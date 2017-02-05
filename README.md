@@ -2,13 +2,13 @@
 
 Slides for various talks I give and have given.
 They are written with the awesome [Asciidoctor](http://asciidoctor.org/) and visualized with [reveal.js](http://asciidoctor.org/).
-Thanks to GitHub Pages you can see them on [talks.codefx.org]](http://talks.codefx.org).
+Thanks to GitHub Pages you can see them on [slides.codefx.org]](http://slides.codefx.org).
 
 * [setup](#setup)
 	* [repository structure](#repository-structure)
 * [editing](#editing)
-	[slides](#slides)
-	[themes](#themes)
+	* [slides](#slides)
+	* [themes](#themes)
 
 ## Setup
 
@@ -31,9 +31,11 @@ After checkout, the `gh-pages` branch should be added as a worktree to `master`:
 #### Branch `gh-pages`
 
 * `_highlight.js` (downloaded from [highlightjs.org](https://highlightjs.org/download/))
+* `images` (folder for landing page)
 * `_reveal.js` (submodule ~>
 	[CodeFX-org/reveal.js; nipa-talks](https://github.com/CodeFX-org/reveal.js/tree/nipa-talks))
 * `_template` (a template for presentations)
+* landing page (favicon, `index.html`, `CNAME` for GH Pages)
 
 
 ## Editing...
