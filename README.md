@@ -1,4 +1,4 @@
-# CodeFX Talk Repository
+# CodeFX Slides Repository
 
 Slides for various talks I give and have given.
 They are written with the awesome [Asciidoctor](http://asciidoctor.org/) and visualized with [reveal.js](http://asciidoctor.org/).
@@ -19,7 +19,8 @@ An amalgam of [submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) 
 #### Branch `master`
 
 * `_asciidoctor-reveal.js` (submodule ~> [CodeFX-org/asciidoctor-reveal.js; nipa-talks](https://github.com/CodeFX-org/asciidoctor-reveal.js/tree/nipa))
-* `_shared` (contains images that are shared among presentations)
+* `_shared` (contains snippets that are shared among presentations)
+* `_shared-images` (contains images that are shared among presentations)
 * a subdirectory for each presentation, with all required files except shared ones
 * meta-information (LICENSE, README, ...)
 
@@ -44,6 +45,7 @@ To generate the slide deck you'll need to [install Asciidoctor](http://asciidoct
 	asciidoctor -T _asciidoctor-reveal.js/templates/slim _template/presentation.adoc -o slides/_template/index.html
 
 If you want to automate that, you can install [guard](https://rubygems.org/gems/guard/versions/2.13.0) and run `guard start` in the same folder.
+It calls the exact same command (instead of using the asciidoctor gem directly) because that [does not resolve include-directives](http://asciidoctor.org/news/3/#3-swap-an-include-for-a-link) (at least not on my machine).
 
 ### Themes
 

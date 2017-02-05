@@ -15,13 +15,10 @@
 [[TODO, check why imagedir does not work]]
 :imagedir: images
 
+include::../_shared/highlight.js.adoc[]
+
 ++++
-<link rel="stylesheet" href="../_highlight.js/styles/monokai-sublime.css">
-<script src="../_highlight.js/highlight.pack.js"></script>
-<script>
-	hljs.initHighlightingOnLoad();
-	hljs.configure({tabReplace: '    '})
-</script>
+<h2>Next Generation Talking</h2>
 ++++
 
 :host-name: JUG Karlsruhe
@@ -29,50 +26,8 @@
 :host-logo-url: images/logo-jug-ka.png
 :host-twitter-name: @jugka
 :host-twitter-url: https://twitter.com/jugka
+include::../_shared/event-on-title-and-footer.adoc[]
 
-[subs="attributes"]
-++++
-<h2>Next Generation Talking</h2>
-<div class="event">
-	<div class="participant">
-		<img src="images/logo-nipa-face.png" class="logo">
-		<div class="name">
-			<p>Nicolai Parlog</p>
-			<p><a href="http://codefx.org">codefx.org</a>
-				/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a></p>
-		</div>
-	</div>
-	<div class="participant">
-		<img src="{host-logo-url}" class="logo">
-		<div class="name">
-			<p><a href="{host-url}">{host-name}</a></p>
-			<p><a href="{host-twitter-url}">{host-twitter-name}</a></p>
-		</div>
-	</div>
-</div>
-<!-- Just adding a footer does not work because reveal.js puts it into the slides and we couldn't get it out via CSS. So we move it via JavaScript. -->
-<footer>
-	<div class="participant">
-		<img src="images/logo-nipa-face.png" class="logo">
-		<div class="name"><p>
-			Nicolai Parlog
-			/ <a href="http://codefx.org">codefx.org</a>
-			/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a>
-		</p></div>
-	</div>
-	<div class="participant">
-		<img src="{host-logo-url}" class="logo">
-		<div class="name">
-			<p><a href="{host-url}">{host-name}</a> / <a href="{host-twitter-url}">{host-twitter-name}</a></p>
-		</div>
-	</div>
-</footer>
-<script>
-	document.addEventListener('DOMContentLoaded', function () {
-		document.body.appendChild(document.querySelector('footer'));
-	})
-</script>
-++++
 
 
 // ####### //
@@ -98,34 +53,9 @@ class JUnit5Test {
 // O U T R O //
 // ######### //
 
-== About
+== Questions?
 
-image::images/question-mark.jpg[background, size=cover]
-
-++++
-<div style="float: left;">
-	<img src="images/jmsia-cover.png" width="85%">
-</div>
-++++
-
-++++
-<h3>Find Me</h3>
-++++
-http://codefx.org[codefx.org] +
-https://sitepoint.com/java[sitepoint.com/java] +
-https://twitter.com/nipafx[@nipafx] /
-https://google.com/+NicolaiParlog[+NicolaiParlog]
-
-++++
-<h3>Want More?</h3>
-++++
-2-day course with 42talents +
-Zürich, 20.04. - 21.04.2017 +
-~> http://42talents.com/training/2017/04/20/Java-9/[register]
-
-or buy http://blog.codefx.org/java-module-system-in-action/[my book]
-~> http://blog.codefx.org/newsletter/[subscribe]
-
+include::../_shared/about-slide.adoc[]
 
 == Image Credits
 
