@@ -4,7 +4,46 @@
 	hljs.initHighlightingOnLoad();
 	hljs.configure({tabReplace: '    '})
 </script>
-<h2>Next Generation Talking</h2></div></section>
+<h2>Next Generation Talking</h2>
+<div class="event">
+	<div class="participant">
+		<img src="images/logo-nipa-face.png" class="logo">
+		<div class="name">
+			<p>Nicolai Parlog</p>
+			<p><a href="http://codefx.org">codefx.org</a>
+				/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a></p>
+		</div>
+	</div>
+	<div class="participant">
+		<img src="images/logo-jug-ka.png" class="logo">
+		<div class="name">
+			<p><a href="http://jug-karlsruhe.de/">JUG Karlsruhe</a></p>
+			<p><a href="https://twitter.com/jugka">@jugka</a></p>
+		</div>
+	</div>
+</div>
+<!-- Just adding a footer does not work because reveal.js puts it into the slides and we couldn't get it out via CSS. So we move it via JavaScript. -->
+<footer>
+	<div class="participant">
+		<img src="images/logo-nipa-face.png" class="logo">
+		<div class="name"><p>
+			Nicolai Parlog
+			/ <a href="http://codefx.org">codefx.org</a>
+			/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a>
+		</p></div>
+	</div>
+	<div class="participant">
+		<img src="images/logo-jug-ka.png" class="logo">
+		<div class="name">
+			<p><a href="http://jug-karlsruhe.de/">JUG Karlsruhe</a> / <a href="https://twitter.com/jugka">@jugka</a></p>
+		</div>
+	</div>
+</footer>
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		document.body.appendChild(document.querySelector('footer'));
+	})
+</script></div></section>
 <section id="_demo"><h2>Demo</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">class JUnit5Test {
 
 	@Test
