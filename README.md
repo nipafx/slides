@@ -39,3 +39,4 @@ To generate the slide deck you'll need to [install Asciidoctor](http://asciidoct
 
 	asciidoctor -T _asciidoctor-reveal.js/templates/slim _template/presentation.adoc -o slides/_template/index.html
 
+If you want to automate that, you can install [guard](https://rubygems.org/gems/guard/versions/2.13.0) and run `guard start` in the same folder.
