@@ -8,6 +8,7 @@ watch(/^([^\/]*)\/(.*\.adoc)$/) {|modified|
 	folder = modified[1]
 	file = modified[2]
 	FileUtils.copy_entry "#{folder}/images", "slides/#{folder}/images"
+	FileUtils.copy_entry "_shared", "slides/#{folder}/images"
 	Asciidoctor.render_file(
 		"#{folder}/#{file}",
 		:to_file => "slides/#{folder}/index.html",

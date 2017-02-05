@@ -24,8 +24,54 @@
 </script>
 ++++
 
+:host-name: JUG Karlsruhe
+:host-url: http://jug-karlsruhe.de/
+:host-logo-url: images/logo-jug-ka.png
+:host-twitter-name: @jugka
+:host-twitter-url: https://twitter.com/jugka
+
+[subs="attributes"]
 ++++
 <h2>Next Generation Talking</h2>
+<div class="event">
+	<div class="participant">
+		<img src="images/logo-nipa-face.png" class="logo">
+		<div class="name">
+			<p>Nicolai Parlog</p>
+			<p><a href="http://codefx.org">codefx.org</a>
+				/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a></p>
+		</div>
+	</div>
+	<div class="participant">
+		<img src="{host-logo-url}" class="logo">
+		<div class="name">
+			<p><a href="{host-url}">{host-name}</a></p>
+			<p><a href="{host-twitter-url}">{host-twitter-name}</a></p>
+		</div>
+	</div>
+</div>
+<!-- Just adding a footer does not work because reveal.js puts it into the slides and we couldn't get it out via CSS. So we move it via JavaScript. -->
+<footer>
+	<div class="participant">
+		<img src="images/logo-nipa-face.png" class="logo">
+		<div class="name"><p>
+			Nicolai Parlog
+			/ <a href="http://codefx.org">codefx.org</a>
+			/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a>
+		</p></div>
+	</div>
+	<div class="participant">
+		<img src="{host-logo-url}" class="logo">
+		<div class="name">
+			<p><a href="{host-url}">{host-name}</a> / <a href="{host-twitter-url}">{host-twitter-name}</a></p>
+		</div>
+	</div>
+</footer>
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		document.body.appendChild(document.querySelector('footer'));
+	})
+</script>
 ++++
 
 

@@ -19,6 +19,7 @@ An amalgam of [submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) 
 #### Branch `master`
 
 * `_asciidoctor-reveal.js` (submodule ~> [CodeFX-org/asciidoctor-reveal.js; nipa-talks](https://github.com/CodeFX-org/asciidoctor-reveal.js/tree/nipa))
+* `_shared` (contains images that are shared among presentations)
 * a subdirectory for each presentation, with all required files except shared ones
 * meta-information (LICENSE, README, ...)
 
