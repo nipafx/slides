@@ -1,0 +1,53 @@
+= Expert Java 8
+:backend: revealjs
+:revealjs_theme: nipa-night
+:revealjsdir: ../_reveal.js
+:revealjs_controls: false
+:revealjs_progress: false
+:revealjs_slideNumber: false
+:revealjs_history: true
+:revealjs_center: true
+:revealjs_transition: slide
+:revealjs_backgroundTransition: fade
+:revealjs_parallaxBackgroundImage: images/8-dark.jpg
+:revealjs_parallaxBackgroundSize: 2560px 1440px
+
+[[TODO, check why imagedir does not work]]
+:imagedir: images
+
+include::../_shared/highlight.js.adoc[]
+
+++++
+<style>
+.reveal .title h2 {
+	font-size: 1.75em;
+}
+</style>
+<h2>Lambdas, Optionals, Streams<br>For Those Who Know<br>What They Are Doing</h2>
+++++
+
+:host-name: Jfokus
+:host-url: https://www.jfokus.se/jfokus/
+:host-logo-url: images/logo-jfokus.png
+:host-twitter-name: #jfokus
+:host-twitter-url: https://twitter.com/hashtag/JFokus?src=hash
+include::../_shared/event-on-title-and-footer.adoc[]
+
+
+
+// ######### //
+// O U T R O //
+// ######### //
+
+== Questions?
+
+include::../_shared/about-slide.adoc[]
+
+== Image Credits
+
+* bubbles:
+https://www.flickr.com/photos/elwillo/[Keith Williamson]
+(https://creativecommons.org/licenses/by/2.0/[CC-BY 2.0])
+* question-mark:
+http://milosevicmilos.com/[Milos Milosevic]
+(https://creativecommons.org/licenses/by/2.0/[CC-BY 2.0])
