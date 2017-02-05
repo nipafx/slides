@@ -1,19 +1,19 @@
 # CodeFX Talk Repository
 
-Slides for various talks I give. They are written with the awesome
- [Asciidoctor](http://asciidoctor.org/) and visualized with
- [reveal.js](http://asciidoctor.org/).
+Slides for various talks I give and have given.
+They are written with the awesome [Asciidoctor](http://asciidoctor.org/) and visualized with [reveal.js](http://asciidoctor.org/).
+Thanks to GitHub Pages you can see them on [talks.codefx.org]](http://talks.codefx.org).
 
 * [setup](#setup)
 	* [repository structure](#repository-structure)
+* [editing](#editing)
+	[slides](#slides)
 
 ## Setup
 
 ### Repository Structure
 
-Some amalgam of
- [submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) and
- [worktrees](https://git-scm.com/docs/git-worktree)...
+An amalgam of [submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) and [worktrees](https://git-scm.com/docs/git-worktree)...
 
 #### Branch `master`
 
@@ -33,7 +33,9 @@ After checkout, the `gh-pages` branch should be added as a worktree to `master`:
 * `_template` (a template for presentations)
 
 
-## Editing Slides
+## Editing...
+
+### Slides
 
 To generate the slide deck you'll need to [install Asciidoctor](http://asciidoctor.org/docs/install-toolchain/) and run this in the repository's root:
 
