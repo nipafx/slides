@@ -17,6 +17,5 @@ Some amalgam of
 
 #### Branch `master`
 
-* `asciidoctor-reveal.js` (submodule ~>
-	[CodeFX-org/asciidoctor-reveal.js; nipa-talks](https://github.com/CodeFX-org/asciidoctor-reveal.js/tree/nipa))
+* `_asciidoctor-reveal.js` (submodule ~> [CodeFX-org/asciidoctor-reveal.js; nipa-talks](https://github.com/CodeFX-org/asciidoctor-reveal.js/tree/nipa))
 * meta-information (LICENSE, README, ...)
