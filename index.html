@@ -1,5 +1,6 @@
 <style>
 @import url('https://fonts.googleapis.com/css?family=Montserrat:700');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400');
 body {
 	background:
 		linear-gradient(to right, rgba(255,255,255,0) 20%,rgba(0,0,0,1) 55%),
@@ -24,24 +25,71 @@ h1 {
 	float: right;
 }
 
-#talk-list {
-	font-size: 2em;
+.talk-list {
+	list-style: none;
 }
-#talk-list ul {
-	list-style-type: none;
-}
-#talk-list a {
+.talk-list a {
 	color: white;
 	text-decoration: none;
+}
+.talk-list .talk-title {
+	font-size: 3em;
+	font-weight: bold;
+	margin: 1em 0 0;
+}
+.talk-list .talk-subtitle {
+	font-size: 2em;
+	font-weight: bold;
+	margin: 0 0 0.5em;
+}
+
+.event-list {
+	display: inline;
+	list-style: none;
+	padding: 0;
+	line-height: 1.5;
+}
+.event-list li {
+	display: inline;
+}
+
+.event-list li:after {
+	content: ", ";
+}
+.event-list li:last-child:after {
+	content: "";
 }
 </style>
 
 <body>
 	<div id="text-box">
-		<h1>Nicolai's Slide Decks</h1>
-		<div id="talk-list">
-			<ul>
-				<li><a href="_template/index.html">Template</a></li>
+		<div>
+			<ul class="talk-list">
+				<li><a href="junit-5/index.html">
+					<p class="talk-title">JUnit 5</p>
+					<p class="talk-subtitle">Next Generation Testing On The JVM</p></a>
+					<dl>
+						<dt>2017</dt>
+						<dd><ul class="event-list">
+							<li><a href="junit-5/2016-01-25-JUG-Karlsruhe/index.html">JUG Karlsruhe</a></li>
+							<li><a href="junit-5/2016-01-19-JUG-Darmstadt/index.html">JUG Darmstadt</a></li>
+							<li><a href="junit-5/2016-01-12-JUG-Mannheim/index.html">JUG Mannheim</a></li>
+						</ul></dd>
+					</dl>
+					<dl>
+						<dt>2016</dt>
+						<dd><ul class="event-list">
+							<li><a href="junit-5/2016-11-10-JVM-Group-Stockholm/index.html">JVM Group Stockholm</a></li>
+							<li><a href="junit-5/2016-11-08-DevoxxBE/index.html">Devoxx BE</a></li>
+							<li><a href="junit-5/2016-10-31-TDC/index.html">TDC</a></li>
+							<li><a href="junit-5/2016-10-12-JAXLondon/index.html">JAX London</a></li>
+							<li><a href="junit-5/2016-09-08-JavaZone/index.html">JavaZone</a></li>
+							<li><a href="junit-5/2016-07-19-vJUG/index.html">virtual JUG</a></li>
+							<li><a href="junit-5/2016-06-24-DevoxxPL/index.html">Devoxx PL</a></li>
+							<li><a href="junit-5/2016-05-20-JEEConf/index.html">JEEConf</a></li>
+						</ul></dd>
+					</dl>
+				</li>
 			</ul>
 		</div>
 	</div>

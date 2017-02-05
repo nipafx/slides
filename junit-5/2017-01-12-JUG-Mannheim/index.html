@@ -1,0 +1,596 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>JUnit 5</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="reveal.js/css/theme/nipa-night.css" id="theme"><link href="reveal.js/lib/css/zenburn.css" rel="stylesheet"><script type="text/javascript">document.write( '<link rel="stylesheet" href="reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title-slide" data-state="title-slide"><h1>JUnit 5</h1><h2>Next Generation Testing<br>on the JVM</h2>
+<div class="event">
+	<div class="participant">
+		<img src="images/logo-nipa-face.png" class="logo">
+		<div class="name">
+			<p>Nicolai Parlog</p>
+			<p><a href="http://codefx.org">codefx.org</a>
+				/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a></p>
+		</div>
+	</div>
+	<div class="participant">
+		<img src="images/logo-majug.png" class="logo">
+		<div class="name">
+			<p><a href="http://www.majug.de/">majug</a></p>
+			<p><a href="https://twitter.com/majug">@majug</a></p>
+		</div>
+	</div>
+</div>
+<link rel="stylesheet" href="highlight.js/9.2.0.monokai-sublime.css">
+<script src="highlight.js/9.2.0.min.js"></script>
+<script>
+	hljs.initHighlightingOnLoad();
+	hljs.configure({tabReplace: '    '})
+</script>
+<footer>
+	<div class="participant">
+		<img src="images/logo-nipa-face.png" class="logo">
+		<div class="name"><p>
+			Nicolai Parlog
+			/ <a href="http://codefx.org">codefx.org</a>
+			/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a>
+		</p></div>
+	</div>
+	<div class="participant">
+		<img src="images/logo-majug.png" class="logo">
+		<div class="name">
+			<p><a href="http://www.majug.de/">majug</a> / <a href="https://twitter.com/majug">@majug</a></p>
+		</div>
+	</div>
+</footer>
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		document.body.appendChild(document.querySelector('footer'));
+	})
+</script></section>
+<section><section id="_heads_up"><h2>Heads Up</h2><div class="paragraph"><p>JUnit 5 is work in progress!</p></div><div class="paragraph"><p>This is based on <strong>Milestone 3</strong><br>
+(released 30th of November 2016).</p></div><div class="paragraph"><p>Give <strong>feedback</strong>!</p></div></section><section id="_junit_5_links"><h2>JUnit 5 Links:</h2><div class="dlist"><dl><dt class="hdlist1">GitHub repository</dt><dd><p><a href="https://github.com/junit-team/junit5">github.com/junit-team/junit5</a></p></dd><dt class="hdlist1">User guide</dt><dd><p><a href="http://junit.org/junit5/docs/snapshot/user-guide">junit.org/junit5/docs/snapshot/user-guide</a></p></dd><dt class="hdlist1">Twitter</dt><dd><p><a href="https://twitter.com/junitteam">@junitteam</a></p></dd><dt class="hdlist1">Articles on my blog</dt><dd><p><a href="http://blog.codefx.org/tag/junit-5/">blog.codefx.org/tag/junit-5/</a></p></dd></dl></div></section></section>
+<section><section id="_basics" data-state="no-title"><h2>Basics</h2><table class="toc">
+	<tr class="toc-current"><td>Basics</td></tr>
+	<tr><td>Dynamic Tests</td></tr>
+	<tr><td>Extensions</td></tr>
+	<tr><td>Architecture</td></tr>
+	<tr><td>Tools &amp; Setup</td></tr>
+</table></section><section id="_what_s_new"><h2>What&#8217;s New?</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">class JUnit5Test {
+
+	@Test
+	void someTest() {
+		assertTrue(true);
+	}
+
+}</code></pre></div></div>
+<p class="fragment current-visible">⇝ Package visibility suffices!</p></section><section id="_what_s_new_2"><h2>What&#8217;s New?</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@BeforeAll
+static void beforeAll() { ... }
+
+@BeforeEach
+void beforeEach() { ... }
+
+@AfterEach
+void afterEach() { ... }
+
+@AfterAll
+static void afterAll() { ... }</code></pre></div></div>
+<p class="fragment current-visible">⇝ Lifecycle annotations have new names.</p></section><section id="_what_s_new_3"><h2>What&#8217;s New?</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@Test
+@Disabled("Y U No Pass?!")
+void failingTest() {
+	assertTrue(false);
+}</code></pre></div></div>
+<p class="fragment current-visible">⇝ <code>@Ignored</code> is now <code>@Disabled</code>.</p></section><section id="_what_s_new_4"><h2>What&#8217;s New?</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@Test
+@DisabledOnFriday
+void failingTest() {
+	assertTrue(false);
+}</code></pre></div></div>
+<p class="fragment" data-fragment-index="0,1">⇝ Convenient Extensibility.</p>
+<p class="fragment" data-fragment-index="1">But how?</p></section><section id="_what_s_new_5"><h2>What&#8217;s New?</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@Test
+void someTest() {
+	...
+	assertEquals(
+		expected,
+		actual,
+		"Should be equal.");
+}</code></pre></div></div>
+<p class="fragment current-visible">⇝ Failure message comes last.</p></section><section id="_what_s_new_6"><h2>What&#8217;s New?</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@Test
+void someTest() {
+	...
+	assertEquals(
+		expected,
+		actual,
+		() -&gt; "Should " + "be " + "equal.");
+}</code></pre></div></div>
+<p class="fragment current-visible">⇝ Failure message can be created lazily.</p></section><section id="_what_s_new_7"><h2>What&#8217;s New?</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@Test
+void assertAllProperties() {
+	Address ad = new Address(
+	  "City", "Street", "42");
+
+	assertAll("address",
+	  () -&gt; assertEquals("C", ad.city),
+	  () -&gt; assertEquals("Str", ad.street),
+	  () -&gt; assertEquals("63", ad.number)
+	);
+}</code></pre></div></div>
+<p class="fragment current-visible">⇝ <code>assertAll</code> gathers results from multiple assertions</p></section><section id="_what_s_new_8"><h2>What&#8217;s New?</h2><div class="paragraph"><p>Output if <code>assertAll</code> fails:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="shell language-shell">org.opentest4j.MultipleFailuresError:
+	address (3 failures)
+	expected: &lt;C&gt; but was: &lt;City&gt;
+	expected: &lt;Str&gt; but was: &lt;Street&gt;
+	expected: &lt;63&gt; but was: <b>(42)</b></code></pre></div></div></section><section id="_what_s_new_9"><h2>What&#8217;s New?</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">void methodUnderTest() {
+	throw new IllegalStateException();
+}
+
+@Test
+void assertExceptions() {
+	Exception ex = assertThrows(
+		Exception.class,
+		this::methodUnderTest);
+	assertEquals("Msg", ex.getMessage());
+}</code></pre></div></div>
+<p class="fragment current-visible">⇝ <code>assertThrows</code> to assert<br>
+	exception type and other properties</p></section><section id="_what_s_new_10"><h2>What&#8217;s New?</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">class CountTest {
+	// lifecycle and tests
+	@Nested
+	class CountGreaterZero {
+		// lifecycle and tests
+		@Nested
+		class CountMuchGreaterZero {
+			// lifecycle and tests
+		}
+	}
+}</code></pre></div></div>
+<p class="fragment current-visible">⇝ <code>@Nested</code> to organize tests in inner classes</p></section><section id="_what_s_new_11"><h2>What&#8217;s New?</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@DisplayName("A count")
+class CountTest {
+	@Nested
+	@DisplayName("when greater zero")
+	class CountGreaterZero {
+		@Test
+		@DisplayName("is positive")
+		void isPositive() { ... }
+	}
+}</code></pre></div></div>
+<p class="fragment current-visible">⇝ <code>@DisplayName</code> to show a nice name</p></section><section id="_what_s_new_12"><h2>What&#8217;s new?</h2><div class="paragraph"><p>The effects of <code>@Nested</code> and <code>@DisplayName</code>:</p></div>
+<div class="imageblock" style=""><div class="content"><img src="images/testing-a-stack.png" alt="Nested and DisplayName" width="900"></div></div></section><section id="_what_s_new_13"><h2>What&#8217;s new?</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@Test
+void someTest(MyServer server) {
+	// do something with `server`
+}</code></pre></div></div>
+<div class="fragment current-visible">
+	<p>⇝ Test has parameters!</p>
+	<p>But where do they come from?</p>
+</div></section><section id="_what_s_new_14"><h2>What&#8217;s New?</h2><h3>Summary</h3>
+<div class="ulist"><ul><li><p>lifecycle works much like before</p></li><li><p>many details were improved</p></li><li><p><code>@Nested</code> and <code>@DisplayName</code><br>
+make a nice couple</p></li><li><p>parameter injection</p></li><li><p>no lambdas (so far)</p></li></ul></div>
+<p class="fragment current-visible">
+That's all very nice but how is it<br>
+<i>Next Generation Testing</i>?
+</p></section></section>
+<section><section id="_dynamic_tests" data-state="no-title"><h2>Dynamic Tests</h2><table class="toc">
+	<tr><td>Basics</td></tr>
+	<tr class="toc-current"><td>Dynamic Tests</td></tr>
+	<tr><td>Extensions</td></tr>
+	<tr><td>Architecture</td></tr>
+	<tr><td>Tools &amp; Setup</td></tr>
+</table></section><section id="_defining_tests"><h2>Defining Tests</h2><div class="paragraph"><p>Up to now tests were identified</p></div>
+<div class="ulist"><ul><li><p>by names<br>
+(<code>test&#8230;&#8203;</code> in JUnit 3 and before)</p></li><li><p>by annotations<br>
+(<code>@Test</code> in JUnit 4 and 5)</p></li></ul></div>
+<div class="paragraph"><p>⇝ Tests had to be known at compile time.</p></div></section><section id="_defining_tests_2"><h2>Defining Tests</h2><div class="paragraph"><p><strong>So what?!</strong></p></div>
+<div class="paragraph"><p>What if we want to create tests</p></div>
+<div class="ulist"><ul><li><p>for a set of parameters</p></li><li><p>based on non-source files</p></li><li><p>with lambdas</p></li></ul></div>
+<div class="paragraph"><p>⇝ We need to define tests at run time.</p></div></section><section id="_dynamic_tests_to_the_rescue"><h2>Dynamic Tests To The Rescue!</h2><div class="paragraph"><p>Allow creation of tests at run time.</p></div>
+<div class="ulist"><ul><li><p>tests are wrapped into <code>DynamicTest</code>-s</p></li><li><p>methods that create them<br>
+are annotated with <code>@TestFactory</code></p></li></ul></div></section><section id="_creating_tests"><h2>Creating Tests</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@TestFactory
+List&lt;DynamicTest&gt; createPointTests() {
+	return Arrays.asList(
+		dynamicTest(
+			"A Great Test For Point",
+			() -&gt; { /* test code */ } ),
+		dynamicTest(
+			"Another Great Test For Point",
+			() -&gt; { /* test code */ } )
+	);
+}</code></pre></div></div></section><section id="_implementation"><h2>Implementation</h2><div class="paragraph"><p>The rest is straight-forward:</p></div>
+<div class="olist arabic"><ol class="arabic"><li><p>JUnit detects <code>@TestFactory</code> methods</p></li><li><p>calls them to generate tests</p></li><li><p>adds tests to the test tree</p></li><li><p>eventually runs them</p></li></ol></div></section><section id="_parameterized_tests"><h2>Parameterized Tests</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">void pointTest(Point p) { /*...*/ }
+
+@TestFactory
+Stream&lt;DynamicText&gt; testingPoints() {
+	return Stream.of(
+			/* create points */)
+		.map(p -&gt;
+			dynamicTest(
+				"Testing " + p,
+				() -&gt; pointTest(p)));
+}</code></pre></div></div></section><section id="_parameterized_tests_2"><h2>Parameterized Tests</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">void pointTest(Point p) { /*...*/ }
+
+@TestFactory
+Stream&lt;DynamicText&gt; testingPoints() {
+	List&lt;Point&gt; points = asList(
+		/* create points */);
+	return DynamicTest.stream(
+		points,
+		p -&gt; "Testing " + p,
+		p -&gt; pointTest(p));
+}</code></pre></div></div></section><section id="_file_based_tests"><h2>File-Based Tests</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">void pointTest(Point p) { /*...*/ }
+
+@TestFactory
+Stream&lt;DynamicText&gt; testingPoints() {
+	return Files
+		.lines(pathToPointFile)
+		.map(Point::parse)
+		.map(p -&gt; dynamicTest(
+			"Testing " + p,
+			() -&gt; pointTest(p)));
+}</code></pre></div></div></section><section id="_lambda_tests"><h2>Lambda Tests</h2><div class="paragraph"><p>So what about lambdas?</p></div>
+<div class="paragraph"><p>This would be great:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">class PointTest {
+
+	"A great test for point" -&gt; {
+		/* test code */
+	}
+
+}</code></pre></div></div>
+<div class="paragraph"><p>But how?</p></div></section><section id="_lambda_tests_2"><h2>Lambda Tests</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class LambdaTest {
+
+	private List&lt;DynamicTest&gt; tests;
+
+	protected void λ(
+			String name, Executable test) {
+		tests.add(dynamicTest(name, test));
+	}
+
+	@TestFactory List&lt;DynamicTest&gt; tests() {
+		return tests;
+	}
+}</code></pre></div></div></section><section id="_lambda_tests_3"><h2>Lambda Tests</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">class PointTest extends LambdaTest {{
+
+	λ("A Great Test For Point", () -&gt; {
+		/* test code goes here */
+	});
+
+}}</code></pre></div></div>
+<div class="ulist"><ul><li><p>the inner braces create
+an <a href="https://reinhard.codes/2016/07/30/double-brace-initialisation-and-java-initialisation-blocks/">initialization block</a></p></li><li><p>code therein is run during construction</p></li><li><p>JUnit will pick up the tests by calling <code>tests()</code></p></li></ul></div></section><section id="_lambda_tests_4"><h2>Lambda Tests</h2><div class="paragraph"><p>While we&#8217;re hacking&#8230;&#8203; what about this?</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">class PointTest extends LambdaTest {{
+
+	λ(a_great_test_for_point -&gt; {
+		/* test code goes here */
+	});
+
+}}</code></pre></div></div>
+<div class="paragraph"><p>Learn how to access<br>
+a lambda&#8217;s parameter name<br>
+with
+<a href="http://benjiweber.co.uk/blog/2015/08/17/lambda-parameter-names-with-reflection/">this one weird trick</a>.</p></div></section><section id="_dynamic_tests_2"><h2>Dynamic Tests</h2><h3>Summary</h3>
+<div class="ulist"><ul><li><p>with <code>@TestFactory</code> and <code>DynamicTest</code><br>
+we can create tests at run time:</p><div class="ulist"><ul><li><p>for sets of parameters</p></li><li><p>based on external input</p></li><li><p>as lambdas (yay!)</p></li></ul></div></li><li><p>not fully integrated in lifecycle (yet? <a href="https://github.com/junit-team/junit5/issues/378">#378</a>)</p></li></ul></div>
+<p class="fragment current-visible">
+That's all very nice but is this already<br>
+<i>Next Generation Testing</i>?
+</p></section></section>
+<section><section id="_extensions" data-state="no-title"><h2>Extensions</h2><table class="toc">
+	<tr><td>Basics</td></tr>
+	<tr><td>Dynamic Tests</td></tr>
+	<tr class="toc-current"><td>Extensions</td></tr>
+	<tr><td>Architecture</td></tr>
+	<tr><td>Tools &amp; Setup</td></tr>
+</table></section><section id="_extensions_in_junit_4"><h2>Extensions in JUnit 4</h2><h3>Runners</h3>
+<div class="paragraph"><p>Manage a test&#8217;s full lifecycle.</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@RunWith(MockitoJUnitRunner.class)
+public class MyTest { ... }</code></pre></div></div>
+<div class="ulist"><ul><li><p>very flexible</p></li><li><p>heavyweight</p></li><li><p>exclusive</p></li></ul></div></section><section id="_extensions_in_junit_4_2"><h2>Extensions in JUnit 4</h2><h3>Rules</h3>
+<div class="paragraph"><p>Execute code before and after statements.</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class MyTest {
+	@Rule
+	public MockitoRule rule =
+		MockitoJUnit.rule();
+}</code></pre></div></div>
+<div class="ulist"><ul><li><p>added in 4.7</p></li><li><p>lightweight</p></li><li><p>limited to before/after behavior</p></li></ul></div></section><section id="_extensions_in_junit_4_3"><h2>Extensions in JUnit 4</h2><div class="paragraph"><p>Extension model is not optimal:</p></div>
+<div class="ulist"><ul><li><p>two competing mechanisms</p><div class="ulist"><ul><li><p>each with limitations</p></li><li><p>but with considerable overlap</p></li></ul></div></li><li><p>composition can cause problems</p></li></ul></div></section><section id="_approach_in_junit_5"><h2>Approach in JUnit 5</h2><div class="paragraph"><p>From JUnit 5&#8217;s
+<a href="https://github.com/junit-team/junit5/wiki/Core-Principles">Core Principles</a>:</p></div>
+<div class="quoteblock"><blockquote><div class="paragraph"><p>Prefer extension points over features</p></div></blockquote></div>
+<div class="paragraph"><p>Quite literally,<br>
+JUnit 5 has <em>Extension Points</em></p></div></section><section id="_extension_points"><h2>Extension Points</h2><div class="ulist"><ul><li><p>Test Instance Post Processor</p></li><li><p>BeforeAll Callback</p></li><li><p>Test and Container Execution Condition</p></li><li><p>BeforeEach Callback</p></li><li><p>Parameter Resolution</p></li><li><p>Before Test Execution</p></li><li><p>After Test Execution</p></li><li><p>Exception Handling</p></li><li><p>AfterEach Callback</p></li><li><p>AfterAll Callback</p></li></ul></div></section><section id="_implementing_extensions"><h2>Implementing Extensions</h2><div class="ulist"><ul><li><p>one interface for each extension point</p></li><li><p>method arguments capture context</p></li></ul></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public interface BeforeEachCallback
+		extends Extension {
+
+	void beforeEach(
+		TestExtensionContext context);
+}</code></pre></div></div>
+<div class="ulist"><ul><li><p>an extension can use multiple points<br>
+to implement its feature</p></li></ul></div></section><section id="_benchmark_extension"><h2>Benchmark Extension</h2><div class="paragraph"><p>We want to benchmark our tests!</p></div>
+<div class="ulist"><ul><li><p>for each test method</p></li><li><p>write the elapsed time to console</p></li></ul></div>
+<div class="paragraph"><p>How?</p></div>
+<div class="ulist"><ul><li><p>before test execution: store test launch time</p></li><li><p>after test execution: print elapsed time</p></li></ul></div></section><section id="_benchmark_extension_2"><h2>Benchmark Extension</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class BenchmarkExtension implements
+		BeforeTestExecutionCallback,
+		AfterTestExecutionCallback {
+
+	private long launchTime;
+
+	// ...
+}</code></pre></div></div></section><section id="_benchmark_extension_3"><h2>Benchmark Extension</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@Override
+public void beforeTestExecution(
+		TestExtensionContext context) {
+	launchTime = currentTimeMillis();
+}
+
+@Override
+public void afterTestExecution(
+		TestExtensionContext context) {
+	printf("Test '%s' took %d ms.%n",
+		context.getDisplayName(),
+		currentTimeMillis() - launchTime);
+}</code></pre></div></div></section><section id="_other_examples"><h2>Other Examples</h2><div class="paragraph"><p>Remember This?</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@Test
+@DisabledOnFriday
+void failingTest() {
+	assertTrue(false);
+}</code></pre></div></div>
+<div class="paragraph"><p>Let&#8217;s see how it works!</p></div></section><section id="_disabled_extension"><h2>Disabled Extension</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class DisabledOnFridayCondition
+		implements TestExecutionCondition {
+	@Override
+	public ConditionEval.Result evaluate(
+			TestExtensionCtx. context) {
+		if (isFriday())
+			return disabled("Weekend!");
+		else
+			return enabled("Fix it!");
+	}
+}</code></pre></div></div></section><section id="_other_examples_2"><h2>Other Examples</h2><div class="paragraph"><p>What about parameter injection?</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@Test
+void someTest(MyServer server) {
+	// do something with `server`
+}</code></pre></div></div></section><section id="_parameter_injection"><h2>Parameter Injection</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class MyServerParameterResolver
+		implements ParameterResolver {
+	@Override
+	public boolean supports(
+			ParameterContext p, ...) {
+		return MyServer.class
+			== p.getParameter().getType();
+	}
+	@Override
+	public Object resolve( ... ) {
+		return new MyServer();
+	}
+}</code></pre></div></div></section><section id="_extension_context"><h2>Extension Context</h2><div class="paragraph"><p>Quick look at <code>ExtensionContext</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// every node has its own context
+Optional&lt;ExtensionContext&gt; getParent();
+
+// some node-related info
+String getUniqueId();
+String getDisplayName();
+Set&lt;String&gt; getTags();
+
+// don't use System.out !
+void publishReportEntry(
+	Map&lt;String, String&gt; map);</code></pre></div></div></section><section id="_extension_context_2"><h2>Extension Context</h2><div class="paragraph"><p>Quick look at <code>ExtensionContext</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// to reflect over the test class/method
+Optional&lt;AnnotatedElement&gt; getElement();
+Optional&lt;Class&lt;?&gt;&gt; getTestClass();
+Optional&lt;Method&gt; getTestMethod();
+
+// use the store to safe extension state
+// (extensions should be stateless;
+//  did I mention that?)
+Store getStore();
+Store getStore(Namespace namespace);</code></pre></div></div></section><section id="_stateless_extensions"><h2>Stateless Extensions</h2><div class="paragraph"><p>JUnit makes no promises regarding<br>
+extension instance lifecycle!</p></div>
+<div class="paragraph"><p><strong>⇝ Extensions must be stateless!</strong></p></div>
+<div class="paragraph"><p>Use the <code>Store</code>, Luke!</p></div>
+<div class="ulist"><ul><li><p>namespaced</p></li><li><p>hierarchical</p></li><li><p>key-value</p></li></ul></div></section><section id="_extension_store"><h2>Extension Store</h2><div class="paragraph"><p><h3>Namespaced</h3></p></div>
+<div class="paragraph"><p>Store is accessed via <code>ExtensionContext</code><br>
+given a <code>Namespace</code></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// forwards with a default namespace
+Store getStore();
+Store getStore(Namespace namespace);</code></pre></div></div>
+<div class="ulist"><ul><li><p>keeps extensions from stepping<br>
+on each other&#8217;s toes</p></li><li><p>could allow deliberate communication!</p></li></ul></div></section><section id="_extension_store_2"><h2>Extension Store</h2><div class="paragraph"><p><h3>Hierarchical</h3></p></div>
+<div class="paragraph"><p>Reads from the store forward to other stores:</p></div>
+<div class="ulist"><ul><li><p>method store ⇝ class store</p></li><li><p>nested class store ⇝ surrounding class store</p></li></ul></div>
+<div class="paragraph"><p>Writes always go to the called store.</p></div></section><section id="_extension_store_3"><h2>Extension Store</h2><div class="paragraph"><p><h3>Key-Value</h3></p></div>
+<div class="paragraph"><p>The store is essentially a map:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Object getObject(Object key);
+Object getOrComputeIfAbsent(
+		K key, Function creator);
+
+void put(Object key, Object value)
+
+Object remove(Object key)</code></pre></div></div>
+<div class="paragraph"><p>Overloads with type tokens exist.</p></div></section><section id="_stateless_benchmark"><h2>Stateless Benchmark</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">void storeNowAsLaunchTime(
+		ExtensionContext context) {
+	long now = currentTimeMillis();
+	context.getStore(NAMESPACE)
+			.put(KEY, now);
+}
+
+long loadLaunchTime(
+		ExtensionContext context) {
+	return context.getStore(NAMESPACE)
+			.get(KEY, long.class);
+}</code></pre></div></div></section><section id="_applying_extensions"><h2>Applying Extensions</h2><div class="paragraph"><p>How do we apply extensions?</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@ExtendWith(DisabledOnFridayCondition.class)
+class JUnit5Test {
+	...
+}</code></pre></div></div>
+<div class="paragraph"><p>That&#8217;s technical and verbose&#8230;&#8203; :(</p></div></section><section id="_applying_extensions_2"><h2>Applying Extensions</h2><div class="paragraph"><p><a href="https://en.wikibooks.org/wiki/Java_Programming/Annotations/Meta-Annotations">Meta-annotations</a> to the rescue!</p></div>
+<div class="ulist"><ul><li><p>JUnit 5&#8217;s annotations are meta-annotations</p></li><li><p>JUnit 5 checks recursively for annotations</p></li></ul></div>
+<div class="paragraph"><p>⇝ We can create our own annotations!</p></div></section><section id="_creating_annotations"><h2>Creating Annotations</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@ExtendWith(DisabledOnFridayCondition.class)
+public @interface DisabledOnFriday { }
+
+@Test
+@Tag("integration")
+@ExtendWith(BenchmarkExtension.class)
+@ExtendWith(MyServerParameterResolver.class)
+public @interface IntegrationTest { }
+
+@IntegrationTest
+@DisabledOnFriday
+void testLogin(MyServer server) { ... }</code></pre></div></div></section><section id="_extensions_2"><h2>Extensions</h2><h3>Summary</h3>
+<div class="ulist"><ul><li><p>flexibility because of many extension points</p></li><li><p>powerful due to extension context</p></li><li><p>need to be stateless!</p></li><li><p>extensions compose well</p></li><li><p>customizable due to meta-annotations</p></li></ul></div>
+<p class="fragment current-visible">
+That's all very nice but how is it<br>
+<i>Next Generation Testing</i>?
+</p></section></section>
+<section><section id="_architecture" data-state="no-title"><h2>Architecture</h2><table class="toc">
+	<tr><td>Basics</td></tr>
+	<tr><td>Dynamic Tests</td></tr>
+	<tr><td>Extensions</td></tr>
+	<tr class="toc-current"><td>Architecture</td></tr>
+	<tr><td>Tools &amp; Setup</td></tr>
+</table></section><section id="_junit_4_architecture"><h2>JUnit 4 Architecture</h2><div class="ulist"><ul><li><p>a single JAR (ignoring Hamcrest)</p></li><li><p>used by</p><div class="ulist"><ul><li><p>developers</p></li><li><p>extensions</p></li><li><p>IDEs, build-tools</p></li></ul></div></li><li><p>no separation of concerns</p></li></ul></div></section><section id="_junit_4_architecture_2"><h2>JUnit 4 Architecture</h2><div class="ulist"><ul><li><p>tools provide us with awesome features!</p></li><li><p>but API is not powerful enough</p></li></ul></div>
+<div class="fragment current-visible">
+<div class="quoteblock"><blockquote><div class="paragraph"><p>I know, I’ll use reflection!</p></div></blockquote></div>
+<div class="ulist"><ul>
+	<li><p>nothing was safe!</p></li>
+	<li><p>bound tools to implementation details</p></li>
+	<li><p>made maintenance and evolution very hard</p></li>
+</ul></div>
+</div></section><section id="_dead_end"><h2>Dead End</h2><div class="paragraph"><p>Part of JUnit&#8217;s success is its great tool support!</p></div>
+<div class="paragraph"><p>But the same tools locked development in.</p></div>
+<div class="quoteblock"><blockquote><div class="paragraph"><p>The success of JUnit as a platform prevents the development of JUnit as a tool.<br>
+(<a href="https://jaxenter.com/crowdfunding-for-junit-lambda-is-underway-119546.html">Johannes Link</a>)</p></div></blockquote></div></section><section id="_approach_in_junit_5_2"><h2>Approach in JUnit 5</h2><div class="paragraph"><p>Separation of concerns:</p></div>
+<div class="olist arabic"><ol class="arabic"><li><p>an API to write tests against</p></li><li><p>a mechanism to discover and run tests</p></li><li><p>an API for tools to run tests</p></li></ol></div></section><section id="_approach_in_junit_5_3"><h2>Approach in JUnit 5</h2><div class="paragraph"><p>Separation of concerns V 2.0:</p></div>
+<div class="olist arabic"><ol class="arabic"><li><p>an API to write tests against</p></li><li><p>a mechanism to discover and run tests</p><div class="olist loweralpha"><ol class="loweralpha" type="a"><li><p>specific engine per variant of tests<br>
+(e.g. JUnit 4 or JUnit 5)</p></li><li><p>orchestration of engines</p></li><li><p>API between them</p></li></ol></div></li><li><p>an API for tools to run tests</p></li></ol></div></section><section id="_subprojects_modules"><h2>Subprojects &amp; Modules</h2><div class="dlist"><dl><dt class="hdlist1">JUnit Jupiter 5.0.0-M2</dt><dd><div class="ulist"><ul><li><p><code>junit-jupiter-api</code></p></li><li><p><code>junit-jupiter-engine</code></p></li></ul></div></dd><dt class="hdlist1">JUnit Vintage 4.12.0-M2</dt><dd><div class="ulist"><ul><li><p><code>junit-vintage-engine</code></p></li></ul></div></dd><dt class="hdlist1">JUnit Platform 1.0.0-M2</dt><dd><div class="ulist"><ul><li><p><code>junit-platform-engine</code></p></li><li><p><code>junit-platform-runner</code></p></li><li><p>a lot more</p></li></ul></div></dd></dl></div></section><section id="_junit_5_modules"><h2>JUnit 5 Modules</h2><div class="imageblock diagram" style=""><div class="content"><img src="images/architecture-limited-lean.png" alt="architecture limited lean" width="500"></div></div></section><section id="_architecture_2"><h2>Architecture</h2><h3>Summary</h3>
+<div class="ulist"><ul><li><p>clear separation of concerns</p></li><li><p>API for developers</p></li><li><p>API for tools</p></li></ul></div>
+<p class="fragment" data-fragment-index="0">
+That's all very nice but how is it<br>
+<i>Next Generation Testing</i>?
+</p>
+
+<p class="fragment" data-fragment-index="1">
+<strong>Because it opens up the platform!</strong>
+</p></section><section id="_moar_engines"><h2>Moar Engines!</h2><div class="ulist"><ul><li><p>want to run JUnit 4 tests?<br>
+⇝ create an engine for it</p></li><li><p>want TestNG to have support like JUnit?<br>
+⇝ create an engine for it</p></li><li><p>want to write tests in natural language?<br>
+⇝ create an engine for it</p></li></ul></div></section><section id="_moar_engines_2"><h2>Moar Engines!</h2><div class="imageblock diagram" style=""><div class="content"><img src="images/architecture-lean.png" alt="architecture lean" width="500"></div></div></section><section id="_open_platform"><h2>Open Platform</h2><div class="paragraph"><p>Once JUnit 5 adoption sets in:</p></div>
+<div class="ulist"><ul><li><p>tools are decoupled from implementation details</p></li><li><p>tools can support all frameworks (almost) equally well</p></li><li><p>new frameworks start with full tool support</p></li><li><p>developers can try out new things</p></li></ul></div>
+<div class="paragraph"><p>A new generation of test frameworks might arise!</p></div></section><section id="_open_platform_2"><h2>Open Platform</h2><div class="paragraph"><p>JUnit&#8217;s success as a platform<br>
+becomes <strong>available to everybody</strong>.</p></div>
+<div class="paragraph"><p>This heralds the<br>
+<strong>next generation of testing on the JVM</strong>!</p></div></section><section id="_architecture_3"><h2>Architecture</h2><h3>Summary</h3>
+<div class="ulist"><ul><li><p>clear separation of concerns:<br>
+APIs for developers, tools,<br>
+and new frameworks</p></li><li><p>opens up the platform</p></li><li><p>tool support for everybody!</p></li></ul></div>
+<div class="paragraph"><p>(There&#8217;s <a href="http://blog.codefx.org/design/architecture/junit-5-architecture/">even more</a> to the story.)</p></div></section></section>
+<section><section id="_tools_setup" data-state="no-title"><h2>Tools &amp; Setup</h2><table class="toc">
+	<tr><td>Basics</td></tr>
+	<tr><td>Dynamic Tests</td></tr>
+	<tr><td>Extensions</td></tr>
+	<tr><td>Architecture</td></tr>
+	<tr class="toc-current"><td>Tools &amp; Setup</td></tr>
+</table></section><section id="_writing_tests"><h2>Writing Tests</h2><h3>As Easy As Pie!</h3>
+<div class="paragraph"><p>Add this:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="shell language-shell">org.junit.jupiter
+junit-jupiter-api
+5.0.0-M3</code></pre></div></div>
+<div class="paragraph"><p>Have fun!</p></div></section><section id="_running_tests"><h2>Running Tests</h2><h3>Not much native support, yet</h3>
+<div class="ulist"><ul><li><p><strong>Maven</strong>: work started <a href="https://issues.apache.org/jira/browse/SUREFIRE-1206">#1206</a></p></li><li><p><strong>Gradle</strong>: work started <a href="https://github.com/gradle/gradle/issues/1037">#1037</a></p></li><li><p><strong>IntelliJ</strong>: EA support since <a href="https://blog.jetbrains.com/idea/2016/08/using-junit-5-in-intellij-idea/">2016.2</a>, <a href="https://blog.jetbrains.com/idea/2016/12/intellij-idea-2016-3-1-rc-updates-junit-5-support-to-m3/">2016.3.1</a> required for JUnit 5 M3</p></li><li><p><strong>Eclipse</strong>: EA support since 4.7 M4<br>
+with some extra work <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=488566">#488566</a></p></li><li><p><strong>NetBeans</strong>: not even an issue</p></li></ul></div></section><section id="_running_tests_2"><h2>Running Tests</h2><h3>As Part Of JUnit 4</h3>
+<div class="ulist"><ul><li><p>individual classes:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@RunWith(JUnitPlatform.class)
+public class JUnit5Test { ... }</code></pre></div></div></li><li><p>all classes:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@RunWith(JUnitPlatform.class)
+@SelectPackages({ "my.test.package" })
+public class JUnit5TestSuite { }</code></pre></div></div></li></ul></div></section><section id="_running_tests_3"><h2>Running Tests</h2><h3>With Build Tools</h3>
+<div class="paragraph"><p>JUnit 5 team provides rudimentary<br>
+Gradle plugin and Maven Surefire provider<br>
+(see <a href="http://junit.org/junit5/docs/snapshot/user-guide/#build-support">user guide</a> for details)</p></div></section><section id="_running_tests_4"><h2>Running Tests</h2><h3>From Console</h3>
+<div class="paragraph"><p>There is a <a href="http://junit.org/junit5/docs/snapshot/user-guide/#running-tests-console-launcher">console launcher</a>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash"># run all tests
+junit-platform-console \
+	-cp ${path_to_compiled_test_classes} \
+	--scan-class-path
+# run a specific test
+junit-platform-console \
+	-cp ${path_to_compiled_test_classes} \
+	--select-class ${fully_qualified_test_class_name}</code></pre></div></div></section><section id="_tools_setup_2"><h2>Tools &amp; Setup</h2><h3>Summary</h3>
+<div class="ulist"><ul><li><p>you can start writing tests right away</p></li><li><p>only IntelliJ has native support</p></li><li><p>running with JUnit 4 is a good compromise</p></li></ul></div>
+<div class="paragraph"><p>(Read about <a href="http://blog.codefx.org/libraries/junit-5-setup/">the setup details</a>.)</p></div></section></section>
+<section><section id="_next_generation_testing_on_the_jvm"><h2>Next Generation Testing On The JVM</h2><div class="ulist"><ul><li><p>new API is an incremental improvement<br>
+full of thoughtful details</p></li><li><p>dynamic tests are very useful</p></li><li><p>extension model looks very promising</p></li><li><p>architecture opens up the platform</p></li><li><p>tool support is not there yet</p></li></ul></div><div class="paragraph"><p>(Read <a href="http://blog.codefx.org/tag/junit-5/">more about JUnit 5</a>.)</p></div></section><section id="_questions" data-background="images/question-mark.jpg"><h2>Questions?</h2><div class="paragraph"><p><h3>Find Me</h3></p></div>
+<div class="paragraph"><p><a href="http://codefx.org">codefx.org</a> / <a href="https://twitter.com/nipafx">@nipafx</a> / <a href="https://google.com/+NicolaiParlog">+NicolaiParlog</a></p></div>
+<div class="paragraph"><p><h3>Me</h3></p></div>
+<div class="paragraph"><p>you can <a href="http://blog.codefx.org/hire-nicolai-parlog/">hire me</a></p></div>
+<div class="paragraph"><p>since 2016: editor of <a href="https://sitepoint.com/java">sitepoint.com/java</a></p></div>
+<div class="paragraph"><p>2014-2016: Java developer at <a href="http://www.disy.net/en/welcome.html">Disy</a></p></div>
+<div class="paragraph"><p>2011-2014: Java developer at <a href="http://www.isi.fraunhofer.de/isi-en/index.php">Fraunhofer ISI</a></p></div>
+<div class="paragraph"><p>until 2010: CS and Math at <a href="http://www.tu-dortmund.de">TU Dortmund</a></p></div></section></section>
+<section id="_image_credits"><h2>Image Credits</h2><div class="ulist"><ul><li><p>bubbles:
+<a href="https://www.flickr.com/photos/elwillo/">Keith Williamson</a>
+(<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a>)</p></li><li><p>architecture diagrams:<br>
+<a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a>
+(<a href="https://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC 4.0</a>)</p></li><li><p>question-mark:
+<a href="http://milosevicmilos.com/">Milos Milosevic</a>
+(<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a>)</p></li></ul></div></section></div></div><script src="reveal.js/lib/js/head.min.js"></script><script src="reveal.js/js/reveal.js"></script><script type="text/javascript">// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+Reveal.initialize({
+  // Display controls in the bottom right corner
+  controls: false,
+  // Display a presentation progress bar
+  progress: false,
+  // Display the page number of the current slide
+  slideNumber: false,
+  // Push each slide change to the browser history
+  history: true,
+  // Enable keyboard shortcuts for navigation
+  keyboard: true,
+  // Enable the slide overview mode
+  overview: true,
+  // Vertical centering of slides
+  center: true,
+  // Enables touch navigation on devices with touch input
+  touch: true,
+  // Loop the presentation
+  loop: false,
+  // Change the presentation direction to be RTL
+  rtl: false,
+  // Turns fragments on and off globally
+  fragments: true,
+  // Flags if the presentation is running in an embedded mode,
+  // i.e. contained within a limited portion of the screen
+  embedded: false,
+  // Number of milliseconds between automatically proceeding to the
+  // next slide, disabled when set to 0, this value can be overwritten
+  // by using a data-autoslide attribute on your slides
+  autoSlide: 0,
+  // Stop auto-sliding after user input
+  autoSlideStoppable: true,
+  // Enable slide navigation via mouse wheel
+  mouseWheel: false,
+  // Hides the address bar on mobile devices
+  hideAddressBar: true,
+  // Opens links in an iframe preview overlay
+  previewLinks: false,
+  // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
+  // NOTE setting the theme in the config no longer works in reveal.js 3.x
+  //theme: Reveal.getQueryHash().theme || 'nipa-night',
+  // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+  transition: Reveal.getQueryHash().transition || 'slide',
+  // Transition speed (e.g., default, fast, slow)
+  transitionSpeed: 'default',
+  // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+  backgroundTransition: 'fade',
+  // Number of slides away from the current that are visible
+  viewDistance: 3,
+  // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+  parallaxBackgroundImage: 'images/soap-bubbles.jpg',
+  // Parallax background size in CSS syntax (e.g., "2100px 900px")
+  parallaxBackgroundSize: '4096px 2731px',
+
+  // The "normal" size of the presentation, aspect ratio will be preserved
+  // when the presentation is scaled to fit different resolutions. Can be
+  // specified using percentage units.
+  width: 960,
+  height: 700,
+
+  // Factor of the display size that should remain empty around the content
+  margin: 0.1,
+
+  // Bounds for smallest/largest possible scale to apply to content
+  minScale: 0.2,
+  maxScale: 1.5,
+
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+      { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      
+      { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+      { src: 'reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+  ]
+});</script></body></html>

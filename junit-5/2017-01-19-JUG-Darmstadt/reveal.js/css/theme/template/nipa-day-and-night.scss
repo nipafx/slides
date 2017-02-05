@@ -1,0 +1,265 @@
+// Include theme-specific fonts
+@import url(https://fonts.googleapis.com/css?family=Montserrat:700);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,400italic,700italic);
+
+// set fonts
+$mainFont: 'Open Sans', sans-serif;
+$mainFontSize: 35px;
+$headingFont: 'Montserrat', Impact, sans-serif;
+$headingLetterSpacing: -0.03em;
+$headingTextTransform: capitalize;
+
+$headingMargin: 0 0 20px 0;
+$blockMargin: 10px;
+
+// move the slides up because it looks a little better
+.reveal .slides {
+	bottom: 30px;
+}
+
+// add space above h3 (looks better if used within slide)
+.reveal h3 {
+	margin-top: 30px !important;
+}
+
+// create slide background as mixin
+@mixin raw-slide-background {
+	box-sizing: border-box;
+	border-radius: 10px;
+	background-color: $slideBackgroundColor;
+}
+@mixin slide-background {
+	padding: 10px;
+	@include raw-slide-background;
+}
+// create round-cornered, content-sized background with proper padding
+.reveal .slides > section,
+.reveal .slides > section > section {
+	@include slide-background;
+}
+// if the slide is "empty" remove the background
+.empty .reveal .slides section {
+	background-color: inherit;
+}
+
+// style title slide
+.title-slide {
+
+	@include raw-slide-background;
+
+	.event {
+		display: flex;
+		justify-content: space-between;
+		margin: 0px 30px;
+	}
+
+	.participant {
+		height: 80px;
+		width: 350px;
+		margin: 0px 30px;
+	}
+
+	.logo {
+		height: 60px;
+		margin: 0 10px 0 0;
+		padding: 5px;
+		float: left;
+	}
+
+	.name {
+
+		margin: 5px;
+
+		p {
+			padding: 0;
+			margin: 0;
+			font-family: $mainFont;
+			font-size: 25px;
+			font-weight: normal;
+			color: $mainColor;
+			text-align: left;
+
+			// there will usually be a lot of links, which should not be too striking
+			a {
+				color: $mainColor;
+				text-decoration: inherit;
+				font-weight: inherit;
+			}
+		}
+	}
+}
+.title-slide footer {
+	display: none;
+}
+
+
+// style table of contents
+.reveal .toc {
+	font-weight: bold;
+
+	.toc-current td {
+		color: $linkColor;
+		border-color: $mainColor;
+	}
+}
+
+.no-title h2 {
+	display: none;
+}
+
+
+// make blockquotes a little nicer
+.reveal .quoteblock {
+	width: 90%;
+	padding: 10px;
+	margin: 0 auto;
+	border-radius: 10px;
+	background-color: $quoteBackgroundColor;
+
+	blockquote::before {
+		content: "\201c";
+		float: left;
+		font-family: Montserrat;
+		font-size: 2.75em;
+		font-weight: bold;
+		line-height: 0.8em;
+		margin-left: -0.7em;
+		color: $quoteColor;
+	}
+
+	blockquote {
+		width: 75%;
+		background-color: inherit;
+		box-shadow: none;
+
+		p {
+			text-align: left;
+			color: $quoteColor;
+
+			em {
+				color: $quoteEmColor;
+				font-weight: bold;
+			}
+		}
+	}
+
+	.attribution {
+		color: $quoteColor;
+	}
+}
+
+// remove all shenanigans from image blocks
+.reveal section img :not(.diagram) {
+	background: none !important;
+	border: none !important;
+	box-shadow: none !important;
+}
+
+// center code blocks (while keeping lines left aligned)
+.reveal .listingblock .content {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+
+	pre {
+		width: inherit;
+
+		code {
+			padding: 10px;
+			max-height: none;
+			font-size: 180%;
+			line-height: 120%;
+		}
+	}
+}
+
+// implement "loweralpha" tag
+.reveal .loweralpha {
+	list-style-type: lower-alpha;
+}
+
+.reveal .conversation {
+
+	margin: 0 auto;
+	width: 80%;
+	text-align: inherit;
+
+	p {
+		margin: 5px 0px;
+	}
+
+	.left {
+		text-align: left;
+	}
+
+	.right {
+		text-align: right;
+	}
+
+}
+
+// allow "fragment dim",
+// which dims a fragment on the specified fragment index
+.fragment.dim:not(.visible) {
+	color: inherit;
+	visibility: inherit !important;
+	opacity: inherit !important;
+}
+.fragment.dim {
+	color: $dimColor;
+}
+
+// allow "fragment current-display",
+// which displays the fragment only on the specified fragment index
+.fragment.current-display.current-fragment {
+	display: inherit;
+}
+.fragment.current-display {
+	display: none;
+}
+
+// footer
+footer {
+
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	background-color: $slideBackgroundColor;
+	padding: 10px 30px 0 30px;
+
+	.participant {
+		width: 450px;
+		margin: 0px 30px;
+	}
+
+	.logo {
+		height: 25px;
+		padding: 2px;
+		margin: 0px 10px 0 0;
+		float: left;
+	}
+
+	.name {
+
+		margin: 5px;
+
+		p {
+			padding: 0;
+			margin: 0;
+			font-family: $mainFont;
+			font-size: 20px;
+			font-weight: normal;
+			color: $mainColor;
+			text-align: left;
+
+			// there will usually be a lot of links, which should not be too striking
+			a {
+				color: $mainColor;
+				text-decoration: inherit;
+				font-weight: inherit;
+			}
+		}
+	}
+}
