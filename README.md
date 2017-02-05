@@ -8,6 +8,7 @@ Thanks to GitHub Pages you can see them on [talks.codefx.org]](http://talks.code
 	* [repository structure](#repository-structure)
 * [editing](#editing)
 	[slides](#slides)
+	[themes](#themes)
 
 ## Setup
 
@@ -42,3 +43,8 @@ To generate the slide deck you'll need to [install Asciidoctor](http://asciidoct
 	asciidoctor -T _asciidoctor-reveal.js/templates/slim _template/presentation.adoc -o slides/_template/index.html
 
 If you want to automate that, you can install [guard](https://rubygems.org/gems/guard/versions/2.13.0) and run `guard start` in the same folder.
+
+### Themes
+
+Finally, to edit the theme do a [full setup for reveal.js](https://github.com/hakimel/reveal.js#full-setup) in `presentation/reveal.js`.
+Here, `grunt serve` will automatically pick up changes in `presentation/reveal.js/css/theme/source` and create the CSS files in the correct location.
