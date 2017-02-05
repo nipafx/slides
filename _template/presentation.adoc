@@ -1,0 +1,91 @@
+= Talk Template
+:backend: revealjs
+:revealjs_theme: nipa-night
+:revealjsdir: ../_reveal.js
+:revealjs_controls: false
+:revealjs_progress: false
+:revealjs_slideNumber: false
+:revealjs_history: true
+:revealjs_center: true
+:revealjs_transition: slide
+:revealjs_backgroundTransition: fade
+:revealjs_parallaxBackgroundImage: images/soap-bubbles.jpg
+:revealjs_parallaxBackgroundSize: 4096px 2731px
+
+[[TODO, check why imagedir does not work]]
+:imagedir: images
+
+++++
+<link rel="stylesheet" href="../_highlight.js/styles/monokai-sublime.css">
+<script src="../_highlight.js/highlight.pack.js"></script>
+<script>
+	hljs.initHighlightingOnLoad();
+	hljs.configure({tabReplace: '    '})
+</script>
+++++
+
+++++
+<h2>Next Generation Talking</h2>
+++++
+
+
+// ####### //
+// D E M O //
+// ####### //
+
+
+== Demo
+
+```java
+class JUnit5Test {
+
+	@Test
+	void someTest() {
+		assertTrue(true);
+	}
+
+}
+```
+
+
+// ######### //
+// O U T R O //
+// ######### //
+
+== About
+
+image::images/question-mark.jpg[background, size=cover]
+
+++++
+<div style="float: left;">
+	<img src="images/jmsia-cover.png" width="85%">
+</div>
+++++
+
+++++
+<h3>Find Me</h3>
+++++
+http://codefx.org[codefx.org] +
+https://sitepoint.com/java[sitepoint.com/java] +
+https://twitter.com/nipafx[@nipafx] /
+https://google.com/+NicolaiParlog[+NicolaiParlog]
+
+++++
+<h3>Want More?</h3>
+++++
+2-day course with 42talents +
+Zürich, 20.04. - 21.04.2017 +
+~> http://42talents.com/training/2017/04/20/Java-9/[register]
+
+or buy http://blog.codefx.org/java-module-system-in-action/[my book]
+~> http://blog.codefx.org/newsletter/[subscribe]
+
+
+== Image Credits
+
+* bubbles:
+https://www.flickr.com/photos/elwillo/[Keith Williamson]
+(https://creativecommons.org/licenses/by/2.0/[CC-BY 2.0])
+* question-mark:
+http://milosevicmilos.com/[Milos Milosevic]
+(https://creativecommons.org/licenses/by/2.0/[CC-BY 2.0])
