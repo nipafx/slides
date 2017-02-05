@@ -19,3 +19,14 @@ Some amalgam of
 
 * `_asciidoctor-reveal.js` (submodule ~> [CodeFX-org/asciidoctor-reveal.js; nipa-talks](https://github.com/CodeFX-org/asciidoctor-reveal.js/tree/nipa))
 * meta-information (LICENSE, README, ...)
+
+After checkout, the `gh-pages` branch should be added as a worktree to `master`:
+
+	git worktree add slides gh-pages
+
+#### Branch `gh-pages`
+
+* `_highlight.js` (downloaded from [highlightjs.org](https://highlightjs.org/download/))
+* `_reveal.js` (submodule ~>
+	[CodeFX-org/reveal.js; nipa-talks](https://github.com/CodeFX-org/reveal.js/tree/nipa-talks))
+* `_template` (a template for presentations)
