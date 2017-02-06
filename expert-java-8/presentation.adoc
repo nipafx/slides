@@ -34,9 +34,13 @@ include::../_shared/highlight.js.adoc[]
 include::../_shared/event-on-title-and-footer.adoc[]
 
 
-
+// ############### //
+// O P T I O N A L //
+// ############### //
 
 == Optional
+
+[[TODO, explore performance]]
 
 ++++
 <h3>Everybody's Favorite Bike Shed!</h3>
@@ -47,9 +51,8 @@ include::../_shared/event-on-title-and-footer.adoc[]
 </table>
 ++++
 
-[[TODO, explore performance]]
 
-== Usage Patterns
+== Optional
 
 ++++
 <table class="toc">
@@ -66,12 +69,14 @@ Some insights into the discussion...
 
 === Basic Rules
 
+[[TODO, silly hat background]]
+
 First some basic rules:
 
 * never, ever, ever just call `get` +
 without checking `isPresent` first
 * prefer functional style +
-(`map`, `flarMap`, `ifPresent`, `orElse`, ...)
+(`map`, `flatMap`, `ifPresent`, `orElse`, ...)
 * make everyone setting `Optional` to `null` +
 buy a round of drinks or wear a silly hat
 
@@ -140,6 +145,8 @@ memory consumption
 [[TODO, check names; make smaller]]
 (Stuart Marks, Brian Goetz,  Stephen Colebourne)
 
+*⇝ This should be your default choice!*
+
 === Use Everywhere!
 ==== Assumptions
 
@@ -198,11 +205,10 @@ http://blog.joda.org/2015/08/java-se-8-optional-pragmatic-approach.html[Pragmati
 http://blog.codefx.org/java/stephen-colebourne-optional-a-strict-approach/[Strict Approach]  (codefx.org)
 
 [[TODO, look up and add name to slide]]
-http://huguesjohnson.com/programming/java/java8optional.html
+http://huguesjohnson.com/programming/java/java8optional.html[TODO] (huguesjohnson.com)
 
-== Optional Is A Value-Based&nbsp;Class
+== Optional
 
-[[TODO, use non-breaking dash]]
 ++++
 <table class="toc">
 	<tr><td>Usage Patterns</td></tr>
@@ -212,7 +218,7 @@ http://huguesjohnson.com/programming/java/java8optional.html
 ++++
 
 `Optional` implements a new "pattern" +
-that requires us to be careful with what we do
+that requires us to be careful with what we do.
 
 === Value-Based Class?
 
@@ -253,26 +259,44 @@ From value types to value-based classes:
 
 * value types require wrappers/boxes +
 (just like primitives do today)
+* value-based classes might turn out +
+wrapping value types
 * as an optimization the JVM will +
 create and destroy them at will
 
 *⇝ Wrappers have identity _but_ it is unstable*
-
-Guess which classes will become wrappers?
 
 [NOTE.speaker]
 --
 * vbc will be optimized in Java 10!
 --
 
+=== Identity Crisis
+
+```java
+Map<User, LocalDateTime> userLogins;
+Map<LocalDateTime, String> messages;
+
+String lastLoginMessage(User user) {
+	LocalDateTime lastLogin =
+		userLogins.get(user); // <1>
+	String message = "Was " + lastLogin;
+	messages.put(lastLogin, message); // <2>
+	return message;
+}
+```
+<1> `get` might return an instance or a value
+<2> `put` might receive an instance or a value
+
+
 === Requirements For VBC
 
+declaration site::
 * final and immutable
-* factory methods instead of constructors +
-(and no guarantees regarding instances!)
 * `equals`, `hashCode`, `toString` +
-must only rely on instance state (not identity)
-* must be fully interchangeable when `equal`
+must _only_ rely on instance state
+* ...
+use site::
 * no use of `==`, identity hash code, +
 locking, serialization
 
@@ -302,9 +326,12 @@ With `Optional` and other value-based classes:
 * never rely on their identity
 * mainly no `==`, locking, serialization
 
-More details:
+*If this works out,* +
+*performance hit all but disappears!*
 
-http://blog.codefx.org/java/value-based-classes/[blog.codefx.org/java/value-based-classes/]
+==== Additional Sources
+
+http://blog.codefx.org/java/value-based-classes/[Value-Based Classes] (codefx.org)
 
 [NOTE.speaker]
 --
@@ -312,7 +339,7 @@ http://blog.codefx.org/java/value-based-classes/[blog.codefx.org/java/value-base
 --
 
 
-== Optional Is Not A Monad
+== Optional
 
 ++++
 <table class="toc">
@@ -323,7 +350,7 @@ http://blog.codefx.org/java/value-based-classes/[blog.codefx.org/java/value-base
 ++++
 
 `Optional` saves us from `null` +
-at the expense of breaking Monad Laws
+at the expense of breaking Monad Laws.
 
 (No math, I promise!)
 
@@ -377,13 +404,12 @@ stops the chain of executions
 
 === So What?
 
-* refactoring by merging functions +
-or breaking them apart +
-can lead to different execution paths
+* refactoring can change +
+which code gets executed
 * functions that can "recover" from `null` +
-will not get executed
-* particularly error-prone +
-when functions have side effects +
+might not get executed
+* particularly error-prone when +
+functions have side effects +
 (they generally should not but it happens)
 
 === Monad Reflection
@@ -393,6 +419,11 @@ when functions have side effects +
 * be aware that refactoring can cause problems +
 if `null` was special cased
 
+==== Additional Sources
+
+https://developer.atlassian.com/blog/2015/08/optional-broken/[More on Optional Being Broken] (atlassian.com)
+
+https://www.sitepoint.com/how-optional-breaks-the-monad-laws-and-why-it-matters/[... and Why It Matters] (sitepoint.com)
 
 == Stream
 
