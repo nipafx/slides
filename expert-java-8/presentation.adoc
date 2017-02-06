@@ -34,7 +34,16 @@ include::../_shared/highlight.js.adoc[]
 include::../_shared/event-on-title-and-footer.adoc[]
 
 
+
+
 == Optional
+
+++++
+<table class="toc">
+	<tr><td>Value-Based Class</td></tr>
+	<tr><td>Not a Monad</td></tr>
+</table>
+++++
 
 * intention
 ** http://blog.codefx.org/java/dev/design-optional/
@@ -48,6 +57,12 @@ include::../_shared/event-on-title-and-footer.adoc[]
 == Optional Is A Value-Based&nbsp;Class
 
 [[TODO, use non-breaking dash]]
+++++
+<table class="toc">
+	<tr class="toc-current"><td>Value-Based Class</td></tr>
+	<tr><td>Not a Monad</td></tr>
+</table>
+++++
 
 `Optional` implements a new "pattern" +
 that requires us to be careful with what we do
