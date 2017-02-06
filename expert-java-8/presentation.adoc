@@ -34,6 +34,146 @@ include::../_shared/highlight.js.adoc[]
 include::../_shared/event-on-title-and-footer.adoc[]
 
 
+== Optional
+
+* intention
+** http://blog.codefx.org/java/dev/design-optional/
+* pragmatic vs strict approach
+** http://blog.joda.org/2015/08/java-se-8-optional-pragmatic-approach.html
+** http://blog.codefx.org/java/stream-performance/
+* performance
+* `Optional` is not a Monad (and why it matters)
+* is a value-based class
+** http://blog.codefx.org/java/value-based-classes/
+
+
+== Stream
+
+* sources
+** https://www.youtube.com/watch?v=sbcXQJA0EQc
+** https://www.youtube.com/watch?v=oWlWEKNM5Aw
+** http://blog.codefx.org/java/rebutting-5-common-stream-tropes/
+** http://blog.codefx.org/java/stream-performance/
+** http://blog.codefx.org/java/stream-findfirst-findany-reduce/
+
+* content
+** overarching goal: more readable code by using simple building blocks (fuck succinctness)
+** utility methods to start streams
+** method handles > lambdas & short lambdas > long lambdas
+** abstraction
+*** higher level than when writing loops
+      "see first part of https://www.youtube.com/watch?v=iDplU7mOocU"
+** error handling
+** look at reduce more often
+** findFirst, findAny vs findOnly
+** utility methods for complicated collectors
+** performance model
+    "second part of https://www.youtube.com/watch?v=iDplU7mOocU"
+*** overheads
+*** parallelization
+** missing features
+    https://medium.com/@johnmcclean/java-8-streams-10-missing-features-ec82ee90b6c0#.5fffwftma
+* returning Streams
+* performance
+
+
+== Default Methods
+
+* anything interesting in here?
+** http://blog.codefx.org/java/everything-about-default-methods/
+
+=== Interface Evolution
+
+* http://blog.codefx.org/design/patterns/interface-evolution-with-default-methods-methods/
+
+=== Isolate From Library
+
+Use FP library of your choice to get functional interfaces that can throw exceptions.
+Maybe wrap'em:
+
+```java
+public interface CoolLibFunction<T, S> {
+
+	S call(T arg);
+
+}
+
+public interface MyFunction<T, S> extends CoolLibFunction<T, S> {
+
+	@Deprecated
+	default S call(T arg) {
+		return execute(args);
+	}
+
+	S execute(T arg);
+
+}
+```
+
+This way it is very unlikely to accidentally rely on `CoolLibFunction::call`
+ and it can be exchanged for another lib without breaking your code.
+
+
+== Lambda APIs
+
+* Instances of non-capt. Lambdas
+** http://blog.codefx.org/java/instances-non-capturing-lambdas/
+
+Instead of relying on setup and teardown to be executed by calling the right methods at the right time, write a method that does both and executes some code in between.
+
+E.g. instead of:
+
+```java
+Weld weld = new Weld();
+WeldContainer container = weld.initialize();
+TextApplication textApplication = container.instance().select(TextApplication.class).get();
+textApplication.run();
+weld.shutdown();
+```
+
+Do this:
+
+```java
+private static void main(Sring[] args) {
+	withInitializedWeld(container -> {
+		TextApplication textApplication = container.instance().select(TextApplication.class).get();
+		textApplication.run();
+	})
+}
+
+private static void withInitializedWeld(Consumer<WeldContainer> with) {
+	Weld weld = new Weld();
+	WeldContainer container = weld.initialize();
+	with.accept(container);
+	weld.shutdown();
+}
+```
+
+Other ideas:
+
+* https://arnaudroger.github.io/blog/2016/09/19/consumer-in-place-of-returning-list.html
+* query-then-act idioms can be implemented in a single method if the "act" part is a lambda, compare `Map::computeIfAbsent`
+* functional implementations of interfaces
+** http://blog.codefx.org/techniques/getting-rid-of-anonymous-classes/
+
+== Patterns
+
+* http://www.javamagazine.mozaicreader.com/NovDec2016#&pageSet=55&page=0&contentItem=0
+* my post about decorator
+
+
+== Ideas
+
+* Concurrency changes: http://docs.oracle.com/javase/8/docs/technotes/guides/concurrency/changes8.html
+* Trisha Gee refactoring to Java 8 https://www.youtube.com/watch?v=NcetKbGayZY
+* documentation with new tags
+** http://blog.codefx.org/java/new-javadoc-tags/
+
+
+
+
+
+
 
 // ######### //
 // O U T R O //
