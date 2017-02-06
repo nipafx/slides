@@ -71,10 +71,14 @@ buy a round of drinks or wear a silly hat</p></li></ul></div></section><section 
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">if (mango != null)
 	System.out.println(mango);</code></pre></div></div></section><section id="_different_opinions"><h2>Different Opinions</h2><div class="ulist"><ul><li><p>don&#8217;t use it unless<br>
 absolutely necessary</p></li><li><p>use it as return value</p></li><li><p>use it everywhere</p></li></ul></div></section><section id="_don_t_use_it"><h2>Don&#8217;t Use It!</h2><h3>Assumptions</h3><div class="ulist"><ul><li><p>API is verbose and invites misuse</p></li><li><p>makes stack traces harder to debug</p></li><li><p>not serializable</p></li><li><p>unsupported by various frameworks</p></li><li><p>dereferencing reduces performance</p></li><li><p>instances increase memory consumption</p></li><li><p>no benefits over explicit <code>null</code> handling</p></li></ul></div></section><section id="_don_t_use_it_2"><h2>Don&#8217;t Use It!</h2><h3>Conclusions</h3><div class="ulist"><ul><li><p><code>Optional</code> sucks</p></li><li><p>only use it if existing API returns it</p></li><li><p>unpack quickly!</p></li></ul></div>
-<div class="paragraph small-note"><p>(Mark Struberg, Stephen Connolly, Hugues Johnson)</p></div></section><section id="_return_value_only"><h2>Return Value Only</h2><h3>Assumptions</h3><div class="ulist"><ul><li><p><a href="http://blog.codefx.org/java/dev/design-optional">was designed</a> as a return value</p></li><li><p>not serializable</p></li><li><p>long-lived instances increase<br>
-memory consumption</p></li><li><p>boxing method arguments is verbose</p></li></ul></div></section><section id="_return_value_only_2"><h2>Return Value Only</h2><h3>Conclusions</h3><div class="ulist"><ul><li><p>use freely as return value</p></li><li><p>no instance variables</p></li><li><p>no method parameters</p></li><li><p>instances should generally be short-lived</p></li></ul></div>
-<div class="paragraph small-note"><p>(Stuart Marks, Brian Goetz,  Stephen Colebourne)</p></div>
-<div class="paragraph"><p><strong>⇝ This should be your default choice!</strong></p></div></section><section id="_use_everywhere"><h2>Use Everywhere!</h2><h3>Assumptions</h3><div class="ulist"><ul><li><p>using <code>Optional</code> instead of <code>null</code><br>
+<div class="paragraph small-note"><p>(Mark Struberg, Stephen Connolly, Hugues Johnson)</p></div></section><section id="_limited_return_value"><h2>Limited Return Value</h2><h3>Assumptions</h3><div class="ulist"><ul><li><p><a href="http://blog.codefx.org/java/dev/design-optional">was designed</a> as a return value</p></li><li><p>not serializable</p></li><li><p>long-lived instances increase<br>
+memory consumption</p></li><li><p>boxing method arguments is verbose</p></li></ul></div></section><section id="_limited_return_value_2"><h2>Limited Return Value</h2><h3>Conclusions</h3><div class="ulist"><ul><li><p>use as return value if<br>
+returning null is error-prone</p></li><li><p>no instance variables</p></li><li><p>no method parameters</p></li><li><p>instances should generally be short-lived</p></li></ul></div>
+<div class="paragraph small-note"><p>(Stuart Marks, Brian Goetz)</p></div>
+<div class="paragraph"><p><strong>⇝ This should be your default choice!</strong></p></div></section><section id="_return_value"><h2>Return Value</h2><h3>Assumptions</h3><div class="ulist"><ul><li><p>returning <code>null</code> is always error-prone</p></li><li><p>rest as before</p></li></ul></div>
+<h3>Conclusions</h3><div class="ulist"><ul><li><p>use as return value whenever<br>
+value can be absent</p></li><li><p>rest as before</p></li></ul></div>
+<div class="paragraph small-note"><p>(Stephen Colebourne)</p></div></section><section id="_use_everywhere"><h2>Use Everywhere!</h2><h3>Assumptions</h3><div class="ulist"><ul><li><p>using <code>Optional</code> instead of <code>null</code><br>
 lifts <code>null</code>-handling into the type system</p></li><li><p>makes any remaining <code>null</code><br>
 an implementation error<br>
 (great for debugging)</p></li><li><p>performance arguments can be discarded<br>
@@ -91,7 +95,8 @@ String bar(String drink) { /* ... */ }
 String bar() { /* ... */ }</code></pre></div></div></section><section id="_reflection_on_usage"><h2>Reflection on Usage</h2><div class="paragraph"><p>Whatever you decide:</p></div>
 <div class="ulist"><ul><li><p>pick my recommendation! :)</p></li><li><p>make it a team decision</p></li><li><p>put it into your code style</p></li><li><p>learn over time</p></li></ul></div>
 <div class="paragraph"><p>Relaxing rules is easier<br>
-than making them stricter!</p></div></section><section id="_additional_sources"><h2>Additional Sources</h2><div class="paragraph"><p><a href="http://huguesjohnson.com/programming/java/java8optional.html">Java 8 Optional: What&#8217;s the Point?</a> (huguesjohnson.com)</p></div>
+than making them stricter!</p></div></section><section id="_additional_sources"><h2>Additional Sources</h2><div class="paragraph"><p><a href="https://www.youtube.com/watch?v=Ej0sss6cq14">The Mother of All Bikesheds</a> (Stuart Marks)</p></div>
+<div class="paragraph"><p><a href="http://huguesjohnson.com/programming/java/java8optional.html">What&#8217;s the Point?</a> (huguesjohnson.com)</p></div>
 <div class="paragraph"><p><a href="http://blog.codefx.org/java/dev/design-optional">Design Of Optional</a> (codefx.org)</p></div>
 <div class="paragraph"><p><a href="http://blog.joda.org/2015/08/java-se-8-optional-pragmatic-approach.html">Pragmatic Approach</a>  (joda.org)</p></div>
 <div class="paragraph"><p><a href="http://blog.codefx.org/java/stephen-colebourne-optional-a-strict-approach/">Strict Approach</a>  (codefx.org)</p></div></section></section>
@@ -131,7 +136,7 @@ locking, serialization</p></li></ul></div></dd></dl></div>
 <div class="paragraph"><p>(None of this is checked by the JVM.)</p></div></section><section id="_vbc_in_java_8"><h2>VBC in Java 8</h2><div class="dlist"><dl><dt class="hdlist1"><code>java.util</code></dt><dd><p><code>Optional</code>[<code>Double</code>, <code>Long</code>, <code>Int</code>]</p></dd><dt class="hdlist1"><code>java.time</code></dt><dd><p><code>Duration</code>, <code>Instant</code>, <code>Period</code>,<br>
 <code>Year</code>, <code>YearMonth</code>, <code>MonthDay</code>,<br>
 <code>Local&#8230;&#8203;</code>, <code>Offset&#8230;&#8203;</code>, <code>Zoned&#8230;&#8203;</code></p></dd><dt class="hdlist1"><code>java.time.chrono</code></dt><dd><p><code>HijrahDate</code>, <code>JapaneseDate</code>, <code>MinguaDate</code>, <code>ThaiBuddhistDate</code></p></dd></dl></div>
-<aside class="notes"><div class="ulist"><ul><li><p>Optional uses reference <code>equals</code> in its <code>equals</code></p></li><li><p>date classes are serializable</p></li></ul></div></aside></section><section id="_vbc_reflection"><h2>VBC Reflection</h2><div class="paragraph"><p>With <code>Optional</code> and other value-based classes:</p></div>
+<aside class="notes"><div class="ulist"><ul><li><p>Optional uses reference <code>equals</code> in its <code>equals</code></p></li><li><p>date classes are serializable</p></li></ul></div></aside></section><section id="_reflection_on_vbc"><h2>Reflection on VBC</h2><div class="paragraph"><p>With <code>Optional</code> and other value-based classes:</p></div>
 <div class="ulist"><ul><li><p>never rely on their identity</p></li><li><p>mainly no <code>==</code>, locking, serialization</p></li></ul></div>
 <div class="paragraph"><p><strong>If this works out,</strong><br>
 <strong>performance hit all but disappears!</strong></p></div>
@@ -166,7 +171,7 @@ stops the chain of executions</p></li></ul></div></section><section id="_so_what
 which code gets executed</p></li><li><p>functions that can "recover" from <code>null</code><br>
 might not get executed</p></li><li><p>particularly error-prone when<br>
 functions have side effects<br>
-(they generally should not but it happens)</p></li></ul></div></section><section id="_monad_reflection"><h2>Monad Reflection</h2><div class="ulist"><ul><li><p>be aware that <code>Optional</code> is no well-behaved monad</p></li><li><p>see it as a way to avoid handling <code>null</code></p></li><li><p>be aware that refactoring can cause problems<br>
+(they generally should not but it happens)</p></li></ul></div></section><section id="_reflection_on_monads"><h2>Reflection on Monads</h2><div class="ulist"><ul><li><p>be aware that <code>Optional</code> is no well-behaved monad</p></li><li><p>see it as a way to avoid handling <code>null</code></p></li><li><p>be aware that refactoring can cause problems<br>
 if <code>null</code> was special cased</p></li></ul></div>
 <h3>Additional Sources</h3><div class="paragraph"><p><a href="https://developer.atlassian.com/blog/2015/08/optional-broken/">More on Optional Being Broken</a> (atlassian.com)</p></div>
 <div class="paragraph"><p><a href="https://www.sitepoint.com/how-optional-breaks-the-monad-laws-and-why-it-matters/">&#8230;&#8203; and Why It Matters</a> (sitepoint.com)</p></div></section></section>
