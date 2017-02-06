@@ -15,7 +15,6 @@
       "see first part of https://www.youtube.com/watch?v=iDplU7mOocU"
 ** error handling
 ** look at reduce more often
-** findFirst, findAny vs findOnly
 ** utility methods for complicated collectors
 ** performance model
     "second part of https://www.youtube.com/watch?v=iDplU7mOocU"
@@ -26,3 +25,99 @@
 * returning Streams
 * performance
 ////
+
+== Streams
+
+== Streams
+
+// toc
+
+Be careful how you find!
+
+=== Finding First or Any
+
+`Stream::findFirst` and `findAny`:
+
+* return an arbitrary element from the Stream
+* if stream has encounter order, +
+`findFirst` returns first element
+
+Often used after a filter.
+
+=== Find Example
+
+```java
+Optional<User> findUser(String id) {
+	return users.stream()
+		.filter(user -> user.getId().equals(id))
+		.findFirst();
+}
+```
+
+Same as the loop:
+
+```java
+Optional<User> findUser(String id) {
+	for (User user : users)
+		if (user.getId().equals(id))
+			return Optional.of(user);
+	return Optional.empty();
+}
+```
+
+=== Small Observation
+
+I often saw the following:
+
+* code's correctness depends on only +
+one element passing the filter
+* *but* there are no additional checks
+
+*⇝ The easy solution might be the wrong one!*
+
+[role="small-note"]
+(All of this applies to the loop as well.)
+
+=== Finding Only
+
+Make sure there is only one element:
+
+```java
+Optional<User> findUser(String id) {
+	return users.stream()
+		.filter(user -> user.getId().equals(id))
+		.reduce(toOnlyElement());
+}
+
+static BinaryOperator toOnlyElement() {
+	return (element, otherElement) -> {
+		throw new IllegalArgumentException();
+	};
+}
+```
+
+Instead of `reduce`, `collect` could be used.
+
+=== Properties of Finding Only
+
+Upsides:
+
+* guarantees correctness by failing fast
+* expresses intent
+
+Downsides:
+
+* materializes entire stream
+
+=== Reflection On Finding
+
+If correctness depends on only one element +
+surviving an ad-hoc filter:
+
+* `findFirst`, `findAny` do not suffice
+* use a reducer or collector to assert uniqueness
+* comes with a performance penalty
+
+==== Additional Sources
+
+http://blog.codefx.org/java/stream-findfirst-findany-reduce/[Beware Of findFirst() And findAny()]
