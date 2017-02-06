@@ -1,0 +1,43 @@
+////
+== Lambda APIs
+
+* Instances of non-capt. Lambdas
+** http://blog.codefx.org/java/instances-non-capturing-lambdas/
+
+Instead of relying on setup and teardown to be executed by calling the right methods at the right time, write a method that does both and executes some code in between.
+
+E.g. instead of:
+
+```java
+Weld weld = new Weld();
+WeldContainer container = weld.initialize();
+TextApplication textApplication = container.instance().select(TextApplication.class).get();
+textApplication.run();
+weld.shutdown();
+```
+
+Do this:
+
+```java
+private static void main(Sring[] args) {
+	withInitializedWeld(container -> {
+		TextApplication textApplication = container.instance().select(TextApplication.class).get();
+		textApplication.run();
+	})
+}
+
+private static void withInitializedWeld(Consumer<WeldContainer> with) {
+	Weld weld = new Weld();
+	WeldContainer container = weld.initialize();
+	with.accept(container);
+	weld.shutdown();
+}
+```
+
+Other ideas:
+
+* https://arnaudroger.github.io/blog/2016/09/19/consumer-in-place-of-returning-list.html
+* query-then-act idioms can be implemented in a single method if the "act" part is a lambda, compare `Map::computeIfAbsent`
+* functional implementations of interfaces
+** http://blog.codefx.org/techniques/getting-rid-of-anonymous-classes/
+////

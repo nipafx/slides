@@ -1,0 +1,37 @@
+////
+== Default Methods
+
+* anything interesting in here?
+** http://blog.codefx.org/java/everything-about-default-methods/
+
+=== Interface Evolution
+
+* http://blog.codefx.org/design/patterns/interface-evolution-with-default-methods-methods/
+
+=== Isolate From Library
+
+Use FP library of your choice to get functional interfaces that can throw exceptions.
+Maybe wrap'em:
+
+```java
+public interface CoolLibFunction<T, S> {
+
+	S call(T arg);
+
+}
+
+public interface MyFunction<T, S> extends CoolLibFunction<T, S> {
+
+	@Deprecated
+	default S call(T arg) {
+		return execute(args);
+	}
+
+	S execute(T arg);
+
+}
+```
+
+This way it is very unlikely to accidentally rely on `CoolLibFunction::call`
+ and it can be exchanged for another lib without breaking your code.
+////
