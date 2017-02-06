@@ -27,8 +27,6 @@ Some insights into the discussion...
 
 === Basic Rules
 
-[[TODO, silly hat background]]
-
 First some basic rules:
 
 * never, ever, ever just call `get` +
@@ -65,9 +63,9 @@ absolutely necessary
 ==== Assumptions
 
 * API is verbose and invites misuse
+* makes stack traces harder to debug
 * not serializable
-* unsupported by various frameworks +
-(JSON, ORM)
+* unsupported by various frameworks
 * dereferencing reduces performance
 * instances increase memory consumption
 * no benefits over explicit `null` handling
@@ -79,8 +77,8 @@ absolutely necessary
 * only use it if existing API returns it
 * unpack quickly!
 
-[[TODO, check names and arguments; make smaller]]
-(Mark Struberg, Stephen Conolly)
+[role=small-note]
+(Mark Struberg, Stephen Connolly, Hugues Johnson)
 
 
 === Return Value Only
@@ -100,7 +98,7 @@ memory consumption
 * no method parameters
 * instances should generally be short-lived
 
-[[TODO, check names; make smaller]]
+[role=small-note]
 (Stuart Marks, Brian Goetz,  Stephen Colebourne)
 
 *⇝ This should be your default choice!*
@@ -125,7 +123,7 @@ an implementation error +
 * consider providing overloads +
 for optional method parameters
 
-[[TODO, make smaller]]
+[role=small-note]
 (Mario Fusco, me)
 
 === Use Everywhere!
@@ -156,14 +154,14 @@ than making them stricter!
 
 === Additional Sources
 
+http://huguesjohnson.com/programming/java/java8optional.html[Java 8 Optional: What's the Point?] (huguesjohnson.com)
+
 http://blog.codefx.org/java/dev/design-optional[Design Of Optional] (codefx.org)
 
 http://blog.joda.org/2015/08/java-se-8-optional-pragmatic-approach.html[Pragmatic Approach]  (joda.org)
 
 http://blog.codefx.org/java/stephen-colebourne-optional-a-strict-approach/[Strict Approach]  (codefx.org)
 
-[[TODO, look up and add name to slide]]
-http://huguesjohnson.com/programming/java/java8optional.html[TODO] (huguesjohnson.com)
 
 == Optional
 
