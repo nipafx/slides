@@ -39,26 +39,173 @@ include::../_shared/event-on-title-and-footer.adoc[]
 == Optional
 
 ++++
+<h3>Everybody's Favorite Bike Shed!</h3>
 <table class="toc">
+	<tr><td>Usage Patterns</td></tr>
 	<tr><td>Value-Based Class</td></tr>
 	<tr><td>Not a Monad</td></tr>
 </table>
 ++++
 
-* intention
-** http://blog.codefx.org/java/dev/design-optional/
-* pragmatic vs strict approach
-** http://blog.joda.org/2015/08/java-se-8-optional-pragmatic-approach.html
-** http://blog.codefx.org/java/stream-performance/
-* performance
-* `Optional` is not a Monad (and why it matters)
+[[TODO, explore performance]]
 
+== Usage Patterns
+
+++++
+<table class="toc">
+	<tr class="toc-current"><td>Usage Patterns</td></tr>
+	<tr><td>Value-Based Class</td></tr>
+	<tr><td>Not a Monad</td></tr>
+</table>
+++++
+
+The Java community strongly disagrees +
+on how to best use `Optional`.
+
+Some insights into the discussion...
+
+=== Basic Rules
+
+First some basic rules:
+
+* never, ever, ever just call `get` +
+without checking `isPresent` first
+* prefer functional style +
+(`map`, `flarMap`, `ifPresent`, `orElse`, ...)
+* make everyone setting `Optional` to `null` +
+buy a round of drinks or wear a silly hat
+
+=== Basic Rules
+
+Nobody (?) wants to see ...
+
+```java
+Optional.ofNullable(mango)
+	.ifPresent(System.out::println);
+```
+
+\... instead of ...
+
+```java
+if (mango != null)
+	System.out.println(mango);
+```
+
+=== Different Opinions
+
+* don't use it unless +
+absolutely necessary
+* use it as return value
+* use it everywhere
+
+=== Don't Use It!
+==== Assumptions
+
+* API is verbose and invites misuse
+* not serializable
+* unsupported by various frameworks +
+(JSON, ORM)
+* dereferencing reduces performance
+* instances increase memory consumption
+* no benefits over explicit `null` handling
+
+=== Don't Use It!
+==== Conclusions
+
+* `Optional` sucks
+* only use it if existing API returns it
+* unpack quickly!
+
+[[TODO, check names and arguments; make smaller]]
+(Mark Struberg, Stephen Conolly)
+
+
+=== Return Value Only
+==== Assumptions
+
+* http://blog.codefx.org/java/dev/design-optional[was designed] as a return value
+* not serializable
+* long-lived instances increase +
+memory consumption
+* boxing method arguments is verbose
+
+=== Return Value Only
+==== Conclusions
+
+* use freely as return value
+* no instance variables
+* no method parameters
+* instances should generally be short-lived
+
+[[TODO, check names; make smaller]]
+(Stuart Marks, Brian Goetz,  Stephen Colebourne)
+
+=== Use Everywhere!
+==== Assumptions
+
+* using `Optional` instead of `null` +
+lifts `null`-handling into the type system
+* makes any remaining `null` +
+an implementation error +
+(great for debugging)
+* performance arguments can be discarded +
+(unless proven to be relevant)
+
+=== Use Everywhere!
+==== Conclusions
+
+* avoid optionality through good design +
+(good recommendation in general)
+* use `Optional` instead of `null` everywhere
+* consider providing overloads +
+for optional method parameters
+
+[[TODO, make smaller]]
+(Mario Fusco, me)
+
+=== Use Everywhere!
+==== Overload Example
+
+```java
+String bar(Optional<String> drink) {
+	return drink.map(this::bar)
+			.orElseGet(this::bar);
+}
+
+String bar(String drink) { /* ... */ }
+
+String bar() { /* ... */ }
+```
+
+=== Reflection on Usage
+
+Whatever you decide:
+
+* pick my recommendation! :)
+* make it a team decision
+* put it into your code style
+* learn over time
+
+Relaxing rules is easier +
+than making them stricter!
+
+=== Additional Sources
+
+http://blog.codefx.org/java/dev/design-optional[Design Of Optional] (codefx.org)
+
+http://blog.joda.org/2015/08/java-se-8-optional-pragmatic-approach.html[Pragmatic Approach]  (joda.org)
+
+http://blog.codefx.org/java/stephen-colebourne-optional-a-strict-approach/[Strict Approach]  (codefx.org)
+
+[[TODO, look up and add name to slide]]
+http://huguesjohnson.com/programming/java/java8optional.html
 
 == Optional Is A Value-Based&nbsp;Class
 
 [[TODO, use non-breaking dash]]
 ++++
 <table class="toc">
+	<tr><td>Usage Patterns</td></tr>
 	<tr class="toc-current"><td>Value-Based Class</td></tr>
 	<tr><td>Not a Monad</td></tr>
 </table>
@@ -169,6 +316,7 @@ http://blog.codefx.org/java/value-based-classes/[blog.codefx.org/java/value-base
 
 ++++
 <table class="toc">
+	<tr><td>Usage Patterns</td></tr>
 	<tr><td>Value-Based Class</td></tr>
 	<tr class="toc-current"><td>Not a Monad</td></tr>
 </table>
