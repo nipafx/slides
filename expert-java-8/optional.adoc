@@ -81,7 +81,7 @@ absolutely necessary
 (Mark Struberg, Stephen Connolly, Hugues Johnson)
 
 
-=== Return Value Only
+=== Limited Return Value
 ==== Assumptions
 
 * http://blog.codefx.org/java/dev/design-optional[was designed] as a return value
@@ -90,18 +90,35 @@ absolutely necessary
 memory consumption
 * boxing method arguments is verbose
 
-=== Return Value Only
+=== Limited Return Value
 ==== Conclusions
 
-* use freely as return value
+* use as return value if +
+returning null is error-prone
 * no instance variables
 * no method parameters
 * instances should generally be short-lived
 
 [role=small-note]
-(Stuart Marks, Brian Goetz,  Stephen Colebourne)
+(Stuart Marks, Brian Goetz)
 
 *⇝ This should be your default choice!*
+
+=== Return Value
+==== Assumptions
+
+* returning `null` is always error-prone
+* rest as before
+
+==== Conclusions
+
+* use as return value whenever +
+value can be absent
+* rest as before
+
+[role=small-note]
+(Stephen Colebourne)
+
 
 === Use Everywhere!
 ==== Assumptions
@@ -154,7 +171,9 @@ than making them stricter!
 
 === Additional Sources
 
-http://huguesjohnson.com/programming/java/java8optional.html[Java 8 Optional: What's the Point?] (huguesjohnson.com)
+https://www.youtube.com/watch?v=Ej0sss6cq14[The Mother of All Bikesheds] (Stuart Marks)
+
+http://huguesjohnson.com/programming/java/java8optional.html[What's the Point?] (huguesjohnson.com)
 
 http://blog.codefx.org/java/dev/design-optional[Design Of Optional] (codefx.org)
 
@@ -275,7 +294,7 @@ locking, serialization
 * date classes are serializable
 --
 
-=== VBC Reflection
+=== Reflection on VBC
 
 With `Optional` and other value-based classes:
 
@@ -368,7 +387,7 @@ might not get executed
 functions have side effects +
 (they generally should not but it happens)
 
-=== Monad Reflection
+=== Reflection on Monads
 
 * be aware that `Optional` is no well-behaved monad
 * see it as a way to avoid handling `null`
