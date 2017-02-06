@@ -44,7 +44,15 @@ include::../_shared/event-on-title-and-footer.adoc[]
 * performance
 * `Optional` is not a Monad (and why it matters)
 
-=== A Value-Based Class
+
+== Optional Is A Value-Based&nbsp;Class
+
+[[TODO, use non-breaking dash]]
+
+`Optional` implements a new "pattern" +
+that requires us to be careful with what we do
+
+=== Value-Based Class?
 
 Did you RTFM?
 
@@ -140,6 +148,88 @@ http://blog.codefx.org/java/value-based-classes/[blog.codefx.org/java/value-base
 --
 * can reference mutable objects
 --
+
+
+== Optional Is Not A Monad
+
+++++
+<table class="toc">
+	<tr><td>Value-Based Class</td></tr>
+	<tr class="toc-current"><td>Not a Monad</td></tr>
+</table>
+++++
+
+`Optional` saves us from `null` +
+at the expense of breaking Monad Laws
+
+(No math, I promise!)
+
+=== Left Identity
+
+For a Monad, this should always be true:
+
+```java
+Objects.equals(
+	ofNullable(x).flatMap(f),
+	f.apply(x));
+```
+
+But:
+
+```java
+Function f = s -> of("mango")
+Optional ofMap =
+	ofNullable(null).flatMap(f);
+Optional apply = f.apply(null);
+// Optional[] != Optional["mango"]
+```
+
+=== Associativity
+
+For a Monad, this should always be true:
+
+```java
+Objects.equals(
+	ofNullable(x).map(f).map(g),
+	ofNullable(x).map(f.andThen(g)));
+```
+
+But:
+
+```java
+Function f = s -> null;
+Function g = s -> "mango";
+Optional map = of("kiwi").map(f).map(g);
+Optional then = of("kiwi").map(f.andThen(g));
+// Optional[] != Optional["mango"]
+```
+
+=== Root Cause Analysis
+
+* `Optional` maps `null` to `empty()`
+* `flatMap` and `map` are not executed +
+on empty optionals
+* the first occurrence of `null`/empty +
+stops the chain of executions
+
+=== So What?
+
+* refactoring by merging functions +
+or breaking them apart +
+can lead to different execution paths
+* functions that can "recover" from `null` +
+will not get executed
+* particularly error-prone +
+when functions have side effects +
+(they generally should not but it happens)
+
+=== Monad Reflection
+
+* be aware that `Optional` is no well-behaved monad
+* see it as a way to avoid handling `null`
+* be aware that refactoring can cause problems +
+if `null` was special cased
+
 
 == Stream
 
