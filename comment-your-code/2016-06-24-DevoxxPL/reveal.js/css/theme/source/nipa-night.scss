@@ -1,0 +1,53 @@
+/**
+ * Bright-on-dark theme for reveal.js.
+ *
+ * Based on Hakim El Hattab's theme "night".
+ * Best enjoyed with an unobstrusive, favorably black & white background image.
+ */
+
+
+// Default mixins and settings -----------------
+@import "../template/mixins";
+@import "../template/settings";
+// ---------------------------------------------
+
+// Override theme settings (see ../template/settings.scss)
+$backgroundColor: #111;
+$slideBackgroundColor: rgba(0, 0, 0, 0.9);
+
+$headingColor: white;
+$mainColor: #EEE;
+$dimColor: darken( $mainColor, 50% );
+$linkColor: orange;
+$linkColorHover: lighten( $linkColor, 20% );
+$linkFontweight: bold;
+$selectionBackgroundColor: violet;
+
+$quoteColor: lighten($backgroundColor, 10%);
+$quoteEmColor: darken($quoteColor, 20%);
+$quoteBackgroundColor: $mainColor;
+
+// my template ------------------------------
+@import "../template/nipa-day-and-night";
+// ---------------------------------------------
+
+.title-slide .logo {
+	background-color: $mainColor !important;
+	border-radius: 5px;
+}
+
+footer .logo {
+	background-color: $mainColor !important;
+	border-radius: 2px;
+}
+
+.diagram img {
+	background: none !important;
+	background-color: white !important;
+	border: none !important;
+	box-shadow: 0px 0px 20px 20px white !important;
+}
+
+// Theme template ------------------------------
+@import "../template/theme";
+// ---------------------------------------------
