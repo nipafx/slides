@@ -160,7 +160,7 @@ Which options do we have?
 === Try in Lambda
 
 ```java
-Stream<User> parse_try(Stream<String> strings) {
+Stream<User> parse(Stream<String> strings) {
 	return strings
 		.map(string -> { try {
 				return parse(string);
@@ -411,7 +411,7 @@ Often used after a filter.
 ```java
 Optional<User> findUser(String id) {
 	return users.stream()
-		.filter(user -> user.getId().equals(id))
+		.filter(user -> user.id().equals(id))
 		.findFirst();
 }
 ```
@@ -421,7 +421,7 @@ Same as the loop:
 ```java
 Optional<User> findUser(String id) {
 	for (User user : users)
-		if (user.getId().equals(id))
+		if (user.id().equals(id))
 			return Optional.of(user);
 	return Optional.empty();
 }
@@ -447,7 +447,7 @@ Make sure there is only one element:
 ```java
 Optional<User> findUser(String id) {
 	return users.stream()
-		.filter(user -> user.getId().equals(id))
+		.filter(user -> user.id().equals(id))
 		.reduce(toOnlyElement());
 }
 
