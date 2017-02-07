@@ -9,7 +9,7 @@
 	font-size: 1.75em;
 }
 </style>
-<h2>Lambdas, Optionals, Streams<br>For Those Who Know<br>What They Are Doing</h2>
+<h2>Lambdas, Streams, Optionals<br>For Afficionados</h2>
 <div class="event">
 	<div class="participant">
 		<img src="images/logo-nipa-face.png" class="logo">
@@ -49,6 +49,233 @@
 		document.body.appendChild(document.querySelector('footer'));
 	})
 </script></div></section>
+<section id="_public_service_announcement"><h2>Public Service Announcement</h2><div class="ulist"><ul><li><p>you need to be proficient with Java 8</p></li><li><p>some of what follows is merely my opinion</p></li></ul></div>
+<div class="paragraph"><p><strong>We&#8217;re live on air!</strong></p></div>
+<div class="ulist"><ul><li><p>this is live-streamed (⇝ behave!)</p></li><li><p>tweet questions with <a href="https://twitter.com/search?f=tweets&amp;q=%23jfokus%20%40nipafx&amp;src=typd">#jfocus @nipafx</a></p></li><li><p>slides at <a href="http://slides.codefx.org/">slides.codefx.org</a></p></li></ul></div></section>
+<section id="_streams"><h2>Streams</h2><table class="toc">
+	<tr><td>In APIs</td></tr>
+	<tr><td>Exception Handling</td></tr>
+	<tr><td>Finding Elements</td></tr>
+	<tr><td>Performance</td></tr>
+</table></section>
+<section><section id="_streams_2"><h2>Streams</h2><table class="toc">
+	<tr class="toc-current"><td>In APIs</td></tr>
+	<tr><td>Exception Handling</td></tr>
+	<tr><td>Finding Elements</td></tr>
+	<tr><td>Performance</td></tr>
+</table><div class="paragraph"><p>Using streams in your APIs.</p></div></section><section id="_interesting_stream_properties"><h2>Interesting Stream Properties</h2><div class="ulist"><ul><li><p>streams are unmodifiable</p></li><li><p>streams are easy to transform</p></li><li><p>streams are lazy</p></li></ul></div>
+<div class="paragraph"><p>⇝ Good way to enrich data in layers.</p></div></section><section id="_enrichment_example"><h2>Enrichment Example</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Map&lt;String, User&gt; userById;
+Map&lt;String, Address&gt; addrById;
+
+Stream&lt;User&gt; users() {
+	return userById.values().stream();
+}
+
+Stream&lt;UserAddress&gt; userAddresses() {
+	return users().map(user -&gt; {
+		Address addr = addrById.get(user.id());
+		return UserAddress.of(user, addr);
+	});
+}</code></pre></div></div></section><section id="_enrichment_example_2"><h2>Enrichment Example</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Map&lt;Address, List&lt;Order&gt;&gt; ordersByAddr;
+
+Stream&lt;Delivery&gt; orders() {
+	return userAddresses().flatMap(userAddr -&gt;
+		ordersByAddr
+			.get(userAddr.address()).stream()
+			.map(order -&gt; Delivery
+				.of(userAddr, order)));
+}</code></pre></div></div></section><section id="_guidelines"><h2>Guidelines</h2><div class="ulist"><ul><li><p>streams can only be traversed once<br>
+⇝ ideally returned streams can be recreated endlessly</p></li><li><p>during traversal collection must not be mutated<br>
+⇝ stick to layers instead of cycles<br>
+(can be harder than it sounds)</p></li><li><p>decide careful where to call <code>parallel()</code></p></li></ul></div></section><section id="_accepting_streams"><h2>Accepting Streams</h2><div class="paragraph"><p>Returning streams is ok.</p></div>
+<div class="paragraph"><p>What about passing them as parameters?</p></div>
+<div class="ulist"><ul><li><p>streams can only be traversed once!</p></li><li><p>caller must assume stream is traversed</p></li><li><p>works for obvious consumer functions</p></li><li><p>possibly a transformed stream can be returned</p></li></ul></div></section><section id="_stream_param_example"><h2>Stream Param Example</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// consuming the passed stream
+void addUsers(Stream&lt;User&gt; users) {
+	users.forEach(this.users::add)
+}
+
+// transforming the passed stream
+Stream&lt;UserAddress&gt; userAddresses(
+		Stream&lt;User&gt; users) {
+	return users.map(user -&gt; {
+		Address addr = addrById.get(user.id());
+		return UserAddress.of(user, address);
+	});
+}</code></pre></div></div></section><section id="_reflection_on_apis"><h2>Reflection On APIs</h2><h3>Returning Streams</h3><div class="ulist"><ul><li><p>returning streams is great<br>
+(unmodifiable but transformable)</p></li><li><p>preferably if streams can be recreated</p></li><li><p>can be used to gradually enrich data</p></li></ul></div></section><section id="_reflection_on_apis_2"><h2>Reflection On APIs</h2><h3>Passing Streams</h3><div class="ulist"><ul><li><p>caller must assume stream is traversed</p></li><li><p>works for obvious consumers</p></li><li><p>transformations can be hard to track</p></li><li><p>never return a traversed stream<br>
+(obvious, right?!)</p></li></ul></div></section><section id="_reflection_on_apis_3"><h2>Reflection On APIs</h2><h3>But Look Out</h3><div class="ulist"><ul><li><p>streams can only be traversed once</p></li><li><p>no mutation during traversal</p></li><li><p>don&#8217;t make chains too long or<br>
+debuggability suffers</p></li></ul></div></section></section>
+<section><section id="_streams_3"><h2>Streams</h2><table class="toc">
+	<tr><td>In APIs</td></tr>
+	<tr class="toc-current"><td>Exception Handling</td></tr>
+	<tr><td>Finding Elements</td></tr>
+	<tr><td>Performance</td></tr>
+</table><div class="paragraph"><p>Handling checked exceptions in Streams.</p></div></section><section id="_setting_the_scene"><h2>Setting the Scene</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;User&gt; parse(Stream&lt;String&gt; strings) {
+	// compile error:
+	// "incompatible thrown types ParseException"
+	return strings.map(this::parse);
+}
+
+User parse(String userString)
+		throws ParseException {
+	// ...
+}</code></pre></div></div>
+<div class="paragraph"><p>Which options do we have?</p></div></section><section id="_try_in_lambda"><h2>Try in Lambda</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;User&gt; parse_try(Stream&lt;String&gt; strings) {
+	return strings
+		.map(string -&gt; { try {
+				return parse(string);
+			} catch (ParseException ex) {
+				return null;
+			}})
+		.filter(Objects::nonNull);
+}</code></pre></div></div>
+<div class="ulist"><ul><li><p>super ugly</p></li><li><p>requires extra clean-up step</p></li><li><p>handling exception locally can be hard</p></li><li><p>troublesome elements "disappear"</p></li></ul></div></section><section id="_try_in_method"><h2>Try in Method</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;User&gt; parse(Stream&lt;String&gt; strings) {
+	return strings
+			.map(this::tryParse)
+			.filter(Objects::nonNull);
+}
+
+private User tryParse(String string) {
+	try { return parse(string); }
+	catch (ParseException ex) { return null; }
+}</code></pre></div></div>
+<div class="ulist"><ul><li><p>somewhat ugly</p></li><li><p>requires extra clean-up step ("far away")</p></li><li><p>handling exception locally can be hard</p></li><li><p>troublesome elements "disappear"</p></li></ul></div></section><section id="_sneaky_throws"><h2>Sneaky Throws</h2><div class="paragraph"><p>How to "trick the compiler":</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">static Function&lt;T, R&gt; hideException(
+		CheckedFunction&lt;T, R, Exception&gt; function) {
+	return element -&gt; {
+		try {
+			return function.apply(element);
+		} catch (Exception ex) {
+			return sneakyThrow(ex);
+		}
+	};
+}
+
+// sneakyThrow does shenanigans with generics
+// and unchecked casts to "confuse the compiler"</code></pre></div></div></section><section id="_sneaky_throws_2"><h2>Sneaky Throws</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;User&gt; parse(Stream&lt;String&gt; strings) {
+	return strings
+		.map(Util.hideException(this::parse));
+}</code></pre></div></div>
+<div class="ulist"><ul><li><p>very surprising (hides a bomb in the stream!)</p></li><li><p>stream executor has to handle exception</p></li><li><p>can&#8217;t <code>try</code>-<code>catch(ParseException)</code> because<br>
+checked exceptions need to be declared</p></li><li><p>exception aborts stream pipeline</p></li></ul></div>
+<div class="paragraph"><p><strong>Please never do that!</strong></p></div></section><section id="_wrap_in_unchecked"><h2>Wrap in Unchecked</h2><div class="paragraph"><p>Another <code>Util</code> method:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">static Function&lt;T, R&gt; uncheckException(
+		CheckedFunction&lt;T, R, Exception&gt; function) {
+	return element -&gt; {
+		try {
+			return function.apply(element);
+		} catch (Exception ex) {
+			throw new IllegalArgumentException(
+				element, ex);
+		}
+	};
+}</code></pre></div></div></section><section id="_wrap_in_unchecked_2"><h2>Wrap in Unchecked</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;User&gt; parse(Stream&lt;String&gt; strings) {
+	return strings
+		.map(Util.uncheckException(this::parse));
+}</code></pre></div></div>
+<div class="ulist"><ul><li><p>stream executor has to handle exception</p></li><li><p>exception aborts stream pipeline</p></li></ul></div></section><section id="_remove_trouble"><h2>Remove Trouble</h2><div class="paragraph"><p>Another <code>Util</code> method:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">static Function&lt;T, Optional&lt;R&gt;&gt; wrapOptional(
+		CheckedFunction&lt;T, R, Exception&gt; function) {
+	return element -&gt; {
+		try {
+			return Optional.of(
+				function.apply(element));
+		} catch (Exception ex) {
+			return Optional.empty();
+		}
+	};
+}</code></pre></div></div></section><section id="_remove_trouble_2"><h2>Remove Trouble</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;User&gt; parse(Stream&lt;String&gt; strings) {
+	return strings
+		.map(Util.wrapOptional(this::parse))
+		// Java 9: .flatMap(Optional::stream)
+		.filter(Optional::isPresent)
+		.map(Optional::get);
+}</code></pre></div></div>
+<div class="ulist"><ul><li><p>requires extra clean-up step<br>
+(at least supported by compiler)</p></li><li><p>troublesome elements "disappear"</p></li></ul></div></section><section id="_expose_with_code_try_code"><h2>Expose With <code>Try</code></h2><div class="paragraph"><p><code>Try&lt;T&gt;</code> is similar to <code>Optional</code>:</p></div>
+<div class="ulist"><ul><li><p>has two states: error or success</p></li><li><p>allows to process them with functions</p></li><li><p>parameterized in type of success result</p></li></ul></div>
+<div class="paragraph"><p>Another <code>Util</code> method:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">static Function&lt;T, Try&lt;R&gt;&gt; wrapTry(
+		CheckedFunction&lt;T, R, Exception&gt; function) {
+	return element -&gt; Try.of(
+		() -&gt; function.apply(element));
+}</code></pre></div></div></section><section id="_expose_with_code_try_code_2"><h2>Expose With <code>Try</code></h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;Try&lt;User&gt;&gt; parse(Stream&lt;String&gt; strings) {
+	return strings
+		.map(Util.wrapTry(this::parse));
+}</code></pre></div></div>
+<div class="ulist"><ul><li><p>requires external library (e.g. <a href="http://www.javaslang.io/">Javaslang</a>)</p></li><li><p>encodes possibility of failure in API</p></li><li><p>makes error available to caller</p></li><li><p>error is encoded as Exception/Throwable</p></li></ul></div></section><section id="_expose_with_code_either_code"><h2>Expose With <code>Either</code></h2><div class="paragraph"><p><code>Either&lt;L, R&gt;</code> is similar to <code>Optional</code>:</p></div>
+<div class="ulist"><ul><li><p>has two states: left or right</p></li><li><p>allows to process them with functions</p></li><li><p>parameterized in types of left and right</p></li><li><p>if used for failure/success, exception goes left<br>
+(by convention)</p></li></ul></div></section><section id="_expose_with_code_either_code_2"><h2>Expose With <code>Either</code></h2><div class="paragraph"><p>Another <code>Util</code> method:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">static Function&lt;T, Either&lt;EX, R&gt;&gt; wrapEither(
+		CheckedFunction&lt;T, R, EX&gt; function) {
+	return element -&gt; {
+		try {
+			return Either.right(
+				function.apply(element));
+		} catch (Exception ex) {
+			return Either.left((EX) ex);
+		}
+	};
+}</code></pre></div></div></section><section id="_expose_with_code_either_code_3"><h2>Expose With <code>Either</code></h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;Either&lt;ParseException, User&gt;&gt; parse(
+		Stream&lt;String&gt; strings) {
+	return strings
+		.map(Util.wrapEither(this::parse));
+}</code></pre></div></div>
+<div class="ulist"><ul><li><p>requires external library (e.g. <a href="http://www.javaslang.io/">Javaslang</a>)</p></li><li><p>encodes possibility of failure in API</p></li><li><p>makes error available to caller</p></li><li><p>error has correct type</p></li></ul></div></section><section id="_reflection_on_exceptions"><h2>Reflection on Exceptions</h2><div class="ulist"><ul><li><p>don&#8217;t be smart and "trick the compiler"</p></li><li><p>return a clean stream: no nulls!</p></li><li><p>ideally, use types to express possibility of failure</p></li></ul></div>
+<div class="paragraph"><p>Streams don&#8217;t cooperate well with checked exceptions.</p></div>
+<div class="paragraph"><p>See that as a chance to use functional concepts<br>
+for greater good of code base!</p></div></section></section>
+<section><section id="_streams_4"><h2>Streams</h2><table class="toc">
+	<tr><td>In APIs</td></tr>
+	<tr><td>Exception Handling</td></tr>
+	<tr class="toc-current"><td>Finding Elements</td></tr>
+	<tr><td>Performance</td></tr>
+</table><div class="paragraph"><p>Be careful how you find!</p></div></section><section id="_finding_first_or_any"><h2>Finding First or Any</h2><div class="paragraph"><p><code>Stream::findFirst</code> and <code>findAny</code>:</p></div>
+<div class="ulist"><ul><li><p>return an arbitrary element from the Stream</p></li><li><p>if stream has encounter order,<br>
+<code>findFirst</code> returns first element</p></li></ul></div>
+<div class="paragraph"><p>Often used after a filter.</p></div></section><section id="_find_example"><h2>Find Example</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Optional&lt;User&gt; findUser(String id) {
+	return users.stream()
+		.filter(user -&gt; user.getId().equals(id))
+		.findFirst();
+}</code></pre></div></div>
+<div class="paragraph"><p>Same as the loop:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Optional&lt;User&gt; findUser(String id) {
+	for (User user : users)
+		if (user.getId().equals(id))
+			return Optional.of(user);
+	return Optional.empty();
+}</code></pre></div></div></section><section id="_small_observation"><h2>Small Observation</h2><div class="paragraph"><p>I sometimes see the following:</p></div>
+<div class="ulist"><ul><li><p>code&#8217;s correctness depends on only<br>
+one element passing the filter</p></li><li><p><strong>but</strong> there are no additional checks</p></li></ul></div>
+<div class="paragraph"><p><strong>⇝ The easy solution might be the wrong one!</strong></p></div>
+<div class="paragraph small-note"><p>(Applies to the loop as well.)</p></div></section><section id="_finding_only"><h2>Finding Only</h2><div class="paragraph"><p>Make sure there is only one element:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Optional&lt;User&gt; findUser(String id) {
+	return users.stream()
+		.filter(user -&gt; user.getId().equals(id))
+		.reduce(toOnlyElement());
+}
+
+static BinaryOperator toOnlyElement() {
+	return (element, otherElement) -&gt; {
+		throw new IllegalArgumentException();
+	};
+}</code></pre></div></div>
+<div class="paragraph"><p>Instead of <code>reduce</code>, <code>collect</code> could be used.</p></div></section><section id="_properties_of_finding_only"><h2>Properties of Finding Only</h2><div class="paragraph"><p>Upsides:</p></div>
+<div class="ulist"><ul><li><p>guarantees correctness by failing fast</p></li><li><p>expresses intent</p></li></ul></div>
+<div class="paragraph"><p>Downsides:</p></div>
+<div class="ulist"><ul><li><p>materializes entire stream</p></li></ul></div></section><section id="_reflection_on_finding"><h2>Reflection On Finding</h2><div class="paragraph"><p>If correctness depends on only one element<br>
+surviving an ad-hoc filter:</p></div>
+<div class="ulist"><ul><li><p><code>findFirst</code>, <code>findAny</code> do not suffice</p></li><li><p>use a reducer or collector to assert uniqueness</p></li><li><p>comes with a performance penalty</p></li></ul></div>
+<h3>Additional Sources</h3><div class="paragraph"><p><a href="http://blog.codefx.org/java/stream-findfirst-findany-reduce/">Beware Of findFirst() And findAny()</a></p></div></section></section>
+<section id="_stream"><h2>Stream</h2><table class="toc">
+	<tr><td>In APIs</td></tr>
+	<tr><td>Exception Handling</td></tr>
+	<tr><td>Finding Elements</td></tr>
+	<tr class="toc-current"><td>Performance</td></tr>
+</table>
+<div class="paragraph"><p>Performance is a too long to go into.</p></div>
+<div class="paragraph"><p>Great talk by Stuart Marks and Brian Goetz:</p></div>
+<div class="paragraph"><p><a href="https://www.youtube.com/watch?v=iDplU7mOocU">Thinking in Parallel</a> (JavaOne 2016)</p></div></section>
 <section id="_optional"><h2>Optional</h2><h3>Everybody's Favorite Bike Shed!</h3>
 <table class="toc">
 	<tr><td>Usage Patterns</td></tr>
@@ -95,7 +322,7 @@ String bar(String drink) { /* ... */ }
 String bar() { /* ... */ }</code></pre></div></div></section><section id="_reflection_on_usage"><h2>Reflection on Usage</h2><div class="paragraph"><p>Whatever you decide:</p></div>
 <div class="ulist"><ul><li><p>pick my recommendation! :)</p></li><li><p>make it a team decision</p></li><li><p>put it into your code style</p></li><li><p>learn over time</p></li></ul></div>
 <div class="paragraph"><p>Relaxing rules is easier<br>
-than making them stricter!</p></div></section><section id="_additional_sources"><h2>Additional Sources</h2><div class="paragraph"><p><a href="https://www.youtube.com/watch?v=Ej0sss6cq14">The Mother of All Bikesheds</a> (Stuart Marks)</p></div>
+than making them stricter!</p></div></section><section id="_additional_sources_2"><h2>Additional Sources</h2><div class="paragraph"><p><a href="https://www.youtube.com/watch?v=Ej0sss6cq14">The Mother of All Bikesheds</a> (Stuart Marks)</p></div>
 <div class="paragraph"><p><a href="http://huguesjohnson.com/programming/java/java8optional.html">What&#8217;s the Point?</a> (huguesjohnson.com)</p></div>
 <div class="paragraph"><p><a href="http://blog.codefx.org/java/dev/design-optional">Design Of Optional</a> (codefx.org)</p></div>
 <div class="paragraph"><p><a href="http://blog.joda.org/2015/08/java-se-8-optional-pragmatic-approach.html">Pragmatic Approach</a>  (joda.org)</p></div>
