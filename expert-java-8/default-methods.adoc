@@ -35,3 +35,151 @@ public interface MyFunction<T, S> extends CoolLibFunction<T, S> {
 This way it is very unlikely to accidentally rely on `CoolLibFunction::call`
  and it can be exchanged for another lib without breaking your code.
 ////
+
+== Default Methods
+
+++++
+<h3>Interface Evolution</h3>
+++++
+
+=== General Approach
+
+New Version::
+
+* interface is transitional (old and new outline)
+* default methods ensure existing code works
+
+Transition::
+
+* client moves from old to new outline
+* default methods ensure code keeps working
+
+New Version::
+
+* removes old outline
+
+=== Adding Methods
+
+Reasonable default impl exists:
+
+New Version::
+
+* add the method with default impl
+* internal impls can override
+* internal callers use new method
+
+Transition::
+
+* external callers use the method
+
+That's it.
+
+=== Adding Methods
+
+No reasonable default impl exists:
+
+New Version::
+
+* add method with default impl throwing UOE
+* override method in all internal impls
+
+Transition::
+
+* external impls override the method
+* external callers use the method
+
+New Version::
+
+* make method abstract
+* internal callers use new method
+
+=== Removing Methods
+
+No external impls exist:
+
+New Version::
+
+* deprecate method
+* internal callers stop calling method
+
+Transition::
+
+* external callers stop using the method
+
+New Version::
+
+* remove the method
+
+(No default methods required.)
+
+=== Removing Methods
+
+External impls exist:
+
+New Version::
+
+* deprecate method
+* provide default impl throwing UOE
+* internal callers stop calling method
+
+Transition::
+
+* external callers stop using the method
+* external impls of the method are removed
+
+New Version::
+
+* remove the method
+
+=== Replacing Methods
+
+Applies with new signature (name, parameters, ...), +
+where methods are "functionally equivalent".
+
+Otherwise it's a matter of adding new +
+and removing old method.
+
+=== Replacing Methods
+
+New Version::
+
+* add _new_ with default impl calling _old_
+* provide default impl of _old_ calling _new_
+* deprecate _old_
+* internal impls override _new_ instead of _old_
+* internal callers use _new_ instead of _old_
+
+Wtf, circular call?
+
+* ensures it does not matter which version is impl'd
+* must be thoroughly documented; tests help
+
+=== Replacing Methods
+
+Transition::
+
+* external impls override _new_ instead of _old_
+* external callers use _new_ instead of _old_
+
+New Version::
+
+* make _new_ abstract
+* remove _old_
+
+=== Reflection On Evolution
+
+If clients can be expected to update their code +
+default methods allow interface evolution +
+without breaking client code.
+
+Mode is always the same:
+
+* release version with transitional outline
+* give clients time to update
+* release version with new outline
+
+=== Additional Source
+
+http://blog.codefx.org/design/patterns/interface-evolution-with-default-methods-methods/[Interface Evolution] (codefx.org)
+
+http://blog.codefx.org/java/new-javadoc-tags/[New Javadoc Tags] (codefx.org)
