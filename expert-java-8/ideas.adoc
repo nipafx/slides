@@ -24,8 +24,13 @@
 *** parallelization
 ** missing features
     https://medium.com/@johnmcclean/java-8-streams-10-missing-features-ec82ee90b6c0#.5fffwftma
+
 * performance
 
+* for exception handling implement method
+** that declares the exception of the passed checked function
+** transforms to regular function by sneaky throws if exception occurs
+** only works if consumer is right were map is called
 
 == Misc
 

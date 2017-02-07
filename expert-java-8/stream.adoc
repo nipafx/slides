@@ -1,9 +1,25 @@
 == Streams
 
+++++
+<table class="toc">
+	<tr><td>In APIs</td></tr>
+	<tr><td>Exception Handling</td></tr>
+	<tr><td>Finding Elements</td></tr>
+	<tr><td>Performance</td></tr>
+</table>
+++++
+
 
 == Streams
 
-// toc
+++++
+<table class="toc">
+	<tr class="toc-current"><td>In APIs</td></tr>
+	<tr><td>Exception Handling</td></tr>
+	<tr><td>Finding Elements</td></tr>
+	<tr><td>Performance</td></tr>
+</table>
+++++
 
 Using streams in your APIs.
 
@@ -50,7 +66,7 @@ Stream<Delivery> orders() {
 === Guidelines
 
 * streams can only be traversed once +
-⇝ ideally new streams can be recreated endlessly
+⇝ ideally returned streams can be recreated endlessly
 * during traversal collection must not be mutated +
 ⇝ stick to layers instead of cycles +
 (can be harder than it sounds)
@@ -72,7 +88,7 @@ What about passing them as parameters?
 ```java
 // consuming the passed stream
 void addUsers(Stream<User> users) {
-	// ...
+	users.forEach(this.users::add)
 }
 
 // transforming the passed stream
@@ -85,30 +101,25 @@ Stream<UserAddress> userAddresses(
 }
 ```
 
-=== Guidelines
-
-* consumers are straight-forward
-* transformations can be hard to track
-* never return a traversed stream +
-(obvious, right?!)
-
 === Reflection On APIs
-
-*Returning streams:*
+==== Returning Streams
 
 * returning streams is great +
 (unmodifiable but transformable)
 * preferably if streams can be recreated
 * can be used to gradually enrich data
 
-*Passing streams:*
+=== Reflection On APIs
+==== Passing Streams
 
-* works for obvious consumers
 * caller must assume stream is traversed
+* works for obvious consumers
+* transformations can be hard to track
+* never return a traversed stream +
+(obvious, right?!)
 
 === Reflection On APIs
-
-*But look out:*
+==== But Look Out
 
 * streams can only be traversed once
 * no mutation during traversal
@@ -118,7 +129,14 @@ debuggability suffers
 
 == Streams
 
-// toc
+++++
+<table class="toc">
+	<tr><td>In APIs</td></tr>
+	<tr class="toc-current"><td>Exception Handling</td></tr>
+	<tr><td>Finding Elements</td></tr>
+	<tr><td>Performance</td></tr>
+</table>
+++++
 
 Handling checked exceptions in Streams.
 
@@ -137,7 +155,7 @@ User parse(String userString)
 }
 ```
 
-What options do we have?
+Which options do we have?
 
 === Try in Lambda
 
@@ -173,7 +191,7 @@ private User tryParse(String string) {
 }
 ```
 
-* ugly
+* somewhat ugly
 * requires extra clean-up step ("far away")
 * handling exception locally can be hard
 * troublesome elements "disappear"
@@ -208,7 +226,7 @@ Stream<User> parse(Stream<String> strings) {
 ```
 
 * very surprising (hides a bomb in the stream!)
-* stream executioner has to handle exception
+* stream executor has to handle exception
 * can't `try`-`catch(ParseException)` because +
 checked exceptions need to be declared
 * exception aborts stream pipeline
@@ -242,7 +260,7 @@ Stream<User> parse(Stream<String> strings) {
 }
 ```
 
-* stream executioner has to handle exception
+* stream executor has to handle exception
 * exception aborts stream pipeline
 
 === Remove Trouble
@@ -297,16 +315,16 @@ static Function<T, Try<R>> wrapTry(
 }
 ```
 
-
 === Expose With `Try`
 
 ```java
 Stream<Try<User>> parse(Stream<String> strings) {
-	return strings.map(Util.wrapTry(this::parse));
+	return strings
+		.map(Util.wrapTry(this::parse));
 }
 ```
 
-* requires external library
+* requires external library (e.g. http://www.javaslang.io/[Javaslang])
 * encodes possibility of failure in API
 * makes error available to caller
 * error is encoded as Exception/Throwable
@@ -317,9 +335,9 @@ Stream<Try<User>> parse(Stream<String> strings) {
 
 * has two states: left or right
 * allows to process them with functions
-* parameterized in type of left and right
-* if used for failure/success, +
-by convention exception goes left
+* parameterized in types of left and right
+* if used for failure/success, exception goes left +
+(by convention)
 
 === Expose With `Either`
 
@@ -344,11 +362,12 @@ static Function<T, Either<EX, R>> wrapEither(
 ```java
 Stream<Either<ParseException, User>> parse(
 		Stream<String> strings) {
-	return strings.map(Util.wrapEither(this::parse));
+	return strings
+		.map(Util.wrapEither(this::parse));
 }
 ```
 
-* requires external library
+* requires external library (e.g. http://www.javaslang.io/[Javaslang])
 * encodes possibility of failure in API
 * makes error available to caller
 * error has correct type
@@ -366,7 +385,14 @@ for greater good of code base!
 
 == Streams
 
-// toc
+++++
+<table class="toc">
+	<tr><td>In APIs</td></tr>
+	<tr><td>Exception Handling</td></tr>
+	<tr class="toc-current"><td>Finding Elements</td></tr>
+	<tr><td>Performance</td></tr>
+</table>
+++++
 
 Be careful how you find!
 
@@ -403,7 +429,7 @@ Optional<User> findUser(String id) {
 
 === Small Observation
 
-I often saw the following:
+I sometimes see the following:
 
 * code's correctness depends on only +
 one element passing the filter
@@ -412,7 +438,7 @@ one element passing the filter
 *⇝ The easy solution might be the wrong one!*
 
 [role="small-note"]
-(All of this applies to the loop as well.)
+(Applies to the loop as well.)
 
 === Finding Only
 
@@ -461,7 +487,14 @@ http://blog.codefx.org/java/stream-findfirst-findany-reduce/[Beware Of findFirst
 
 == Stream
 
-// toc
+++++
+<table class="toc">
+	<tr><td>In APIs</td></tr>
+	<tr><td>Exception Handling</td></tr>
+	<tr><td>Finding Elements</td></tr>
+	<tr class="toc-current"><td>Performance</td></tr>
+</table>
+++++
 
 Performance is a too long to go into.
 
