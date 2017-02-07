@@ -23,7 +23,7 @@ include::../_shared/highlight.js.adoc[]
 	font-size: 1.75em;
 }
 </style>
-<h2>Lambdas, Optionals, Streams<br>For Those Who Know<br>What They Are Doing</h2>
+<h2>Lambdas, Streams, Optionals<br>For Afficionados</h2>
 ++++
 
 :host-name: Jfokus
@@ -37,10 +37,22 @@ include::../_shared/event-on-title-and-footer.adoc[]
 // P R E S E N T A T I O N //
 // ####################### //
 
+
+== Public Service Announcement
+
+* you need to be proficient with Java 8
+* some of what follows is merely my opinion
+
+*We're live on air!*
+
+* this is live-streamed (⇝ behave!)
+* tweet questions with https://twitter.com/search?f=tweets&q=%23jfokus%20%40nipafx&src=typd[#jfocus @nipafx]
+* slides at http://slides.codefx.org/[slides.codefx.org]
+
+include::stream.adoc[]
+
 include::optional.adoc[]
 
-// include::stream.adoc[]
-//
 // include::default-methods.adoc[]
 //
 // include::lambda.adoc[]
