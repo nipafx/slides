@@ -1,30 +1,3 @@
-////
-* sources
-** https://www.youtube.com/watch?v=sbcXQJA0EQc
-** https://www.youtube.com/watch?v=oWlWEKNM5Aw
-** http://blog.codefx.org/java/rebutting-5-common-stream-tropes/
-** http://blog.codefx.org/java/stream-performance/
-** http://blog.codefx.org/java/stream-findfirst-findany-reduce/
-
-* content
-** overarching goal: more readable code by using simple building blocks (fuck succinctness)
-** utility methods to start streams
-** method handles > lambdas & short lambdas > long lambdas
-** abstraction
-*** higher level than when writing loops
-      "see first part of https://www.youtube.com/watch?v=iDplU7mOocU"
-** error handling
-** look at reduce more often
-** utility methods for complicated collectors
-** performance model
-    "second part of https://www.youtube.com/watch?v=iDplU7mOocU"
-*** overheads
-*** parallelization
-** missing features
-    https://medium.com/@johnmcclean/java-8-streams-10-missing-features-ec82ee90b6c0#.5fffwftma
-* performance
-////
-
 == Streams
 
 
@@ -142,6 +115,254 @@ Stream<UserAddress> userAddresses(
 * don't make chains too long or +
 debuggability suffers
 
+
+== Streams
+
+// toc
+
+Handling checked exceptions in Streams.
+
+=== Setting the Scene
+
+```java
+Stream<User> parse(Stream<String> strings) {
+	// compile error:
+	// "incompatible thrown types ParseException"
+	return strings.map(this::parse);
+}
+
+User parse(String userString)
+		throws ParseException {
+	// ...
+}
+```
+
+What options do we have?
+
+=== Try in Lambda
+
+```java
+Stream<User> parse_try(Stream<String> strings) {
+	return strings
+		.map(string -> { try {
+				return parse(string);
+			} catch (ParseException ex) {
+				return null;
+			}})
+		.filter(Objects::nonNull);
+}
+```
+
+* super ugly
+* requires extra clean-up step
+* handling exception locally can be hard
+* troublesome elements "disappear"
+
+=== Try in Method
+
+```java
+Stream<User> parse(Stream<String> strings) {
+	return strings
+			.map(this::tryParse)
+			.filter(Objects::nonNull);
+}
+
+private User tryParse(String string) {
+	try { return parse(string); }
+	catch (ParseException ex) { return null; }
+}
+```
+
+* ugly
+* requires extra clean-up step ("far away")
+* handling exception locally can be hard
+* troublesome elements "disappear"
+
+=== Sneaky Throws
+
+How to "trick the compiler":
+
+```java
+static Function<T, R> hideException(
+		CheckedFunction<T, R, Exception> function) {
+	return element -> {
+		try {
+			return function.apply(element);
+		} catch (Exception ex) {
+			return sneakyThrow(ex);
+		}
+	};
+}
+
+// sneakyThrow does shenanigans with generics
+// and unchecked casts to "confuse the compiler"
+```
+
+=== Sneaky Throws
+
+```java
+Stream<User> parse(Stream<String> strings) {
+	return strings
+		.map(Util.hideException(this::parse));
+}
+```
+
+* very surprising (hides a bomb in the stream!)
+* stream executioner has to handle exception
+* can't `try`-`catch(ParseException)` because +
+checked exceptions need to be declared
+* exception aborts stream pipeline
+
+*Please never do that!*
+
+=== Wrap in Unchecked
+
+Another `Util` method:
+
+```java
+static Function<T, R> uncheckException(
+		CheckedFunction<T, R, Exception> function) {
+	return element -> {
+		try {
+			return function.apply(element);
+		} catch (Exception ex) {
+			throw new IllegalArgumentException(
+				element, ex);
+		}
+	};
+}
+```
+
+=== Wrap in Unchecked
+
+```java
+Stream<User> parse(Stream<String> strings) {
+	return strings
+		.map(Util.uncheckException(this::parse));
+}
+```
+
+* stream executioner has to handle exception
+* exception aborts stream pipeline
+
+=== Remove Trouble
+
+Another `Util` method:
+
+```java
+static Function<T, Optional<R>> wrapOptional(
+		CheckedFunction<T, R, Exception> function) {
+	return element -> {
+		try {
+			return Optional.of(
+				function.apply(element));
+		} catch (Exception ex) {
+			return Optional.empty();
+		}
+	};
+}
+```
+
+=== Remove Trouble
+
+```java
+Stream<User> parse(Stream<String> strings) {
+	return strings
+		.map(Util.wrapOptional(this::parse))
+		// Java 9: .flatMap(Optional::stream)
+		.filter(Optional::isPresent)
+		.map(Optional::get);
+}
+```
+
+* requires extra clean-up step +
+(at least supported by compiler)
+* troublesome elements "disappear"
+
+=== Expose With `Try`
+
+`Try<T>` is similar to `Optional`:
+
+* has two states: error or success
+* allows to process them with functions
+* parameterized in type of success result
+
+Another `Util` method:
+
+```java
+static Function<T, Try<R>> wrapTry(
+		CheckedFunction<T, R, Exception> function) {
+	return element -> Try.of(
+		() -> function.apply(element));
+}
+```
+
+
+=== Expose With `Try`
+
+```java
+Stream<Try<User>> parse(Stream<String> strings) {
+	return strings.map(Util.wrapTry(this::parse));
+}
+```
+
+* requires external library
+* encodes possibility of failure in API
+* makes error available to caller
+* error is encoded as Exception/Throwable
+
+=== Expose With `Either`
+
+`Either<L, R>` is similar to `Optional`:
+
+* has two states: left or right
+* allows to process them with functions
+* parameterized in type of left and right
+* if used for failure/success, +
+by convention exception goes left
+
+=== Expose With `Either`
+
+Another `Util` method:
+
+```java
+static Function<T, Either<EX, R>> wrapEither(
+		CheckedFunction<T, R, EX> function) {
+	return element -> {
+		try {
+			return Either.right(
+				function.apply(element));
+		} catch (Exception ex) {
+			return Either.left((EX) ex);
+		}
+	};
+}
+```
+
+=== Expose With `Either`
+
+```java
+Stream<Either<ParseException, User>> parse(
+		Stream<String> strings) {
+	return strings.map(Util.wrapEither(this::parse));
+}
+```
+
+* requires external library
+* encodes possibility of failure in API
+* makes error available to caller
+* error has correct type
+
+=== Reflection on Exceptions
+
+* don't be smart and "trick the compiler"
+* return a clean stream: no nulls!
+* ideally, use types to express possibility of failure
+
+Streams don't cooperate well with checked exceptions.
+
+See that as a chance to use functional concepts +
+for greater good of code base!
 
 == Streams
 

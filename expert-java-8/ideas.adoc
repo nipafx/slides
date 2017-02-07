@@ -2,8 +2,32 @@
 
 * explore performance
 
+== Stream
 
-== Ideas
+* sources
+** https://www.youtube.com/watch?v=sbcXQJA0EQc
+** https://www.youtube.com/watch?v=oWlWEKNM5Aw
+** http://blog.codefx.org/java/rebutting-5-common-stream-tropes/
+** http://blog.codefx.org/java/stream-performance/
+
+* content
+** overarching goal: more readable code by using simple building blocks (fuck succinctness)
+** utility methods to start streams
+** method handles > lambdas & short lambdas > long lambdas
+** abstraction
+*** higher level than when writing loops; see first part of https://www.youtube.com/watch?v=iDplU7mOocU
+** error handling
+** look at reduce more often
+** utility methods for complicated collectors
+** performance model; see second part of https://www.youtube.com/watch?v=iDplU7mOocU
+*** overheads
+*** parallelization
+** missing features
+    https://medium.com/@johnmcclean/java-8-streams-10-missing-features-ec82ee90b6c0#.5fffwftma
+* performance
+
+
+== Misc
 
 * Concurrency changes: http://docs.oracle.com/javase/8/docs/technotes/guides/concurrency/changes8.html
 * Trisha Gee refactoring to Java 8 https://www.youtube.com/watch?v=NcetKbGayZY
