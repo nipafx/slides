@@ -22,11 +22,126 @@
 *** parallelization
 ** missing features
     https://medium.com/@johnmcclean/java-8-streams-10-missing-features-ec82ee90b6c0#.5fffwftma
-* returning Streams
 * performance
 ////
 
 == Streams
+
+
+== Streams
+
+// toc
+
+Using streams in your APIs.
+
+=== Interesting Stream Properties
+
+* streams are unmodifiable
+* streams are easy to transform
+* streams are lazy
+
+⇝ Good way to enrich data in layers.
+
+=== Enrichment Example
+
+```java
+Map<String, User> userById;
+Map<String, Address> addrById;
+
+Stream<User> users() {
+	return userById.values().stream();
+}
+
+Stream<UserAddress> userAddresses() {
+	return users().map(user -> {
+		Address addr = addrById.get(user.id());
+		return UserAddress.of(user, addr);
+	});
+}
+```
+
+=== Enrichment Example
+
+```java
+Map<Address, List<Order>> ordersByAddr;
+
+Stream<Delivery> orders() {
+	return userAddresses().flatMap(userAddr ->
+		ordersByAddr
+			.get(userAddr.address()).stream()
+			.map(order -> Delivery
+				.of(userAddr, order)));
+}
+```
+
+=== Guidelines
+
+* streams can only be traversed once +
+⇝ ideally new streams can be recreated endlessly
+* during traversal collection must not be mutated +
+⇝ stick to layers instead of cycles +
+(can be harder than it sounds)
+* decide careful where to call `parallel()`
+
+=== Accepting Streams
+
+Returning streams is ok.
+
+What about passing them as parameters?
+
+* streams can only be traversed once!
+* caller must assume stream is traversed
+* works for obvious consumer functions
+* possibly a transformed stream can be returned
+
+=== Stream Param Example
+
+```java
+// consuming the passed stream
+void addUsers(Stream<User> users) {
+	// ...
+}
+
+// transforming the passed stream
+Stream<UserAddress> userAddresses(
+		Stream<User> users) {
+	return users.map(user -> {
+		Address addr = addrById.get(user.id());
+		return UserAddress.of(user, address);
+	});
+}
+```
+
+=== Guidelines
+
+* consumers are straight-forward
+* transformations can be hard to track
+* never return a traversed stream +
+(obvious, right?!)
+
+=== Reflection On APIs
+
+*Returning streams:*
+
+* returning streams is great +
+(unmodifiable but transformable)
+* preferably if streams can be recreated
+* can be used to gradually enrich data
+
+*Passing streams:*
+
+* works for obvious consumers
+* caller must assume stream is traversed
+
+=== Reflection On APIs
+
+*But look out:*
+
+* streams can only be traversed once
+* no mutation during traversal
+* don't make chains too long or +
+debuggability suffers
+
 
 == Streams
 
