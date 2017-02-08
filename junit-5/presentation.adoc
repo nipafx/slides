@@ -270,56 +270,7 @@ That's all very nice but how is it<br>
 ++++
 
 
-=== Extensions in JUnit 4
-
-++++
-<h3>Runners</h3>
-++++
-
-Manage a test's full lifecycle.
-
-```java
-@RunWith(MockitoJUnitRunner.class)
-public class MyTest { ... }
-```
-
-* very flexible
-* heavyweight
-* exclusive
-
-
-=== Extensions in JUnit 4
-
-++++
-<h3>Rules</h3>
-++++
-
-Execute code before and after statements.
-
-```java
-public class MyTest {
-	@Rule
-	public MockitoRule rule =
-		MockitoJUnit.rule();
-}
-```
-
-* added in 4.7
-* lightweight
-* limited to before/after behavior
-
-
-=== Extensions in JUnit 4
-
-Extension model is not optimal:
-
-* two competing mechanisms
-** each with limitations
-** but with considerable overlap
-* composition can cause problems
-
-
-=== Approach in JUnit 5
+=== Approach To Extension
 
 From JUnit 5's
 https://github.com/junit-team/junit5/wiki/Core-Principles[Core Principles]:
@@ -471,123 +422,6 @@ public class MyServerParameterResolver
 ```
 
 
-=== Extension Context
-
-Quick look at `ExtensionContext`:
-
-```java
-// every node has its own context
-Optional<ExtensionContext> getParent();
-
-// some node-related info
-String getUniqueId();
-String getDisplayName();
-Set<String> getTags();
-
-// don't use System.out !
-void publishReportEntry(
-	Map<String, String> map);
-```
-
-
-=== Extension Context
-
-Quick look at `ExtensionContext`:
-
-```java
-// to reflect over the test class/method
-Optional<AnnotatedElement> getElement();
-Optional<Class<?>> getTestClass();
-Optional<Method> getTestMethod();
-
-// use the store to safe extension state
-// (extensions should be stateless;
-//  did I mention that?)
-Store getStore();
-Store getStore(Namespace namespace);
-```
-
-
-=== Stateless Extensions
-
-JUnit makes no promises regarding +
-extension instance lifecycle!
-
-*⇝ Extensions must be stateless!*
-
-Use the `Store`, Luke!
-
-* namespaced
-* hierarchical
-* key-value
-
-
-=== Extension Store
-
-+++<h3>Namespaced</h3>+++
-
-Store is accessed via `ExtensionContext` +
-given a `Namespace`
-
-```java
-// forwards with a default namespace
-Store getStore();
-Store getStore(Namespace namespace);
-```
-
-* keeps extensions from stepping +
-on each other's toes
-* could allow deliberate communication!
-
-
-=== Extension Store
-
-+++<h3>Hierarchical</h3>+++
-
-Reads from the store forward to other stores:
-
-* method store ⇝ class store
-* nested class store ⇝ surrounding class store
-
-Writes always go to the called store.
-
-
-=== Extension Store
-
-+++<h3>Key-Value</h3>+++
-
-The store is essentially a map:
-
-```java
-Object getObject(Object key);
-Object getOrComputeIfAbsent(
-		K key, Function creator);
-
-void put(Object key, Object value)
-
-Object remove(Object key)
-```
-
-Overloads with type tokens exist.
-
-
-=== Stateless Benchmark
-
-```java
-void storeNowAsLaunchTime(
-		ExtensionContext context) {
-	long now = currentTimeMillis();
-	context.getStore(NAMESPACE)
-			.put(KEY, now);
-}
-
-long loadLaunchTime(
-		ExtensionContext context) {
-	return context.getStore(NAMESPACE)
-			.get(KEY, long.class);
-}
-```
-
 === Applying Extensions
 
 How do we apply extensions?
@@ -637,12 +471,10 @@ void testLogin(MyServer server) { ... }
 ++++
 
 * flexibility because of many extension points
-* powerful due to extension context
-* need to be stateless!
 * extensions compose well
 * customizable due to meta-annotations
 
-// (We left out http://blog.codefx.org/design/architecture/junit-5-extension-model/[some details].)
+(We left out http://blog.codefx.org/design/architecture/junit-5-extension-model/[some details].)
 
 ++++
 <p class="fragment current-visible">
