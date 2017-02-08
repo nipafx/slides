@@ -84,7 +84,7 @@ You will also find longer versions there. +
 ++++
 
 
-=== What's New?
+=== Declaring Tests
 
 ```java
 class JUnit5Test {
@@ -97,12 +97,30 @@ class JUnit5Test {
 }
 ```
 
-++++
-<p class="fragment current-visible">⇝ Package visibility suffices!</p>
-++++
+
+=== Disabling Tests
+
+```java
+@Test
+@Disabled("Y U No Pass?!")
+void failingTest() {
+	assertTrue(false);
+}
+```
 
 
-=== What's New?
+=== Seamless Extensions
+
+```java
+@Test
+@DisabledOnFriday
+void failingTest() {
+	assertTrue(false);
+}
+```
+
+
+=== Lifecycle Methods
 
 ```java
 @BeforeAll
@@ -118,43 +136,8 @@ void afterEach() { ... }
 static void afterAll() { ... }
 ```
 
-++++
-<p class="fragment current-visible">⇝ Lifecycle annotations have new names.</p>
-++++
 
-
-=== What's New?
-
-```java
-@Test
-@Disabled("Y U No Pass?!")
-void failingTest() {
-	assertTrue(false);
-}
-```
-
-++++
-<p class="fragment current-visible">⇝ <code>@Ignored</code> is now <code>@Disabled</code>.</p>
-++++
-
-
-=== What's New?
-
-```java
-@Test
-@DisabledOnFriday
-void failingTest() {
-	assertTrue(false);
-}
-```
-
-++++
-<p class="fragment" data-fragment-index="0,1">⇝ Convenient Extensibility.</p>
-<p class="fragment" data-fragment-index="1">But how?</p>
-++++
-
-
-=== What's New?
+=== Basic Assertions
 
 ```java
 @Test
@@ -167,30 +150,8 @@ void someTest() {
 }
 ```
 
-++++
-<p class="fragment current-visible">⇝ Failure message comes last.</p>
-++++
 
-
-=== What's New?
-
-```java
-@Test
-void someTest() {
-	...
-	assertEquals(
-		expected,
-		actual,
-		() -> "Should " + "be " + "equal.");
-}
-```
-
-++++
-<p class="fragment current-visible">⇝ Failure message can be created lazily.</p>
-++++
-
-
-=== What's New?
+=== Advanced Assertions
 
 ```java
 @Test
@@ -206,12 +167,8 @@ void assertAllProperties() {
 }
 ```
 
-++++
-<p class="fragment current-visible">⇝ <code>assertAll</code> gathers results from multiple assertions</p>
-++++
 
-
-=== What's New?
+=== Assert All
 
 Output if `assertAll` fails:
 
@@ -224,29 +181,7 @@ org.opentest4j.MultipleFailuresError:
 ```
 
 
-=== What's New?
-
-```java
-void methodUnderTest() {
-	throw new IllegalStateException();
-}
-
-@Test
-void assertExceptions() {
-	Exception ex = assertThrows(
-		Exception.class,
-		this::methodUnderTest);
-	assertEquals("Msg", ex.getMessage());
-}
-```
-
-++++
-<p class="fragment current-visible">⇝ <code>assertThrows</code> to assert<br>
-	exception type and other properties</p>
-++++
-
-
-=== What's New?
+=== Nesting Tests
 
 ```java
 class CountTest {
@@ -262,12 +197,8 @@ class CountTest {
 }
 ```
 
-++++
-<p class="fragment current-visible">⇝ <code>@Nested</code> to organize tests in inner classes</p>
-++++
 
-
-=== What's New?
+=== Naming Tests
 
 ```java
 @DisplayName("A count")
@@ -282,19 +213,15 @@ class CountTest {
 }
 ```
 
-++++
-<p class="fragment current-visible">⇝ <code>@DisplayName</code> to show a nice name</p>
-++++
 
-
-=== What's new?
+=== Nesting And Naming
 
 The effects of `@Nested` and `@DisplayName`:
 
 image::images/testing-a-stack.png[Nested and DisplayName, 900]
 
 
-=== What's new?
+=== Tests Parameters
 
 ```java
 @Test
@@ -303,26 +230,19 @@ void someTest(MyServer server) {
 }
 ```
 
-++++
-<div class="fragment current-visible">
-	<p>⇝ Test has parameters!</p>
-	<p>But where do they come from?</p>
-</div>
-++++
 
-
-=== What's New?
+=== JUnit 5 Basics
 
 ++++
 <h3>Summary</h3>
 ++++
 
-* lifecycle works much like before
+* test declaration much like before
+* lifecycle much like before
 * many details were improved
 * `@Nested` and `@DisplayName` +
 make a nice couple
 * parameter injection
-* no lambdas (so far)
 
 ++++
 <p class="fragment current-visible">
