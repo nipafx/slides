@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>JUnit 5</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="../_reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="../_reveal.js/css/theme/nipa-night.css" id="theme"><link href="../_reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>document.write( '<link rel="stylesheet" href="../_reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title"><h1>JUnit 5</h1><div class="preamble"><link rel="stylesheet" href="../_highlight.js/styles/monokai-sublime.css">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>JUnit 5</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="../_reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="../_reveal.js/css/theme/nipa-night.css" id="theme"><link href="../_reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>document.write( '<link rel="stylesheet" href="../_reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>JUnit 5</h1><div class="preamble"><link rel="stylesheet" href="../_highlight.js/styles/monokai-sublime.css">
 <script src="../_highlight.js/highlight.pack.js"></script>
 <script>
 	hljs.configure({tabReplace: '    '})
@@ -21,10 +21,10 @@
 		</div>
 	</div>
 	<div class="participant">
-		<img src="images/logo-etc.png" class="logo">
+		<img src="images/logo-frankfurter-entwicklertag.png" class="logo" style="background-color: #2D5352; border-color: #2D5352;">
 		<div class="name">
-			<p><a href="http://europeantestingconference.eu">ETC</a></p>
-			<p><a href="https://twitter.com/hashtag/eurotestconf?src=hash">#EuroTestConf</a></p>
+			<p><a href="https://entwicklertag.de/frankfurt/2017/">FFM Entwicklertag</a></p>
+			<p><a href="https://twitter.com/hashtag/etffm17s">#etffm17</a></p>
 		</div>
 	</div>
 </div>
@@ -39,9 +39,9 @@
 		</p></div>
 	</div>
 	<div class="participant">
-		<img src="images/logo-etc.png" class="logo">
+		<img src="images/logo-frankfurter-entwicklertag.png" class="logo" style="background-color: #2D5352; border-color: #2D5352;">
 		<div class="name">
-			<p><a href="http://europeantestingconference.eu">ETC</a> / <a href="https://twitter.com/hashtag/eurotestconf?src=hash">#EuroTestConf</a></p>
+			<p><a href="https://entwicklertag.de/frankfurt/2017/">FFM Entwicklertag</a> / <a href="https://twitter.com/hashtag/etffm17s">#etffm17</a></p>
 		</div>
 	</div>
 </footer>
@@ -51,13 +51,10 @@
 	})
 </script></div></section>
 <section><section id="_heads_up"><h2>Heads Up</h2><div class="paragraph"><p>JUnit 5 is work in progress!</p></div><div class="paragraph"><p>This is based on <strong>Milestone 3</strong><br>
-(released 30th of November 2016).</p></div><div class="paragraph"><p>Give <strong>feedback</strong>!</p></div></section><section id="_junit_5_links"><h2>JUnit 5 Links:</h2><div class="dlist"><dl><dt class="hdlist1">GitHub repository</dt><dd><p><a href="https://github.com/junit-team/junit5">github.com/junit-team/junit5</a></p></dd><dt class="hdlist1">User guide</dt><dd><p><a href="http://junit.org/junit5/docs/snapshot/user-guide">junit.org/junit5/docs/snapshot/user-guide</a></p></dd><dt class="hdlist1">Twitter</dt><dd><p><a href="https://twitter.com/junitteam">@junitteam</a></p></dd><dt class="hdlist1">Articles on my blog</dt><dd><p><a href="http://blog.codefx.org/tag/junit-5/">blog.codefx.org/tag/junit-5/</a></p></dd></dl></div></section><section id="_public_service_announcement"><h2>Public Service Announcement</h2><div class="paragraph"><p>This is the short version of the talk!</p></div>
-<div class="paragraph"><p>Find the slides under<br>
-<a href="http://slides.codefx.org">slides.codefx.org</a></p></div>
-<div class="paragraph"><p>You will also find longer versions there.<br>
-(Pick one from 2017.)</p></div></section></section>
+(released 30th of November 2016).</p></div><div class="paragraph"><p>Give <strong>feedback</strong>!</p></div></section><section id="_junit_5_links"><h2>JUnit 5 Links:</h2><div class="dlist"><dl><dt class="hdlist1">User guide</dt><dd><p><a href="http://junit.org/junit5/docs/snapshot/user-guide">junit.org/junit5/docs/snapshot/user-guide</a></p></dd><dt class="hdlist1">GitHub repository</dt><dd><p><a href="https://github.com/junit-team/junit5">github.com/junit-team/junit5</a></p></dd><dt class="hdlist1">Twitter</dt><dd><p><a href="https://twitter.com/junitteam">@junitteam</a></p></dd><dt class="hdlist1">Articles on my blog</dt><dd><p><a href="http://blog.codefx.org/tag/junit-5/">blog.codefx.org/tag/junit-5/</a></p></dd><dt class="hdlist1">Slides</dt><dd><p><a href="http://slides.codefx.org">slides.codefx.org</a></p></dd></dl></div></section></section>
 <section><section id="_basics"><h2>Basics</h2><table class="toc">
 	<tr class="toc-current"><td>Basics</td></tr>
+	<tr><td>Dynamic Tests</td></tr>
 	<tr><td>Extensions</td></tr>
 	<tr><td>Architecture</td></tr>
 	<tr><td>Tools &amp; Setup</td></tr>
@@ -138,8 +135,112 @@ make a nice couple</p></li><li><p>parameter injection</p></li></ul></div>
 That's all very nice but how is it<br>
 <i>Next Generation Testing</i>?
 </p></section></section>
+<section><section id="_dynamic_tests"><h2>Dynamic Tests</h2><table class="toc">
+	<tr><td>Basics</td></tr>
+	<tr class="toc-current"><td>Dynamic Tests</td></tr>
+	<tr><td>Extensions</td></tr>
+	<tr><td>Architecture</td></tr>
+	<tr><td>Tools &amp; Setup</td></tr>
+</table></section><section id="_defining_tests"><h2>Defining Tests</h2><div class="paragraph"><p>Up to now tests were identified</p></div>
+<div class="ulist"><ul><li><p>by names<br>
+(<code>test&#8230;&#8203;</code> in JUnit 3 and before)</p></li><li><p>by annotations<br>
+(<code>@Test</code> in JUnit 4 and 5)</p></li></ul></div>
+<div class="paragraph"><p>⇝ Tests had to be known at compile time.</p></div></section><section id="_defining_tests_2"><h2>Defining Tests</h2><div class="paragraph"><p><strong>So what?!</strong></p></div>
+<div class="paragraph"><p>What if we want to create tests</p></div>
+<div class="ulist"><ul><li><p>for a set of parameters</p></li><li><p>based on non-source files</p></li><li><p>with lambdas</p></li></ul></div>
+<div class="paragraph"><p>⇝ We need to define tests at run time.</p></div></section><section id="_dynamic_tests_to_the_rescue"><h2>Dynamic Tests To The Rescue!</h2><div class="paragraph"><p>Allow creation of tests at run time.</p></div>
+<div class="ulist"><ul><li><p>tests are wrapped into <code>DynamicTest</code>-s</p></li><li><p>methods that create them<br>
+are annotated with <code>@TestFactory</code></p></li></ul></div></section><section id="_creating_tests"><h2>Creating Tests</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@TestFactory
+List&lt;DynamicTest&gt; createPointTests() {
+	return Arrays.asList(
+		dynamicTest(
+			"A Great Test For Point",
+			() -&gt; { /* test code */ } ),
+		dynamicTest(
+			"Another Great Test For Point",
+			() -&gt; { /* test code */ } )
+	);
+}</code></pre></div></div></section><section id="_implementation"><h2>Implementation</h2><div class="paragraph"><p>The rest is straight-forward:</p></div>
+<div class="olist arabic"><ol class="arabic"><li><p>JUnit detects <code>@TestFactory</code> methods</p></li><li><p>calls them to generate tests</p></li><li><p>adds tests to the test tree</p></li><li><p>eventually runs them</p></li></ol></div></section><section id="_parameterized_tests"><h2>Parameterized Tests</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">void pointTest(Point p) { /*...*/ }
+
+@TestFactory
+Stream&lt;DynamicText&gt; testingPoints() {
+	return Stream.of(
+			/* create points */)
+		.map(p -&gt;
+			dynamicTest(
+				"Testing " + p,
+				() -&gt; pointTest(p)));
+}</code></pre></div></div></section><section id="_parameterized_tests_2"><h2>Parameterized Tests</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">void pointTest(Point p) { /*...*/ }
+
+@TestFactory
+Stream&lt;DynamicText&gt; testingPoints() {
+	List&lt;Point&gt; points = asList(
+		/* create points */);
+	return DynamicTest.stream(
+		points,
+		p -&gt; "Testing " + p,
+		p -&gt; pointTest(p));
+}</code></pre></div></div></section><section id="_file_based_tests"><h2>File-Based Tests</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">void pointTest(Point p) { /*...*/ }
+
+@TestFactory
+Stream&lt;DynamicText&gt; testingPoints() {
+	return Files
+		.lines(pathToPointFile)
+		.map(Point::parse)
+		.map(p -&gt; dynamicTest(
+			"Testing " + p,
+			() -&gt; pointTest(p)));
+}</code></pre></div></div></section><section id="_lambda_tests"><h2>Lambda Tests</h2><div class="paragraph"><p>So what about lambdas?</p></div>
+<div class="paragraph"><p>This would be great:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">class PointTest {
+
+	"A great test for point" -&gt; {
+		/* test code */
+	}
+
+}</code></pre></div></div>
+<div class="paragraph"><p>But how?</p></div></section><section id="_lambda_tests_2"><h2>Lambda Tests</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class LambdaTest {
+
+	private List&lt;DynamicTest&gt; tests;
+
+	protected void λ(
+			String name, Executable test) {
+		tests.add(dynamicTest(name, test));
+	}
+
+	@TestFactory List&lt;DynamicTest&gt; tests() {
+		return tests;
+	}
+}</code></pre></div></div></section><section id="_lambda_tests_3"><h2>Lambda Tests</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">class PointTest extends LambdaTest {{
+
+	λ("A Great Test For Point", () -&gt; {
+		/* test code goes here */
+	});
+
+}}</code></pre></div></div>
+<div class="ulist"><ul><li><p>the inner braces create
+an <a href="https://reinhard.codes/2016/07/30/double-brace-initialisation-and-java-initialisation-blocks/">initialization block</a></p></li><li><p>code therein is run during construction</p></li><li><p>JUnit will pick up the tests by calling <code>tests()</code></p></li></ul></div></section><section id="_lambda_tests_4"><h2>Lambda Tests</h2><div class="paragraph"><p>While we&#8217;re hacking&#8230;&#8203; what about this?</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">class PointTest extends LambdaTest {{
+
+	λ(a_great_test_for_point -&gt; {
+		/* test code goes here */
+	});
+
+}}</code></pre></div></div>
+<div class="paragraph"><p>Learn how to access<br>
+a lambda&#8217;s parameter name<br>
+with
+<a href="http://benjiweber.co.uk/blog/2015/08/17/lambda-parameter-names-with-reflection/">this one weird trick</a>.</p></div></section><section id="_dynamic_tests_2"><h2>Dynamic Tests</h2><h3>Summary</h3>
+<div class="ulist"><ul><li><p>with <code>@TestFactory</code> and <code>DynamicTest</code><br>
+we can create tests at run time:</p><div class="ulist"><ul><li><p>for sets of parameters</p></li><li><p>based on external input</p></li><li><p>as lambdas (yay!)</p></li></ul></div></li><li><p>not fully integrated in lifecycle (yet? <a href="https://github.com/junit-team/junit5/issues/378">#378</a>)</p></li></ul></div>
+<p class="fragment current-visible">
+That's all very nice but is this already<br>
+<i>Next Generation Testing</i>?
+</p></section></section>
 <section><section id="_extensions"><h2>Extensions</h2><table class="toc">
 	<tr><td>Basics</td></tr>
+	<tr><td>Dynamic Tests</td></tr>
 	<tr class="toc-current"><td>Extensions</td></tr>
 	<tr><td>Architecture</td></tr>
 	<tr><td>Tools &amp; Setup</td></tr>
@@ -236,6 +337,7 @@ That's all very nice but how is it<br>
 </p></section></section>
 <section><section id="_architecture"><h2>Architecture</h2><table class="toc">
 	<tr><td>Basics</td></tr>
+	<tr><td>Dynamic Tests</td></tr>
 	<tr><td>Extensions</td></tr>
 	<tr class="toc-current"><td>Architecture</td></tr>
 	<tr><td>Tools &amp; Setup</td></tr>
@@ -253,7 +355,7 @@ That's all very nice but how is it<br>
 (<a href="https://jaxenter.com/crowdfunding-for-junit-lambda-is-underway-119546.html">Johannes Link</a>)</p></div></blockquote></div></section><section id="_approach_in_junit_5"><h2>Approach in JUnit 5</h2><div class="paragraph"><p>Separation of concerns:</p></div>
 <div class="olist arabic"><ol class="arabic"><li><p>an API to write tests against</p></li><li><p>a mechanism to discover and run tests</p></li><li><p>an API for tools to run tests</p></li></ol></div></section><section id="_approach_in_junit_5_2"><h2>Approach in JUnit 5</h2><div class="paragraph"><p>Separation of concerns V 2.0:</p></div>
 <div class="olist arabic"><ol class="arabic"><li><p>an API to write tests against</p></li><li><p>a mechanism to discover and run tests</p><div class="olist loweralpha"><ol class="loweralpha" type="a"><li><p>specific engine per variant of tests<br>
-(e.g. JUnit 4 or JUnit 5)</p></li><li><p>orchestration of engines</p></li><li><p>API between them</p></li></ol></div></li><li><p>an API for tools to run tests</p></li></ol></div></section><section id="_junit_5_modules"><h2>JUnit 5 Modules</h2><div class="imageblock" style=""><img src="images/architecture-limited-lean.png" alt="architecture limited lean" width="500"></div></section><section id="_subprojects_modules"><h2>Subprojects &amp; Modules</h2><div class="dlist"><dl><dt class="hdlist1">JUnit Jupiter 5.0.0-M3</dt><dd><div class="ulist"><ul><li><p><code>junit-jupiter-api</code></p></li><li><p><code>junit-jupiter-engine</code></p></li></ul></div></dd><dt class="hdlist1">JUnit Vintage 4.12.0-M3</dt><dd><div class="ulist"><ul><li><p><code>junit-vintage-engine</code></p></li></ul></div></dd><dt class="hdlist1">JUnit Platform 1.0.0-M3</dt><dd><div class="ulist"><ul><li><p><code>junit-platform-engine</code></p></li><li><p><code>junit-platform-runner</code></p></li><li><p>a lot more</p></li></ul></div></dd></dl></div></section><section id="_architecture_2"><h2>Architecture</h2><h3>Summary</h3>
+(e.g. JUnit 4 or JUnit 5)</p></li><li><p>orchestration of engines</p></li><li><p>API between them</p></li></ol></div></li><li><p>an API for tools to run tests</p></li></ol></div></section><section id="_subprojects_modules"><h2>Subprojects &amp; Modules</h2><div class="dlist"><dl><dt class="hdlist1">JUnit Jupiter 5.0.0-M3</dt><dd><div class="ulist"><ul><li><p><code>junit-jupiter-api</code></p></li><li><p><code>junit-jupiter-engine</code></p></li></ul></div></dd><dt class="hdlist1">JUnit Vintage 4.12.0-M3</dt><dd><div class="ulist"><ul><li><p><code>junit-vintage-engine</code></p></li></ul></div></dd><dt class="hdlist1">JUnit Platform 1.0.0-M3</dt><dd><div class="ulist"><ul><li><p><code>junit-platform-engine</code></p></li><li><p><code>junit-platform-runner</code></p></li><li><p>a lot more</p></li></ul></div></dd></dl></div></section><section id="_junit_5_modules"><h2>JUnit 5 Modules</h2><div class="imageblock" style=""><img src="images/architecture-limited-lean.png" alt="architecture limited lean" width="500"></div></section><section id="_architecture_2"><h2>Architecture</h2><h3>Summary</h3>
 <div class="ulist"><ul><li><p>clear separation of concerns</p></li><li><p>API for developers</p></li><li><p>API for tools</p></li></ul></div>
 <p class="fragment" data-fragment-index="0">
 That's all very nice but how is it<br>
@@ -277,6 +379,7 @@ and new frameworks</p></li><li><p>opens up the platform</p></li><li><p>tool supp
 <div class="paragraph"><p>(There&#8217;s <a href="http://blog.codefx.org/design/architecture/junit-5-architecture/">even more</a> to the story.)</p></div></section></section>
 <section><section id="_tools_setup"><h2>Tools &amp; Setup</h2><table class="toc">
 	<tr><td>Basics</td></tr>
+	<tr><td>Dynamic Tests</td></tr>
 	<tr><td>Extensions</td></tr>
 	<tr><td>Architecture</td></tr>
 	<tr class="toc-current"><td>Tools &amp; Setup</td></tr>
