@@ -76,6 +76,7 @@ You will also find longer versions there. +
 ++++
 <table class="toc">
 	<tr class="toc-current"><td>Basics</td></tr>
+	<tr><td>Dynamic Tests</td></tr>
 	<tr><td>Extensions</td></tr>
 	<tr><td>Architecture</td></tr>
 	<tr><td>Tools &amp; Setup</td></tr>
@@ -252,6 +253,235 @@ That's all very nice but how is it<br>
 
 
 
+// ######################### //
+// D Y N A M I C   T E S T S //
+// ######################### //
+
+
+[data-state="no-title"]
+== Dynamic Tests
+
+++++
+<table class="toc">
+	<tr><td>Basics</td></tr>
+	<tr class="toc-current"><td>Dynamic Tests</td></tr>
+	<tr><td>Extensions</td></tr>
+	<tr><td>Architecture</td></tr>
+	<tr><td>Tools &amp; Setup</td></tr>
+</table>
+++++
+
+
+=== Defining Tests
+
+Up to now tests were identified
+
+* by names +
+(`test...` in JUnit 3 and before)
+* by annotations +
+(`@Test` in JUnit 4 and 5)
+
+⇝ Tests had to be known at compile time.
+
+
+=== Defining Tests
+
+*So what?!*
+
+What if we want to create tests
+
+* for a set of parameters
+* based on non-source files
+* with lambdas
+
+⇝ We need to define tests at run time.
+
+
+=== Dynamic Tests To The Rescue!
+
+Allow creation of tests at run time.
+
+* tests are wrapped into `DynamicTest`-s
+* methods that create them +
+are annotated with `@TestFactory`
+
+
+=== Creating Tests
+
+```java
+@TestFactory
+List<DynamicTest> createPointTests() {
+	return Arrays.asList(
+		dynamicTest(
+			"A Great Test For Point",
+			() -> { /* test code */ } ),
+		dynamicTest(
+			"Another Great Test For Point",
+			() -> { /* test code */ } )
+	);
+}
+```
+
+
+=== Implementation
+
+The rest is straight-forward:
+
+. JUnit detects `@TestFactory` methods
+. calls them to generate tests
+. adds tests to the test tree
+. eventually runs them
+
+
+=== Parameterized Tests
+
+```java
+void pointTest(Point p) { /*...*/ }
+
+@TestFactory
+Stream<DynamicText> testingPoints() {
+	return Stream.of(
+			/* create points */)
+		.map(p ->
+			dynamicTest(
+				"Testing " + p,
+				() -> pointTest(p)));
+}
+```
+
+
+=== Parameterized Tests
+
+```java
+void pointTest(Point p) { /*...*/ }
+
+@TestFactory
+Stream<DynamicText> testingPoints() {
+	List<Point> points = asList(
+		/* create points */);
+	return DynamicTest.stream(
+		points,
+		p -> "Testing " + p,
+		p -> pointTest(p));
+}
+```
+
+
+=== File-Based Tests
+
+```java
+void pointTest(Point p) { /*...*/ }
+
+@TestFactory
+Stream<DynamicText> testingPoints() {
+	return Files
+		.lines(pathToPointFile)
+		.map(Point::parse)
+		.map(p -> dynamicTest(
+			"Testing " + p,
+			() -> pointTest(p)));
+}
+```
+
+
+=== Lambda Tests
+
+So what about lambdas?
+
+This would be great:
+
+```java
+class PointTest {
+
+	"A great test for point" -> {
+		/* test code */
+	}
+
+}
+```
+
+But how?
+
+
+=== Lambda Tests
+
+```java
+public class LambdaTest {
+
+	private List<DynamicTest> tests;
+
+	protected void λ(
+			String name, Executable test) {
+		tests.add(dynamicTest(name, test));
+	}
+
+	@TestFactory List<DynamicTest> tests() {
+		return tests;
+	}
+}
+```
+
+
+=== Lambda Tests
+
+```java
+class PointTest extends LambdaTest {{
+
+	λ("A Great Test For Point", () -> {
+		/* test code goes here */
+	});
+
+}}
+```
+
+* the inner braces create
+ an https://reinhard.codes/2016/07/30/double-brace-initialisation-and-java-initialisation-blocks/[initialization block]
+* code therein is run during construction
+* JUnit will pick up the tests by calling `tests()`
+
+
+=== Lambda Tests
+
+While we're hacking... what about this?
+
+```java
+class PointTest extends LambdaTest {{
+
+	λ(a_great_test_for_point -> {
+		/* test code goes here */
+	});
+
+}}
+```
+
+Learn how to access +
+a lambda's parameter name +
+with
+http://benjiweber.co.uk/blog/2015/08/17/lambda-parameter-names-with-reflection/[this one weird trick].
+
+
+=== Dynamic Tests
+
+++++
+<h3>Summary</h3>
+++++
+
+* with `@TestFactory` and `DynamicTest` +
+we can create tests at run time:
+** for sets of parameters
+** based on external input
+** as lambdas (yay!)
+* not fully integrated in lifecycle (yet? https://github.com/junit-team/junit5/issues/378[#378])
+
+++++
+<p class="fragment current-visible">
+That's all very nice but is this already<br>
+<i>Next Generation Testing</i>?
+</p>
+++++
+
+
+
 // ################### //
 // E X T E N S I O N S //
 // ################### //
@@ -263,6 +493,7 @@ That's all very nice but how is it<br>
 ++++
 <table class="toc">
 	<tr><td>Basics</td></tr>
+	<tr><td>Dynamic Tests</td></tr>
 	<tr class="toc-current"><td>Extensions</td></tr>
 	<tr><td>Architecture</td></tr>
 	<tr><td>Tools &amp; Setup</td></tr>
@@ -496,6 +727,7 @@ That's all very nice but how is it<br>
 ++++
 <table class="toc">
 	<tr><td>Basics</td></tr>
+	<tr><td>Dynamic Tests</td></tr>
 	<tr><td>Extensions</td></tr>
 	<tr class="toc-current"><td>Architecture</td></tr>
 	<tr><td>Tools &amp; Setup</td></tr>
@@ -666,6 +898,7 @@ and new frameworks
 ++++
 <table class="toc">
 	<tr><td>Basics</td></tr>
+	<tr><td>Dynamic Tests</td></tr>
 	<tr><td>Extensions</td></tr>
 	<tr><td>Architecture</td></tr>
 	<tr class="toc-current"><td>Tools &amp; Setup</td></tr>
