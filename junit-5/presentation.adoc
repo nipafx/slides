@@ -563,11 +563,6 @@ Separation of concerns V 2.0:
 . an API for tools to run tests
 
 
-=== JUnit 5 Modules
-
-image::images/architecture-limited-lean.png[style="diagram",500]
-
-
 === Subprojects & Modules
 
 JUnit Jupiter 5.0.0-M3::
@@ -579,6 +574,11 @@ JUnit Platform 1.0.0-M3::
 * `junit-platform-engine`
 * `junit-platform-runner`
 * a lot more
+
+
+=== JUnit 5 Modules
+
+image::images/architecture-limited-lean.png[style="diagram",500]
 
 
 === Architecture
