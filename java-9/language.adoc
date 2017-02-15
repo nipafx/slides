@@ -48,3 +48,52 @@ Just like private methods in abstract classes:
 * can not be overriden
 * can only be called in same source file
 
+
+
+== New Language Features
+
+[toc]
+
+Making `try`-with-resources blocks cleaner.
+
+=== Useless Variable
+
+```java
+void doSomethingWith(Connection connection)
+		throws Exception {
+	try(Connection c = connection) {
+		c.doSomething();
+	}
+}
+```
+
+Why is `c` necessary?
+
+=== Why is `c` necessary?
+
+* target of `close()` must be obvious +
+⇝ resource should not be reassigned
+* easiest if resource is final
+* easiest if resource must be assigned +
+and can be made implicitly final
+
+```java
+try(Connection c = connection)
+```
+
+=== Effectively Final Resource
+
+But since Java 8 we have _effectively final_!
+
+```java
+void doSomethingWith(Connection connection)
+		throws Exception {
+	try(connection) {
+		connection.doSomething();
+	}
+}
+
+```
+
+* compiler knows that `connection` is not reassigned
+* developers know what _effectively final_ means
