@@ -2,15 +2,15 @@
 ++++
 <div class="event">
 	<div class="participant">
-		<img src="images/logo-nipa-face.png" class="logo">
+		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
 		<div class="name">
-			<p>Nicolai Parlog</p>
+			<p><a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a></p>
 			<p><a href="http://codefx.org">codefx.org</a>
 				/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a></p>
 		</div>
 	</div>
 	<div class="participant">
-		<img src="{host-logo-url}" class="logo" style="{host-logo-style}">
+		<a href="{host-url}"><img src="{host-logo-url}" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
 			<p><a href="{host-url}">{host-name}</a></p>
 			<p><a href="{host-twitter-url}">{host-twitter-name}</a></p>
@@ -20,15 +20,15 @@
 <!-- Just adding a footer does not work because reveal.js puts it into the slides and we couldn't get it out via CSS. So we move it via JavaScript. -->
 <footer>
 	<div class="participant">
-		<img src="images/logo-nipa-face.png" class="logo">
+		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
 		<div class="name"><p>
-			Nicolai Parlog
+			<a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a>
 			/ <a href="http://codefx.org">codefx.org</a>
 			/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a>
 		</p></div>
 	</div>
 	<div class="participant">
-		<img src="{host-logo-url}" class="logo" style="{host-logo-style}">
+		<a href="{host-url}"><img src="{host-logo-url}" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
 			<p><a href="{host-url}">{host-name}</a> / <a href="{host-twitter-url}">{host-twitter-name}</a></p>
 		</div>
