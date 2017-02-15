@@ -2,8 +2,11 @@
 <link rel="stylesheet" href="../_highlight.js/styles/monokai-sublime.css">
 <script src="../_highlight.js/highlight.pack.js"></script>
 <script>
-	hljs.configure({tabReplace: '    '})
 	window.onload = function() {
+		hljs.configure({
+			tabReplace: '    ',
+			languages: [ 'java' ]
+		})
 		var codes = document.getElementsByTagName('code');
 		for(var i = 0; i < codes.length; i++) {
 			hljs.highlightBlock(codes.item(i));
