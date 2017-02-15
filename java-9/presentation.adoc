@@ -1,0 +1,66 @@
+= Java 9 Is Coming!
+:backend: revealjs
+:revealjs_theme: nipa-night
+:revealjsdir: ../_reveal.js
+:revealjs_controls: false
+:revealjs_progress: false
+:revealjs_slideNumber: false
+:revealjs_history: true
+:revealjs_center: true
+:revealjs_transition: slide
+:revealjs_backgroundTransition: fade
+:revealjs_parallaxBackgroundImage: images/9-dark.jpg
+:revealjs_parallaxBackgroundSize: 2560px 1440px
+
+[[TODO, check why imagedir does not work]]
+:imagedir: images
+
+include::../_shared/highlight.js.adoc[]
+
+:host-name: Zürich
+:host-url: https://voxxeddays.com/zurich/
+:host-logo-url: images/logo-voxxed-days-zuerich.png
+:host-logo-style: background-color: #111; border-color: #FFF;
+:host-twitter-name: #VDZ17
+:host-twitter-url: https://twitter.com/hashtag/VDZ17
+include::../_shared/event-on-title-and-footer.adoc[]
+
+
+
+// ####################### //
+// P R E S E N T A T I O N //
+// ####################### //
+
+== Public Service Announcement
+
+* Java 9 release: 27th July
+* there are much more features +
+than fit into this talk
+* if you're shy, tweet questions +
+with https://twitter.com/search?q=%23vdz17%20%40nipafx[#VDZ17 @nipafx]
+* slides at http://slides.codefx.org/[slides.codefx.org]
+
+include::jpms.adoc[]
+
+include::language.adoc[]
+
+include::apis.adoc[]
+
+
+
+// ######### //
+// O U T R O //
+// ######### //
+
+== Questions?
+
+include::../_shared/about-slide.adoc[]
+
+== Image Credits
+
+* bubbles:
+https://www.flickr.com/photos/elwillo/[Keith Williamson]
+(https://creativecommons.org/licenses/by/2.0/[CC-BY 2.0])
+* question-mark:
+http://milosevicmilos.com/[Milos Milosevic]
+(https://creativecommons.org/licenses/by/2.0/[CC-BY 2.0])
