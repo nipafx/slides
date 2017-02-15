@@ -1,1 +1,50 @@
 == New Language Features
+
+[toc]
+
+
+
+== New Language Features
+
+[toc]
+
+Enabling reuse between default methods.
+
+=== No Reuse
+
+```java
+public interface InJava8 {
+
+	default boolean evenSum(int... numbers) {
+		return sum(numbers) % 2 == 0;
+	}
+
+	default boolean oddSum(int... numbers) {
+		return sum(numbers) % 2 == 1;
+	}
+
+	default int sum(int[] numbers) {
+		return IntStream.of(numbers).sum();
+	}
+
+}
+```
+
+=== Private Interface Methods
+
+```java
+public interface InJava9 {
+
+	private int sum(int[] numbers) {
+		return IntStream.of(numbers).sum();
+	}
+
+}
+```
+
+Just like private methods in abstract classes:
+
+* must be implemented
+* can not be overriden
+* can only be called in same source file
+
