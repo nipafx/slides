@@ -97,3 +97,197 @@ void doSomethingWith(Connection connection)
 
 * compiler knows that `connection` is not reassigned
 * developers know what _effectively final_ means
+
+
+
+== New Language Features
+
+[toc]
+
+A little more type inference.
+
+=== Diamond Operator
+
+Maybe the best example:
+
+```java
+List<String> strings = new ArrayList<>();
+```
+
+* used at a constructor call
+* tells Java to infer the parametric type
+
+
+=== Anonymous Classes
+
+Diamond did not work with anon. classes:
+
+```java
+<T> Box<T> createBox(T content) {
+	// we have to put the `T` here :(
+	return new Box<T>(content) { };
+}
+```
+
+Reason are non-denotable types:
+
+* might be inferred by compiler for anon. classes
+* can not be expressed by JVM
+
+=== Infer Denotable Types
+
+Java 9 infers denotable types:
+
+```java
+<T> Box<T> createBox(T content) {
+	return new Box<>(content) { };
+}
+```
+
+Gives compile error if type is non-denotable:
+
+```java
+Box<?> createCrazyBox(Object content) {
+	List<?> innerList = Arrays.asList(content);
+	// compile error
+	return new Box<>(innerList) { };
+}
+```
+
+
+
+== New Language Features
+
+[toc]
+
+One less warning +
+you couldn't do anything about.
+
+=== Heap Pollution
+
+Some innocent looking code...
+
+```java
+private <T> Optional<T> firstNonNull(T... args) {
+	return stream(args)
+			.filter(Objects::nonNull)
+			.findFirst();
+}
+```
+
+Compiler warns (on call site, too):
+
+```
+Possible heap pollution from parameterized vararg type
+```
+
+=== Heap Pollution?
+
+For generic varargs argument `T... args`, +
+you *must not* depend on it being a `T[]`!
+
+```java
+private <T> T[] replaceTwoNulls(
+		T value, T first, T second) {
+	return replaceAllNulls(value, first, second);
+}
+
+private <T> T[] replaceAllNulls(T value, T... args) {
+	// loop over `args`, replacing null with `value`
+	return args;
+}
+```
+
+=== Compiler Warning
+
+Compiler is aware of the problem and warns you.
+
+If you think, everything's under control:
+
+```java
+@SafeVarargs
+private <T> Optional<T> firstNonNull(T... args) {
+	return // [...]
+}
+```
+
+Or not... In Java 8 this is a compile error!
+
+```
+Invalid SafeVarargs annotation. Instance method
+<T>firstNonNull(T...) is not final.
+```
+
+=== But Why?
+
+The `@SafeVarargs` annotation:
+
+* tells the caller that all is fine
+* only makes sense on methods +
+that can not be overriden
+
+Which methods can't be overriden? +
+⇝ `final` methods
+
+What about `private` methods? +
+⇝ Damn! 😭
+
+=== @SafeVarargs on Private&nbsp;Methods
+
+Looong story, here's the point:
+
+In Java 9 `@SafeVarargs` +
+can be applied to private methods.
+
+
+
+== New Language Features
+
+[toc]
+
+_Another_ warning +
+you couldn't do anything about.
+
+=== Deprecation Warnings
+
+Should this code emit a warning?
+
+++++
+<div style="height: 350px;">
+<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">// LineNumberInputStream is deprecated
+<span class="hljs-keyword">import</span> java.io.LineNumberInputStream;
+
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DeprecatedImports</span> </span>{
+
+    LineNumberInputStream stream;
+
+}</code></pre></div></div>
+<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">// LineNumberInputStream is deprecated
+<span class="hljs-keyword">import</span> java.io.LineNumberInputStream;
+
+<span class="hljs-meta">@Deprecated</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DeprecatedImports</span> </span>{
+
+    LineNumberInputStream stream;
+
+}</code></pre></div></div></div>
+++++
+
+=== Not On Imports
+
+Java 9 no longer emits warnings +
+for importing deprecated members.
+
+Warning free:
+
+```java
+import java.io.LineNumberInputStream;
+
+@Deprecated
+public class DeprecatedImports {
+
+	LineNumberInputStream stream;
+
+}
+```
