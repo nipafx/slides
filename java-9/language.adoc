@@ -1,12 +1,28 @@
 == New Language Features
 
-[toc]
+++++
+<table class="toc">
+	<tr><td>Private Interface Methods</td></tr>
+	<tr><td>Try-With-Resources</td></tr>
+	<tr><td>Diamond Operator</td></tr>
+	<tr><td>SafeVarargs</td></tr>
+	<tr><td>Deprecation Warnings</td></tr>
+</table>
+++++
 
 
 
 == New Language Features
 
-[toc]
+++++
+<table class="toc">
+	<tr class="toc-current"><td>Private Interface Methods</td></tr>
+	<tr><td>Try-With-Resources</td></tr>
+	<tr><td>Diamond Operator</td></tr>
+	<tr><td>SafeVarargs</td></tr>
+	<tr><td>Deprecation Warnings</td></tr>
+</table>
+++++
 
 Enabling reuse between default methods.
 
@@ -52,7 +68,15 @@ Just like private methods in abstract classes:
 
 == New Language Features
 
-[toc]
+++++
+<table class="toc">
+	<tr><td>Private Interface Methods</td></tr>
+	<tr class="toc-current"><td>Try-With-Resources</td></tr>
+	<tr><td>Diamond Operator</td></tr>
+	<tr><td>SafeVarargs</td></tr>
+	<tr><td>Deprecation Warnings</td></tr>
+</table>
+++++
 
 Making `try`-with-resources blocks cleaner.
 
@@ -85,6 +109,8 @@ try(Connection c = connection)
 
 But since Java 8 we have _effectively final_!
 
+This works in Java 9:
+
 ```java
 void doSomethingWith(Connection connection)
 		throws Exception {
@@ -102,7 +128,15 @@ void doSomethingWith(Connection connection)
 
 == New Language Features
 
-[toc]
+++++
+<table class="toc">
+	<tr><td>Private Interface Methods</td></tr>
+	<tr><td>Try-With-Resources</td></tr>
+	<tr class="toc-current"><td>Diamond Operator</td></tr>
+	<tr><td>SafeVarargs</td></tr>
+	<tr><td>Deprecation Warnings</td></tr>
+</table>
+++++
 
 A little more type inference.
 
@@ -158,10 +192,17 @@ Box<?> createCrazyBox(Object content) {
 
 == New Language Features
 
-[toc]
+++++
+<table class="toc">
+	<tr><td>Private Interface Methods</td></tr>
+	<tr><td>Try-With-Resources</td></tr>
+	<tr><td>Diamond Operator</td></tr>
+	<tr class="toc-current"><td>SafeVarargs</td></tr>
+	<tr><td>Deprecation Warnings</td></tr>
+</table>
+++++
 
-One less warning +
-you couldn't do anything about.
+One less warning you couldn't do anything about.
 
 === Heap Pollution
 
@@ -214,15 +255,15 @@ private <T> Optional<T> firstNonNull(T... args) {
 Or not... In Java 8 this is a compile error!
 
 ```
-Invalid SafeVarargs annotation. Instance method
-<T>firstNonNull(T...) is not final.
+Invalid SafeVarargs annotation. Instance
+method <T>firstNonNull(T...) is not final.
 ```
 
 === But Why?
 
 The `@SafeVarargs` annotation:
 
-* tells the caller that all is fine
+* tells _the caller_ that all is fine
 * only makes sense on methods +
 that can not be overriden
 
@@ -243,10 +284,17 @@ can be applied to private methods.
 
 == New Language Features
 
-[toc]
+++++
+<table class="toc">
+	<tr><td>Private Interface Methods</td></tr>
+	<tr><td>Try-With-Resources</td></tr>
+	<tr><td>Diamond Operator</td></tr>
+	<tr><td>SafeVarargs</td></tr>
+	<tr class="toc-current"><td>Deprecation Warnings</td></tr>
+</table>
+++++
 
-_Another_ warning +
-you couldn't do anything about.
+_Another_ warning you couldn't do anything about.
 
 === Deprecation Warnings
 
