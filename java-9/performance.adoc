@@ -1,0 +1,167 @@
+== Performance
+
+++++
+<table class="toc">
+	<tr><td>Compact Strings</td></tr>
+	<tr><td>Indified String Concatenation</td></tr>
+	<tr><td>A Mixed Bag</td></tr>
+</table>
+++++
+
+
+
+== Compact Strings
+
+++++
+<table class="toc">
+	<tr class="toc-current"><td>Compact Strings</td></tr>
+	<tr><td>Indified String Concatenation</td></tr>
+	<tr><td>A Mixed Bag</td></tr>
+</table>
+++++
+
+Going from UTF-16 to ISO-8859-1.
+
+=== Strings and memory
+
+* 20% - 30% of heap are `char[]` for `String`
+* a `char` is UTF-16 code unit ⇝ 2 bytes
+* most strings only require ISO-8859-1 ⇝ 1 byte
+
+*10% - 15% of memory is wasted!*
+
+=== Compact Strings
+
+For Java 9, `String` was changed:
+
+* uses `byte[]` instead of `char[]`
+* bytes per character:
+** 1 if _all_ characters are ISO-8859-1
+** 2 otherwise
+
+Only possible because `String` makes +
+defensive copies of all arguments.
+
+=== Performance
+
+Simple benchmark: +
+(by https://twitter.com/shipilev[Aleksey Shipilëv])
+
+```java
+String method = generateString(size);
+
+public String work() {
+	return "Calling method \"" + method + "\"";
+}
+```
+
+Depending on circumstances:
+
+* throughput 1.4x
+* garbage less 1.85x
+
+
+
+== Indified String Concatenation
+
+++++
+<table class="toc">
+	<tr><td>Compact Strings</td></tr>
+	<tr class="toc-current"><td>Indified String Concatenation</td></tr>
+	<tr><td>A Mixed Bag</td></tr>
+</table>
+++++
+
+
+`"Improving" + "String" + "Concatenation"`
+
+=== String Concatenation
+
+What happens when you run:
+
+```java
+String s = greeting + ", " + place + "!";
+```
+
+* bytecode uses `StringBuilder`
+* JIT may (!) recognize and optimize +
+by writing content directly to new `char[]`
+* breaks down quickly +
+(e.g. with `long` or `double`)
+
+=== Why Not Create Better Bytecode?
+
+* new optimizations create new bytecode
+* new optimizations require recompile
+* test matrix _JVMs vs bytecodes_ explodes
+
+=== Why Not Call `String::concat`?
+
+There is no such method.
+
+* `concat(String... args)` requires `toString`
+* `concat(Object... args)` requires boxing
+
+Nothing fancy can be done +
+because compiler must use public API.
+
+=== Invokedynamic
+
+Invokedynamic came in Java 7:
+
+* compiler creates a recipe
+* runtime has to process it
+* defers decisions from compiler to runtime
+
+(Used for lambda expressions and in Nashorn.)
+
+=== Indy To The Rescue
+
+With Indy compiler can express +
+_"concat these things"_ +
+(without boxing!)
+
+JVM executes by writing content +
+directly to new `char[]`.
+
+=== Performance
+
+Depending on circumstances:
+
+* throughput 2.6x
+* garbage less 3.4x
+
+(Benchmarks by https://twitter.com/shipilev[Aleksey Shipilëv])
+
+=== Performance Of Indified Compact String Concat
+
+Depending on circumstances:
+
+* throughput 2.9x
+* garbage less 6.4x
+
+(Benchmarks by https://twitter.com/shipilev[Aleksey Shipilëv])
+
+
+
+== A Mixed Bag
+
+++++
+<table class="toc">
+	<tr><td>Compact Strings</td></tr>
+	<tr><td>Indified String Concatenation</td></tr>
+	<tr class="toc-current"><td>A Mixed Bag</td></tr>
+</table>
+++++
+
+
+A few, less universal improvements.
+
+=== More Improvements
+
+* something with interned strings +
+and class data sharing (http://openjdk.java.net/jeps/250[JEP 250])
+* contested locks (http://openjdk.java.net/jeps/143[JEP 143])
+* security manager (http://openjdk.java.net/jeps/232[JEP 232])
+* GHASH/RSA computation (http://openjdk.java.net/jeps/246[JEP 246])
+* Java 2D rendering (http://openjdk.java.net/jeps/265[JEP 265])
