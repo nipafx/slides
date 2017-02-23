@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>The Java 9 Module System In Action</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="../_reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="../_reveal.js/css/theme/nipa-night.css" id="theme"><link href="../_reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>document.write( '<link rel="stylesheet" href="../_reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title"><h1>The Java 9 Module System In Action</h1><div class="preamble"><style>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>The Java 9 Module System In Action</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="../_reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="../_reveal.js/css/theme/nipa-night.css" id="theme"><link href="../_reveal.js/lib/css/zenburn.css" rel="stylesheet"><script type="text/javascript">document.write( '<link rel="stylesheet" href="../_reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>The Java 9 Module System In Action</h1><div class="preamble"><style>
 .reveal .title h1 {
 	font-size: 3.5em;
 }
@@ -6,20 +6,29 @@
 <link rel="stylesheet" href="../_highlight.js/styles/monokai-sublime.css">
 <script src="../_highlight.js/highlight.pack.js"></script>
 <script>
-	hljs.initHighlightingOnLoad();
-	hljs.configure({tabReplace: '    '})
+	window.onload = function() {
+		hljs.configure({
+			tabReplace: '    ',
+			languages: [ 'java' ]
+		})
+		var codes = document.getElementsByTagName('code');
+		for(var i = 0; i < codes.length; i++) {
+			hljs.highlightBlock(codes.item(i));
+		}
+		hljs.initHighlightingOnLoad();
+	}
 </script>
 <div class="event">
 	<div class="participant">
-		<img src="images/logo-nipa-face.png" class="logo">
+		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
 		<div class="name">
-			<p>Nicolai Parlog</p>
+			<p><a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a></p>
 			<p><a href="http://codefx.org">codefx.org</a>
 				/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a></p>
 		</div>
 	</div>
 	<div class="participant">
-		<img src="images/logo-devfest-ka.png" class="logo">
+		<a href="http://www.devfestka.de"><img src="images/logo-devfest-ka.png" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
 			<p><a href="http://www.devfestka.de">DEVFEST KA</a></p>
 			<p><a href="https://twitter.com/hashtag/devfestka?src=hash">#devfestka</a></p>
@@ -29,15 +38,15 @@
 <!-- Just adding a footer does not work because reveal.js puts it into the slides and we couldn't get it out via CSS. So we move it via JavaScript. -->
 <footer>
 	<div class="participant">
-		<img src="images/logo-nipa-face.png" class="logo">
+		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
 		<div class="name"><p>
-			Nicolai Parlog
+			<a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a>
 			/ <a href="http://codefx.org">codefx.org</a>
 			/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a>
 		</p></div>
 	</div>
 	<div class="participant">
-		<img src="images/logo-devfest-ka.png" class="logo">
+		<a href="http://www.devfestka.de"><img src="images/logo-devfest-ka.png" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
 			<p><a href="http://www.devfestka.de">DEVFEST KA</a> / <a href="https://twitter.com/hashtag/devfestka?src=hash">#devfestka</a></p>
 		</div>
@@ -229,19 +238,21 @@ in the JDK / JRE folder?</p></li><li><p>search for casts to <code>URLClassLoader
 <div class="ulist"><ul><li><p>get your code in shape<br>
 (and prevent relapses)</p></li><li><p>check your dependencies and tools</p></li><li><p>if any are suspicious<br>
 (automatically true for IDEs, build tools):</p><div class="ulist"><ul><li><p>make sure they&#8217;re alive</p></li><li><p><strong>get them up to date!</strong></p></li><li><p>or look for alternatives</p></li></ul></div></li><li><p>get an <a href="https://jdk9.java.net/">EA-build</a> and <strong>try it!</strong></p></li></ul></div></section></section>
-<section id="_questions" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>Questions?</h2>
+<section id="_about_me" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>About Me</h2>
 <div style="float: left;">
-	<img src="images/jmsia-cover.png" width="85%">
+	<img src="images/cover-j9ms.png" width="90%">
 </div>
-<h3>Find Me</h3>
-<div class="paragraph"><p><a href="http://codefx.org">codefx.org</a><br>
+<div class="paragraph"><p>Nicolai Parlog<br>
+<a href="http://codefx.org">codefx.org</a><br>
 <a href="https://sitepoint.com/java">sitepoint.com/java</a><br>
 <a href="https://twitter.com/nipafx">@nipafx</a> /
 <a href="https://google.com/+NicolaiParlog">+NicolaiParlog</a></p></div>
 <h3>Want More?</h3>
-<div class="paragraph"><p>2-day course with 42talents<br>
-Zürich, 20.04. - 21.04.2017<br></p></div>
-<div class="paragraph"><p>or buy <a href="http://blog.codefx.org/java-module-system-in-action/">my book</a></p></div>
+<div class="paragraph"><p>I&#8217;m writing <a href="http://blog.codefx.org/java-module-system-in-action/">a book</a>!<br>
+EA soon ⇝ <a href="http://blog.codefx.org/newsletter/">tiny.cc/fx-weekly</a></p></div>
+<div class="paragraph"><p>two-day <strong><em>Java 9</em></strong> course<br>
+Zürich, 20.-21.04.<br>
+⇝ register at <a href="http://42talents.com/training/2017/04/20/Java-9/">42talents.com</a></p></div>
 <div class="paragraph"><p>or <a href="http://blog.codefx.org/hire-nicolai-parlog/">hire me</a>!</p></div></section>
 <section><section id="_what_about_osgi"><h2>What About OSGi?</h2><h3>Brief comparison<br>of Jigsaw and OSGi</h3></section><section id="_jigsaw_vs_osgi" data-background-image="images/bundles.jpg" data-background-size="cover"><h2>Jigsaw vs. OSGi</h2>
 <div class="paragraph"><p>OSGi Bundles:</p></div>
@@ -298,7 +309,7 @@ more flexible</p></td></tr><tr><td class="tableblock halign-left valign-top"><p 
 <a href="http://milosevicmilos.com/">Milos Milosevic</a>
 (<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a>)</p></li><li><p>bundles:
 <a href="https://www.flickr.com/photos/dmahendra/">Danumurthi Mahendra</a>
-(<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a>)</p></li></ul></div></section></section></div></div><script src="../_reveal.js/lib/js/head.min.js"></script><script src="../_reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+(<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a>)</p></li></ul></div></section></section></div></div><script src="../_reveal.js/lib/js/head.min.js"></script><script src="../_reveal.js/js/reveal.js"></script><script type="text/javascript">// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
 Reveal.initialize({
   // Display controls in the bottom right corner
   controls: false,

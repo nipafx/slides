@@ -1,8 +1,11 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>JUnit 5</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="../_reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="../_reveal.js/css/theme/nipa-night.css" id="theme"><link href="../_reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>document.write( '<link rel="stylesheet" href="../_reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>JUnit 5</h1><div class="preamble"><link rel="stylesheet" href="../_highlight.js/styles/monokai-sublime.css">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>JUnit 5</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="../_reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="../_reveal.js/css/theme/nipa-night.css" id="theme"><link href="../_reveal.js/lib/css/zenburn.css" rel="stylesheet"><script type="text/javascript">document.write( '<link rel="stylesheet" href="../_reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>JUnit 5</h1><div class="preamble"><link rel="stylesheet" href="../_highlight.js/styles/monokai-sublime.css">
 <script src="../_highlight.js/highlight.pack.js"></script>
 <script>
-	hljs.configure({tabReplace: '    '})
 	window.onload = function() {
+		hljs.configure({
+			tabReplace: '    ',
+			languages: [ 'java' ]
+		})
 		var codes = document.getElementsByTagName('code');
 		for(var i = 0; i < codes.length; i++) {
 			hljs.highlightBlock(codes.item(i));
@@ -13,15 +16,15 @@
 <h2>Next Generation Testing<br>on the JVM</h2>
 <div class="event">
 	<div class="participant">
-		<img src="images/logo-nipa-face.png" class="logo">
+		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
 		<div class="name">
-			<p>Nicolai Parlog</p>
+			<p><a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a></p>
 			<p><a href="http://codefx.org">codefx.org</a>
 				/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a></p>
 		</div>
 	</div>
 	<div class="participant">
-		<img src="images/logo-frankfurter-entwicklertag.png" class="logo" style="background-color: #2D5352; border-color: #2D5352;">
+		<a href="https://entwicklertag.de/frankfurt/2017/"><img src="images/logo-frankfurter-entwicklertag.png" class="logo" style="background-color: #2D5352; border-color: #2D5352;"></a>
 		<div class="name">
 			<p><a href="https://entwicklertag.de/frankfurt/2017/">FFM Entwicklertag</a></p>
 			<p><a href="https://twitter.com/hashtag/etffm17s">#etffm17</a></p>
@@ -31,15 +34,15 @@
 <!-- Just adding a footer does not work because reveal.js puts it into the slides and we couldn't get it out via CSS. So we move it via JavaScript. -->
 <footer>
 	<div class="participant">
-		<img src="images/logo-nipa-face.png" class="logo">
+		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
 		<div class="name"><p>
-			Nicolai Parlog
+			<a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a>
 			/ <a href="http://codefx.org">codefx.org</a>
 			/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a>
 		</p></div>
 	</div>
 	<div class="participant">
-		<img src="images/logo-frankfurter-entwicklertag.png" class="logo" style="background-color: #2D5352; border-color: #2D5352;">
+		<a href="https://entwicklertag.de/frankfurt/2017/"><img src="images/logo-frankfurter-entwicklertag.png" class="logo" style="background-color: #2D5352; border-color: #2D5352;"></a>
 		<div class="name">
 			<p><a href="https://entwicklertag.de/frankfurt/2017/">FFM Entwicklertag</a> / <a href="https://twitter.com/hashtag/etffm17s">#etffm17</a></p>
 		</div>
@@ -410,28 +413,32 @@ junit-platform-console \
 	${fully_qualified_test_class_name}</code></pre></div></div></section><section id="_tools_setup_2"><h2>Tools &amp; Setup</h2><h3>Summary</h3>
 <div class="ulist"><ul><li><p>you can start writing tests right away</p></li><li><p>only IntelliJ has native support</p></li><li><p>running with JUnit 4 is a good compromise</p></li></ul></div>
 <div class="paragraph"><p>(Read about <a href="http://blog.codefx.org/libraries/junit-5-setup/">the setup details</a>.)</p></div></section></section>
-<section><section id="_next_generation_testing_on_the_jvm"><h2>Next Generation Testing On The JVM</h2><div class="ulist"><ul><li><p>new API is an incremental improvement<br>
-full of thoughtful details</p></li><li><p>dynamic tests are very useful</p></li><li><p>extension model looks very promising</p></li><li><p>architecture opens up the platform</p></li><li><p>tool support is not there yet</p></li></ul></div><div class="paragraph"><p>(Read <a href="http://blog.codefx.org/tag/junit-5/">more about JUnit 5</a>.)</p></div></section><section id="_questions" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>Questions?</h2>
+<section id="_next_generation_testing_on_the_jvm"><h2>Next Generation Testing On The JVM</h2><div class="ulist"><ul><li><p>new API is an incremental improvement<br>
+full of thoughtful details</p></li><li><p>dynamic tests are very useful</p></li><li><p>extension model looks very promising</p></li><li><p>architecture opens up the platform</p></li><li><p>tool support is not there yet</p></li></ul></div>
+<div class="paragraph"><p>(Read <a href="http://blog.codefx.org/tag/junit-5/">more about JUnit 5</a>.)</p></div></section>
+<section id="_about_me" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>About Me</h2>
 <div style="float: left;">
-	<img src="images/jmsia-cover.png" width="85%">
+	<img src="images/cover-j9ms.png" width="90%">
 </div>
-<h3>Find Me</h3>
-<div class="paragraph"><p><a href="http://codefx.org">codefx.org</a><br>
+<div class="paragraph"><p>Nicolai Parlog<br>
+<a href="http://codefx.org">codefx.org</a><br>
 <a href="https://sitepoint.com/java">sitepoint.com/java</a><br>
 <a href="https://twitter.com/nipafx">@nipafx</a> /
 <a href="https://google.com/+NicolaiParlog">+NicolaiParlog</a></p></div>
 <h3>Want More?</h3>
-<div class="paragraph"><p>one-day course <strong><em>Expert Java 8</em></strong><br>
-Voxxed Days Zürich, 22.02.</p></div>
-<div class="paragraph"><p>or buy <a href="http://blog.codefx.org/java-module-system-in-action/">my book</a> about Java 9</p></div>
-<div class="paragraph"><p>or <a href="http://blog.codefx.org/hire-nicolai-parlog/">hire me</a>!</p></div></section></section>
-<section id="_image_credits"><h2>Image Credits</h2><div class="ulist"><ul><li><p>bubbles:
-<a href="https://www.flickr.com/photos/elwillo/">Keith Williamson</a>
-(<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a>)</p></li><li><p>architecture diagrams:<br>
-<a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a>
-(<a href="https://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC 4.0</a>)</p></li><li><p>question-mark:
-<a href="http://milosevicmilos.com/">Milos Milosevic</a>
-(<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a>)</p></li></ul></div></section></div></div><script src="../_reveal.js/lib/js/head.min.js"></script><script src="../_reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+<div class="paragraph"><p>I&#8217;m writing <a href="http://blog.codefx.org/java-module-system-in-action/">a book</a>!<br>
+EA soon ⇝ <a href="http://blog.codefx.org/newsletter/">tiny.cc/fx-weekly</a></p></div>
+<div class="paragraph"><p>two-day <strong><em>Java 9</em></strong> course<br>
+Zürich, 20.-21.04.<br>
+⇝ register at <a href="http://42talents.com/training/2017/04/20/Java-9/">42talents.com</a></p></div>
+<div class="paragraph"><p>or <a href="http://blog.codefx.org/hire-nicolai-parlog/">hire me</a>!</p></div></section>
+<section id="_image_credits"><h2>Image Credits</h2><div class="ulist"><ul><li><p><a href="https://www.flickr.com/photos/elwillo/5172528284">bubbles</a>:
+<a href="https://www.flickr.com/photos/elwillo/">Keith Williamson</a>,
+<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a></p></li><li><p>architecture diagrams:
+<a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a>,
+<a href="https://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC 4.0</a></p></li><li><p><a href="https://www.flickr.com/photos/21496790@N06/5065834411">question-mark</a>:
+<a href="http://milosevicmilos.com/">Milos Milosevic</a>,
+<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a></p></li></ul></div></section></div></div><script src="../_reveal.js/lib/js/head.min.js"></script><script src="../_reveal.js/js/reveal.js"></script><script type="text/javascript">// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
 Reveal.initialize({
   // Display controls in the bottom right corner
   controls: false,
