@@ -270,3 +270,22 @@ Interesting `static` methods:
 * command, arguments
 * start time
 * CPU time
+
+
+
+== A Mixed Bag Of API&nbsp;Changes
+
+* multi-resolution images (http://openjdk.java.net/jeps/251[JEP 251])
+* native desktop integration (http://openjdk.java.net/jeps/272[JEP 272])
+* deserialization filter (http://openjdk.java.net/jeps/290[JEP 290])
+* HTTP/2 (http://openjdk.java.net/jeps/110[JEP 110]), DTLS (http://openjdk.java.net/jeps/219[JEP 219]), +
+TLS ALPN and OCSP stapling (http://openjdk.java.net/jeps/244[JEP 244])
+* OASIS XML Catalogs 1.1 (http://openjdk.java.net/jeps/268[JEP 268]), +
+Xerces 2.11.0 (http://openjdk.java.net/jeps/255[JEP 255])
+
+Many lower-level APIs.
+
+////
+* Unicode support via `PropertyResourceBundle` (http://openjdk.java.net/jeps/226[JEP 226])
+* Unicode 8.0 support (http://openjdk.java.net/jeps/227[JEP 227], http://openjdk.java.net/jeps/267[JEP 267])
+////
