@@ -1,1 +1,274 @@
 == New or Updated APIs
+
+++++
+<table class="toc">
+	<tr><td>Collection Factories</td></tr>
+	<tr><td>Reactive Streams</td></tr>
+	<tr><td>Stack-Walking</td></tr>
+	<tr><td>OS Processes</td></tr>
+</table>
+++++
+
+Some APIs are new, +
+many existing ones were improved.
+
+[[TODO, consider Optional/Stream extensions]]
+
+
+
+== Collection Factories
+
+++++
+<table class="toc">
+	<tr class="toc-current"><td>Collection Factories</td></tr>
+	<tr><td>Reactive Streams</td></tr>
+	<tr><td>Stack-Walking</td></tr>
+	<tr><td>OS Processes</td></tr>
+</table>
+++++
+
+
+Creating ad-hoc collections more easily.
+
+=== Hope is Pain
+
+Wouldn't this be awesome?
+
+```java
+List<String> list = [ "a", "b", "c" ];
+Map<String, Integer> map = [ "one" = 1, "two" = 2 ];
+```
+
+Not gonna happen!
+
+* language change is costly
+* binds language to collection framework
+* strongly favors specific collections
+
+=== Next Best Thing
+
+```java
+List<String> list = List.of("a", "b", "c");
+Map<String, Integer> mapImmediate = Map.of(
+		"one", 1,
+		"two", 2,
+		"three", 3);
+Map<String, Integer> mapEntries = Map.ofEntries(
+		entry("one", 1),
+		entry("two", 2),
+		entry("three", 3));
+```
+
+=== Interesting Details
+
+* collections are immutable +
+(no immutability in type system, though)
+* `null` values are forbidden
+* iteration order is random between JVM starts
+
+
+
+== Reactive Streams
+
+++++
+<table class="toc">
+	<tr><td>Collection Factories</td></tr>
+	<tr class="toc-current"><td>Reactive Streams</td></tr>
+	<tr><td>Stack-Walking</td></tr>
+	<tr><td>OS Processes</td></tr>
+</table>
+++++
+
+
+The JDK as common ground +
+for reactive stream libraries.
+
+=== Reactive Types
+
+`Publisher`::
+* produces items to consume
+* can be subscribed to
+`Subscriber`::
+* subscribes to publisher
+* `onNext`, `onError`, `onComplete`
+`Subscription`::
+* connection between publisher and subscriber
+* `request`, `cancel`
+
+=== Reactive Flow
+==== Subscribing
+
+* create `Publisher pub` and `Subscriber sub`
+* call `pub.subscribe(sub)`
+* pub creates `Subscription script` +
+and calls `sub.onSubscription(script)`
+* `sub` can store `script`
+
+=== Reactive Flow
+==== Streaming
+
+* `sub` calls `script.request(10)`
+* `pub` calls `sub.onNext(element)` (max 10x)
+
+==== Canceling
+
+* `pub` may call `sub.OnError(err)` +
+or `sub.onComplete()`
+* `sub` may call `script.cancel()`
+
+=== Reactive APIs?
+
+JDK only provides interfaces.
+
+No JDK API uses them. +
+(No reactive HTTP connections et al.)
+
+
+
+== Stack-Walking
+
+++++
+<table class="toc">
+	<tr><td>Collection Factories</td></tr>
+	<tr><td>Reactive Streams</td></tr>
+	<tr class="toc-current"><td>Stack-Walking</td></tr>
+	<tr><td>OS Processes</td></tr>
+</table>
+++++
+
+
+Examining the stack faster and easier.
+
+=== `StackWalker::forEach`
+
+```java
+public static void main(String[] args) { one(); }
+static void one() { two(); }
+static void two() { three(); }
+static void three() {
+	StackWalker.getInstance()
+		.forEach(System.out::println);
+}
+
+// output
+StackWalkingExample.three(StackWalking.java:15)
+StackWalkingExample.two(StackWalking.java:12)
+StackWalkingExample.one(StackWalking.java:11)
+StackWalkingExample.main(StackWalking.java:10)
+```
+
+=== `StackWalker::walk`
+
+```java
+static void three() {
+	String line = StackWalker.getInstance().walk(
+		frames -> frames
+			.filter(f -> f.getMethodName().contains("one"))
+			.findFirst()
+			.map(f -> "Line " + f.getLineNumber())
+			.orElse("Unknown line");
+	);
+}
+
+// output
+Line 11
+```
+
+=== Options
+
+`getInstance` takes options as arguments:
+
+* `SHOW_REFLECT_FRAMES` for reflection frames
+* `SHOW_HIDDEN_FRAMES` e.g. for lambda frames
+* `RETAIN_CLASS_REFERENCE` for `Class<?>`
+
+=== Frames and Traces
+
+`forEach` and `walk` operate on `StackFrame`:
+
+* class and method name
+* class as `Class<?>`
+* bytecode index and isNative
+
+Can upgrade to `StackTraceElement` (expensive):
+
+* file name and line number
+
+=== Performance I
+
+image::images/stack-walker-vs-exception.png[role="diagram"]
+
+=== Performance II
+
+image::images/stack-walker-limit-with-estimated-size.png[role="diagram"]
+
+=== Performance III
+
+* creating `StackTraceElement` is expensive +
+(for file name and line number)
+* lazy evaluation pays off for partial traversal
+
+(Benchmarks performed by https://twitter.com/arnaudroger[Arnaud Roger])
+
+
+
+== OS Processes
+
+++++
+<table class="toc">
+	<tr><td>Collection Factories</td></tr>
+	<tr><td>Reactive Streams</td></tr>
+	<tr><td>Stack-Walking</td></tr>
+	<tr class="toc-current"><td>OS Processes</td></tr>
+</table>
+++++
+
+
+Improving interaction with OS processes.
+
+=== Simple Example
+
+```shell
+ls /home/nipa/tmp | grep pdf
+```
+
+```java
+Path dir = Paths.get("/home/nipa/tmp");
+ProcessBuilder ls = new ProcessBuilder()
+		.command("ls")
+		.directory(dir.toFile());
+ProcessBuilder grepPdf = new ProcessBuilder()
+		.command("grep", "pdf")
+		.redirectOutput(Redirect.INHERIT);
+List<Process> lsThenGrep = ProcessBuilder
+		.startPipeline(asList(ls, grepPdf));
+```
+
+=== Extended `Process`
+
+Cool new methods on `Process`:
+
+* `boolean supportsNormalTermination();`
+* `long getPid();`
+* `CompletableFuture<Process> onExit();`
+* `Stream<ProcessHandle> children();`
+* `Stream<ProcessHandle> descendants();`
+* `ProcessHandle toHandle();`
+
+=== New `ProcessHandle`
+
+New functionality actually comes from `ProcessHandle`.
+
+Interesting `static` methods:
+
+* `Stream<ProcessHandle> allProcesses();`
+* `Optional<ProcessHandle> of(long pid);`
+* `ProcessHandle current();`
+
+=== More Information
+
+`ProcessHandle` can return `Info`:
+
+* command, arguments
+* start time
+* CPU time
