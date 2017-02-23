@@ -1,0 +1,170 @@
+== JVM Features
+
+++++
+<table class="toc">
+	<tr><td>Multi-Release JARs</td></tr>
+	<tr><td>Redirected Platform Logging</td></tr>
+</table>
+++++
+
+
+== Multi-Release JARs
+
+++++
+<table class="toc">
+	<tr class="toc-current"><td>Multi-Release JARs</td></tr>
+	<tr><td>Redirected Platform Logging</td></tr>
+</table>
+++++
+
+
+"Do this on Java X, do that on Java Y."
+
+=== Version Dependence
+
+`Main` calls `Version`:
+
+```java
+public class Main {
+
+	public static void main(String[] args) {
+		System.out.println(new Version().get());
+	}
+
+}
+```
+
+=== Version Dependence
+
+`Version` exists twice:
+
+```java
+public class Version {
+
+	public String get() { return "Java 8"; }
+
+}
+
+public class Version {
+
+	public String get() { return "Java 9"; }
+
+}
+```
+
+(Btw, IDEs hate this!)
+
+=== Creating A Multi&#8209;Release&nbsp;JAR
+
+Now, here's the magic:
+
+* compile `Main` and `Version[8]` to `out/java8`
+* compile `Version[9]` to `out/java9`
+* use new `jar` flag `--release`:
++
+```bash
+jar9 --create --file out/mr.jar
+	-C out/java-8 .
+	--release 9 -C out/java-9 .
+```
+
+=== JAR Content
+
+```bash
+└ org
+    └ codefx ... (moar folders)
+        ├ Main.class
+        └ Version.class
+└ META-INF
+    └ versions
+        └ 9
+            └ org
+                └ codefx ... (moar folders)
+                    └ Version.class
+```
+
+=== Run!
+
+With `java -cp out/mr.jar ...Main`:
+
+* prints `"Java 8"` on Java 8
+* prints `"Java 9"` on Java 9
+
+Great Success!
+
+
+
+== Redirected Platform Logging
+
+++++
+<table class="toc">
+	<tr><td>Multi-Release JARs</td></tr>
+	<tr class="toc-current"><td>Redirected Platform Logging</td></tr>
+</table>
+++++
+
+
+Use your logging framework of choice +
+as backend for JDK logging.
+
+=== Loggers and Finders
+
+New logging infrastructure inside the JDK:
+
+* new interface `System.Logger`
+* used by JDK classes
+* instances created by `System-LoggerFinder`
+
+The interesting bit:
+
+*`LoggerFinder` is a service!*
+
+=== Creating a `Logger`
+
+```java
+public class SystemOutLogger implements Logger {
+
+	public String getName() { return "SystemOut"; }
+
+	public boolean isLoggable(Level level) { return true; }
+
+	public void log(
+			Level level, ResourceBundle bundle,
+			String msg, Throwable thrown) {
+		System.out.println(/* ...*/);
+	}
+
+	public void log(
+			Level level, ResourceBundle bundle,
+			String format, Object... params) {
+		System.out.println(/* ...*/);
+	}
+}
+```
+
+=== Creating a `LoggerFinder`
+
+```java
+public class SystemOutLoggerFinder
+		extends LoggerFinder {
+
+	public Logger getLogger(
+			String name, Module module) {
+		return new SystemOutLogger();
+	}
+
+}
+```
+
+=== Registering the Service
+
+Module descriptor for _system.out.logger_:
+
+++++
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> system.out.logger {
+    <span class="hljs-keyword">provides</span> java.lang.System.LoggerFinder
+        <span class="hljs-keyword">with</span> system.out.logger.SystemOutLoggerFinder;
+}</code></pre></div></div>
+++++
+
+Module system and JDK take care of the rest!
