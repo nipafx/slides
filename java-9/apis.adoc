@@ -3,6 +3,7 @@
 ++++
 <table class="toc">
 	<tr><td>Stream Improvements</td></tr>
+	<tr><td>Optional Improvements</td></tr>
 	<tr><td>Collection Factories</td></tr>
 	<tr><td>Reactive Streams</td></tr>
 	<tr><td>Stack-Walking</td></tr>
@@ -19,6 +20,7 @@ many existing ones were improved.
 ++++
 <table class="toc">
 	<tr class="toc-current"><td>Stream Improvements</td></tr>
+	<tr><td>Optional Improvements</td></tr>
 	<tr><td>Collection Factories</td></tr>
 	<tr><td>Reactive Streams</td></tr>
 	<tr><td>Stack-Walking</td></tr>
@@ -110,11 +112,120 @@ Stream.of("a", "b", "c", "de", "f")
 ```
 
 
+
+== Optional Improvements
+
+++++
+<table class="toc">
+	<tr><td>Stream Improvements</td></tr>
+	<tr class="toc-current"><td>Optional Improvements</td></tr>
+	<tr><td>Collection Factories</td></tr>
+	<tr><td>Reactive Streams</td></tr>
+	<tr><td>Stack-Walking</td></tr>
+	<tr><td>OS Processes</td></tr>
+</table>
+++++
+
+Small improvements to Java 8 `Optional`.
+
+
+=== `Optional::stream`
+
+Turns an `Optional` into a `Stream` +
+of zero or one elements:
+
+```java
+Stream<T> stream();
+```
+
+=== Filter-Map in one Step
+
+```java
+private Optional<Customer> findCustomer(int id) {
+	// ...
+}
+
+public Stream<Customer> findCustomers(
+		Collection<String> ids) {
+	return ids.stream()
+		.map(this::findCustomer)
+		// now we have a Stream<Optional<Customer>>
+		.flatMap(Optional::stream)
+}
+```
+
+=== From Eager to Lazy
+
+```java
+public List<Order> findOrdersForCustomer(String id) {
+	return findCustomer(id)
+		// 'List<Order> getOrders(Customer)' is expensive;
+		// this is 'Optional::map', which is eager:
+		.map(this::getOrders)
+		.orElse(new ArrayList<>());
+}
+
+public Stream<Order> findOrdersForCustomer(String id) {
+	return findCustomer(id)
+		.stream()
+		// this is 'Stream::map', which is lazy
+		.map(this::getOrders)
+		.flatMap(List::stream);
+}
+```
+
+=== `Optional::or`
+
+Chose a non-empty `Optional`:
+
+```java
+Optional<T> or(Supplier<Optional<T>> supplier);
+```
+
+=== Find in Many Places
+
+```java
+public interface Customers {
+	Optional<Customer> findInMemory(String id);
+	Optional<Customer> findOnDisk(String id);
+	Optional<Customer> findRemotely(String id);
+}
+
+public Optional<Customer> findCustomer(String id) {
+	return customers.findInMemory(id)
+		.or(() -> customers.findOnDisk(id))
+		.or(() -> customers.findRemotely(id));
+}
+```
+
+=== `ifPresentOrElse`
+
+Like `ifPresent` but do something if empty:
+
+```java
+void ifPresentOrElse(
+	Consumer<? super T> action,
+	Runnable emptyAction);
+```
+
+Example:
+
+```java
+public void logLogin(String id) {
+	findCustomer(id)
+		.ifPresent(this::logLogin)
+		.ifEmpty(() -> logUnknownLogin(customerId));
+}
+```
+
+
+
 == Collection Factories
 
 ++++
 <table class="toc">
 	<tr><td>Stream Improvements</td></tr>
+	<tr><td>Optional Improvements</td></tr>
 	<tr class="toc-current"><td>Collection Factories</td></tr>
 	<tr><td>Reactive Streams</td></tr>
 	<tr><td>Stack-Walking</td></tr>
@@ -168,6 +279,7 @@ Map<String, Integer> mapEntries = Map.ofEntries(
 ++++
 <table class="toc">
 	<tr><td>Stream Improvements</td></tr>
+	<tr><td>Optional Improvements</td></tr>
 	<tr><td>Collection Factories</td></tr>
 	<tr class="toc-current"><td>Reactive Streams</td></tr>
 	<tr><td>Stack-Walking</td></tr>
@@ -226,6 +338,7 @@ No JDK API uses them. +
 ++++
 <table class="toc">
 	<tr><td>Stream Improvements</td></tr>
+	<tr><td>Optional Improvements</td></tr>
 	<tr><td>Collection Factories</td></tr>
 	<tr><td>Reactive Streams</td></tr>
 	<tr class="toc-current"><td>Stack-Walking</td></tr>
@@ -314,6 +427,7 @@ image::images/stack-walker-limit-with-estimated-size.png[role="diagram"]
 ++++
 <table class="toc">
 	<tr><td>Stream Improvements</td></tr>
+	<tr><td>Optional Improvements</td></tr>
 	<tr><td>Collection Factories</td></tr>
 	<tr><td>Reactive Streams</td></tr>
 	<tr><td>Stack-Walking</td></tr>
