@@ -71,9 +71,9 @@ Stream.iterate(
 	.forEach(System.out::println);
 ```
 
-first `nextElement()` +
-then `hasMoreElements()` +
-⇝ fail
+* first `nextElement()`
+* then `hasMoreElements()`
+* ⇝ fail
 
 === `Stream::takeWhile`
 
@@ -145,8 +145,7 @@ private Optional<Customer> findCustomer(int id) {
 	// ...
 }
 
-public Stream<Customer> findCustomers(
-		Collection<String> ids) {
+Stream<Customer> findCustomers(List<String> ids) {
 	return ids.stream()
 		.map(this::findCustomer)
 		// now we have a Stream<Optional<Customer>>
@@ -156,27 +155,26 @@ public Stream<Customer> findCustomers(
 
 === From Eager to Lazy
 
+`List<Order> getOrders(String id)` is expensive:
+
 ```java
-public List<Order> findOrdersForCustomer(String id) {
+List<Order> findOrdersForCustomer(String id) {
 	return findCustomer(id)
-		// 'List<Order> getOrders(Customer)' is expensive;
-		// this is 'Optional::map', which is eager:
-		.map(this::getOrders)
+		.map(this::getOrders) // eager
 		.orElse(new ArrayList<>());
 }
 
-public Stream<Order> findOrdersForCustomer(String id) {
+Steam<Order> findOrdersForCustomer(String id) {
 	return findCustomer(id)
 		.stream()
-		// this is 'Stream::map', which is lazy
-		.map(this::getOrders)
+		.map(this::getOrders) // lazy
 		.flatMap(List::stream);
 }
 ```
 
 === `Optional::or`
 
-Chose a non-empty `Optional`:
+Choose a non-empty `Optional`:
 
 ```java
 Optional<T> or(Supplier<Optional<T>> supplier);
@@ -185,16 +183,17 @@ Optional<T> or(Supplier<Optional<T>> supplier);
 === Find in Many Places
 
 ```java
-public interface Customers {
-	Optional<Customer> findInMemory(String id);
-	Optional<Customer> findOnDisk(String id);
-	Optional<Customer> findRemotely(String id);
-}
+public interface Search {
+	Optional<Customer> inMemory(String id);
+	Optional<Customer> onDisk(String id);
+	Optional<Customer> remotely(String id);
 
-public Optional<Customer> findCustomer(String id) {
-	return customers.findInMemory(id)
-		.or(() -> customers.findOnDisk(id))
-		.or(() -> customers.findRemotely(id));
+	default Optional<Customer> anywhere(String id) {
+		return inMemory(id)
+			.or(() -> onDisk(id))
+			.or(() -> remotely(id));
+	}
+
 }
 ```
 
@@ -204,17 +203,18 @@ Like `ifPresent` but do something if empty:
 
 ```java
 void ifPresentOrElse(
-	Consumer<? super T> action,
+	Consumer<T> action,
 	Runnable emptyAction);
 ```
 
 Example:
 
 ```java
-public void logLogin(String id) {
+void logLogin(String id) {
 	findCustomer(id)
-		.ifPresent(this::logLogin)
-		.ifEmpty(() -> logUnknownLogin(customerId));
+		.ifPresentorElse(
+			this::logCustomerLogin,
+			() -> logUnknownLogin(id));
 }
 ```
 
@@ -326,10 +326,13 @@ or `sub.onComplete()`
 
 === Reactive APIs?
 
-JDK only provides interfaces.
+JDK only provides three interfaces +
+and one simple implementation.
+
+(Also called *Flow API*.)
 
 No JDK API uses them. +
-(No reactive HTTP connections et al.)
+(No reactive HTTP connections etc.)
 
 
 
@@ -346,6 +349,7 @@ No JDK API uses them. +
 </table>
 ++++
 
+[[TODO, create extra slide that introduces `forEach` and `walk` with signature]]
 
 Examining the stack faster and easier.
 
@@ -378,6 +382,7 @@ static void three() {
 			.map(f -> "Line " + f.getLineNumber())
 			.orElse("Unknown line");
 	);
+	System.out.println(line);
 }
 
 // output

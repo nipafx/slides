@@ -58,8 +58,8 @@ public class Version {
 
 Now, here's the magic:
 
-* compile `Main` and `Version[8]` to `out/java8`
-* compile `Version[9]` to `out/java9`
+* compile `Main` and `Version[8]` to `out/java-8`
+* compile `Version[9]` to `out/java-9`
 * use new `jar` flag `--release`:
 +
 ```bash
@@ -113,7 +113,7 @@ New logging infrastructure inside the JDK:
 
 * new interface `System.Logger`
 * used by JDK classes
-* instances created by `System-LoggerFinder`
+* instances created by `System.LoggerFinder`
 
 The interesting bit:
 
@@ -130,15 +130,12 @@ public class SystemOutLogger implements Logger {
 
 	public void log(
 			Level level, ResourceBundle bundle,
-			String msg, Throwable thrown) {
-		System.out.println(/* ...*/);
-	}
-
-	public void log(
-			Level level, ResourceBundle bundle,
 			String format, Object... params) {
 		System.out.println(/* ...*/);
 	}
+
+	// another, similar `log` method
+
 }
 ```
 
@@ -146,7 +143,7 @@ public class SystemOutLogger implements Logger {
 
 ```java
 public class SystemOutLoggerFinder
-		extends LoggerFinder {
+		implements LoggerFinder {
 
 	public Logger getLogger(
 			String name, Module module) {

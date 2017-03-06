@@ -103,7 +103,7 @@ The module system as a service registry:
 
 === Loading Services
 
-Code in _java.sql_ can now:
+Code in _java.sql_ can now do this:
 
 ```java
 List<Driver> drivers = new ArrayList<>();
@@ -123,8 +123,8 @@ ServiceLoader
 === Final Feature
 
 ++++
-<div style="float: left;  width: 45%;">
-	<img src="images/cover-j9ms.png">
+<div style="float: left; width: 42%; margin: 0px 0px;">
+	<img src="images/cover-j9ms.png" style="margin: 0;">
 </div>
 ++++
 
