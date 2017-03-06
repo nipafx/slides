@@ -23,10 +23,10 @@
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://voxxeddays.com/zurich/"><img src="images/logo-voxxed-days-zuerich.png" class="logo" style="background-color: #111; border-color: #FFF;"></a>
+		<a href="https://jugfr.de/"><img src="images/logo-jug-fr.jpg" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://voxxeddays.com/zurich/">Zürich</a></p>
-			<p><a href="https://twitter.com/hashtag/VDZ17">#VDZ17</a></p>
+			<p><a href="https://jugfr.de/">JUG Freiburg</a></p>
+			<p><a href="https://twitter.com/jug_freiburg">@jug_freiburg</a></p>
 		</div>
 	</div>
 </div>
@@ -41,9 +41,9 @@
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://voxxeddays.com/zurich/"><img src="images/logo-voxxed-days-zuerich.png" class="logo" style="background-color: #111; border-color: #FFF;"></a>
+		<a href="https://jugfr.de/"><img src="images/logo-jug-fr.jpg" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://voxxeddays.com/zurich/">Zürich</a> / <a href="https://twitter.com/hashtag/VDZ17">#VDZ17</a></p>
+			<p><a href="https://jugfr.de/">JUG Freiburg</a> / <a href="https://twitter.com/jug_freiburg">@jug_freiburg</a></p>
 		</div>
 	</div>
 </footer>
@@ -52,8 +52,7 @@
 		document.body.appendChild(document.querySelector('footer'));
 	})
 </script></div></section>
-<section><section id="_27th_of_july_2017"><h2>27th Of July 2017</h2></section><section id="_public_service_announcement"><h2>Public Service Announcement</h2><div class="ulist"><ul><li><p>this is a showcase, not a tutorial</p></li><li><p>if you&#8217;re shy, tweet questions<br>
-with <a href="https://twitter.com/search?q=%23vdz17%20%40nipafx">#VDZ17 @nipafx</a></p></li><li><p>slides at <a href="http://slides.codefx.org/">slides.codefx.org</a></p></li></ul></div></section><section id="_lots_to_talk_about"><h2>Lots to talk about!</h2><table class="toc">
+<section><section id="TODO"><h2>27th Of July 2017</h2></section><section id="_public_service_announcement"><h2>Public Service Announcement</h2><div class="ulist"><ul><li><p>this is a showcase, not a tutorial</p></li><li><p>slides at <a href="http://slides.codefx.org/">slides.codefx.org</a></p></li></ul></div></section><section id="_lots_to_talk_about"><h2>Lots to talk about!</h2><table class="toc">
 	<tr><td>Module System</td></tr>
 	<tr><td>Language Changes</td></tr>
 	<tr><td>New and Updated APIs</td></tr>
@@ -99,8 +98,8 @@ with <a href="https://twitter.com/search?q=%23vdz17%20%40nipafx">#VDZ17 @nipafx<
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Driver&gt; drivers = new ArrayList&lt;&gt;();
 ServiceLoader
 	.load(Driver.class)
-	.forEach(drivers::add);</code></pre></div></div></section><section id="_other_features"><h2>Other Features</h2><div class="ulist"><ul><li><p>finer grained dependencies and exports</p></li><li><p>open packages and modules (for reflection)</p></li><li><p>unnamed and automatic modules (for migration)</p></li><li><p>layers (for containers)</p></li><li><p><code>jlink</code> to create runtime images</p></li></ul></div></section><section id="_final_feature"><h2>Final Feature</h2><div style="float: left;">
-	<img src="images/cover-j9ms.png" width="75%">
+	.forEach(drivers::add);</code></pre></div></div></section><section id="_other_features"><h2>Other Features</h2><div class="ulist"><ul><li><p>finer grained dependencies and exports</p></li><li><p>open packages and modules (for reflection)</p></li><li><p>unnamed and automatic modules (for migration)</p></li><li><p>layers (for containers)</p></li><li><p><code>jlink</code> to create runtime images</p></li></ul></div></section><section id="_final_feature"><h2>Final Feature</h2><div style="float: left;  width: 45%;">
+	<img src="images/cover-j9ms.png">
 </div>
 <div class="paragraph"><p>Enough complexity to feed authors, trainers, consultants for the next decade!</p></div>
 <h3>Coincidentally&#8230;&#8203;</h3><div class="paragraph"><p>I&#8217;m writing <a href="http://blog.codefx.org/java-module-system-in-action/">a book</a>!<br>
@@ -269,6 +268,8 @@ public class DeprecatedImports {
 
 }</code></pre></div></div></section></section>
 <section id="_new_or_updated_apis"><h2>New or Updated APIs</h2><table class="toc">
+	<tr><td>Stream Improvements</td></tr>
+	<tr><td>Optional Improvements</td></tr>
 	<tr><td>Collection Factories</td></tr>
 	<tr><td>Reactive Streams</td></tr>
 	<tr><td>Stack-Walking</td></tr>
@@ -276,7 +277,104 @@ public class DeprecatedImports {
 </table>
 <div class="paragraph"><p>Some APIs are new,<br>
 many existing ones were improved.</p></div></section>
+<section><section id="_stream_improvements"><h2>Stream Improvements</h2><table class="toc">
+	<tr class="toc-current"><td>Stream Improvements</td></tr>
+	<tr><td>Optional Improvements</td></tr>
+	<tr><td>Collection Factories</td></tr>
+	<tr><td>Reactive Streams</td></tr>
+	<tr><td>Stack-Walking</td></tr>
+	<tr><td>OS Processes</td></tr>
+</table><div class="paragraph"><p>Small improvements to Java 8 streams.</p></div></section><section id="__code_stream_ofnullable_code"><h2><code>Stream::ofNullable</code></h2><div class="paragraph"><p>Creates a stream of zero or one elements:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">long zero = Stream.ofNullable(null).count();
+long one = Stream.ofNullable("42").count();</code></pre></div></div></section><section id="__code_stream_iterate_code"><h2><code>Stream::iterate</code></h2><div class="paragraph"><p>To use <code>for</code> even less&#8230;&#8203;</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">iterate(T seed,
+	Predicate&lt;T&gt; hasNext,
+	UnaryOperator&lt;T&gt; next);</code></pre></div></div>
+<div class="paragraph"><p>Example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream
+	.iterate(1, i -&gt; i&lt;=10, i -&gt; 2*i)
+	.forEach(System.out::println);
+// output: 1 2 4 8</code></pre></div></div></section><section id="__code_stream_iterate_code_2"><h2><code>Stream::iterate</code></h2><div class="paragraph"><p>Counter Example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Enumeration&lt;Integer&gt; en = // ...
+Stream.iterate(
+		en.nextElement(),
+		el -&gt; en.hasMoreElements(),
+		el -&gt; en.nextElement())
+	.forEach(System.out::println);</code></pre></div></div>
+<div class="paragraph"><p>first <code>nextElement()</code><br>
+then <code>hasMoreElements()</code><br>
+⇝ fail</p></div></section><section id="__code_stream_takewhile_code"><h2><code>Stream::takeWhile</code></h2><div class="paragraph"><p>Stream as long as a condition is true:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;T&gt; takeWhile(Predicate&lt;T&gt; predicate);</code></pre></div></div>
+<div class="paragraph"><p>Example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream.of("a", "b", "c", "", "e")
+	.takeWhile(s -&gt; !String.isEmpty(s));
+	.forEach(System.out::print);
+
+// output: abc</code></pre></div></div></section><section id="__code_stream_dropwhile_code"><h2><code>Stream::dropWhile</code></h2><div class="paragraph"><p>Start streaming as soon as a condition is true:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;T&gt; dropWhile(Predicate&lt;T&gt; predicate);</code></pre></div></div>
+<div class="paragraph"><p>Example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream.of("a", "b", "c", "de", "f")
+	.dropWhile(s -&gt; s.length &lt;= 1);
+	.forEach(System.out::print);
+
+// output: def</code></pre></div></div></section></section>
+<section><section id="_optional_improvements"><h2>Optional Improvements</h2><table class="toc">
+	<tr><td>Stream Improvements</td></tr>
+	<tr class="toc-current"><td>Optional Improvements</td></tr>
+	<tr><td>Collection Factories</td></tr>
+	<tr><td>Reactive Streams</td></tr>
+	<tr><td>Stack-Walking</td></tr>
+	<tr><td>OS Processes</td></tr>
+</table><div class="paragraph"><p>Small improvements to Java 8 <code>Optional</code>.</p></div></section><section id="__code_optional_stream_code"><h2><code>Optional::stream</code></h2><div class="paragraph"><p>Turns an <code>Optional</code> into a <code>Stream</code><br>
+of zero or one elements:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;T&gt; stream();</code></pre></div></div></section><section id="_filter_map_in_one_step"><h2>Filter-Map in one Step</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">private Optional&lt;Customer&gt; findCustomer(int id) {
+	// ...
+}
+
+public Stream&lt;Customer&gt; findCustomers(
+		Collection&lt;String&gt; ids) {
+	return ids.stream()
+		.map(this::findCustomer)
+		// now we have a Stream&lt;Optional&lt;Customer&gt;&gt;
+		.flatMap(Optional::stream)
+}</code></pre></div></div></section><section id="_from_eager_to_lazy"><h2>From Eager to Lazy</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public List&lt;Order&gt; findOrdersForCustomer(String id) {
+	return findCustomer(id)
+		// 'List&lt;Order&gt; getOrders(Customer)' is expensive;
+		// this is 'Optional::map', which is eager:
+		.map(this::getOrders)
+		.orElse(new ArrayList&lt;&gt;());
+}
+
+public Stream&lt;Order&gt; findOrdersForCustomer(String id) {
+	return findCustomer(id)
+		.stream()
+		// this is 'Stream::map', which is lazy
+		.map(this::getOrders)
+		.flatMap(List::stream);
+}</code></pre></div></div></section><section id="__code_optional_or_code"><h2><code>Optional::or</code></h2><div class="paragraph"><p>Chose a non-empty <code>Optional</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Optional&lt;T&gt; or(Supplier&lt;Optional&lt;T&gt;&gt; supplier);</code></pre></div></div></section><section id="_find_in_many_places"><h2>Find in Many Places</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public interface Customers {
+	Optional&lt;Customer&gt; findInMemory(String id);
+	Optional&lt;Customer&gt; findOnDisk(String id);
+	Optional&lt;Customer&gt; findRemotely(String id);
+}
+
+public Optional&lt;Customer&gt; findCustomer(String id) {
+	return customers.findInMemory(id)
+		.or(() -&gt; customers.findOnDisk(id))
+		.or(() -&gt; customers.findRemotely(id));
+}</code></pre></div></div></section><section id="__code_ifpresentorelse_code"><h2><code>ifPresentOrElse</code></h2><div class="paragraph"><p>Like <code>ifPresent</code> but do something if empty:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">void ifPresentOrElse(
+	Consumer&lt;? super T&gt; action,
+	Runnable emptyAction);</code></pre></div></div>
+<div class="paragraph"><p>Example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public void logLogin(String id) {
+	findCustomer(id)
+		.ifPresent(this::logLogin)
+		.ifEmpty(() -&gt; logUnknownLogin(customerId));
+}</code></pre></div></div></section></section>
 <section><section id="_collection_factories"><h2>Collection Factories</h2><table class="toc">
+	<tr><td>Stream Improvements</td></tr>
+	<tr><td>Optional Improvements</td></tr>
 	<tr class="toc-current"><td>Collection Factories</td></tr>
 	<tr><td>Reactive Streams</td></tr>
 	<tr><td>Stack-Walking</td></tr>
@@ -296,6 +394,8 @@ Map&lt;String, Integer&gt; mapEntries = Map.ofEntries(
 		entry("three", 3));</code></pre></div></div></section><section id="_interesting_details"><h2>Interesting Details</h2><div class="ulist"><ul><li><p>collections are immutable<br>
 (no immutability in type system, though)</p></li><li><p><code>null</code> values are forbidden</p></li><li><p>iteration order is random between JVM starts</p></li></ul></div></section></section>
 <section><section id="_reactive_streams"><h2>Reactive Streams</h2><table class="toc">
+	<tr><td>Stream Improvements</td></tr>
+	<tr><td>Optional Improvements</td></tr>
 	<tr><td>Collection Factories</td></tr>
 	<tr class="toc-current"><td>Reactive Streams</td></tr>
 	<tr><td>Stack-Walking</td></tr>
@@ -308,6 +408,8 @@ or <code>sub.onComplete()</code></p></li><li><p><code>sub</code> may call <code>
 <div class="paragraph"><p>No JDK API uses them.<br>
 (No reactive HTTP connections et al.)</p></div></section></section>
 <section><section id="_stack_walking"><h2>Stack-Walking</h2><table class="toc">
+	<tr><td>Stream Improvements</td></tr>
+	<tr><td>Optional Improvements</td></tr>
 	<tr><td>Collection Factories</td></tr>
 	<tr><td>Reactive Streams</td></tr>
 	<tr class="toc-current"><td>Stack-Walking</td></tr>
@@ -343,6 +445,8 @@ Line 11</code></pre></div></div></section><section id="_options"><h2>Options</h2
 (for file name and line number)</p></li><li><p>lazy evaluation pays off for partial traversal</p></li></ul></div>
 <div class="paragraph"><p>(Benchmarks performed by <a href="https://twitter.com/arnaudroger">Arnaud Roger</a>)</p></div></section></section>
 <section><section id="_os_processes"><h2>OS Processes</h2><table class="toc">
+	<tr><td>Stream Improvements</td></tr>
+	<tr><td>Optional Improvements</td></tr>
 	<tr><td>Collection Factories</td></tr>
 	<tr><td>Reactive Streams</td></tr>
 	<tr><td>Stack-Walking</td></tr>
@@ -493,8 +597,8 @@ and class data sharing (<a href="http://openjdk.java.net/jeps/250">JEP 250</a>)<
 <div class="paragraph"><p><strong>The Ultimate Guide To Java 9</strong></p></div>
 <div class="paragraph"><p>(<a href="https://www.sitepoint.com/ultimate-guide-to-java-9/">tiny.cc/java-9</a>)</p></div></section>
 <section id="_about_me" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>About Me</h2>
-<div style="float: left;">
-	<img src="images/cover-j9ms.png" width="90%">
+<div style="float: left; width: 45%;">
+	<img src="images/cover-j9ms.png">
 </div>
 <div class="paragraph"><p>Nicolai Parlog<br>
 <a href="http://codefx.org">codefx.org</a><br>
@@ -502,7 +606,7 @@ and class data sharing (<a href="http://openjdk.java.net/jeps/250">JEP 250</a>)<
 <a href="https://twitter.com/nipafx">@nipafx</a> /
 <a href="https://google.com/+NicolaiParlog">+NicolaiParlog</a></p></div>
 <h3>Want More?</h3>
-<div class="paragraph"><p>I&#8217;m writing <a href="http://blog.codefx.org/java-module-system-in-action/">a book</a>!<br>
+<div class="paragraph"><p>I&#8217;m writing <a href="http://blog.codefx.org/java-9-module-system/">a book</a>!<br>
 EA soon ⇝ <a href="http://blog.codefx.org/newsletter/">tiny.cc/fx-weekly</a></p></div>
 <div class="paragraph"><p>two-day <strong><em>Java 9</em></strong> course<br>
 Zürich, 20.-21.04.<br>
