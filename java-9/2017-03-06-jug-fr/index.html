@@ -1,0 +1,693 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Java 9 Is Coming!</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="_reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="_reveal.js/css/theme/nipa-night.css" id="theme"><link href="_reveal.js/lib/css/zenburn.css" rel="stylesheet"><script type="text/javascript">document.write( '<link rel="stylesheet" href="_reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>Java 9 Is Coming!</h1><div class="preamble"><link rel="stylesheet" href="_highlight.js/styles/monokai-sublime.css">
+<script src="_highlight.js/highlight.pack.js"></script>
+<script>
+	window.onload = function() {
+		hljs.configure({
+			tabReplace: '    ',
+			languages: [ 'java' ]
+		})
+		var codes = document.getElementsByTagName('code');
+		for(var i = 0; i < codes.length; i++) {
+			hljs.highlightBlock(codes.item(i));
+		}
+		hljs.initHighlightingOnLoad();
+	}
+</script>
+<div class="event">
+	<div class="participant">
+		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
+		<div class="name">
+			<p><a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a></p>
+			<p><a href="http://codefx.org">codefx.org</a>
+				/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a></p>
+		</div>
+	</div>
+	<div class="participant">
+		<a href="https://jugfr.de/"><img src="images/logo-jug-fr.jpg" class="logo" style="{host-logo-style}"></a>
+		<div class="name">
+			<p><a href="https://jugfr.de/">JUG Freiburg</a></p>
+			<p><a href="https://twitter.com/jug_freiburg">@jug_freiburg</a></p>
+		</div>
+	</div>
+</div>
+<!-- Just adding a footer does not work because reveal.js puts it into the slides and we couldn't get it out via CSS. So we move it via JavaScript. -->
+<footer>
+	<div class="participant">
+		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
+		<div class="name"><p>
+			<a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a>
+			/ <a href="http://codefx.org">codefx.org</a>
+			/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a>
+		</p></div>
+	</div>
+	<div class="participant">
+		<a href="https://jugfr.de/"><img src="images/logo-jug-fr.jpg" class="logo" style="{host-logo-style}"></a>
+		<div class="name">
+			<p><a href="https://jugfr.de/">JUG Freiburg</a> / <a href="https://twitter.com/jug_freiburg">@jug_freiburg</a></p>
+		</div>
+	</div>
+</footer>
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		document.body.appendChild(document.querySelector('footer'));
+	})
+</script></div></section>
+<section><section id="TODO"><h2>27th Of July 2017</h2></section><section id="_public_service_announcement"><h2>Public Service Announcement</h2><div class="ulist"><ul><li><p>this is a showcase, not a tutorial</p></li><li><p>slides at <a href="http://slides.codefx.org/">slides.codefx.org</a></p></li></ul></div></section><section id="_lots_to_talk_about"><h2>Lots to talk about!</h2><table class="toc">
+	<tr><td>Module System</td></tr>
+	<tr><td>Language Changes</td></tr>
+	<tr><td>New and Updated APIs</td></tr>
+	<tr><td>New JVM Features</td></tr>
+	<tr><td>Performance Improvements</td></tr>
+</table></section></section>
+<section><section id="_module_system"><h2>Module System</h2><div class="paragraph"><p>Delaying Java since 2008!</p></div></section><section id="_jar_hell_is_bad_mkay"><h2>JAR Hell is bad, mkay?</h2><div class="paragraph"><p>JARs have:</p></div>
+<div class="ulist"><ul><li><p>no explicit dependencies</p></li><li><p>no well-defined API</p></li><li><p>no concept of versions</p></li></ul></div>
+<div class="paragraph"><p>Some consequences:</p></div>
+<div class="ulist"><ul><li><p><code>NoClassDefFoundError</code></p></li><li><p>no encapsulation across JARs</p></li><li><p>version conflicts</p></li></ul></div></section><section id="_modules"><h2>Modules</h2><div class="paragraph"><p>Modules are like JARs but have:</p></div>
+<div class="ulist"><ul><li><p>explicit dependencies</p></li><li><p>a well-defined API</p></li><li><p>no concept of versions</p></li></ul></div>
+<div class="paragraph"><p>Some consequences:</p></div>
+<div class="ulist"><ul><li><p>reliable configuration</p></li><li><p>strong encapsulation</p></li><li><p>a couple of nice features</p></li><li><p>still version conflicts 😭</p></li></ul></div></section><section id="_platform_modules"><h2>Platform Modules</h2><div class="imageblock diagram" id="TODO" style=""><img src="images/platform-modules.png" alt="platform modules"></div></section><section id="_module_descriptor"><h2>Module Descriptor</h2><div class="paragraph"><p>A file <code>module-info.java</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> java.sql {
+	<span class="hljs-keyword">requires transitive</span> java.logging
+	<span class="hljs-keyword">requires transitive</span> java.xml
+	<span class="hljs-keyword">uses</span> java.sql.Driver
+	<span class="hljs-keyword">exports</span> java.sql
+	<span class="hljs-keyword">exports</span> javax.sql
+	<span class="hljs-keyword">exports</span> javax.transaction.xa
+}</code></pre></div></div></section><section id="_reliable_configuration"><h2>Reliable Configuration</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> java.sql {
+	<span class="hljs-keyword">requires transitive</span> java.logging
+	<span class="hljs-keyword">requires transitive</span> java.xml
+}</code></pre></div></div>
+<div class="paragraph"><p>Module system enforces:</p></div>
+<div class="ulist"><ul><li><p>all required modules are present</p></li><li><p>no ambiguity</p></li><li><p>no static dependency cycles</p></li><li><p>no split packages</p></li></ul></div></section><section id="_strong_encapsulation"><h2>Strong Encapsulation</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> java.sql {
+	<span class="hljs-keyword">exports</span> java.sql
+	<span class="hljs-keyword">exports</span> javax.sql
+	<span class="hljs-keyword">exports</span> javax.transaction.xa
+}</code></pre></div></div>
+<div class="paragraph"><p>Say you want to access <code>java.sql.ResultSet</code>.</p></div>
+<div class="paragraph"><p>Module system only grants access if:</p></div>
+<div class="ulist"><ul><li><p><code>ResultSet</code> is public</p></li><li><p><code>java.sql</code> is exported by <em>java.sql</em></p></li><li><p>your module reads <em>java.sql</em></p></li></ul></div></section><section id="_services"><h2>Services</h2><div class="paragraph"><p>The module system as a service registry:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> java.sql {
+	<span class="hljs-keyword">uses</span> java.sql.Driver
+}
+
+<span class="hljs-keyword">module</span> mysql.driver {
+	<span class="hljs-keyword">provides</span> java.sql.Driver
+		<span class="hljs-keyword">with</span> com.mysql.MySQLDriver;
+}
+</code></pre></div></div></section><section id="_loading_services"><h2>Loading Services</h2><div class="paragraph"><p>Code in <em>java.sql</em> can now do this:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Driver&gt; drivers = new ArrayList&lt;&gt;();
+ServiceLoader
+	.load(Driver.class)
+	.forEach(drivers::add);</code></pre></div></div></section><section id="_other_features"><h2>Other Features</h2><div class="ulist"><ul><li><p>finer grained dependencies and exports</p></li><li><p>open packages and modules (for reflection)</p></li><li><p>unnamed and automatic modules (for migration)</p></li><li><p>layers (for containers)</p></li><li><p><code>jlink</code> to create runtime images</p></li></ul></div></section><section id="_final_feature"><h2>Final Feature</h2><div style="float: left; width: 42%; margin: 0px 0px;">
+	<img src="images/cover-j9ms.png" style="margin: 0;">
+</div>
+<div class="paragraph"><p>Enough complexity to feed authors, trainers, consultants for the next decade!</p></div>
+<h3>Coincidentally&#8230;&#8203;</h3><div class="paragraph"><p>I&#8217;m writing <a href="http://blog.codefx.org/java-module-system-in-action/">a book</a>!<br>
+EA soon ⇝ <a href="http://blog.codefx.org/newsletter/">tiny.cc/fx-weekly</a></p></div>
+<div class="paragraph"><p>two-day <strong><em>Java 9</em></strong> course<br>
+Zürich, 20.-21.04.<br>
+⇝ register at <a href="http://42talents.com/training/2017/04/20/Java-9/">42talents.com</a></p></div></section></section>
+<section id="_new_language_features"><h2>New Language Features</h2><table class="toc">
+	<tr><td>Private Interface Methods</td></tr>
+	<tr><td>Try-With-Resources</td></tr>
+	<tr><td>Diamond Operator</td></tr>
+	<tr><td>SafeVarargs</td></tr>
+	<tr><td>Deprecation Warnings</td></tr>
+</table></section>
+<section><section id="_new_language_features_2"><h2>New Language Features</h2><table class="toc">
+	<tr class="toc-current"><td>Private Interface Methods</td></tr>
+	<tr><td>Try-With-Resources</td></tr>
+	<tr><td>Diamond Operator</td></tr>
+	<tr><td>SafeVarargs</td></tr>
+	<tr><td>Deprecation Warnings</td></tr>
+</table><div class="paragraph"><p>Enabling reuse between default methods.</p></div></section><section id="_no_reuse"><h2>No Reuse</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public interface InJava8 {
+
+	default boolean evenSum(int... numbers) {
+		return sum(numbers) % 2 == 0;
+	}
+
+	default boolean oddSum(int... numbers) {
+		return sum(numbers) % 2 == 1;
+	}
+
+	default int sum(int[] numbers) {
+		return IntStream.of(numbers).sum();
+	}
+
+}</code></pre></div></div></section><section id="_private_interface_methods"><h2>Private Interface Methods</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public interface InJava9 {
+
+	private int sum(int[] numbers) {
+		return IntStream.of(numbers).sum();
+	}
+
+}</code></pre></div></div>
+<div class="paragraph"><p>Just like private methods in abstract classes:</p></div>
+<div class="ulist"><ul><li><p>must be implemented</p></li><li><p>can not be overriden</p></li><li><p>can only be called in same source file</p></li></ul></div></section></section>
+<section><section id="_new_language_features_3"><h2>New Language Features</h2><table class="toc">
+	<tr><td>Private Interface Methods</td></tr>
+	<tr class="toc-current"><td>Try-With-Resources</td></tr>
+	<tr><td>Diamond Operator</td></tr>
+	<tr><td>SafeVarargs</td></tr>
+	<tr><td>Deprecation Warnings</td></tr>
+</table><div class="paragraph"><p>Making <code>try</code>-with-resources blocks cleaner.</p></div></section><section id="_useless_variable"><h2>Useless Variable</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">void doSomethingWith(Connection connection)
+		throws Exception {
+	try(Connection c = connection) {
+		c.doSomething();
+	}
+}</code></pre></div></div>
+<div class="paragraph"><p>Why is <code>c</code> necessary?</p></div></section><section id="_why_is_code_c_code_necessary"><h2>Why is <code>c</code> necessary?</h2><div class="ulist"><ul><li><p>target of <code>close()</code> must be obvious<br>
+⇝ resource should not be reassigned</p></li><li><p>easiest if resource is final</p></li><li><p>easiest if resource must be assigned<br>
+and can be made implicitly final</p></li></ul></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">try(Connection c = connection)</code></pre></div></div></section><section id="_effectively_final_resource"><h2>Effectively Final Resource</h2><div class="paragraph"><p>But since Java 8 we have <em>effectively final</em>!</p></div>
+<div class="paragraph"><p>This works in Java 9:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">void doSomethingWith(Connection connection)
+		throws Exception {
+	try(connection) {
+		connection.doSomething();
+	}
+}</code></pre></div></div>
+<div class="ulist"><ul><li><p>compiler knows that <code>connection</code> is not reassigned</p></li><li><p>developers know what <em>effectively final</em> means</p></li></ul></div></section></section>
+<section><section id="_new_language_features_4"><h2>New Language Features</h2><table class="toc">
+	<tr><td>Private Interface Methods</td></tr>
+	<tr><td>Try-With-Resources</td></tr>
+	<tr class="toc-current"><td>Diamond Operator</td></tr>
+	<tr><td>SafeVarargs</td></tr>
+	<tr><td>Deprecation Warnings</td></tr>
+</table><div class="paragraph"><p>A little more type inference.</p></div></section><section id="_diamond_operator"><h2>Diamond Operator</h2><div class="paragraph"><p>Maybe the best example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;String&gt; strings = new ArrayList&lt;&gt;();</code></pre></div></div>
+<div class="ulist"><ul><li><p>used at a constructor call</p></li><li><p>tells Java to infer the parametric type</p></li></ul></div></section><section id="_anonymous_classes"><h2>Anonymous Classes</h2><div class="paragraph"><p>Diamond did not work with anon. classes:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">&lt;T&gt; Box&lt;T&gt; createBox(T content) {
+	// we have to put the `T` here :(
+	return new Box&lt;T&gt;(content) { };
+}</code></pre></div></div>
+<div class="paragraph"><p>Reason are non-denotable types:</p></div>
+<div class="ulist"><ul><li><p>might be inferred by compiler for anon. classes</p></li><li><p>can not be expressed by JVM</p></li></ul></div></section><section id="_infer_denotable_types"><h2>Infer Denotable Types</h2><div class="paragraph"><p>Java 9 infers denotable types:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">&lt;T&gt; Box&lt;T&gt; createBox(T content) {
+	return new Box&lt;&gt;(content) { };
+}</code></pre></div></div>
+<div class="paragraph"><p>Gives compile error if type is non-denotable:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Box&lt;?&gt; createCrazyBox(Object content) {
+	List&lt;?&gt; innerList = Arrays.asList(content);
+	// compile error
+	return new Box&lt;&gt;(innerList) { };
+}</code></pre></div></div></section></section>
+<section><section id="_new_language_features_5"><h2>New Language Features</h2><table class="toc">
+	<tr><td>Private Interface Methods</td></tr>
+	<tr><td>Try-With-Resources</td></tr>
+	<tr><td>Diamond Operator</td></tr>
+	<tr class="toc-current"><td>SafeVarargs</td></tr>
+	<tr><td>Deprecation Warnings</td></tr>
+</table><div class="paragraph"><p>One less warning you couldn&#8217;t do anything about.</p></div></section><section id="_heap_pollution"><h2>Heap Pollution</h2><div class="paragraph"><p>Innocent looking code&#8230;&#8203;</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">private &lt;T&gt; Optional&lt;T&gt; firstNonNull(T... args) {
+	return stream(args)
+			.filter(Objects::nonNull)
+			.findFirst();
+}</code></pre></div></div>
+<div class="paragraph"><p>Compiler warns (on call site, too):</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code>Possible heap pollution from parameterized vararg type</code></pre></div></div></section><section id="_heap_pollution_2"><h2>Heap Pollution?</h2><div class="paragraph"><p>For generic varargs argument <code>T&#8230;&#8203; args</code>,<br>
+you <strong>must not</strong> depend on it being a <code>T[]</code>!</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">private &lt;T&gt; T[] replaceTwoNulls(
+		T value, T first, T second) {
+	return replaceAllNulls(value, first, second);
+}
+
+private &lt;T&gt; T[] replaceAllNulls(T value, T... args) {
+	// loop over `args`, replacing null with `value`
+	return args;
+}</code></pre></div></div></section><section id="_compiler_warning"><h2>Compiler Warning</h2><div class="paragraph"><p>Compiler is aware of the problem and warns you.</p></div>
+<div class="paragraph"><p>If you think, everything&#8217;s under control:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@SafeVarargs
+private &lt;T&gt; Optional&lt;T&gt; firstNonNull(T... args) {
+	return // [...]
+}</code></pre></div></div>
+<div class="paragraph"><p>Or not&#8230;&#8203; In Java 8 this is a compile error!</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code>Invalid SafeVarargs annotation. Instance
+method &lt;T&gt;firstNonNull(T...) is not final.</code></pre></div></div></section><section id="_but_why"><h2>But Why?</h2><div class="paragraph"><p>The <code>@SafeVarargs</code> annotation:</p></div>
+<div class="ulist"><ul><li><p>tells <em>the caller</em> that all is fine</p></li><li><p>only makes sense on methods<br>
+that can not be overriden</p></li></ul></div>
+<div class="paragraph"><p>Which methods can&#8217;t be overriden?<br>
+⇝ <code>final</code> methods</p></div>
+<div class="paragraph"><p>What about <code>private</code> methods?<br>
+⇝ Damn! 😭</p></div></section><section id="__safevarargs_on_private_methods"><h2>@SafeVarargs on Private&nbsp;Methods</h2><div class="paragraph"><p>Looong story, here&#8217;s the point:</p></div>
+<div class="paragraph"><p>In Java 9 <code>@SafeVarargs</code><br>
+can be applied to private methods.</p></div></section></section>
+<section><section id="_new_language_features_6"><h2>New Language Features</h2><table class="toc">
+	<tr><td>Private Interface Methods</td></tr>
+	<tr><td>Try-With-Resources</td></tr>
+	<tr><td>Diamond Operator</td></tr>
+	<tr><td>SafeVarargs</td></tr>
+	<tr class="toc-current"><td>Deprecation Warnings</td></tr>
+</table><div class="paragraph"><p><em>Another</em> warning you couldn&#8217;t do anything about.</p></div></section><section id="_deprecation_warnings"><h2>Deprecation Warnings</h2><div class="paragraph"><p>Should this code emit a warning?</p></div>
+<div style="height: 350px;">
+<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">// LineNumberInputStream is deprecated
+<span class="hljs-keyword">import</span> java.io.LineNumberInputStream;
+
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DeprecatedImports</span> </span>{
+
+    LineNumberInputStream stream;
+
+}</code></pre></div></div>
+<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">// LineNumberInputStream is deprecated
+<span class="hljs-keyword">import</span> java.io.LineNumberInputStream;
+
+<span class="hljs-meta">@Deprecated</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DeprecatedImports</span> </span>{
+
+    LineNumberInputStream stream;
+
+}</code></pre></div></div></div></section><section id="_not_on_imports"><h2>Not On Imports</h2><div class="paragraph"><p>Java 9 no longer emits warnings<br>
+for importing deprecated members.</p></div>
+<div class="paragraph"><p>Warning free:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">import java.io.LineNumberInputStream;
+
+@Deprecated
+public class DeprecatedImports {
+
+	LineNumberInputStream stream;
+
+}</code></pre></div></div></section></section>
+<section id="_new_or_updated_apis"><h2>New or Updated APIs</h2><table class="toc">
+	<tr><td>Stream Improvements</td></tr>
+	<tr><td>Optional Improvements</td></tr>
+	<tr><td>Collection Factories</td></tr>
+	<tr><td>Reactive Streams</td></tr>
+	<tr><td>Stack-Walking</td></tr>
+	<tr><td>OS Processes</td></tr>
+</table>
+<div class="paragraph"><p>Some APIs are new,<br>
+many existing ones were improved.</p></div></section>
+<section><section id="_stream_improvements"><h2>Stream Improvements</h2><table class="toc">
+	<tr class="toc-current"><td>Stream Improvements</td></tr>
+	<tr><td>Optional Improvements</td></tr>
+	<tr><td>Collection Factories</td></tr>
+	<tr><td>Reactive Streams</td></tr>
+	<tr><td>Stack-Walking</td></tr>
+	<tr><td>OS Processes</td></tr>
+</table><div class="paragraph"><p>Small improvements to Java 8 streams.</p></div></section><section id="__code_stream_ofnullable_code"><h2><code>Stream::ofNullable</code></h2><div class="paragraph"><p>Creates a stream of zero or one elements:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">long zero = Stream.ofNullable(null).count();
+long one = Stream.ofNullable("42").count();</code></pre></div></div></section><section id="__code_stream_iterate_code"><h2><code>Stream::iterate</code></h2><div class="paragraph"><p>To use <code>for</code> even less&#8230;&#8203;</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">iterate(T seed,
+	Predicate&lt;T&gt; hasNext,
+	UnaryOperator&lt;T&gt; next);</code></pre></div></div>
+<div class="paragraph"><p>Example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream
+	.iterate(1, i -&gt; i&lt;=10, i -&gt; 2*i)
+	.forEach(System.out::println);
+// output: 1 2 4 8</code></pre></div></div></section><section id="__code_stream_iterate_code_2"><h2><code>Stream::iterate</code></h2><div class="paragraph"><p>Counter Example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Enumeration&lt;Integer&gt; en = // ...
+Stream.iterate(
+		en.nextElement(),
+		el -&gt; en.hasMoreElements(),
+		el -&gt; en.nextElement())
+	.forEach(System.out::println);</code></pre></div></div>
+<div class="ulist"><ul><li><p>first <code>nextElement()</code></p></li><li><p>then <code>hasMoreElements()</code></p></li><li><p>⇝ fail</p></li></ul></div></section><section id="__code_stream_takewhile_code"><h2><code>Stream::takeWhile</code></h2><div class="paragraph"><p>Stream as long as a condition is true:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;T&gt; takeWhile(Predicate&lt;T&gt; predicate);</code></pre></div></div>
+<div class="paragraph"><p>Example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream.of("a", "b", "c", "", "e")
+	.takeWhile(s -&gt; !String.isEmpty(s));
+	.forEach(System.out::print);
+
+// output: abc</code></pre></div></div></section><section id="__code_stream_dropwhile_code"><h2><code>Stream::dropWhile</code></h2><div class="paragraph"><p>Start streaming as soon as a condition is true:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;T&gt; dropWhile(Predicate&lt;T&gt; predicate);</code></pre></div></div>
+<div class="paragraph"><p>Example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream.of("a", "b", "c", "de", "f")
+	.dropWhile(s -&gt; s.length &lt;= 1);
+	.forEach(System.out::print);
+
+// output: def</code></pre></div></div></section></section>
+<section><section id="_optional_improvements"><h2>Optional Improvements</h2><table class="toc">
+	<tr><td>Stream Improvements</td></tr>
+	<tr class="toc-current"><td>Optional Improvements</td></tr>
+	<tr><td>Collection Factories</td></tr>
+	<tr><td>Reactive Streams</td></tr>
+	<tr><td>Stack-Walking</td></tr>
+	<tr><td>OS Processes</td></tr>
+</table><div class="paragraph"><p>Small improvements to Java 8 <code>Optional</code>.</p></div></section><section id="__code_optional_stream_code"><h2><code>Optional::stream</code></h2><div class="paragraph"><p>Turns an <code>Optional</code> into a <code>Stream</code><br>
+of zero or one elements:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;T&gt; stream();</code></pre></div></div></section><section id="_filter_map_in_one_step"><h2>Filter-Map in one Step</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">private Optional&lt;Customer&gt; findCustomer(int id) {
+	// ...
+}
+
+Stream&lt;Customer&gt; findCustomers(List&lt;String&gt; ids) {
+	return ids.stream()
+		.map(this::findCustomer)
+		// now we have a Stream&lt;Optional&lt;Customer&gt;&gt;
+		.flatMap(Optional::stream)
+}</code></pre></div></div></section><section id="_from_eager_to_lazy"><h2>From Eager to Lazy</h2><div class="paragraph"><p><code>List&lt;Order&gt; getOrders(String id)</code> is expensive:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Order&gt; findOrdersForCustomer(String id) {
+	return findCustomer(id)
+		.map(this::getOrders) // eager
+		.orElse(new ArrayList&lt;&gt;());
+}
+
+Steam&lt;Order&gt; findOrdersForCustomer(String id) {
+	return findCustomer(id)
+		.stream()
+		.map(this::getOrders) // lazy
+		.flatMap(List::stream);
+}</code></pre></div></div></section><section id="__code_optional_or_code"><h2><code>Optional::or</code></h2><div class="paragraph"><p>Choose a non-empty <code>Optional</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Optional&lt;T&gt; or(Supplier&lt;Optional&lt;T&gt;&gt; supplier);</code></pre></div></div></section><section id="_find_in_many_places"><h2>Find in Many Places</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public interface Search {
+	Optional&lt;Customer&gt; inMemory(String id);
+	Optional&lt;Customer&gt; onDisk(String id);
+	Optional&lt;Customer&gt; remotely(String id);
+
+	default Optional&lt;Customer&gt; anywhere(String id) {
+		return inMemory(id)
+			.or(() -&gt; onDisk(id))
+			.or(() -&gt; remotely(id));
+	}
+
+}</code></pre></div></div></section><section id="__code_ifpresentorelse_code"><h2><code>ifPresentOrElse</code></h2><div class="paragraph"><p>Like <code>ifPresent</code> but do something if empty:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">void ifPresentOrElse(
+	Consumer&lt;T&gt; action,
+	Runnable emptyAction);</code></pre></div></div>
+<div class="paragraph"><p>Example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">void logLogin(String id) {
+	findCustomer(id)
+		.ifPresentorElse(
+			this::logCustomerLogin,
+			() -&gt; logUnknownLogin(id));
+}</code></pre></div></div></section></section>
+<section><section id="_collection_factories"><h2>Collection Factories</h2><table class="toc">
+	<tr><td>Stream Improvements</td></tr>
+	<tr><td>Optional Improvements</td></tr>
+	<tr class="toc-current"><td>Collection Factories</td></tr>
+	<tr><td>Reactive Streams</td></tr>
+	<tr><td>Stack-Walking</td></tr>
+	<tr><td>OS Processes</td></tr>
+</table><div class="paragraph"><p>Creating ad-hoc collections more easily.</p></div></section><section id="_hope_is_pain"><h2>Hope is Pain</h2><div class="paragraph"><p>Wouldn&#8217;t this be awesome?</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;String&gt; list = [ "a", "b", "c" ];
+Map&lt;String, Integer&gt; map = [ "one" = 1, "two" = 2 ];</code></pre></div></div>
+<div class="paragraph"><p>Not gonna happen!</p></div>
+<div class="ulist"><ul><li><p>language change is costly</p></li><li><p>binds language to collection framework</p></li><li><p>strongly favors specific collections</p></li></ul></div></section><section id="_next_best_thing"><h2>Next Best Thing</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;String&gt; list = List.of("a", "b", "c");
+Map&lt;String, Integer&gt; mapImmediate = Map.of(
+		"one", 1,
+		"two", 2,
+		"three", 3);
+Map&lt;String, Integer&gt; mapEntries = Map.ofEntries(
+		entry("one", 1),
+		entry("two", 2),
+		entry("three", 3));</code></pre></div></div></section><section id="_interesting_details"><h2>Interesting Details</h2><div class="ulist"><ul><li><p>collections are immutable<br>
+(no immutability in type system, though)</p></li><li><p><code>null</code> values are forbidden</p></li><li><p>iteration order is random between JVM starts</p></li></ul></div></section></section>
+<section><section id="_reactive_streams"><h2>Reactive Streams</h2><table class="toc">
+	<tr><td>Stream Improvements</td></tr>
+	<tr><td>Optional Improvements</td></tr>
+	<tr><td>Collection Factories</td></tr>
+	<tr class="toc-current"><td>Reactive Streams</td></tr>
+	<tr><td>Stack-Walking</td></tr>
+	<tr><td>OS Processes</td></tr>
+</table><div class="paragraph"><p>The JDK as common ground<br>
+for reactive stream libraries.</p></div></section><section id="_reactive_types"><h2>Reactive Types</h2><div class="dlist"><dl><dt class="hdlist1"><code>Publisher</code></dt><dd><div class="ulist"><ul><li><p>produces items to consume</p></li><li><p>can be subscribed to</p></li></ul></div></dd><dt class="hdlist1"><code>Subscriber</code></dt><dd><div class="ulist"><ul><li><p>subscribes to publisher</p></li><li><p><code>onNext</code>, <code>onError</code>, <code>onComplete</code></p></li></ul></div></dd><dt class="hdlist1"><code>Subscription</code></dt><dd><div class="ulist"><ul><li><p>connection between publisher and subscriber</p></li><li><p><code>request</code>, <code>cancel</code></p></li></ul></div></dd></dl></div></section><section id="_reactive_flow"><h2>Reactive Flow</h2><h3>Subscribing</h3><div class="ulist"><ul><li><p>create <code>Publisher pub</code> and <code>Subscriber sub</code></p></li><li><p>call <code>pub.subscribe(sub)</code></p></li><li><p>pub creates <code>Subscription script</code><br>
+and calls <code>sub.onSubscription(script)</code></p></li><li><p><code>sub</code> can store <code>script</code></p></li></ul></div></section><section id="_reactive_flow_2"><h2>Reactive Flow</h2><h3>Streaming</h3><div class="ulist"><ul><li><p><code>sub</code> calls <code>script.request(10)</code></p></li><li><p><code>pub</code> calls <code>sub.onNext(element)</code> (max 10x)</p></li></ul></div>
+<h3>Canceling</h3><div class="ulist"><ul><li><p><code>pub</code> may call <code>sub.OnError(err)</code><br>
+or <code>sub.onComplete()</code></p></li><li><p><code>sub</code> may call <code>script.cancel()</code></p></li></ul></div></section><section id="_reactive_apis"><h2>Reactive APIs?</h2><div class="paragraph"><p>JDK only provides three interfaces<br>
+and one simple implementation.</p></div>
+<div class="paragraph"><p>(Also called <strong>Flow API</strong>.)</p></div>
+<div class="paragraph"><p>No JDK API uses them.<br>
+(No reactive HTTP connections etc.)</p></div></section></section>
+<section><section id="_stack_walking"><h2>Stack-Walking</h2><table class="toc">
+	<tr><td>Stream Improvements</td></tr>
+	<tr><td>Optional Improvements</td></tr>
+	<tr><td>Collection Factories</td></tr>
+	<tr><td>Reactive Streams</td></tr>
+	<tr class="toc-current"><td>Stack-Walking</td></tr>
+	<tr><td>OS Processes</td></tr>
+</table><div class="paragraph" id="TODO"><p>Examining the stack faster and easier.</p></div></section><section id="__code_stackwalker_foreach_code"><h2><code>StackWalker::forEach</code></h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public static void main(String[] args) { one(); }
+static void one() { two(); }
+static void two() { three(); }
+static void three() {
+	StackWalker.getInstance()
+		.forEach(System.out::println);
+}
+
+// output
+StackWalkingExample.three(StackWalking.java:15)
+StackWalkingExample.two(StackWalking.java:12)
+StackWalkingExample.one(StackWalking.java:11)
+StackWalkingExample.main(StackWalking.java:10)</code></pre></div></div></section><section id="__code_stackwalker_walk_code"><h2><code>StackWalker::walk</code></h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">static void three() {
+	String line = StackWalker.getInstance().walk(
+		frames -&gt; frames
+			.filter(f -&gt; f.getMethodName().contains("one"))
+			.findFirst()
+			.map(f -&gt; "Line " + f.getLineNumber())
+			.orElse("Unknown line");
+	);
+	System.out.println(line);
+}
+
+// output
+Line 11</code></pre></div></div></section><section id="_options"><h2>Options</h2><div class="paragraph"><p><code>getInstance</code> takes options as arguments:</p></div>
+<div class="ulist"><ul><li><p><code>SHOW_REFLECT_FRAMES</code> for reflection frames</p></li><li><p><code>SHOW_HIDDEN_FRAMES</code> e.g. for lambda frames</p></li><li><p><code>RETAIN_CLASS_REFERENCE</code> for <code>Class&lt;?&gt;</code></p></li></ul></div></section><section id="_frames_and_traces"><h2>Frames and Traces</h2><div class="paragraph"><p><code>forEach</code> and <code>walk</code> operate on <code>StackFrame</code>:</p></div>
+<div class="ulist"><ul><li><p>class and method name</p></li><li><p>class as <code>Class&lt;?&gt;</code></p></li><li><p>bytecode index and isNative</p></li></ul></div>
+<div class="paragraph"><p>Can upgrade to <code>StackTraceElement</code> (expensive):</p></div>
+<div class="ulist"><ul><li><p>file name and line number</p></li></ul></div></section><section id="_performance_i"><h2>Performance I</h2><div class="imageblock diagram" style=""><img src="images/stack-walker-vs-exception.png" alt="stack walker vs exception"></div></section><section id="_performance_ii"><h2>Performance II</h2><div class="imageblock diagram" style=""><img src="images/stack-walker-limit-with-estimated-size.png" alt="stack walker limit with estimated size"></div></section><section id="_performance_iii"><h2>Performance III</h2><div class="ulist"><ul><li><p>creating <code>StackTraceElement</code> is expensive<br>
+(for file name and line number)</p></li><li><p>lazy evaluation pays off for partial traversal</p></li></ul></div>
+<div class="paragraph"><p>(Benchmarks performed by <a href="https://twitter.com/arnaudroger">Arnaud Roger</a>)</p></div></section></section>
+<section><section id="_os_processes"><h2>OS Processes</h2><table class="toc">
+	<tr><td>Stream Improvements</td></tr>
+	<tr><td>Optional Improvements</td></tr>
+	<tr><td>Collection Factories</td></tr>
+	<tr><td>Reactive Streams</td></tr>
+	<tr><td>Stack-Walking</td></tr>
+	<tr class="toc-current"><td>OS Processes</td></tr>
+</table><div class="paragraph"><p>Improving interaction with OS processes.</p></div></section><section id="_simple_example"><h2>Simple Example</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="shell language-shell">ls /home/nipa/tmp | grep pdf</code></pre></div></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Path dir = Paths.get("/home/nipa/tmp");
+ProcessBuilder ls = new ProcessBuilder()
+		.command("ls")
+		.directory(dir.toFile());
+ProcessBuilder grepPdf = new ProcessBuilder()
+		.command("grep", "pdf")
+		.redirectOutput(Redirect.INHERIT);
+List&lt;Process&gt; lsThenGrep = ProcessBuilder
+		.startPipeline(asList(ls, grepPdf));</code></pre></div></div></section><section id="_extended_code_process_code"><h2>Extended <code>Process</code></h2><div class="paragraph"><p>Cool new methods on <code>Process</code>:</p></div>
+<div class="ulist"><ul><li><p><code>boolean supportsNormalTermination();</code></p></li><li><p><code>long getPid();</code></p></li><li><p><code>CompletableFuture&lt;Process&gt; onExit();</code></p></li><li><p><code>Stream&lt;ProcessHandle&gt; children();</code></p></li><li><p><code>Stream&lt;ProcessHandle&gt; descendants();</code></p></li><li><p><code>ProcessHandle toHandle();</code></p></li></ul></div></section><section id="_new_code_processhandle_code"><h2>New <code>ProcessHandle</code></h2><div class="paragraph"><p>New functionality actually comes from <code>ProcessHandle</code>.</p></div>
+<div class="paragraph"><p>Interesting <code>static</code> methods:</p></div>
+<div class="ulist"><ul><li><p><code>Stream&lt;ProcessHandle&gt; allProcesses();</code></p></li><li><p><code>Optional&lt;ProcessHandle&gt; of(long pid);</code></p></li><li><p><code>ProcessHandle current();</code></p></li></ul></div></section><section id="_more_information"><h2>More Information</h2><div class="paragraph"><p><code>ProcessHandle</code> can return <code>Info</code>:</p></div>
+<div class="ulist"><ul><li><p>command, arguments</p></li><li><p>start time</p></li><li><p>CPU time</p></li></ul></div></section></section>
+<section id="_a_mixed_bag_of_api_changes"><h2>A Mixed Bag Of API&nbsp;Changes</h2><div class="ulist"><ul><li><p>multi-resolution images (<a href="http://openjdk.java.net/jeps/251">JEP 251</a>)</p></li><li><p>native desktop integration (<a href="http://openjdk.java.net/jeps/272">JEP 272</a>)</p></li><li><p>deserialization filter (<a href="http://openjdk.java.net/jeps/290">JEP 290</a>)</p></li><li><p>HTTP/2 (<a href="http://openjdk.java.net/jeps/110">JEP 110</a>), DTLS (<a href="http://openjdk.java.net/jeps/219">JEP 219</a>),<br>
+TLS ALPN and OCSP stapling (<a href="http://openjdk.java.net/jeps/244">JEP 244</a>)</p></li><li><p>OASIS XML Catalogs 1.1 (<a href="http://openjdk.java.net/jeps/268">JEP 268</a>),<br>
+Xerces 2.11.0 (<a href="http://openjdk.java.net/jeps/255">JEP 255</a>)</p></li></ul></div>
+<div class="paragraph"><p>Many lower-level APIs.</p></div></section>
+<section id="_jvm_features"><h2>JVM Features</h2><table class="toc">
+	<tr><td>Multi-Release JARs</td></tr>
+	<tr><td>Redirected Platform Logging</td></tr>
+</table></section>
+<section><section id="_multi_release_jars"><h2>Multi-Release JARs</h2><table class="toc">
+	<tr class="toc-current"><td>Multi-Release JARs</td></tr>
+	<tr><td>Redirected Platform Logging</td></tr>
+</table><div class="paragraph"><p>"Do this on Java X, do that on Java Y."</p></div></section><section id="_version_dependence"><h2>Version Dependence</h2><div class="paragraph"><p><code>Main</code> calls <code>Version</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class Main {
+
+	public static void main(String[] args) {
+		System.out.println(new Version().get());
+	}
+
+}</code></pre></div></div></section><section id="_version_dependence_2"><h2>Version Dependence</h2><div class="paragraph"><p><code>Version</code> exists twice:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class Version {
+
+	public String get() { return "Java 8"; }
+
+}
+
+public class Version {
+
+	public String get() { return "Java 9"; }
+
+}</code></pre></div></div>
+<div class="paragraph"><p>(Btw, IDEs hate this!)</p></div></section><section id="_creating_a_multi_release_jar"><h2>Creating A Multi&#8209;Release&nbsp;JAR</h2><div class="paragraph"><p>Now, here&#8217;s the magic:</p></div>
+<div class="ulist"><ul><li><p>compile <code>Main</code> and <code>Version[8]</code> to <code>out/java-8</code></p></li><li><p>compile <code>Version[9]</code> to <code>out/java-9</code></p></li><li><p>use new <code>jar</code> flag <code>--release</code>:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">jar9 --create --file out/mr.jar
+	-C out/java-8 .
+	--release 9 -C out/java-9 .</code></pre></div></div></li></ul></div></section><section id="_jar_content"><h2>JAR Content</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">└ org
+    └ codefx ... (moar folders)
+        ├ Main.class
+        └ Version.class
+└ META-INF
+    └ versions
+        └ 9
+            └ org
+                └ codefx ... (moar folders)
+                    └ Version.class</code></pre></div></div></section><section id="_run"><h2>Run!</h2><div class="paragraph"><p>With <code>java -cp out/mr.jar &#8230;&#8203;Main</code>:</p></div>
+<div class="ulist"><ul><li><p>prints <code>"Java 8"</code> on Java 8</p></li><li><p>prints <code>"Java 9"</code> on Java 9</p></li></ul></div>
+<div class="paragraph"><p>Great Success!</p></div></section></section>
+<section><section id="_redirected_platform_logging"><h2>Redirected Platform Logging</h2><table class="toc">
+	<tr><td>Multi-Release JARs</td></tr>
+	<tr class="toc-current"><td>Redirected Platform Logging</td></tr>
+</table><div class="paragraph"><p>Use your logging framework of choice<br>
+as backend for JDK logging.</p></div></section><section id="_loggers_and_finders"><h2>Loggers and Finders</h2><div class="paragraph"><p>New logging infrastructure inside the JDK:</p></div>
+<div class="ulist"><ul><li><p>new interface <code>System.Logger</code></p></li><li><p>used by JDK classes</p></li><li><p>instances created by <code>System.LoggerFinder</code></p></li></ul></div>
+<div class="paragraph"><p>The interesting bit:</p></div>
+<div class="paragraph"><p><strong><code>LoggerFinder</code> is a service!</strong></p></div></section><section id="_creating_a_code_logger_code"><h2>Creating a <code>Logger</code></h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class SystemOutLogger implements Logger {
+
+	public String getName() { return "SystemOut"; }
+
+	public boolean isLoggable(Level level) { return true; }
+
+	public void log(
+			Level level, ResourceBundle bundle,
+			String format, Object... params) {
+		System.out.println(/* ...*/);
+	}
+
+	// another, similar `log` method
+
+}</code></pre></div></div></section><section id="_creating_a_code_loggerfinder_code"><h2>Creating a <code>LoggerFinder</code></h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class SystemOutLoggerFinder
+		implements LoggerFinder {
+
+	public Logger getLogger(
+			String name, Module module) {
+		return new SystemOutLogger();
+	}
+
+}</code></pre></div></div></section><section id="_registering_the_service"><h2>Registering the Service</h2><div class="paragraph"><p>Module descriptor for <em>system.out.logger</em>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> system.out.logger {
+    <span class="hljs-keyword">provides</span> java.lang.System.LoggerFinder
+        <span class="hljs-keyword">with</span> system.out.logger.SystemOutLoggerFinder;
+}</code></pre></div></div>
+<div class="paragraph"><p>Module system and JDK take care of the rest!</p></div></section></section>
+<section id="_a_mixed_bag_of_new_jvm_features"><h2>A Mixed Bag Of New&nbsp;JVM&nbsp;Features</h2><div class="ulist"><ul><li><p>new version strings (<a href="http://openjdk.java.net/jeps/223">JEP 223</a>)</p></li><li><p>GNU-style command line options (<a href="http://openjdk.java.net/jeps/293">JEP 293</a>)</p></li><li><p>unified logging (<a href="http://openjdk.java.net/jeps/158">JEP 158</a>, <a href="http://openjdk.java.net/jeps/271">JEP 271</a>)</p></li><li><p>command line flag validation (<a href="http://openjdk.java.net/jeps/245">JEP 245</a>)</p></li><li><p>reserved stack areas (<a href="http://openjdk.java.net/jeps/270">JEP 270</a>)</p></li></ul></div></section>
+<section id="_performance"><h2>Performance</h2><table class="toc">
+	<tr><td>Compact Strings</td></tr>
+	<tr><td>Indified String Concatenation</td></tr>
+</table></section>
+<section><section id="_compact_strings"><h2>Compact Strings</h2><table class="toc">
+	<tr class="toc-current"><td>Compact Strings</td></tr>
+	<tr><td>Indified String Concatenation</td></tr>
+</table><div class="paragraph"><p>Going from UTF-16 to ISO-8859-1.</p></div></section><section id="_strings_and_memory"><h2>Strings and memory</h2><div class="ulist"><ul><li><p>20% - 30% of heap are <code>char[]</code> for <code>String</code></p></li><li><p>a <code>char</code> is UTF-16 code unit ⇝ 2 bytes</p></li><li><p>most strings only require ISO-8859-1 ⇝ 1 byte</p></li></ul></div>
+<div class="paragraph"><p><strong>10% - 15% of memory is wasted!</strong></p></div></section><section id="_compact_strings_2"><h2>Compact Strings</h2><div class="paragraph"><p>For Java 9, <code>String</code> was changed:</p></div>
+<div class="ulist"><ul><li><p>uses <code>byte[]</code> instead of <code>char[]</code></p></li><li><p>bytes per character:</p><div class="ulist"><ul><li><p>1 if <em>all</em> characters are ISO-8859-1</p></li><li><p>2 otherwise</p></li></ul></div></li></ul></div>
+<div class="paragraph"><p>Only possible because <code>String</code> makes<br>
+defensive copies of all arguments.</p></div></section><section id="_performance_2"><h2>Performance</h2><div class="paragraph"><p>Simple benchmark:<br>
+(by <a href="https://twitter.com/shipilev">Aleksey Shipilëv</a>)</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">String method = generateString(size);
+
+public String work() {
+	return "Calling method \"" + method + "\"";
+}</code></pre></div></div>
+<div class="paragraph"><p>Depending on circumstances:</p></div>
+<div class="ulist"><ul><li><p>throughput 1.4x</p></li><li><p>garbage less 1.85x</p></li></ul></div></section></section>
+<section><section id="_indified_string_concatenation"><h2>Indified String Concatenation</h2><table class="toc">
+	<tr><td>Compact Strings</td></tr>
+	<tr class="toc-current"><td>Indified String Concatenation</td></tr>
+</table><div class="paragraph"><p><code>"Improving" + "String" + "Concatenation"</code></p></div></section><section id="_string_concatenation"><h2>String Concatenation</h2><div class="paragraph"><p>What happens when you run:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">String s = greeting + ", " + place + "!";</code></pre></div></div>
+<div class="ulist"><ul><li><p>bytecode uses <code>StringBuilder</code></p></li><li><p>JIT may (!) recognize and optimize<br>
+by writing content directly to new <code>char[]</code></p></li><li><p>breaks down quickly<br>
+(e.g. with <code>long</code> or <code>double</code>)</p></li></ul></div></section><section id="_why_not_create_better_bytecode"><h2>Why Not Create Better Bytecode?</h2><div class="ulist"><ul><li><p>new optimizations create new bytecode</p></li><li><p>new optimizations require recompile</p></li><li><p>test matrix <em>JVMs vs bytecodes</em> explodes</p></li></ul></div></section><section id="_why_not_call_code_string_concat_code"><h2>Why Not Call <code>String::concat</code>?</h2><div class="paragraph"><p>There is no such method.</p></div>
+<div class="ulist"><ul><li><p><code>concat(String&#8230;&#8203; args)</code> requires <code>toString</code></p></li><li><p><code>concat(Object&#8230;&#8203; args)</code> requires boxing</p></li></ul></div>
+<div class="paragraph"><p>Nothing fancy can be done<br>
+because compiler must use public API.</p></div></section><section id="_invokedynamic"><h2>Invokedynamic</h2><div class="paragraph"><p>Invokedynamic came in Java 7:</p></div>
+<div class="ulist"><ul><li><p>compiler creates a recipe</p></li><li><p>runtime has to process it</p></li><li><p>defers decisions from compiler to runtime</p></li></ul></div>
+<div class="paragraph"><p>(Used for lambda expressions and in Nashorn.)</p></div></section><section id="_indy_to_the_rescue"><h2>Indy To The Rescue</h2><div class="paragraph"><p>With Indy compiler can express<br>
+<em>"concat these things"</em><br>
+(without boxing!)</p></div>
+<div class="paragraph"><p>JVM executes by writing content<br>
+directly to new <code>char[]</code>.</p></div></section><section id="_performance_3"><h2>Performance</h2><div class="paragraph"><p>Depending on circumstances:</p></div>
+<div class="ulist"><ul><li><p>throughput 2.6x</p></li><li><p>garbage less 3.4x</p></li></ul></div>
+<div class="paragraph"><p>(Benchmarks by <a href="https://twitter.com/shipilev">Aleksey Shipilëv</a>)</p></div></section><section id="_performance_of_indified_compact_string_concat"><h2>Performance Of Indified Compact String Concat</h2><div class="paragraph"><p>Depending on circumstances:</p></div>
+<div class="ulist"><ul><li><p>throughput 2.9x</p></li><li><p>garbage less 6.4x</p></li></ul></div>
+<div class="paragraph"><p>(Benchmarks by <a href="https://twitter.com/shipilev">Aleksey Shipilëv</a>)</p></div></section></section>
+<section id="_a_mixed_bag_of_performance_improvements"><h2>A Mixed Bag Of Performance Improvements</h2><div class="ulist"><ul><li><p>something with interned strings<br>
+and class data sharing (<a href="http://openjdk.java.net/jeps/250">JEP 250</a>)</p></li><li><p>contested locks (<a href="http://openjdk.java.net/jeps/143">JEP 143</a>)</p></li><li><p>security manager (<a href="http://openjdk.java.net/jeps/232">JEP 232</a>)</p></li><li><p>GHASH/RSA computation (<a href="http://openjdk.java.net/jeps/246">JEP 246</a>)</p></li><li><p>Java 2D rendering (<a href="http://openjdk.java.net/jeps/265">JEP 265</a>)</p></li></ul></div></section>
+<section id="_full_picture" data-background-image="images/shibuya-night.jpg" data-background-size="cover"><h2>Full Picture</h2>
+<div class="paragraph"><p>If you want the full picture, read</p></div>
+<div class="paragraph"><p><strong>The Ultimate Guide To Java 9</strong></p></div>
+<div class="paragraph"><p>(<a href="https://www.sitepoint.com/ultimate-guide-to-java-9/">tiny.cc/java-9</a>)</p></div></section>
+<section id="_about_me" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>About Me</h2>
+<div style="float: left; width: 42%; margin: 25px 0px;">
+	<img src="images/cover-j9ms.png" style="margin: 0;">
+</div>
+<div class="paragraph"><p>Nicolai Parlog<br>
+<a href="http://codefx.org">codefx.org</a><br>
+<a href="https://sitepoint.com/java">sitepoint.com/java</a><br>
+<a href="https://twitter.com/nipafx">@nipafx</a> /
+<a href="https://google.com/+NicolaiParlog">+NicolaiParlog</a></p></div>
+<h3>Want More?</h3>
+<div class="paragraph"><p>I&#8217;m writing <a href="http://blog.codefx.org/java-9-module-system/">a book</a>!<br>
+EA soon ⇝ <a href="http://blog.codefx.org/newsletter/">tiny.cc/fx-weekly</a></p></div>
+<div class="paragraph"><p>two-day <strong><em>Java 9</em></strong> course<br>
+Zürich, 20.-21.04.<br>
+⇝ register at <a href="http://42talents.com/training/2017/04/20/Java-9/">42talents.com</a></p></div>
+<div class="paragraph"><p>or <a href="http://blog.codefx.org/hire-nicolai-parlog/">hire me</a>!</p></div></section>
+<section id="_image_credits"><h2>Image Credits</h2><div class="ulist"><ul><li><p><a href="https://pixabay.com/en/number-digit-nine-9-background-1982274/">nine</a>:
+<a href="https://pixabay.com/en/users/PIRO4D-2707530/">PIRO4D</a>,
+<a href="https://wiki.creativecommons.org/wiki/CC0">CC0</a></p></li><li><p><a href="https://www.flickr.com/photos/21496790@N06/5065834411">question-mark</a>:
+<a href="http://milosevicmilos.com/">Milos Milosevic</a>,
+<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a></p></li></ul></div></section></div></div><script src="_reveal.js/lib/js/head.min.js"></script><script src="_reveal.js/js/reveal.js"></script><script type="text/javascript">// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+Reveal.initialize({
+  // Display controls in the bottom right corner
+  controls: false,
+  // Display a presentation progress bar
+  progress: false,
+  // Display the page number of the current slide
+  slideNumber: false,
+  // Push each slide change to the browser history
+  history: true,
+  // Enable keyboard shortcuts for navigation
+  keyboard: true,
+  // Enable the slide overview mode
+  overview: true,
+  // Vertical centering of slides
+  center: true,
+  // Enables touch navigation on devices with touch input
+  touch: true,
+  // Loop the presentation
+  loop: false,
+  // Change the presentation direction to be RTL
+  rtl: false,
+  // Turns fragments on and off globally
+  fragments: true,
+  // Flags if the presentation is running in an embedded mode,
+  // i.e. contained within a limited portion of the screen
+  embedded: false,
+  // Number of milliseconds between automatically proceeding to the
+  // next slide, disabled when set to 0, this value can be overwritten
+  // by using a data-autoslide attribute on your slides
+  autoSlide: 0,
+  // Stop auto-sliding after user input
+  autoSlideStoppable: true,
+  // Enable slide navigation via mouse wheel
+  mouseWheel: false,
+  // Hides the address bar on mobile devices
+  hideAddressBar: true,
+  // Opens links in an iframe preview overlay
+  previewLinks: false,
+  // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
+  // NOTE setting the theme in the config no longer works in reveal.js 3.x
+  //theme: Reveal.getQueryHash().theme || 'nipa-night',
+  // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+  transition: Reveal.getQueryHash().transition || 'slide',
+  // Transition speed (e.g., default, fast, slow)
+  transitionSpeed: 'default',
+  // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+  backgroundTransition: 'fade',
+  // Number of slides away from the current that are visible
+  viewDistance: 3,
+  // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+  parallaxBackgroundImage: 'images/9-dark.jpg',
+  // Parallax background size in CSS syntax (e.g., "2100px 900px")
+  parallaxBackgroundSize: '2560px 1440px',
+
+  // The "normal" size of the presentation, aspect ratio will be preserved
+  // when the presentation is scaled to fit different resolutions. Can be
+  // specified using percentage units.
+  width: 960,
+  height: 700,
+
+  // Factor of the display size that should remain empty around the content
+  margin: 0.1,
+
+  // Bounds for smallest/largest possible scale to apply to content
+  minScale: 0.2,
+  maxScale: 1.5,
+
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+      { src: '_reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: '_reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '_reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      
+      { src: '_reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+      { src: '_reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+  ]
+});</script></body></html>
