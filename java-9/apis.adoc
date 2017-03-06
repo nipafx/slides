@@ -2,6 +2,7 @@
 
 ++++
 <table class="toc">
+	<tr><td>Stream Improvements</td></tr>
 	<tr><td>Collection Factories</td></tr>
 	<tr><td>Reactive Streams</td></tr>
 	<tr><td>Stack-Walking</td></tr>
@@ -13,11 +14,107 @@ Some APIs are new, +
 many existing ones were improved.
 
 
+== Stream Improvements
+
+++++
+<table class="toc">
+	<tr class="toc-current"><td>Stream Improvements</td></tr>
+	<tr><td>Collection Factories</td></tr>
+	<tr><td>Reactive Streams</td></tr>
+	<tr><td>Stack-Walking</td></tr>
+	<tr><td>OS Processes</td></tr>
+</table>
+++++
+
+Small improvements to Java 8 streams.
+
+=== `Stream::ofNullable`
+
+Creates a stream of zero or one elements:
+
+```java
+long zero = Stream.ofNullable(null).count();
+long one = Stream.ofNullable("42").count();
+```
+
+=== `Stream::iterate`
+
+To use `for` even less...
+
+```java
+iterate(T seed,
+	Predicate<T> hasNext,
+	UnaryOperator<T> next);
+```
+
+Example:
+
+```java
+Stream
+	.iterate(1, i -> i<=10, i -> 2*i)
+	.forEach(System.out::println);
+// output: 1 2 4 8
+```
+
+=== `Stream::iterate`
+
+Counter Example:
+
+```java
+Enumeration<Integer> en = // ...
+Stream.iterate(
+		en.nextElement(),
+		el -> en.hasMoreElements(),
+		el -> en.nextElement())
+	.forEach(System.out::println);
+```
+
+first `nextElement()` +
+then `hasMoreElements()` +
+⇝ fail
+
+=== `Stream::takeWhile`
+
+Stream as long as a condition is true:
+
+```java
+Stream<T> takeWhile(Predicate<T> predicate);
+```
+
+Example:
+
+```java
+Stream.of("a", "b", "c", "", "e")
+	.takeWhile(s -> !String.isEmpty(s));
+	.forEach(System.out::print);
+
+// output: abc
+```
+
+=== `Stream::dropWhile`
+
+Start streaming as soon as a condition is true:
+
+```java
+Stream<T> dropWhile(Predicate<T> predicate);
+```
+
+Example:
+
+```java
+Stream.of("a", "b", "c", "de", "f")
+	.dropWhile(s -> s.length <= 1);
+	.forEach(System.out::print);
+
+// output: def
+```
+
 
 == Collection Factories
 
 ++++
 <table class="toc">
+	<tr><td>Stream Improvements</td></tr>
 	<tr class="toc-current"><td>Collection Factories</td></tr>
 	<tr><td>Reactive Streams</td></tr>
 	<tr><td>Stack-Walking</td></tr>
@@ -70,6 +167,7 @@ Map<String, Integer> mapEntries = Map.ofEntries(
 
 ++++
 <table class="toc">
+	<tr><td>Stream Improvements</td></tr>
 	<tr><td>Collection Factories</td></tr>
 	<tr class="toc-current"><td>Reactive Streams</td></tr>
 	<tr><td>Stack-Walking</td></tr>
@@ -127,6 +225,7 @@ No JDK API uses them. +
 
 ++++
 <table class="toc">
+	<tr><td>Stream Improvements</td></tr>
 	<tr><td>Collection Factories</td></tr>
 	<tr><td>Reactive Streams</td></tr>
 	<tr class="toc-current"><td>Stack-Walking</td></tr>
@@ -214,6 +313,7 @@ image::images/stack-walker-limit-with-estimated-size.png[role="diagram"]
 
 ++++
 <table class="toc">
+	<tr><td>Stream Improvements</td></tr>
 	<tr><td>Collection Factories</td></tr>
 	<tr><td>Reactive Streams</td></tr>
 	<tr><td>Stack-Walking</td></tr>
