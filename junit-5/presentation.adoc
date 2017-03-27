@@ -671,6 +671,126 @@ public class MyServerParameterResolver
 ```
 
 
+////
+=== Extension Context
+
+Quick look at `ExtensionContext`:
+
+```java
+// every node has its own context
+Optional<ExtensionContext> getParent();
+
+// some node-related info
+String getUniqueId();
+String getDisplayName();
+Set<String> getTags();
+
+// don't use System.out !
+void publishReportEntry(
+	Map<String, String> map);
+```
+
+
+=== Extension Context
+
+Quick look at `ExtensionContext`:
+
+```java
+// to reflect over the test class/method
+Optional<AnnotatedElement> getElement();
+Optional<Class<?>> getTestClass();
+Optional<Method> getTestMethod();
+
+// use the store to safe extension state
+// (extensions should be stateless;
+//  did I mention that?)
+Store getStore();
+Store getStore(Namespace namespace);
+```
+
+
+=== Stateless Extensions
+
+JUnit makes no promises regarding +
+extension instance lifecycle!
+
+*⇝ Extensions must be stateless!*
+
+Use the `Store`, Luke!
+
+* namespaced
+* hierarchical
+* key-value
+
+
+=== Extension Store
+
++++<h3>Namespaced</h3>+++
+
+Store is accessed via `ExtensionContext` +
+given a `Namespace`
+
+```java
+// forwards with a default namespace
+Store getStore();
+Store getStore(Namespace namespace);
+```
+
+* keeps extensions from stepping +
+on each other's toes
+* could allow deliberate communication!
+
+
+=== Extension Store
+
++++<h3>Hierarchical</h3>+++
+
+Reads from the store forward to other stores:
+
+* method store ⇝ class store
+* nested class store ⇝ surrounding class store
+
+Writes always go to the called store.
+
+
+=== Extension Store
+
++++<h3>Key-Value</h3>+++
+
+The store is essentially a map:
+
+```java
+Object getObject(Object key);
+Object getOrComputeIfAbsent(
+		K key, Function creator);
+
+void put(Object key, Object value)
+
+Object remove(Object key)
+```
+
+Overloads with type tokens exist.
+
+
+=== Stateless Benchmark
+
+```java
+void storeNowAsLaunchTime(
+		ExtensionContext context) {
+	long now = currentTimeMillis();
+	context.getStore(NAMESPACE)
+			.put(KEY, now);
+}
+
+long loadLaunchTime(
+		ExtensionContext context) {
+	return context.getStore(NAMESPACE)
+			.get(KEY, long.class);
+}
+```
+////
+
+
 === Applying Extensions
 
 How do we apply extensions?
