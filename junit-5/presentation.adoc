@@ -79,7 +79,7 @@ Slides::
 ++++
 
 
-=== Declaring Tests
+=== What's New?
 
 ```java
 class JUnit5Test {
@@ -92,30 +92,12 @@ class JUnit5Test {
 }
 ```
 
-
-=== Disabling Tests
-
-```java
-@Test
-@Disabled("Y U No Pass?!")
-void failingTest() {
-	assertTrue(false);
-}
-```
+++++
+<p class="fragment current-visible">⇝ Package visibility suffices!</p>
+++++
 
 
-=== Seamless Extensions
-
-```java
-@Test
-@DisabledOnFriday
-void failingTest() {
-	assertTrue(false);
-}
-```
-
-
-=== Lifecycle Methods
+=== What's New?
 
 ```java
 @BeforeAll
@@ -131,22 +113,43 @@ void afterEach() { ... }
 static void afterAll() { ... }
 ```
 
+++++
+<p class="fragment current-visible">⇝ Lifecycle annotations have new names.</p>
+++++
 
-=== Basic Assertions
+
+=== What's New?
 
 ```java
 @Test
-void someTest() {
-	...
-	assertEquals(
-		expected,
-		actual,
-		"Should be equal.");
+@Disabled("Y U No Pass?!")
+void failingTest() {
+	assertTrue(false);
 }
 ```
 
+++++
+<p class="fragment current-visible">⇝ <code>@Ignored</code> is now <code>@Disabled</code>.</p>
+++++
 
-=== Advanced Assertions
+
+=== What's New?
+
+```java
+@Test
+@DisabledOnFriday
+void failingTest() {
+	assertTrue(false);
+}
+```
+
+++++
+<p class="fragment" data-fragment-index="0,1">⇝ Convenient Extensibility.</p>
+<p class="fragment" data-fragment-index="1">But how?</p>
+++++
+
+
+=== What's New?
 
 ```java
 @Test
@@ -162,8 +165,12 @@ void assertAllProperties() {
 }
 ```
 
+++++
+<p class="fragment current-visible">⇝ <code>assertAll</code> gathers results from multiple assertions</p>
+++++
 
-=== Assert All
+
+=== What's New?
 
 Output if `assertAll` fails:
 
@@ -176,7 +183,7 @@ org.opentest4j.MultipleFailuresError:
 ```
 
 
-=== Nesting Tests
+=== What's New?
 
 ```java
 class CountTest {
@@ -192,8 +199,12 @@ class CountTest {
 }
 ```
 
+++++
+<p class="fragment current-visible">⇝ <code>@Nested</code> to organize tests in inner classes</p>
+++++
 
-=== Naming Tests
+
+=== What's New?
 
 ```java
 @DisplayName("A count")
@@ -208,15 +219,19 @@ class CountTest {
 }
 ```
 
+++++
+<p class="fragment current-visible">⇝ <code>@DisplayName</code> to show a nice name</p>
+++++
 
-=== Nesting And Naming
+
+=== What's new?
 
 The effects of `@Nested` and `@DisplayName`:
 
 image::images/testing-a-stack.png[Nested and DisplayName, 900]
 
 
-=== Tests Parameters
+=== What's new?
 
 ```java
 @Test
@@ -225,15 +240,21 @@ void someTest(MyServer server) {
 }
 ```
 
+++++
+<div class="fragment current-visible">
+	<p>⇝ Test has parameters!</p>
+	<p>But where do they come from?</p>
+</div>
+++++
 
-=== JUnit 5 Basics
+
+=== What's New?
 
 ++++
 <h3>Summary</h3>
 ++++
 
-* test declaration much like before
-* lifecycle much like before
+* lifecycle works much like before
 * many details were improved
 * `@Nested` and `@DisplayName` +
 make a nice couple
