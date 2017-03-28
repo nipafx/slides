@@ -24,10 +24,10 @@
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://entwicklertag.de/frankfurt/2017/"><img src="images/logo-frankfurter-entwicklertag.png" class="logo" style="background-color: #2D5352; border-color: #2D5352;"></a>
+		<a href="https://www.javaland.eu"><img src="images/logo-javaland.jpg" class="logo" style="background-color: #2D5352; border-color: #2D5352;"></a>
 		<div class="name">
-			<p><a href="https://entwicklertag.de/frankfurt/2017/">FFM Entwicklertag</a></p>
-			<p><a href="https://twitter.com/hashtag/etffm17s">#etffm17</a></p>
+			<p><a href="https://www.javaland.eu">JavaLand</a></p>
+			<p><a href="https://twitter.com/hashtag/JavaLand">#javaland</a></p>
 		</div>
 	</div>
 </div>
@@ -42,9 +42,9 @@
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://entwicklertag.de/frankfurt/2017/"><img src="images/logo-frankfurter-entwicklertag.png" class="logo" style="background-color: #2D5352; border-color: #2D5352;"></a>
+		<a href="https://www.javaland.eu"><img src="images/logo-javaland.jpg" class="logo" style="background-color: #2D5352; border-color: #2D5352;"></a>
 		<div class="name">
-			<p><a href="https://entwicklertag.de/frankfurt/2017/">FFM Entwicklertag</a> / <a href="https://twitter.com/hashtag/etffm17s">#etffm17</a></p>
+			<p><a href="https://www.javaland.eu">JavaLand</a> / <a href="https://twitter.com/hashtag/JavaLand">#javaland</a></p>
 		</div>
 	</div>
 </footer>
@@ -54,29 +54,22 @@
 	})
 </script></div></section>
 <section><section id="_heads_up"><h2>Heads Up</h2><div class="paragraph"><p>JUnit 5 is work in progress!</p></div><div class="paragraph"><p>This is based on <strong>Milestone 3</strong><br>
-(released 30th of November 2016).</p></div><div class="paragraph"><p>Give <strong>feedback</strong>!</p></div></section><section id="_junit_5_links"><h2>JUnit 5 Links:</h2><div class="dlist"><dl><dt class="hdlist1">User guide</dt><dd><p><a href="http://junit.org/junit5/docs/snapshot/user-guide">junit.org/junit5/docs/snapshot/user-guide</a></p></dd><dt class="hdlist1">GitHub repository</dt><dd><p><a href="https://github.com/junit-team/junit5">github.com/junit-team/junit5</a></p></dd><dt class="hdlist1">Twitter</dt><dd><p><a href="https://twitter.com/junitteam">@junitteam</a></p></dd><dt class="hdlist1">Articles on my blog</dt><dd><p><a href="http://blog.codefx.org/tag/junit-5/">blog.codefx.org/tag/junit-5/</a></p></dd><dt class="hdlist1">Slides</dt><dd><p><a href="http://slides.codefx.org">slides.codefx.org</a></p></dd></dl></div></section></section>
+(released 30th of November 2016).</p></div><div class="paragraph"><p><strong>Milestone 4</strong> should come out any day now!</p></div><div class="paragraph"><p>Give <strong>feedback</strong>!</p></div></section><section id="_junit_5_links"><h2>JUnit 5 Links:</h2><div class="dlist"><dl><dt class="hdlist1">User guide</dt><dd><p><a href="http://junit.org/junit5/docs/snapshot/user-guide">junit.org/junit5/docs/snapshot/user-guide</a></p></dd><dt class="hdlist1">GitHub repository</dt><dd><p><a href="https://github.com/junit-team/junit5">github.com/junit-team/junit5</a></p></dd><dt class="hdlist1">Twitter</dt><dd><p><a href="https://twitter.com/junitteam">@junitteam</a></p></dd><dt class="hdlist1">Articles on my blog</dt><dd><p><a href="http://blog.codefx.org/tag/junit-5/">blog.codefx.org/tag/junit-5/</a></p></dd><dt class="hdlist1">Slides</dt><dd><p><a href="http://slides.codefx.org">slides.codefx.org</a></p></dd></dl></div></section></section>
 <section><section id="_basics"><h2>Basics</h2><table class="toc">
 	<tr class="toc-current"><td>Basics</td></tr>
 	<tr><td>Dynamic Tests</td></tr>
 	<tr><td>Extensions</td></tr>
 	<tr><td>Architecture</td></tr>
 	<tr><td>Tools &amp; Setup</td></tr>
-</table></section><section id="_declaring_tests"><h2>Declaring Tests</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">class JUnit5Test {
+</table></section><section id="_what_s_new"><h2>What&#8217;s New?</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">class JUnit5Test {
 
 	@Test
 	void someTest() {
 		assertTrue(true);
 	}
 
-}</code></pre></div></div></section><section id="_disabling_tests"><h2>Disabling Tests</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@Test
-@Disabled("Y U No Pass?!")
-void failingTest() {
-	assertTrue(false);
-}</code></pre></div></div></section><section id="_seamless_extensions"><h2>Seamless Extensions</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@Test
-@DisabledOnFriday
-void failingTest() {
-	assertTrue(false);
-}</code></pre></div></div></section><section id="_lifecycle_methods"><h2>Lifecycle Methods</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@BeforeAll
+}</code></pre></div></div>
+<p class="fragment current-visible">⇝ Package visibility suffices!</p></section><section id="_what_s_new_2"><h2>What&#8217;s New?</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@BeforeAll
 static void beforeAll() { ... }
 
 @BeforeEach
@@ -86,14 +79,19 @@ void beforeEach() { ... }
 void afterEach() { ... }
 
 @AfterAll
-static void afterAll() { ... }</code></pre></div></div></section><section id="_basic_assertions"><h2>Basic Assertions</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@Test
-void someTest() {
-	...
-	assertEquals(
-		expected,
-		actual,
-		"Should be equal.");
-}</code></pre></div></div></section><section id="_advanced_assertions"><h2>Advanced Assertions</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@Test
+static void afterAll() { ... }</code></pre></div></div>
+<p class="fragment current-visible">⇝ Lifecycle annotations have new names.</p></section><section id="_what_s_new_3"><h2>What&#8217;s New?</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@Test
+@Disabled("Y U No Pass?!")
+void failingTest() {
+	assertTrue(false);
+}</code></pre></div></div>
+<p class="fragment current-visible">⇝ <code>@Ignored</code> is now <code>@Disabled</code>.</p></section><section id="_what_s_new_4"><h2>What&#8217;s New?</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@Test
+@DisabledOnFriday
+void failingTest() {
+	assertTrue(false);
+}</code></pre></div></div>
+<p class="fragment" data-fragment-index="0,1">⇝ Convenient Extensibility.</p>
+<p class="fragment" data-fragment-index="1">But how?</p></section><section id="_what_s_new_5"><h2>What&#8217;s New?</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@Test
 void assertAllProperties() {
 	Address ad = new Address(
 	  "City", "Street", "42");
@@ -103,12 +101,13 @@ void assertAllProperties() {
 	  () -&gt; assertEquals("Str", ad.street),
 	  () -&gt; assertEquals("63", ad.number)
 	);
-}</code></pre></div></div></section><section id="_assert_all"><h2>Assert All</h2><div class="paragraph"><p>Output if <code>assertAll</code> fails:</p></div>
+}</code></pre></div></div>
+<p class="fragment current-visible">⇝ <code>assertAll</code> gathers results from multiple assertions</p></section><section id="_what_s_new_6"><h2>What&#8217;s New?</h2><div class="paragraph"><p>Output if <code>assertAll</code> fails:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="shell language-shell">org.opentest4j.MultipleFailuresError:
 	address (3 failures)
 	expected: &lt;C&gt; but was: &lt;City&gt;
 	expected: &lt;Str&gt; but was: &lt;Street&gt;
-	expected: &lt;63&gt; but was: <b>(42)</b></code></pre></div></div></section><section id="_nesting_tests"><h2>Nesting Tests</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">class CountTest {
+	expected: &lt;63&gt; but was: <b>(42)</b></code></pre></div></div></section><section id="_what_s_new_7"><h2>What&#8217;s New?</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">class CountTest {
 	// lifecycle and tests
 	@Nested
 	class CountGreaterZero {
@@ -118,7 +117,8 @@ void assertAllProperties() {
 			// lifecycle and tests
 		}
 	}
-}</code></pre></div></div></section><section id="_naming_tests"><h2>Naming Tests</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@DisplayName("A count")
+}</code></pre></div></div>
+<p class="fragment current-visible">⇝ <code>@Nested</code> to organize tests in inner classes</p></section><section id="_what_s_new_8"><h2>What&#8217;s New?</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@DisplayName("A count")
 class CountTest {
 	@Nested
 	@DisplayName("when greater zero")
@@ -127,12 +127,17 @@ class CountTest {
 		@DisplayName("is positive")
 		void isPositive() { ... }
 	}
-}</code></pre></div></div></section><section id="_nesting_and_naming"><h2>Nesting And Naming</h2><div class="paragraph"><p>The effects of <code>@Nested</code> and <code>@DisplayName</code>:</p></div>
-<div class="imageblock" style=""><img src="images/testing-a-stack.png" alt="Nested and DisplayName" width="900"></div></section><section id="_tests_parameters"><h2>Tests Parameters</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@Test
+}</code></pre></div></div>
+<p class="fragment current-visible">⇝ <code>@DisplayName</code> to show a nice name</p></section><section id="_what_s_new_9"><h2>What&#8217;s new?</h2><div class="paragraph"><p>The effects of <code>@Nested</code> and <code>@DisplayName</code>:</p></div>
+<div class="imageblock" style=""><img src="images/testing-a-stack.png" alt="Nested and DisplayName" width="900"></div></section><section id="_what_s_new_10"><h2>What&#8217;s new?</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@Test
 void someTest(MyServer server) {
 	// do something with `server`
-}</code></pre></div></div></section><section id="_junit_5_basics"><h2>JUnit 5 Basics</h2><h3>Summary</h3>
-<div class="ulist"><ul><li><p>test declaration much like before</p></li><li><p>lifecycle much like before</p></li><li><p>many details were improved</p></li><li><p><code>@Nested</code> and <code>@DisplayName</code><br>
+}</code></pre></div></div>
+<div class="fragment current-visible">
+	<p>⇝ Test has parameters!</p>
+	<p>But where do they come from?</p>
+</div></section><section id="_what_s_new_11"><h2>What&#8217;s New?</h2><h3>Summary</h3>
+<div class="ulist"><ul><li><p>lifecycle works much like before</p></li><li><p>many details were improved</p></li><li><p><code>@Nested</code> and <code>@DisplayName</code><br>
 make a nice couple</p></li><li><p>parameter injection</p></li></ul></div>
 <p class="fragment current-visible">
 That's all very nice but how is it<br>
@@ -194,47 +199,7 @@ Stream&lt;DynamicText&gt; testingPoints() {
 		.map(p -&gt; dynamicTest(
 			"Testing " + p,
 			() -&gt; pointTest(p)));
-}</code></pre></div></div></section><section id="_lambda_tests"><h2>Lambda Tests</h2><div class="paragraph"><p>So what about lambdas?</p></div>
-<div class="paragraph"><p>This would be great:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">class PointTest {
-
-	"A great test for point" -&gt; {
-		/* test code */
-	}
-
-}</code></pre></div></div>
-<div class="paragraph"><p>But how?</p></div></section><section id="_lambda_tests_2"><h2>Lambda Tests</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class LambdaTest {
-
-	private List&lt;DynamicTest&gt; tests;
-
-	protected void λ(
-			String name, Executable test) {
-		tests.add(dynamicTest(name, test));
-	}
-
-	@TestFactory List&lt;DynamicTest&gt; tests() {
-		return tests;
-	}
-}</code></pre></div></div></section><section id="_lambda_tests_3"><h2>Lambda Tests</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">class PointTest extends LambdaTest {{
-
-	λ("A Great Test For Point", () -&gt; {
-		/* test code goes here */
-	});
-
-}}</code></pre></div></div>
-<div class="ulist"><ul><li><p>the inner braces create
-an <a href="https://reinhard.codes/2016/07/30/double-brace-initialisation-and-java-initialisation-blocks/">initialization block</a></p></li><li><p>code therein is run during construction</p></li><li><p>JUnit will pick up the tests by calling <code>tests()</code></p></li></ul></div></section><section id="_lambda_tests_4"><h2>Lambda Tests</h2><div class="paragraph"><p>While we&#8217;re hacking&#8230;&#8203; what about this?</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">class PointTest extends LambdaTest {{
-
-	λ(a_great_test_for_point -&gt; {
-		/* test code goes here */
-	});
-
-}}</code></pre></div></div>
-<div class="paragraph"><p>Learn how to access<br>
-a lambda&#8217;s parameter name<br>
-with
-<a href="http://benjiweber.co.uk/blog/2015/08/17/lambda-parameter-names-with-reflection/">this one weird trick</a>.</p></div></section><section id="_dynamic_tests_2"><h2>Dynamic Tests</h2><h3>Summary</h3>
+}</code></pre></div></div></section><section id="_dynamic_tests_2"><h2>Dynamic Tests</h2><h3>Summary</h3>
 <div class="ulist"><ul><li><p>with <code>@TestFactory</code> and <code>DynamicTest</code><br>
 we can create tests at run time:</p><div class="ulist"><ul><li><p>for sets of parameters</p></li><li><p>based on external input</p></li><li><p>as lambdas (yay!)</p></li></ul></div></li><li><p>not fully integrated in lifecycle (yet? <a href="https://github.com/junit-team/junit5/issues/378">#378</a>)</p></li></ul></div>
 <p class="fragment current-visible">
@@ -375,7 +340,11 @@ That's all very nice but how is it<br>
 <div class="paragraph"><p>A new generation of test frameworks might arise!</p></div></section><section id="_open_platform_2"><h2>Open Platform</h2><div class="paragraph"><p>JUnit&#8217;s success as a platform<br>
 becomes <strong>available to everybody</strong>.</p></div>
 <div class="paragraph"><p>This heralds the<br>
-<strong>next generation of testing on the JVM</strong>!</p></div></section><section id="_architecture_3"><h2>Architecture</h2><h3>Summary</h3>
+<strong>next generation of testing on the JVM</strong>!</p></div></section><section id="_it_already_shows"><h2>It Already Shows</h2><div class="paragraph"><p>Some community engines:</p></div>
+<div class="ulist"><ul><li><p><a href="http://jqwik.net/">jqwik</a>: "a simpler JUnit test engine"</p></li><li><p><a href="http://specsy.org/">Specsy</a>: "a BDD-style unit-level testing framework"</p></li><li><p><a href="http://spekframework.org/">Spek</a>: "a Kotlin specification framework for the JVM"</p></li></ul></div>
+<div class="paragraph"><p>Other projects:</p></div>
+<div class="ulist"><ul><li><p><a href="https://faustxvi.github.io/junit5-docker/">Docker</a>: starts and stops docker containers</p></li><li><p><a href="https://github.com/kncept/junit-dataprovider">Parameterized</a>: "similar to TestNG DataProvider"</p></li><li><p><a href="https://github.com/junit-pioneer/junit-pioneer">Pioneer</a>: "JUnit 5 Extension Pack"</p></li></ul></div>
+<div class="paragraph"><p><a href="https://github.com/junit-team/junit5/wiki/Third-party-Extensions">More projects&#8230;&#8203;</a></p></div></section><section id="_architecture_3"><h2>Architecture</h2><h3>Summary</h3>
 <div class="ulist"><ul><li><p>clear separation of concerns:<br>
 APIs for developers, tools,<br>
 and new frameworks</p></li><li><p>opens up the platform</p></li><li><p>tool support for everybody!</p></li></ul></div>
@@ -417,8 +386,8 @@ junit-platform-console \
 full of thoughtful details</p></li><li><p>dynamic tests are very useful</p></li><li><p>extension model looks very promising</p></li><li><p>architecture opens up the platform</p></li><li><p>tool support is not there yet</p></li></ul></div>
 <div class="paragraph"><p>(Read <a href="http://blog.codefx.org/tag/junit-5/">more about JUnit 5</a>.)</p></div></section>
 <section id="_about_me" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>About Me</h2>
-<div style="float: left;">
-	<img src="images/cover-j9ms.png" width="90%">
+<div style="float: left; width: 42%; margin: 25px 0px;">
+	<img src="images/cover-j9ms.png" style="margin: 0;">
 </div>
 <div class="paragraph"><p>Nicolai Parlog<br>
 <a href="http://codefx.org">codefx.org</a><br>
@@ -426,7 +395,7 @@ full of thoughtful details</p></li><li><p>dynamic tests are very useful</p></li>
 <a href="https://twitter.com/nipafx">@nipafx</a> /
 <a href="https://google.com/+NicolaiParlog">+NicolaiParlog</a></p></div>
 <h3>Want More?</h3>
-<div class="paragraph"><p>I&#8217;m writing <a href="http://blog.codefx.org/java-module-system-in-action/">a book</a>!<br>
+<div class="paragraph"><p>I&#8217;m writing <a href="http://blog.codefx.org/java-9-module-system/">a book</a>!<br>
 EA soon ⇝ <a href="http://blog.codefx.org/newsletter/">tiny.cc/fx-weekly</a></p></div>
 <div class="paragraph"><p>two-day <strong><em>Java 9</em></strong> course<br>
 Zürich, 20.-21.04.<br>
