@@ -628,14 +628,16 @@ Let's see how it works!
 ```java
 public class DisabledOnFridayCondition
 		implements TestExecutionCondition {
+
 	@Override
-	public ConditionEval.Result evaluate(
-			TestExtensionCtx. context) {
+	public ConditionEvaluationResult evaluate(
+			TestExtensionContext context) {
 		if (isFriday())
 			return disabled("Weekend!");
 		else
 			return enabled("Fix it!");
 	}
+
 }
 ```
 
@@ -657,16 +659,18 @@ void someTest(MyServer server) {
 ```java
 public class MyServerParameterResolver
 		implements ParameterResolver {
+
 	@Override
-	public boolean supports(
-			ParameterContext p, ...) {
+	public boolean supports(ParameterContext p, ...) {
 		return MyServer.class
 			== p.getParameter().getType();
 	}
+
 	@Override
-	public Object resolve( ... ) {
+	public Object resolve(ParameterContext p, ...) {
 		return new MyServer();
 	}
+
 }
 ```
 
