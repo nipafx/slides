@@ -29,10 +29,10 @@
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://www.jfokus.se/jfokus/"><img src="images/logo-jfokus.png" class="logo" style="{host-logo-style}"></a>
+		<a href="https://www.andrena.de/objektforum"><img src="images/logo-objektforum-ka.png" class="logo" style="background-color: transparent; border-width: 0;"></a>
 		<div class="name">
-			<p><a href="https://www.jfokus.se/jfokus/">Jfokus</a></p>
-			<p><a href="https://twitter.com/hashtag/JFokus?src=hash">#jfokus</a></p>
+			<p><a href="https://www.andrena.de/objektforum">Objektforum KA</a></p>
+			<p><a href="https://twitter.com/objektforum">@objektforum</a></p>
 		</div>
 	</div>
 </div>
@@ -47,9 +47,9 @@
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://www.jfokus.se/jfokus/"><img src="images/logo-jfokus.png" class="logo" style="{host-logo-style}"></a>
+		<a href="https://www.andrena.de/objektforum"><img src="images/logo-objektforum-ka.png" class="logo" style="background-color: transparent; border-width: 0;"></a>
 		<div class="name">
-			<p><a href="https://www.jfokus.se/jfokus/">Jfokus</a> / <a href="https://twitter.com/hashtag/JFokus?src=hash">#jfokus</a></p>
+			<p><a href="https://www.andrena.de/objektforum">Objektforum KA</a> / <a href="https://twitter.com/objektforum">@objektforum</a></p>
 		</div>
 	</div>
 </footer>
@@ -58,9 +58,7 @@
 		document.body.appendChild(document.querySelector('footer'));
 	})
 </script></div></section>
-<section id="_public_service_announcement"><h2>Public Service Announcement</h2><div class="ulist"><ul><li><p>you need to be proficient with Java 8</p></li><li><p>some of what follows is merely my opinion</p></li></ul></div>
-<div class="paragraph"><p><strong>We&#8217;re live on air!</strong></p></div>
-<div class="ulist"><ul><li><p>this is live-streamed (⇝ behave!)</p></li><li><p>tweet questions with <a href="https://twitter.com/search?f=tweets&amp;q=%23jfokus%20%40nipafx&amp;src=typd">#jfocus @nipafx</a></p></li><li><p>slides at <a href="http://slides.codefx.org/">slides.codefx.org</a></p></li></ul></div></section>
+<section id="_public_service_announcement"><h2>Public Service Announcement</h2><div class="ulist"><ul><li><p>you need to be proficient with Java 8</p></li><li><p>some of what follows is merely my opinion</p></li><li><p>slides at <a href="http://slides.codefx.org/">slides.codefx.org</a></p></li></ul></div></section>
 <section id="_streams"><h2>Streams</h2><table class="toc">
 	<tr><td>In APIs</td></tr>
 	<tr><td>Exception Handling</td></tr>
@@ -81,18 +79,23 @@ Stream&lt;User&gt; users() {
 }
 
 Stream&lt;UserAddress&gt; userAddresses() {
-	return users().map(user -&gt; {
-		Address addr = addrById.get(user.id());
-		return UserAddress.of(user, addr);
-	});
+	return users()
+		.map(user -&gt; UserAddress.of(
+				user, addrById.get(user.id())));
 }</code></pre></div></div></section><section id="_enrichment_example_2"><h2>Enrichment Example</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Map&lt;Address, List&lt;Order&gt;&gt; ordersByAddr;
 
-Stream&lt;Delivery&gt; orders() {
-	return userAddresses().flatMap(userAddr -&gt;
-		ordersByAddr
-			.get(userAddr.address()).stream()
-			.map(order -&gt; Delivery
-				.of(userAddr, order)));
+Stream&lt;Delivery&gt; deliveries() {
+	return userAddresses().flatMap(this::deliveriesFor);
+}
+
+Stream&lt;Delivery&gt; deliveriesFor(UserAdress userAddr) {
+	return ordersFor(userAddr)
+		.map(order -&gt; Delivery.of(userAddr, order));
+}
+
+Stream&lt;Order&gt; ordersFor(UserAdress userAddr) {
+	return ordersByAddr
+		.get(userAddr.address()).stream();
 }</code></pre></div></div></section><section id="_guidelines"><h2>Guidelines</h2><div class="ulist"><ul><li><p>streams can only be traversed once<br>
 ⇝ ideally returned streams can be recreated endlessly</p></li><li><p>during traversal collection must not be mutated<br>
 ⇝ stick to layers instead of cycles<br>
@@ -104,12 +107,10 @@ void addUsers(Stream&lt;User&gt; users) {
 }
 
 // transforming the passed stream
-Stream&lt;UserAddress&gt; userAddresses(
-		Stream&lt;User&gt; users) {
-	return users.map(user -&gt; {
-		Address addr = addrById.get(user.id());
-		return UserAddress.of(user, address);
-	});
+Stream&lt;UserAddress&gt; userAddresses(Stream&lt;User&gt; users) {
+	return users
+		.map(user -&gt; UserAddress.of(
+				user, addrById.get(user.id())));
 }</code></pre></div></div></section><section id="_reflection_on_apis"><h2>Reflection On APIs</h2><h3>Returning Streams</h3><div class="ulist"><ul><li><p>returning streams is great<br>
 (unmodifiable but transformable)</p></li><li><p>preferably if streams can be recreated</p></li><li><p>can be used to gradually enrich data</p></li></ul></div></section><section id="_reflection_on_apis_2"><h2>Reflection On APIs</h2><h3>Passing Streams</h3><div class="ulist"><ul><li><p>caller must assume stream is traversed</p></li><li><p>works for obvious consumers</p></li><li><p>transformations can be hard to track</p></li><li><p>never return a traversed stream<br>
 (obvious, right?!)</p></li></ul></div></section><section id="_reflection_on_apis_3"><h2>Reflection On APIs</h2><h3>But Look Out</h3><div class="ulist"><ul><li><p>streams can only be traversed once</p></li><li><p>no mutation during traversal</p></li><li><p>don&#8217;t make chains too long or<br>
@@ -125,8 +126,7 @@ debuggability suffers</p></li></ul></div></section></section>
 	return strings.map(this::parse);
 }
 
-User parse(String userString)
-		throws ParseException {
+User parse(String userString) throws ParseException {
 	// ...
 }</code></pre></div></div>
 <div class="paragraph"><p>Which options do we have?</p></div></section><section id="_try_in_lambda"><h2>Try in Lambda</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;User&gt; parse(Stream&lt;String&gt; strings) {
@@ -282,7 +282,7 @@ surviving an ad-hoc filter:</p></div>
 	<tr><td>Finding Elements</td></tr>
 	<tr class="toc-current"><td>Performance</td></tr>
 </table>
-<div class="paragraph"><p>Performance is a too long to go into.</p></div>
+<div class="paragraph"><p>Performance is too long to go into.</p></div>
 <div class="paragraph"><p>Great talk by Stuart Marks and Brian Goetz:</p></div>
 <div class="paragraph"><p><a href="https://www.youtube.com/watch?v=iDplU7mOocU">Thinking in Parallel</a> (JavaOne 2016)</p></div></section>
 <section id="_optional"><h2>Optional</h2><h3>Everybody's Favorite Bike Shed!</h3>
@@ -315,10 +315,9 @@ returning null is error-prone</p></li><li><p>no instance variables</p></li><li><
 <h3>Conclusions</h3><div class="ulist"><ul><li><p>use as return value whenever<br>
 value can be absent</p></li><li><p>rest as before</p></li></ul></div>
 <div class="paragraph small-note"><p>(Stephen Colebourne)</p></div></section><section id="_use_everywhere"><h2>Use Everywhere!</h2><h3>Assumptions</h3><div class="ulist"><ul><li><p>using <code>Optional</code> instead of <code>null</code><br>
-lifts <code>null</code>-handling into the type system</p></li><li><p>makes any remaining <code>null</code><br>
-an implementation error<br>
+lifts <code>null</code>-handling into the type system</p></li><li><p>makes any <code>null</code> an implementation error<br>
 (great for debugging)</p></li><li><p>performance arguments can be discarded<br>
-(unless proven to be relevant)</p></li></ul></div></section><section id="_use_everywhere_2"><h2>Use Everywhere!</h2><h3>Conclusions</h3><div class="ulist"><ul><li><p>avoid optionality through good design<br>
+unless proven to be relevant</p></li></ul></div></section><section id="_use_everywhere_2"><h2>Use Everywhere!</h2><h3>Conclusions</h3><div class="ulist"><ul><li><p>avoid optionality through good design<br>
 (good recommendation in general)</p></li><li><p>use <code>Optional</code> instead of <code>null</code> everywhere</p></li><li><p>consider providing overloads<br>
 for optional method parameters</p></li></ul></div>
 <div class="paragraph small-note"><p>(Mario Fusco, me)</p></div></section><section id="_use_everywhere_3"><h2>Use Everywhere!</h2><h3>Overload Example</h3><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">String bar(Optional&lt;String&gt; drink) {
@@ -429,8 +428,8 @@ without breaking client code.</p></div>
 <div class="ulist"><ul><li><p>release version with transitional outline</p></li><li><p>give clients time to update</p></li><li><p>release version with new outline</p></li></ul></div></section><section id="_additional_source"><h2>Additional Source</h2><div class="paragraph"><p><a href="http://blog.codefx.org/design/patterns/interface-evolution-with-default-methods-methods/">Interface Evolution</a> (codefx.org)</p></div>
 <div class="paragraph"><p><a href="http://blog.codefx.org/java/new-javadoc-tags/">New Javadoc Tags</a> (codefx.org)</p></div></section></section>
 <section id="_about_me" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>About Me</h2>
-<div style="float: left;">
-	<img src="images/cover-j9ms.png" width="90%">
+<div style="float: left; width: 42%; margin: 25px 0px;">
+	<img src="images/cover-j9ms.png" style="margin: 0;">
 </div>
 <div class="paragraph"><p>Nicolai Parlog<br>
 <a href="http://codefx.org">codefx.org</a><br>
@@ -438,8 +437,8 @@ without breaking client code.</p></div>
 <a href="https://twitter.com/nipafx">@nipafx</a> /
 <a href="https://google.com/+NicolaiParlog">+NicolaiParlog</a></p></div>
 <h3>Want More?</h3>
-<div class="paragraph"><p>I&#8217;m writing <a href="http://blog.codefx.org/java-module-system-in-action/">a book</a>!<br>
-EA soon ⇝ <a href="http://blog.codefx.org/newsletter/">tiny.cc/fx-weekly</a></p></div>
+<div class="paragraph"><p>Module System: <a href="https://www.manning.com/books/the-java-9-module-system?a_aid=nipa&amp;a_bid=869915cb">tiny.cc/j9ms</a><br>
+Newsletter: <a href="http://blog.codefx.org/newsletter/">tiny.cc/fx-weekly</a></p></div>
 <div class="paragraph"><p>two-day <strong><em>Java 9</em></strong> course<br>
 Zürich, 20.-21.04.<br>
 ⇝ register at <a href="http://42talents.com/training/2017/04/20/Java-9/">42talents.com</a></p></div>
