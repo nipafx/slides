@@ -152,8 +152,7 @@ Stream<User> parse(Stream<String> strings) {
 	return strings.map(this::parse);
 }
 
-User parse(String userString)
-		throws ParseException {
+User parse(String userString) throws ParseException {
 	// ...
 }
 ```
@@ -499,7 +498,7 @@ http://blog.codefx.org/java/stream-findfirst-findany-reduce/[Beware Of findFirst
 </table>
 ++++
 
-Performance is a too long to go into.
+Performance is too long to go into.
 
 Great talk by Stuart Marks and Brian Goetz:
 

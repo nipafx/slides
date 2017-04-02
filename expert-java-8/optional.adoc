@@ -125,11 +125,10 @@ value can be absent
 
 * using `Optional` instead of `null` +
 lifts `null`-handling into the type system
-* makes any remaining `null` +
-an implementation error +
+* makes any `null` an implementation error +
 (great for debugging)
 * performance arguments can be discarded +
-(unless proven to be relevant)
+unless proven to be relevant
 
 === Use Everywhere!
 ==== Conclusions
