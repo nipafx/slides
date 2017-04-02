@@ -42,10 +42,9 @@ Stream<User> users() {
 }
 
 Stream<UserAddress> userAddresses() {
-	return users().map(user -> {
-		Address addr = addrById.get(user.id());
-		return UserAddress.of(user, addr);
-	});
+	return users()
+		.map(user -> UserAddress.of(
+				user, addrById.get(user.id())));
 }
 ```
 
@@ -54,12 +53,18 @@ Stream<UserAddress> userAddresses() {
 ```java
 Map<Address, List<Order>> ordersByAddr;
 
-Stream<Delivery> orders() {
-	return userAddresses().flatMap(userAddr ->
-		ordersByAddr
-			.get(userAddr.address()).stream()
-			.map(order -> Delivery
-				.of(userAddr, order)));
+Stream<Delivery> deliveries() {
+	return userAddresses().flatMap(this::deliveriesFor);
+}
+
+Stream<Delivery> deliveriesFor(UserAdress userAddr) {
+	return ordersFor(userAddr)
+		.map(order -> Delivery.of(userAddr, order));
+}
+
+Stream<Order> ordersFor(UserAdress userAddr) {
+	return ordersByAddr
+		.get(userAddr.address()).stream();
 }
 ```
 
@@ -92,12 +97,10 @@ void addUsers(Stream<User> users) {
 }
 
 // transforming the passed stream
-Stream<UserAddress> userAddresses(
-		Stream<User> users) {
-	return users.map(user -> {
-		Address addr = addrById.get(user.id());
-		return UserAddress.of(user, address);
-	});
+Stream<UserAddress> userAddresses(Stream<User> users) {
+	return users
+		.map(user -> UserAddress.of(
+				user, addrById.get(user.id())));
 }
 ```
 
