@@ -272,3 +272,149 @@ Assumptions:
 
 * nobody calls into Guava part without using Guava
 * no runtime checks necessary
+
+
+//*****************//
+// S E R V I C E S //
+//*****************//
+
+
+=== Services
+
+*Consumers* and *implementations* +
+of an API should be decoupled.
+
+Service locator pattern:
+
+* service registry as central TODO(vermittler)
+* implementors inform registry
+* consumers call registry to get implementations
+
+In Java:
+
+* `ServiceLoader` is the registry
+* modules can interact with it
+
+
+=== Services
+
+Module Declarations:
+
+[source,java]
+----
+// consumer
+module A {
+	uses some.Interface;
+}
+
+// provider
+module B {
+	provides some.Interface
+		with some.Type;
+}
+----
+
+
+=== Services
+
+* _A_ never "sees" providers like _B_
+* module system picks up all providers
+* _A_ can get providers from `ServiceLoader`
+
+[source,java]
+----
+ServiceLoader.load(Interface.class)
+----
+
+
+=== Factory Services
+
+[source,java]
+----
+module advent {
+	requires calendar;
+	uses surprise.SurpriseFactory;
+}
+
+module factory.chocolate {
+	requires surprise;
+	provides surprise.SurpriseFactory
+		with factory.quote.ChocolateFactory;
+}
+
+module factory.quote {
+	requires surprise;
+	provides surprise.SurpriseFactory
+		with factory.quote.QuoteFactory;
+}
+----
+
+
+=== Factory Services
+
+[source,java]
+----
+public static void main(String[] args) {
+	List<SurpriseFactory> fac = new ArrayList<>();
+	ServiceLoader.load(SurpriseFactory.class)
+			.forEach(fac::add);
+	Calendar cal = Calendar.createWithSurprises(fac);
+	System.out.println(cal.asText());
+}
+----
+
+
+//***********************************//
+// Q U A L I F I E D   E X P O R T S //
+//***********************************//
+
+=== Qualified Exports
+
+So far, exported packages are visible +
+to every reading module.
+
+What if a set of modules wants to share code?
+
+Similar to utility classes:
+
+* if class should be visible outside of package, +
+it has to be public ⇝ visible to everybody
+* if package should be visible outside of module, +
+it has to be exported ⇝ visible to everybody
+
+Module system fixes the former. +
+What about the latter?
+
+
+=== Qualified Exports
+
+[source,java]
+----
+module A {
+	exports some.pack to B;
+}
+----
+
+* _B_ can access `some.pack` +
+as if regularly exported
+* other modules can not access it +
+as if not exported at all
+
+
+=== Factory Utilities
+
+To ease implementation of `SurpriseFactory`:
+
+* create new module _factory_
+* add class `AbstractSurpriseFactory`
+* export that package only to +
+factory implementation modules
+
+[source,java]
+----
+module factory {
+	requires transitive surprise;
+	exports factory
+		to factory.chocolate, factory.quote;
+}
+----
