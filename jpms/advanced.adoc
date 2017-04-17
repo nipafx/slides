@@ -156,3 +156,119 @@ module factories {
 	requires transitive surprisefactories;
 }
 ----
+
+
+//*****************************************//
+// O P T I O N L   D E P E N D E N C I E S //
+//*****************************************//
+
+=== Optional Dependencies
+
+Not all dependencies are equally required:
+
+* some are needed for a module to function
+* some can be absent and code adapts
+* are only needed to enhance +
+another module's features
+
+Optional dependencies are about the latter two.
+
+
+=== Use Cases
+
+Adapting code:
+
+* a library may be absent from some deployments
+* code is aware and does not call absent modules
+
+Enhancing a module:
+
+* a project may provide usability functions +
+for other libraries
+* such code can not be called if module absent
+
+
+=== Conundrum
+
+With what we know so far:
+
+* for code to compile against another module +
+that module has to be required
+* a required module has to be present +
+at launch time
+
+⇝ If a module's types are used +
+it has to be present at run time
+
+(Reliable configuration!)
+
+
+=== Optional Dependencies
+
+Dependency can be marked `requires static`:
+
+[source,java]
+----
+module A {
+	requires static B;
+}
+----
+
+* at compile time: _A_ requires _B_ as usual
+* at run time:
+** if _B_ is present, _A_ reads _B_
+** otherwise, app can launch +
+but access to _B_ can fail
+
+
+=== Adapting Code
+
+Assuming each factory has its own module, +
+_advent_ may not need both all the time:
+
+[source,java]
+----
+module advent {
+	requires calendar;
+	requires factories;
+	requires static factories.chocolate;
+	requires static factories.quote;
+}
+----
+
+
+=== Adapting Code
+
+Checking whether module is present:
+
+[source,java]
+----
+Optional<SurpriseFactory> createChocolateFactory() {
+	if (isModulePresent("factories.chocolate"))
+		return Optional.of(new ChocolateFactory());
+	else
+		return Optional.empty();
+}
+----
+
+
+=== Enhancing A Module
+
+Hypothetical library _uber-lib_ provides +
+usability functions for various libraries.
+
+[source,java]
+----
+module uber.lib {
+	requires static com.google.guava;
+	requires static org.apache.commons.lang;
+	requires static org.apache.commons.io;
+	requires static io.vavr;
+	requires static com.aol.cyclops;
+}
+----
+
+Assumptions:
+
+* nobody calls into Guava part without using Guava
+* no runtime checks necessary
