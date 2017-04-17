@@ -1,0 +1,158 @@
+== Advanced Java Module System
+
+++++
+<h3>Going Deeper...
+++++
+
+//***********************************************//
+// T R A N S I T I V E   D E P E N D E N C I E S //
+//***********************************************//
+
+=== Transitive Dependencies
+
+Not all dependencies are created equal:
+
+* most are used *within* a module
+* some are used *on the boundary* +
+between modules
+
+Transitive dependencies are about the latter.
+
+
+=== Exposing dependencies
+
+Example in _calendar_ exposing _surprise_:
+
+[source,java]
+----
+public static Calendar createWithSurprises(
+		List<SurpriseFactory> factories) {
+	// ...
+}
+----
+
+⇝ Module _calendar_ us unusable without _surprise_!
+
+[[TODO, diagram with depending, exposing, exposed module]]
+
+
+=== Try and Error?
+
+How can users of exposing module +
+determine required dependencies?
+
+Try and Error?
+
+No!
+
+
+=== Implied Readability
+
+Exposing module can mark dependencies +
+on exposed modules +
+with `requires transitive`:
+
+[source,java]
+----
+module A {
+	requires transitive B;
+}
+----
+
+* _A_ reads _B_ as usual
+* modules reading _A_ will read _B_ +
+without having to require it
+
+⇝ _A_ *implies readability* of _B_
+
+
+=== Implied Readability
+
+Applied to the advent calendar:
+
+[source,java]
+----
+module calendar {
+	requires transitive surprise;
+	// ...
+}
+
+module factories {
+	requires transitive surprise;
+	// ...
+}
+----
+
+
+=== Further Applications
+
+Implied readability is surprisingly versatile
+
+* aggregator modules
+* splitting modules up
+* even merging modules
+* renaming modules
+
+
+=== Aggregator Modules
+
+Making it easier to consume +
+_calendar_, _factories_, _surprise_:
+
+[source,java]
+----
+module adventcalendar {
+	requires transitive calendar;
+	requires transitive factories;
+	requires transitive surprise;
+}
+----
+
+
+=== Splitting Modules
+
+If _factories_ gets split into +
+_api_, _chocolate_, and _quotes_:
+
+[source,java]
+----
+module factories {
+	requires transitive factories.api;
+	requires transitive factories.chocolate;
+	requires transitive factories.quotes;
+}
+----
+
+
+=== Merging Modules
+
+If _calendar_, _factories_, _surprise_ +
+are merged into _adventcalendar_:
+
+[source,java]
+----
+module calendar {
+	requires transitive adventcalendar;
+}
+
+module factories {
+	requires transitive adventcalendar;
+}
+
+module surprise {
+	requires transitive adventcalendar;
+}
+----
+
+Careful: Users suddenly depend on a large module!
+
+=== Renaming Modules
+
+If _factories_ becomes _surprisefactories_:
+
+[source,java]
+----
+module factories {
+	requires transitive surprisefactories;
+}
+----
