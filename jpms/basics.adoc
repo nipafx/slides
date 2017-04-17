@@ -69,10 +69,10 @@ module A {
 ----
 we say
 
-* `A` requires `B`
-* `A` depends on `B`
-* `A` reads `B`
-* `B` is readable by `A`
+* _A_ requires _B_
+* _A_ depends on _B_
+* _A_ reads _B_
+* _B_ is readable by _A_
 
 [NOTE.speaker]
 --
@@ -95,6 +95,15 @@ Java will only compile/launch when
 * multiple modules with the same name
 * split packages
 --
+
+
+=== Consequences
+
+* boost for reliability
+* module system is strict _and_ TODO(starr) +
+(no way to easily alter dependencies)
+* accidental long cycles will cause problems
+* module name changes are TODO(nicht vorgesehen)
 
 
 === Accessibility
@@ -124,17 +133,19 @@ by code in another module if
 === Strong Encapsulation
 
 * `public` is no longer public
-* even reflection http://mail.openjdk.java.net/pipermail/jpms-spec-observers/2015-September/000122.html[doesn't work]
-* command line provides escape hatches
+* even reflection doesn't work
+* more fine-grained mechanisms exist:
+** for module authors in module declaration
+** for module users as command line arguments
 
 
 === Consequences
 
 * great boost for maintainability
-* also the major reason for community unrest
-* critical APIs might survive until Java 10 +
+* major reason for community unrest
+* critical APIs survive until Java 10 +
 (e.g. `sun.misc.Unsafe` -- see http://openjdk.java.net/jeps/260[JEP 260])
-* life might get tougher for reflection-based +
+* life gets tougher for reflection-based +
 libraries and frameworks
 
 
@@ -159,8 +170,8 @@ image::images/advent-calendar-structure.png[role="diagram"]
 [source,java]
 ----
 public static void main(String[] args) {
-	List<SurpriseF_> fac = asList(
-		new ChocolateF_(), new QuoteF_());
+	List<SurpriseFactory> fac = asList(
+		new ChocolateFactory(), new QuoteFactory());
 	Calendar cal = Calendar.create(fac);
 	println(cal.asText());
 }
@@ -168,28 +179,6 @@ public static void main(String[] args) {
 
 // see above
 image::images/advent-calendar-structure.png[_,75%,role="diagram"]
-
-
-////
-=== Command Line
-
-[source,bash]
-----
-# compile
-javac -d classes/advent ${*.java}
-# package
-jar -cfm jars/advent.jar ${*.class, *.mf}
-# run
-java -jar jars/advent.jar
-----
-
-[NOTE.speaker]
---
-* explain manifest
-* add dependencies to the class path
-* works on JDK 9 as is
---
-////
 
 
 === No Module
@@ -205,6 +194,32 @@ on the class path as before
 ++++
 <p class="fragment current-visible" data-fragment-index="1">(Boring...)</p>
 ++++
+
+
+=== No Module
+
+++++
+<h3>Compilation, Packaging, Execution</h3>
+++++
+
+[source,bash]
+----
+# compile
+javac -d classes/advent ${*.java}
+# package with manifest
+jar --create --file jars/advent.jar
+	--manifest ${manifest}
+	${*.class}
+# run
+java -jar jars/advent.jar
+----
+
+[NOTE.speaker]
+--
+* explain manifest
+* add dependencies to the class path
+* works on JDK 9 as is
+--
 
 
 
@@ -240,18 +255,7 @@ module advent {
 === A single module
 
 ++++
-<h3>Readability & Accessibility</h3>
-++++
-
-// http://yuml.me/edit/3144f0af
-image::images/advent-calendar-readability-accessibility.png[role="diagram"]
-
-
-////
-=== A single module
-
-++++
-<h3>Command Line</h3>
+<h3>Compilation, Packaging, Execution</h3>
 ++++
 
 [source,bash]
@@ -260,19 +264,28 @@ image::images/advent-calendar-readability-accessibility.png[role="diagram"]
 javac -d classes/advent ${*.java}
 # package with module-info.class
 #	and specify main class:
-jar -c --file=mods/advent.jar
-	--main-class=advent.Main
+jar --create --file mods/advent.jar
+	--main-class advent.Main
 	${*.class}
 # run by specifying a module path
 #	and a module to run (by name):
-java -p mods -m advent
+java --module-path mods --module advent
 ----
 
 [NOTE.speaker]
 --
 * explain module path
 --
-////
+
+
+=== A single module
+
+++++
+<h3>Readability & Accessibility</h3>
+++++
+
+// http://yuml.me/edit/3144f0af
+image::images/advent-calendar-readability-accessibility.png[role="diagram"]
 
 
 === Multiple Modules
@@ -303,10 +316,10 @@ java -p mods -m advent
 // taken from previous slide
 image::images/advent-calendar-module-multi.png[role="diagram"]
 
-// The outer div's height must be specified explicitly so that vertical space is reserved
-// for the non-displayed fragments.
+// The outer div's height must be specified explicitly so that
+// vertical space is reserved for the non-displayed fragments.
 ++++
-<div style="height: 250px;">
+<div style="height: 210px;">
 <div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">module surprise {
 	<span class="hljs-comment">// requires no other modules</span>
 	exports org.codefx.advent.surprise;
@@ -336,14 +349,14 @@ image::images/advent-calendar-module-multi.png[role="diagram"]
 
 [source,bash]
 ----
-# First compile/package the other modules
-#   ('surprise', 'calendar', 'factories')
-#   into folder 'mods'.
-# Compile/package 'advent':
-javac -p mods -d classes/advent ${*.java}
-jar -c --file=mods/advent.jar
-	--main-class=org.codefx.advent.Main
+# compile all modules at once
+javac -d classes
+	--module-source-path "src"
+	--module advent
+# package one by one, eventually advent:
+jar --create --file mods/advent.jar
+	--main-class advent.Main
 	${*.class}
-# Launch the application:
-java -p mods -m advent
+# launch the application:
+java --module-path mods --module advent
 ----

@@ -44,6 +44,9 @@ contains _all_ JARs on the class path +
 * can read all modules
 * exports all packages
 
+Inside the unnamed module +
+"the chaos of the class path" lives on.
+
 [NOTE.speaker]
 --
 * one unnamed module per class loader
@@ -138,15 +141,15 @@ image::images/confusion.jpg[background, size=cover]
 
 === Migration Strategies
 
-Two strategies emerge:
+Three strategies emerge:
 
 * bottom-up migration
 * top-down migration
-
+* inside-out migration
 
 === Bottom-Up Migration
 
-Works best for Projects *without* +
+Works best for projects *without* +
 unmodularized dependencies +
 (libraries).
 
@@ -169,7 +172,7 @@ TODO: diagram
 
 === Top-Down Migration
 
-Required for Projects *with* +
+Required for projects *with* +
 unmodularized dependencies +
 (applications).
 
@@ -214,3 +217,54 @@ When dependencies get modularized:
 nothing changes
 * otherwise move them there
 * check their dependencies
+
+
+=== Inside-Out Migration?
+
+What about *published* projects *with* +
+unmodularized dependencies +
+(libraries)?
+
+* top-down seems to work
+* but there's a problem +
+with automatic module names!
+
+
+=== Inside-Out Migration?
+
+++++
+<h3>Unstable Module Names</h3>
+++++
+
+* automatic module names +
+are based on JAR names
+* file names can differ +
+across build environments
+* module name can change +
+when project gets modularized
+
+⇝ Automatic module names are unstable.
+
+
+=== Inside-Out Migration?
+
+++++
+<h3>Impossible Module Requirements</h3>
+++++
+
+* dependencies might require the same +
+module by different names
+* the module system does not support that
+* there is no way to launch that application!
+
+⇝ JDK team recommends *not to publish* +
+modules that *depend on automatic modules*!
+
+
+=== No Inside-Out Migration
+
+Frameworks/libraries can only publish modules +
+once all dependencies were modularized.
+
+This will make modularization of the ecosystem +
+take *much, much longer*! 😭

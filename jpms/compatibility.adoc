@@ -24,7 +24,7 @@ image::images/internals.jpg[background, size=cover]
 ** all in `sun.*`
 ** most in `com.sun.*` +
 (unless marked `@jdk.Exported`)
-* most if that will be encapsulated
+* most if them are encapsulated
 * critical APIs will survive until Java 10 +
 (e.g. `sun.misc.Unsafe` -- see http://openjdk.java.net/jeps/260[JEP 260])
 * six deprecated methods adding/removing +
@@ -49,8 +49,9 @@ from `LogManager` and `Pack200`
 . contact library developers
 . look for alternatives +
 (in the JDK or other libraries)
-. consider command line flag `--add-exports`
-. turn to the Jigsaw mailing lists
+. consider command line flags +
+`--add-exports`, `--add-opens`, or +
+`--permit-illegal-access`
 
 
 === Split Packages
@@ -60,12 +61,12 @@ image::images/cut.jpg[background, size=cover]
 * no module must read the same package +
 from two modules
 
-The current implementation is even stricter:
+The implementation is even stricter:
 
 * no two modules must contain +
 the same package (exported or not)
-* split packages on the class path +
-will be inaccessible
+* split packages on class path +
+are inaccessible
 
 
 === Examples
@@ -88,9 +89,10 @@ for `java(x)` packages (`jdeps` can help)
 
 . is the split on purpose / necessary?
 . find other ways to solve the problem
-. upgradeable modules to replace run-time modules
-. command line `--patch-module` to add individual classes
-
+. upgradeable modules +
+to replace run-time modules
+. command line `--patch-module` +
+to add individual classes
 
 === Run-Time Images
 image::images/cells.jpg[background, size=cover]
