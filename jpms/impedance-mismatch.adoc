@@ -1,0 +1,74 @@
+== Impedance Mismatch
+
+++++
+<h3>Where the JVM disagrees with us</h3>
+++++
+
+=== How do you think about Software?
+image::images/binary-code.jpg[background, size=cover]
+
+++++
+<h3>What is it made of?</h3>
+++++
+
+[NOTE.speaker]
+--
+* "think about your favorite project"
+* "or about one you're being paid for"
+--
+
+
+=== How I think about Software
+image::images/graph.png[background, size=cover]
+
+* interacting parts
+* parts have
+** names
+** dependencies
+** capabilities
+* creates a graph
+
+[NOTE.speaker]
+--
+* helps tools and devs to
+** dissect
+** analyze
+** reason about
+** work with
+* Maven, jdeps
+--
+
+
+[transition="slide-in none-out"]
+=== How the JVM thinks about it
+image::images/ball-of-mud-2.jpg[background, size=cover]
+
+
+* parts are packaged as JARs
+* to the JVM JARs
+** have no names
+** dependencies are unexpressed
+** have no coherent surface
+* JVM rolls them into one big ball of mud
+
+[NOTE.speaker]
+--
+* graph is gone
+* "modularity erasure"
+--
+
+[state="empty"]
+=== !
+image::images/ball-of-mud-2.jpg[background, size=cover]
+
+
+=== Consequences
+image::images/jar-hell.jpg[background, size=cover]
+
+* http://blog.codefx.org/java/jar-hell/[JAR hell]
+** unexpressed, transitive dependencies
+** shadowing, version conflicts
+** complex class loading
+* slow
+* unsecure
+* maintenance nightmare

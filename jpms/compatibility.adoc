@@ -1,0 +1,156 @@
+== Compatibility
+
+++++
+<h3>What to look out for<br>when running on JDK 9</h3>
+++++
+
+
+=== Break Stuff
+image::images/broken-glass.jpg[background, size=cover]
+
+Some internal changes can
+http://blog.codefx.org/java/dev/how-java-9-and-project-jigsaw-may-break-your-code/[break existing code]!
+
+Just by running on JDK 9 +
+(even without modularizing the application).
+
+http://openjdk.java.net/jeps/261[JEP 261] contains a list of risks.
+
+
+=== Internal APIs
+image::images/internals.jpg[background, size=cover]
+
+* internal APIs are:
+** all in `sun.*`
+** most in `com.sun.*` +
+(unless marked `@jdk.Exported`)
+* most if that will be encapsulated
+* critical APIs will survive until Java 10 +
+(e.g. `sun.misc.Unsafe` -- see http://openjdk.java.net/jeps/260[JEP 260])
+* six deprecated methods adding/removing +
+`PropertyChangeListener` got removed +
+from `LogManager` and `Pack200`
+
+
+=== What to look for?
+
+* use https://docs.oracle.com/javase/8/docs/technotes/tools/unix/jdeps.html[`jdeps`] (preferably from JDK 9)
+** either manually: +
+`jdeps --jdk-internals {*.class/*.jar}`
+** or as part of your build (e.g. with https://github.com/CodeFX-org/JDeps-Maven-Plugin[JDeps Mvn])
+* look for reflection, especially
+** `Class::forName`
+** `AccessibleObject::setAccessible`
+* recursively check your dependencies!
+
+
+=== What to do?
+
+. contact library developers
+. look for alternatives +
+(in the JDK or other libraries)
+. consider command line flag `--add-exports`
+. turn to the Jigsaw mailing lists
+
+
+=== Split Packages
+image::images/cut.jpg[background, size=cover]
+
+* packages should have a unique origin
+* no module must read the same package +
+from two modules
+
+The current implementation is even stricter:
+
+* no two modules must contain +
+the same package (exported or not)
+* split packages on the class path +
+will be inaccessible
+
+
+=== Examples
+
+* some libraries split `java.xml.*`, e.g. http://search.maven.org/#artifactdetails|xml-apis|xml-apis|2.0.2|jar[xml-apis]
+* some https://issues.jboss.org/browse/WFLY-6375?_sscc=t[JBoss modules] split, e.g., +
+`java.transaction`, `java.xml.ws`
+* http://mvnrepository.com/artifact/com.google.code.findbugs/jsr305[jsr305] splits `javax.annotation`
+
+
+=== What to look for?
+
+* search your code and dependencies +
+for `java(x)` packages (`jdeps` can help)
+[[TODO, add Maven enforcer rule ban-duplicate-classes]]
+* no tool support (http://mail.openjdk.java.net/pipermail/jigsaw-dev/2015-November/005227.html[yet?])
+
+
+=== What to do?
+
+. is the split on purpose / necessary?
+. find other ways to solve the problem
+. upgradeable modules to replace run-time modules
+. command line `--patch-module` to add individual classes
+
+
+=== Run-Time Images
+image::images/cells.jpg[background, size=cover]
+
+* new JDK/JRE layout
+* internal JARs are gone (e.g. `rt.jar`, `tools.jar`)
+* JARs are now JMODs
+* application class loader is no `URLClassLoader`
+* new URL schema for run-time image content
+
+
+=== What to look for?
+
+* does the code rummage around +
+in the JDK / JRE folder?
+* search for casts to `URLClassLoader`
+* are URLs to JDK classes / resources handcrafted?
+
+
+=== Obsolete
+image::images/obsolete.jpg[background, size=cover]
+
+* Endorsed Standards Override Mechanism
+* Extension Mechanism
+* Boot Class Path Override
+
+[NOTE.speaker]
+--
+* ext. mech.: makes custom APIs available to all applications running on the JDK
+* first 2 replaced by upgradeable modules.
+--
+
+
+=== But wait, there's more!
+
+* yes, yes, there's more
+* you should really check http://openjdk.java.net/jeps/261[JEP 261]
+* and http://openjdk.java.net/jeps/223[JEP 223] (new version strings)
+** goodbye `1.9.0_31`
+** hello `9.1.4`
+
+
+=== General Advice I
+image::images/sign.jpg[background, size=cover]
+
+The most relevant for most applications:
+
+* internal APIs
+* split packages
+
+
+=== General Advice II
+image::images/sign.jpg[background, size=cover]
+
+* get your code in shape +
+(and prevent relapses)
+* check your dependencies and tools
+* if any are suspicious +
+(automatically true for IDEs, build tools):
+** make sure they're alive
+** *get them up to date!*
+** or look for alternatives
+* get an https://jdk9.java.net/[EA-build] and *try it!*

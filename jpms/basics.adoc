@@ -1,0 +1,349 @@
+== Java Module System Basics
+
+++++
+<h3>Getting started...</h3>
+++++
+
+=== Modules
+image::images/puzzle-piece-green.jpg[background, size=cover]
+
+++++
+<h3>Pieces of a puzzle</h3>
+++++
+
+These are the nodes in our graph.
+
+
+=== Definition
+
+Modules
+
+* have a unique name
+* express their dependencies
+* export specific packages +
+(and hide the rest)
+
+[NOTE.speaker]
+--
+* inverse URL naming schema for modules
+--
+
+
+=== Implementation
+
+* Modules are JARs with a `module-info.class` +
+(aka *Modular JAR*)
+* gets generated from `module-info.java`:
++
+[source,java]
+----
+module $module_name {
+	requires $other_module;
+	exports $api_package;
+}
+----
+* this is called a *Module Declaration* or a +
+*Module Descriptor*
+
+
+=== Readability
+image::images/puzzle-pieces-put-together.jpg[background, size=cover]
+
+++++
+<h3>Putting the pieces together</h3>
+++++
+
+Readability brings edges into our graph.
+
+It is the basis for *Reliable Configuration*.
+
+
+=== Definition
+
+For two modules `A` and `B` with +
+[source,java]
+----
+module A {
+	requires B;
+}
+----
+we say
+
+* `A` requires `B`
+* `A` depends on `B`
+* `A` reads `B`
+* `B` is readable by `A`
+
+[NOTE.speaker]
+--
+* Implied Readability also leads to "A reads B"
+* the first two are always true
+* the last two materialize at run time
+--
+
+
+=== Reliable Configuration
+
+Java will only compile/launch when
+
+* every dependency is fulfilled
+* there are no cycles
+* there is no ambiguity
+
+[NOTE.speaker]
+--
+* multiple modules with the same name
+* split packages
+--
+
+
+=== Accessibility
+image::images/iceberg.jpg[background, size=cover]
+
+++++
+<h3>Hiding internals</h3>
+++++
+
+Accessibility governs which types a module can see.
+
+It builds on top of Readability.
+
+It is the basis for *Strong Encapsulation*.
+
+
+=== Definition
+
+A type in one module is only accessible +
+by code in another module if
+
+* the type is public
+* the package is exported
+* the second module reads the first
+
+
+=== Strong Encapsulation
+
+* `public` is no longer public
+* even reflection http://mail.openjdk.java.net/pipermail/jpms-spec-observers/2015-September/000122.html[doesn't work]
+* command line provides escape hatches
+
+
+=== Consequences
+
+* great boost for maintainability
+* also the major reason for community unrest
+* critical APIs might survive until Java 10 +
+(e.g. `sun.misc.Unsafe` -- see http://openjdk.java.net/jeps/260[JEP 260])
+* life might get tougher for reflection-based +
+libraries and frameworks
+
+
+=== Jigsaw Advent Calendar
+image::images/advent-calendar.jpg[background, size=cover]
+
+++++
+<h3>A simple example</h3>
+++++
+
+Find it https://github.com/CodeFX-org/demo-jigsaw-advent-calendar[on GitHub]!
+
+
+=== Structure
+
+// http://yuml.me/edit/64cd5858
+image::images/advent-calendar-structure.png[role="diagram"]
+
+
+=== Code
+
+[source,java]
+----
+public static void main(String[] args) {
+	List<SurpriseF_> fac = asList(
+		new ChocolateF_(), new QuoteF_());
+	Calendar cal = Calendar.create(fac);
+	println(cal.asText());
+}
+----
+
+// see above
+image::images/advent-calendar-structure.png[_,75%,role="diagram"]
+
+
+////
+=== Command Line
+
+[source,bash]
+----
+# compile
+javac -d classes/advent ${*.java}
+# package
+jar -cfm jars/advent.jar ${*.class, *.mf}
+# run
+java -jar jars/advent.jar
+----
+
+[NOTE.speaker]
+--
+* explain manifest
+* add dependencies to the class path
+* works on JDK 9 as is
+--
+////
+
+
+=== No Module
+
+* modularization is not required
+* JARs continue to work as today!
+
+(Unless you do forbidden things, more on that link:#/_compatibility[later].)
+
+* we can just put the application +
+on the class path as before
+
+++++
+<p class="fragment current-visible" data-fragment-index="1">(Boring...)</p>
+++++
+
+
+
+=== A single module
+
+++++
+<h3>Modularization</h3>
+++++
+
+// http://yuml.me/edit/4b1f89ab
+image::images/advent-calendar-module-single.png[role="diagram"]
+
+[source,java]
+----
+module advent {
+	// java.base is implicitly required
+	// requires no other modules
+	// exports no API
+}
+----
+
+++++
+<p class="fragment current-visible" data-fragment-index="1">(Still Boring...)</p>
+++++
+
+[NOTE.speaker]
+--
+* talk about `java.base`
+* this is a simple module graph
+--
+
+
+=== A single module
+
+++++
+<h3>Readability & Accessibility</h3>
+++++
+
+// http://yuml.me/edit/3144f0af
+image::images/advent-calendar-readability-accessibility.png[role="diagram"]
+
+
+////
+=== A single module
+
+++++
+<h3>Command Line</h3>
+++++
+
+[source,bash]
+----
+# compile with module-info.java:
+javac -d classes/advent ${*.java}
+# package with module-info.class
+#	and specify main class:
+jar -c --file=mods/advent.jar
+	--main-class=advent.Main
+	${*.class}
+# run by specifying a module path
+#	and a module to run (by name):
+java -p mods -m advent
+----
+
+[NOTE.speaker]
+--
+* explain module path
+--
+////
+
+
+=== Multiple Modules
+
+// image #1: taken from "Structure"
+// iamge #2: http://yuml.me/edit/a61aa29b
+++++
+<div class="imageblock" style="">
+	<div class="content diagram">
+		<img src="images/advent-calendar-structure.png" style="margin: 25px; width:75%;">
+	</div>
+</div>
+<div class="imageblock fragment current-visible" data-fragment-index="0">
+	<div class="content diagram">
+		<img src="images/advent-calendar-module-multi.png" alt="b2e21fbf" style="margin: 0;">
+	</div>
+</div>
+++++
+
+[NOTE.speaker]
+--
+* this is another module graph
+--
+
+
+=== Multiple Modules
+
+// taken from previous slide
+image::images/advent-calendar-module-multi.png[role="diagram"]
+
+// The outer div's height must be specified explicitly so that vertical space is reserved
+// for the non-displayed fragments.
+++++
+<div style="height: 250px;">
+<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">module surprise {
+	<span class="hljs-comment">// requires no other modules</span>
+	exports org.codefx.advent.surprise;
+}</code></pre></div></div>
+<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">module calendar {
+	requires surprise;
+	exports org.codefx.advent.calendar;
+}</code></pre></div></div>
+<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">module factories {
+	requires surprise;
+	exports org.codefx.advent.factories;
+}</code></pre></div></div>
+<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">module advent {
+	requires calendar;
+	requires factories;
+	requires surprise;
+}</code></pre></div></div>
+</div>
+++++
+
+
+=== Multiple Modules
+
+++++
+<h3>Compilation, Packaging, Execution</h3>
+++++
+
+[source,bash]
+----
+# First compile/package the other modules
+#   ('surprise', 'calendar', 'factories')
+#   into folder 'mods'.
+# Compile/package 'advent':
+javac -p mods -d classes/advent ${*.java}
+jar -c --file=mods/advent.jar
+	--main-class=org.codefx.advent.Main
+	${*.class}
+# Launch the application:
+java -p mods -m advent
+----

@@ -1,0 +1,44 @@
+== What About OSGi?
+
+++++
+<h3>Brief comparison<br>of Jigsaw and OSGi</h3>
+++++
+
+
+=== Jigsaw vs. OSGi
+image::images/bundles.jpg[background, size=cover]
+
+OSGi Bundles:
+
+* are JARs with a descriptor (`MANIFEST.MF`)
+* have a name
+* import packages or bundles
+* define public API by exporting packages
+
+
+=== Jigsaw vs. OSGi
+image::images/bundles.jpg[background, size=cover]
+
+[cols="s,d,d", options="header"]
+|===
+|
+|Jigsaw
+|OSGi
+
+|Versioning
+|not at all
+|packages and modules
+
+|Run-time Behavior
+|mostly static
+|dynamic
+
+|Services
+|declarative via `ServiceLoader`
+|declarative or programmatically; +
+more flexible
+
+|Class Loaders
+|operates below
+|one per bundle
+|===

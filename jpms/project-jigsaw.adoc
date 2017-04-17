@@ -1,0 +1,165 @@
+== Project Jigsaw
+
+++++
+<h3>Teaching the JVM about that graph</h3>
+++++
+
+[NOTE.speaker]
+--
+* modularity is the keyword
+--
+
+
+=== Quick History
+
+2005:: first discussions about modularity in JDK
+2008:: Project Jigsaw is created
+2011-2014:: exploratory phase;
+ends with https://www.jcp.org/en/jsr/detail?id=376[JSR 376]
+2015:: prototype is released
+2017:: Java 9 gets released with Jigsaw
+
+
+
+[NOTE.speaker]
+--
+* 2006: Java 6
+* 2008:
+** to create a simple module system
+** just for the JDK
+** for Java 7
+** "in the next year or so" (http://mreinhold.org/blog/jigsaw[Reinhold])
+* 2010: Oracle aquires Sun, Jigsaw is halted
+* 2011: Jigsaw gets fully staffed
+* 2011: Java 7
+* 2014: Java 8
+* JSR 376: Java Platform Module System
+--
+
+////
+
+// ############# //
+// H I S T O R Y //
+// ############# //
+
+
+== History ==
+
+
+=== Distant Past ...
+
+2005/2006:: https://jcp.org/en/jsr/detail?id=277[JSR 277] and https://jcp.org/en/jsr/detail?id=294[JSR 294] start talking about modularizing the JDK
+2008::
+** JSR 277 is abandoned due to complexity
+** JSR 294 becomes the vehicle for the new Project Jigsaw:
++
+*** to create a simple module system
+*** just for the JDK
+*** "in the next year or so" [http://mreinhold.org/blog/jigsaw[Reinhold]]
+2010:: Oracle acquires Sun; Jigsaw is halted
+2011:: demand for a standard Java module system is reestablished
+
+[NOTE.speaker]
+--
+* December 2006: Java 6
+* July 2011: Java 7
+* March 2014: Java 8
+--
+
+
+=== ... Past ...
+
+2011::
+** demand for a standard Java module system is reestablished
+** requirements are formulated
+** Jigsaw is chosen as the vehicle
+** gets fully staffed
+** enters "exploratory phase"
+2012::
+** Jigsaw postponed to Java 9
+** Compact Profiles fill the gap (http://openjdk.java.net/jeps/161[JEP 161])
+** modularization is prepared in Java 8 (http://openjdk.java.net/jeps/162[JEP 162])
+
+[NOTE.speaker]
+--
+* December 2006: Java 6
+* July 2011: Java 7
+* March 2014: Java 8
+--
+
+
+=== ... Present ...
+
+2014::
+** exploratory phase ends with a plethora of JEPs:
+*** http://openjdk.java.net/jeps/200[JEP 200]: define a modular structure for the JDK
+*** http://openjdk.java.net/jeps/201[JEP 201]: reorganize source
+*** http://openjdk.java.net/jeps/220[JEP 220]: create run-time images for modules
+*** http://openjdk.java.net/jeps/260[JEP 260]: encapsulate (most) internal APIs
+*** http://openjdk.java.net/jeps/261[JEP 261]: implement module system
+** all collected under https://www.jcp.org/en/jsr/detail?id=376[JSR 376: Java Platform Module System]
+2015::
+JDK-9-with-Jigsaw https://jdk9.java.net/jigsaw/[early access builds] contain all relevant changes to experiment with the module system
+
+
+=== ... Future
+
+2016::
+** *May*: JDK 9: feature complete
+** *June*: JSR 376: public review
+** *December*: JSR 376: final draft
+2017::
+** *January*: JDK 9: final release candidate
+** *March*:
+*** JSR 376: final release
+*** JDK 9: general availability
+
+////
+
+=== Disclaimer / Call to arms
+image::images/flag-amsterdam.jpg[background, size=cover]
+
+* this is based on early access builds
+* some things can still change
+* *time for community feedback +
+is running out*
+
+
+=== Goals
+
+* *Reliable Configuration*
+* *Strong Encapsulation*
+* Scalable Systems (esp. the JDK)
+* Security, Performance, Maintainability
+
++++<h3>Non-Goals</h3>+++
+
+* Multiple Versions
+* Version Selection
+
+
+=== Means
+image::images/puzzle-cubed.jpg[background, size=cover]
+
+Introducing modules, which
+
+* have a name
+* express dependencies
+* encapsulate internals
+
+Everything else follows from here!
+
+
+=== Concepts & Features
+
+++++
+<ul>
+	<li><p>Modules, Readability, Accessibility</p></li>
+	<li class="fragment dim" data-fragment-index="1"><p>Implied Readability, Qualified Exports</p></li>
+	<li><p>Modular JARs, Module Path, Module Graph</p></li>
+	<li class="fragment dim" data-fragment-index="1"><p>Services</p></li>
+	<li><p>Unnamed Modules, Automatic Modules</p></li>
+	<li class="fragment dim" data-fragment-index="1"><p>Reflection, Layers</p></li>
+	<li class="fragment dim" data-fragment-index="1"><p>Run-time Images</p></li>
+</ul>
+++++

@@ -1,0 +1,216 @@
+== Migration
+
+++++
+<h3>Moving Into Module Land</h3>
+++++
+
+=== Why Is It Even An Option?
+image::images/keep-out.jpg[background, size=cover]
+
+* most module systems are "in or out", +
+* but modularized JDK and legacy JARs +
+have to cooperate!
+* so migration has to be possible
+
+
+=== Enablers
+
+Migration is enabled by two features:
+
+* Unnamed Module(s)
+* Automatic Modules
+
+And the fact that module and class path coexist:
+
+* modular JARs can be put on either
+* "regular" JARs can be put on either
+
+
+=== The Unnamed Module
+image::images/garbage-only.jpg[background, size=cover]
+
+++++
+<h3>Why The Class Path "Just Works"</h3>
+++++
+
+
+=== Definition
+
+The *Unnamed Module* +
+contains _all_ JARs on the class path +
+(including modular JARs).
+
+* has no name (surprise!)
+* can read all modules
+* exports all packages
+
+[NOTE.speaker]
+--
+* one unnamed module per class loader
+--
+
+
+=== Example
+
+Put all your JARs on the class path.
+
+image::images/migration-unnamed.png[role="diagram"]
+
+
+=== No Access
+
+* what if your code was modularized? +
+and your dependencies were not?
+* proper modules can not depend on +
+"the chaos on the class path"
+* this is not possible:
++
+[source,java]
+----
+module advent {
+	requires unnamed;
+}
+----
+
+
+=== No Access
+
+image::images/migration-unnamed-dependency.png[role="diagram"]
+
+
+
+=== Automatic Modules
+image::images/golden-gate.jpg[background, size=cover]
+
+++++
+<h3>From Modules To The Class Path</h3>
+++++
+
+
+=== Definition
+
+An *Automatic Module* +
+is created _for each_ "regular" JAR +
+on the module path.
+
+* gets a name based on the file name
+* can read all modules +
+(including the Unnamed Module)
+* exports all packages
+
+
+=== Example
+
+* put `guava-19.0.jar` on the module path
+* then this works:
++
+[source,java]
+----
+module advent {
+	requires guava;
+}
+----
+
+
+=== Example
+
+image::images/migration-automatic.png[role="diagram"]
+
+
+=== What Goes Where?
+image::images/confusion.jpg[background, size=cover]
+
+[cols="s,d,d", options="header"]
+|===
+|
+|Class Path
+|Module Path
+
+|Regular JAR
+|Unnamed Module
+|Automatic Module
+
+|Modular JAR
+|Unnamed Module
+|Named Module
+|===
+
+
+=== Migration Strategies
+
+Two strategies emerge:
+
+* bottom-up migration
+* top-down migration
+
+
+=== Bottom-Up Migration
+
+Works best for Projects *without* +
+unmodularized dependencies +
+(libraries).
+
+* turn project JARs into modules
+* they still work on the class path
+* clients can move them to the module path +
+whenever they want
+
+
+////
+=== Bottom-Up Migration
+
+++++
+<h3>Example</h3>
+++++
+
+TODO: diagram
+////
+
+
+=== Top-Down Migration
+
+Required for Projects *with* +
+unmodularized dependencies +
+(applications).
+
+* turn project JARs into modules
+
+
+=== Top-Down Migration
+
+* modularized dependencies:
+** require direct ones
+** put all on the module path
+* unmodularized dependencies:
+** require direct ones with automatic name
+** put direct ones on the module path
+** put others on the class path
+
+[NOTE.speaker]
+--
+* only required modules are loaded from the module path
+* ~> automatic modules' dependencies would not be loaded
+* ~> automatic modules' dependencies go on the class path
+--
+
+
+////
+=== Top-Down Migration
+
+++++
+<h3>Example</h3>
+++++
+
+TODO: diagram
+////
+
+
+=== Top-Down Migration
+
+When dependencies get modularized:
+
+* hopefully the name didn't change
+* if they are already on the module path, +
+nothing changes
+* otherwise move them there
+* check their dependencies
