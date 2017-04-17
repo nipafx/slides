@@ -158,6 +158,21 @@ module factories {
 ----
 
 
+=== Summary
+
+With `A requires transitive B`:
+
+* _A_ reads _B_
+* any module reading _A_ reads _B_
+
+Applications:
+
+* make sure API is usable +
+without further dependencies
+* aggregator modules
+* splitting, merging, renaming modules
+
+
 //*****************************************//
 // O P T I O N L   D E P E N D E N C I E S //
 //*****************************************//
@@ -274,6 +289,21 @@ Assumptions:
 * no runtime checks necessary
 
 
+=== Summary
+
+With `A requires static B`:
+
+* at compile time: _A_ requires _B_ as usual
+* at runtime: _B_ may be absent
+
+Use to prevent absence of optional dependencies +
+from preventing application launch:
+
+* modules with code adapting to absense
+* utility libraries that aren't called +
+without that dependency
+
+
 //*****************//
 // S E R V I C E S //
 //*****************//
@@ -304,12 +334,12 @@ Module Declarations:
 ----
 // consumer
 module A {
-	uses some.Interface;
+	uses service.Interface;
 }
 
 // provider
 module B {
-	provides some.Interface
+	provides service.Interface
 		with some.Type;
 }
 ----
@@ -323,7 +353,7 @@ module B {
 
 [source,java]
 ----
-ServiceLoader.load(Interface.class)
+ServiceLoader.load(service.Interface.class)
 ----
 
 
@@ -362,6 +392,19 @@ public static void main(String[] args) {
 	System.out.println(cal.asText());
 }
 ----
+
+
+=== Summary
+
+To decouple API consumers and providers:
+
+* consumer `uses Service`
+* provider `provides Service with Impl`
+
+Module system is service locator; +
+request implementations from `ServiceLoader`:
+
+`ServiceLoader.load(Service.class)``
 
 
 //***********************************//
@@ -418,3 +461,14 @@ module factory {
 		to factory.chocolate, factory.quote;
 }
 ----
+
+
+=== Summary
+
+With `A exports pack to B`:
+
+* only _B_ can access types in `pack`
+* other modules behave as if `pack` +
+not exported
+
+Use to share sensible code between modules.
