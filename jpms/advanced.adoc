@@ -536,3 +536,131 @@ for reflection
 
 Use to make types available for reflection +
 without making them public API.
+
+
+//*************************//
+// C O M M A N D   L I N E //
+//*************************//
+
+=== Command Line Arguments
+
+The module system is pretty strict but...
+
+* ... not all modules are well-designed
+* ... not all use cases were intended
+
+What to do then?
+
+Command Line Arguments to the rescue! +
+(I often call them "escape hatches".)
+
+
+=== Command Line Arguments
+
+All command line flags can be applied +
+to `javac` and `java`!
+
+(Which is weird for `--add-opens`.)
+
+When used during compilation, +
+they do _not_ change the resulting +
+module descriptor!
+
+=== Add Modules
+
+If a module is not required, +
+it might not make it into the module graph.
+
+**Help it get there with `--add-modules`:**
+
+[source,bash]
+----
+	java --module-path mods
+#	--add-modules <module>(,<module>)*
+		--add-modules factories
+		--module advent
+----
+
+
+=== Add Readability Edges
+
+Maybe a module in the graph is not readable +
+by another but you need it to be.
+
+**Add readability edges with `--add-reads`:**
+
+[source,bash]
+----
+	java --module-path mods
+#	--add-reads <module>=<target>(,<more>)*
+		--add-reads advent=factories
+		--module advent
+----
+
+
+=== Add JavaEE Modules
+
+JavaEE modules are not resolved by default! +
+
+* _java.activation_
+* _java.annotations.common_
+* _java.corba_
+* _java.transaction_
+* _java.xml.bind_
+* _java.xml.ws_
+
+They need to be added with `--add-modules`!
+
+
+=== Add Exports
+
+A common case:
+
+A module needs types that +
+the owning module doesn't export.
+
+**Export them with `--add-exports`:**
+
+[source,bash]
+----
+	java --module-path mods
+#	--add-exports <module>/<package>=<target>
+		--add-reads factories/factories.quotes=advent
+		--module advent
+----
+
+Use target `ALL-UNNAMED` to export to all modules.
+
+
+=== Open Packages
+
+Another common case:
+
+A module reflects on types from a package that +
+the owning module doesn't open.
+
+**Open packages with `add-opens`:**
+
+[source,bash]
+----
+	java --module-path mods
+#	--add-opens <module>/<package>=<target>
+		--add-opens factories/factories.quotes=advent
+		--module advent
+----
+
+Use target `ALL-UNNAMED` to open to all modules.
+
+(It is not possible to open an entire module.)
+
+
+=== Summary
+
+Edit module graph with:
+
+* `--add-modules` to add modules
+* `--add-reads` to add readability edges
+* `--add-exports` to export packages to modules
+* `--add-opens` to open packages to modules
+
+The latter two accept `ALL-UNNAMED` as target.
