@@ -418,6 +418,9 @@ to every reading module.
 
 What if a set of modules wants to share code?
 
+
+=== Known Problem
+
 Similar to utility classes:
 
 * if class should be visible outside of package, +
@@ -472,3 +475,64 @@ With `A exports pack to B`:
 not exported
 
 Use to share sensible code between modules.
+
+
+//*******************************************//
+// O P E N   P A C K A G E S / M O D U L E S //
+//*******************************************//
+
+=== Reflective Access
+
+Exporting a package makes it public API:
+
+* modules can compile code against it
+* clients expect it to be stable
+
+What if a type is only meant +
+to be accessed via reflection?
+
+(Think Spring, Hibernate, etc.)
+
+
+=== Open Packages
+
+[source,java]
+----
+module A {
+	opens some.pack;
+}
+----
+
+* at compile time: +
+types in `some.pack` are not accessible
+* at run time: +
+_all_ types and members in `some.pack` +
+are accessible
+
+A qualified variant (`opens to`) exists.
+
+
+=== Open Modules
+
+[source,java]
+----
+open module A {
+	// no more `opens` clauses
+}
+----
+
+The same as open packages +
+but for all of them!
+
+
+=== Summary
+
+With open modules or open packages:
+
+* code can be made accessible +
+at compile time only
+* particularly valuable to open +
+for reflection
+
+Use to make types available for reflection +
+without making them public API.
