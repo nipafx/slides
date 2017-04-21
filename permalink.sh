@@ -39,7 +39,7 @@ then
 	printf "Committing snapshot\n"
 	cd _slides/
 	git add index.html $talk/$event
-	git commit --quiet --message "Create snapshot of $talk at $event_name"
+	git commit --quiet --message "[$talk] Create snapshot for $event_name"
 	git log --oneline -3
 
 	printf "\nTagging sources\n"
