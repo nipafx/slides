@@ -102,8 +102,8 @@ ends with <a href="https://www.jcp.org/en/jsr/detail?id=376">JSR 376</a></p></dd
 <div class="ulist"><ul><li><p><em>A</em> requires <em>B</em></p></li><li><p><em>A</em> depends on <em>B</em></p></li><li><p><em>A</em> reads <em>B</em></p></li><li><p><em>B</em> is readable by <em>A</em></p></li></ul></div>
 <aside class="notes"><div class="ulist"><ul><li><p>Implied Readability also leads to "A reads B"</p></li><li><p>the first two are always true</p></li><li><p>the last two materialize at run time</p></li></ul></div></aside></section><section id="_reliable_configuration"><h2>Reliable Configuration</h2><div class="paragraph"><p>Java will only compile/launch when</p></div>
 <div class="ulist"><ul><li><p>every dependency is fulfilled</p></li><li><p>there are no cycles</p></li><li><p>there is no ambiguity</p></li></ul></div>
-<aside class="notes"><div class="ulist"><ul><li><p>multiple modules with the same name</p></li><li><p>split packages</p></li></ul></div></aside></section><section id="_consequences_2"><h2>Consequences</h2><div class="ulist"><ul><li><p>boost for reliability</p></li><li><p>module system is strict <em>and</em> TODO(starr)<br>
-(no way to easily alter dependencies)</p></li><li><p>accidental long cycles will cause problems</p></li><li><p>module name changes are TODO(nicht vorgesehen)</p></li></ul></div></section><section id="_accessibility" data-background-image="images/iceberg.jpg" data-background-size="cover"><h2>Accessibility</h2>
+<aside class="notes"><div class="ulist"><ul><li><p>multiple modules with the same name</p></li><li><p>split packages</p></li></ul></div></aside></section><section id="_consequences_2"><h2>Consequences</h2><div class="ulist"><ul><li><p>boost for reliability</p></li><li><p>module system is strict <em>and</em> rigid<br>
+(no way to easily alter dependencies)</p></li><li><p>accidental long cycles will cause problems</p></li><li><p>module name changes are not supported</p></li></ul></div></section><section id="_accessibility" data-background-image="images/iceberg.jpg" data-background-size="cover"><h2>Accessibility</h2>
 <h3>Hiding internals</h3>
 <div class="paragraph"><p>Accessibility governs which types a module can see.</p></div>
 <div class="paragraph"><p>It builds on top of Readability.</p></div>
@@ -302,7 +302,7 @@ from preventing application launch:</p></div>
 without that dependency</p></li></ul></div></section><section id="_services"><h2>Services</h2><div class="paragraph"><p><strong>Consumers</strong> and <strong>implementations</strong><br>
 of an API should be decoupled.</p></div>
 <div class="paragraph"><p>Service locator pattern:</p></div>
-<div class="ulist"><ul><li><p>service registry as central TODO(vermittler)</p></li><li><p>implementors inform registry</p></li><li><p>consumers call registry to get implementations</p></li></ul></div>
+<div class="ulist"><ul><li><p>service registry as central arbiter</p></li><li><p>implementors inform registry</p></li><li><p>consumers call registry to get implementations</p></li></ul></div>
 <div class="paragraph"><p>In Java:</p></div>
 <div class="ulist"><ul><li><p><code>ServiceLoader</code> is the registry</p></li><li><p>modules can interact with it</p></li></ul></div></section><section id="_services_2"><h2>Services</h2><div class="paragraph"><p>Module Declarations:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// consumer
@@ -397,15 +397,15 @@ it might not make it into the module graph.</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">	java --module-path mods
 #	--add-modules &lt;module&gt;(,&lt;module&gt;)*
 		--add-modules factories
-		--module advent</code></pre></div></div></section><section id="_add_readability_edges"><h2>Add Readability Edges</h2><div class="paragraph"><p>Maybe a module in the graph is not readable<br>
+		--module advent</code></pre></div></div></section><section id="_add_javaee_modules"><h2>Add JavaEE Modules</h2><div class="paragraph"><p>JavaEE modules are not resolved by default!<br></p></div>
+<div class="ulist"><ul><li><p><em>java.activation</em></p></li><li><p><em>java.annotations.common</em></p></li><li><p><em>java.corba</em></p></li><li><p><em>java.transaction</em></p></li><li><p><em>java.xml.bind</em></p></li><li><p><em>java.xml.ws</em></p></li></ul></div>
+<div class="paragraph"><p>They need to be added with <code>--add-modules</code>!</p></div></section><section id="_add_readability_edges"><h2>Add Readability Edges</h2><div class="paragraph"><p>Maybe a module in the graph is not readable<br>
 by another but you need it to be.</p></div>
 <div class="paragraph"><p><strong>Add readability edges with <code>--add-reads</code>:</strong></p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">	java --module-path mods
 #	--add-reads &lt;module&gt;=&lt;target&gt;(,&lt;more&gt;)*
 		--add-reads advent=factories
-		--module advent</code></pre></div></div></section><section id="_add_javaee_modules"><h2>Add JavaEE Modules</h2><div class="paragraph"><p>JavaEE modules are not resolved by default!<br></p></div>
-<div class="ulist"><ul><li><p><em>java.activation</em></p></li><li><p><em>java.annotations.common</em></p></li><li><p><em>java.corba</em></p></li><li><p><em>java.transaction</em></p></li><li><p><em>java.xml.bind</em></p></li><li><p><em>java.xml.ws</em></p></li></ul></div>
-<div class="paragraph"><p>They need to be added with <code>--add-modules</code>!</p></div></section><section id="_add_exports"><h2>Add Exports</h2><div class="paragraph"><p>A common case:</p></div>
+		--module advent</code></pre></div></div></section><section id="_add_exports"><h2>Add Exports</h2><div class="paragraph"><p>A common case:</p></div>
 <div class="paragraph"><p>A module needs types that<br>
 the owning module doesn&#8217;t export.</p></div>
 <div class="paragraph"><p><strong>Export them with <code>--add-exports</code>:</strong></p></div>
