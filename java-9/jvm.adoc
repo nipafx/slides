@@ -63,7 +63,7 @@ Now, here's the magic:
 * use new `jar` flag `--release`:
 +
 ```bash
-jar9 --create --file out/mr.jar
+jar --create --file out/mr.jar
 	-C out/java-8 .
 	--release 9 -C out/java-9 .
 ```
@@ -143,7 +143,7 @@ public class SystemOutLogger implements Logger {
 
 ```java
 public class SystemOutLoggerFinder
-		implements LoggerFinder {
+		extends LoggerFinder {
 
 	public Logger getLogger(
 			String name, Module module) {

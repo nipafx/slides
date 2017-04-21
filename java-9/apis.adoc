@@ -212,7 +212,7 @@ Example:
 ```java
 void logLogin(String id) {
 	findCustomer(id)
-		.ifPresentorElse(
+		.ifPresentOrElse(
 			this::logCustomerLogin,
 			() -> logUnknownLogin(id));
 }
@@ -270,7 +270,8 @@ Map<String, Integer> mapEntries = Map.ofEntries(
 * collections are immutable +
 (no immutability in type system, though)
 * `null` values are forbidden
-* iteration order is random between JVM starts
+* iteration order is random between JVM starts +
+(except for lists, of course!)
 
 
 
@@ -501,6 +502,7 @@ Interesting `static` methods:
 TLS ALPN and OCSP stapling (http://openjdk.java.net/jeps/244[JEP 244])
 * OASIS XML Catalogs 1.1 (http://openjdk.java.net/jeps/268[JEP 268]), +
 Xerces 2.11.0 (http://openjdk.java.net/jeps/255[JEP 255])
+[[TODO, does this include Xerxes support for XSLT 2?]]
 
 Many lower-level APIs.
 

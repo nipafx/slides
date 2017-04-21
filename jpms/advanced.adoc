@@ -316,7 +316,7 @@ of an API should be decoupled.
 
 Service locator pattern:
 
-* service registry as central TODO(vermittler)
+* service registry as central arbiter
 * implementors inform registry
 * consumers call registry to get implementations
 
@@ -582,6 +582,20 @@ it might not make it into the module graph.
 ----
 
 
+=== Add JavaEE Modules
+
+JavaEE modules are not resolved by default! +
+
+* _java.activation_
+* _java.annotations.common_
+* _java.corba_
+* _java.transaction_
+* _java.xml.bind_
+* _java.xml.ws_
+
+They need to be added with `--add-modules`!
+
+
 === Add Readability Edges
 
 Maybe a module in the graph is not readable +
@@ -596,20 +610,6 @@ by another but you need it to be.
 		--add-reads advent=factories
 		--module advent
 ----
-
-
-=== Add JavaEE Modules
-
-JavaEE modules are not resolved by default! +
-
-* _java.activation_
-* _java.annotations.common_
-* _java.corba_
-* _java.transaction_
-* _java.xml.bind_
-* _java.xml.ws_
-
-They need to be added with `--add-modules`!
 
 
 === Add Exports
