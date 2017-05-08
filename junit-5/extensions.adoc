@@ -12,6 +12,57 @@
 ++++
 
 
+////
+=== Extensions in JUnit 4
+
+++++
+<h3>Runners</h3>
+++++
+
+Manage a test's full lifecycle.
+
+```java
+@RunWith(MockitoJUnitRunner.class)
+public class MyTest { ... }
+```
+
+* very flexible
+* heavyweight
+* exclusive
+
+
+=== Extensions in JUnit 4
+
+++++
+<h3>Rules</h3>
+++++
+
+Execute code before and after statements.
+
+```java
+public class MyTest {
+	@Rule
+	public MockitoRule rule =
+		MockitoJUnit.rule();
+}
+```
+
+* added in 4.7
+* lightweight
+* limited to before/after behavior
+
+
+=== Extensions in JUnit 4
+
+Extension model is not optimal:
+
+* two competing mechanisms
+** each with limitations
+** but with considerable overlap
+* composition can cause problems
+////
+
+
 === Approach To Extension
 
 From JUnit 5's
