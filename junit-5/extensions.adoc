@@ -1,0 +1,350 @@
+[data-state="no-title"]
+== Extensions
+
+++++
+<table class="toc">
+	<tr><td>Basics</td></tr>
+	<tr><td>Dynamic Tests</td></tr>
+	<tr class="toc-current"><td>Extensions</td></tr>
+	<tr><td>Architecture</td></tr>
+	<tr><td>Setup &amp; Tools</td></tr>
+</table>
+++++
+
+
+=== Approach To Extension
+
+From JUnit 5's
+https://github.com/junit-team/junit5/wiki/Core-Principles[Core Principles]:
+
+> Prefer extension points over features
+
+Quite literally, +
+JUnit 5 has _Extension Points_
+
+
+=== Extension Points
+
+* Test Instance Post Processor
+* BeforeAll Callback
+* Test and Container Execution Condition
+* BeforeEach Callback
+* Parameter Resolution
+* Before Test Execution
+* After Test Execution
+* Exception Handling
+* AfterEach Callback
+* AfterAll Callback
+
+
+=== Implementing Extensions
+
+* one interface for each extension point
+* method arguments capture context
+
+```java
+public interface BeforeEachCallback
+		extends Extension {
+
+	void beforeEach(
+		TestExtensionContext context);
+}
+```
+
+* an extension can use multiple points +
+to implement its feature
+
+
+=== Benchmark Extension
+
+We want to benchmark our tests!
+
+* for each test method
+* write the elapsed time to console
+
+How?
+
+* before test execution: store test launch time
+* after test execution: print elapsed time
+
+
+=== Benchmark Extension
+
+```java
+public class BenchmarkExtension implements
+		BeforeTestExecutionCallback,
+		AfterTestExecutionCallback {
+
+	private long launchTime;
+
+	// ...
+}
+```
+
+
+=== Benchmark Extension
+
+```java
+@Override
+public void beforeTestExecution(
+		TestExtensionContext context) {
+	launchTime = currentTimeMillis();
+}
+
+@Override
+public void afterTestExecution(
+		TestExtensionContext context) {
+	printf("Test '%s' took %d ms.%n",
+		context.getDisplayName(),
+		currentTimeMillis() - launchTime);
+}
+```
+
+
+=== Other Examples
+
+Remember This?
+
+```java
+@Test
+@DisabledOnFriday
+void failingTest() {
+	assertTrue(false);
+}
+```
+
+Let's see how it works!
+
+
+=== Disabled Extension
+
+```java
+public class DisabledOnFridayCondition
+		implements TestExecutionCondition {
+
+	@Override
+	public ConditionEvaluationResult evaluate(
+			TestExtensionContext context) {
+		if (isFriday())
+			return disabled("Weekend!");
+		else
+			return enabled("Fix it!");
+	}
+
+}
+```
+
+
+=== Other Examples
+
+What about parameter injection?
+
+```java
+@Test
+void someTest(MyServer server) {
+	// do something with `server`
+}
+```
+
+
+=== Parameter Injection
+
+```java
+public class MyServerParameterResolver
+		implements ParameterResolver {
+
+	@Override
+	public boolean supports(ParameterContext p, ...) {
+		return MyServer.class
+			== p.getParameter().getType();
+	}
+
+	@Override
+	public Object resolve(ParameterContext p, ...) {
+		return new MyServer();
+	}
+
+}
+```
+
+
+////
+=== Extension Context
+
+Quick look at `ExtensionContext`:
+
+```java
+// every node has its own context
+Optional<ExtensionContext> getParent();
+
+// some node-related info
+String getUniqueId();
+String getDisplayName();
+Set<String> getTags();
+
+// don't use System.out !
+void publishReportEntry(
+	Map<String, String> map);
+```
+
+
+=== Extension Context
+
+Quick look at `ExtensionContext`:
+
+```java
+// to reflect over the test class/method
+Optional<AnnotatedElement> getElement();
+Optional<Class<?>> getTestClass();
+Optional<Method> getTestMethod();
+
+// use the store to safe extension state
+// (extensions should be stateless;
+//  did I mention that?)
+Store getStore();
+Store getStore(Namespace namespace);
+```
+
+
+=== Stateless Extensions
+
+JUnit makes no promises regarding +
+extension instance lifecycle!
+
+*⇝ Extensions must be stateless!*
+
+Use the `Store`, Luke!
+
+* namespaced
+* hierarchical
+* key-value
+
+
+=== Extension Store
+
++++<h3>Namespaced</h3>+++
+
+Store is accessed via `ExtensionContext` +
+given a `Namespace`
+
+```java
+// forwards with a default namespace
+Store getStore();
+Store getStore(Namespace namespace);
+```
+
+* keeps extensions from stepping +
+on each other's toes
+* could allow deliberate communication!
+
+
+=== Extension Store
+
++++<h3>Hierarchical</h3>+++
+
+Reads from the store forward to other stores:
+
+* method store ⇝ class store
+* nested class store ⇝ surrounding class store
+
+Writes always go to the called store.
+
+
+=== Extension Store
+
++++<h3>Key-Value</h3>+++
+
+The store is essentially a map:
+
+```java
+Object getObject(Object key);
+Object getOrComputeIfAbsent(
+		K key, Function creator);
+
+void put(Object key, Object value)
+
+Object remove(Object key)
+```
+
+Overloads with type tokens exist.
+
+
+=== Stateless Benchmark
+
+```java
+void storeNowAsLaunchTime(
+		ExtensionContext context) {
+	long now = currentTimeMillis();
+	context.getStore(NAMESPACE)
+			.put(KEY, now);
+}
+
+long loadLaunchTime(
+		ExtensionContext context) {
+	return context.getStore(NAMESPACE)
+			.get(KEY, long.class);
+}
+```
+////
+
+
+=== Applying Extensions
+
+How do we apply extensions?
+
+```java
+@ExtendWith(DisabledOnFridayCondition.class)
+class JUnit5Test {
+	...
+}
+```
+
+That's technical and verbose... :(
+
+
+=== Applying Extensions
+
+https://en.wikibooks.org/wiki/Java_Programming/Annotations/Meta-Annotations[Meta-annotations] to the rescue!
+
+* JUnit 5's annotations are meta-annotations
+* JUnit 5 checks recursively for annotations
+
+⇝ We can create our own annotations!
+
+
+=== Creating Annotations
+
+```java
+@ExtendWith(DisabledOnFridayCondition.class)
+public @interface DisabledOnFriday { }
+
+@Test
+@Tag("integration")
+@ExtendWith(BenchmarkExtension.class)
+@ExtendWith(MyServerParameterResolver.class)
+public @interface IntegrationTest { }
+
+@IntegrationTest
+@DisabledOnFriday
+void testLogin(MyServer server) { ... }
+```
+
+
+=== Extensions
+
+++++
+<h3>Summary</h3>
+++++
+
+* flexibility because of many extension points
+* extensions compose well
+* customizable due to meta-annotations
+
+(We left out http://blog.codefx.org/design/architecture/junit-5-extension-model/[some details].)
+
+++++
+<p class="fragment current-visible">
+That's all very nice but how is it<br>
+<i>Next Generation Testing</i>?
+</p>
+++++

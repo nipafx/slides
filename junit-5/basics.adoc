@@ -1,0 +1,201 @@
+[data-state="no-title"]
+== Basics
+
+++++
+<table class="toc">
+	<tr class="toc-current"><td>Basics</td></tr>
+	<tr><td>Dynamic Tests</td></tr>
+	<tr><td>Extensions</td></tr>
+	<tr><td>Architecture</td></tr>
+	<tr><td>Setup &amp; Tools</td></tr>
+</table>
+++++
+
+
+=== What's New?
+
+```java
+class JUnit5Test {
+
+	@Test
+	void someTest() {
+		assertTrue(true);
+	}
+
+}
+```
+
+++++
+<p class="fragment current-visible">⇝ Package visibility suffices!</p>
+++++
+
+
+=== What's New?
+
+```java
+@BeforeAll
+static void beforeAll() { ... }
+
+@BeforeEach
+void beforeEach() { ... }
+
+@AfterEach
+void afterEach() { ... }
+
+@AfterAll
+static void afterAll() { ... }
+```
+
+++++
+<p class="fragment current-visible">⇝ Lifecycle annotations have new names.</p>
+++++
+
+
+=== What's New?
+
+```java
+@Test
+@Disabled("Y U No Pass?!")
+void failingTest() {
+	assertTrue(false);
+}
+```
+
+++++
+<p class="fragment current-visible">⇝ <code>@Ignored</code> is now <code>@Disabled</code>.</p>
+++++
+
+
+=== What's New?
+
+```java
+@Test
+@DisabledOnFriday
+void failingTest() {
+	assertTrue(false);
+}
+```
+
+++++
+<p class="fragment" data-fragment-index="0,1">⇝ Convenient Extensibility.</p>
+<p class="fragment" data-fragment-index="1">But how?</p>
+++++
+
+
+=== What's New?
+
+```java
+@Test
+void assertAllProperties() {
+	Address ad = new Address(
+	  "City", "Street", "42");
+
+	assertAll("address",
+	  () -> assertEquals("C", ad.city),
+	  () -> assertEquals("Str", ad.street),
+	  () -> assertEquals("63", ad.number)
+	);
+}
+```
+
+++++
+<p class="fragment current-visible">⇝ <code>assertAll</code> gathers results from multiple assertions</p>
+++++
+
+
+=== What's New?
+
+Output if `assertAll` fails:
+
+```shell
+org.opentest4j.MultipleFailuresError:
+	address (3 failures)
+	expected: <C> but was: <City>
+	expected: <Str> but was: <Street>
+	expected: <63> but was: <42>
+```
+
+
+=== What's New?
+
+```java
+class CountTest {
+	// lifecycle and tests
+	@Nested
+	class CountGreaterZero {
+		// lifecycle and tests
+		@Nested
+		class CountMuchGreaterZero {
+			// lifecycle and tests
+		}
+	}
+}
+```
+
+++++
+<p class="fragment current-visible">⇝ <code>@Nested</code> to organize tests in inner classes</p>
+++++
+
+
+=== What's New?
+
+```java
+@DisplayName("A count")
+class CountTest {
+	@Nested
+	@DisplayName("when greater zero")
+	class CountGreaterZero {
+		@Test
+		@DisplayName("is positive")
+		void isPositive() { ... }
+	}
+}
+```
+
+++++
+<p class="fragment current-visible">⇝ <code>@DisplayName</code> to show a nice name</p>
+++++
+
+
+=== What's new?
+
+The effects of `@Nested` and `@DisplayName`:
+
+image::images/testing-a-stack.png[Nested and DisplayName, 900]
+
+
+=== What's new?
+
+```java
+@Test
+void someTest(MyServer server) {
+	// do something with `server`
+}
+```
+
+++++
+<div class="fragment current-visible">
+	<p>⇝ Test has parameters!</p>
+	<p>But where do they come from?</p>
+</div>
+++++
+
+
+=== What's New?
+
+++++
+<h3>Summary</h3>
+++++
+
+* lifecycle works much like before
+* many details were improved
+* `@Nested` and `@DisplayName` +
+make a nice couple
+* parameter injection
+
+++++
+<p class="fragment current-visible">
+That's all very nice but how is it<br>
+<i>Next Generation Testing</i>?
+</p>
+++++
