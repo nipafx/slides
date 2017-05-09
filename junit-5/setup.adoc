@@ -24,7 +24,7 @@ Add this:
 ```shell
 org.junit.jupiter
 junit-jupiter-api
-5.0.0-M3
+5.0.0-M4
 ```
 
 Have fun!
@@ -39,12 +39,23 @@ Have fun!
 * *Maven*: work started https://issues.apache.org/jira/browse/SUREFIRE-1206[#1206]
 // (https://github.com/junit-team/junit5/issues/31[#31], https://issues.apache.org/jira/browse/SUREFIRE-1206[#1206], http://markmail.org/message/nx6qzkarj7r6eyf5#query:+page:1+mid:nx6qzkarj7r6eyf5+state:results[mails])
 * *Gradle*: work started https://github.com/gradle/gradle/issues/1037[#1037]
-* *IntelliJ*: since https://blog.jetbrains.com/idea/2016/08/using-junit-5-in-intellij-idea/[2016.2]; https://blog.jetbrains.com/idea/2016/12/intellij-idea-2016-3-1-rc-updates-junit-5-support-to-m3/[2016.3.1] required for M3
+* *IntelliJ*: since https://blog.jetbrains.com/idea/2016/08/using-junit-5-in-intellij-idea/[2016.2]; https://youtrack.jetbrains.com/issue/IDEA-170817[2017.1.2] required for M4
 * *Eclipse*: EA support with 4.7 M4 +
 with some extra work https://bugs.eclipse.org/bugs/show_bug.cgi?id=488566[#488566]
 // search for all issues with "JUnit" in them:
-// https://netbeans.org/bugzilla/buglist.cgi?bug_status=NEW&bug_status=STARTED&bug_status=REOPENED&query_format=advanced&short_desc=junit&short_desc_type=allwordssubstr&x=0&y=0
+// https://netbeans.org/bugzilla/buglist.cgi?quicksearch=JUnit%205
 * *NetBeans*: not even an issue
+
+
+=== Running Tests
+
+++++
+<h3>With Build Tools</h3>
+++++
+
+JUnit 5 team provides rudimentary +
+Gradle plugin and Maven Surefire provider +
+(see http://junit.org/junit5/docs/snapshot/user-guide/#build-support[user guide] for details)
 
 
 === Running Tests
@@ -71,32 +82,20 @@ public class JUnit5TestSuite { }
 === Running Tests
 
 ++++
-<h3>With Build Tools</h3>
-++++
-
-JUnit 5 team provides rudimentary +
-Gradle plugin and Maven Surefire provider +
-(see http://junit.org/junit5/docs/snapshot/user-guide/#build-support[user guide] for details)
-
-
-=== Running Tests
-
-++++
 <h3>From Console</h3>
 ++++
 
-There is a http://junit.org/junit5/docs/snapshot/user-guide/#running-tests-console-launcher[console launcher]:
+There is a https://blog.codefx.org/libraries/junit-5-setup/#Command-Line-For-The-Win[console launcher]:
 
 ```bash
 # run all tests
-junit-platform-console \
-	-cp ${path_to_compiled_test_classes} \
+java -jar junit-platform-console-standalone.jar
+	--class-path ${path_to_compiled_test_classes}
 	--scan-class-path
 # run a specific test
-junit-platform-console \
-	-cp ${path_to_compiled_test_classes} \
-	--select-class \
-	${fully_qualified_test_class_name}
+java -jar junit-platform-console-standalone.jar
+	--class-path ${path_to_compiled_test_classes}
+	--select-class ${fully_qualified_test_class_name}
 ```
 
 
@@ -108,6 +107,7 @@ junit-platform-console \
 
 * you can start writing tests right away
 * only IntelliJ has native support
+* provisional Maven/Gradle integration works
 * running with JUnit 4 is a good compromise
 
 (Read about http://blog.codefx.org/libraries/junit-5-setup/[the setup details].)

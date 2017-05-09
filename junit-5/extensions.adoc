@@ -12,7 +12,7 @@
 ++++
 
 
-////
+
 === Extensions in JUnit 4
 
 ++++
@@ -60,7 +60,7 @@ Extension model is not optimal:
 ** each with limitations
 ** but with considerable overlap
 * composition can cause problems
-////
+
 
 
 === Approach To Extension
@@ -76,16 +76,15 @@ JUnit 5 has _Extension Points_
 
 === Extension Points
 
-* Test Instance Post Processor
-* BeforeAll Callback
-* Test and Container Execution Condition
-* BeforeEach Callback
+* Instance Post Processor
+* Template Invocation
+* Container and Test Execution Condition
+* BeforeAll and BeforeEach Callbacks
 * Parameter Resolution
 * Before Test Execution
 * After Test Execution
 * Exception Handling
-* AfterEach Callback
-* AfterAll Callback
+* AfterEach and AfterAll Callbacks
 
 
 === Implementing Extensions
@@ -219,7 +218,7 @@ public class MyServerParameterResolver
 ```
 
 
-////
+
 === Extension Context
 
 Quick look at `ExtensionContext`:
@@ -235,7 +234,7 @@ Set<String> getTags();
 
 // don't use System.out !
 void publishReportEntry(
-	Map<String, String> map);
+		Map<String, String> map);
 ```
 
 
@@ -246,7 +245,7 @@ Quick look at `ExtensionContext`:
 ```java
 // to reflect over the test class/method
 Optional<AnnotatedElement> getElement();
-Optional<Class<?>> getTestClass();
+Optional<Class> getTestClass();
 Optional<Method> getTestMethod();
 
 // use the store to safe extension state
@@ -336,7 +335,7 @@ long loadLaunchTime(
 			.get(KEY, long.class);
 }
 ```
-////
+
 
 
 === Applying Extensions
@@ -379,6 +378,9 @@ public @interface IntegrationTest { }
 @DisabledOnFriday
 void testLogin(MyServer server) { ... }
 ```
+
+
+[[TODO, explain support for JUnit 4 rules]]
 
 
 === Extensions
