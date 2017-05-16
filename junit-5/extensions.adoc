@@ -13,7 +13,7 @@
 ++++
 
 
-
+////
 === Extensions in JUnit 4
 
 ++++
@@ -61,7 +61,7 @@ Extension model is not optimal:
 ** each with limitations
 ** but with considerable overlap
 * composition can cause problems
-
+////
 
 
 === Approach To Extension
@@ -219,7 +219,7 @@ public class MyServerParameterResolver
 ```
 
 
-
+////
 === Extension Context
 
 Quick look at `ExtensionContext`:
@@ -336,7 +336,7 @@ long loadLaunchTime(
 			.get(KEY, long.class);
 }
 ```
-
+////
 
 
 === Applying Extensions

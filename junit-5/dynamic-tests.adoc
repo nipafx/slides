@@ -46,7 +46,15 @@ Allow creation of tests at run time.
 * methods that create them +
 are annotated with `@TestFactory`
 
+These are fully-fledged tests:
 
+* integrated into lifecycle (https://github.com/junit-team/junit5/issues/378[soon])
+* viewed by tools as separate tests
+
+For more details, check https://blog.codefx.org/libraries/junit-5-dynamic-tests/[this post].
+
+
+////
 === Creating Tests
 
 ```java
@@ -220,3 +228,4 @@ That's all very nice but is this already<br>
 <i>Next Generation Testing</i>?
 </p>
 ++++
+////
