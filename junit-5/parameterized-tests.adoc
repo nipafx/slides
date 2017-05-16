@@ -1,0 +1,201 @@
+[data-state="no-title"]
+== Parameterized Tests
+
+++++
+<table class="toc">
+	<tr><td>Basics</td></tr>
+	<tr><td>Dynamic Tests</td></tr>
+	<tr class="toc-current"><td>Parameterized Tests</td></tr>
+	<tr><td>Extensions</td></tr>
+	<tr><td>Architecture</td></tr>
+	<tr><td>Setup &amp; Tools</td></tr>
+</table>
+++++
+
+
+=== Parameterizing Tests
+
+Dominant use case for parameterizing tests:
+
+* have a test method
+* define input data
+* run the method once per input
+
+JUnit 5 has native support for that!
+
+=== Parameterizing Tests
+
+```java
+@ParameterizedTest
+@ValueSource(strings = { " Hello", "JUnit" })
+void testValues(String word) { ... }
+```
+
+* declare test method with `@ParameterizedTest`
+* define input data with different sources
+* JUnit does the rest:
+
+image::images/parameterized-test.png[Parameterized tests, 400]
+
+=== Argument Sources
+
+Parameterized tests need sources for arguments.
+
+These are included:
+
+* `@ValueSource` is very simple +
+but only works for single arguments
+* `@EnumSource` injects some or all enum values
+* `@MethodSource` calls a method to create args
+* `@CsvSource` allows defining args as CSV strings
+* `@CsvFileSource` loads args from CSV file
+
+More than one source can be used per method!
+
+=== Enum Source
+
+Calling a test with all values of an enum:
+
+```java
+@ParameterizedTest
+@EnumSource(TimeUnit.class)
+void testAllEnumValues(TimeUnit unit) { ... }
+```
+
+Calling a test with a few values of an enum:
+
+```java
+@ParameterizedTest
+@EnumSource(
+	value = TimeUnit.class,
+	names = {"NANOSECONDS", "MICROSECONDS"})
+void testSomeEnumValues(TimeUnit unit) { ... }
+```
+
+=== Method Source
+
+Call a method to provide arguments:
+
+```java
+@ParameterizedTest
+@MethodSource(names = "createWords")
+void testWords(String word) { ... }
+
+static Stream<String> createWords() {
+	return Stream.of("Hello", "JUnit");
+}
+```
+
+=== Method Source
+
+For multiple arguments, return `Arguments`:
+
+```java
+@ParameterizedTest
+@MethodSource(names = "createWordsWithLength")
+void testLength(String word, int length) { ... }
+
+static Stream<Arguments> createWordsWithLength() {
+	return Stream.of(
+			create("Hello", 5),
+			create("JUnit 5", 7));
+}
+```
+
+=== CSV Sources
+
+Define values as CSV strings:
+
+```java
+@ParameterizedTest
+@CsvSource({ "(0/0), 0", "(0/1), 1", "(1/1), 1.41" })
+void testPointNorm(String point, double norm) { ... }
+```
+
+* each string provides args for one execution
+* strings are split by comma to get individual args
+
+=== Argument Converters
+
+How do strings get converted?
+
+* JUnit handles primitives, enums, `java.time.*`
+* you can implement `ArgumentConverter` +
+and apply with `@ConvertWith`:
+
+```java
+@ParameterizedTest
+@CsvSource({ "(0/0), 0", "(0/1), 1", "(1/1), 1.41" })
+void testPointNorm(
+	@ConvertWith(PointConverter.class) Point point,
+	double norm) { ... }
+```
+
+
+=== CSV File Sources
+
+This also applies to CSV files:
+
+```java
+@ParameterizedTest
+@CsvFileSource(resources = "/pointNorms.csv")
+void testPointNorm(
+	@ConvertWith(PointConverter.class) Point point,
+	double norm) { ... }
+```
+
+=== More Sources
+
+You can create your own sources:
+
+. implement `ArgumentsProvider`
+
+```java
+static class RandomIntegerProvider
+		implements ArgumentsProvider {
+
+	@Override
+	public Stream<Arguments> arguments(...) {
+		return new Random().ints(0, 10)
+			.mapToObj(ObjectArrayArguments::create)
+			.limit(3);
+	}
+
+}
+```
+
+=== More Sources
+
+You can create your own sources:
+
+[start=2]
+. apply with `@ArgumentsSource`
+
+```java
+@ParameterizedTest
+@ArgumentsSource(RandomIntegerProvider.class)
+void testRandomIntegers(Integer argument) { ... }
+```
+
+=== Parameterized Tests
+
+++++
+<h3>Summary</h3>
+++++
+
+JUnit 5 has native support for +
+one variant of parameterized tests:
+
+* declare test method with `@ParameterizedTest`
+* define input data with different sources, e.g. +
+`@ValueSource`, `@MethodSource`, `@CsvSource`, +
+or self-made sources
+
+Other variants can be implemented via extensions!
+
+++++
+<p class="fragment current-visible">
+That's all very nice but is this already<br>
+<i>Next Generation Testing</i>?
+</p>
+++++
