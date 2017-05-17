@@ -23,10 +23,10 @@
 		</div>
 	</div>
 	<div class="participant">
-		<a href="http://42talents.com/de/training/"><img src="images/logo-42-talents.png" class="logo" style="{host-logo-style}"></a>
+		<a href="http://rigadevdays.lv/"><img src="images/logo-riga-dev-days.png" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="http://42talents.com/de/training/">42 Talents</a></p>
-			<p><a href="https://twitter.com/42talents">@42talents</a></p>
+			<p><a href="http://rigadevdays.lv/">Riga DevDays</a></p>
+			<p><a href="https://twitter.com/hashtag/RigaDevDays">#RigaDevDays</a></p>
 		</div>
 	</div>
 </div>
@@ -41,9 +41,9 @@
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="http://42talents.com/de/training/"><img src="images/logo-42-talents.png" class="logo" style="{host-logo-style}"></a>
+		<a href="http://rigadevdays.lv/"><img src="images/logo-riga-dev-days.png" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="http://42talents.com/de/training/">42 Talents</a> / <a href="https://twitter.com/42talents">@42talents</a></p>
+			<p><a href="http://rigadevdays.lv/">Riga DevDays</a> / <a href="https://twitter.com/hashtag/RigaDevDays">#RigaDevDays</a></p>
 		</div>
 	</div>
 </footer>
@@ -551,11 +551,11 @@ as backend for JDK logging.</p></div></section><section id="_loggers_and_finders
 	<tr><td>Compact Strings</td></tr>
 	<tr><td>Indified String Concatenation</td></tr>
 </table></section>
-<section><section id="TODO"><h2>Compact Strings</h2><table class="toc">
+<section><section id="_compact_strings"><h2>Compact Strings</h2><table class="toc">
 	<tr class="toc-current"><td>Compact Strings</td></tr>
 	<tr><td>Indified String Concatenation</td></tr>
 </table><div class="paragraph"><p>Going from UTF-16 to ISO-8859-1.</p></div></section><section id="_strings_and_memory"><h2>Strings and memory</h2><div class="ulist"><ul><li><p>20% - 30% of heap are <code>char[]</code> for <code>String</code></p></li><li><p>a <code>char</code> is UTF-16 code unit ⇝ 2 bytes</p></li><li><p>most strings only require ISO-8859-1 ⇝ 1 byte</p></li></ul></div>
-<div class="paragraph"><p><strong>10% - 15% of memory is wasted!</strong></p></div></section><section id="_compact_strings"><h2>Compact Strings</h2><div class="paragraph"><p>For Java 9, <code>String</code> was changed:</p></div>
+<div class="paragraph"><p><strong>10% - 15% of memory is wasted!</strong></p></div></section><section id="_compact_strings_2"><h2>Compact Strings</h2><div class="paragraph"><p>For Java 9, <code>String</code> was changed:</p></div>
 <div class="ulist"><ul><li><p>uses <code>byte[]</code> instead of <code>char[]</code></p></li><li><p>bytes per character:</p><div class="ulist"><ul><li><p>1 if <em>all</em> characters are ISO-8859-1</p></li><li><p>2 otherwise</p></li></ul></div></li></ul></div>
 <div class="paragraph"><p>Only possible because <code>String</code> makes<br>
 defensive copies of all arguments.</p></div></section><section id="_performance_2"><h2>Performance</h2><div class="paragraph"><p>Simple benchmark:<br>
@@ -616,7 +616,6 @@ and class data sharing (<a href="http://openjdk.java.net/jeps/250">JEP 250</a>)<
 ✉ <a href="http://blog.codefx.org/newsletter/">tiny.cc/fx-weekly</a><br>
 <a href="https://twitter.com/nipafx">@nipafx</a> /
 <a href="https://google.com/+NicolaiParlog">+NicolaiParlog</a></p></div>
-<div class="paragraph"><p><a href="https://sitepoint.com/java">sitepoint.com/java</a></p></div>
 <h3>Want More?</h3>
 <div class="paragraph"><p>⇜ Get <a href="https://www.manning.com/books/the-java-9-module-system?a_aid=nipa&amp;a_bid=869915cb">my book</a>!</p></div>
 <div class="paragraph"><p>I write <a href="http://blog.codefx.org/newsletter/">a mean newsletter</a>,<br>
