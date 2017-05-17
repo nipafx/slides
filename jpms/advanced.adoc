@@ -25,13 +25,13 @@ Example in _calendar_ exposing _surprise_:
 
 [source,java]
 ----
-public static Calendar createWithSurprises(
+public static Calendar create(
 		List<SurpriseFactory> factories) {
 	// ...
 }
 ----
 
-⇝ Module _calendar_ us unusable without _surprise_!
+⇝ Module _calendar_ is unusable without _surprise_!
 
 [[TODO, diagram with depending, exposing, exposed module]]
 
@@ -41,7 +41,7 @@ public static Calendar createWithSurprises(
 How can users of exposing module +
 determine required dependencies?
 
-Try and Error?
+Try and error?
 
 No!
 
@@ -385,10 +385,12 @@ module factory.quote {
 [source,java]
 ----
 public static void main(String[] args) {
-	List<SurpriseFactory> fac = new ArrayList<>();
-	ServiceLoader.load(SurpriseFactory.class)
-			.forEach(fac::add);
-	Calendar cal = Calendar.createWithSurprises(fac);
+	List<SurpriseFactory> factories =
+			new ArrayList<>();
+	ServiceLoader
+			.load(SurpriseFactory.class)
+			.forEach(factories::add);
+	Calendar cal = Calendar.create(factories);
 	System.out.println(cal.asText());
 }
 ----
@@ -404,7 +406,7 @@ To decouple API consumers and providers:
 Module system is service locator; +
 request implementations from `ServiceLoader`:
 
-`ServiceLoader.load(Service.class)``
+`ServiceLoader.load(Service.class)`
 
 
 //***********************************//
@@ -560,8 +562,6 @@ Command Line Arguments to the rescue! +
 All command line flags can be applied +
 to `javac` and `java`!
 
-(Which is weird for `--add-opens`.)
-
 When used during compilation, +
 they do _not_ change the resulting +
 module descriptor!
@@ -625,7 +625,7 @@ the owning module doesn't export.
 ----
 	java --module-path mods
 #	--add-exports <module>/<package>=<target>
-		--add-reads factories/factories.quotes=advent
+		--add-exports factories/factories.quotes=advent
 		--module advent
 ----
 

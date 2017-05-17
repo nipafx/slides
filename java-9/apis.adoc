@@ -87,7 +87,7 @@ Example:
 
 ```java
 Stream.of("a", "b", "c", "", "e")
-	.takeWhile(s -> !String.isEmpty(s));
+	.takeWhile(s -> !s.isEmpty());
 	.forEach(System.out::print);
 
 // output: abc
@@ -105,7 +105,7 @@ Example:
 
 ```java
 Stream.of("a", "b", "c", "de", "f")
-	.dropWhile(s -> s.length <= 1);
+	.dropWhile(s -> s.length() <= 1);
 	.forEach(System.out::print);
 
 // output: def
@@ -164,7 +164,7 @@ List<Order> findOrdersForCustomer(String id) {
 		.orElse(new ArrayList<>());
 }
 
-Steam<Order> findOrdersForCustomer(String id) {
+Stream<Order> findOrdersForCustomer(String id) {
 	return findCustomer(id)
 		.stream()
 		.map(this::getOrders) // lazy
@@ -269,7 +269,7 @@ Map<String, Integer> mapEntries = Map.ofEntries(
 
 * collections are immutable +
 (no immutability in type system, though)
-* `null` values are forbidden
+* `null` elements/keys/values are forbidden
 * iteration order is random between JVM starts +
 (except for lists, of course!)
 
@@ -375,6 +375,10 @@ StackWalkingExample.main(StackWalking.java:10)
 === `StackWalker::walk`
 
 ```java
+T walk (Function<Stream<StackFrame>, T>);
+```
+
+```java
 static void three() {
 	String line = StackWalker.getInstance().walk(
 		frames -> frames
@@ -467,7 +471,7 @@ List<Process> lsThenGrep = ProcessBuilder
 Cool new methods on `Process`:
 
 * `boolean supportsNormalTermination();`
-* `long getPid();`
+* `long pid();`
 * `CompletableFuture<Process> onExit();`
 * `Stream<ProcessHandle> children();`
 * `Stream<ProcessHandle> descendants();`

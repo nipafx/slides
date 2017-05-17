@@ -135,8 +135,9 @@ is running out*
 
 +++<h3>Non-Goals</h3>+++
 
-* Multiple Versions
 * Version Selection
+* Multiple Versions
+* Package Isolation
 
 
 === Means
@@ -156,9 +157,9 @@ Everything else follows from here!
 ++++
 <ul>
 	<li><p>Modules, Readability, Accessibility</p></li>
-	<li class="fragment dim" data-fragment-index="1"><p>Implied Readability, Qualified Exports</p></li>
+	<li><p>Implied Readability, Qualified Exports</p></li>
 	<li><p>Modular JARs, Module Path, Module Graph</p></li>
-	<li class="fragment dim" data-fragment-index="1"><p>Services</p></li>
+	<li><p>Services</p></li>
 	<li><p>Unnamed Modules, Automatic Modules</p></li>
 	<li class="fragment dim" data-fragment-index="1"><p>Reflection, Layers</p></li>
 	<li class="fragment dim" data-fragment-index="1"><p>Run-time Images</p></li>

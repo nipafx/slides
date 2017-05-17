@@ -102,8 +102,8 @@ Java will only compile/launch when
 * boost for reliability
 * module system is strict _and_ rigid +
 (no way to easily alter dependencies)
-* accidental long cycles will cause problems
 * module name changes are not supported
+* accidental long cycles will cause problems
 
 
 === Accessibility
@@ -170,9 +170,9 @@ image::images/advent-calendar-structure.png[role="diagram"]
 [source,java]
 ----
 public static void main(String[] args) {
-	List<SurpriseFactory> fac = asList(
+	List<SurpriseFactory> factories = asList(
 		new ChocolateFactory(), new QuoteFactory());
-	Calendar cal = Calendar.create(fac);
+	Calendar cal = Calendar.create(factories);
 	println(cal.asText());
 }
 ----
@@ -260,15 +260,15 @@ module advent {
 
 [source,bash]
 ----
-# compile with module-info.java:
+# compile with module-info.java
 javac -d classes/advent ${*.java}
 # package with module-info.class
-#	and specify main class:
+# and specify main class
 jar --create --file mods/advent.jar
 	--main-class advent.Main
 	${*.class}
 # run by specifying a module path
-#	and a module to run (by name):
+# and a module to run (by name)
 java --module-path mods --module advent
 ----
 
@@ -353,10 +353,10 @@ image::images/advent-calendar-module-multi.png[role="diagram"]
 javac -d classes
 	--module-source-path "src"
 	--module advent
-# package one by one, eventually advent:
+# package one by one, eventually advent
 jar --create --file mods/advent.jar
 	--main-class advent.Main
 	${*.class}
-# launch the application:
+# launch the application
 java --module-path mods --module advent
 ----
