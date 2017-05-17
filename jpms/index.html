@@ -69,14 +69,14 @@
 ends with <a href="https://www.jcp.org/en/jsr/detail?id=376">JSR 376</a></p></dd><dt class="hdlist1">2015</dt><dd><p>prototype is released</p></dd><dt class="hdlist1">2017</dt><dd><p>Java 9 gets released with module system</p></dd></dl></div>
 <aside class="notes"><div class="ulist"><ul><li><p>2006: Java 6</p></li><li><p>2008:</p><div class="ulist"><ul><li><p>to create a simple module system</p></li><li><p>just for the JDK</p></li><li><p>for Java 7</p></li><li><p>"in the next year or so" (<a href="http://mreinhold.org/blog/jigsaw">Reinhold</a>)</p></li></ul></div></li><li><p>2010: Oracle aquires Sun, Jigsaw is halted</p></li><li><p>2011: Jigsaw gets fully staffed</p></li><li><p>2011: Java 7</p></li><li><p>2014: Java 8</p></li><li><p>JSR 376: Java Platform Module System</p></li></ul></div></aside></section><section id="_goals"><h2>Goals</h2><div class="ulist"><ul><li><p><strong>Reliable Configuration</strong></p></li><li><p><strong>Strong Encapsulation</strong></p></li><li><p>Scalable Systems (esp. the JDK)</p></li><li><p>Security, Performance, Maintainability</p></li></ul></div>
 <div class="paragraph"><p><h3>Non-Goals</h3></p></div>
-<div class="ulist"><ul><li><p>Multiple Versions</p></li><li><p>Version Selection</p></li></ul></div></section><section id="_means" data-background-image="images/puzzle-cubed.jpg" data-background-size="cover"><h2>Means</h2>
+<div class="ulist"><ul><li><p>Version Selection</p></li><li><p>Multiple Versions</p></li><li><p>Package Isolation</p></li></ul></div></section><section id="_means" data-background-image="images/puzzle-cubed.jpg" data-background-size="cover"><h2>Means</h2>
 <div class="paragraph"><p>Introducing modules, which</p></div>
 <div class="ulist"><ul><li><p>have a name</p></li><li><p>express dependencies</p></li><li><p>encapsulate internals</p></li></ul></div>
 <div class="paragraph"><p>Everything else follows from here!</p></div></section><section id="_concepts_features"><h2>Concepts &amp; Features</h2><ul>
 	<li><p>Modules, Readability, Accessibility</p></li>
-	<li class="fragment dim" data-fragment-index="1"><p>Implied Readability, Qualified Exports</p></li>
+	<li><p>Implied Readability, Qualified Exports</p></li>
 	<li><p>Modular JARs, Module Path, Module Graph</p></li>
-	<li class="fragment dim" data-fragment-index="1"><p>Services</p></li>
+	<li><p>Services</p></li>
 	<li><p>Unnamed Modules, Automatic Modules</p></li>
 	<li class="fragment dim" data-fragment-index="1"><p>Reflection, Layers</p></li>
 	<li class="fragment dim" data-fragment-index="1"><p>Run-time Images</p></li>
@@ -103,7 +103,7 @@ ends with <a href="https://www.jcp.org/en/jsr/detail?id=376">JSR 376</a></p></dd
 <aside class="notes"><div class="ulist"><ul><li><p>Implied Readability also leads to "A reads B"</p></li><li><p>the first two are always true</p></li><li><p>the last two materialize at run time</p></li></ul></div></aside></section><section id="_reliable_configuration"><h2>Reliable Configuration</h2><div class="paragraph"><p>Java will only compile/launch when</p></div>
 <div class="ulist"><ul><li><p>every dependency is fulfilled</p></li><li><p>there are no cycles</p></li><li><p>there is no ambiguity</p></li></ul></div>
 <aside class="notes"><div class="ulist"><ul><li><p>multiple modules with the same name</p></li><li><p>split packages</p></li></ul></div></aside></section><section id="_consequences_2"><h2>Consequences</h2><div class="ulist"><ul><li><p>boost for reliability</p></li><li><p>module system is strict <em>and</em> rigid<br>
-(no way to easily alter dependencies)</p></li><li><p>accidental long cycles will cause problems</p></li><li><p>module name changes are not supported</p></li></ul></div></section><section id="_accessibility" data-background-image="images/iceberg.jpg" data-background-size="cover"><h2>Accessibility</h2>
+(no way to easily alter dependencies)</p></li><li><p>module name changes are not supported</p></li><li><p>accidental long cycles will cause problems</p></li></ul></div></section><section id="_accessibility" data-background-image="images/iceberg.jpg" data-background-size="cover"><h2>Accessibility</h2>
 <h3>Hiding internals</h3>
 <div class="paragraph"><p>Accessibility governs which types a module can see.</p></div>
 <div class="paragraph"><p>It builds on top of Readability.</p></div>
@@ -114,9 +114,9 @@ by code in another module if</p></div>
 libraries and frameworks</p></li></ul></div></section><section id="_jigsaw_advent_calendar" data-background-image="images/advent-calendar.jpg" data-background-size="cover"><h2>Jigsaw Advent Calendar</h2>
 <h3>A simple example</h3>
 <div class="paragraph"><p>Find it <a href="https://github.com/CodeFX-org/demo-jigsaw-advent-calendar">on GitHub</a>!</p></div></section><section id="_structure"><h2>Structure</h2><div class="imageblock diagram" style=""><img src="images/advent-calendar-structure.png" alt="advent calendar structure"></div></section><section id="_code"><h2>Code</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public static void main(String[] args) {
-	List&lt;SurpriseFactory&gt; fac = asList(
+	List&lt;SurpriseFactory&gt; factories = asList(
 		new ChocolateFactory(), new QuoteFactory());
-	Calendar cal = Calendar.create(fac);
+	Calendar cal = Calendar.create(factories);
 	println(cal.asText());
 }</code></pre></div></div>
 <div class="imageblock diagram" style=""><img src="images/advent-calendar-structure.png" alt="_" width="75%"></div></section><section id="_no_module"><h2>No Module</h2><div class="ulist"><ul><li><p>modularization is not required</p></li><li><p>JARs continue to work as today!</p></li></ul></div>
@@ -141,15 +141,15 @@ java -jar jars/advent.jar</code></pre></div></div>
 }</code></pre></div></div>
 <p class="fragment current-visible" data-fragment-index="1">(Still Boring...)</p>
 <aside class="notes"><div class="ulist"><ul><li><p>talk about <code>java.base</code></p></li><li><p>this is a simple module graph</p></li></ul></div></aside></section><section id="_a_single_module_2"><h2>A single module</h2><h3>Compilation, Packaging, Execution</h3>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash"># compile with module-info.java:
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash"># compile with module-info.java
 javac -d classes/advent ${*.java}
 # package with module-info.class
-#	and specify main class:
+# and specify main class
 jar --create --file mods/advent.jar
 	--main-class advent.Main
 	${*.class}
 # run by specifying a module path
-#	and a module to run (by name):
+# and a module to run (by name)
 java --module-path mods --module advent</code></pre></div></div>
 <aside class="notes"><div class="ulist"><ul><li><p>explain module path</p></li></ul></div></aside></section><section id="_a_single_module_3"><h2>A single module</h2><h3>Readability & Accessibility</h3>
 <div class="imageblock diagram" style=""><img src="images/advent-calendar-readability-accessibility.png" alt="advent calendar readability accessibility"></div></section><section id="_multiple_modules"><h2>Multiple Modules</h2><div class="imageblock" style="">
@@ -186,23 +186,23 @@ java --module-path mods --module advent</code></pre></div></div>
 javac -d classes
 	--module-source-path "src"
 	--module advent
-# package one by one, eventually advent:
+# package one by one, eventually advent
 jar --create --file mods/advent.jar
 	--main-class advent.Main
 	${*.class}
-# launch the application:
+# launch the application
 java --module-path mods --module advent</code></pre></div></div></section></section>
 <section><section id="_advanced_java_module_system"><h2>Advanced Java Module System</h2><h3>Going Deeper...</section><section id="_transitive_dependencies"><h2>Transitive Dependencies</h2><div class="paragraph"><p>Not all dependencies are created equal:</p></div>
 <div class="ulist"><ul><li><p>most are used <strong>within</strong> a module</p></li><li><p>some are used <strong>on the boundary</strong><br>
 between modules</p></li></ul></div>
 <div class="paragraph"><p>Transitive dependencies are about the latter.</p></div></section><section id="_exposing_dependencies"><h2>Exposing dependencies</h2><div class="paragraph"><p>Example in <em>calendar</em> exposing <em>surprise</em>:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public static Calendar createWithSurprises(
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public static Calendar create(
 		List&lt;SurpriseFactory&gt; factories) {
 	// ...
 }</code></pre></div></div>
-<div class="paragraph"><p>⇝ Module <em>calendar</em> us unusable without <em>surprise</em>!</p></div></section><section id="TODO"><h2>Try and Error?</h2><div class="paragraph"><p>How can users of exposing module<br>
+<div class="paragraph"><p>⇝ Module <em>calendar</em> is unusable without <em>surprise</em>!</p></div></section><section id="TODO"><h2>Try and Error?</h2><div class="paragraph"><p>How can users of exposing module<br>
 determine required dependencies?</p></div>
-<div class="paragraph"><p>Try and Error?</p></div>
+<div class="paragraph"><p>Try and error?</p></div>
 <div class="paragraph"><p>No!</p></div></section><section id="_implied_readability"><h2>Implied Readability</h2><div class="paragraph"><p>Exposing module can mark dependencies<br>
 on exposed modules<br>
 with <code>requires transitive</code>:</p></div>
@@ -331,16 +331,18 @@ module factory.quote {
 	provides surprise.SurpriseFactory
 		with factory.quote.QuoteFactory;
 }</code></pre></div></div></section><section id="_factory_services_2"><h2>Factory Services</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public static void main(String[] args) {
-	List&lt;SurpriseFactory&gt; fac = new ArrayList&lt;&gt;();
-	ServiceLoader.load(SurpriseFactory.class)
-			.forEach(fac::add);
-	Calendar cal = Calendar.createWithSurprises(fac);
+	List&lt;SurpriseFactory&gt; factories =
+			new ArrayList&lt;&gt;();
+	ServiceLoader
+			.load(SurpriseFactory.class)
+			.forEach(factories::add);
+	Calendar cal = Calendar.create(factories);
 	System.out.println(cal.asText());
 }</code></pre></div></div></section><section id="_summary_3"><h2>Summary</h2><div class="paragraph"><p>To decouple API consumers and providers:</p></div>
 <div class="ulist"><ul><li><p>consumer <code>uses Service</code></p></li><li><p>provider <code>provides Service with Impl</code></p></li></ul></div>
 <div class="paragraph"><p>Module system is service locator;<br>
 request implementations from <code>ServiceLoader</code>:</p></div>
-<div class="paragraph"><p><code>ServiceLoader.load(Service.class)`</code></p></div></section><section id="_qualified_exports"><h2>Qualified Exports</h2><div class="paragraph"><p>So far, exported packages are visible<br>
+<div class="paragraph"><p><code>ServiceLoader.load(Service.class)</code></p></div></section><section id="_qualified_exports"><h2>Qualified Exports</h2><div class="paragraph"><p>So far, exported packages are visible<br>
 to every reading module.</p></div>
 <div class="paragraph"><p>What if a set of modules wants to share code?</p></div></section><section id="_known_problem"><h2>Known Problem</h2><div class="paragraph"><p>Similar to utility classes:</p></div>
 <div class="ulist"><ul><li><p>if class should be visible outside of package,<br>
@@ -388,7 +390,6 @@ without making them public API.</p></div></section><section id="_command_line_ar
 <div class="paragraph"><p>Command Line Arguments to the rescue!<br>
 (I often call them "escape hatches".)</p></div></section><section id="_command_line_arguments_2"><h2>Command Line Arguments</h2><div class="paragraph"><p>All command line flags can be applied<br>
 to <code>javac</code> and <code>java</code>!</p></div>
-<div class="paragraph"><p>(Which is weird for <code>--add-opens</code>.)</p></div>
 <div class="paragraph"><p>When used during compilation,<br>
 they do <em>not</em> change the resulting<br>
 module descriptor!</p></div></section><section id="_add_modules"><h2>Add Modules</h2><div class="paragraph"><p>If a module is not required,<br>
@@ -411,7 +412,7 @@ the owning module doesn&#8217;t export.</p></div>
 <div class="paragraph"><p><strong>Export them with <code>--add-exports</code>:</strong></p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">	java --module-path mods
 #	--add-exports &lt;module&gt;/&lt;package&gt;=&lt;target&gt;
-		--add-reads factories/factories.quotes=advent
+		--add-exports factories/factories.quotes=advent
 		--module advent</code></pre></div></div>
 <div class="paragraph"><p>Use target <code>ALL-UNNAMED</code> to export to all modules.</p></div></section><section id="_open_packages_2"><h2>Open Packages</h2><div class="paragraph"><p>Another common case:</p></div>
 <div class="paragraph"><p>A module reflects on types from a package that<br>
@@ -446,7 +447,8 @@ and your dependencies were not?</p></li><li><p>proper modules can not depend on<
 <h3>From Modules To The Class Path</h3></section><section id="_definition_5"><h2>Definition</h2><div class="paragraph"><p>An <strong>Automatic Module</strong><br>
 is created <em>for each</em> "regular" JAR<br>
 on the module path.</p></div>
-<div class="ulist"><ul><li><p>gets a name based on the file name</p></li><li><p>can read all modules<br>
+<div class="ulist"><ul><li><p>gets a name based on the file name or a<br>
+manifest entry <code>AUTOMATIC-MODULE-NAME</code></p></li><li><p>can read all modules<br>
 (including the Unnamed Module)</p></li><li><p>exports all packages</p></li></ul></div></section><section id="_example_2"><h2>Example</h2><div class="ulist"><ul><li><p>put <code>guava-19.0.jar</code> on the module path</p></li><li><p>then this works:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">module advent {
 	requires guava;
 }</code></pre></div></div></li></ul></div></section><section id="_example_3"><h2>Example</h2><div class="imageblock diagram" style=""><img src="images/migration-automatic.png" alt="migration automatic"></div></section><section id="_what_goes_where" data-background-image="images/confusion.jpg" data-background-size="cover"><h2>What Goes Where?</h2>
@@ -461,23 +463,27 @@ unmodularized dependencies<br>
 <div class="ulist"><ul><li><p>turn project JARs into modules</p></li></ul></div></section><section id="_top_down_migration_2"><h2>Top-Down Migration</h2><div class="ulist"><ul><li><p>modularized dependencies:</p><div class="ulist"><ul><li><p>require direct ones</p></li><li><p>put all on the module path</p></li></ul></div></li><li><p>unmodularized dependencies:</p><div class="ulist"><ul><li><p>require direct ones with automatic name</p></li><li><p>put direct ones on the module path</p></li><li><p>put others on the class path</p></li></ul></div></li></ul></div>
 <aside class="notes"><div class="ulist"><ul><li><p>only required modules are loaded from the module path</p></li><li><p>~&gt; automatic modules' dependencies would not be loaded</p></li><li><p>~&gt; automatic modules' dependencies go on the class path</p></li></ul></div></aside></section><section id="_top_down_migration_3"><h2>Top-Down Migration</h2><div class="paragraph"><p>When dependencies get modularized:</p></div>
 <div class="ulist"><ul><li><p>hopefully the name didn&#8217;t change</p></li><li><p>if they are already on the module path,<br>
-nothing changes</p></li><li><p>otherwise move them there</p></li><li><p>check their dependencies</p></li></ul></div></section><section id="_inside_out_migration"><h2>Inside-Out Migration?</h2><div class="paragraph"><p>What about <strong>published</strong> projects <strong>with</strong><br>
+nothing changes</p></li><li><p>otherwise move them there</p></li><li><p>check their dependencies</p></li></ul></div></section><section id="_inside_out_migration"><h2>Inside-Out Migration</h2><div class="paragraph"><p>What about <strong>published</strong> projects <strong>with</strong><br>
 unmodularized dependencies<br>
 (libraries)?</p></div>
-<div class="ulist"><ul><li><p>top-down seems to work</p></li><li><p>but there&#8217;s a problem<br>
-with automatic module names!</p></li></ul></div></section><section id="_inside_out_migration_2"><h2>Inside-Out Migration?</h2><h3>Unstable Module Names</h3>
-<div class="ulist"><ul><li><p>automatic module names<br>
-are based on JAR names</p></li><li><p>file names can differ<br>
+<div class="ulist"><ul><li><p>top-down mostly works</p></li><li><p>but there&#8217;s an important detail<br>
+about automatic module names!</p></li></ul></div></section><section id="_inside_out_migration_2"><h2>Inside-Out Migration</h2><h3>Automatic Module Names</h3>
+<div class="ulist"><ul><li><p>automatic module name may<br>
+be based on JAR name</p></li><li><p>file names can differ<br>
 across build environments</p></li><li><p>module name can change<br>
 when project gets modularized</p></li></ul></div>
-<div class="paragraph"><p>⇝ Automatic module names are unstable.</p></div></section><section id="_inside_out_migration_3"><h2>Inside-Out Migration?</h2><h3>Impossible Module Requirements</h3>
+<div class="paragraph"><p>⇝ Such automatic module names are unstable.</p></div></section><section id="_inside_out_migration_3"><h2>Inside-Out Migration</h2><h3>Impossible Module Requirements</h3>
 <div class="ulist"><ul><li><p>dependencies might require the same<br>
 module by different names</p></li><li><p>the module system does not support that</p></li><li><p>there is no way to launch that application!</p></li></ul></div>
-<div class="paragraph"><p>⇝ JDK team recommends <strong>not to publish</strong><br>
-modules that <strong>depend on automatic modules</strong>!</p></div></section><section id="_no_inside_out_migration"><h2>No Inside-Out Migration</h2><div class="paragraph"><p>Frameworks/libraries can only publish modules<br>
-once all dependencies were modularized.</p></div>
-<div class="paragraph"><p>This will make modularization of the ecosystem<br>
-take <strong>much, much longer</strong>! 😭</p></div></section></section>
+<div class="paragraph"><p>⇝ <strong>Do not publish</strong> modules<br>
+that depend on automatic modules<br>
+whose names are <strong>based on file names</strong>!</p></div></section><section id="_inside_out_migration_4"><h2>Inside-Out Migration</h2><h3>Manifest Entry</h3>
+<div class="ulist"><ul><li><p>thanks to manifest entry projects<br>
+can already publish their module name</p></li><li><p>assumption is that it won&#8217;t change<br>
+when project gets modularized</p></li><li><p>that makes these names stable</p></li></ul></div>
+<div class="paragraph"><p>⇝ It is <strong>ok to publish</strong> modules<br>
+that depend on automatic modules<br>
+whose names are <strong>based on manifest entry</strong>.</p></div></section></section>
 <section><section id="_compatibility"><h2>Compatibility</h2><h3>What to look out for<br>when running on JDK 9</h3></section><section id="_break_stuff" data-background-image="images/broken-glass.jpg" data-background-size="cover"><h2>Break Stuff</h2>
 <div class="paragraph"><p>Some internal changes can
 <a href="http://blog.codefx.org/java/dev/how-java-9-and-project-jigsaw-may-break-your-code/">break existing code</a>!</p></div>
@@ -500,7 +506,7 @@ from two modules</p></li></ul></div>
 the same package (exported or not)</p></li><li><p>split packages on class path<br>
 are inaccessible</p></li></ul></div></section><section id="_examples"><h2>Examples</h2><div class="ulist"><ul><li><p>some libraries split <code>java.xml.*</code>, e.g. <a href="http://search.maven.org/#artifactdetails|xml-apis|xml-apis|2.0.2|jar">xml-apis</a></p></li><li><p>some <a href="https://issues.jboss.org/browse/WFLY-6375?_sscc=t">JBoss modules</a> split, e.g.,<br>
 <code>java.transaction</code>, <code>java.xml.ws</code></p></li><li><p><a href="http://mvnrepository.com/artifact/com.google.code.findbugs/jsr305">jsr305</a> splits <code>javax.annotation</code></p></li></ul></div></section><section id="_what_to_look_for_2"><h2>What to look for?</h2><div class="ulist"><ul><li><p>search your code and dependencies<br>
-for <code>java(x)</code> packages (<code>jdeps</code> can help)</p></li><li><p>no tool support (<a href="http://mail.openjdk.java.net/pipermail/jigsaw-dev/2015-November/005227.html">yet?</a>)</p></li></ul></div></section><section id="_what_to_do_2"><h2>What to do?</h2><div class="olist arabic"><ol class="arabic"><li><p>is the split on purpose / necessary?</p></li><li><p>find other ways to solve the problem</p></li><li><p>upgradeable modules<br>
+for <code>java(x)</code> packages (<code>jdeps</code> can help)</p></li><li><p>no tool support</p></li></ul></div></section><section id="_what_to_do_2"><h2>What to do?</h2><div class="olist arabic"><ol class="arabic"><li><p>is the split on purpose / necessary?</p></li><li><p>find other ways to solve the problem</p></li><li><p>upgradeable modules<br>
 to replace run-time modules</p></li><li><p>command line <code>--patch-module</code><br>
 to add individual classes</p></li></ol></div></section><section id="_run_time_images" data-background-image="images/cells.jpg" data-background-size="cover"><h2>Run-Time Images</h2>
 <div class="ulist"><ul><li><p>new JDK/JRE layout</p></li><li><p>internal JARs are gone (e.g. <code>rt.jar</code>, <code>tools.jar</code>)</p></li><li><p>JARs are now JMODs</p></li><li><p>application class loader is no <code>URLClassLoader</code></p></li><li><p>new URL schema for run-time image content</p></li></ul></div></section><section id="_what_to_look_for_3"><h2>What to look for?</h2><div class="ulist"><ul><li><p>does the code rummage around<br>

@@ -98,15 +98,7 @@
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Driver&gt; drivers = new ArrayList&lt;&gt;();
 ServiceLoader
 	.load(Driver.class)
-	.forEach(drivers::add);</code></pre></div></div></section><section id="_other_features"><h2>Other Features</h2><div class="ulist"><ul><li><p>finer grained dependencies and exports</p></li><li><p>open packages and modules (for reflection)</p></li><li><p>unnamed and automatic modules (for migration)</p></li><li><p>layers (for containers)</p></li><li><p><code>jlink</code> to create runtime images</p></li></ul></div></section><section id="_final_feature"><h2>Final Feature</h2><div style="float: left; width: 42%; margin: 0px 0px;">
-	<img src="images/cover-j9ms.png" style="margin: 0;">
-</div>
-<div class="paragraph"><p>Enough complexity to feed authors, trainers, consultants for the next decade!</p></div>
-<h3>Coincidentally&#8230;&#8203;</h3><div class="paragraph"><p>I&#8217;m writing <a href="http://blog.codefx.org/java-module-system-in-action/">a book</a>!<br>
-EA soon ⇝ <a href="http://blog.codefx.org/newsletter/">tiny.cc/fx-weekly</a></p></div>
-<div class="paragraph"><p>two-day <strong><em>Java 9</em></strong> course<br>
-Zürich, 20.-21.04.<br>
-⇝ register at <a href="http://42talents.com/training/2017/04/20/Java-9/">42talents.com</a></p></div></section></section>
+	.forEach(drivers::add);</code></pre></div></div></section><section id="_other_features"><h2>Other Features</h2><div class="ulist"><ul><li><p>finer grained dependencies and exports</p></li><li><p>open packages and modules (for reflection)</p></li><li><p>unnamed and automatic modules (for migration)</p></li><li><p>layers (for containers)</p></li><li><p><code>jlink</code> to create runtime images</p></li></ul></div></section></section>
 <section id="_new_language_features"><h2>New Language Features</h2><table class="toc">
 	<tr><td>Private Interface Methods</td></tr>
 	<tr><td>Try-With-Resources</td></tr>
@@ -305,14 +297,14 @@ Stream.iterate(
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;T&gt; takeWhile(Predicate&lt;T&gt; predicate);</code></pre></div></div>
 <div class="paragraph"><p>Example:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream.of("a", "b", "c", "", "e")
-	.takeWhile(s -&gt; !String.isEmpty(s));
+	.takeWhile(s -&gt; !s.isEmpty());
 	.forEach(System.out::print);
 
 // output: abc</code></pre></div></div></section><section id="__code_stream_dropwhile_code"><h2><code>Stream::dropWhile</code></h2><div class="paragraph"><p>Start streaming as soon as a condition is true:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;T&gt; dropWhile(Predicate&lt;T&gt; predicate);</code></pre></div></div>
 <div class="paragraph"><p>Example:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream.of("a", "b", "c", "de", "f")
-	.dropWhile(s -&gt; s.length &lt;= 1);
+	.dropWhile(s -&gt; s.length() &lt;= 1);
 	.forEach(System.out::print);
 
 // output: def</code></pre></div></div></section></section>
@@ -341,7 +333,7 @@ Stream&lt;Customer&gt; findCustomers(List&lt;String&gt; ids) {
 		.orElse(new ArrayList&lt;&gt;());
 }
 
-Steam&lt;Order&gt; findOrdersForCustomer(String id) {
+Stream&lt;Order&gt; findOrdersForCustomer(String id) {
 	return findCustomer(id)
 		.stream()
 		.map(this::getOrders) // lazy
@@ -389,7 +381,7 @@ Map&lt;String, Integer&gt; mapEntries = Map.ofEntries(
 		entry("one", 1),
 		entry("two", 2),
 		entry("three", 3));</code></pre></div></div></section><section id="_interesting_details"><h2>Interesting Details</h2><div class="ulist"><ul><li><p>collections are immutable<br>
-(no immutability in type system, though)</p></li><li><p><code>null</code> values are forbidden</p></li><li><p>iteration order is random between JVM starts<br>
+(no immutability in type system, though)</p></li><li><p><code>null</code> elements/keys/values are forbidden</p></li><li><p>iteration order is random between JVM starts<br>
 (except for lists, of course!)</p></li></ul></div></section></section>
 <section><section id="_reactive_streams"><h2>Reactive Streams</h2><table class="toc">
 	<tr><td>Stream Improvements</td></tr>
@@ -426,7 +418,8 @@ static void three() {
 StackWalkingExample.three(StackWalking.java:15)
 StackWalkingExample.two(StackWalking.java:12)
 StackWalkingExample.one(StackWalking.java:11)
-StackWalkingExample.main(StackWalking.java:10)</code></pre></div></div></section><section id="__code_stackwalker_walk_code"><h2><code>StackWalker::walk</code></h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">static void three() {
+StackWalkingExample.main(StackWalking.java:10)</code></pre></div></div></section><section id="__code_stackwalker_walk_code"><h2><code>StackWalker::walk</code></h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">T walk (Function&lt;Stream&lt;StackFrame&gt;, T&gt;);</code></pre></div></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">static void three() {
 	String line = StackWalker.getInstance().walk(
 		frames -&gt; frames
 			.filter(f -&gt; f.getMethodName().contains("one"))
@@ -462,7 +455,7 @@ ProcessBuilder grepPdf = new ProcessBuilder()
 		.redirectOutput(Redirect.INHERIT);
 List&lt;Process&gt; lsThenGrep = ProcessBuilder
 		.startPipeline(asList(ls, grepPdf));</code></pre></div></div></section><section id="_extended_code_process_code"><h2>Extended <code>Process</code></h2><div class="paragraph"><p>Cool new methods on <code>Process</code>:</p></div>
-<div class="ulist"><ul><li><p><code>boolean supportsNormalTermination();</code></p></li><li><p><code>long getPid();</code></p></li><li><p><code>CompletableFuture&lt;Process&gt; onExit();</code></p></li><li><p><code>Stream&lt;ProcessHandle&gt; children();</code></p></li><li><p><code>Stream&lt;ProcessHandle&gt; descendants();</code></p></li><li><p><code>ProcessHandle toHandle();</code></p></li></ul></div></section><section id="_new_code_processhandle_code"><h2>New <code>ProcessHandle</code></h2><div class="paragraph"><p>New functionality actually comes from <code>ProcessHandle</code>.</p></div>
+<div class="ulist"><ul><li><p><code>boolean supportsNormalTermination();</code></p></li><li><p><code>long pid();</code></p></li><li><p><code>CompletableFuture&lt;Process&gt; onExit();</code></p></li><li><p><code>Stream&lt;ProcessHandle&gt; children();</code></p></li><li><p><code>Stream&lt;ProcessHandle&gt; descendants();</code></p></li><li><p><code>ProcessHandle toHandle();</code></p></li></ul></div></section><section id="_new_code_processhandle_code"><h2>New <code>ProcessHandle</code></h2><div class="paragraph"><p>New functionality actually comes from <code>ProcessHandle</code>.</p></div>
 <div class="paragraph"><p>Interesting <code>static</code> methods:</p></div>
 <div class="ulist"><ul><li><p><code>Stream&lt;ProcessHandle&gt; allProcesses();</code></p></li><li><p><code>Optional&lt;ProcessHandle&gt; of(long pid);</code></p></li><li><p><code>ProcessHandle current();</code></p></li></ul></div></section><section id="_more_information"><h2>More Information</h2><div class="paragraph"><p><code>ProcessHandle</code> can return <code>Info</code>:</p></div>
 <div class="ulist"><ul><li><p>command, arguments</p></li><li><p>start time</p></li><li><p>CPU time</p></li></ul></div></section></section>
