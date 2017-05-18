@@ -155,7 +155,7 @@ Stream<Customer> findCustomers(List<String> ids) {
 
 === From Eager to Lazy
 
-`List<Order> getOrders(String id)` is expensive:
+`List<Order> getOrders(Customer c)` is expensive:
 
 ```java
 List<Order> findOrdersForCustomer(String id) {
