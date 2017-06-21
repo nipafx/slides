@@ -26,21 +26,24 @@ An amalgam of [submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) 
 
 After checkout, the submodule needs to be initialized and the `gh-pages` branch should be added as a worktree to `master`:
 
-	git submodule update
-	git worktree add _slides gh-pages
+```
+git submodule update
+git worktree add _slides gh-pages
+```
 
 #### Branch `gh-pages`
 
 * `_highlight.js` (downloaded from [highlightjs.org](https://highlightjs.org/download/))
 * `images` (folder for landing page)
-* `_reveal.js` (submodule ~>
-	[CodeFX-org/reveal.js; nipa-talks](https://github.com/CodeFX-org/reveal.js/tree/nipa-talks))
+* `_reveal.js` (submodule ~> [CodeFX-org/reveal.js; nipa-talks](https://github.com/CodeFX-org/reveal.js/tree/nipa-talks))
 * `_template` (a template for presentations)
 * landing page (favicon, `index.html`, `CNAME` for GH Pages)
 
 After checkout, the submodule needs to be initialized:
 
-	git submodule update
+```
+git submodule update
+```
 
 ## Editing...
 
@@ -48,7 +51,9 @@ After checkout, the submodule needs to be initialized:
 
 To generate the slide deck you'll need to [install Asciidoctor](http://asciidoctor.org/docs/install-toolchain/) and run this in the repository's root:
 
-	asciidoctor -T _asciidoctor-reveal.js/templates/slim _template/presentation.adoc -o _slides/_template/index.html
+```
+asciidoctor -T _asciidoctor-reveal.js/templates/slim _template/presentation.adoc -o _slides/_template/index.html
+```
 
 If you want to automate that, you can install [guard](https://rubygems.org/gems/guard/versions/2.13.0) and run `guard start` in the same folder.
 It calls the exact same command (instead of using the asciidoctor gem directly) because that [does not resolve include-directives](http://asciidoctor.org/news/3/#3-swap-an-include-for-a-link) (at least not on my machine).
