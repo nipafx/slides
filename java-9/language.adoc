@@ -124,6 +124,10 @@ void doSomethingWith(Connection connection)
 * compiler knows that `connection` is not reassigned
 * developers know what _effectively final_ means
 
+[NOTE.speaker]
+--
+Q: Can instance be created but not assigned? No.
+--
 
 
 == New Language Features

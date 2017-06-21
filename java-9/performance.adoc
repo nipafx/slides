@@ -7,8 +7,6 @@
 </table>
 ++++
 
-// [[TODO, mention cgroup-memory aware]]
-
 == Compact Strings
 
 ++++
@@ -143,6 +141,7 @@ Depending on circumstances:
 
 == A Mixed Bag Of Performance Improvements
 
+* cgroup-memory limits
 * something with interned strings +
 and class data sharing (http://openjdk.java.net/jeps/250[JEP 250])
 * contested locks (http://openjdk.java.net/jeps/143[JEP 143])
