@@ -80,7 +80,7 @@ String s = greeting + ", " + place + "!";
 
 * bytecode uses `StringBuilder`
 * JIT may (!) recognize and optimize +
-by writing content directly to new `char[]`
+by writing content directly to new `byte[]`
 * breaks down quickly +
 (e.g. with `long` or `double`)
 
@@ -117,7 +117,7 @@ _"concat these things"_ +
 (without boxing!)
 
 JVM executes by writing content +
-directly to new `char[]`.
+directly to new `byte[]`.
 
 === Performance
 
@@ -144,7 +144,7 @@ Depending on circumstances:
 * cgroup-memory limits
 * something with interned strings +
 and class data sharing (http://openjdk.java.net/jeps/250[JEP 250])
-* contested locks (http://openjdk.java.net/jeps/143[JEP 143])
+* contended locks (http://openjdk.java.net/jeps/143[JEP 143])
 * security manager (http://openjdk.java.net/jeps/232[JEP 232])
 * GHASH/RSA computation (http://openjdk.java.net/jeps/246[JEP 246])
 * Java 2D rendering (http://openjdk.java.net/jeps/265[JEP 265])

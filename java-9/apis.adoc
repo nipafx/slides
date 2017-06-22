@@ -141,7 +141,7 @@ Stream<T> stream();
 === Filter-Map ...
 
 ```java
-private Optional<Customer> findCustomer(int id) {
+private Optional<Customer> findCustomer(String id) {
 	// ...
 }
 
@@ -149,7 +149,7 @@ Stream<Customer> findCustomers(List<String> ids) {
 	return ids.stream()
 		.map(this::findCustomer)
 		// now we have a Stream<Optional<Customer>>
-		.filter(Optonal::isPresent)
+		.filter(Optional::isPresent)
 		.map(Optional::get)
 }
 ```
@@ -158,7 +158,7 @@ Stream<Customer> findCustomers(List<String> ids) {
 === ... in one Step
 
 ```java
-private Optional<Customer> findCustomer(int id) {
+private Optional<Customer> findCustomer(String id) {
 	// ...
 }
 
