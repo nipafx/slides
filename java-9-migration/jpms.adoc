@@ -1,0 +1,98 @@
+== Java Module System
+
+Delaying Java since 2008!
+
+=== JAR Hell is bad, mkay?
+
+JARs have:
+
+* no name the JVM cares about
+* no explicit dependencies
+* no well-defined API
+* no concept of versions
+
+[NOTE.speaker]
+--
+Some consequences:
+
+* `NoClassDefFoundError`
+* no encapsulation across JARs
+* version conflicts
+--
+
+=== Modules
+
+Modules are like JARs but have:
+
+* proper names
+* explicit dependencies
+* a well-defined API
+* no concept of versions
+
+Important goals:
+
+* reliable configuration
+* strong encapsulation
+
+=== Module Descriptor
+
+A file `module-info.java`:
+
+++++
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> java.sql {
+	<span class="hljs-keyword">requires transitive</span> java.logging
+	<span class="hljs-keyword">requires transitive</span> java.xml
+	<span class="hljs-keyword">uses</span> java.sql.Driver
+	<span class="hljs-keyword">exports</span> java.sql
+	<span class="hljs-keyword">exports</span> javax.sql
+	<span class="hljs-keyword">exports</span> javax.transaction.xa
+}</code></pre></div></div>
+++++
+
+=== Reliable Configuration
+
+++++
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> java.sql {
+	<span class="hljs-keyword">requires transitive</span> java.logging
+	<span class="hljs-keyword">requires transitive</span> java.xml
+}</code></pre></div></div>
+++++
+
+Module system enforces:
+
+* all required modules are present
+* no ambiguity
+* no static dependency cycles
+* no split packages
+
+=== Strong Encapsulation
+
+++++
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> java.sql {
+	<span class="hljs-keyword">exports</span> java.sql
+	<span class="hljs-keyword">exports</span> javax.sql
+	<span class="hljs-keyword">exports</span> javax.transaction.xa
+}</code></pre></div></div>
+++++
+
+Say you want to access `java.sql.ResultSet`.
+
+Module system only grants access if:
+
+* `ResultSet` is public
+* `java.sql` is exported by _java.sql_
+* your module reads _java.sql_
+
+=== Platform Modules
+
+[[TODO, consider creating a state and role for full screen images/diagrams]]
+image::images/platform-modules.png[role="diagram"]
+
+=== Other Features
+
+* decoupling via services
+* finer grained dependencies and exports
+* open packages and modules (for reflection)
+* unnamed and automatic modules (for migration)
+* layers (for containers)
+* `jlink` to create runtime images
