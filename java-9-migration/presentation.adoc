@@ -1,0 +1,77 @@
+= To JAR Hell And Back
+:backend: revealjs
+:revealjs_theme: nipa-night
+:revealjsdir: ../_reveal.js
+:revealjs_controls: false
+:revealjs_progress: false
+:revealjs_slideNumber: false
+:revealjs_history: true
+:revealjs_center: true
+:revealjs_transition: slide
+:revealjs_backgroundTransition: fade
+:revealjs_parallaxBackgroundImage: images/migration.jpg
+:revealjs_parallaxBackgroundSize: 3000px 2000px
+
+:imagedir: images
+
+include::../_shared/highlight.js.adoc[]
+
+++++
+<style>
+.reveal .title h2 {
+	font-size: 1.75em;
+}
+</style>
+<h2>A Life Migration To<br>The Java 9 Module System</h2>
+++++
+
+:host-name: vJUG
+:host-url: http://virtualjug.com/
+:host-logo-url: images/logo-vjug.jpg
+// :host-logo-style: background-color: #FFF; border-color: #FFF;
+:host-twitter-name: @VirtualJUG
+:host-twitter-url: https://twitter.com/virtualJUG
+include::../_shared/event-on-title-and-footer.adoc[]
+
+
+
+// ######### //
+// I N T R O //
+// ######### //
+
+[[TODO, ⇝]]
+
+== Public Service Announcement
+
+* Java 9 is scheduled for September 21st
+* slides at http://slides.codefx.org/[slides.codefx.org]
+
+// ############# //
+// C O N T E N T //
+// ############# //
+
+// ######### //
+// O U T R O //
+// ######### //
+
+== Full Picture
+
+image::images/shibuya-night.jpg[background, size=cover]
+
+If you want the full picture:
+
+*Java 9 Migration Guide* +
+(https://blog.codefx.org/java/java-9-migration-guide/[tiny.cc/java-9-migration])
+
+If you run into problems:
+
+*http://java9.wtf[java9.wtf]*
+
+Or get my book:
+
+*The Java 9 Module System* +
+(https://www.manning.com/books/the-java-9-module-system?a_aid=nipa&a_bid=869915cb[tiny.cc/j9ms])
+
+include::../_shared/about-slide.adoc[]
+
+include::images/sources.adoc[]
