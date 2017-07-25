@@ -1,0 +1,240 @@
+# Guide: To JAR Hell and Back
+
+Show that it works on Java 8:
+
+```
+mvn clean install
+java -cp 'monitor/target/libs/*':'monitor/target/main-1.0-SNAPSHOT.jar' monitor.Main
+```
+
+In a different terminal:
+
+```
+watch -n 1 curl http://localhost:4567/stats/xml
+```
+
+## Migration
+
+### Building on Java 9
+
+. start building with Java 9
+.. set `JAVA_HOME` in `.mavenrc`
++
+```
+JAVA_HOME="/opt/jdk-9"
+```
+.. create a profile for Java 9
++
+```xml
+<profiles>
+	<profile>
+		<id>java-9</id>
+		<activation>
+			<jdk>9</jdk>
+		</activation>
+	</profile>
+</profiles>
+```
+.. set `release` to 9
++
+```xml
+<properties>
+	<maven.compiler.release>9</maven.compiler.release>
+</properties>
+```
+
+. fix use of `sun.misc.BASE64Encoder`
++
+```java
+Base64.getEncoder().encodeToString(content.getBytes());
+```
+
+. fix warning messages in `UtilsTest` in _monitor.utils_
+.. create a profile for Java 9
+.. configure Surefire to use `--add-opens`
++
+```xml
+<build>
+	<plugins>
+		<plugin>
+			<artifactId>maven-surefire-plugin</artifactId>
+			<configuration>
+				<argLine>
+					--add-opens java.base/java.lang=ALL-UNNAMED
+				</argLine>
+			</configuration>
+		</plugin>
+	</plugins>
+</build>
+```
+.. better, yet: update Mockito to `2.8.47`
+
+. add modules for annotations in _monitor.rest_
+.. create a profile for Java 9
+.. configure compiler to use `--add-modules java.xml.bind`
++
+```xml
+<build>
+	<plugins>
+		<plugin>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<configuration>
+				<compilerArgs>
+					<arg>--add-modules</arg><arg>java.xml.bind</arg>
+				</compilerArgs>
+			</configuration>
+		</plugin>
+	</plugins>
+</build>
+```
+.. configure compiler to patch _java.xml.ws.annotation_
+*** observe that errors due to other missing annotations contain no hint of the containing modules
+*** look at the involved classes and note that they import from jsr305
+*** comment out jsr305
+*** note mention of _java.xml.ws.annotation_ and add it
++
+```xml
+<arg>--add-modules</arg><arg>java.xml.ws.annotation</arg>
+```
+*** uncomment jsr305 and observe the same problem
+*** patch _java.xml.ws.annotation_
++
+```xml
+<arg>--patch-module</arg><arg>java.xml.ws.annotation=${settings.localRepository}/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar</arg>
+```
+*** replace `maven.compiler.release` with `maven.compiler.source` and `maven.compiler.target` in parent pom
+
+### Running on Java 9
+
+Start running with Java 9:
+
+```
+java9 -cp 'monitor/target/libs/*':'monitor/target/main-1.0-SNAPSHOT.jar' monitor.Main
+```
+
+. fix cast to `URLClassLoader` by commenting out `logClassPathContent`
+
+. add module `java.xml.bind`
++
+```
+java9 --add-modules java.xml.bind -cp 'monitor/target/libs/*':'monitor/target/main-1.0-SNAPSHOT.jar' monitor.Main
+```
+
+. note that `--add-exports`,  `--add-opens`, `--add-modules`, `--patch-module` usually carry from build to compile time
+
+## Modularization
+
+### Preparation
+
+* can't use Maven at the moment; see https://issues.apache.org/jira/browse/MCOMPILER-294[MCOMPILER-294]
+* switch to `migrated` and discuss layout
+
+### Get an Overview
+
+. see artifact dependencies
++
+```
+jdeps -s -R -cp 'monitor/target/libs/*' monitor/target/main-1.0-SNAPSHOT.jar
+```
+
+. limiting to _Monitor_ classes
+
+```
+jdeps -include 'monitor.*' -s -R -cp 'monitor/target/libs/*' monitor/target/main-1.0-SNAPSHOT.jar
+```
+
+. create a diagram
+
+```
+jdeps -include 'monitor.*' -s -R --dot-output . -cp 'monitor/target/libs/*' monitor/target/main-1.0-SNAPSHOT.jar
+dot -Tpng -O summary.dot
+gwenview summary.dot.png
+```
+
+. clean up graph
+
+```
+sed -i '/java.base/d' summary.dot
+sed -i 's/-1.0-SNAPSHOT.jar//g' summary.dot
+dot -Tpng -O summary.dot
+gwenview summary.dot.png
+```
+
+### Start Bottom-Up
+
+. start with _monitor.utils_
+.. modularize _monitor.utils_
++
+```
+module monitor.utils {
+	exports monitor.utils;
+}
+```
+.. observe that the module works on the class path
+.. to make it work on the module path:
+... copy it to module path after being built
+... use `--add-modules` when compiling _monitor.rest_ and _monitor_ as well as when running the application
+
+. continue with observers
+.. modularize _monitor.observer_:
++
+```
+module monitor.observer {
+	exports monitor.observer;
+}
+```
+.. modularize _monitor.observer.alpha_:
++
+```
+module monitor.observer.alpha {
+	requires monitor.observer;
+	exports monitor.observer.alpha;
+}
+```
+.. modularize _monitor.observer.beta_:
++
+```
+module monitor.observer.beta {
+	requires monitor.observer;
+	exports monitor.observer.beta;
+}
+```
+.. to make it work:
+... copy them to the module path after being built
+... use `--add-modules` when compiling _monitor.observer.alpha_, _monitor.observer.beta_, _monitor.statistics_, and _monitor_ as well as when running the application
+
+. modularize statistics as preparation for _monitor.rest_
+.. modularize _monitor.statistics_
++
+```
+module monitor.statistics {
+	requires monitor.observer;
+	exports monitor.statistics;
+}
+```
+.. copy it to the module path after being built
+.. use `--add-modules` when compiling _monitor.persistence_, _monitor.rest_, and _monitor_ as well as when running the application
+
+. modularize _monitor.rest_ in face of unmodularized dependencies
+.. create module descriptor
++
+```
+module monitor.rest {
+	requires java.xml.bind;
+	requires java.xml.ws.annotation;
+
+	requires monitor.utils;
+	requires monitor.statistics;
+
+	requires spark.core;
+	requires jackson.core;
+	requires jackson.databind;
+
+	exports monitor.rest;
+}
+```
+.. move `spark-core*`, `jackson-core*`, and `jackson-databind*` to module path
+.. move to module path after being built
+.. remove all `--add-modules` from compiling _monitor.rest_
+
+. maybe: `--main-class monitor.Main`
