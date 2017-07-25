@@ -1,0 +1,83 @@
+== Modularizing Your Project
+
+++++
+<h3>Making Use Of The Module System</h3>
+++++
+
+=== The Tale Of Two Paths
+
+Class path is for regular JARs, +
+module path is for modular JARs?
+
+*Wrong!*
+
+Class path is for the unnamed module, +
+module path is for named modules!
+
+=== From The Bottom Up
+
+You can put modular JARs in the class path +
+and everything works like before.
+
+* you can modularize projects, +
+without clients even realizing
+* start with the modularization +
+from the bottom up
+
+=== From The Top Down
+
+What if you want to modularize your code +
+but your dependencies aren't yet?
+
+* proper modules can not depend on +
+"the chaos on the class path"
+* this is not possible:
++
+[source,java]
+----
+module monitor.rest {
+	// we need spark.core
+	requires unnamed;
+}
+----
+
+=== Automatic Modules
+
+An *Automatic Module* +
+is created _for each_ "regular" JAR +
+on the module path.
+
+* gets a name based on the file name or a +
+manifest entry `AUTOMATIC-MODULE-NAME`
+* can read all modules +
+(including the Unnamed Module)
+* exports all packages
+
+=== Automatic Module Example
+
+* put `spark-core-2.6.0.jar` on the module path
+* then this works:
++
+[source,java]
+----
+module monitor.rest {
+	requires spark.core;
+}
+----
+
+=== What Goes Where?
+
+[cols="s,d,d", options="header"]
+|===
+|
+|Class Path
+|Module Path
+
+|Regular JAR
+|Unnamed Module
+|Automatic Module
+
+|Modular JAR
+|Unnamed Module
+|Named Module
+|===
