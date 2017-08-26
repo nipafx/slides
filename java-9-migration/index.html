@@ -139,6 +139,20 @@ manifest entry <code>AUTOMATIC-MODULE-NAME</code></p></li><li><p>can read all mo
 (including the Unnamed Module)</p></li><li><p>exports all packages</p></li></ul></div></section><section id="_automatic_module_example"><h2>Automatic Module Example</h2><div class="ulist"><ul><li><p>put <code>spark-core-2.6.0.jar</code> on the module path</p></li><li><p>then this works:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">module monitor.rest {
 	requires spark.core;
 }</code></pre></div></div></li></ul></div></section><section id="_what_goes_where"><h2>What Goes Where?</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:33.3333%"><col style="width:33.3333%"><col style="width:33.3334%"></colgroup><thead><tr><th class="tableblock halign-left valign-top"></th><th class="tableblock halign-left valign-top">Class Path</th><th class="tableblock halign-left valign-top">Module Path</th></tr></thead><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Regular JAR</strong></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Unnamed Module</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Automatic Module</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Modular JAR</strong></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Unnamed Module</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Named Module</p></td></tr></tbody></table></section></section>
+<section><section id="_advanced_jpms_features"><h2>Advanced JPMS features</h2><h3>Getting the most out of the module system</h3></section><section id="_services"><h2>Services</h2><div class="paragraph"><p>The module system as a service registry:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> java.sql {
+	<span class="hljs-keyword">uses</span> java.sql.Driver
+}
+
+<span class="hljs-keyword">module</span> mysql.driver {
+	<span class="hljs-keyword">provides</span> java.sql.Driver
+		<span class="hljs-keyword">with</span> com.mysql.MySQLDriver;
+}
+</code></pre></div></div></section><section id="_loading_services"><h2>Loading Services</h2><div class="paragraph"><p>Code in <em>java.sql</em> can now do this:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Driver&gt; drivers = new ArrayList&lt;&gt;();
+ServiceLoader
+	.load(Driver.class)
+	.forEach(drivers::add);</code></pre></div></div></section></section>
 <section id="_full_picture" data-background-image="images/shibuya-night.jpg" data-background-size="cover"><h2>Full Picture</h2>
 <div class="paragraph"><p>If you want more details:</p></div>
 <div class="paragraph"><p><strong>Java 9 Migration Guide</strong><br>
