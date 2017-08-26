@@ -71,7 +71,7 @@ Base64.getEncoder().encodeToString(content.getBytes());
 
 . add modules for annotations in _monitor.rest_
 .. create a profile for Java 9
-.. configure compiler to use `--add-modules java.xml.bind`
+.. configure compiler to use `--add-modules java.xml.bind` to fix _package `javax.xml.bind.annotation` is not visible_
 +
 ```xml
 <build>
@@ -87,17 +87,17 @@ Base64.getEncoder().encodeToString(content.getBytes());
 	</plugins>
 </build>
 ```
-.. configure compiler to patch _java.xml.ws.annotation_
-*** observe that errors due to other missing annotations contain no hint of the containing modules
-*** look at the involved classes and note that they import from jsr305
-*** comment out jsr305
-*** note mention of _java.xml.ws.annotation_ and add it
+.. configure compiler to patch _java.xml.ws.annotation_ to fix missing type `Generated`
+... observe that errors due to other missing annotations contain no hint of the containing modules
+... look at the involved classes and note that they import from jsr305
+... comment out jsr305
+... note mention of _java.xml.ws.annotation_ and add it
 +
 ```xml
 <arg>--add-modules</arg><arg>java.xml.ws.annotation</arg>
 ```
-*** uncomment jsr305 and observe the same problem
-*** patch _java.xml.ws.annotation_
+... uncomment jsr305 and observe the same problem
+... patch _java.xml.ws.annotation_
 +
 ```xml
 <arg>--patch-module</arg><arg>java.xml.ws.annotation=${settings.localRepository}/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar</arg>
