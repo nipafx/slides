@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Java 9 Is Coming!</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="../_reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="../_reveal.js/css/theme/nipa-night.css" id="theme"><link href="../_reveal.js/lib/css/zenburn.css" rel="stylesheet"><script type="text/javascript">document.write( '<link rel="stylesheet" href="../_reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>Java 9 Is Coming!</h1><div class="preamble"><link rel="stylesheet" href="../_highlight.js/styles/monokai-sublime.css">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Java 9 Is Here!</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="../_reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="../_reveal.js/css/theme/nipa-night.css" id="theme"><link href="../_reveal.js/lib/css/zenburn.css" rel="stylesheet"><script type="text/javascript">document.write( '<link rel="stylesheet" href="../_reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>Java 9 Is Here!</h1><div class="preamble"><link rel="stylesheet" href="../_highlight.js/styles/monokai-sublime.css">
 <script src="../_highlight.js/highlight.pack.js"></script>
 <script>
 	window.onload = function() {
@@ -23,10 +23,10 @@
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://www.jugdo.de/"><img src="images/logo-jug-do.png" class="logo" style="background-color: #FFF; border-color: #FFF;"></a>
+		<a href="http://www.javaforumnord.de"><img src="images/logo-javaforumnord.png" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://www.jugdo.de/">JUG Dortmund</a></p>
-			<p><a href="https://twitter.com/hashtag/JUGDortmund?src=hash">#JUGDortmund</a></p>
+			<p><a href="http://www.javaforumnord.de">Java Forum Nord</a></p>
+			<p><a href="https://twitter.com/JavaForumNord">@JavaForumNord</a></p>
 		</div>
 	</div>
 </div>
@@ -41,9 +41,9 @@
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://www.jugdo.de/"><img src="images/logo-jug-do.png" class="logo" style="background-color: #FFF; border-color: #FFF;"></a>
+		<a href="http://www.javaforumnord.de"><img src="images/logo-javaforumnord.png" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://www.jugdo.de/">JUG Dortmund</a> / <a href="https://twitter.com/hashtag/JUGDortmund?src=hash">#JUGDortmund</a></p>
+			<p><a href="http://www.javaforumnord.de">Java Forum Nord</a> / <a href="https://twitter.com/JavaForumNord">@JavaForumNord</a></p>
 		</div>
 	</div>
 </footer>
@@ -98,8 +98,21 @@
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Driver&gt; drivers = new ArrayList&lt;&gt;();
 ServiceLoader
 	.load(Driver.class)
-	.forEach(drivers::add);</code></pre></div></div></section><section id="_other_features"><h2>Other Features</h2><div class="ulist"><ul><li><p>finer grained dependencies and exports</p></li><li><p>open packages and modules (for reflection)</p></li><li><p>unnamed and automatic modules (for migration)</p></li><li><p>layers (for containers)</p></li><li><p><code>jlink</code> to create runtime images</p></li></ul></div></section><section id="_more_about_jpms"><h2>More About JPMS</h2><div style="float: left; width: 42%; margin: 0px 0px;">
-	<img src="images/cover-j9ms.png" style="margin: 0;">
+	.forEach(drivers::add);</code></pre></div></div></section><section id="_other_features"><h2>Other Features</h2><div class="ulist"><ul><li><p>finer grained dependencies and exports</p></li><li><p>open packages and modules (for reflection)</p></li><li><p>unnamed and automatic modules (for migration)</p></li><li><p>layers (for containers)</p></li><li><p><code>jlink</code> to create runtime images</p></li></ul></div></section><section id="_more_about_jpms"><h2>More About JPMS</h2><div style="float: left; width: 45%; margin:0px;">
+	<a href="https://www.manning.com/books/the-java-9-module-system?a_aid=nipa&a_bid=869915cb"><img src="images/cover-j9ms.png" style="margin: 0;"></a>
+	<p style="
+		position: fixed;
+		margin: -160px 0 0 60px;
+		transform: rotate(-8deg);
+		font-size: 28pt;
+		color: #cc0000;
+		text-shadow: 2px 2px 3px #660000;
+		font-weight: bold;
+		border: 5px solid #cc0000;
+		border-radius: 12px;
+		background-color: rgba(255,255,255,0.5);
+		padding: 2px 8px 7px 4px;
+">40% off with<br>code <em>npjava9ms</em></p>
 </div>
 <div class="paragraph"><p>I&#8217;m writing a book!<br>
 EA available ⇝ <a href="https://www.manning.com/books/the-java-9-module-system?a_aid=nipa&amp;a_bid=869915cb">tiny.cc/j9ms</a></p></div>
@@ -625,11 +638,13 @@ and class data sharing (<a href="http://openjdk.java.net/jeps/250">JEP 250</a>)<
 		border-radius: 12px;
 		background-color: rgba(255,255,255,0.5);
 		padding: 2px 8px 7px 4px;
-">37% off with<br>code <em>fccparlog</em></p>
+">40% off with<br>code <em>npjava9ms</em></p>
 	<p><a href="https://www.manning.com/books/the-java-9-module-system?a_aid=nipa&a_bid=869915cb">tiny.cc/j9ms</a></p>
 </div>
 <div class="paragraph"><p><a href="http://codefx.org">codefx.org</a><br>
 ✉ <a href="http://blog.codefx.org/newsletter/">tiny.cc/fx-weekly</a><br>
+🌍 <a href="https://medium.com/codefx-weekly">tiny.cc/fx-medium</a><br>
+▶ <a href="https://www.youtube.com/channel/UCngKKOnBxYtLAV8pgUBNDng">tiny.cc/fx-youtube</a><br>
 <a href="https://twitter.com/nipafx">@nipafx</a> /
 <a href="https://google.com/+NicolaiParlog">+NicolaiParlog</a></p></div>
 <h3>Want More?</h3>
