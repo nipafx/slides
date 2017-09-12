@@ -65,7 +65,7 @@
 <div class="ulist"><ul><li><p><code>NoClassDefFoundError</code></p></li><li><p>no encapsulation across JARs</p></li><li><p>version conflicts</p></li></ul></div></section><section id="_modules"><h2>Modules</h2><div class="paragraph"><p>Modules are like JARs but have:</p></div>
 <div class="ulist"><ul><li><p>explicit dependencies</p></li><li><p>a well-defined API</p></li><li><p>no concept of versions</p></li></ul></div>
 <div class="paragraph"><p>Some consequences:</p></div>
-<div class="ulist"><ul><li><p>reliable configuration</p></li><li><p>strong encapsulation</p></li><li><p>a couple of nice features</p></li><li><p>still version conflicts 😭</p></li></ul></div></section><section id="_platform_modules"><h2>Platform Modules</h2><div class="imageblock diagram" id="TODO" style=""><img src="images/platform-modules.png" alt="platform modules"></div></section><section id="_module_descriptor"><h2>Module Descriptor</h2><div class="paragraph"><p>A file <code>module-info.java</code>:</p></div>
+<div class="ulist"><ul><li><p>reliable configuration</p></li><li><p>strong encapsulation</p></li><li><p>a couple of nice features</p></li><li><p>still version conflicts 😭</p></li></ul></div></section><section id="_platform_modules"><h2>Platform Modules</h2><div class="imageblock diagram" id="TODO" style=""><img src="images/platform-modules.png" alt="platform modules"></div></section><section id="_module_declaration"><h2>Module Declaration</h2><div class="paragraph"><p>A file <code>module-info.java</code>:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> java.sql {
 	<span class="hljs-keyword">requires transitive</span> java.logging
 	<span class="hljs-keyword">requires transitive</span> java.xml
@@ -94,11 +94,11 @@
 	<span class="hljs-keyword">provides</span> java.sql.Driver
 		<span class="hljs-keyword">with</span> com.mysql.MySQLDriver;
 }
-</code></pre></div></div></section><section id="_loading_services"><h2>Loading Services</h2><div class="paragraph"><p>Code in <em>java.sql</em> can now do this:</p></div>
+</code></pre></div></div></section><section id="_loading_services"><h2>Loading Services</h2><div class="paragraph"><p>Code in <em>java.sql</em> can do this:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Driver&gt; drivers = new ArrayList&lt;&gt;();
 ServiceLoader
 	.load(Driver.class)
-	.forEach(drivers::add);</code></pre></div></div></section><section id="_other_features"><h2>Other Features</h2><div class="ulist"><ul><li><p>finer grained dependencies and exports</p></li><li><p>open packages and modules (for reflection)</p></li><li><p>unnamed and automatic modules (for migration)</p></li><li><p>layers (for containers)</p></li><li><p><code>jlink</code> to create runtime images</p></li></ul></div></section><section id="_more_about_jpms"><h2>More About JPMS</h2><div style="float: left; width: 45%; margin:0px;">
+	.forEach(drivers::add);</code></pre></div></div></section><section id="_other_features"><h2>Other Features</h2><div class="ulist"><ul><li><p>finer grained dependencies and exports</p></li><li><p>open packages and modules (for reflection)</p></li><li><p>unnamed and automatic modules (for migration)</p></li><li><p>layers (for containers)</p></li><li><p><code>jlink</code> to create runtime images</p></li></ul></div></section><section id="_more_about_jpms"><h2>More About JPMS</h2><div class="ulist"><ul><li><p><a href="http://openjdk.java.net/projects/jigsaw/spec/sotms/">State of the Module System</a></p></li><li><p><a href="https://blog.codefx.org/java/dev/jigsaw-hands-on-guide/">Project Jigsaw Hands-On Guide</a></p></li><li><p><a href="https://blog.codefx.org/java/java-9-migration-guide/">Java 9 Migration Guide</a></p></li><li><p><a href="https://blog.codefx.org/java/five-command-line-options-to-hack-the-java-9-module-system/">Command Line Options To Hack The JPMS</a></p></li><li><p><a href="https://blog.codefx.org/java/planning-your-java-9-update/">Planning Your Java 9 Update</a></p></li></ul></div></section><section id="_even_more_about_jpms"><h2>Even More About JPMS</h2><div style="float: left; width: 45%; margin:0px;">
 	<a href="https://www.manning.com/books/the-java-9-module-system?a_aid=nipa&a_bid=869915cb"><img src="images/cover-j9ms.png" style="margin: 0;"></a>
 	<p style="
 		position: fixed;
@@ -117,7 +117,7 @@ ServiceLoader
 <div class="paragraph"><p>I&#8217;m writing a book!<br>
 EA available ⇝ <a href="https://www.manning.com/books/the-java-9-module-system?a_aid=nipa&amp;a_bid=869915cb">tiny.cc/j9ms</a></p></div>
 <div class="ulist"><ul><li><p>creating, building,<br>
-running modules</p></li><li><p>migration to Java 9</p></li><li><p>migration to JPMS</p></li><li><p>services and<br>
+running modules</p></li><li><p>migration to Java 9</p></li><li><p>modularization</p></li><li><p>services and<br>
 advanced features</p></li><li><p>reflection and layers</p></li><li><p>custom runtime images</p></li></ul></div></section></section>
 <section id="_new_language_features"><h2>New Language Features</h2><table class="toc">
 	<tr><td>Private Interface Methods</td></tr>
@@ -317,18 +317,18 @@ Stream.iterate(
 <div class="ulist"><ul><li><p>first <code>nextElement()</code></p></li><li><p>then <code>hasMoreElements()</code></p></li><li><p>⇝ fail</p></li></ul></div></section><section id="__code_stream_takewhile_code"><h2><code>Stream::takeWhile</code></h2><div class="paragraph"><p>Stream as long as a condition is true:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;T&gt; takeWhile(Predicate&lt;T&gt; predicate);</code></pre></div></div>
 <div class="paragraph"><p>Example:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream.of("a", "b", "c", "", "e")
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream.of("a-", "b-", "c-", "", "e-")
 	.takeWhile(s -&gt; !s.isEmpty());
 	.forEach(System.out::print);
 
-// output: abc</code></pre></div></div></section><section id="__code_stream_dropwhile_code"><h2><code>Stream::dropWhile</code></h2><div class="paragraph"><p>Start streaming as soon as a condition is true:</p></div>
+// output: a-b-c-</code></pre></div></div></section><section id="__code_stream_dropwhile_code"><h2><code>Stream::dropWhile</code></h2><div class="paragraph"><p>Ignore as long as a condition is true:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;T&gt; dropWhile(Predicate&lt;T&gt; predicate);</code></pre></div></div>
 <div class="paragraph"><p>Example:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream.of("a", "b", "c", "de", "f")
-	.dropWhile(s -&gt; s.length() &lt;= 1);
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream.of("a-", "b-", "c-", "de-", "f-")
+	.dropWhile(s -&gt; s.length() &lt;= 2);
 	.forEach(System.out::print);
 
-// output: def</code></pre></div></div></section></section>
+// output: de-f-</code></pre></div></div></section></section>
 <section><section id="_optional_improvements"><h2>Optional Improvements</h2><table class="toc">
 	<tr><td>Stream Improvements</td></tr>
 	<tr class="toc-current"><td>Optional Improvements</td></tr>
