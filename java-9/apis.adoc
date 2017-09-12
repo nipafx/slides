@@ -86,16 +86,16 @@ Stream<T> takeWhile(Predicate<T> predicate);
 Example:
 
 ```java
-Stream.of("a", "b", "c", "", "e")
+Stream.of("a-", "b-", "c-", "", "e-")
 	.takeWhile(s -> !s.isEmpty());
 	.forEach(System.out::print);
 
-// output: abc
+// output: a-b-c-
 ```
 
 === `Stream::dropWhile`
 
-Start streaming as soon as a condition is true:
+Ignore as long as a condition is true:
 
 ```java
 Stream<T> dropWhile(Predicate<T> predicate);
@@ -104,11 +104,11 @@ Stream<T> dropWhile(Predicate<T> predicate);
 Example:
 
 ```java
-Stream.of("a", "b", "c", "de", "f")
-	.dropWhile(s -> s.length() <= 1);
+Stream.of("a-", "b-", "c-", "de-", "f-")
+	.dropWhile(s -> s.length() <= 2);
 	.forEach(System.out::print);
 
-// output: def
+// output: de-f-
 ```
 
 

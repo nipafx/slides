@@ -36,7 +36,7 @@ Some consequences:
 [[TODO, consider creating a state and role for full screen images/diagrams]]
 image::images/platform-modules.png[role="diagram"]
 
-=== Module Descriptor
+=== Module Declaration
 
 A file `module-info.java`:
 
@@ -103,7 +103,7 @@ The module system as a service registry:
 
 === Loading Services
 
-Code in _java.sql_ can now do this:
+Code in _java.sql_ can do this:
 
 ```java
 List<Driver> drivers = new ArrayList<>();
@@ -145,11 +145,11 @@ ServiceLoader
 I'm writing a book! +
 EA available ⇝ https://www.manning.com/books/the-java-9-module-system?a_aid=nipa&a_bid=869915cb[tiny.cc/j9ms]
 
- * creating, building, +
+* creating, building, +
 running modules
 * migration to Java 9
-* migration to JPMS
- * services and +
+* modularization
+* services and +
 advanced features
 * reflection and layers
 * custom runtime images
