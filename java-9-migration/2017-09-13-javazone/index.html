@@ -1,0 +1,274 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>To JAR Hell And Back</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="_reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="_reveal.js/css/theme/nipa-night.css" id="theme"><link href="_reveal.js/lib/css/zenburn.css" rel="stylesheet"><script type="text/javascript">document.write( '<link rel="stylesheet" href="_reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>To JAR Hell And Back</h1><div class="preamble"><link rel="stylesheet" href="_highlight.js/styles/monokai-sublime.css">
+<script src="_highlight.js/highlight.pack.js"></script>
+<script>
+	window.onload = function() {
+		hljs.configure({
+			tabReplace: '    ',
+			languages: [ 'java' ]
+		})
+		var codes = document.getElementsByTagName('code');
+		for(var i = 0; i < codes.length; i++) {
+			hljs.highlightBlock(codes.item(i));
+		}
+		hljs.initHighlightingOnLoad();
+	}
+</script>
+<style>
+.reveal .title h2 {
+	font-size: 1.75em;
+}
+</style>
+<h2>A Life Migration To<br>The Java 9 Module System</h2>
+<div class="event">
+	<div class="participant">
+		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
+		<div class="name">
+			<p><a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a></p>
+			<p><a href="http://codefx.org">codefx.org</a>
+				/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a></p>
+		</div>
+	</div>
+	<div class="participant">
+		<a href="http://javazone.no/"><img src="images/logo-javazone.png" class="logo" style="{host-logo-style}"></a>
+		<div class="name">
+			<p><a href="http://javazone.no/">JavaZone</a></p>
+			<p><a href="https://twitter.com/javazone">@JavaZone</a></p>
+		</div>
+	</div>
+</div>
+<!-- Just adding a footer does not work because reveal.js puts it into the slides and we couldn't get it out via CSS. So we move it via JavaScript. -->
+<footer>
+	<div class="participant">
+		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
+		<div class="name"><p>
+			<a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a>
+			/ <a href="http://codefx.org">codefx.org</a>
+			/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a>
+		</p></div>
+	</div>
+	<div class="participant">
+		<a href="http://javazone.no/"><img src="images/logo-javazone.png" class="logo" style="{host-logo-style}"></a>
+		<div class="name">
+			<p><a href="http://javazone.no/">JavaZone</a> / <a href="https://twitter.com/javazone">@JavaZone</a></p>
+		</div>
+	</div>
+</footer>
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		document.body.appendChild(document.querySelector('footer'));
+	})
+</script></div></section>
+<section id="_public_service_announcements"><h2>Public Service Announcements</h2><div class="ulist"><ul><li><p>Java 9 is scheduled for September 21st</p></li><li><p>slides at <a href="http://slides.codefx.org/">slides.codefx.org</a></p></li><li><p>code on GitHub at<br>
+<a href="https://github.com/CodeFX-org/demo-java-9-migration">CodeFX-org/demo-java-9-migration</a></p></li></ul></div></section>
+<section><section id="_java_module_system"><h2>Java Module System</h2><h3>Delaying Java since 2008!</h3></section><section id="_jar_hell_is_bad_mkay"><h2>JAR Hell is bad, mkay?</h2><div class="paragraph"><p>JARs have:</p></div>
+<div class="ulist"><ul><li><p>no name the JVM cares about</p></li><li><p>no explicit dependencies</p></li><li><p>no well-defined API</p></li><li><p>no concept of versions</p></li></ul></div>
+<aside class="notes"><div class="paragraph"><p>Some consequences:</p></div>
+<div class="ulist"><ul><li><p><code>NoClassDefFoundError</code></p></li><li><p>no encapsulation across JARs</p></li><li><p>version conflicts</p></li></ul></div></aside></section><section id="_modules"><h2>Modules</h2><div class="paragraph"><p>Modules are like JARs but have:</p></div>
+<div class="ulist"><ul><li><p>proper names</p></li><li><p>explicit dependencies</p></li><li><p>a well-defined API</p></li><li><p>no concept of versions</p></li></ul></div>
+<div class="paragraph"><p>Important goals:</p></div>
+<div class="ulist"><ul><li><p>reliable configuration</p></li><li><p>strong encapsulation</p></li></ul></div></section><section id="_module_descriptor"><h2>Module Descriptor</h2><div class="paragraph"><p>A file <code>module-info.java</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> java.sql {
+	<span class="hljs-keyword">requires transitive</span> java.logging
+	<span class="hljs-keyword">requires transitive</span> java.xml
+	<span class="hljs-keyword">uses</span> java.sql.Driver
+	<span class="hljs-keyword">exports</span> java.sql
+	<span class="hljs-keyword">exports</span> javax.sql
+	<span class="hljs-keyword">exports</span> javax.transaction.xa
+}</code></pre></div></div></section><section id="_reliable_configuration"><h2>Reliable Configuration</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> java.sql {
+	<span class="hljs-keyword">requires transitive</span> java.logging
+	<span class="hljs-keyword">requires transitive</span> java.xml
+}</code></pre></div></div>
+<div class="paragraph"><p>Module system enforces:</p></div>
+<div class="ulist"><ul><li><p>all required modules are present</p></li><li><p>no ambiguity</p></li><li><p>no static dependency cycles</p></li><li><p>no split packages</p></li></ul></div></section><section id="_strong_encapsulation"><h2>Strong Encapsulation</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> java.sql {
+	<span class="hljs-keyword">exports</span> java.sql
+	<span class="hljs-keyword">exports</span> javax.sql
+	<span class="hljs-keyword">exports</span> javax.transaction.xa
+}</code></pre></div></div>
+<div class="paragraph"><p>Say you want to access <code>java.sql.ResultSet</code>.</p></div>
+<div class="paragraph"><p>Module system only grants access if:</p></div>
+<div class="ulist"><ul><li><p><code>ResultSet</code> is public</p></li><li><p><code>java.sql</code> is exported by <em>java.sql</em></p></li><li><p>your module reads <em>java.sql</em></p></li></ul></div></section><section id="_platform_modules"><h2>Platform Modules</h2><div class="imageblock diagram" id="TODO" style=""><img src="images/platform-modules.png" alt="platform modules"></div></section><section id="_other_features"><h2>Other Features</h2><div class="ulist"><ul><li><p>decoupling via services</p></li><li><p>finer grained dependencies and exports</p></li><li><p>open packages and modules (for reflection)</p></li><li><p>unnamed and automatic modules (for migration)</p></li><li><p>layers (for containers)</p></li><li><p><code>jlink</code> to create runtime images</p></li></ul></div></section></section>
+<section><section id="_migration_to_java_9"><h2>Migration To Java 9</h2><h3>Compiling and Running on Java 9</h3></section><section id="_of_modules_and_jars"><h2>Of Modules And JARs</h2><div class="paragraph"><p>Modularized JDK and legacy JARs have to cooperate.</p></div>
+<div class="paragraph"><p>Two requirements:</p></div>
+<div class="ulist"><ul><li><p>for the module system to work,<br>
+everything needs to be a module</p></li><li><p>for compatibility, the class path<br>
+and regular JARs have to keep working</p></li></ul></div></section><section id="_the_unnamed_module"><h2>The Unnamed Module</h2><div class="paragraph"><p>The <strong>Unnamed Module</strong><br>
+contains <em>all</em> JARs on the class path<br>
+(including modular JARs).</p></div>
+<div class="ulist"><ul><li><p>has no name (surprise!)</p></li><li><p>can read all modules</p></li><li><p>exports all packages</p></li></ul></div>
+<div class="paragraph"><p>Inside the unnamed module<br>
+"the chaos of the class path" lives on.</p></div>
+<aside class="notes"><div class="ulist"><ul><li><p>one unnamed module per class loader</p></li></ul></div></aside></section><section id="_access_to_internal_apis"><h2>Access to Internal APIs</h2><div class="paragraph"><p>Internal APIs are encapsulated by default.</p></div>
+<div class="paragraph"><p>What exactly is "internal"?</p></div>
+<div class="ulist"><ul><li><p>everything not exported by a module</p></li><li><p>includes most <code>com.sun.*</code> packages</p></li><li><p>includes all <code>sun.*</code> packages<br>
+except parts of <code>sun.misc</code></p></li></ul></div>
+<div class="paragraph"><p><code>Unsafe</code> and others are available<br>
+in <em>jdk.unsupported</em> for a while.</p></div></section><section id="_breaking_into_modules"><h2>Breaking Into Modules</h2><div class="paragraph"><p>Compilation will fail for internal dependencies:</p></div>
+<div class="ulist"><ul><li><p>use <code>--add-exports</code> to export packages</p></li></ul></div>
+<div class="paragraph"><p>In Java 9, run time access is allowed<br>
+but reflection will result in a warning.</p></div>
+<div class="ulist"><ul><li><p>use <code>--add-exports</code> to export packages</p></li><li><p>use <code>--add-opens</code> to open packages<br>
+for deep reflection</p></li><li><p>use <code>--illegal-access</code> to configure behavior</p></li></ul></div></section><section id="_adding_java_ee_modules"><h2>Adding Java EE Modules</h2><div class="paragraph"><p>Java EE modules are not included by default:</p></div>
+<div class="paragraph"><p><em>java.activation</em>, <em>java.corba</em>, <em>java.transaction</em><br>
+<em>java.xml.bind</em>, <em>java.xml.ws</em>, <em>java.xml.ws.annotation</em></p></div>
+<div class="paragraph"><p>Have to be added to compiler and JVM<br>
+with <code>--add-modules</code>.</p></div></section><section id="_splitting_packages"><h2>Splitting Packages</h2><div class="paragraph"><p>No two modules can contain the same packages<br>
+(exported or not).</p></div>
+<div class="ulist"><ul><li><p>for named modules this is checked</p></li><li><p>for the unnamed module it is <em>not</em></p></li><li><p>classes in the unnamed package are "invisible"</p></li></ul></div></section><section id="_splitting_packages_2"><h2>Splitting Packages</h2><div class="paragraph"><p>Two ways to mend the split:</p></div>
+<div class="ulist"><ul><li><p>for <em>upgreadable modules</em>, use the JAR instead<br>
+of the module (<code>--upgrade-module-path</code>)</p></li><li><p>for individual classes, merge the JAR with<br>
+the module (<code>--patch-module</code>)</p></li></ul></div></section></section>
+<section><section id="_modularizing_your_project"><h2>Modularizing Your Project</h2><h3>Making Use Of The Module System</h3></section><section id="_the_tale_of_two_paths"><h2>The Tale Of Two Paths</h2><div class="paragraph"><p>Class path is for regular JARs,<br>
+module path is for modular JARs?</p></div>
+<div class="paragraph"><p><strong>Wrong!</strong></p></div>
+<div class="paragraph"><p>Class path is for the unnamed module,<br>
+module path is for named modules!</p></div></section><section id="_from_the_bottom_up"><h2>From The Bottom Up</h2><div class="paragraph"><p>You can put modular JARs in the class path<br>
+and everything works like before.</p></div>
+<div class="ulist"><ul><li><p>you can modularize projects,<br>
+without clients even realizing</p></li><li><p>start with the modularization<br>
+from the bottom up</p></li></ul></div></section><section id="_from_the_top_down"><h2>From The Top Down</h2><div class="paragraph"><p>What if you want to modularize your code<br>
+but your dependencies aren&#8217;t yet?</p></div>
+<div class="ulist"><ul><li><p>proper modules can not depend on<br>
+"the chaos on the class path"</p></li><li><p>this is not possible:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">module monitor.rest {
+	// we need spark.core
+	requires unnamed;
+}</code></pre></div></div></li></ul></div></section><section id="_automatic_modules"><h2>Automatic Modules</h2><div class="paragraph"><p>An <strong>Automatic Module</strong><br>
+is created <em>for each</em> "regular" JAR<br>
+on the module path.</p></div>
+<div class="ulist"><ul><li><p>gets a name based on the file name or a<br>
+manifest entry <code>AUTOMATIC-MODULE-NAME</code></p></li><li><p>can read all modules<br>
+(including the Unnamed Module)</p></li><li><p>exports all packages</p></li></ul></div></section><section id="_automatic_module_example"><h2>Automatic Module Example</h2><div class="ulist"><ul><li><p>put <code>spark-core-2.6.0.jar</code> on the module path</p></li><li><p>then this works:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">module monitor.rest {
+	requires spark.core;
+}</code></pre></div></div></li></ul></div></section><section id="_what_goes_where"><h2>What Goes Where?</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:33.3333%"><col style="width:33.3333%"><col style="width:33.3334%"></colgroup><thead><tr><th class="tableblock halign-left valign-top"></th><th class="tableblock halign-left valign-top">Class Path</th><th class="tableblock halign-left valign-top">Module Path</th></tr></thead><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Regular JAR</strong></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Unnamed Module</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Automatic Module</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Modular JAR</strong></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Unnamed Module</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Named Module</p></td></tr></tbody></table></section></section>
+<section><section id="_advanced_jpms_features"><h2>Advanced JPMS features</h2><h3>Getting the most out of the module system</h3></section><section id="_services"><h2>Services</h2><div class="paragraph"><p>The module system as a service registry:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> java.sql {
+	<span class="hljs-keyword">uses</span> java.sql.Driver
+}
+
+<span class="hljs-keyword">module</span> mysql.driver {
+	<span class="hljs-keyword">provides</span> java.sql.Driver
+		<span class="hljs-keyword">with</span> com.mysql.MySQLDriver;
+}
+</code></pre></div></div></section><section id="_loading_services"><h2>Loading Services</h2><div class="paragraph"><p>Code in <em>java.sql</em> can now do this:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Driver&gt; drivers = new ArrayList&lt;&gt;();
+ServiceLoader
+	.load(Driver.class)
+	.forEach(drivers::add);</code></pre></div></div></section></section>
+<section id="_full_picture" data-background-image="images/shibuya-night.jpg" data-background-size="cover"><h2>Full Picture</h2>
+<div class="paragraph"><p>If you want more details:</p></div>
+<div class="paragraph"><p><strong>Java 9 Migration Guide</strong><br>
+(<a href="https://blog.codefx.org/java/java-9-migration-guide/">tiny.cc/java-9-migration</a>)</p></div>
+<div class="paragraph"><p>Background:</p></div>
+<div class="ulist"><ul><li><p><a href="https://blog.codefx.org/java/planning-your-java-9-update/">Planning Your Java 9 Update</a></p></li><li><p><a href="https://blog.codefx.org/java/five-command-line-options-to-hack-the-java-9-module-system/">JPMS Command Line Options</a></p></li><li><p><a href="https://blog.codefx.org/tools/jdeps-tutorial-analyze-java-project-dependencies/">JDeps Tutorial</a></p></li></ul></div>
+<div class="paragraph"><p>For the the full picture get my book:</p></div>
+<div class="paragraph"><p><strong>The Java 9 Module System</strong><br>
+(<a href="https://www.manning.com/books/the-java-9-module-system?a_aid=nipa&amp;a_bid=869915cb">tiny.cc/j9ms</a>)</p></div></section>
+<section id="_about_nicolai_parlog" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>About Nicolai Parlog</h2>
+<div style="float: left; width: 45%; margin:0px;">
+	<a href="https://www.manning.com/books/the-java-9-module-system?a_aid=nipa&a_bid=869915cb"><img src="images/cover-j9ms.png" style="margin: 0;"></a>
+	<p style="
+		position: fixed;
+		margin: -160px 0 0 60px;
+		transform: rotate(-8deg);
+		font-size: 28pt;
+		color: #cc0000;
+		text-shadow: 2px 2px 3px #660000;
+		font-weight: bold;
+		border: 5px solid #cc0000;
+		border-radius: 12px;
+		background-color: rgba(255,255,255,0.5);
+		padding: 2px 8px 7px 4px;
+">40% off with<br>code <em>npjava9ms</em></p>
+	<p><a href="https://www.manning.com/books/the-java-9-module-system?a_aid=nipa&a_bid=869915cb">tiny.cc/j9ms</a></p>
+</div>
+<div class="paragraph"><p><a href="http://codefx.org">codefx.org</a><br>
+✉ <a href="http://blog.codefx.org/newsletter/">tiny.cc/fx-weekly</a><br>
+🌍 <a href="https://medium.com/codefx-weekly">tiny.cc/fx-medium</a><br>
+▶ <a href="https://www.youtube.com/channel/UCngKKOnBxYtLAV8pgUBNDng">tiny.cc/fx-youtube</a><br>
+<a href="https://twitter.com/nipafx">@nipafx</a> /
+<a href="https://google.com/+NicolaiParlog">+NicolaiParlog</a></p></div>
+<h3>Want More?</h3>
+<div class="paragraph"><p>⇜ Get <a href="https://www.manning.com/books/the-java-9-module-system?a_aid=nipa&amp;a_bid=869915cb">my book</a>!</p></div>
+<div class="paragraph"><p>You can <a href="http://blog.codefx.org/hire-nicolai-parlog/">hire me</a>:</p></div>
+<div class="ulist"><ul><li><p>training (Java 8/9, JUnit 5)</p></li><li><p>consulting (Java 8/9)</p></li></ul></div></section>
+<section id="_image_credits"><h2>Image Credits</h2><div class="ulist"><ul><li><p><a href="https://pixabay.com/en/bison-buffalo-group-herd-snow-2237654/">buffalos</a>:
+<a href="https://pixabay.com/en/users/skeeze-272447/">skeeze</a>,
+<a href="https://wiki.creativecommons.org/wiki/CC0">CC0</a></p></li><li><p><a href="https://www.flickr.com/photos/21496790@N06/5065834411">question-mark</a>:
+<a href="http://milosevicmilos.com/">Milos Milosevic</a>,
+<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a></p></li></ul></div></section></div></div><script src="_reveal.js/lib/js/head.min.js"></script><script src="_reveal.js/js/reveal.js"></script><script type="text/javascript">// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+Reveal.initialize({
+  // Display controls in the bottom right corner
+  controls: false,
+  // Display a presentation progress bar
+  progress: false,
+  // Display the page number of the current slide
+  slideNumber: false,
+  // Push each slide change to the browser history
+  history: true,
+  // Enable keyboard shortcuts for navigation
+  keyboard: true,
+  // Enable the slide overview mode
+  overview: true,
+  // Vertical centering of slides
+  center: true,
+  // Enables touch navigation on devices with touch input
+  touch: true,
+  // Loop the presentation
+  loop: false,
+  // Change the presentation direction to be RTL
+  rtl: false,
+  // Turns fragments on and off globally
+  fragments: true,
+  // Flags if the presentation is running in an embedded mode,
+  // i.e. contained within a limited portion of the screen
+  embedded: false,
+  // Number of milliseconds between automatically proceeding to the
+  // next slide, disabled when set to 0, this value can be overwritten
+  // by using a data-autoslide attribute on your slides
+  autoSlide: 0,
+  // Stop auto-sliding after user input
+  autoSlideStoppable: true,
+  // Enable slide navigation via mouse wheel
+  mouseWheel: false,
+  // Hides the address bar on mobile devices
+  hideAddressBar: true,
+  // Opens links in an iframe preview overlay
+  previewLinks: false,
+  // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
+  // NOTE setting the theme in the config no longer works in reveal.js 3.x
+  //theme: Reveal.getQueryHash().theme || 'nipa-night',
+  // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+  transition: Reveal.getQueryHash().transition || 'slide',
+  // Transition speed (e.g., default, fast, slow)
+  transitionSpeed: 'default',
+  // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+  backgroundTransition: 'fade',
+  // Number of slides away from the current that are visible
+  viewDistance: 3,
+  // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+  parallaxBackgroundImage: 'images/migration.jpg',
+  // Parallax background size in CSS syntax (e.g., "2100px 900px")
+  parallaxBackgroundSize: '3000px 2000px',
+
+  // The "normal" size of the presentation, aspect ratio will be preserved
+  // when the presentation is scaled to fit different resolutions. Can be
+  // specified using percentage units.
+  width: 960,
+  height: 700,
+
+  // Factor of the display size that should remain empty around the content
+  margin: 0.1,
+
+  // Bounds for smallest/largest possible scale to apply to content
+  minScale: 0.2,
+  maxScale: 1.5,
+
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+      { src: '_reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: '_reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '_reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      
+      { src: '_reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+      { src: '_reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+  ]
+});</script></body></html>
