@@ -1,5 +1,8 @@
 # Guide: To JAR Hell and Back
 
+[NOTE]
+~> "Other Features"
+
 Show that it works on Java 8:
 
 ```
@@ -15,15 +18,20 @@ watch -n 1 curl http://localhost:4567/stats/xml
 
 ## Migration
 
+[NOTE]
+~> "The Unnamed Module"
+
 ### Building on Java 9
 
 . start building with Java 9
+.. show `mvn -v`
 .. set `JAVA_HOME` in `.mavenrc`
 +
 ```
 JAVA_HOME="/opt/jdk-9"
 ```
-.. create a profile for Java 9
+.. show `mvn -v`
+. create a profile for Java 9
 +
 ```xml
 <profiles>
@@ -35,7 +43,7 @@ JAVA_HOME="/opt/jdk-9"
 	</profile>
 </profiles>
 ```
-.. set `release` to 9
+. set `release` to 9 in profile
 +
 ```xml
 <properties>
@@ -43,11 +51,18 @@ JAVA_HOME="/opt/jdk-9"
 </properties>
 ```
 
+#### Internal APIs
+
 . fix use of `sun.misc.BASE64Encoder`
 +
 ```java
 Base64.getEncoder().encodeToString(content.getBytes());
 ```
+
+. note warning message in _monitor.utils_
++
+[NOTE]
+~> "Breaking Into Modules"
 
 . fix warning messages in `UtilsTest` in _monitor.utils_
 .. create a profile for Java 9
@@ -60,7 +75,7 @@ Base64.getEncoder().encodeToString(content.getBytes());
 			<artifactId>maven-surefire-plugin</artifactId>
 			<configuration>
 				<argLine>
-					--add-opens java.base/java.lang=ALL-UNNAMED
+					--add-opens=java.base/java.lang=ALL-UNNAMED
 				</argLine>
 			</configuration>
 		</plugin>
@@ -69,7 +84,14 @@ Base64.getEncoder().encodeToString(content.getBytes());
 ```
 .. better, yet: update Mockito to `2.8.47`
 
-. add modules for annotations in _monitor.rest_
+#### Java EE Modules
+
+. note error _package `javax.xml.bind.annotation` is not visible_
++
+[NOTE]
+~> "Adding Java EE Modules"
+
+. add _java.xml.bind_ module for annotations in _monitor.rest_
 .. create a profile for Java 9
 .. configure compiler to use `--add-modules java.xml.bind` to fix _package `javax.xml.bind.annotation` is not visible_
 +
@@ -80,29 +102,35 @@ Base64.getEncoder().encodeToString(content.getBytes());
 			<artifactId>maven-compiler-plugin</artifactId>
 			<configuration>
 				<compilerArgs>
-					<arg>--add-modules</arg><arg>java.xml.bind</arg>
+					<arg>--add-modules=java.xml.bind</arg>
 				</compilerArgs>
 			</configuration>
 		</plugin>
 	</plugins>
 </build>
 ```
-.. configure compiler to patch _java.xml.ws.annotation_ to fix missing type `Generated`
-... observe that errors due to other missing annotations contain no hint of the containing modules
-... look at the involved classes and note that they import from jsr305
-... comment out jsr305
-... note mention of _java.xml.ws.annotation_ and add it
+
+#### Patch Modules
+
+. add _java.xml.ws.annotation_ to _monitor.rest_ to fix missing type `Generated`
+.. observe that error contains no hint of the containing module
+.. look up module in documentation
+.. add _java.xml.ws.annotation_
 +
 ```xml
-<arg>--add-modules</arg><arg>java.xml.ws.annotation</arg>
+<arg>--add-modules=java.xml.ws.annotation</arg>
 ```
-... uncomment jsr305 and observe the same problem
-... patch _java.xml.ws.annotation_
+.. observe new missing types problem
++
+[NOTE]
+~> "Splitting Packages (2)"
+
+. patch _java.xml.ws.annotation_ with JSR classes
 +
 ```xml
-<arg>--patch-module</arg><arg>java.xml.ws.annotation=${settings.localRepository}/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar</arg>
+<arg>--patch-module=java.xml.ws.annotation=${settings.localRepository}/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar</arg>
 ```
-*** replace `maven.compiler.release` with `maven.compiler.source` and `maven.compiler.target` in parent pom
+. maybe replace `maven.compiler.release` with `maven.compiler.source` and `maven.compiler.target` in parent pom
 
 ### Running on Java 9
 
