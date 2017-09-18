@@ -53,8 +53,9 @@ Stream<UserAddress> userAddresses() {
 ```java
 Map<Address, List<Order>> ordersByAddr;
 
-Stream<Delivery> deliveries() {
-	return userAddresses().flatMap(this::deliveriesFor);
+Stream<Order> ordersFor(UserAdress userAddr) {
+	return ordersByAddr
+		.get(userAddr.address()).stream();
 }
 
 Stream<Delivery> deliveriesFor(UserAdress userAddr) {
@@ -62,20 +63,20 @@ Stream<Delivery> deliveriesFor(UserAdress userAddr) {
 		.map(order -> Delivery.of(userAddr, order));
 }
 
-Stream<Order> ordersFor(UserAdress userAddr) {
-	return ordersByAddr
-		.get(userAddr.address()).stream();
+Stream<Delivery> deliveries() {
+	return userAddresses().flatMap(this::deliveriesFor);
 }
 ```
 
 === Guidelines
 
 * streams can only be traversed once +
-⇝ ideally returned streams can be recreated endlessly
+⇝ ideally, returned streams can be recreated endlessly
 * during traversal collection must not be mutated +
 ⇝ stick to layers instead of cycles +
 (can be harder than it sounds)
-* decide careful where to call `parallel()`
+* decide carefully where to call `parallel()` +
+⇝ close to terminal operation is a good default
 
 === Accepting Streams
 
@@ -148,7 +149,7 @@ Handling checked exceptions in Streams.
 ```java
 Stream<User> parse(Stream<String> strings) {
 	// compile error:
-	// "incompatible thrown types ParseException"
+	// "Unhandled exception ParseException"
 	return strings.map(this::parse);
 }
 
@@ -246,6 +247,8 @@ static Function<T, R> uncheckException(
 		try {
 			return function.apply(element);
 		} catch (Exception ex) {
+			// add special cases for RuntimeException,
+			// InterruptedException, etc.
 			throw new IllegalArgumentException(
 				element, ex);
 		}
@@ -303,7 +306,7 @@ Stream<User> parse(Stream<String> strings) {
 
 `Try<T>` is similar to `Optional`:
 
-* has two states: error or success
+* has two states (error or success)
 * allows to process them with functions
 * parameterized in type of success result
 
@@ -326,7 +329,7 @@ Stream<Try<User>> parse(Stream<String> strings) {
 }
 ```
 
-* requires external library (e.g. http://www.javaslang.io/[Javaslang])
+* requires external library (e.g. http://vavr.io/[Vavr])
 * encodes possibility of failure in API
 * makes error available to caller
 * error is encoded as Exception/Throwable
@@ -335,7 +338,7 @@ Stream<Try<User>> parse(Stream<String> strings) {
 
 `Either<L, R>` is similar to `Optional`:
 
-* has two states: left or right
+* has two states (left or right)
 * allows to process them with functions
 * parameterized in types of left and right
 * if used for failure/success, exception goes left +
@@ -369,7 +372,7 @@ Stream<Either<ParseException, User>> parse(
 }
 ```
 
-* requires external library (e.g. http://www.javaslang.io/[Javaslang])
+* requires external library (e.g. http://vavr.io/[Vavr])
 * encodes possibility of failure in API
 * makes error available to caller
 * error has correct type
@@ -377,7 +380,7 @@ Stream<Either<ParseException, User>> parse(
 === Reflection on Exceptions
 
 * don't be smart and "trick the compiler"
-* return a clean stream: no nulls!
+* return a clean stream, no `null`!
 * ideally, use types to express possibility of failure
 
 Streams don't cooperate well with checked exceptions.
@@ -460,7 +463,7 @@ static BinaryOperator toOnlyElement() {
 }
 ```
 
-Instead of `reduce`, `collect` could be used.
+(`Stream::collect` is an alternative to `reduce`.)
 
 === Properties of Finding Only
 

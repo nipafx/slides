@@ -238,7 +238,7 @@ private <T> T[] replaceTwoNulls(
 }
 
 private <T> T[] replaceAllNulls(T value, T... args) {
-	// loop over `args`, replacing null with `value`
+	// loop over `args`, replacing `null` with `value`
 	return args;
 }
 ```

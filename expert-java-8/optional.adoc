@@ -94,7 +94,7 @@ memory consumption
 ==== Conclusions
 
 * use as return value if +
-returning null is error-prone
+returning `null` is error-prone
 * no instance variables
 * no method parameters
 * instances should generally be short-lived
@@ -206,7 +206,7 @@ What does it mean?
 
 === Value Types In Future Java
 
-Future Java (10?) will contain value types:
+Future Java (2019?) will contain value types:
 
 * pass by value +
 (copied when passed as params)
@@ -248,19 +248,18 @@ create and destroy them at will
 === Identity Crisis
 
 ```java
-Map<User, LocalDateTime> userLogins;
-Map<LocalDateTime, String> messages;
+LocalDateTime getLastLogin(User user);
+void storeMessage(LocalDateTime time, String message);
 
 String lastLoginMessage(User user) {
-	LocalDateTime lastLogin =
-		userLogins.get(user); // <1>
+	LocalDateTime lastLogin = getLastLogin(user); // <1>
 	String message = "Was " + lastLogin;
-	messages.put(lastLogin, message); // <2>
+	storeMessage(lastLogin, message); // <2>
 	return message;
 }
 ```
-<1> `get` might return an instance or a value
-<2> `put` might receive an instance or a value
+<1> might return an instance or a value
+<2> might receive an instance or a value
 
 
 === Requirements For VBC
@@ -384,7 +383,7 @@ which code gets executed
 might not get executed
 * particularly error-prone when +
 functions have side effects +
-(they generally should not but it happens)
+(they generally should not, but it happens)
 
 === Reflection on Monads
 
