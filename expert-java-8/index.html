@@ -29,10 +29,10 @@
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://www.andrena.de/objektforum"><img src="images/logo-objektforum-ka.png" class="logo" style="background-color: transparent; border-width: 0;"></a>
+		<a href="https://www.andrena.de/objektforum"><img src="images/logo-objektforum-stuttgart.png" class="logo" style="background-color: transparent; border-width: 0;"></a>
 		<div class="name">
-			<p><a href="https://www.andrena.de/objektforum">Objektforum KA</a></p>
-			<p><a href="https://twitter.com/objektforum">@objektforum</a></p>
+			<p><a href="https://www.andrena.de/objektforum">Objektforum Stuttart</a></p>
+			<p><a href="https://twitter.com/hashtag/objektforum?src=hash">#objektforum</a></p>
 		</div>
 	</div>
 </div>
@@ -47,9 +47,9 @@
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://www.andrena.de/objektforum"><img src="images/logo-objektforum-ka.png" class="logo" style="background-color: transparent; border-width: 0;"></a>
+		<a href="https://www.andrena.de/objektforum"><img src="images/logo-objektforum-stuttgart.png" class="logo" style="background-color: transparent; border-width: 0;"></a>
 		<div class="name">
-			<p><a href="https://www.andrena.de/objektforum">Objektforum KA</a> / <a href="https://twitter.com/objektforum">@objektforum</a></p>
+			<p><a href="https://www.andrena.de/objektforum">Objektforum Stuttart</a> / <a href="https://twitter.com/hashtag/objektforum?src=hash">#objektforum</a></p>
 		</div>
 	</div>
 </footer>
@@ -84,8 +84,9 @@ Stream&lt;UserAddress&gt; userAddresses() {
 				user, addrById.get(user.id())));
 }</code></pre></div></div></section><section id="_enrichment_example_2"><h2>Enrichment Example</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Map&lt;Address, List&lt;Order&gt;&gt; ordersByAddr;
 
-Stream&lt;Delivery&gt; deliveries() {
-	return userAddresses().flatMap(this::deliveriesFor);
+Stream&lt;Order&gt; ordersFor(UserAdress userAddr) {
+	return ordersByAddr
+		.get(userAddr.address()).stream();
 }
 
 Stream&lt;Delivery&gt; deliveriesFor(UserAdress userAddr) {
@@ -93,13 +94,13 @@ Stream&lt;Delivery&gt; deliveriesFor(UserAdress userAddr) {
 		.map(order -&gt; Delivery.of(userAddr, order));
 }
 
-Stream&lt;Order&gt; ordersFor(UserAdress userAddr) {
-	return ordersByAddr
-		.get(userAddr.address()).stream();
+Stream&lt;Delivery&gt; deliveries() {
+	return userAddresses().flatMap(this::deliveriesFor);
 }</code></pre></div></div></section><section id="_guidelines"><h2>Guidelines</h2><div class="ulist"><ul><li><p>streams can only be traversed once<br>
-⇝ ideally returned streams can be recreated endlessly</p></li><li><p>during traversal collection must not be mutated<br>
+⇝ ideally, returned streams can be recreated endlessly</p></li><li><p>during traversal collection must not be mutated<br>
 ⇝ stick to layers instead of cycles<br>
-(can be harder than it sounds)</p></li><li><p>decide careful where to call <code>parallel()</code></p></li></ul></div></section><section id="_accepting_streams"><h2>Accepting Streams</h2><div class="paragraph"><p>Returning streams is ok.</p></div>
+(can be harder than it sounds)</p></li><li><p>decide carefully where to call <code>parallel()</code><br>
+⇝ close to terminal operation is a good default</p></li></ul></div></section><section id="_accepting_streams"><h2>Accepting Streams</h2><div class="paragraph"><p>Returning streams is ok.</p></div>
 <div class="paragraph"><p>What about passing them as parameters?</p></div>
 <div class="ulist"><ul><li><p>streams can only be traversed once!</p></li><li><p>caller must assume stream is traversed</p></li><li><p>works for obvious consumer functions</p></li><li><p>possibly a transformed stream can be returned</p></li></ul></div></section><section id="_stream_param_example"><h2>Stream Param Example</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// consuming the passed stream
 void addUsers(Stream&lt;User&gt; users) {
@@ -122,7 +123,7 @@ debuggability suffers</p></li></ul></div></section></section>
 	<tr><td>Performance</td></tr>
 </table><div class="paragraph"><p>Handling checked exceptions in Streams.</p></div></section><section id="_setting_the_scene"><h2>Setting the Scene</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;User&gt; parse(Stream&lt;String&gt; strings) {
 	// compile error:
-	// "incompatible thrown types ParseException"
+	// "Unhandled exception ParseException"
 	return strings.map(this::parse);
 }
 
@@ -174,6 +175,8 @@ checked exceptions need to be declared</p></li><li><p>exception aborts stream pi
 		try {
 			return function.apply(element);
 		} catch (Exception ex) {
+			// add special cases for RuntimeException,
+			// InterruptedException, etc.
 			throw new IllegalArgumentException(
 				element, ex);
 		}
@@ -202,7 +205,7 @@ checked exceptions need to be declared</p></li><li><p>exception aborts stream pi
 }</code></pre></div></div>
 <div class="ulist"><ul><li><p>requires extra clean-up step<br>
 (at least supported by compiler)</p></li><li><p>troublesome elements "disappear"</p></li></ul></div></section><section id="_expose_with_code_try_code"><h2>Expose With <code>Try</code></h2><div class="paragraph"><p><code>Try&lt;T&gt;</code> is similar to <code>Optional</code>:</p></div>
-<div class="ulist"><ul><li><p>has two states: error or success</p></li><li><p>allows to process them with functions</p></li><li><p>parameterized in type of success result</p></li></ul></div>
+<div class="ulist"><ul><li><p>has two states (error or success)</p></li><li><p>allows to process them with functions</p></li><li><p>parameterized in type of success result</p></li></ul></div>
 <div class="paragraph"><p>Another <code>Util</code> method:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">static Function&lt;T, Try&lt;R&gt;&gt; wrapTry(
 		CheckedFunction&lt;T, R, Exception&gt; function) {
@@ -212,8 +215,8 @@ checked exceptions need to be declared</p></li><li><p>exception aborts stream pi
 	return strings
 		.map(Util.wrapTry(this::parse));
 }</code></pre></div></div>
-<div class="ulist"><ul><li><p>requires external library (e.g. <a href="http://www.javaslang.io/">Javaslang</a>)</p></li><li><p>encodes possibility of failure in API</p></li><li><p>makes error available to caller</p></li><li><p>error is encoded as Exception/Throwable</p></li></ul></div></section><section id="_expose_with_code_either_code"><h2>Expose With <code>Either</code></h2><div class="paragraph"><p><code>Either&lt;L, R&gt;</code> is similar to <code>Optional</code>:</p></div>
-<div class="ulist"><ul><li><p>has two states: left or right</p></li><li><p>allows to process them with functions</p></li><li><p>parameterized in types of left and right</p></li><li><p>if used for failure/success, exception goes left<br>
+<div class="ulist"><ul><li><p>requires external library (e.g. <a href="http://vavr.io/">Vavr</a>)</p></li><li><p>encodes possibility of failure in API</p></li><li><p>makes error available to caller</p></li><li><p>error is encoded as Exception/Throwable</p></li></ul></div></section><section id="_expose_with_code_either_code"><h2>Expose With <code>Either</code></h2><div class="paragraph"><p><code>Either&lt;L, R&gt;</code> is similar to <code>Optional</code>:</p></div>
+<div class="ulist"><ul><li><p>has two states (left or right)</p></li><li><p>allows to process them with functions</p></li><li><p>parameterized in types of left and right</p></li><li><p>if used for failure/success, exception goes left<br>
 (by convention)</p></li></ul></div></section><section id="_expose_with_code_either_code_2"><h2>Expose With <code>Either</code></h2><div class="paragraph"><p>Another <code>Util</code> method:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">static Function&lt;T, Either&lt;EX, R&gt;&gt; wrapEither(
 		CheckedFunction&lt;T, R, EX&gt; function) {
@@ -222,6 +225,8 @@ checked exceptions need to be declared</p></li><li><p>exception aborts stream pi
 			return Either.right(
 				function.apply(element));
 		} catch (Exception ex) {
+			// add special cases for RuntimeException,
+			// InterruptedException, etc.
 			return Either.left((EX) ex);
 		}
 	};
@@ -230,7 +235,7 @@ checked exceptions need to be declared</p></li><li><p>exception aborts stream pi
 	return strings
 		.map(Util.wrapEither(this::parse));
 }</code></pre></div></div>
-<div class="ulist"><ul><li><p>requires external library (e.g. <a href="http://www.javaslang.io/">Javaslang</a>)</p></li><li><p>encodes possibility of failure in API</p></li><li><p>makes error available to caller</p></li><li><p>error has correct type</p></li></ul></div></section><section id="_reflection_on_exceptions"><h2>Reflection on Exceptions</h2><div class="ulist"><ul><li><p>don&#8217;t be smart and "trick the compiler"</p></li><li><p>return a clean stream: no nulls!</p></li><li><p>ideally, use types to express possibility of failure</p></li></ul></div>
+<div class="ulist"><ul><li><p>requires external library (e.g. <a href="http://vavr.io/">Vavr</a>)</p></li><li><p>encodes possibility of failure in API</p></li><li><p>makes error available to caller</p></li><li><p>error has correct type</p></li></ul></div></section><section id="_reflection_on_exceptions"><h2>Reflection on Exceptions</h2><div class="ulist"><ul><li><p>don&#8217;t be smart and "trick the compiler"</p></li><li><p>return a clean stream, no <code>null</code>!</p></li><li><p>ideally, use types to express possibility of failure</p></li></ul></div>
 <div class="paragraph"><p>Streams don&#8217;t cooperate well with checked exceptions.</p></div>
 <div class="paragraph"><p>See that as a chance to use functional concepts<br>
 for greater good of code base!</p></div></section></section>
@@ -269,7 +274,7 @@ static BinaryOperator toOnlyElement() {
 		throw new IllegalArgumentException();
 	};
 }</code></pre></div></div>
-<div class="paragraph"><p>Instead of <code>reduce</code>, <code>collect</code> could be used.</p></div></section><section id="_properties_of_finding_only"><h2>Properties of Finding Only</h2><div class="paragraph"><p>Upsides:</p></div>
+<div class="paragraph"><p>(<code>Stream::collect</code> is an alternative to <code>reduce</code>.)</p></div></section><section id="_properties_of_finding_only"><h2>Properties of Finding Only</h2><div class="paragraph"><p>Upsides:</p></div>
 <div class="ulist"><ul><li><p>guarantees correctness by failing fast</p></li><li><p>expresses intent</p></li></ul></div>
 <div class="paragraph"><p>Downsides:</p></div>
 <div class="ulist"><ul><li><p>materializes entire stream</p></li></ul></div></section><section id="_reflection_on_finding"><h2>Reflection On Finding</h2><div class="paragraph"><p>If correctness depends on only one element<br>
@@ -309,7 +314,7 @@ buy a round of drinks or wear a silly hat</p></li></ul></div></section><section 
 absolutely necessary</p></li><li><p>use it as return value</p></li><li><p>use it everywhere</p></li></ul></div></section><section id="_don_t_use_it"><h2>Don&#8217;t Use It!</h2><h3>Assumptions</h3><div class="ulist"><ul><li><p>API is verbose and invites misuse</p></li><li><p>makes stack traces harder to debug</p></li><li><p>not serializable</p></li><li><p>unsupported by various frameworks</p></li><li><p>dereferencing reduces performance</p></li><li><p>instances increase memory consumption</p></li><li><p>no benefits over explicit <code>null</code> handling</p></li></ul></div></section><section id="_don_t_use_it_2"><h2>Don&#8217;t Use It!</h2><h3>Conclusions</h3><div class="ulist"><ul><li><p><code>Optional</code> sucks</p></li><li><p>only use it if existing API returns it</p></li><li><p>unpack quickly!</p></li></ul></div>
 <div class="paragraph small-note"><p>(Mark Struberg, Stephen Connolly, Hugues Johnson)</p></div></section><section id="_limited_return_value"><h2>Limited Return Value</h2><h3>Assumptions</h3><div class="ulist"><ul><li><p><a href="http://blog.codefx.org/java/dev/design-optional">was designed</a> as a return value</p></li><li><p>not serializable</p></li><li><p>long-lived instances increase<br>
 memory consumption</p></li><li><p>boxing method arguments is verbose</p></li></ul></div></section><section id="_limited_return_value_2"><h2>Limited Return Value</h2><h3>Conclusions</h3><div class="ulist"><ul><li><p>use as return value if<br>
-returning null is error-prone</p></li><li><p>no instance variables</p></li><li><p>no method parameters</p></li><li><p>instances should generally be short-lived</p></li></ul></div>
+returning <code>null</code> is error-prone</p></li><li><p>no instance variables</p></li><li><p>no method parameters</p></li><li><p>instances should generally be short-lived</p></li></ul></div>
 <div class="paragraph small-note"><p>(Stuart Marks, Brian Goetz)</p></div>
 <div class="paragraph"><p><strong>⇝ This should be your default choice!</strong></p></div></section><section id="_return_value"><h2>Return Value</h2><h3>Assumptions</h3><div class="ulist"><ul><li><p>returning <code>null</code> is always error-prone</p></li><li><p>rest as before</p></li></ul></div>
 <h3>Conclusions</h3><div class="ulist"><ul><li><p>use as return value whenever<br>
@@ -343,7 +348,7 @@ than making them stricter!</p></div></section><section id="_additional_sources_2
 that requires us to be careful with what we do.</p></div></section><section id="_value_based_class"><h2>Value-Based Class?</h2><div class="paragraph"><p>Did you RTFM?</p></div>
 <div class="paragraph"><p><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/doc-files/ValueBased.html"><code>Optional</code> Javadoc</a> says:</p></div>
 <div class="quoteblock"><blockquote><div class="paragraph"><p>This is a value-based class; use of identity-sensitive operations [&#8230;&#8203;] on instances of <code>Optional</code> may have unpredictable results and should be avoided.</p></div></blockquote></div>
-<div class="paragraph"><p>What does it mean?</p></div></section><section id="_value_types_in_future_java"><h2>Value Types In Future Java</h2><div class="paragraph"><p>Future Java (10?) will contain value types:</p></div>
+<div class="paragraph"><p>What does it mean?</p></div></section><section id="_value_types_in_future_java"><h2>Value Types In Future Java</h2><div class="paragraph"><p>Future Java (2019?) will contain value types:</p></div>
 <div class="ulist"><ul><li><p>pass by value<br>
 (copied when passed as params)</p></li><li><p>immutable</p></li><li><p>no identity</p></li></ul></div>
 <div class="paragraph"><p>Very similar to today&#8217;s primitives.</p></div></section><section id="_no_identity"><h2>No Identity?</h2><div class="paragraph"><p>Class instances <strong>have identity</strong>:</p></div>
@@ -355,17 +360,16 @@ that requires us to be careful with what we do.</p></div></section><section id="
 wrapping value types</p></li><li><p>as an optimization the JVM will<br>
 create and destroy them at will</p></li></ul></div>
 <div class="paragraph"><p><strong>⇝ Wrappers have identity <em>but</em> it is unstable</strong></p></div>
-<aside class="notes"><div class="ulist"><ul><li><p>vbc will be optimized in Java 10!</p></li></ul></div></aside></section><section id="_identity_crisis"><h2>Identity Crisis</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Map&lt;User, LocalDateTime&gt; userLogins;
-Map&lt;LocalDateTime, String&gt; messages;
+<aside class="notes"><div class="ulist"><ul><li><p>vbc will be optimized in Java 10!</p></li></ul></div></aside></section><section id="_identity_crisis"><h2>Identity Crisis</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">LocalDateTime getLastLogin(User user);
+void storeMessage(LocalDateTime time, String message);
 
 String lastLoginMessage(User user) {
-	LocalDateTime lastLogin =
-		userLogins.get(user); <b>(1)</b>
+	LocalDateTime lastLogin = getLastLogin(user); <b>(1)</b>
 	String message = "Was " + lastLogin;
-	messages.put(lastLogin, message); <b>(2)</b>
+	storeMessage(lastLogin, message); <b>(2)</b>
 	return message;
 }</code></pre></div></div>
-<div class="colist arabic"><ol><li><p><code>get</code> might return an instance or a value</p></li><li><p><code>put</code> might receive an instance or a value</p></li></ol></div></section><section id="_requirements_for_vbc"><h2>Requirements For VBC</h2><div class="dlist"><dl><dt class="hdlist1">declaration site</dt><dd><div class="ulist"><ul><li><p>final and immutable</p></li><li><p><code>equals</code>, <code>hashCode</code>, <code>toString</code><br>
+<div class="colist arabic"><ol><li><p>might return an instance or a value</p></li><li><p>might receive an instance or a value</p></li></ol></div></section><section id="_requirements_for_vbc"><h2>Requirements For VBC</h2><div class="dlist"><dl><dt class="hdlist1">declaration site</dt><dd><div class="ulist"><ul><li><p>final and immutable</p></li><li><p><code>equals</code>, <code>hashCode</code>, <code>toString</code><br>
 must <em>only</em> rely on instance state</p></li><li><p>&#8230;&#8203;</p></li></ul></div></dd><dt class="hdlist1">use site</dt><dd><div class="ulist"><ul><li><p>no use of <code>==</code>, identity hash code,<br>
 locking, serialization</p></li></ul></div></dd></dl></div>
 <div class="paragraph"><p>(None of this is checked by the JVM.)</p></div></section><section id="_vbc_in_java_8"><h2>VBC in Java 8</h2><div class="dlist"><dl><dt class="hdlist1"><code>java.util</code></dt><dd><p><code>Optional</code>[<code>Double</code>, <code>Long</code>, <code>Int</code>]</p></dd><dt class="hdlist1"><code>java.time</code></dt><dd><p><code>Duration</code>, <code>Instant</code>, <code>Period</code>,<br>
@@ -406,7 +410,7 @@ stops the chain of executions</p></li></ul></div></section><section id="_so_what
 which code gets executed</p></li><li><p>functions that can "recover" from <code>null</code><br>
 might not get executed</p></li><li><p>particularly error-prone when<br>
 functions have side effects<br>
-(they generally should not but it happens)</p></li></ul></div></section><section id="_reflection_on_monads"><h2>Reflection on Monads</h2><div class="ulist"><ul><li><p>be aware that <code>Optional</code> is no well-behaved monad</p></li><li><p>see it as a way to avoid handling <code>null</code></p></li><li><p>be aware that refactoring can cause problems<br>
+(they generally should not, but it happens)</p></li></ul></div></section><section id="_reflection_on_monads"><h2>Reflection on Monads</h2><div class="ulist"><ul><li><p>be aware that <code>Optional</code> is no well-behaved monad</p></li><li><p>see it as a way to avoid handling <code>null</code></p></li><li><p>be aware that refactoring can cause problems<br>
 if <code>null</code> was special cased</p></li></ul></div>
 <h3>Additional Sources</h3><div class="paragraph"><p><a href="https://developer.atlassian.com/blog/2015/08/optional-broken/">More on Optional Being Broken</a> (atlassian.com)</p></div>
 <div class="paragraph"><p><a href="https://www.sitepoint.com/how-optional-breaks-the-monad-laws-and-why-it-matters/">&#8230;&#8203; and Why It Matters</a> (sitepoint.com)</p></div></section></section>
@@ -429,7 +433,7 @@ without breaking client code.</p></div>
 <div class="paragraph"><p><a href="http://blog.codefx.org/java/new-javadoc-tags/">New Javadoc Tags</a> (codefx.org)</p></div></section></section>
 <section id="_about_nicolai_parlog" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>About Nicolai Parlog</h2>
 <div style="float: left; width: 45%; margin:0px;">
-	<a href="https://www.manning.com/books/the-java-9-module-system?a_aid=nipa&a_bid=869915cb"><img src="images/cover-j9ms.png" style="margin: 0;"></a>
+	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="images/cover-jms.png" style="margin: 0;"></a>
 	<p style="
 		position: fixed;
 		margin: -160px 0 0 60px;
@@ -442,19 +446,19 @@ without breaking client code.</p></div>
 		border-radius: 12px;
 		background-color: rgba(255,255,255,0.5);
 		padding: 2px 8px 7px 4px;
-">37% off with<br>code <em>fccparlog</em></p>
-	<p><a href="https://www.manning.com/books/the-java-9-module-system?a_aid=nipa&a_bid=869915cb">tiny.cc/j9ms</a></p>
+">40% off with<br>code <em>npjava9ms</em></p>
+	<p><a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb">tiny.cc/jms</a></p>
 </div>
 <div class="paragraph"><p><a href="http://codefx.org">codefx.org</a><br>
 ✉ <a href="http://blog.codefx.org/newsletter/">tiny.cc/fx-weekly</a><br>
+🌍 <a href="https://medium.com/codefx-weekly">tiny.cc/fx-medium</a><br>
+▶ <a href="https://www.youtube.com/channel/UCngKKOnBxYtLAV8pgUBNDng">tiny.cc/fx-youtube</a><br>
 <a href="https://twitter.com/nipafx">@nipafx</a> /
 <a href="https://google.com/+NicolaiParlog">+NicolaiParlog</a></p></div>
-<div class="paragraph"><p><a href="https://sitepoint.com/java">sitepoint.com/java</a></p></div>
 <h3>Want More?</h3>
-<div class="paragraph"><p>⇜ Get <a href="https://www.manning.com/books/the-java-9-module-system?a_aid=nipa&amp;a_bid=869915cb">my book</a>!</p></div>
-<div class="paragraph"><p>I write <a href="http://blog.codefx.org/newsletter/">a mean newsletter</a>,<br>
-currently mostly about Java 9.</p></div>
-<div class="paragraph"><p>You can <a href="http://blog.codefx.org/hire-nicolai-parlog/">hire me</a>.</p></div></section>
+<div class="paragraph"><p>⇜ Get <a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&amp;a_bid=869915cb">my book</a>!</p></div>
+<div class="paragraph"><p>You can <a href="http://blog.codefx.org/hire-nicolai-parlog/">hire me</a>:</p></div>
+<div class="ulist"><ul><li><p>training (Java 8/9, JUnit 5)</p></li><li><p>consulting (Java 8/9)</p></li></ul></div></section>
 <section id="_image_credits"><h2>Image Credits</h2><div class="ulist"><ul><li><p><a href="https://pixabay.com/en/number-digit-eight-8-background-1982275/">eight</a>:
 <a href="https://pixabay.com/en/users/PIRO4D-2707530/">PIRO4D</a>,
 <a href="https://wiki.creativecommons.org/wiki/CC0">CC0</a></p></li><li><p><a href="https://www.flickr.com/photos/21496790@N06/5065834411">question-mark</a>:
