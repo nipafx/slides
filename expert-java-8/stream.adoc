@@ -356,6 +356,8 @@ static Function<T, Either<EX, R>> wrapEither(
 			return Either.right(
 				function.apply(element));
 		} catch (Exception ex) {
+			// add special cases for RuntimeException,
+			// InterruptedException, etc.
 			return Either.left((EX) ex);
 		}
 	};
