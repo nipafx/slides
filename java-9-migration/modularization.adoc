@@ -47,8 +47,9 @@ An *Automatic Module* +
 is created _for each_ "regular" JAR +
 on the module path.
 
-* gets a name based on the file name or a +
-manifest entry `AUTOMATIC-MODULE-NAME`
+* name defined by manifest entry +
+`AUTOMATIC-MODULE-NAME` or +
+derived from JAR name
 * can read all modules +
 (including the Unnamed Module)
 * exports all packages
