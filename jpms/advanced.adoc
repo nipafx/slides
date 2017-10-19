@@ -49,8 +49,8 @@ No!
 === Implied Readability
 
 Exposing module can mark dependencies +
-on exposed modules +
-with `requires transitive`:
+on exposed modules with +
+`requires transitive`:
 
 [source,java]
 ----
@@ -183,7 +183,7 @@ Not all dependencies are equally required:
 
 * some are needed for a module to function
 * some can be absent and code adapts
-* are only needed to enhance +
+* some are only needed to enhance +
 another module's features
 
 Optional dependencies are about the latter two.
@@ -200,7 +200,8 @@ Enhancing a module:
 
 * a project may provide usability functions +
 for other libraries
-* such code can not be called if module absent
+* such code can not be called if library modules +
+are absent
 
 
 === Conundrum
@@ -245,7 +246,7 @@ _advent_ may not need both all the time:
 ----
 module advent {
 	requires calendar;
-	requires factories;
+	requires surprise;
 	requires static factories.chocolate;
 	requires static factories.quote;
 }
@@ -334,12 +335,12 @@ Module Declarations:
 ----
 // consumer
 module A {
-	uses service.Interface;
+	uses some.Service;
 }
 
 // provider
 module B {
-	provides service.Interface
+	provides some.Service
 		with some.Type;
 }
 ----
@@ -353,7 +354,7 @@ module B {
 
 [source,java]
 ----
-ServiceLoader.load(service.Interface.class)
+ServiceLoader.load(Service.class)
 ----
 
 
@@ -385,11 +386,10 @@ module factory.quote {
 [source,java]
 ----
 public static void main(String[] args) {
-	List<SurpriseFactory> factories =
-			new ArrayList<>();
-	ServiceLoader
-			.load(SurpriseFactory.class)
-			.forEach(factories::add);
+	List<SurpriseFactory> factories = ServiceLoader
+		.load(SurpriseFactory.class).stream()
+		.map(Provider::get)
+		.collect(toList());
 	Calendar cal = Calendar.create(factories);
 	System.out.println(cal.asText());
 }
@@ -472,9 +472,9 @@ module factory {
 
 With `A exports pack to B`:
 
-* only _B_ can access types in `pack`
-* other modules behave as if `pack` +
-not exported
+* only _B_ can access types in `some.pack`
+* other modules behave as if `some.pack` +
+is not exported
 
 Use to share sensible code between modules.
 

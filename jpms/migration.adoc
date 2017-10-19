@@ -96,8 +96,9 @@ An *Automatic Module* +
 is created _for each_ "regular" JAR +
 on the module path.
 
-* gets a name based on the file name or a +
-manifest entry `AUTOMATIC-MODULE-NAME`
+* name defined by manifest entry +
+`AUTOMATIC-MODULE-NAME` or +
+derived from JAR name
 * can read all modules +
 (including the Unnamed Module)
 [[TODO, use a diagram that has the automatic module read a dependency from the unnamed module to drive the important point home]]
@@ -270,8 +271,8 @@ whose names are *based on file names*!
 <h3>Manifest Entry</h3>
 ++++
 
-* thanks to manifest entry projects +
-can already publish their module name
+* thanks to manifest entry, +
+projects can publish their module name
 * assumption is that it won't change +
 when project gets modularized
 * that makes these names stable
