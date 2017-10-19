@@ -1,0 +1,124 @@
+== Java Module System Basics
+
+++++
+<h3>The very short version</h3>
+++++
+
+
+=== Modules
+
+Modules
+
+* have a unique name
+* express their dependencies +
+(_readability_ ⇝ _reliable configuration_)
+* export specific packages +
+and hide the rest +
+(_accessibility_ ⇝ _strong encapsulation_)
+
+
+=== Jigsaw Advent Calendar
+image::images/advent-calendar.jpg[background, size=cover]
+
+++++
+<h3>A simple example</h3>
+++++
+
+Find it https://github.com/CodeFX-org/demo-jigsaw-advent-calendar[on GitHub]!
+
+
+=== Structure
+
+// http://yuml.me/edit/64cd5858
+image::images/advent-calendar-structure.png[role="diagram"]
+
+
+=== Code
+
+[source,java]
+----
+public static void main(String[] args) {
+	List<SurpriseFactory> factories = asList(
+		new ChocolateFactory(), new QuoteFactory());
+	Calendar cal = Calendar.create(factories);
+	println(cal.asText());
+}
+----
+
+// see above
+image::images/advent-calendar-structure.png[_,75%,role="diagram"]
+
+
+=== Module Structure
+
+// image #1: taken from "Structure"
+// iamge #2: http://yuml.me/edit/a61aa29b
+++++
+<div class="imageblock" style="">
+	<div class="content diagram">
+		<img src="images/advent-calendar-structure.png" style="margin: 25px; width:75%;">
+	</div>
+</div>
+<div class="imageblock fragment current-visible" data-fragment-index="0">
+	<div class="content diagram">
+		<img src="images/advent-calendar-module-multi.png" alt="b2e21fbf" style="margin: 0;">
+	</div>
+</div>
+++++
+
+[NOTE.speaker]
+--
+* this is another module graph
+--
+
+
+=== Module Structure
+
+// taken from previous slide
+image::images/advent-calendar-module-multi.png[role="diagram"]
+
+// The outer div's height must be specified explicitly so that
+// vertical space is reserved for the non-displayed fragments.
+++++
+<div style="height: 210px;">
+<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">module surprise {
+	<span class="hljs-comment">// requires no other modules</span>
+	exports org.codefx.advent.surprise;
+}</code></pre></div></div>
+<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">module calendar {
+	requires surprise;
+	exports org.codefx.advent.calendar;
+}</code></pre></div></div>
+<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">module factories {
+	requires surprise;
+	exports org.codefx.advent.factories;
+}</code></pre></div></div>
+<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">module advent {
+	requires calendar;
+	requires factories;
+	requires surprise;
+}</code></pre></div></div>
+</div>
+++++
+
+
+=== Module Creation
+
+++++
+<h3>Compilation, Packaging, Execution</h3>
+++++
+
+[source,bash]
+----
+# compile all modules at once
+$ javac -d classes
+    --module-source-path "src"
+    --module advent
+# package one by one, eventually advent
+$ jar --create
+    --file mods/advent.jar
+    --main-class advent.Main
+    ${*.class}
+# launch the application
+$ java --module-path mods --module advent
+----
