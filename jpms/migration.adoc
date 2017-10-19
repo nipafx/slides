@@ -34,7 +34,8 @@ for some time
 
 https://blog.codefx.org/tools/jdeps-tutorial-analyze-java-project-dependencies/[JDeps] can report internal dependencies:
 
-```
+[source,bash]
+----
 $ jdeps --jdk-internals
 	-recursive --class-path 'libs/*'
 	scaffold-hunter-2.6.3.jar
@@ -45,7 +46,7 @@ $ jdeps --jdk-internals
 >     Striped64 -> Unsafe
 > scaffold-hunter-2.6.3.jar -> java.desktop
 >     SteppedComboBox -> WindowsComboBoxUI
-```
+----
 
 
 === What else to look for?
@@ -94,7 +95,8 @@ are inaccessible
 
 JDeps reports split packages:
 
-```
+[source,bash]
+----
 $ jdeps -summary
 	-recursive --class-path 'libs/*'
 	project.jar
@@ -102,7 +104,7 @@ $ jdeps -summary
 > split package: javax.annotation
 >     [jrt:/java.xml.ws.annotation,
 >         libs/jsr305-3.0.2.jar]
-```
+----
 
 
 === What to do?
@@ -141,7 +143,8 @@ These are
 
 JDeps shows dependencies on platform modules:
 
-```
+[source,bash]
+----
 $ jdeps -summary sh-2.6.3.jar
 
 > sh-2.6.3.jar -> java.base
@@ -151,7 +154,7 @@ $ jdeps -summary sh-2.6.3.jar
 > sh-2.6.3.jar -> java.prefs
 > sh-2.6.3.jar -> java.sql
 > sh-2.6.3.jar -> java.xml
-```
+----
 
 
 === What to do?

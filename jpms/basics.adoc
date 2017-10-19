@@ -205,13 +205,13 @@ on the class path as before
 [source,bash]
 ----
 # compile
-javac -d classes/advent ${*.java}
+$ javac -d classes/advent ${*.java}
 # package with manifest
-jar --create --file jars/advent.jar
-	--manifest ${manifest}
-	${*.class}
+$ jar --create --file jars/advent.jar
+    --manifest ${manifest}
+    ${*.class}
 # run
-java -jar jars/advent.jar
+$ java -jar jars/advent.jar
 ----
 
 [NOTE.speaker]
@@ -261,15 +261,16 @@ module advent {
 [source,bash]
 ----
 # compile with module-info.java
-javac -d classes/advent ${*.java}
+$ javac -d classes/advent ${*.java}
 # package with module-info.class
 # and specify main class
-jar --create --file mods/advent.jar
-	--main-class advent.Main
-	${*.class}
+$ jar --create
+    --file mods/advent.jar
+    --main-class advent.Main
+    ${*.class}
 # run by specifying a module path
 # and a module to run (by name)
-java --module-path mods --module advent
+$ java --module-path mods --module advent
 ----
 
 [NOTE.speaker]
@@ -350,13 +351,14 @@ image::images/advent-calendar-module-multi.png[role="diagram"]
 [source,bash]
 ----
 # compile all modules at once
-javac -d classes
-	--module-source-path "src"
-	--module advent
+$ javac -d classes
+    module-source-path "src"
+    --module advent
 # package one by one, eventually advent
-jar --create --file mods/advent.jar
-	--main-class advent.Main
-	${*.class}
+$ jar --create
+    --file mods/advent.jar
+    --main-class advent.Main
+    ${*.class}
 # launch the application
-java --module-path mods --module advent
+$ java --module-path mods --module advent
 ----

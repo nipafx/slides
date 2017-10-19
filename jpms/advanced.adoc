@@ -575,10 +575,10 @@ it might not make it into the module graph.
 
 [source,bash]
 ----
-	java --module-path mods
-#	--add-modules <module>(,<module>)*
-		--add-modules factories
-		--module advent
+$ java --module-path mods
+#   --add-modules <module>(,<module>)*
+    --add-modules factories
+    --module advent
 ----
 
 
@@ -605,10 +605,10 @@ by another but you need it to be.
 
 [source,bash]
 ----
-	java --module-path mods
-#	--add-reads <module>=<target>(,<more>)*
-		--add-reads advent=factories
-		--module advent
+$ java --module-path mods
+#   --add-reads <module>=<target>(,<more>)*
+    --add-reads advent=factories
+    --module advent
 ----
 
 
@@ -623,10 +623,10 @@ the owning module doesn't export.
 
 [source,bash]
 ----
-	java --module-path mods
-#	--add-exports <module>/<package>=<target>
-		--add-exports factories/factories.quotes=advent
-		--module advent
+$ java --module-path mods
+#   --add-exports <module>/<package>=<target>
+    --add-exports factories/factories.quotes=advent
+    --module advent
 ----
 
 Use target `ALL-UNNAMED` to export to all modules.
@@ -643,10 +643,10 @@ the owning module doesn't open.
 
 [source,bash]
 ----
-	java --module-path mods
-#	--add-opens <module>/<package>=<target>
-		--add-opens factories/factories.quotes=advent
-		--module advent
+$ java --module-path mods
+#   --add-opens <module>/<package>=<target>
+    --add-opens factories/factories.quotes=advent
+    --module advent
 ----
 
 Use target `ALL-UNNAMED` to open to all modules.
