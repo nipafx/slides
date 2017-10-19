@@ -22,16 +22,17 @@
 	font-size: 3.5em;
 }
 </style>
+<h2>Beyond the Basics</h2>
 ++++
 
 include::../_shared/highlight.js.adoc[]
 
-:host-name: Riga DevDays
-:host-url: http://rigadevdays.lv/
-:host-logo-url: images/logo-riga-dev-days.png
+:host-name: BaselOne
+:host-url: http://baselone.ch/
+:host-logo-url: images/logo-basel-one.jpg
 // :host-logo-style: background-color: #111; border-color: #FFF;
-:host-twitter-name: #RigaDevDays
-:host-twitter-url: https://twitter.com/hashtag/RigaDevDays
+:host-twitter-name: #BaselOne
+:host-twitter-url: https://twitter.com/hashtag/BaselOne
 include::../_shared/event-on-title-and-footer.adoc[]
 
 
@@ -43,15 +44,19 @@ include::../_shared/event-on-title-and-footer.adoc[]
 == Public Service Announcement
 
 * I assume you know the JPMS basics
+* there's much to talk about +
+⇝ you pick and choose
 // * if you're shy, tweet questions +
 // with https://twitter.com/search?q=%23vdz17%20%40nipafx[#VDZ17 @nipafx]
 * slides at http://slides.codefx.org/[slides.codefx.org]
 
-include::impedance-mismatch.adoc[]
+// include::impedance-mismatch.adoc[]
+//
+// include::project-jigsaw.adoc[]
+//
+// include::basics.adoc[]
 
-include::project-jigsaw.adoc[]
-
-include::basics.adoc[]
+include::quick-intro.adoc[]
 
 include::advanced.adoc[]
 
