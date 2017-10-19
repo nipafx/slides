@@ -1,0 +1,240 @@
+== Migration Challenges
+
+++++
+<h3>What to look out for<br>when running on JDK 9</h3>
+++++
+
+
+=== Break Stuff
+image::images/broken-glass.jpg[background, size=cover]
+
+Some internal changes https://blog.codefx.org/java/java-9-migration-guide/[break existing code]!
+
+Just by running on JDK 9 +
+(even without modularizing the application).
+
+// http://openjdk.java.net/jeps/261[JEP 261] contains a list of risks.
+
+
+=== Internal APIs
+image::images/internals.jpg[background, size=cover]
+
+* internal APIs are:
+** all in `sun.*`
+** most in `com.sun.*` +
+(unless marked `@jdk.Exported`)
+* encapsulated at compile time
+* accessible at run time +
+for some time
+* critical APIs may survive longer +
+(e.g. `sun.misc.Unsafe`)
+
+
+=== What to look for?
+
+https://blog.codefx.org/tools/jdeps-tutorial-analyze-java-project-dependencies/[JDeps] can report internal dependencies:
+
+```
+$ jdeps --jdk-internals
+	-recursive --class-path 'libs/*'
+	scaffold-hunter-2.6.3.jar
+
+> batik-codec.jar -> JDK removed internal API
+>     JPEGImageWriter -> JPEGCodec
+> guava-18.0.jar -> jdk.unsupported
+>     Striped64 -> Unsafe
+> scaffold-hunter-2.6.3.jar -> java.desktop
+>     SteppedComboBox -> WindowsComboBoxUI
+```
+
+
+=== What else to look for?
+
+* look for reflection, especially
+** `Class::forName`
+** `AccessibleObject::setAccessible`
+* recursively check your dependencies!
+
+
+=== What to do?
+
+. fix your code
+. contact library developers
+. look for alternatives +
+(in the JDK or other libraries)
+. consider command line flags +
+`--add-exports`, `--add-opens`, or +
+`--permit-illegal-access`
+
+
+=== Split Packages
+image::images/cut.jpg[background, size=cover]
+
+* packages should have a unique origin
+* no module must read the same package +
+from two modules
+
+The implementation is even stricter:
+
+* no two modules must contain +
+the same package (exported or not)
+* split packages on class path +
+are inaccessible
+
+
+=== Examples
+
+* some libraries split `java.xml.*`, e.g. http://search.maven.org/#artifactdetails|xml-apis|xml-apis|2.0.2|jar[xml-apis]
+* some https://issues.jboss.org/browse/WFLY-6375?_sscc=t[JBoss modules] split, e.g., +
+`java.transaction`, `java.xml.ws`
+* http://mvnrepository.com/artifact/com.google.code.findbugs/jsr305[jsr305] splits `javax.annotation`
+
+
+=== What to look for?
+
+JDeps reports split packages:
+
+```
+$ jdeps -summary
+	-recursive --class-path 'libs/*'
+	project.jar
+
+> split package: javax.annotation
+>     [jrt:/java.xml.ws.annotation,
+>         libs/jsr305-3.0.2.jar]
+```
+
+
+=== What to do?
+
+Your artifacts:
+
+. rename one of the packages
+. merge package into the same artifact
+. merge the artifacts
+. place both artifacts on the class path
+
+Otherwise:
+
+[start=5]
+. upgrade the JDK module with the artifact
+. `--patch-module` with the artifact's content
+
+
+=== Java EE Modules
+image::images/java-ee.jpg[background, size=cover]
+
+* _java.activation_ (`javax.activation`)
+* _java.corba_ (CORBA packages)
+* _java.transaction_ (`javax.transaction`)
+* _java.xml.bind_ (`javax.xml.bind.*`)
+* _java.xml.ws_ (JAX-WS packages)
+* _java.xml.ws.annotation_ (`javax.annotation`)
+
+These are
+
+* deprecated for removal
+* not resolved by default
+
+
+=== What to look for?
+
+JDeps shows dependencies on platform modules:
+
+```
+$ jdeps -summary sh-2.6.3.jar
+
+> sh-2.6.3.jar -> java.base
+> sh-2.6.3.jar -> java.datatransfer
+> sh-2.6.3.jar -> java.desktop
+> sh-2.6.3.jar -> java.logging
+> sh-2.6.3.jar -> java.prefs
+> sh-2.6.3.jar -> java.sql
+> sh-2.6.3.jar -> java.xml
+```
+
+
+=== What to do?
+
+* pick a third-party implementation
+* add Java EE platform modules +
+with `--add-modules`
+
+
+=== Run-Time Images
+image::images/cells.jpg[background, size=cover]
+
+* new JDK/JRE layout
+* internal JARs are gone (e.g. `rt.jar`, `tools.jar`)
+* JARs are now JMODs
+* application class loader is no `URLClassLoader` +
+(no way to append to its class path)
+* new URL schema for run-time image content
+
+
+=== What to look for?
+
+* does the code rummage around +
+in the JDK / JRE folder?
+* are URLs to JDK classes / resources handcrafted?
+* search for casts to `URLClassLoader`
+
+
+=== Obsolete
+image::images/obsolete.jpg[background, size=cover]
+
+* Compact Profiles
+* Extension Mechanism
+* Endorsed Standards Override Mechanism
+* Boot Class Path Override
+* JRE version selection with `-version:N`
+
+[NOTE.speaker]
+--
+* ext. mech.: makes custom APIs available to all applications running on the JDK
+* first 2 replaced by upgradeable modules.
+--
+
+
+=== But wait, there's more!
+image::images/shibuya-night.jpg[background, size=cover]
+
+Yes, yes, there's more:
+
+*Java 9 Migration Guide* +
+(https://blog.codefx.org/java/java-9-migration-guide/[tiny.cc/java-9-migration])
+
+Background:
+
+* https://blog.codefx.org/java/planning-your-java-9-update/[Planning Your Java 9 Update]
+* https://blog.codefx.org/java/five-command-line-options-to-hack-the-java-9-module-system/[JPMS Command Line Options]
+* https://blog.codefx.org/tools/jdeps-tutorial-analyze-java-project-dependencies/[JDeps Tutorial]
+
+And there are new version strings:
+
+* goodbye `1.9.0_31`, hello `9.1.4` +
+(soon  `18.3`?)
+
+
+=== General Advice I
+image::images/sign.jpg[background, size=cover]
+
+The most relevant for most applications:
+
+* internal APIs
+* split packages
+* Java EE modules
+
+
+=== General Advice II
+image::images/sign.jpg[background, size=cover]
+
+* get your code in shape +
+(and prevent relapses)
+* check your dependencies and tools
+* if any are suspicious +
+(automatically true for IDEs, build tools):
+** make sure they're alive
+** *get them up to date!*
+** or look for alternatives
+* download Java 9 and *try it!*
