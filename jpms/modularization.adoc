@@ -1,4 +1,4 @@
-== Migration
+== Incremental Modularization
 
 ++++
 <h3>Moving Into Module Land</h3>
@@ -10,12 +10,16 @@ image::images/keep-out.jpg[background, size=cover]
 * most module systems are "in or out", +
 * but modularized JDK and legacy JARs +
 have to cooperate!
-* so migration has to be possible
+* there is a boundary between +
+legacy and modules
+
+Incremental modularization means +
+moving that boundary.
 
 
 === Enablers
 
-Migration is enabled by two features:
+Incremental modularization is enabled by two features:
 
 * Unnamed Module(s)
 * Automatic Modules
@@ -57,7 +61,7 @@ Inside the unnamed module +
 
 Put all your JARs on the class path.
 
-image::images/migration-unnamed.png[role="diagram"]
+image::images/modularization-unnamed.png[role="diagram"]
 
 
 === No Access
@@ -78,8 +82,7 @@ module advent {
 
 === No Access
 
-image::images/migration-unnamed-dependency.png[role="diagram"]
-
+image::images/modularization-unnamed-dependency.png[role="diagram"]
 
 
 === Automatic Modules
@@ -120,7 +123,7 @@ module advent {
 
 === Example
 
-image::images/migration-automatic.png[role="diagram"]
+image::images/modularization-automatic.png[role="diagram"]
 
 
 === What Goes Where?
@@ -138,19 +141,21 @@ image::images/confusion.jpg[background, size=cover]
 
 |Modular JAR
 |Unnamed Module
-|Named Module
+|Explicit Module
 |===
 
+Unnamed or named module? +
+The user decides, not the maintainer!
 
-=== Migration Strategies
+=== Modularization Strategies
 
 Three strategies emerge:
 
-* bottom-up migration
-* top-down migration
-* inside-out migration
+* bottom-up
+* top-down
+* inside-out
 
-=== Bottom-Up Migration
+=== Bottom-Up
 
 Works best for projects *without* +
 unmodularized dependencies +
@@ -163,7 +168,7 @@ whenever they want
 
 
 ////
-=== Bottom-Up Migration
+=== Bottom-Up
 
 ++++
 <h3>Example</h3>
@@ -173,7 +178,7 @@ whenever they want
 ////
 
 
-=== Top-Down Migration
+=== Top-Down
 
 Required for projects *with* +
 unmodularized dependencies +
@@ -182,7 +187,7 @@ unmodularized dependencies +
 * turn project JARs into modules
 
 
-=== Top-Down Migration
+=== Top-Down
 
 * modularized dependencies:
 ** require direct ones
@@ -201,7 +206,7 @@ unmodularized dependencies +
 
 
 ////
-=== Top-Down Migration
+=== Top-Down
 
 ++++
 <h3>Example</h3>
@@ -211,7 +216,7 @@ unmodularized dependencies +
 ////
 
 
-=== Top-Down Migration
+=== Top-Down
 
 When dependencies get modularized:
 
@@ -222,7 +227,7 @@ nothing changes
 * check their dependencies
 
 
-=== Inside-Out Migration
+=== Inside-Out
 
 What about *published* projects *with* +
 unmodularized dependencies +
@@ -233,7 +238,7 @@ unmodularized dependencies +
 about automatic module names!
 
 
-=== Inside-Out Migration
+=== Inside-Out
 
 ++++
 <h3>Automatic Module Names</h3>
@@ -249,7 +254,7 @@ when project gets modularized
 ⇝ Such automatic module names are unstable.
 
 
-=== Inside-Out Migration
+=== Inside-Out
 
 ++++
 <h3>Impossible Module Requirements</h3>
@@ -265,7 +270,7 @@ that depend on automatic modules +
 whose names are *based on file names*!
 
 
-=== Inside-Out Migration
+=== Inside-Out
 
 ++++
 <h3>Manifest Entry</h3>
