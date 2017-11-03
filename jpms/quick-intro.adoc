@@ -10,11 +10,52 @@
 Modules
 
 * have a unique name
-* express their dependencies +
-(_readability_ ⇝ _reliable configuration_)
+* express their dependencies
 * export specific packages +
-and hide the rest +
-(_accessibility_ ⇝ _strong encapsulation_)
+and hide the rest
+
+These information
+
+* are defined in `module-info.java`
+* get compiled to `module-info.class`
+* end up in JAR root folder
+
+=== Readability
+
+Modules express dependencies
+with `requires` clauses:
+
+[source,java]
+----
+module A {
+	requires B;
+}
+----
+
+* module system checks all dependencies +
+(⇝ _reliable configuration_)
+* lets module _read_ its dependencies
+
+
+=== Accessibility
+
+Modules export packages
+with `exports` clauses
+
+[source,java]
+----
+module B {
+	exports p;
+}
+----
+
+Code in module _A_ can only access `Type` in module _B_ if:
+
+* `Type` is public
+* `Type` is in an exported package
+* _A_ reads _B_
+
+(⇝ _strong encapsulation_)
 
 
 === Jigsaw Advent Calendar
