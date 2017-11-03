@@ -1,12 +1,34 @@
-== Advanced Java Module System
+== Java Module System Beyond The Basics
 
 ++++
-<h3>Going Deeper...
+<table class="toc">
+	<tr><td>Transitive Dependencies</td></tr>
+	<tr><td>Optional Dependencies</td></tr>
+	<tr><td>Services</td></tr>
+	<tr><td>Qualified Exports</td></tr>
+	<tr><td>Reflective Access</td></tr>
+	<tr><td>Command Line Options</td></tr>
+</table>
 ++++
+
 
 //***********************************************//
 // T R A N S I T I V E   D E P E N D E N C I E S //
 //***********************************************//
+
+== Java Module System Beyond The Basics
+
+++++
+<table class="toc">
+	<tr class="toc-current"><td>Transitive Dependencies</td></tr>
+	<tr><td>Optional Dependencies</td></tr>
+	<tr><td>Services</td></tr>
+	<tr><td>Qualified Exports</td></tr>
+	<tr><td>Reflective Access</td></tr>
+	<tr><td>Command Line Options</td></tr>
+</table>
+++++
+
 
 === Transitive Dependencies
 
@@ -177,6 +199,20 @@ without further dependencies
 // O P T I O N L   D E P E N D E N C I E S //
 //*****************************************//
 
+== Java Module System Beyond The Basics
+
+++++
+<table class="toc">
+	<tr><td>Transitive Dependencies</td></tr>
+	<tr class="toc-current"><td>Optional Dependencies</td></tr>
+	<tr><td>Services</td></tr>
+	<tr><td>Qualified Exports</td></tr>
+	<tr><td>Reflective Access</td></tr>
+	<tr><td>Command Line Options</td></tr>
+</table>
+++++
+
+
 === Optional Dependencies
 
 Not all dependencies are equally required:
@@ -310,6 +346,20 @@ without that dependency
 //*****************//
 
 
+== Java Module System Beyond The Basics
+
+++++
+<table class="toc">
+	<tr><td>Transitive Dependencies</td></tr>
+	<tr><td>Optional Dependencies</td></tr>
+	<tr class="toc-current"><td>Services</td></tr>
+	<tr><td>Qualified Exports</td></tr>
+	<tr><td>Reflective Access</td></tr>
+	<tr><td>Command Line Options</td></tr>
+</table>
+++++
+
+
 === Services
 
 *Consumers* and *implementations* +
@@ -413,6 +463,20 @@ request implementations from `ServiceLoader`:
 // Q U A L I F I E D   E X P O R T S //
 //***********************************//
 
+== Java Module System Beyond The Basics
+
+++++
+<table class="toc">
+	<tr><td>Transitive Dependencies</td></tr>
+	<tr><td>Optional Dependencies</td></tr>
+	<tr><td>Services</td></tr>
+	<tr class="toc-current"><td>Qualified Exports</td></tr>
+	<tr><td>Reflective Access</td></tr>
+	<tr><td>Command Line Options</td></tr>
+</table>
+++++
+
+
 === Qualified Exports
 
 So far, exported packages are visible +
@@ -483,6 +547,20 @@ Use to share sensible code between modules.
 // O P E N   P A C K A G E S / M O D U L E S //
 //*******************************************//
 
+== Java Module System Beyond The Basics
+
+++++
+<table class="toc">
+	<tr><td>Transitive Dependencies</td></tr>
+	<tr><td>Optional Dependencies</td></tr>
+	<tr><td>Services</td></tr>
+	<tr><td>Qualified Exports</td></tr>
+	<tr class="toc-current"><td>Reflective Access</td></tr>
+	<tr><td>Command Line Options</td></tr>
+</table>
+++++
+
+
 === Reflective Access
 
 Exporting a package makes it public API:
@@ -543,6 +621,20 @@ without making them public API.
 //*************************//
 // C O M M A N D   L I N E //
 //*************************//
+
+== Java Module System Beyond The Basics
+
+++++
+<table class="toc">
+	<tr><td>Transitive Dependencies</td></tr>
+	<tr><td>Optional Dependencies</td></tr>
+	<tr><td>Services</td></tr>
+	<tr><td>Qualified Exports</td></tr>
+	<tr><td>Reflective Access</td></tr>
+	<tr class="toc-current"><td>Command Line Options</td></tr>
+</table>
+++++
+
 
 === Command Line Arguments
 
