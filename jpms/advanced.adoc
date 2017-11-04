@@ -53,9 +53,10 @@ public static Calendar create(
 }
 ----
 
-⇝ Module _calendar_ is unusable without _surprise_!
+// http://yuml.me/edit/8f6136a7
+image::images/advent-requires-transitive-problem.png[role="diagram"]
 
-[[TODO, diagram with depending, exposing, exposed module]]
+⇝ Module _calendar_ is unusable without _surprise_!
 
 
 === Try and Error?
@@ -98,13 +99,10 @@ module calendar {
 	requires transitive surprise;
 	// ...
 }
-
-module factories {
-	requires transitive surprise;
-	// ...
-}
 ----
 
+// http://yuml.me/edit/792c3137
+image::images/advent-requires-transitive-solution.png[role="diagram"]
 
 === Further Applications
 
@@ -139,9 +137,9 @@ _api_, _chocolate_, and _quotes_:
 [source,java]
 ----
 module factories {
-	requires transitive factories.api;
-	requires transitive factories.chocolate;
-	requires transitive factories.quotes;
+	requires transitive factory.api;
+	requires transitive factory.chocolate;
+	requires transitive factory.quotes;
 }
 ----
 
@@ -189,11 +187,13 @@ With `A requires transitive B`:
 
 Applications:
 
-* make sure API is usable +
-without further dependencies
+* make API usable without further dependencies
 * aggregator modules
 * splitting, merging, renaming modules
 
+More at https://blog.codefx.org[codefx.org]:
+
+https://blog.codefx.org/java/implied-readability[Implied Readability]
 
 //*****************************************//
 // O P T I O N L   D E P E N D E N C I E S //
@@ -225,19 +225,45 @@ another module's features
 Optional dependencies are about the latter two.
 
 
-=== Use Cases
+=== Adapting Code
 
-Adapting code:
+Use case:
 
 * a library may be absent from some deployments
 * code is aware and does not call absent modules
 
-Enhancing a module:
+Example:
+
+* each `SurpriseFactory` implementation +
+has its own module
+* _advent_ works without any specific factory
+
+
+=== Adapting Code
+
+// http://yuml.me/edit/c546ecc6
+image::images/advent-requires-static.png[role="diagram"]
+
+
+=== Enhancing A Module
+
+Use case:
 
 * a project may provide usability functions +
 for other libraries
-* such code can not be called if library modules +
+* such code will not be called if library modules +
 are absent
+
+Example:
+
+* hypothetical library _uber-lib_
+* provides usability functions for various libraries
+
+
+=== Enhancing A Module
+
+// http://yuml.me/edit/7097b60f
+image::images/uber-lib-requires-static.png[role="diagram"]
 
 
 === Conundrum
@@ -275,16 +301,15 @@ but access to _B_ can fail
 
 === Adapting Code
 
-Assuming each factory has its own module, +
-_advent_ may not need both all the time:
+For _advent_ and the two factories:
 
 [source,java]
 ----
 module advent {
 	requires calendar;
 	requires surprise;
-	requires static factories.chocolate;
-	requires static factories.quote;
+	requires static factory.chocolate;
+	requires static factory.quote;
 }
 ----
 
@@ -296,7 +321,7 @@ Checking whether module is present:
 [source,java]
 ----
 Optional<SurpriseFactory> createChocolateFactory() {
-	if (isModulePresent("factories.chocolate"))
+	if (isModulePresent("factory.chocolate"))
 		return Optional.of(new ChocolateFactory());
 	else
 		return Optional.empty();
@@ -306,15 +331,13 @@ Optional<SurpriseFactory> createChocolateFactory() {
 
 === Enhancing A Module
 
-Hypothetical library _uber-lib_ provides +
-usability functions for various libraries.
+For _uber-lib_:
 
 [source,java]
 ----
 module uber.lib {
 	requires static com.google.guava;
 	requires static org.apache.commons.lang;
-	requires static org.apache.commons.io;
 	requires static io.vavr;
 	requires static com.aol.cyclops;
 }
@@ -333,12 +356,15 @@ With `A requires static B`:
 * at compile time: _A_ requires _B_ as usual
 * at runtime: _B_ may be absent
 
-Use to prevent absence of optional dependencies +
-from preventing application launch:
+Two kinds of applications:
 
-* modules with code adapting to absense
+* modules with code adapting to absence
 * utility libraries that aren't called +
 without that dependency
+
+More at https://blog.codefx.org[codefx.org]:
+
+https://blog.codefx.org/java/module-system-optional-dependencies/[Optional Dependencies]
 
 
 //*****************//
@@ -360,7 +386,13 @@ without that dependency
 ++++
 
 
-=== Services
+=== Dependency Inversion?
+
+// http://yuml.me/edit/e46b1686
+image::images/advent-dependency-inversion.png[role="diagram"]
+
+
+=== Service Locator Pattern
 
 *Consumers* and *implementations* +
 of an API should be decoupled.
@@ -371,15 +403,20 @@ Service locator pattern:
 * implementors inform registry
 * consumers call registry to get implementations
 
-In Java:
 
+=== Services in JPMS
+
+In the JPMS:
+
+* modules declare which services they use
+* modules declare which services they provide
 * `ServiceLoader` is the registry
-* modules can interact with it
+* code can interact with it to load services
 
 
-=== Services
+=== Service Declarations
 
-Module Declarations:
+Module declarations:
 
 [source,java]
 ----
@@ -396,7 +433,7 @@ module B {
 ----
 
 
-=== Services
+=== Loading Services
 
 * _A_ never "sees" providers like _B_
 * module system picks up all providers
@@ -429,6 +466,13 @@ module factory.quote {
 		with factory.quote.QuoteFactory;
 }
 ----
+
+
+=== Factory Services
+
+
+// http://yuml.me/edit/aeff75c1
+image::images/advent-services.png[role="diagram"]
 
 
 === Factory Services
@@ -636,7 +680,7 @@ without making them public API.
 ++++
 
 
-=== Command Line Arguments
+=== Command Line Options
 
 The module system is pretty strict but...
 
@@ -645,11 +689,11 @@ The module system is pretty strict but...
 
 What to do then?
 
-Command Line Arguments to the rescue! +
+Command line options to the rescue! +
 (I often call them "escape hatches".)
 
 
-=== Command Line Arguments
+=== Command Line Options
 
 All command line flags can be applied +
 to `javac` and `java`!
@@ -657,6 +701,7 @@ to `javac` and `java`!
 When used during compilation, +
 they do _not_ change the resulting +
 module descriptor!
+
 
 === Add Modules
 
@@ -717,7 +762,7 @@ the owning module doesn't export.
 ----
 $ java --module-path mods
 #   --add-exports <module>/<package>=<target>
-    --add-exports factories/factories.quotes=advent
+    --add-exports factories/factory.quotes=advent
     --module advent
 ----
 
@@ -737,7 +782,7 @@ the owning module doesn't open.
 ----
 $ java --module-path mods
 #   --add-opens <module>/<package>=<target>
-    --add-opens factories/factories.quotes=advent
+    --add-opens factories/factory.quotes=advent
     --module advent
 ----
 
