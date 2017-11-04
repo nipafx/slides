@@ -1,0 +1,149 @@
+== Creating Runtime Images With JLink
+
+++++
+<h3>Custom-Made For Your Application</h3>
+++++
+
+
+=== Remember This?
+image::images/platform-modules.png[background, size=cover]
+
+
+=== Benefiting From JDK Modularization
+
+Create a JDK install with just the code you need:
+
+* know which modules your app uses (⇝ `jdeps`)
+* create an image with those modules (⇝ `jlink`)
+
+This is about `jlink`.
+
+
+=== A Minimal JDK Image
+
+Create with `jlink`
+
+[source,bash]
+----
+$ jlink
+#   define output folder for the image
+    --output jdk
+#   where to find modules?
+    --module-path $JAVA_HOME/jmods
+#   which modules to add (includes dependencies!)
+    --add-modules java.base
+----
+
+Try it out:
+
+[source,bash]
+----
+$ jdk/bin/java --list-modules
+> java.base
+----
+
+
+=== Image For A Backend
+
+Say you use JAX-WS, JAXP, JAXB, JDBC, and JUL:
+
+[source,bash]
+----
+$ jlink
+    --output jdk
+    --module-path $JAVA_HOME/jmods
+    --add-modules java.xml.ws,java.xml,java.xml.bind
+	--add-modules java.sql,java.logging
+----
+
+
+=== Image For A Backend
+
+[source,bash]
+----
+$ jdk/bin/java --list-modules
+> java.activation
+> java.base
+> java.compiler
+> java.datatransfer
+> java.desktop
+> java.logging
+> java.management
+> java.prefs
+> java.sql
+> java.xml
+> java.xml.bind
+> java.xml.ws
+> java.xml.ws.annotation
+> jdk.httpserver
+> jdk.unsupported
+----
+
+
+=== Image Including Your App
+
+To create an image for your app +
+*all JARs need to be modularized!* +
+(Including dependencies.)
+
+[source,bash]
+----
+$ jlink
+    --output jdk
+    --module-path $JAVA_HOME/jmods:mods
+    --add-modules advent
+#   services are not resolves automatically
+    --add-modules factory.surprise,factory.chocolate
+----
+
+Launching the app:
+
+[source,bash]
+----
+jdk/bin/java -module advent
+----
+
+
+=== Creating A Launcher
+
+You can even create a launcher:
+
+[source,bash]
+----
+$ jlink
+    --output jdk
+    --module-path $JAVA_HOME/jmods:mods
+    --add-modules advent,...
+#   --launcher <name>=<module>[/<mainclass>]
+    --launcher calendar=advent
+----
+
+Launching the app:
+
+[source,bash]
+----
+jdk/bin/calendar
+----
+
+
+=== More Options
+
+* `--bind-services`: link in all service providers
+* `--limit-modules`: limit universe of observable mods
+* `--no-header-files`: exclude include header files
+* `--no-man-pages`: exclude man pages
+* `--strip-debug`: strip debug information
+
+
+=== Summary
+
+Once you've modularized your application, +
+you can use `jlink` to:
+
+* create a runtime image +
+with just the right classes
+* create a runtime image +
+including your code
+
+This should make certain kinds of deploys +
+smaller and easier.
