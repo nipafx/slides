@@ -7,7 +7,6 @@
 	<tr><td>Services</td></tr>
 	<tr><td>Qualified Exports</td></tr>
 	<tr><td>Reflective Access</td></tr>
-	<tr><td>Command Line Options</td></tr>
 </table>
 ++++
 
@@ -25,7 +24,6 @@
 	<tr><td>Services</td></tr>
 	<tr><td>Qualified Exports</td></tr>
 	<tr><td>Reflective Access</td></tr>
-	<tr><td>Command Line Options</td></tr>
 </table>
 ++++
 
@@ -208,7 +206,6 @@ https://blog.codefx.org/java/implied-readability[Implied Readability]
 	<tr><td>Services</td></tr>
 	<tr><td>Qualified Exports</td></tr>
 	<tr><td>Reflective Access</td></tr>
-	<tr><td>Command Line Options</td></tr>
 </table>
 ++++
 
@@ -381,7 +378,6 @@ https://blog.codefx.org/java/module-system-optional-dependencies/[Optional Depen
 	<tr class="toc-current"><td>Services</td></tr>
 	<tr><td>Qualified Exports</td></tr>
 	<tr><td>Reflective Access</td></tr>
-	<tr><td>Command Line Options</td></tr>
 </table>
 ++++
 
@@ -516,7 +512,6 @@ request implementations from `ServiceLoader`:
 	<tr><td>Services</td></tr>
 	<tr class="toc-current"><td>Qualified Exports</td></tr>
 	<tr><td>Reflective Access</td></tr>
-	<tr><td>Command Line Options</td></tr>
 </table>
 ++++
 
@@ -600,7 +595,6 @@ Use to share sensible code between modules.
 	<tr><td>Services</td></tr>
 	<tr><td>Qualified Exports</td></tr>
 	<tr class="toc-current"><td>Reflective Access</td></tr>
-	<tr><td>Command Line Options</td></tr>
 </table>
 ++++
 
@@ -660,144 +654,3 @@ for reflection
 
 Use to make types available for reflection +
 without making them public API.
-
-
-//*************************//
-// C O M M A N D   L I N E //
-//*************************//
-
-== Java Module System Beyond The Basics
-
-++++
-<table class="toc">
-	<tr><td>Transitive Dependencies</td></tr>
-	<tr><td>Optional Dependencies</td></tr>
-	<tr><td>Services</td></tr>
-	<tr><td>Qualified Exports</td></tr>
-	<tr><td>Reflective Access</td></tr>
-	<tr class="toc-current"><td>Command Line Options</td></tr>
-</table>
-++++
-
-
-=== Command Line Options
-
-The module system is pretty strict but...
-
-* ... not all modules are well-designed
-* ... not all use cases were intended
-
-What to do then?
-
-Command line options to the rescue! +
-(I often call them "escape hatches".)
-
-
-=== Command Line Options
-
-All command line flags can be applied +
-to `javac` and `java`!
-
-When used during compilation, +
-they do _not_ change the resulting +
-module descriptor!
-
-
-=== Add Modules
-
-If a module is not required, +
-it might not make it into the module graph.
-
-**Help it get there with `--add-modules`:**
-
-[source,bash]
-----
-$ java --module-path mods
-#   --add-modules <module>(,<module>)*
-    --add-modules factories
-    --module advent
-----
-
-
-=== Add JavaEE Modules
-
-JavaEE modules are not resolved by default! +
-
-* _java.activation_
-* _java.annotations.common_
-* _java.corba_
-* _java.transaction_
-* _java.xml.bind_
-* _java.xml.ws_
-
-They need to be added with `--add-modules`!
-
-
-=== Add Readability Edges
-
-Maybe a module in the graph is not readable +
-by another but you need it to be.
-
-**Add readability edges with `--add-reads`:**
-
-[source,bash]
-----
-$ java --module-path mods
-#   --add-reads <module>=<target>(,<more>)*
-    --add-reads advent=factories
-    --module advent
-----
-
-
-=== Add Exports
-
-A common case:
-
-A module needs types that +
-the owning module doesn't export.
-
-**Export them with `--add-exports`:**
-
-[source,bash]
-----
-$ java --module-path mods
-#   --add-exports <module>/<package>=<target>
-    --add-exports factories/factory.quotes=advent
-    --module advent
-----
-
-Use target `ALL-UNNAMED` to export to all modules.
-
-
-=== Open Packages
-
-Another common case:
-
-A module reflects on types from a package that +
-the owning module doesn't open.
-
-**Open packages with `add-opens`:**
-
-[source,bash]
-----
-$ java --module-path mods
-#   --add-opens <module>/<package>=<target>
-    --add-opens factories/factory.quotes=advent
-    --module advent
-----
-
-Use target `ALL-UNNAMED` to open to all modules.
-
-(It is not possible to open an entire module.)
-
-
-=== Summary
-
-Edit module graph with:
-
-* `--add-modules` to add modules
-* `--add-reads` to add readability edges
-* `--add-exports` to export packages to modules
-* `--add-opens` to open packages to modules
-
-The latter two accept `ALL-UNNAMED` as target.

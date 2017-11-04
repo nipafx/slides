@@ -1,0 +1,158 @@
+== Command Line Options
+
+The module system is pretty strict but...
+
+* ... not all modules are well-designed
+* ... not all use cases were intended
+
+What to do then?
+
+Command line options to the rescue! +
+(I often call them "escape hatches".)
+
+
+=== Command Line Options
+
+All command line flags can be applied +
+to `javac` and `java`!
+
+When used during compilation, +
+they do _not_ change the resulting +
+module descriptor!
+
+
+=== Add Modules
+
+If a module is not required, +
+it might not make it into the module graph.
+
+**Help it get there with `--add-modules`:**
+
+[source,bash]
+----
+$ java --module-path mods
+#   --add-modules <module>(,<module>)*
+    --add-modules java.xml.ws.annotation
+    --module advent
+----
+
+
+=== Add JavaEE Modules
+
+JavaEE modules are not resolved by default! +
+
+* _java.activation_
+* _java.corba_
+* _java.transaction_
+* _java.xml.bind_
+* _java.xml.ws_
+* _java.xml.ws.annotation_
+
+They need to be added with `--add-modules`!
+
+
+=== Add Readability Edges
+
+Maybe a module in the graph is not readable +
+by another but you need it to be.
+
+**Add readability edges with `--add-reads`:**
+
+[source,bash]
+----
+$ java --module-path mods
+#   --add-reads <module>=<target>(,<more>)*
+    --add-reads advent=factories
+    --module advent
+----
+
+
+=== Add Exports
+
+A common case:
+
+A module needs types that +
+the owning module doesn't export.
+
+**Export them with `--add-exports`:**
+
+[source,bash]
+----
+$ java --module-path mods
+#   --add-exports <module>/<package>=<target>
+    --add-exports factories/factory.quotes=advent
+    --module advent
+----
+
+Use target `ALL-UNNAMED` to export to all modules.
+
+
+=== Open Packages
+
+Another common case:
+
+A module reflects on types from a package that +
+the owning module doesn't open.
+
+**Open packages with `add-opens`:**
+
+[source,bash]
+----
+$ java --module-path mods
+#   --add-opens <module>/<package>=<target>
+    --add-opens factories/factory.quotes=advent
+    --module advent
+----
+
+Use target `ALL-UNNAMED` to open to all modules.
+
+(It is not possible to open an entire module.)
+
+
+=== Patch Modules
+
+Maybe you have a package split...
+
+*Mend it with `--patch-module`:*
+
+[source,bash]
+----
+$ java --module-path mods
+    --add-modules java.xml.ws.annotation
+#   --patch-module <module>=<JAR>
+    --patch-module java.xml.ws.annotation=jsr305.jar
+    --module advent
+----
+
+All classes from `jsr305.jar` are put +
+into _java.xml.ws.annotation_.
+
+
+=== Patch Module
+
+By putting JAR content into a module _A_:
+
+* split packages can be mended
+* _A_ needs to read JAR's dependencies, +
+which need to export used packages
+* modules using JAR content need to read _A_ +
+and _A_ needs to export used packages
+
+Often used with `--add-reads` and `--add-exports`.
+
+
+=== Summary
+
+Edit module graph with:
+
+* `--add-modules` to add modules
+* `--add-reads` to add readability edges
+* `--add-exports` to export packages to modules
+* `--add-opens` to open packages to modules
+* `--patch-module` to add classes to module
+
+The latter two accept `ALL-UNNAMED` as target.
+
+More at https://blog.codefx.org[codefx.org]:
+
+https://blog.codefx.org/java/five-command-line-options-to-hack-the-java-9-module-system/[Five Command Line Options To Hack The JPMS]
