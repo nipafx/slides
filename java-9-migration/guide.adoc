@@ -1,8 +1,5 @@
 # Guide: To JAR Hell and Back
 
-[NOTE]
-~> "Other Features"
-
 Show that it works on Java 8:
 
 ```
@@ -17,9 +14,6 @@ watch -n 1 curl http://localhost:4567/stats/xml
 ```
 
 ## Migration
-
-[NOTE]
-~> "The Unnamed Module"
 
 ### Building on Java 9
 
@@ -53,6 +47,7 @@ JAVA_HOME="/opt/jdk-9"
 
 #### Internal APIs
 
+. `mvn clean install`
 . fix use of `sun.misc.BASE64Encoder`
 +
 ```java
@@ -60,12 +55,10 @@ Base64.getEncoder().encodeToString(content.getBytes());
 ```
 
 . note warning message in _monitor.utils_
-+
-[NOTE]
-~> "Breaking Into Modules"
 
 . fix warning messages in `UtilsTest` in _monitor.utils_
 .. create a profile for Java 9
+.. show that `illegal-access=deny` disallows access
 .. configure Surefire to use `--add-opens`
 +
 ```xml
@@ -87,10 +80,9 @@ Base64.getEncoder().encodeToString(content.getBytes());
 #### Java EE Modules
 
 . note error _package `javax.xml.bind.annotation` is not visible_
-+
-[NOTE]
-~> "Adding Java EE Modules"
+.. open `StatisticsEntity`
 
+. add comment `// from module java.xml.bind:` above `import XmlElement`
 . add _java.xml.bind_ module for annotations in _monitor.rest_
 .. create a profile for Java 9
 .. configure compiler to use `--add-modules java.xml.bind` to fix _package `javax.xml.bind.annotation` is not visible_
@@ -112,25 +104,25 @@ Base64.getEncoder().encodeToString(content.getBytes());
 
 #### Patch Modules
 
+. observe _error: cannot find symbol_ for missing type `Generated`
+.. open `StatisticsEntity`
 . add _java.xml.ws.annotation_ to _monitor.rest_ to fix missing type `Generated`
 .. observe that error contains no hint of the containing module
 .. look up module in documentation
+-. add comment `// from module java.xml.ws.annotation:` above `import Generated`
 .. add _java.xml.ws.annotation_
 +
 ```xml
 <arg>--add-modules=java.xml.ws.annotation</arg>
 ```
 .. observe new missing types problem
-+
-[NOTE]
-~> "Splitting Packages (2)"
 
 . patch _java.xml.ws.annotation_ with JSR classes
 +
 ```xml
 <arg>--patch-module=java.xml.ws.annotation=${settings.localRepository}/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar</arg>
 ```
-. maybe replace `maven.compiler.release` with `maven.compiler.source` and `maven.compiler.target` in parent pom
+. replace `maven.compiler.release` with `maven.compiler.source` and `maven.compiler.target` in parent POM
 
 ### Running on Java 9
 
