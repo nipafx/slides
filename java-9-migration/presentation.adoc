@@ -22,15 +22,15 @@ include::../_shared/highlight.js.adoc[]
 	font-size: 1.75em;
 }
 </style>
-<h2>A Life Migration To<br>The Java 9 Module System</h2>
+<h2>A Life Migration To Java 9</h2>
 ++++
 
-:host-name: JavaZone
-:host-url: http://javazone.no/
-:host-logo-url: images/logo-javazone.png
-// :host-logo-style: background-color: #FFF; border-color: #FFF;
-:host-twitter-name: @JavaZone
-:host-twitter-url: https://twitter.com/javazone
+:host-name: JavaDay
+:host-url: http://javaday.org.ua/
+:host-logo-url: images/logo-javaday-2017.jpg
+// :host-logo-style: background-color: #111; border-color: #FFF;
+:host-twitter-name: @JavaDayUA
+:host-twitter-url: https://twitter.com/JavaDayUA
 include::../_shared/event-on-title-and-footer.adoc[]
 
 
@@ -41,7 +41,8 @@ include::../_shared/event-on-title-and-footer.adoc[]
 
 == Public Service Announcements
 
-* Java 9 is scheduled for September 21st
+* this is about running on Java 9 +
+(not about creating modules)
 * slides at http://slides.codefx.org/[slides.codefx.org]
 * code on GitHub at +
 https://github.com/CodeFX-org/demo-java-9-migration[CodeFX-org/demo-java-9-migration]
@@ -54,9 +55,9 @@ include::jpms.adoc[]
 
 include::../jpms/migration.adoc[]
 
-include::modularization.adoc[]
+// include::modularization.adoc[]
 
-include::jpms-advanced.adoc[]
+// include::jpms-advanced.adoc[]
 
 // ######### //
 // O U T R O //
