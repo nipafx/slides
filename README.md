@@ -31,6 +31,8 @@ git submodule update
 git worktree add _slides gh-pages
 ```
 
+Then run `bundle install` to install all the right Ruby Gems as described in [the Asciidoctor-Reveal.js setup guide](https://github.com/asciidoctor/asciidoctor-reveal.js/#install).
+
 #### Branch `gh-pages`
 
 * `_highlight.js` (downloaded from [highlightjs.org](https://highlightjs.org/download/))
@@ -52,7 +54,7 @@ git submodule update
 To generate the slide deck you'll need to [install Asciidoctor](http://asciidoctor.org/docs/install-toolchain/) and run this in the repository's root:
 
 ```
-asciidoctor -T _asciidoctor-reveal.js/templates/slim _template/presentation.adoc -o _slides/_template/index.html
+bundle exec asciidoctor-revealjs -T _asciidoctor-reveal.js/templates/slim _template/presentation.adoc -o _slides/_template/index.html
 ```
 
 If you want to automate that, you can install [guard](https://rubygems.org/gems/guard/versions/2.13.0) and run `guard start` in the same folder.
