@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>To JAR Hell And Back</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="../_reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="../_reveal.js/css/theme/nipa-night.css" id="theme"><link href="../_reveal.js/lib/css/zenburn.css" rel="stylesheet"><script type="text/javascript">document.write( '<link rel="stylesheet" href="../_reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>To JAR Hell And Back</h1><div class="preamble"><link rel="stylesheet" href="../_highlight.js/styles/monokai-sublime.css">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>To JAR Hell And Back</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="../_reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="../_reveal.js/css/theme/nipa-night.css" id="theme"><link href="../_reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>document.write( '<link rel="stylesheet" href="../_reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>To JAR Hell And Back</h1><div class="preamble"><link rel="stylesheet" href="../_highlight.js/styles/monokai-sublime.css">
 <script src="../_highlight.js/highlight.pack.js"></script>
 <script>
 	window.onload = function() {
@@ -58,16 +58,16 @@
 		document.body.appendChild(document.querySelector('footer'));
 	})
 </script></div></section>
-<section id="_public_service_announcements"><h2>Public Service Announcements</h2><div class="ulist"><ul><li><p>this is about running on Java 9<br>
+<section id="_public_service_announcement"><h2>Public Service Announcement</h2><div class="ulist"><ul><li><p>this is about running on Java 9<br>
 (not about creating modules)</p></li><li><p>slides at <a href="http://slides.codefx.org/">slides.codefx.org</a></p></li><li><p>code on GitHub at<br>
 <a href="https://github.com/CodeFX-org/demo-java-9-migration">CodeFX-org/demo-java-9-migration</a></p></li></ul></div></section>
-<section><section id="_java_module_system"><h2>Java Module System</h2><h3>Delaying Java since 2008!</h3></section><section id="_jar_hell_is_bad_mkay"><h2>JAR Hell is bad, mkay?</h2><div class="paragraph"><p>JARs have:</p></div>
+<section><section id="_java_platform_module_system"><h2>Java Platform Module System</h2><h3>Delaying Java since 2008!</h3></section><section id="_jar_hell_is_bad_mkay"><h2>JAR Hell is bad, mkay?</h2><div class="paragraph"><p><strong>JARs have</strong>:</p></div>
 <div class="ulist"><ul><li><p>no name the JVM cares about</p></li><li><p>no explicit dependencies</p></li><li><p>no well-defined API</p></li><li><p>no concept of versions</p></li></ul></div>
-<aside class="notes"><div class="paragraph"><p>Some consequences:</p></div>
-<div class="ulist"><ul><li><p><code>NoClassDefFoundError</code></p></li><li><p>no encapsulation across JARs</p></li><li><p>version conflicts</p></li></ul></div></aside></section><section id="_modules"><h2>Modules</h2><div class="paragraph"><p>Modules are like JARs but have:</p></div>
-<div class="ulist"><ul><li><p>proper names</p></li><li><p>explicit dependencies</p></li><li><p>a well-defined API</p></li><li><p>no concept of versions</p></li></ul></div>
-<div class="paragraph"><p>Important goals:</p></div>
-<div class="ulist"><ul><li><p>reliable configuration</p></li><li><p>strong encapsulation</p></li></ul></div></section><section id="_module_descriptor"><h2>Module Descriptor</h2><div class="paragraph"><p>A file <code>module-info.java</code>:</p></div>
+<div class="paragraph"><p><strong>Some consequences</strong>:</p></div>
+<div class="ulist"><ul><li><p><code>NoClassDefFoundError</code></p></li><li><p>no encapsulation across JARs</p></li><li><p>version conflicts</p></li></ul></div></section><section id="_modules"><h2>Modules</h2><div class="paragraph"><p><strong>Modules are like JARs but have</strong>:</p></div>
+<div class="ulist"><ul><li><p>proper names</p></li><li><p>explicit dependencies</p></li><li><p>a well-defined API</p></li><li><p>no concept of versions 😭</p></li></ul></div>
+<div class="paragraph"><p><strong>Important goals</strong>:</p></div>
+<div class="ulist"><ul><li><p>reliable configuration</p></li><li><p>strong encapsulation</p></li></ul></div></section><section id="_module_declaration"><h2>Module Declaration</h2><div class="paragraph"><p>A file <code>module-info.java</code>:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> java.sql {
 	<span class="hljs-keyword">requires transitive</span> java.logging
 	<span class="hljs-keyword">requires transitive</span> java.xml
@@ -87,7 +87,7 @@
 }</code></pre></div></div>
 <div class="paragraph"><p>Say you want to access <code>java.sql.ResultSet</code>.</p></div>
 <div class="paragraph"><p>Module system only grants access if:</p></div>
-<div class="ulist"><ul><li><p><code>ResultSet</code> is public</p></li><li><p><code>java.sql</code> is exported by <em>java.sql</em></p></li><li><p>your module reads <em>java.sql</em></p></li></ul></div></section><section data-background-image="images/platform-modules.png" data-background-size="cover" data-state="empty"></section><section id="_other_features"><h2>Other Features</h2><div class="ulist"><ul><li><p>decoupling via services</p></li><li><p>finer grained dependencies and exports</p></li><li><p>open packages and modules (for reflection)</p></li><li><p>unnamed and automatic modules (for migration)</p></li><li><p>layers (for containers)</p></li><li><p><code>jlink</code> to create runtime images</p></li></ul></div></section><section id="_of_modules_and_jars"><h2>Of Modules And JARs</h2><div class="paragraph"><p>Modularized JDK and legacy JARs have to cooperate.</p></div>
+<div class="ulist"><ul><li><p><code>ResultSet</code> is public</p></li><li><p><code>java.sql</code> is exported by <em>java.sql</em></p></li><li><p>your module reads <em>java.sql</em></p></li></ul></div></section><section data-background-color="white" data-background-image="images/platform-modules.png" data-background-size="contain" data-state="empty"></section><section id="_other_features"><h2>Other Features</h2><div class="ulist"><ul><li><p>decoupling via services</p></li><li><p>finer grained dependencies and exports</p></li><li><p>open packages and modules (for reflection)</p></li><li><p>unnamed and automatic modules (for migration)</p></li><li><p>layers (for containers)</p></li><li><p><code>jlink</code> to create runtime images</p></li></ul></div></section><section id="_of_modules_and_jars"><h2>Of Modules And JARs</h2><div class="paragraph"><p>Modularized JDK and legacy JARs have to cooperate.</p></div>
 <div class="paragraph"><p>Two requirements:</p></div>
 <div class="ulist"><ul><li><p>for the module system to work,<br>
 everything needs to be a module</p></li><li><p>for compatibility, the class path<br>
@@ -171,8 +171,6 @@ in the JDK / JRE folder?</p></li><li><p>are URLs to JDK classes / resources hand
 <div class="paragraph"><p>If you want more details:</p></div>
 <div class="paragraph"><p><strong>Java 9 Migration Guide</strong><br>
 (<a href="https://blog.codefx.org/java/java-9-migration-guide/">tiny.cc/java-9-migration</a>)</p></div>
-<div class="paragraph"><p>Background:</p></div>
-<div class="ulist"><ul><li><p><a href="https://blog.codefx.org/java/planning-your-java-9-update/">Planning Your Java 9 Update</a></p></li><li><p><a href="https://blog.codefx.org/java/five-command-line-options-to-hack-the-java-9-module-system/">JPMS Command Line Options</a></p></li><li><p><a href="https://blog.codefx.org/tools/jdeps-tutorial-analyze-java-project-dependencies/">JDeps Tutorial</a></p></li></ul></div>
 <div class="paragraph"><p>For the the full picture get my book:</p></div>
 <div class="paragraph"><p><strong>The Java 9 Module System</strong><br>
 (<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&amp;a_bid=869915cb">tiny.cc/jms</a>)</p></div></section>
@@ -196,8 +194,7 @@ in the JDK / JRE folder?</p></li><li><p>are URLs to JDK classes / resources hand
 </div>
 <div class="paragraph"><p><a href="http://codefx.org">codefx.org</a><br>
 ✉ <a href="http://blog.codefx.org/newsletter/">tiny.cc/fx-weekly</a><br>
-🌍 <a href="https://medium.com/codefx-weekly">tiny.cc/fx-medium</a><br>
-▶ <a href="https://www.youtube.com/channel/UCngKKOnBxYtLAV8pgUBNDng">tiny.cc/fx-youtube</a><br>
+▶ <a href="https://www.youtube.com/c/codefx">youtube.com/c/codefx</a><br>
 <a href="https://twitter.com/nipafx">@nipafx</a> /
 <a href="https://google.com/+NicolaiParlog">+NicolaiParlog</a></p></div>
 <h3>Want More?</h3>
@@ -210,7 +207,7 @@ in the JDK / JRE folder?</p></li><li><p>are URLs to JDK classes / resources hand
 <a href="http://milosevicmilos.com/">Milos Milosevic</a>,
 <a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a></p></li><li><p>sign:
 <a href="https://www.flickr.com/photos/duncharris/">Duncan Harris</a>,
-<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA 2.0</a></p></li></ul></div></section></div></div><script src="../_reveal.js/lib/js/head.min.js"></script><script src="../_reveal.js/js/reveal.js"></script><script type="text/javascript">// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA 2.0</a></p></li></ul></div></section></div></div><script src="../_reveal.js/lib/js/head.min.js"></script><script src="../_reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
 Reveal.initialize({
   // Display controls in the bottom right corner
   controls: false,

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>The Java 9 Module System</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="../_reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="../_reveal.js/css/theme/nipa-night.css" id="theme"><link href="../_reveal.js/lib/css/zenburn.css" rel="stylesheet"><script type="text/javascript">document.write( '<link rel="stylesheet" href="../_reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>The Java 9 Module System</h1><div class="preamble"><style>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>The Java 9 Module System</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="../_reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="../_reveal.js/css/theme/nipa-night.css" id="theme"><link href="../_reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>document.write( '<link rel="stylesheet" href="../_reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>The Java 9 Module System</h1><div class="preamble"><style>
 .reveal .title h1 {
 	font-size: 3.5em;
 }
@@ -77,7 +77,7 @@ with <code>exports</code> clauses</p></div>
 }</code></pre></div></div>
 <div class="paragraph"><p>Code in module <em>A</em> can only access <code>Type</code> in module <em>B</em> if:</p></div>
 <div class="ulist"><ul><li><p><code>Type</code> is public</p></li><li><p><code>Type</code> is in an exported package</p></li><li><p><em>A</em> reads <em>B</em></p></li></ul></div>
-<div class="paragraph"><p>(⇝ <em>strong encapsulation</em>)</p></div></section><section data-background-image="images/platform-modules.png" data-background-size="cover" data-state="empty"></section><section id="_jigsaw_advent_calendar" data-background-image="images/advent-calendar.jpg" data-background-size="cover"><h2>Jigsaw Advent Calendar</h2>
+<div class="paragraph"><p>(⇝ <em>strong encapsulation</em>)</p></div></section><section data-background-color="white" data-background-image="images/platform-modules.png" data-background-size="contain" data-state="empty"></section><section id="_jigsaw_advent_calendar" data-background-image="images/advent-calendar.jpg" data-background-size="cover"><h2>Jigsaw Advent Calendar</h2>
 <h3>A simple example</h3>
 <div class="paragraph"><p>Find it <a href="https://github.com/CodeFX-org/demo-jigsaw-advent-calendar">on GitHub</a>!</p></div></section><section id="_structure"><h2>Structure</h2><div class="imageblock diagram" style=""><img src="images/advent-calendar-structure.png" alt="advent calendar structure"></div></section><section id="_code"><h2>Code</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public static void main(String[] args) {
 	List&lt;SurpriseFactory&gt; factories = asList(
@@ -412,7 +412,7 @@ and <em>A</em> needs to export used packages</p></li></ul></div>
 <div class="paragraph"><p>The latter two accept <code>ALL-UNNAMED</code> as target.</p></div>
 <div class="paragraph"><p>More at <a href="https://blog.codefx.org">codefx.org</a>:</p></div>
 <div class="paragraph"><p><a href="https://blog.codefx.org/java/five-command-line-options-to-hack-the-java-9-module-system/">Five Command Line Options To Hack The JPMS</a></p></div></section></section>
-<section><section id="_creating_runtime_images_with_jlink"><h2>Creating Runtime Images With JLink</h2><h3>Custom-Made For Your Application</h3></section><section id="_remember_this" data-background-image="images/platform-modules.png" data-background-size="cover"><h2>Remember This?</h2></section><section id="_benefiting_from_jdk_modularization"><h2>Benefiting From JDK Modularization</h2><div class="paragraph"><p>Create a JDK install with just the code you need:</p></div>
+<section><section id="_creating_runtime_images_with_jlink"><h2>Creating Runtime Images With JLink</h2><h3>Custom-Made For Your Application</h3></section><section id="_remember_this" data-background-color="white" data-background-image="images/platform-modules.png" data-background-size="contain"><h2>Remember This?</h2></section><section id="_benefiting_from_jdk_modularization"><h2>Benefiting From JDK Modularization</h2><div class="paragraph"><p>Create a JDK install with just the code you need:</p></div>
 <div class="ulist"><ul><li><p>know which modules your app uses (⇝ <code>jdeps</code>)</p></li><li><p>create an image with those modules (⇝ <code>jlink</code>)</p></li></ul></div>
 <div class="paragraph"><p>This is about <code>jlink</code>.</p></div></section><section id="_a_minimal_jdk_image"><h2>A Minimal JDK Image</h2><div class="paragraph"><p>Create with <code>jlink</code></p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">$ jlink
@@ -493,8 +493,7 @@ more flexible</p></td></tr><tr><td class="tableblock halign-left valign-top"><p 
 </div>
 <div class="paragraph"><p><a href="http://codefx.org">codefx.org</a><br>
 ✉ <a href="http://blog.codefx.org/newsletter/">tiny.cc/fx-weekly</a><br>
-🌍 <a href="https://medium.com/codefx-weekly">tiny.cc/fx-medium</a><br>
-▶ <a href="https://www.youtube.com/channel/UCngKKOnBxYtLAV8pgUBNDng">tiny.cc/fx-youtube</a><br>
+▶ <a href="https://www.youtube.com/c/codefx">youtube.com/c/codefx</a><br>
 <a href="https://twitter.com/nipafx">@nipafx</a> /
 <a href="https://google.com/+NicolaiParlog">+NicolaiParlog</a></p></div>
 <h3>Want More?</h3>
@@ -551,7 +550,7 @@ more flexible</p></td></tr><tr><td class="tableblock halign-left valign-top"><p 
 <a href="http://milosevicmilos.com/">Milos Milosevic</a>
 (<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a>)</p></li><li><p>bundles:
 <a href="https://www.flickr.com/photos/dmahendra/">Danumurthi Mahendra</a>
-(<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a>)</p></li></ul></div></section></section></div></div><script src="../_reveal.js/lib/js/head.min.js"></script><script src="../_reveal.js/js/reveal.js"></script><script type="text/javascript">// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+(<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a>)</p></li></ul></div></section></section></div></div><script src="../_reveal.js/lib/js/head.min.js"></script><script src="../_reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
 Reveal.initialize({
   // Display controls in the bottom right corner
   controls: false,
