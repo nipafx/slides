@@ -1,0 +1,78 @@
+== Analyzing Dependencies With JDeps
+
+++++
+<h3>Helping You Modularize!</h3>
+++++
+
+
+=== About JDeps
+
+* a command line tool
+* analyzes bytecode to +
+detect dependencies
+* exists since Java 8
+* really shines with modules
+
+=== Simplest Invocation
+
+```bash
+$ jdeps sh-2.6.3.jar
+
+> sh-2.6.3.jar -> java.base
+> sh-2.6.3.jar -> java.datatransfer
+> sh-2.6.3.jar -> java.desktop
+# ... truncated more module dependencies ...
+>    edu.udo.sh -> com.beust.jcommander  not found
+>    edu.udo.sh -> edu.udo.sh.data       sh-2.6.3.jar
+>    edu.udo.sh -> edu.udo.sh.gui        sh-2.6.3.jar
+>    edu.udo.sh -> edu.udo.sh.gui.util   sh-2.6.3.jar
+>    edu.udo.sh -> edu.udo.sh.util       sh-2.6.3.jar
+>    edu.udo.sh -> java.io               java.base
+>    edu.udo.sh -> java.lang             java.base
+>    edu.udo.sh -> javax.swing           java.desktop
+# ... truncated many more package dependencies ...
+```
+
+=== Analyzing Dependencies
+
+```bash
+$ jdeps
+	--class-path 'libs/*' -recursive
+	sh-2.6.3.jar
+
+# ... truncated split package warnings ...
+# ... truncated some module/JAR dependencies...
+> sh-2.6.3.jar -> libs/commons-codec-1.6.jar
+> sh-2.6.3.jar -> libs/commons-io-2.4.jar
+> sh-2.6.3.jar -> libs/dom4j-1.6.1.jar
+> sh-2.6.3.jar -> libs/exp4j-0.1.38.jar
+> sh-2.6.3.jar -> libs/guava-18.0.jar
+# ... truncated more module/JAR dependencies...
+# ... truncated many, many package dependencies ...
+```
+
+=== Creating Graphs
+
+```bash
+$ jdeps
+	--class-path 'libs/*' -recursive
+	--dot-output dots
+	sh-2.6.3.jar
+# sed -i 's/-1.0-SNAPSHOT.jar//g' summary.dot
+# sed -i '/java.base/d' summary.dot
+$ dot -Tpng -O dots/summary.dot
+```
+
+[state="empty",background-color="white"]
+=== !
+image::images/jdeps-scaffoldhunter-jars.png[background, size=contain]
+
+
+=== JDK-Internal APIs
+
+```bash
+$ jdeps
+	--class-path 'libs/*' -recursive
+	--jdk-internals
+	sh-2.6.3.jar
+```
