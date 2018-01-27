@@ -68,6 +68,47 @@ $ jdeps --jdk-internals
 `--permit-illegal-access`
 
 
+=== Java EE Modules
+image::images/java-ee.jpg[background, size=cover]
+
+* _java.activation_ (`javax.activation`)
+* _java.corba_ (CORBA packages)
+* _java.transaction_ (`javax.transaction`)
+* _java.xml.bind_ (`javax.xml.bind.*`)
+* _java.xml.ws_ (JAX-WS packages)
+* _java.xml.ws.annotation_ (`javax.annotation`)
+
+These are
+
+* deprecated for removal
+* not resolved by default
+
+
+=== What to look for?
+
+JDeps shows dependencies on platform modules:
+
+[source,bash]
+----
+$ jdeps -summary sh-2.6.3.jar
+
+> sh-2.6.3.jar -> java.base
+> sh-2.6.3.jar -> java.datatransfer
+> sh-2.6.3.jar -> java.desktop
+> sh-2.6.3.jar -> java.logging
+> sh-2.6.3.jar -> java.prefs
+> sh-2.6.3.jar -> java.sql
+> sh-2.6.3.jar -> java.xml
+----
+
+
+=== What to do?
+
+* pick a third-party implementation
+* add Java EE platform modules +
+with `--add-modules`
+
+
 === Split Packages
 image::images/cut.jpg[background, size=cover]
 
@@ -121,47 +162,6 @@ Otherwise:
 [start=5]
 . upgrade the JDK module with the artifact
 . `--patch-module` with the artifact's content
-
-
-=== Java EE Modules
-image::images/java-ee.jpg[background, size=cover]
-
-* _java.activation_ (`javax.activation`)
-* _java.corba_ (CORBA packages)
-* _java.transaction_ (`javax.transaction`)
-* _java.xml.bind_ (`javax.xml.bind.*`)
-* _java.xml.ws_ (JAX-WS packages)
-* _java.xml.ws.annotation_ (`javax.annotation`)
-
-These are
-
-* deprecated for removal
-* not resolved by default
-
-
-=== What to look for?
-
-JDeps shows dependencies on platform modules:
-
-[source,bash]
-----
-$ jdeps -summary sh-2.6.3.jar
-
-> sh-2.6.3.jar -> java.base
-> sh-2.6.3.jar -> java.datatransfer
-> sh-2.6.3.jar -> java.desktop
-> sh-2.6.3.jar -> java.logging
-> sh-2.6.3.jar -> java.prefs
-> sh-2.6.3.jar -> java.sql
-> sh-2.6.3.jar -> java.xml
-----
-
-
-=== What to do?
-
-* pick a third-party implementation
-* add Java EE platform modules +
-with `--add-modules`
 
 
 === Run-Time Images
