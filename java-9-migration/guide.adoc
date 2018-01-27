@@ -68,6 +68,7 @@ Base64.getEncoder().encodeToString(content.getBytes());
 			<artifactId>maven-surefire-plugin</artifactId>
 			<configuration>
 				<argLine>
+					--illegal-access=deny
 					--add-opens=java.base/java.lang=ALL-UNNAMED
 				</argLine>
 			</configuration>
