@@ -22,17 +22,17 @@
 	font-size: 3.5em;
 }
 </style>
-<h2>Beyond the Basics</h2>
+<h2>Getting your hands dirty</h2>
 ++++
 
 include::../_shared/highlight.js.adoc[]
 
-:host-name: Code Europe
-:host-url: https://www.codeeurope.pl/en
-:host-logo-url: images/logo-code-europe.jpg
-// :host-logo-style: background-color: transparent; border-width: 0;
-:host-twitter-name: @code_europe
-:host-twitter-url: https://twitter.com/code_europe
+:host-name: Jfokus
+:host-url: https://www.jfokus.se/jfokus/
+:host-logo-url: images/logo-jfokus-2018.png
+// :host-logo-style: background-color: #111; border-color: #FFF;
+:host-twitter-name: @Jfokus
+:host-twitter-url: https://twitter.com/Jfokus
 include::../_shared/event-on-title-and-footer.adoc[]
 
 
@@ -43,20 +43,20 @@ include::../_shared/event-on-title-and-footer.adoc[]
 
 == Public Service Announcement
 
-* I assume you know the JPMS basics
+* who knows the JPMS basics?
 * there's much to talk about +
-⇝ this is only about "advanced" JPMS features
+⇝ this can only cover parts of the JPMS
 // * if you're shy, tweet questions +
 // with https://twitter.com/search?q=%23vdz17%20%40nipafx[#VDZ17 @nipafx]
 * slides at http://slides.codefx.org/[slides.codefx.org]
 
-// include::impedance-mismatch.adoc[]
-//
-// include::project-jigsaw.adoc[]
-//
-// include::basics.adoc[]
+include::impedance-mismatch.adoc[]
 
-include::quick-intro.adoc[]
+include::project-jigsaw.adoc[]
+
+include::basics.adoc[]
+
+// include::quick-intro.adoc[]
 
 include::advanced.adoc[]
 
