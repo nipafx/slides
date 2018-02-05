@@ -29,10 +29,10 @@
 		</div>
 	</div>
 	<div class="participant">
-		<a href="http://javaday.org.ua/"><img src="images/logo-javaday-2017.jpg" class="logo" style="{host-logo-style}"></a>
+		<a href="https://www.jfokus.se/jfokus/"><img src="images/logo-jfokus-2018.png" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="http://javaday.org.ua/">JavaDay</a></p>
-			<p><a href="https://twitter.com/JavaDayUA">@JavaDayUA</a></p>
+			<p><a href="https://www.jfokus.se/jfokus/">Jfokus</a></p>
+			<p><a href="https://twitter.com/Jfokus">@Jfokus</a></p>
 		</div>
 	</div>
 </div>
@@ -47,9 +47,9 @@
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="http://javaday.org.ua/"><img src="images/logo-javaday-2017.jpg" class="logo" style="{host-logo-style}"></a>
+		<a href="https://www.jfokus.se/jfokus/"><img src="images/logo-jfokus-2018.png" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="http://javaday.org.ua/">JavaDay</a> / <a href="https://twitter.com/JavaDayUA">@JavaDayUA</a></p>
+			<p><a href="https://www.jfokus.se/jfokus/">Jfokus</a> / <a href="https://twitter.com/Jfokus">@Jfokus</a></p>
 		</div>
 	</div>
 </footer>
@@ -118,27 +118,10 @@ for some time</p></li><li><p>critical APIs may survive longer<br>
 &gt;     SteppedComboBox -&gt; WindowsComboBoxUI</code></pre></div></div></section><section id="_what_else_to_look_for"><h2>What else to look for?</h2><div class="ulist"><ul><li><p>look for reflection, especially</p><div class="ulist"><ul><li><p><code>Class::forName</code></p></li><li><p><code>AccessibleObject::setAccessible</code></p></li></ul></div></li><li><p>recursively check your dependencies!</p></li></ul></div></section><section id="_what_to_do"><h2>What to do?</h2><div class="olist arabic"><ol class="arabic"><li><p>fix your code</p></li><li><p>contact library developers</p></li><li><p>look for alternatives<br>
 (in the JDK or other libraries)</p></li><li><p>consider command line flags<br>
 <code>--add-exports</code>, <code>--add-opens</code>, or<br>
-<code>--permit-illegal-access</code></p></li></ol></div></section><section id="_split_packages" data-background-image="images/cut.jpg" data-background-size="cover"><h2>Split Packages</h2>
-<div class="ulist"><ul><li><p>packages should have a unique origin</p></li><li><p>no module must read the same package<br>
-from two modules</p></li></ul></div>
-<div class="paragraph"><p>The implementation is even stricter:</p></div>
-<div class="ulist"><ul><li><p>no two modules must contain<br>
-the same package (exported or not)</p></li><li><p>split packages on class path<br>
-are inaccessible</p></li></ul></div></section><section id="_examples"><h2>Examples</h2><div class="ulist"><ul><li><p>some libraries split <code>java.xml.*</code>, e.g. <a href="http://search.maven.org/#artifactdetails|xml-apis|xml-apis|2.0.2|jar">xml-apis</a></p></li><li><p>some <a href="https://issues.jboss.org/browse/WFLY-6375?_sscc=t">JBoss modules</a> split, e.g.,<br>
-<code>java.transaction</code>, <code>java.xml.ws</code></p></li><li><p><a href="http://mvnrepository.com/artifact/com.google.code.findbugs/jsr305">jsr305</a> splits <code>javax.annotation</code></p></li></ul></div></section><section id="_what_to_look_for_2"><h2>What to look for?</h2><div class="paragraph"><p>JDeps reports split packages:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">$ jdeps -summary
-	-recursive --class-path 'libs/*'
-	project.jar
-
-&gt; split package: javax.annotation
-&gt;     [jrt:/java.xml.ws.annotation,
-&gt;         libs/jsr305-3.0.2.jar]</code></pre></div></div></section><section id="_what_to_do_2"><h2>What to do?</h2><div class="paragraph"><p>Your artifacts:</p></div>
-<div class="olist arabic"><ol class="arabic"><li><p>rename one of the packages</p></li><li><p>merge package into the same artifact</p></li><li><p>merge the artifacts</p></li><li><p>place both artifacts on the class path</p></li></ol></div>
-<div class="paragraph"><p>Otherwise:</p></div>
-<div class="olist arabic"><ol class="arabic" start="5"><li><p>upgrade the JDK module with the artifact</p></li><li><p><code>--patch-module</code> with the artifact&#8217;s content</p></li></ol></div></section><section id="_java_ee_modules" data-background-image="images/java-ee.jpg" data-background-size="cover"><h2>Java EE Modules</h2>
+<code>--permit-illegal-access</code></p></li></ol></div></section><section id="_java_ee_modules" data-background-image="images/java-ee.jpg" data-background-size="cover"><h2>Java EE Modules</h2>
 <div class="ulist"><ul><li><p><em>java.activation</em> (<code>javax.activation</code>)</p></li><li><p><em>java.corba</em> (CORBA packages)</p></li><li><p><em>java.transaction</em> (<code>javax.transaction</code>)</p></li><li><p><em>java.xml.bind</em> (<code>javax.xml.bind.*</code>)</p></li><li><p><em>java.xml.ws</em> (JAX-WS packages)</p></li><li><p><em>java.xml.ws.annotation</em> (<code>javax.annotation</code>)</p></li></ul></div>
 <div class="paragraph"><p>These are</p></div>
-<div class="ulist"><ul><li><p>deprecated for removal</p></li><li><p>not resolved by default</p></li></ul></div></section><section id="_what_to_look_for_3"><h2>What to look for?</h2><div class="paragraph"><p>JDeps shows dependencies on platform modules:</p></div>
+<div class="ulist"><ul><li><p>deprecated for removal</p></li><li><p>not resolved by default</p></li></ul></div></section><section id="_what_to_look_for_2"><h2>What to look for?</h2><div class="paragraph"><p>JDeps shows dependencies on platform modules:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">$ jdeps -summary sh-2.6.3.jar
 
 &gt; sh-2.6.3.jar -&gt; java.base
@@ -147,8 +130,25 @@ are inaccessible</p></li></ul></div></section><section id="_examples"><h2>Exampl
 &gt; sh-2.6.3.jar -&gt; java.logging
 &gt; sh-2.6.3.jar -&gt; java.prefs
 &gt; sh-2.6.3.jar -&gt; java.sql
-&gt; sh-2.6.3.jar -&gt; java.xml</code></pre></div></div></section><section id="_what_to_do_3"><h2>What to do?</h2><div class="ulist"><ul><li><p>pick a third-party implementation</p></li><li><p>add Java EE platform modules<br>
-with <code>--add-modules</code></p></li></ul></div></section><section id="_run_time_images" data-background-image="images/cells.jpg" data-background-size="cover"><h2>Run-Time Images</h2>
+&gt; sh-2.6.3.jar -&gt; java.xml</code></pre></div></div></section><section id="_what_to_do_2"><h2>What to do?</h2><div class="ulist"><ul><li><p>pick a third-party implementation</p></li><li><p>add Java EE platform modules<br>
+with <code>--add-modules</code></p></li></ul></div></section><section id="_split_packages" data-background-image="images/cut.jpg" data-background-size="cover"><h2>Split Packages</h2>
+<div class="ulist"><ul><li><p>packages should have a unique origin</p></li><li><p>no module must read the same package<br>
+from two modules</p></li></ul></div>
+<div class="paragraph"><p>The implementation is even stricter:</p></div>
+<div class="ulist"><ul><li><p>no two modules must contain<br>
+the same package (exported or not)</p></li><li><p>split packages on class path<br>
+are inaccessible</p></li></ul></div></section><section id="_examples"><h2>Examples</h2><div class="ulist"><ul><li><p>some libraries split <code>java.xml.*</code>, e.g. <a href="http://search.maven.org/#artifactdetails|xml-apis|xml-apis|2.0.2|jar">xml-apis</a></p></li><li><p>some <a href="https://issues.jboss.org/browse/WFLY-6375?_sscc=t">JBoss modules</a> split, e.g.,<br>
+<code>java.transaction</code>, <code>java.xml.ws</code></p></li><li><p><a href="http://mvnrepository.com/artifact/com.google.code.findbugs/jsr305">jsr305</a> splits <code>javax.annotation</code></p></li></ul></div></section><section id="_what_to_look_for_3"><h2>What to look for?</h2><div class="paragraph"><p>JDeps reports split packages:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">$ jdeps -summary
+	-recursive --class-path 'libs/*'
+	project.jar
+
+&gt; split package: javax.annotation
+&gt;     [jrt:/java.xml.ws.annotation,
+&gt;         libs/jsr305-3.0.2.jar]</code></pre></div></div></section><section id="_what_to_do_3"><h2>What to do?</h2><div class="paragraph"><p>Your artifacts:</p></div>
+<div class="olist arabic"><ol class="arabic"><li><p>rename one of the packages</p></li><li><p>merge package into the same artifact</p></li><li><p>merge the artifacts</p></li><li><p>place both artifacts on the class path</p></li></ol></div>
+<div class="paragraph"><p>Otherwise:</p></div>
+<div class="olist arabic"><ol class="arabic" start="5"><li><p>upgrade the JDK module with the artifact</p></li><li><p><code>--patch-module</code> with the artifact&#8217;s content</p></li></ol></div></section><section id="_run_time_images" data-background-image="images/cells.jpg" data-background-size="cover"><h2>Run-Time Images</h2>
 <div class="ulist"><ul><li><p>new JDK/JRE layout</p></li><li><p>internal JARs are gone (e.g. <code>rt.jar</code>, <code>tools.jar</code>)</p></li><li><p>JARs are now JMODs</p></li><li><p>application class loader is no <code>URLClassLoader</code><br>
 (no way to append to its class path)</p></li><li><p>new URL schema for run-time image content</p></li></ul></div></section><section id="_what_to_look_for_4"><h2>What to look for?</h2><div class="ulist"><ul><li><p>does the code rummage around<br>
 in the JDK / JRE folder?</p></li><li><p>are URLs to JDK classes / resources handcrafted?</p></li><li><p>search for casts to <code>URLClassLoader</code></p></li></ul></div></section><section id="_obsolete" data-background-image="images/obsolete.jpg" data-background-size="cover"><h2>Obsolete</h2>
