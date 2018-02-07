@@ -352,7 +352,7 @@ image::images/advent-calendar-module-multi.png[role="diagram"]
 ----
 # compile all modules at once
 $ javac -d classes
-    module-source-path "src"
+    --module-source-path "src"
     --module advent
 # package one by one, eventually advent
 $ jar --create

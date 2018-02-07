@@ -37,9 +37,9 @@ $ java --module-path mods
 ----
 
 
-=== Add JavaEE Modules
+=== Add Java EE Modules
 
-JavaEE modules are not resolved by default! +
+Java EE modules are not resolved by default! +
 
 * _java.activation_
 * _java.corba_
@@ -48,8 +48,8 @@ JavaEE modules are not resolved by default! +
 * _java.xml.ws_
 * _java.xml.ws.annotation_
 
-They need to be added with `--add-modules`!
-
+They need to be added with `--add-modules` or +
+be replaced with https://stackoverflow.com/a/48204154/2525313[third party dependencies].
 
 === Add Readability Edges
 

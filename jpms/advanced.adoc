@@ -384,7 +384,7 @@ https://blog.codefx.org/java/module-system-optional-dependencies/[Optional Depen
 
 === Dependency Inversion?
 
-// http://yuml.me/edit/e46b1686
+// https://yuml.me/edit/e46b1686
 image::images/advent-dependency-inversion.png[role="diagram"]
 
 
@@ -428,6 +428,8 @@ module B {
 }
 ----
 
+(_A_ and _B_ need access to `some.Service`)
+
 
 === Loading Services
 
@@ -446,7 +448,7 @@ ServiceLoader.load(Service.class)
 [source,java]
 ----
 module advent {
-	requires calendar;
+	requires surprise;
 	uses surprise.SurpriseFactory;
 }
 
@@ -466,8 +468,7 @@ module factory.quote {
 
 === Factory Services
 
-
-// http://yuml.me/edit/aeff75c1
+// https://yuml.me/edit/aeff75c1
 image::images/advent-services.png[role="diagram"]
 
 
