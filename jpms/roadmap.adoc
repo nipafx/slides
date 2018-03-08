@@ -1,0 +1,100 @@
+== Breaking News!
+
+But before we come to that...
+
+=== Old News!
+
+Oracle JDK ≠ OpenJDK
+
+* no free Oracle JDK from Java 11 on
+* Oracle ships OpenJDK builds
+* but *only for current major version*: +
+⇝ 10 ⇝ 10.0.1 ⇝ 10.0.4 +
+⇝ 11 ⇝ 11.0.1 ⇝ 11.0.4 +
+⇝ 12 ⇝ 12.0.1 ⇝ 12.0.4 +
+* there is no pass:[<span style="text-decoration: line-through;">spoon</span>] free LTS by Oracle!
+
+⇝ More in my weekly: +
+https://medium.com/codefx-weekly/no-free-java-lts-version-b850192745fb[No Free Java LTS Version?]
+
+=== Breaking News!
+
+Oracle released a +
+_Java Client Roadmap Update_ +
+with plans for:
+
+* Applets
+* Web Start
+* JavaFX
+* Swing/AWT
+
+=== Applets
+
+* Applets are deprecated in Java 9
+* Applets are removed from Java SE 11
+* Applets won't be in Oracle's OpenJDK 11 builds
+
+=== Web Start
+
+* Web Start is deprecated in Java 9
+* Web Start is removed from Java SE 11
+* Web Start won't be in Oracle's OpenJDK 11 builds
+
+=== JavaFX
+
+* was never part of Java SE +
+(unlikely to change soon)
+* was never in Oracle's OpenJDK builds +
+(just as unlikely to change)
+* will be https://twitter.com/holgerbrands/status/971428308708679680[removed from Oracle JDK 11]
+
+If your project uses JavaFX, +
+you *can't rely* on its presence +
+on your customers' machines!
+
+=== JavaFX
+
+Quote:
+
+++++
+<div class="quoteblock"><blockquote style="color: black;">
+Oracle is working with interested third parties to make it easier to build and maintain JavaFX as a separately distributable open-source module.
+</blockquote></div>
+++++
+
+Not a quote:
+
+++++
+<div class="quoteblock"><blockquote style="color: black;">
+Oracle wants to reduce/terminate investment in JavaFX.
+</blockquote></div>
+++++
+
+=== Swing/AWT
+
+Quote:
+
+++++
+<div class="quoteblock"><blockquote style="color: black;">
+Oracle will continue developing Swing and AWT in Java SE 8 and Java SE 11 (18.9 LTS).
+This means they will be supported by Oracle through at least 2026.
+</blockquote></div>
+++++
+
+What this doesn't say:
+
+* support is free
+* support goes beyond Java 11
+
+=== Swing/AWT
+
+*Hypothetically* Oracle could +
+remove Swing/AWT from Java SE 12 +
+and its statement still holds.
+
+=== More Breaking News...
+
+To hear about such news:
+
+* follow me on Twitter: https://twitter.com/nipafx[@nipafx]
+* subscribe to my newsletter: http://blog.codefx.org/newsletter/[tiny.cc/fx-weekly]
