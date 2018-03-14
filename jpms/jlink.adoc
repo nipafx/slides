@@ -46,6 +46,8 @@ $ jdk/bin/java --list-modules
 
 === Image For A Backend
 
+// TODO all these modules are deprecated, find another example
+
 Say you use JAX-WS, JAXP, JAXB, JDBC, and JUL:
 
 [source,bash]
@@ -81,11 +83,20 @@ $ jdk/bin/java --list-modules
 ----
 
 
-=== Image Including Your App
+=== Image Including Your App And Dependencies
 
-To create an image for your app +
-*all JARs need to be modularized!* +
-(Including dependencies.)
+
+To create an image for your app:
+
+* *all JARs need to be modularized!*
+* including dependencies
+
+Unless you use Gunnar Morling's https://github.com/moditect/moditect#creating-modular-runtime-images[ModiTect], +
+which creates module descriptors on the fly.
+
+=== Linking And Launching
+
+Creating the image:
 
 [source,bash]
 ----
@@ -127,13 +138,14 @@ jdk/bin/calendar
 ----
 
 
-=== More Options
+=== More Features
 
-* `--bind-services`: link in all service providers
-* `--limit-modules`: limit universe of observable mods
-* `--no-header-files`: exclude include header files
-* `--no-man-pages`: exclude man pages
-* `--strip-debug`: strip debug information
+* automatic service binding +
+(with `--bind-services`)
+* various optimizations +
+(size and launch performance)
+* plugin API (not yet public)
+* cross OS image generation
 
 
 === Summary
@@ -142,7 +154,7 @@ You can use `jlink` to:
 
 * create a runtime image +
 with just the right classes
-* create a runtime image +
+* create an application image +
 including your code
 
 This should make certain kinds of deploys +
