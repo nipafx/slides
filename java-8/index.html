@@ -1,0 +1,729 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Java 8</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="../_reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="../_reveal.js/css/theme/nipa-night.css" id="theme"><link href="../_reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>document.write( '<link rel="stylesheet" href="../_reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>Java 8</h1><div class="preamble"><h2>From The Ground Up</h2>
+<link rel="stylesheet" href="../_highlight.js/styles/monokai-sublime.css">
+<script src="../_highlight.js/highlight.pack.js"></script>
+<script>
+	window.onload = function() {
+		hljs.configure({
+			tabReplace: '    ',
+			languages: [ 'java' ]
+		})
+		var codes = document.getElementsByTagName('code');
+		for(var i = 0; i < codes.length; i++) {
+			hljs.highlightBlock(codes.item(i));
+		}
+		hljs.initHighlightingOnLoad();
+	}
+</script>
+<div class="event">
+	<div class="participant">
+		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
+		<div class="name">
+			<p><a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a></p>
+			<p><a href="http://codefx.org">codefx.org</a>
+				/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a></p>
+		</div>
+	</div>
+	<div class="participant">
+		<a href="https://www.bayer.de/"><img src="images/logo-bayer.png" class="logo" style="{host-logo-style}"></a>
+		<div class="name">
+			<p><a href="https://www.bayer.de/">Bayer</a></p>
+			<p><a href="https://twitter.com/bayer">@Bayer</a></p>
+		</div>
+	</div>
+</div>
+<!-- Just adding a footer does not work because reveal.js puts it into the slides and we couldn't get it out via CSS. So we move it via JavaScript. -->
+<footer>
+	<div class="participant">
+		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
+		<div class="name"><p>
+			<a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a>
+			/ <a href="http://codefx.org">codefx.org</a>
+			/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a>
+		</p></div>
+	</div>
+	<div class="participant">
+		<a href="https://www.bayer.de/"><img src="images/logo-bayer.png" class="logo" style="{host-logo-style}"></a>
+		<div class="name">
+			<p><a href="https://www.bayer.de/">Bayer</a> / <a href="https://twitter.com/bayer">@Bayer</a></p>
+		</div>
+	</div>
+</footer>
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		document.body.appendChild(document.querySelector('footer'));
+	})
+</script></div></section>
+<section><section id="_hello_java_8"><h2>Hello, Java 8</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">() -&gt; System.out.println("Hello, Java 8!")</code></pre></div></div></section><section id="_about_me"><h2>About Me</h2><div class="paragraph"><p>My name is <strong>Nicolai</strong> (Parlog)</p></div>
+<div class="ulist"><ul><li><p>Java since 2005, professionally since 2011</p></li><li><p>blogger since 2014</p></li><li><p>freelancing developer, speaker, trainer since 2016</p></li><li><p>published author "since" June 2018</p></li></ul></div>
+<div class="paragraph"><p>Main topics:</p></div>
+<div class="ulist"><ul><li><p>JDK feauters (language, APIs, JVM)</p></li><li><p>code quality (clean code and comments)</p></li><li><p>processes (code reviews, knowledge sharing)</p></li></ul></div></section><section id="_code_of_conduct"><h2>Code of Conduct</h2><div class="ulist"><ul><li><p>ask any question you have<br>
+as soon as you have it</p></li><li><p>ask your colleagues first</p></li><li><p>there are no stupid questions!</p></li><li><p>work in pairs or triples<br>
+(+1 for mixing skill levels)</p></li><li><p>consider taking notes</p></li></ul></div></section><section id="_slides"><h2>Slides</h2><div class="ulist"><ul><li><p>online at <a href="http://slides.codefx.org/java-8">slides.codefx.org/java-8</a></p></li><li><p>press "?" to learn how to navigate</p></li><li><p>there will be a permalink when the course is over</p></li><li><p>Java 9 specific content is marked with ⑨</p></li></ul></div>
+<div class="paragraph"><p>(Please share responsibly)</p></div></section><section id="_exercises"><h2>Exercises</h2><div class="ulist"><ul><li><p>repository is at<br>
+<a href="https://github.com/nicolaiparlog/course-java-8">github.com/nicolaiparlog/course-java-8</a></p></li><li><p>clone it now (please do not fork on GH)</p></li><li><p>will be unavailable by end of the week</p></li></ul></div>
+<div class="paragraph"><p>(Please share responsibly)</p></div></section><section id="_a_very_short_history"><h2>A Very Short History</h2><div class="paragraph"><p>Project Lambda started in 2010:</p></div>
+<div class="ulist"><ul><li><p>language features:</p><div class="ulist"><ul><li><p>lambda expressions</p></li><li><p>default methods</p></li></ul></div></li><li><p>library changes:</p><div class="ulist"><ul><li><p>stream API</p></li><li><p><code>Optional</code></p></li><li><p>various smaller changes</p></li></ul></div></li></ul></div>
+<div class="paragraph"><p>Java 8 shipped in March 2014.</p></div></section><section id="_paradigm_shift"><h2>Paradigm Shift</h2><div class="paragraph"><p>Lambdas make it easy to treat code as data.</p></div>
+<div class="ulist"><ul><li><p>passing "functions" was always easy in Java:<br></p><div class="ulist"><ul><li><p>use interface with single abstract method (e.g. <code>Runnable</code>)</p></li><li><p>pass instance of it</p></li></ul></div></li><li><p>creating "functions" becomes really easy now:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Runnable r = () -&gt; System.out.println("Hello");</code></pre></div></div></li></ul></div></section><section id="_paradigm_shift_2"><h2>Paradigm Shift</h2><div class="paragraph"><p>Makes it easier to parameterize behavior:</p></div>
+<div class="ulist"><ul><li><p>by <em>passing</em> an action</p></li><li><p>instead of <em>configuring</em> it</p></li></ul></div></section><section id="_table_of_content"><h2>Table of Content</h2><table class="toc">
+	<tr><td>Lambda Expressions</td></tr>
+	<tr><td>Stream API</td></tr>
+	<tr><td>Optional API</td></tr>
+	<tr><td>Default Methods</td></tr>
+</table>
+<div class="paragraph"><p>There are many other additions in Java 8,<br>
+but we don&#8217;t have time for them.</p></div></section></section>
+<section><section id="_lambda_expressions"><h2>Lambda Expressions</h2><table class="toc">
+	<tr class="toc-current"><td>Lambda Expressions</td></tr>
+	<tr><td>Stream API</td></tr>
+	<tr><td>Optional API</td></tr>
+	<tr><td>Default Methods</td></tr>
+	<tr><td>Summary</td></tr>
+</table></section><section id="_lambda_expressions_2"><h2>Lambda Expressions</h2><div class="paragraph"><p>Make it easy to pass code as data,<br>
+by making it easy to create functions:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code>Runnable r = () -&gt; System.out.println("Hello");</code></pre></div></div></section></section>
+<section><section id="_lambda_expressions_3"><h2>Lambda Expressions</h2><table class="toc">
+	<tr class="toc-current"><td>Lambda Expression Syntax</td></tr>
+	<tr><td>Lambdas vs Closures</td></tr>
+	<tr><td>Functional Interfaces</td></tr>
+	<tr><td>Method References</td></tr>
+	<tr><td>Summary</td></tr>
+</table></section><section id="_exercise_1"><h2>Exercise 1</h2><div class="paragraph"><p>Pass code as data</p></div></section><section id="_the_essence"><h2>The Essence</h2><div class="paragraph"><p>What&#8217;s the essence of <code>TodoFilter</code> implementation?</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">TodoFilter filter = new TodoFilter() {
+	@Override
+	public boolean passes(Todo todo) {
+		return todo.importance() == importance;
+	}
+}</code></pre></div></div>
+<div class="ulist"><ul><li><p>takes a <code>Todo</code></p></li><li><p>executes 1 LOC</p></li><li><p>returns a <code>boolean</code></p></li></ul></div>
+<div class="paragraph"><p>Do we really need 5 LOC to implement that?</p></div></section><section id="_as_lambda"><h2>As Lambda</h2><div class="paragraph"><p>As anonymous class:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">TodoFilter filter = new TodoFilter() {
+	@Override
+	public boolean passes(Todo todo) {
+		return todo.importance() == importance;
+	}
+}</code></pre></div></div>
+<div class="paragraph"><p>As lambda expression:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">TodoFilter filter = todo -&gt;
+	todo.importance() == importance;</code></pre></div></div>
+<div class="paragraph"><p>😲</p></div></section><section id="_exercise_2"><h2>Exercise 2</h2><div class="paragraph"><p>Refactor anonymous classes to lambda expressions</p></div></section><section id="_lambda_expression"><h2>Lambda Expression</h2><div class="paragraph"><p>To create an implementation of<br>
+an interface with a single abstract method:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">$Interface $var= ($parameters) -&gt; { $body }</code></pre></div></div>
+<div class="paragraph"><p>Things to discuss:</p></div>
+<div class="ulist"><ul><li><p>parameters</p></li><li><p>body</p></li><li><p>capturing variables</p></li></ul></div></section><section id="_defining_parameters"><h2>Defining Parameters</h2><div class="paragraph"><p>General form:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// method signature:
+void method(Type_1 name_1, Type_2 name_2, ...) { $body }
+
+// lambda
+(Type_1 name_1, Type_2 name_2, ...) -&gt; { $body }</code></pre></div></div>
+<div class="paragraph"><p>Possible simplifications:</p></div>
+<div class="ulist"><ul><li><p>leave out types</p></li><li><p>leave out parenthesis<br>
+if single parameter</p></li></ul></div></section><section id="_infer_parameter_types"><h2>Infer Parameter Types</h2><div class="paragraph"><p>Compiler can infer types in most cases:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// lambda
+(Type_1 name_1, Type_2 name_2, ...) -&gt; { $body }
+
+// inferred
+(name_1, name_2, ...) -&gt; { $body }</code></pre></div></div></section><section id="_single_parameter"><h2>Single Parameter</h2><div class="paragraph"><p>For single parameters, leave out parenthesis:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// lambda
+(Type_1 name_1) -&gt; { $body }
+
+// inferred
+Type_1 name_1 -&gt; { $body }</code></pre></div></div></section><section id="_keep_it_simple"><h2>Keep It "Simple"</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// instead of
+TodoFilter filter = (Todo todo) -&gt; { $body }
+
+// usually
+TodoFilter filter = todo -&gt; { $body }</code></pre></div></div></section><section id="_body_as_block_or_line"><h2>Body As Block Or Line</h2><div class="paragraph"><p>General form:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">($parameters) -&gt; {
+	// lines of code
+	// possible `return`
+}</code></pre></div></div>
+<div class="paragraph"><p>Example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">TodoFilter filter = (Todo todo) -&gt; {
+	boolean same = todo.importance() == importance;
+	return same;
+}</code></pre></div></div></section><section id="_single_line_body"><h2>Single Line Body</h2><div class="paragraph"><p>If body is a single line:</p></div>
+<div class="ulist"><ul><li><p>no curly braces</p></li><li><p>no <code>return</code></p></li><li><p>no semicolon<br>
+(for the statement itself)</p></li></ul></div>
+<div class="paragraph"><p>Example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">TodoFilter filter = (Todo todo) -&gt;
+	todo.importance() == importance;</code></pre></div></div></section><section id="_in_combination"><h2>In Combination</h2><div class="paragraph"><p>Instead of:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">TodoFilter filter = (Todo todo) -&gt; {
+	boolean same = todo.importance() == importance;
+	return same;
+}</code></pre></div></div>
+<div class="paragraph"><p>Usually:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">TodoFilter filter = todo
+	-&gt; todo.importance() == importance;</code></pre></div></div></section><section id="_matter_of_taste"><h2>Matter Of Taste</h2><div class="paragraph"><p>Where to line break on long lambdas?</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">filter = todo -&gt; todo
+	.importance() == importance;
+
+filter = todo -&gt;
+	todo.importance() == importance;
+
+filter = todo
+	-&gt; todo.importance() == importance;</code></pre></div></div>
+<div class="paragraph"><p>My preference: break after <code>-&gt;</code></p></div></section><section id="_exercise_3"><h2>Exercise 3</h2><div class="paragraph"><p>Create lambda expressions from scratch</p></div></section></section>
+<section><section id="_lambdas_vs_closures"><h2>Lambdas vs. Closures</h2><table class="toc">
+	<tr><td>Lambda Expression Syntax</td></tr>
+	<tr class="toc-current"><td>Lambdas vs Closures</td></tr>
+	<tr><td>Functional Interfaces</td></tr>
+	<tr><td>Method References</td></tr>
+	<tr><td>Summary</td></tr>
+</table></section><section id="_lambdas_vs_closures_2"><h2>Lambdas vs. Closures</h2><div class="paragraph"><p>Two kinds of lambdas:</p></div>
+<div class="dlist"><dl><dt class="hdlist1">non-capturing lambdas</dt><dd><p>use only the lambda&#8217;s parameter(s)</p></dd><dt class="hdlist1">capturing lambdas / closures</dt><dd><p>use / capture / close over<br>
+fields, method parameters, local variables</p></dd></dl></div></section><section id="_lambdas_vs_closures_3"><h2>Lambdas vs. Closures</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">private String field = "field";
+
+public StringToInt toInt(String parameter) {
+	String local = "local";
+	return s -&gt; s.length()   // input
+		+ local.length()     // captures
+		+ parameter.length() // captures
+		+ field.length();    // captures
+}</code></pre></div></div></section><section id="_capturing_variables"><h2>Capturing Variables</h2><div class="paragraph"><p>In anonymous classes:</p></div>
+<div class="ulist"><ul><li><p>method params and local vars<br>
+needed to be <code>final</code></p></li><li><p>fields did not <em>and</em> could be reassigned</p></li></ul></div>
+<div class="paragraph"><p>In lambda expressions:</p></div>
+<div class="ulist"><ul><li><p>method params and local vars<br>
+need to be <strong>effectively final</strong></p></li><li><p>fields do not <em>and</em> can be reassigned</p></li></ul></div></section><section id="_effectively_final"><h2>Effectively Final</h2><div class="paragraph"><p>"If adding <code>final</code> would not<br>
+cause a compile error."</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public StringToInt toInt(String parameter) {
+	parameter = "new value";
+	String local = "local";
+	return s -&gt; s.length()   // always ✔
+		+ local.length()     // eff. final ✔
+		+ parameter.length() // not eff. final ✘
+		+ field.length();    // always ✔
+}</code></pre></div></div></section><section id="_effectively_final_2"><h2>Effectively Final</h2><div class="paragraph"><p>Implications:</p></div>
+<div class="ulist"><ul><li><p>method parameters can not be reassigned</p></li><li><p>local variables can not be reassigned</p></li><li><p>fields <em>can</em> be reassigned</p></li></ul></div></section><section id="_exercise_4"><h2>Exercise 4</h2><div class="paragraph"><p>Experiment with (non-) capturing lambda expressions</p></div></section><section id="_why_effectively_final"><h2>Why Effectively Final?</h2><div class="paragraph"><p>Otherwise - if captured variables<br>
+can be reassigned:</p></div>
+<div class="ulist"><ul><li><p>which value will a lambda observe?</p></li><li><p>what happens under threading?</p></li></ul></div>
+<div class="paragraph"><p>This keeps programing model simpler!</p></div></section></section>
+<section><section id="_functional_interfaces"><h2>Functional Interfaces</h2><table class="toc">
+	<tr><td>Lambda Expression Syntax</td></tr>
+	<tr><td>Lambdas vs Closures</td></tr>
+	<tr class="toc-current"><td>Functional Interfaces</td></tr>
+	<tr><td>Method References</td></tr>
+	<tr><td>Summary</td></tr>
+</table></section><section id="_functional_interfaces_2"><h2>Functional Interfaces</h2><div class="paragraph"><p>To assign a lambda to an interface<br>
+it must have exactly one abstract method.</p></div>
+<div class="paragraph"><p>They are called <em>functional interfaces</em>!</p></div>
+<div class="paragraph"><p>Can be marked with <code>@FunctionalInterface</code>,<br>
+which leads to compile error when not functional.</p></div></section><section id="_functional_jdk"><h2>Functional JDK</h2><div class="paragraph"><p>JDK has many functional interfaces!</p></div>
+<div class="ulist"><ul><li><p>basic types</p></li><li><p>special cases</p></li><li><p>two parameters</p></li><li><p>primitive specializations</p></li></ul></div></section><section id="_basic_func_int"><h2>Basic Func. Int.</h2><div class="ulist"><ul><li><p><code>Supplier&lt;T&gt;</code>: <code>T get()</code></p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Supplier&lt;String&gt; s = () -&gt; "foo";</code></pre></div></div></li><li><p><code>Consumer&lt;T&gt;</code>: <code>void accept(T)</code></p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Consumer&lt;String&gt; c = s -&gt; System.out.println(s);</code></pre></div></div></li><li><p><code>Function&lt;T, R&gt;</code>: <code>R apply(T)</code></p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Function&lt;String, Integer&gt; f = s -&gt; s.length();</code></pre></div></div></li></ul></div></section><section id="_special_cases"><h2>Special Cases</h2><div class="ulist"><ul><li><p><code>UnaryOperator&lt;T&gt;</code>: <code>T apply(T)</code></p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">UnaryOperator&lt;String&gt; o = s -&gt; s + s;</code></pre></div></div></li><li><p><code>Predicate&lt;T&gt;</code>: <code>boolean test(T)</code></p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Predicate&lt;String&gt; p = s -&gt; s.isEmpty();</code></pre></div></div></li></ul></div></section><section id="_terminology"><h2>Terminology</h2><div class="paragraph"><p>Essential terminology:</p></div>
+<div class="ulist"><ul><li><p><code>Supplier</code> returns something without input</p></li><li><p><code>Consumer</code> uses something without return</p></li><li><p><code>Function</code> transforms input into return</p></li><li><p><code>Operator</code> works as <code>Function</code> but on the same type</p></li><li><p><code>Predicate</code> tests something re <code>true</code>/<code>false</code></p></li></ul></div></section><section id="_two_parameters"><h2>Two Parameters</h2><div class="ulist"><ul><li><p>no <code>BiSupplier&lt;T&gt;</code></p></li><li><p><code>BiConsumer&lt;T, U&gt;</code>: <code>void accept(T, U)</code></p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">BiConsumer&lt;String, Integer&gt; c =
+	(s, i) -&gt; System.out.println(s + ": " + i);</code></pre></div></div></li><li><p><code>BiFunction&lt;T, U, R&gt;</code>: <code>R apply(T, U)</code></p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Function&lt;String, Boolean, Integer&gt; f =
+	(s, b) -&gt; b ? s.length() : 0;</code></pre></div></div></li><li><p><code>BinaryOperator&lt;T&gt;</code>: <code>T apply(T, T)</code></p></li><li><p><code>BiPredicate&lt;T&gt;</code>: <code>boolean test(T, U)</code></p></li></ul></div></section><section id="_primitive_specializations"><h2>Primitive Specializations</h2><div class="paragraph"><p>For <code>int</code>, <code>long</code>, <code>double</code> exist specializations:</p></div>
+<div class="ulist"><ul><li><p><code>IntSupplier</code>: <code>int getAsInt()</code></p></li><li><p><code>IntConsumer</code>: <code>void accept(int)</code></p></li><li><p><code>IntFunction&lt;R&gt;</code>: <code>R apply(int)</code></p></li><li><p><code>ToIntFunction&lt;T&gt;</code>: <code>int applyAsInt(T)</code></p></li><li><p><code>IntUnaryOperator</code>: <code>int applyAsInt(int)</code></p></li><li><p><code>IntBinaryOperator</code>: <code>int applyAsInt(int, int)</code></p></li><li><p><code>IntPredicate</code>: <code>boolean test(int)</code></p></li></ul></div></section><section id="_functional_interfaces_3"><h2>Functional Interfaces</h2><div class="paragraph"><p>All of these can be found<br>
+in <code>java.util.function</code>:</p></div>
+<div class="paragraph"><p><a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/package-summary.html">Java 8 Documentation</a></p></div></section><section id="_exercise_5"><h2>Exercise 5</h2><div class="paragraph"><p>Get to know functional interfaces</p></div>
+<div class="paragraph"><p>(Take some notes to make sure<br>
+you can look up these interfaces!)</p></div></section></section>
+<section><section id="_method_references"><h2>Method References</h2><table class="toc">
+	<tr><td>Lambda Expression Syntax</td></tr>
+	<tr><td>Lambdas vs Closures</td></tr>
+	<tr><td>Functional Interfaces</td></tr>
+	<tr class="toc-current"><td>Method References</td></tr>
+	<tr><td>Summary</td></tr>
+</table></section><section id="_method_references_2"><h2>Method References</h2><div class="paragraph"><p>We&#8217;ve seen a lot of these:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Consumer&lt;String&gt; printString = s -&gt; print(s);</code></pre></div></div>
+<div class="paragraph"><p>Then use a method reference:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Consumer&lt;String&gt; printString = this::print;</code></pre></div></div></section><section id="_exercise_6"><h2>Exercise 6</h2><div class="paragraph"><p>Create simple method references</p></div></section><section id="_kinds_of_references"><h2>Kinds Of References</h2><div class="paragraph"><p>There are various kinds<br>
+of methods references:</p></div>
+<div class="ulist"><ul><li><p>to a static method</p></li><li><p>to a constructor</p></li><li><p>to an existing object</p></li><li><p>to the first parameter</p></li></ul></div></section><section id="_static_reference"><h2>Static Reference</h2><div class="paragraph"><p>Reference to a type&#8217;s static method:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public static void main(String[] args) {...}
+
+Consumer&lt;String[]&gt; main =
+//  args -&gt; Type.main(args);
+	Type::main;</code></pre></div></div></section><section id="_constructor_reference"><h2>Constructor Reference</h2><div class="paragraph"><p>Reference to a type&#8217;s constructor:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public Type(String s) {...}
+
+Function&lt;String, Type&gt; constructor =
+//  s -&gt; new Type(s);
+	Type::new;</code></pre></div></div></section><section id="_object_reference"><h2>Object Reference</h2><div class="paragraph"><p>Reference to a method<br>
+of an existing object:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Type typeInstance = // ...
+Supplier&lt;String&gt; getFieldFromType =
+//  typeInstance -&gt; typeInstance.getField();
+	typeInstance::getField;</code></pre></div></div></section><section id="_parameter_reference"><h2>Parameter Reference</h2><div class="paragraph"><p>Reference to a method<br>
+of the first parameter:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Function&lt;Type, String&gt; getFieldFromType =
+//  typeInstance -&gt; typeInstance.getField();
+	Type::getField;</code></pre></div></div></section><section id="_reference_types"><h2>Reference Types</h2><div class="ulist"><ul><li><p>static method: <code>$TYPE::$METHOD</code></p></li><li><p>constructor: <code>$TYPE::new</code></p></li><li><p>instance method: <code>$INSTANCE::$METHOD</code></p></li><li><p>method on first parameter: <code>$TYPE::$METHOD</code></p></li></ul></div></section><section id="_exercise_7"><h2>Exercise 7</h2><div class="paragraph"><p>Create various kinds of method references</p></div></section></section>
+<section><section id="_summary"><h2>Summary</h2><table class="toc">
+	<tr><td>Lambda Expression Syntax</td></tr>
+	<tr><td>Lambdas vs Closures</td></tr>
+	<tr><td>Functional Interfaces</td></tr>
+	<tr><td>Method References</td></tr>
+	<tr class="toc-current"><td>Summary</td></tr>
+</table></section><section id="_summary_2"><h2>Summary</h2><div class="paragraph"><p>Basic functional interfaces:<br>
+<code>Supplier</code>, <code>Consumer</code>, <code>Function</code>, <code>Operator</code>, <code>Predicate</code></p></div>
+<div class="paragraph"><p>Basic lambda expression:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">$interface $var= ($parameters) -&gt; { $body }</code></pre></div></div></section><section id="_summary_3"><h2>Summary</h2><div class="ulist"><ul><li><p>Interface must be functional,<br></p></li><li><p>Parameters:</p><div class="ulist"><ul><li><p>can have types</p></li><li><p>must have parenthesis if more than one</p></li></ul></div></li><li><p>Body:</p><div class="ulist"><ul><li><p>can be block in curly braces</p></li><li><p>can be expression of single line</p></li></ul></div></li></ul></div></section><section id="_summary_4"><h2>Summary</h2><div class="ulist"><ul><li><p>variables used in body must be effectively final</p></li><li><p>capturing lambdas use fields or non-lambda parameters</p></li></ul></div>
+<div class="paragraph"><p>Method reference:</p></div>
+<div class="ulist"><ul><li><p>static method: <code>$TYPE::$METHOD</code></p></li><li><p>constructor: <code>$TYPE::new</code></p></li><li><p>instance method: <code>$INSTANCE::$METHOD</code></p></li><li><p>method on first parameter: <code>$TYPE::$METHOD</code></p></li></ul></div></section></section>
+<section><section id="_streams"><h2>Streams</h2><table class="toc">
+	<tr><td>Lambda Expressions</td></tr>
+	<tr class="toc-current"><td>Stream API</td></tr>
+	<tr><td>Optional API</td></tr>
+	<tr><td>Default Methods</td></tr>
+</table></section><section id="_demo"><h2>Demo</h2></section><section id="_building_blocks"><h2>Building Blocks</h2><div class="paragraph"><p>Typical collection operations:</p></div>
+<div class="ulist"><ul><li><p>start with a collection (<em>source</em>)</p></li><li><p>perform operation on each element<br>
+(<em>filter</em>, <em>map</em>)</p></li><li><p>gather results (<em>reduce</em>, <em>collect</em>)</p></li></ul></div>
+<div class="paragraph"><p>Why not formalize that?</p></div></section><section id="_exercise_1_2"><h2>Exercise 1</h2><div class="paragraph"><p>Create Lambda-based collection processing API</p></div></section><section id="_loops_vs_whatever"><h2>Loops vs &lt;Whatever&gt;</h2><div class="paragraph"><p>What do you think about that API?</p></div></section><section id="_loops_vs_whatever_2"><h2>Loops vs &lt;Whatever&gt;</h2><div class="paragraph"><p>Loop upsides:</p></div>
+<div class="ulist"><ul><li><p>make side effects easier / more likely</p></li><li><p>are more efficient</p></li></ul></div>
+<div class="paragraph"><p>Loop downsides:</p></div>
+<div class="ulist"><ul><li><p>make it harder to see what&#8217;s going on</p></li><li><p>make side effects easier / more likely</p></li><li><p>make optimization/parallelization harder</p></li></ul></div></section><section id="_a_word_on_mapreduce"><h2>A Word On MapReduce</h2><div class="paragraph"><p>Google&#8217;s MapReduce has the same logic:</p></div>
+<div class="ulist"><ul><li><p>split input across nodes</p></li><li><p>apply given function in parallel (<em>map</em>)</p></li><li><p>reduce resulting data in parallel (<em>reduce</em>)</p></li><li><p>reduce data across nodes (more <em>reduce</em>)</p></li></ul></div></section></section>
+<section><section id="_stream_api_basics"><h2>Stream API Basics</h2><table class="toc">
+	<tr class="toc-current"><td>Stream API Basics</td></tr>
+	<tr><td>Stream Operations</td></tr>
+	<tr><td>More Stream APIs</td></tr>
+	<tr><td>Stream Details</td></tr>
+	<tr><td>Stream Pitfalls</td></tr>
+	<tr><td>Summary</td></tr>
+</table></section><section id="_enter_streams"><h2>Enter Streams!</h2><div class="paragraph"><p>Streams have the same idea:</p></div>
+<div class="ulist"><ul><li><p>a collection as stream source</p></li><li><p>multitude of operations</p></li><li><p>terminal operations that create results</p></li></ul></div>
+<div class="paragraph"><p><strong>But</strong>:</p></div>
+<div class="ulist"><ul><li><p>streams are lazy:<br>
+they do nothing until terminal operation</p></li><li><p>streams are clever:<br>
+lots of internal optimizations</p></li><li><p>streams come with support for parallelization</p></li></ul></div></section><section id="_simple_stream_pipeline"><h2>Simple Stream Pipeline</h2><div class="paragraph"><p>Your first <em>stream pipeline</em>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Todo&gt; todos = // ...
+Set&lt;String&gt; = todos               // source
+	.stream()                     // start streaming
+	.map(Todo::description)       // operate on
+	.filter(d -&gt; d.length &gt; 10)   //     the stream
+	.collect(Collectors.toSet()); // terminal op.</code></pre></div></div></section><section id="_stream_basics"><h2>Stream Basics</h2><div class="ulist"><ul><li><p>new package <code>java.util.stream</code><br>
+with <a href="https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html">excellent Javadoc</a></p></li><li><p>new interface <code>java.util.stream.Stream</code><br>
+with all important operations</p></li></ul></div></section><section id="_stream_terminology"><h2>Stream Terminology</h2><div class="paragraph"><p>Every stream pipeline has three steps:</p></div>
+<div class="dlist"><dl><dt class="hdlist1">Source (one)</dt><dd><p>Get a stream, notably from a collection<br>
+with <code>Collection::stream</code></p></dd><dt class="hdlist1">Intermediate Operations (zero or more)</dt><dd><p>All methods on <code>Stream</code> that return a <code>Stream</code>,<br>
+notably <code>map</code> and <code>filter</code></p></dd><dt class="hdlist1">Terminal Operation (one)</dt><dd><p>All methods on <code>Stream</code> that don&#8217;t return a <code>Stream</code>,<br>
+notably <code>collect</code> and <code>reduce</code></p></dd></dl></div></section><section id="_exercise_2_2"><h2>Exercise 2</h2><div class="paragraph"><p>Refactor use of self-made API to stream API</p></div></section></section>
+<section><section id="_stream_operations"><h2>Stream Operations</h2><table class="toc">
+	<tr><td>Stream API Basics</td></tr>
+	<tr class="toc-current"><td>Stream Operations</td></tr>
+	<tr><td>More Stream APIs</td></tr>
+	<tr><td>Stream Details</td></tr>
+	<tr><td>Stream Pitfalls</td></tr>
+	<tr><td>Summary</td></tr>
+</table></section><section id="_common_use_cases"><h2>Common Use Cases</h2><div class="ulist"><ul><li><p>doing something</p></li><li><p>transformation</p></li><li><p>filtering</p></li><li><p>finding / checking presence</p></li><li><p>sorting / searching for min/max</p></li><li><p>reducing</p></li><li><p>grouping</p></li></ul></div></section><section id="_doing_something"><h2>Doing Something</h2><div class="paragraph"><p><em>"I have todos and want to print them"</em></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Todo&gt; todos = // ...
+Set&lt;String&gt; = todos.stream()
+	.forEach(System.out::println);</code></pre></div></div></section><section id="_doing_something_2"><h2>Doing Something</h2><div class="paragraph"><p><em>"I have a pipeline and want to see what&#8217;s going on"</em></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">elements.stream()
+	.map(/* ... */)
+	.filter(/* ... */)
+	.peek(System.out::println)
+	.map(/* ... */)
+	.forEach(/* ... */)</code></pre></div></div>
+<div class="paragraph"><p><strong>Careful</strong>:</p></div>
+<div class="paragraph"><p>Optimizations and surprising implementation details<br>
+make <code>peek</code> unpredictable.</p></div>
+<div class="paragraph"><p>⇝ Never do anything important in <code>peek</code>!</p></div></section><section id="_doing_something_3"><h2>Doing Something</h2><div class="paragraph"><p>Intermediate operations:</p></div>
+<div class="ulist"><ul><li><p><code>peek(Consumer&lt;T&gt;)</code> (unreliable!)</p></li></ul></div>
+<div class="paragraph"><p>Terminal operations:</p></div>
+<div class="ulist"><ul><li><p><code>forEach(Consumer&lt;T&gt;)</code></p></li><li><p><code>forEachOrdered(Consumer&lt;T&gt;)</code> (⇝ later)</p></li></ul></div></section><section id="_transforming_collections"><h2>Transforming Collections</h2><div class="paragraph"><p><em>"I have users and need their last names"</em></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;User&gt; users = // ...
+List&lt;String&gt; names = users.stream()
+	.map(User::name)
+	.map(Name::lastName)
+	.collect(toList());</code></pre></div></div>
+<div class="paragraph"><p><code>Collector</code> implementations for <code>collect</code>:</p></div>
+<div class="ulist"><ul><li><p>come from <code>Collectors</code> (⇝ later)</p></li><li><p>often statically imported</p></li></ul></div></section><section id="_transforming_collections_2"><h2>Transforming Collections</h2><div class="paragraph"><p><em>"I have users and need their last names as an array"</em></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;User&gt; users = // ...
+String[] names = users.stream()
+	.map(User::name)
+	.map(Name::lastName)
+	.toArray(length -&gt; new String[length]);
+//  .toArray(String[]::new);</code></pre></div></div></section><section id="_transforming_collections_3"><h2>Transforming Collections</h2><div class="paragraph"><p><em>"I have users and need their orders as a list"</em></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;User&gt; users = // ...
+List&lt;Order&gt; orders = users.stream()
+	// User::orders returns List&lt;Order&gt;
+	.map(User::orders)
+	// now we have a Stream&lt;List&lt;Order&gt;&gt;
+	.flatMap(Collection::stream)
+	// flatMap turned it into Stream&lt;Order&gt;
+	.collect(toList());</code></pre></div></div></section><section id="_transforming_collections_4"><h2>Transforming Collections</h2><div class="paragraph"><p>Intermediate operations:</p></div>
+<div class="ulist"><ul><li><p><code>map(Function&lt;T, R&gt;)</code></p></li><li><p><code>flatMap(Function&lt;T, Stream&lt;R&gt;&gt;)</code></p></li></ul></div>
+<div class="paragraph"><p>Terminal operations:</p></div>
+<div class="ulist"><ul><li><p><code>collect(Collector&lt;T, A, R&gt;)</code> (⇝ later)</p></li><li><p><code>toArray(IntFunction&lt;A[]&gt;)</code></p></li></ul></div></section><section id="_filtering_collections"><h2>Filtering Collections</h2><div class="paragraph"><p><em>"I have drugs and need those with low stockpile"</em></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Drug&gt; drugs = // ...
+List&lt;Drug&gt; lowDrugs = drugs.stream()
+	.filter(drug -&gt;
+		drug.inventory().isStockpileLow())
+	.collect(toList());</code></pre></div></div></section><section id="_filtering_collections_2"><h2>Filtering Collections</h2><div class="paragraph"><p><em>"I have drugs and need the first five with low stockpile"</em></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Drug&gt; drugs = // ...
+List&lt;Drug&gt; lowDrugs = drugs.stream()
+	.filter(drug -&gt;
+		drug.inventory().isStockpileLow())
+	.limit(5)
+	.collect(toList());</code></pre></div></div></section><section id="_filtering_collections_3"><h2>Filtering Collections</h2><div class="paragraph"><p><em>"I have drugs and need those with low stockpile<br>
+beyond the first five"</em></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Drug&gt; drugs = // ...
+List&lt;Drug&gt; lowDrugs = drugs.stream()
+	.filter(drug -&gt;
+		drug.inventory().isStockpileLow())
+	.skip(5)
+	.collect(toList());</code></pre></div></div></section><section id="_filtering_collections_4"><h2>Filtering Collections</h2><div class="paragraph"><p><em>"I have log messages and need warnings (or worse)"</em></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Message&gt; messages = // ...
+List&lt;Message&gt; afterWarning = messages.stream()
+	.filter(message -&gt;
+		message.priority().atLeast(WARNING));
+	.collect(toList());</code></pre></div></div></section><section id="_filtering_collections_5"><h2>Filtering Collections</h2><div class="paragraph"><p><em>"I have log messages and need all after the first warning"</em></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Message&gt; messages = // ...
+List&lt;Message&gt; afterWarning = messages.stream()
+	.dropWhile(message -&gt;
+		message.priority().lessThan(WARNING));
+	.collect(toList());</code></pre></div></div></section><section id="_filtering_collections_6"><h2>Filtering Collections</h2><div class="paragraph"><p><em>"I have log messages and need all before the first error"</em></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Message&gt; messages = // ...
+List&lt;Message&gt; afterWarning = messages.stream()
+	.takeWhile(message -&gt;
+		message.priority().lessThan(ERROR));
+	.collect(toList());</code></pre></div></div></section><section id="_filtering_collections_7"><h2>Filtering Collections</h2><div class="paragraph"><p>Intermediate operations:</p></div>
+<div class="ulist"><ul><li><p><code>filter(Predicate&lt;T&gt;)</code></p></li><li><p><code>limit(int)</code></p></li><li><p><code>skip(int)</code></p></li><li><p><code>takeWhile(Predicate&lt;T&gt;)</code> ⑨</p></li><li><p><code>dropWhile(Predicate&lt;T&gt;)</code> ⑨</p></li></ul></div></section><section id="_sorting_minima_maxima"><h2>Sorting, Minima, Maxima</h2><div class="paragraph"><p><em>"I have todos and want to sort by natural order"</em></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Todo&gt; todos = // ...
+List&lt;Todo&gt; sorted = todos.stream()
+	.sorted()
+	.collect(toList());</code></pre></div></div>
+<div class="paragraph"><p>Todo needs to implement <code>Comparable&lt;Todo&gt;</code>!</p></div></section><section id="_sorting_minima_maxima_2"><h2>Sorting, Minima, Maxima</h2><div class="paragraph"><p><em>"I have todos and want to sort by due date"</em></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Todo&gt; todos = // ...
+List&lt;Todo&gt; sorted = todos.stream()
+//  provide Comparator implementation with lambda
+	.sorted((todo1, todo2) -&gt;
+		todo1.due().compareTo(todo2.due()))
+	.collect(toList());</code></pre></div></div>
+<div class="paragraph"><p>Alternatively, use <code>Comparator::comparing</code> (⇝ later)</p></div></section><section id="_sorting_minima_maxima_3"><h2>Sorting, Minima, Maxima</h2><div class="paragraph"><p><em>"I have sorted elements and need to<br>
+do something in that order"</em></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Element&gt; elements = // ...
+elements.stream()
+	.sorted(/* ... */)
+	.forEachOrdered(/* ... */);</code></pre></div></div>
+<div class="paragraph"><p>On sorted streams, use <code>forEachOrdered</code><br>
+or stream API is free to ignore order!</p></div></section><section id="_sorting_minima_maxima_4"><h2>Sorting, Minima, Maxima</h2><div class="paragraph"><p><em>"I have todos and want the one with earliest due date"</em></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Todo&gt; todos = // ...
+Comparator&lt;Todo&gt; byDueDate = // ...
+Optional&lt;Todo&gt; sorted = todos.stream()
+	.min(byDueDate);</code></pre></div></div>
+<div class="paragraph"><p>What&#8217;s <code>Optional</code>?</p></div></section><section id="_quick_intro_to_optional"><h2>Quick Intro to Optional</h2><div class="paragraph"><p><code>Optional</code> is " <code>null</code> as a type":</p></div>
+<div class="ulist"><ul><li><p><code>Optional&lt;T&gt;</code> may contain an instance of <code>T</code> or not (⇝ later)</p></li><li><p>check <code>isPresent()</code>, then <code>get()</code></p></li><li><p>convert to <code>Stream&lt;T&gt;</code> by calling <code>stream()</code> ⑨</p></li><li><p>much more, but we talk about that later</p></li></ul></div></section><section id="_sorting_minima_maxima_5"><h2>Sorting, Minima, Maxima</h2><div class="paragraph"><p><em>"I have todos and want the one with latest due date"</em></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Todo&gt; todos = // ...
+Comparator&lt;Todo&gt; byDueDate = // ...
+Optional&lt;Todo&gt; sorted = todos.stream()
+	.max(byDueDate);</code></pre></div></div></section><section id="_sorting_minima_maxima_6"><h2>Sorting, Minima, Maxima</h2><div class="paragraph"><p><em>"I have elements and need to deduplicate them"</em></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Element&gt; elements = // ...
+List&lt;element&gt; distinctElements = elements.stream()
+	.distinct()
+	.collect(toList());</code></pre></div></div>
+<div class="paragraph"><p>Uses <code>Element::equals</code>.</p></div></section><section id="_sorting_minima_maxima_7"><h2>Sorting, Minima, Maxima</h2><div class="paragraph"><p><em>"I have elements and need to deduplicate them,<br>
+but their <code>equals</code> doesn&#8217;t fit"</em></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Element&gt; elements = // ...
+List&lt;element&gt; distinctElements = elements.stream()
+	.map(WithMyEquals::neω)
+	.distinct()
+	.map(WithMyEquals::element)
+	.collect(toList());</code></pre></div></div>
+<div class="paragraph"><p>Where <code>WithMyEuals</code> wraps <code>Element</code><br>
+and implements desired <code>equals</code>.</p></div></section><section id="_sorting_minima_maxima_8"><h2>Sorting, Minima, Maxima</h2><div class="paragraph"><p>Intermediate operations:</p></div>
+<div class="ulist"><ul><li><p><code>sorted()</code> / <code>sorted(Comparator&lt;T&gt;)</code> <br>
+(use with <code>forEachOrdered</code>!)</p></li><li><p><code>distinct()</code></p></li></ul></div>
+<div class="paragraph"><p>Terminal operations:</p></div>
+<div class="ulist"><ul><li><p><code>min(Comparator&lt;T&gt;)</code></p></li><li><p><code>max(Comparator&lt;T&gt;)</code></p></li></ul></div></section><section id="_finding_things"><h2>Finding Things</h2><div class="paragraph"><p><em>"I have Todos and want</em> the first <code>VERY</code> <em>important one"</em></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Todo&gt; todos = // ...
+Optional&lt;Todo&gt; veryImportant = todos.stream()
+	.filter(todo -&gt; todo.importance() == VERY)
+	.findFirst();</code></pre></div></div></section><section id="_finding_things_2"><h2>Finding Things</h2><div class="paragraph"><p><em>"I have Todos and want</em> any <code>VERY</code> <em>important one"</em></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Todo&gt; todos = // ...
+Optional&lt;Todo&gt; veryImportant = todos.stream()
+	.filter(todo -&gt; todo.importance() == VERY)
+	.findAny();</code></pre></div></div></section><section id="_finding_things_3"><h2>Finding Things</h2><div class="paragraph"><p><em>"I have Todos and want</em> the only <code>VERY</code> <em>important one"</em></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Todo&gt; todos = // ...
+Optional&lt;Todo&gt; veryImportant = todos.stream()
+	.filter(todo -&gt; todo.importance() == VERY)
+//  there isn't really a good solution... ⇝ later
+	.reduce((t1, t2) -&gt;
+		throw new IllegalStateException());</code></pre></div></div></section><section id="_finding_things_4"><h2>Finding Things</h2><div class="paragraph"><p><em>"I have Todos and want to know if</em> any <em>is <code>VERY</code> important"</em></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Todo&gt; todos = // ...
+// DON'T DO THIS!
+// boolean isAnyVeryImportant = todos.stream()
+// 	.filter(todo -&gt; todo.importance() == VERY)
+// 	.findAny()
+// 	.isPresent();
+boolean isAnyVeryImportant = todos.stream()
+	.anyMatch(todo -&gt; todo.importance() == VERY)</code></pre></div></div></section><section id="_finding_things_5"><h2>Finding Things</h2><div class="paragraph"><p><em>"I have Todos and want to know if</em> all <em>are <code>VERY</code> important"</em></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Todo&gt; todos = // ...
+boolean areAllVeryImportant = todos.stream()
+	.allMatch(todo -&gt; todo.importance() == VERY)</code></pre></div></div></section><section id="_finding_things_6"><h2>Finding Things</h2><div class="paragraph"><p><em>"I have Todos and want to know if</em> none <em>are <code>VERY</code> important"</em></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Todo&gt; todos = // ...
+boolean areNoneVeryImportant = todos.stream()
+	.noneMatch(todo -&gt; todo.importance() == VERY)</code></pre></div></div></section><section id="_finding_things_7"><h2>Finding Things</h2><div class="paragraph"><p>Intermediate operations:</p></div>
+<div class="ulist"><ul><li><p><code>filter(Predicate&lt;T&gt;)</code></p></li></ul></div>
+<div class="paragraph"><p>Terminal operations:</p></div>
+<div class="ulist"><ul><li><p><code>findFirst()</code></p></li><li><p><code>findAny()</code></p></li><li><p><code>anyMatch(Predicate&lt;T&gt;)</code></p></li><li><p><code>allMatch(Predicate&lt;T&gt;)</code></p></li><li><p><code>noneMatch(Predicate&lt;T&gt;)</code></p></li></ul></div></section><section id="_reducing"><h2>Reducing</h2><div class="paragraph"><p><em>"I have todos and want to concatenate their descriptions"</em></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Todo&gt; todos = // ...
+String descriptions = todos.stream()
+	.map(Todo::description)
+	.reduce("", (d1, d2)-&gt; d1 + d2):</code></pre></div></div></section><section id="_reducing_2"><h2>Reducing</h2><div class="paragraph"><p><em>"I have todos and want to concatenate their descriptions"</em></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Todo&gt; todos = // ...
+String descriptions = todos.stream()
+	.map(Todo::description)
+	.reduce("", (d1, d2)-&gt; d1 + d2):</code></pre></div></div></section><section id="_reducing_3"><h2>Reducing</h2><div class="paragraph"><p><em>"I have drugs and want to know how many have low stockpile"</em></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Drug&gt; drugs = // ...
+List&lt;Drug&gt; lowDrugs = drugs.stream()
+	.filter(drug -&gt;
+		drug.inventory().isStockpileLow())
+	.count();</code></pre></div></div></section><section id="_reducing_4"><h2>Reducing</h2><div class="paragraph"><p>Terminal operations:</p></div>
+<div class="ulist"><ul><li><p><code>reduce(BinaryOperator&lt;T&gt;)</code></p></li><li><p><code>reduce(T, BinaryOperator&lt;T&gt;)</code></p></li><li><p><code>count()</code></p></li></ul></div></section><section id="_exercise_3_2"><h2>Exercise 3</h2><div class="paragraph"><p>Solve problems with streams</p></div></section></section>
+<section><section id="_more_stream_apis"><h2>More Stream APIs</h2><table class="toc">
+	<tr><td>Stream API Basics</td></tr>
+	<tr><td>Stream Operations</td></tr>
+	<tr class="toc-current"><td>More Stream APIs</td></tr>
+	<tr><td>Stream Details</td></tr>
+	<tr><td>Stream Pitfalls</td></tr>
+	<tr><td>Summary</td></tr>
+</table></section><section id="_more_stream_apis_2"><h2>More Stream APIs</h2><div class="ulist"><ul><li><p>various sources</p></li><li><p>reductions in general</p></li><li><p>collectors in detail</p></li><li><p>primitive specializations</p></li></ul></div></section><section id="_stream_sources"><h2>Stream Sources</h2><div class="paragraph"><p>Besides <code>Collection::stream</code>:</p></div>
+<div class="ulist"><ul><li><p><code>Stream.of(T&#8230;&#8203;)</code></p></li><li><p><code>Stream.iterate(T, UnaryOperator&lt;T&gt;)</code></p></li><li><p><code>Stream.iterate(T, Predicate&lt;T&gt;, UnaryOperator&lt;T&gt;)</code></p></li><li><p><code>Arrays.stream(T[])</code></p></li><li><p><code>BufferedReader.lines()</code></p></li><li><p><code>Files.lines(Path)</code>, <code>Files.list(Path)</code></p></li><li><p><code>Random.ints()</code></p></li><li><p>more&#8230;&#8203;</p></li></ul></div></section><section id="_stream_iterate"><h2>Stream::iterate</h2><div class="paragraph"><p>Creates an infinite stream:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream.iterate(T seed,
+	UnaryOperator&lt;T&gt; next);</code></pre></div></div>
+<div class="paragraph"><p>Example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream.iterate(0, i -&gt; i + 1)
+	.forEach(System.out::println);</code></pre></div></div>
+<div class="paragraph"><p>Prints all the (<code>int</code>) numbers.</p></div></section><section id="_stream_iterate_2"><h2>Stream::iterate</h2><div class="paragraph"><p>Creates a possibly finite stream:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream.iterate(T seed,
+	Predicate&lt;T&gt; hasNext, // ⑨
+	UnaryOperator&lt;T&gt; next);</code></pre></div></div>
+<div class="paragraph"><p>Example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream
+	.iterate(0, i -&gt; i &lt; 5, i -&gt; i + 1)
+	.forEach(System.out::println);</code></pre></div></div>
+<div class="paragraph"><p>Prints <code>0</code>, <code>1</code>, <code>2</code>, <code>3</code>, <code>4</code>.</p></div></section><section id="_reduction"><h2>Reduction</h2><div class="paragraph"><p>Reduce elements of a stream to a final result.</p></div>
+<div class="ulist"><ul><li><p><code>reduce(BinaryOperator&lt;T&gt;)</code> accumulates results<br>
+and returns <code>Optional&lt;T&gt;</code></p></li><li><p><code>reduce(T, BinaryOperator&lt;T&gt;)</code> accumulates result on identity</p></li></ul></div></section><section id="_reduction_2"><h2>Reduction</h2><div class="paragraph"><p>Simple example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Integer&gt; numbers = // ...
+int sum = numbers.stream()
+	.reduce(0, (x,y) -&gt; x+y);</code></pre></div></div>
+<div class="paragraph"><p>Weird example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;T&gt; elements = // ...
+Predicate&lt;T&gt; filter = // ...
+Optional&lt;T&gt; only = elements.stream()
+	.filter(filter)
+	.reduce((t1, t2) -&gt;
+		throw new IllegalStateException());</code></pre></div></div></section><section id="_collectors"><h2>Collectors</h2><div class="paragraph"><p>Collectors are a special kind of reduction<br>
+where a mutable container is needed/created.</p></div>
+<div class="paragraph"><p><code>Collector&lt;T, A, R&gt;</code> has four parts:</p></div>
+<div class="ulist"><ul><li><p><code>Supplier&lt;A&gt;</code> returns a new collection <code>A</code></p></li><li><p><code>BiConsumer&lt;A, T&gt;</code> adds an item <code>T</code> to <code>A</code></p></li><li><p><code>BinaryOperator&lt;A&gt;</code> combines two collections</p></li><li><p><code>Function&lt;A,R&gt;</code> returns the final result <code>R</code></p></li></ul></div></section><section id="_collectors_2"><h2>Collectors</h2><div class="paragraph"><p>Example collecting strings to a <code>List&lt;String&gt;</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Collector&lt;String, ?, List&lt;String&gt;&gt; collector = Collector.of(
+	// Supplier&lt;List&lt;String&gt;&gt;
+	() -&gt; new ArrayList&lt;String&gt;(),
+	// BiConsumer&lt;List&lt;String&gt;, String&gt;
+	(l, s) -&gt; l.add(s),
+	// BinaryOperator&lt;List&lt;String&gt;&gt;
+	(l1, l2) -&gt; { l1.addAll(l2); return l1; },
+	// Function&lt;List&lt;String&gt;,List&lt;String&gt;&gt;
+	l -&gt; l
+);</code></pre></div></div></section><section id="_collectors_3"><h2>Collectors</h2><div class="paragraph"><p>Why so complicated? For parallelization!</p></div>
+<div class="paragraph"><p>Think MapReduce&#8201;&#8212;&#8201;each thread:</p></div>
+<div class="ulist"><ul><li><p>creates collections <code>A</code> (supplier)</p></li><li><p>fills them with its items <code>T</code> (biconsumer)</p></li></ul></div>
+<div class="paragraph"><p>Then one thread:</p></div>
+<div class="ulist"><ul><li><p>combines collections <code>A</code></p></li><li><p>applies function to get <code>R</code></p></li></ul></div>
+<div class="paragraph"><p><code>A</code> and <code>R</code> can have different characteristics.</p></div></section><section id="_collectors_4"><h2>Collectors</h2><div class="paragraph"><p>Call methods on <code>Collectors</code>:</p></div>
+<div class="ulist"><ul><li><p>most importantly <code>toList</code> and <code>toSet</code></p></li><li><p><code>toMap</code> to map elements to key and values</p></li><li><p><code>gropingBy</code> to get a <code>Map&lt;K, List&lt;T&gt;&gt;</code> or <code>Map&lt;K, D&gt;</code></p></li><li><p><code>partitioningBy</code> to get a<br>
+<code>Map&lt;Boolean, List&lt;T&gt;&gt;</code> or <code>Map&lt;Boolean, D&gt;</code></p></li><li><p><code>joining</code> to join strings</p></li></ul></div></section><section id="_collectors_5"><h2>Collectors</h2><div class="paragraph"><p>Collectors are "stream complete":</p></div>
+<div class="ulist"><ul><li><p><code>collectingAndThen</code> applies another finisher</p></li><li><p><code>mappng</code> applies a function <em>within</em> the collector</p></li></ul></div></section><section id="_primitive_specializations_2"><h2>Primitive Specializations</h2><div class="paragraph"><p><code>Stream&lt;T&gt;</code> has to box primitives ⇝ booh!</p></div>
+<div class="paragraph"><p>Primitive specialization of <code>Stream</code>:</p></div>
+<div class="ulist"><ul><li><p><code>DoubleStream</code></p></li><li><p><code>IntStream</code></p></li><li><p><code>LongStream</code></p></li></ul></div>
+<div class="paragraph"><p>(Yes, no <code>FloatStream</code>)</p></div></section><section id="_intstream"><h2>IntStream</h2><div class="paragraph"><p>On the example if <code>IntStream</code><br>
+(others are the same):</p></div>
+<div class="ulist"><ul><li><p>get one with static factory methods<br>
+or <code>Stream::mapToInt</code></p></li><li><p>conceptually the same as <code>Stream</code></p></li><li><p>uses primitive specializations of func. int.</p></li><li><p>have a few numeric special cases:<br>
+<code>average</code>, <code>max</code>, <code>min</code>, <code>sum</code></p></li></ul></div></section></section>
+<section><section id="_stream_details"><h2>Stream Details</h2><table class="toc">
+	<tr><td>Stream API Basics</td></tr>
+	<tr><td>Stream Operations</td></tr>
+	<tr><td>More Stream APIs</td></tr>
+	<tr class="toc-current"><td>Stream Details</td></tr>
+	<tr><td>Stream Pitfalls</td></tr>
+	<tr><td>Summary</td></tr>
+</table></section><section id="_stream_details_2"><h2>Stream Details</h2><div class="ulist"><ul><li><p>lazy</p></li><li><p>easy to parallelize</p></li><li><p>stateless vs stateful</p></li><li><p>short-circuiting</p></li><li><p>characteristics<br>
+and optimizations</p></li></ul></div></section><section id="_streams_are_lazy"><h2>Streams Are Lazy</h2><div class="paragraph"><p>All intermediate operations are lazy!</p></div>
+<div class="ulist"><ul><li><p>calling <code>map</code>, <code>filter</code>, etc. is "free"<br>
+even for large or infinite streams</p></li><li><p>only when terminal operation is called,<br>
+will pipeline be executed</p></li></ul></div>
+<div class="paragraph"><p>⇝ Terminal operation determines:</p></div>
+<div class="ulist"><ul><li><p>correctness</p></li><li><p>side effects</p></li><li><p>boundedness</p></li><li><p>performance (partially)</p></li></ul></div></section><section id="_streams_are_easy_to_parallelize"><h2>Streams Are Easy To Parallelize</h2><div class="paragraph"><p>Two ways to parallelize a pipeline:</p></div>
+<div class="ulist"><ul><li><p>call <code>Collection::parallelStream</code></p></li><li><p>call <code>Stream::parallel</code></p></li></ul></div>
+<div class="paragraph"><p>Streams will do the rest!</p></div>
+<div class="paragraph"><p>One way to get back to normal:</p></div>
+<div class="ulist"><ul><li><p>call <code>Stream::sequential</code></p></li></ul></div></section><section id="_streams_are_easy_to_parallelize_2"><h2>Streams Are Easy To Parallelize</h2><div class="paragraph"><p>That it&#8217;s easy, doesn&#8217;t mean you should do it often!</p></div>
+<div class="paragraph"><p>Parallelization can cause a lot of problems<br>
+and has only one benefit: performance.</p></div>
+<div class="paragraph"><p>As always with performance:</p></div>
+<div class="ulist"><ul><li><p>have clear requirements</p></li><li><p>measure whether you fulfill them</p></li><li><p>identify hotspots</p></li><li><p>research possible improvements</p></li><li><p>measure changes</p></li></ul></div></section><section id="_streams_are_easy_to_parallelize_3"><h2>Streams Are Easy To Parallelize</h2><div class="paragraph"><p>Guidelines for when parallelization<br>
+has the most potential:</p></div>
+<div class="ulist"><ul><li><p>many elements</p></li><li><p>CPU-intensive operations</p></li><li><p>stateless / side-effect free<br>
+operations</p></li></ul></div></section><section id="_streams_are_clever"><h2>Streams Are Clever</h2><div class="ulist"><ul><li><p>process each element as rarely as possible<br>
+(even though conceptually each is processed<br>
+once per operation)</p></li><li><p>short-circuiting operations prevent<br>
+processing entire stream</p></li><li><p>stream characteristics allow "no-op operations"</p></li></ul></div></section><section id="_stateless_vs_stateful"><h2>Stateless vs Stateful</h2><div class="paragraph"><p>Most intermediate operations are stateless:</p></div>
+<div class="ulist"><ul><li><p>do not store information (no state)</p></li><li><p>can compute elements independently</p></li></ul></div>
+<div class="paragraph"><p>Benefits:</p></div>
+<div class="ulist"><ul><li><p>low memory requirements</p></li><li><p>easy to (correctly) parallelize</p></li></ul></div></section><section id="_stateless_vs_stateful_2"><h2>Stateless vs Stateful</h2><div class="paragraph"><p>Some operations need to be stateful<br>
+(<code>distinct</code>, <code>sorted</code>, <code>limit</code>, <code>skip</code>)</p></div>
+<div class="ulist"><ul><li><p>store state during processing</p></li><li><p>may need to process some/many/all<br>
+elements before producing a result</p></li></ul></div>
+<div class="paragraph"><p>Downsides:</p></div>
+<div class="ulist"><ul><li><p>may require considerable memory</p></li><li><p>may lead to large overhead<br>
+when parallelized</p></li></ul></div></section><section id="_short_circuiting"><h2>Short-Circuiting</h2><div class="ulist"><ul><li><p><code>findFirst</code>, <code>findAny</code> stop processing<br>
+once an element is found</p></li><li><p><code>anyMatch</code>, <code>allMatch</code>, <code>noneMatch</code> stop<br>
+as soon as result is determined</p></li><li><p><code>limit</code>, <code>takeWhile</code> cut stream short</p></li></ul></div></section><section id="_stream_characteristics"><h2>Stream Characteristics</h2><div class="paragraph"><p>Stream knows characteristics of its source:</p></div>
+<div class="ulist"><ul><li><p><em>sized</em> (e.g. <code>ArrayList</code>)</p></li><li><p><em>distinct</em> (e.g. <code>Set</code>)</p></li><li><p><em>ordered</em> (e.g. <code>List</code> or <code>SortedSet</code>)</p></li><li><p><em>sorted</em> (e.g. <code>SortedSet</code>)</p></li></ul></div></section><section id="_stream_characteristics_2"><h2>Stream Characteristics</h2><div class="paragraph"><p>Operations clear, preserve, or inject
+these characteristics.</p></div>
+<div class="paragraph"><p>Operations can benefit from them:</p></div>
+<div class="ulist"><ul><li><p><code>count</code> may return immediately if <em>sized</em></p></li><li><p><code>distinct</code> may be no-op if <em>distinct</em></p></li><li><p><code>sorted</code>, <code>min</code>, <code>max</code> may be no-op if <em>sorted</em></p></li><li><p><code>findFirst</code> is like <code>findAny</code> if not <em>ordered</em></p></li><li><p>parallelization is easier if not <em>ordered</em></p></li></ul></div></section></section>
+<section><section id="_possible_stream_pitfalls"><h2>Possible Stream Pitfalls</h2><table class="toc">
+	<tr><td>Stream API Basics</td></tr>
+	<tr><td>Stream Operations</td></tr>
+	<tr><td>More Stream APIs</td></tr>
+	<tr><td>Stream Details</td></tr>
+	<tr class="toc-current"><td>Stream Pitfalls</td></tr>
+	<tr><td>Summary</td></tr>
+</table></section><section id="_possible_stream_pitfalls_2"><h2>Possible Stream Pitfalls</h2><div class="ulist"><ul><li><p>no mutations</p></li><li><p>no storage</p></li><li><p>no reuse</p></li><li><p>minimize side effects</p></li></ul></div></section><section id="_streams_do_not_mutate"><h2>Streams Do Not Mutate</h2><div class="paragraph"><p>A stream pipeline<br>
+<strong>never mutates the underlying collection</strong>!</p></div>
+<div class="paragraph"><p>All data is collected in terminal operation.</p></div>
+<div class="paragraph"><p>If you need to mutate in place,<br>
+use imperative structures!</p></div></section><section id="_streams_are_no_storage"><h2>Streams Are No Storage</h2><div class="paragraph"><p>A stream pipeline<br>
+<strong>does not hold data</strong>!</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// if `orderRepository` goes down,
+// `orders` is useless!
+Stream&lt;Orders&gt; orders =
+	orderRepository.streamOrders();</code></pre></div></div>
+<div class="paragraph"><p>If you need to keep data around,<br>
+use a collection!</p></div>
+<div class="paragraph"><p>(Intermediate operations may amass data,<br>
+but they don&#8217;t expose it.)</p></div></section><section id="_streams_can_not_be_reused"><h2>Streams Can Not Be Reused</h2><div class="paragraph"><p>Like <code>Iterator</code>, a stream pipeline<br>
+can not be reused.</p></div>
+<div class="paragraph"><p>To process the stream again, recreate it.</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Supplier&lt;Stream&lt;Orders&gt;&gt; orders = () -&gt;
+	orderRepository.streamOrders();
+// now, call orders.get() as often as you want</code></pre></div></div></section><section id="_beware_of_side_effects"><h2>Beware Of Side Effects</h2><div class="paragraph"><p>If code&#8230;&#8203;</p></div>
+<div class="ulist"><ul><li><p>is executed in a stream pipeline and</p></li><li><p>has an effect on anything outside of it</p></li></ul></div>
+<div class="paragraph"><p>... that is a <em>side effect</em>.</p></div>
+<div class="ulist"><ul><li><p>anything useful in <code>peek</code> or <code>forEach</code></p></li><li><p>anything "non return value oriented"<br>
+in lambdas for other <code>Stream</code> methods</p></li></ul></div></section><section id="_beware_of_side_effects_2"><h2>Beware Of Side Effects</h2><div class="paragraph"><p>A danger of side effects:</p></div>
+<div class="ulist"><ul><li><p>optimization may remove side effects</p></li></ul></div>
+<div class="paragraph"><p>Example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream.of("a", "b", "c")
+	.peek(auditLogger::log)
+	.count();</code></pre></div></div>
+<div class="paragraph"><p>Nothing is logged&#8230;&#8203; (Why?)</p></div></section><section id="_beware_of_side_effects_3"><h2>Beware Of Side Effects</h2><div class="paragraph"><p>Another danger of side effects:</p></div>
+<div class="ulist"><ul><li><p>optimization and parallelization may make<br>
+side effects unordered and unpredictable</p></li></ul></div>
+<div class="paragraph"><p>Example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Source&gt; largeList = // ...
+List&lt;Target&gt; result = new ArrayList&lt;&gt;();
+largeList.parallelStream()
+//  [... snip stream operations ...]
+	.forEach(result::add);</code></pre></div></div>
+<div class="paragraph"><p><code>ArrayList</code> is not thread-safe.</p></div></section><section id="_beware_of_side_effects_4"><h2>Beware Of Side Effects</h2><div class="paragraph"><p>A specific side effect is mutation<br>
+of the stream source.</p></div>
+<div class="paragraph"><p>This is called <em>interference</em>.</p></div>
+<div class="paragraph"><p>Don&#8217;t do it!</p></div>
+<div class="paragraph"><p>(Unless collection is concurrent,<br>
+but even then it makes code complex.)</p></div></section><section id="_beware_of_side_effects_5"><h2>Beware Of Side Effects</h2><div class="paragraph"><p>Acceptable side effects:</p></div>
+<div class="ulist"><ul><li><p>logging</p></li><li><p>debugging</p></li></ul></div>
+<div class="paragraph"><p>Otherwise:</p></div>
+<div class="ulist"><ul><li><p>try to rely on the terminal operation,<br>
+particularly reduction</p></li><li><p>make sure side-effects are not critical</p></li><li><p>make sure methods called in side-effects<br>
+are order-independent, thread-safe. and performant</p></li></ul></div></section></section>
+<section><section id="_summary_5"><h2>Summary</h2><table class="toc">
+	<tr><td>Stream API Basics</td></tr>
+	<tr><td>Stream Operations</td></tr>
+	<tr><td>More Stream APIs</td></tr>
+	<tr><td>Stream Details</td></tr>
+	<tr><td>Stream Pitfalls</td></tr>
+	<tr class="toc-current"><td>Summary</td></tr>
+</table></section><section id="_summary_6"><h2>Summary</h2><div class="ulist"><ul><li><p>source, intermediate, and terminal operations</p></li><li><p>there are primitive specializations</p></li><li><p>streams are lazy and not reusable</p></li><li><p>streams are easy to parallelize</p></li><li><p>should miniize side effects</p></li></ul></div></section><section id="_summary_7"><h2>Summary</h2><div class="paragraph"><p>Sources:</p></div>
+<div class="ulist"><ul><li><p>primarily collections</p></li><li><p>many other APIs return streams</p></li><li><p>define a stream&#8217;s initial characteristics</p></li></ul></div></section><section id="_summary_8"><h2>Summary</h2><div class="paragraph"><p>Intermediate Operations:</p></div>
+<div class="ulist"><ul><li><p>can be stateless or stateful</p></li><li><p>can be short-circuiting</p></li><li><p>clear, preserve, or inject characteristics</p></li></ul></div></section><section id="_summary_9"><h2>Summary:</h2><div class="paragraph"><p>Terminal operations</p></div>
+<div class="ulist"><ul><li><p>largely define how a stream is processed</p></li><li><p><code>reduce</code> and <code>collect</code> are powerful and important</p></li><li><p>can be short-circuiting</p></li><li><p>can be optimized based on characteristics</p></li></ul></div></section></section>
+<section id="_image_credits"><h2>Image Credits</h2><div class="ulist"><ul><li><p><a href="https://pixabay.com/en/number-digit-eight-8-background-1982275/">eight</a>:
+<a href="https://pixabay.com/en/users/PIRO4D-2707530/">PIRO4D</a>,
+<a href="https://wiki.creativecommons.org/wiki/CC0">CC0</a></p></li><li><p><a href="https://www.flickr.com/photos/21496790@N06/5065834411">question-mark</a>:
+<a href="http://milosevicmilos.com/">Milos Milosevic</a>,
+<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a></p></li></ul></div></section></div></div><script src="../_reveal.js/lib/js/head.min.js"></script><script src="../_reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+Reveal.initialize({
+  // Display controls in the bottom right corner
+  controls: false,
+  // Display a presentation progress bar
+  progress: false,
+  // Display the page number of the current slide
+  slideNumber: false,
+  // Push each slide change to the browser history
+  history: true,
+  // Enable keyboard shortcuts for navigation
+  keyboard: true,
+  // Enable the slide overview mode
+  overview: true,
+  // Vertical centering of slides
+  center: true,
+  // Enables touch navigation on devices with touch input
+  touch: true,
+  // Loop the presentation
+  loop: false,
+  // Change the presentation direction to be RTL
+  rtl: false,
+  // Turns fragments on and off globally
+  fragments: true,
+  // Flags if the presentation is running in an embedded mode,
+  // i.e. contained within a limited portion of the screen
+  embedded: false,
+  // Number of milliseconds between automatically proceeding to the
+  // next slide, disabled when set to 0, this value can be overwritten
+  // by using a data-autoslide attribute on your slides
+  autoSlide: 0,
+  // Stop auto-sliding after user input
+  autoSlideStoppable: true,
+  // Enable slide navigation via mouse wheel
+  mouseWheel: false,
+  // Hides the address bar on mobile devices
+  hideAddressBar: true,
+  // Opens links in an iframe preview overlay
+  previewLinks: false,
+  // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
+  // NOTE setting the theme in the config no longer works in reveal.js 3.x
+  //theme: Reveal.getQueryHash().theme || 'nipa-night',
+  // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+  transition: Reveal.getQueryHash().transition || 'slide',
+  // Transition speed (e.g., default, fast, slow)
+  transitionSpeed: 'default',
+  // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+  backgroundTransition: 'fade',
+  // Number of slides away from the current that are visible
+  viewDistance: 3,
+  // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+  parallaxBackgroundImage: 'images/8-dark.jpg',
+  // Parallax background size in CSS syntax (e.g., "2100px 900px")
+  parallaxBackgroundSize: '2560px 1440px',
+
+  // The "normal" size of the presentation, aspect ratio will be preserved
+  // when the presentation is scaled to fit different resolutions. Can be
+  // specified using percentage units.
+  width: 960,
+  height: 700,
+
+  // Factor of the display size that should remain empty around the content
+  margin: 0.1,
+
+  // Bounds for smallest/largest possible scale to apply to content
+  minScale: 0.2,
+  maxScale: 1.5,
+
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+      { src: '../_reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: '../_reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../_reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      
+      { src: '../_reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+      { src: '../_reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+  ]
+});</script></body></html>
