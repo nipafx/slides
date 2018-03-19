@@ -148,8 +148,7 @@ Like on `Stream`, but eager:
 * `map(Function<T, R>)`
 * `flatMap(Function<T, Optional<R>>)`
 * `ifPresent(Consumer<T>)` (like `Stream::forEach`)
-
-Do nothing on empty `Optional`.
+* `ifPresentOrElse​(Consumer<T>, Runnable)` ⑨
 
 === The Functional Way
 

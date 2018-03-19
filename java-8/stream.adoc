@@ -34,14 +34,14 @@ What do you think about that API?
 
 Loop upsides:
 
-* make side effects easier / more likely
 * are more efficient
+* make side effects easier / more likely
 
 Loop downsides:
 
 * make it harder to see what's going on
-* make side effects easier / more likely
 * make optimization/parallelization harder
+* make side effects easier / more likely
 
 === A Word On MapReduce
 
@@ -143,6 +143,9 @@ Refactor use of self-made API to stream API
 * sorting / searching for min/max
 * reducing
 * grouping
+
+We will go through them one by one +
+and see which operations fulfill them.
 
 ////
 doing something
@@ -411,10 +414,11 @@ What's `Optional`?
 
 `Optional` is " `null` as a type":
 
-* `Optional<T>` may contain an instance of `T` or not (⇝ later)
+* `Optional<T>` may contain an instance of `T` or not
 * check `isPresent()`, then `get()`
 * convert to `Stream<T>` by calling `stream()` ⑨
-* much more, but we talk about that later
+
+More details later.
 
 === Sorting, Minima, Maxima
 
@@ -651,7 +655,8 @@ Stream.iterate(0, i -> i + 1)
 	.forEach(System.out::println);
 ```
 
-Prints all the (`int`) numbers.
+Prints all the `int` s, +
+again and again...
 
 === Stream::iterate
 
@@ -677,9 +682,10 @@ Prints `0`, `1`, `2`, `3`, `4`.
 
 Reduce elements of a stream to a final result.
 
-* `reduce(BinaryOperator<T>)` accumulates results +
-and returns `Optional<T>`
-* `reduce(T, BinaryOperator<T>)` accumulates result on identity
+* `reduce(BinaryOperator<T>)` +
+accumulates results and returns `Optional<T>`
+* `reduce(T, BinaryOperator<T>)` +
+accumulates result on identity
 
 === Reduction
 
@@ -737,23 +743,25 @@ Why so complicated? For parallelization!
 
 Think MapReduce -- each thread:
 
-* creates collections `A` (supplier)
-* fills them with its items `T` (biconsumer)
+* creates collections `A` (`Supplier<A>`)
+* fills them with its items `T` (`BiConsumer<A, T>`)
 
 Then one thread:
 
-* combines collections `A`
-* applies function to get `R`
+* combines collections `A` (`BinaryOperator<A>`)
+* transforms to `R` (`Function<A,R>`)
 
 `A` and `R` can have different characteristics.
 
 === Collectors
 
-Call methods on `Collectors`:
+Rarely build collectors yourself; +
+instead Call methods on `Collectors`:
 
 * most importantly `toList` and `toSet`
 * `toMap` to map elements to key and values
-* `gropingBy` to get a `Map<K, List<T>>` or `Map<K, D>`
+* `groupingBy` to get a +
+`Map<K, List<T>>` or `Map<K, D>`
 * `partitioningBy` to get a +
 `Map<Boolean, List<T>>` or `Map<Boolean, D>`
 * `joining` to join strings
@@ -763,7 +771,13 @@ Call methods on `Collectors`:
 Collectors are "stream complete":
 
 * `collectingAndThen` applies another finisher
-* `mappng` applies a function _within_ the collector
+* `mapping` applies a function _within_ the collector
+
+Collectors are harder to read than stream pipelines!
+
+* prefer using `Stream`
+* look for ways to represent +
+intermediate results
 
 === Primitive Specializations
 
@@ -775,11 +789,9 @@ Primitive specialization of `Stream`:
 * `IntStream`
 * `LongStream`
 
-(Yes, no `FloatStream`)
-
 === IntStream
 
-On the example if `IntStream` +
+On the example of `IntStream` +
 (others are the same):
 
 * get one with static factory methods +
@@ -835,15 +847,14 @@ Two ways to parallelize a pipeline:
 * call `Collection::parallelStream`
 * call `Stream::parallel`
 
-Streams will do the rest!
+Streams will do the rest! +
+(With internal Fork/Join-Pool)
 
 One way to get back to normal:
 
 * call `Stream::sequential`
 
 === Streams Are Easy To Parallelize
-
-That it's easy, doesn't mean you should do it often!
 
 Parallelization can cause a lot of problems +
 and has only one benefit: performance.
@@ -863,8 +874,7 @@ has the most potential:
 
 * many elements
 * CPU-intensive operations
-* stateless / side-effect free +
-operations
+* stateless / side-effect free operations
 
 === Streams Are Clever
 
@@ -1063,11 +1073,10 @@ Acceptable side effects:
 
 Otherwise:
 
-* try to rely on the terminal operation, +
-particularly reduction
+* try to rely on the terminal operation
 * make sure side-effects are not critical
-* make sure methods called in side-effects +
-are order-independent, thread-safe. and performant
+* make sure methods called in side-effects are +
+order-independent, thread-safe, performant
 
 
 == Summary
@@ -1089,7 +1098,7 @@ are order-independent, thread-safe. and performant
 * there are primitive specializations
 * streams are lazy and not reusable
 * streams are easy to parallelize
-* should miniize side effects
+* should minimize side effects
 
 === Summary
 
@@ -1097,7 +1106,7 @@ Sources:
 
 * primarily collections
 * many other APIs return streams
-* define a stream's initial characteristics
+* they define a stream's initial characteristics
 
 === Summary
 

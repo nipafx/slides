@@ -87,6 +87,12 @@ To create an implementation of +
 an interface with a single abstract method:
 
 ```java
+interface $Interface {
+	$return method($parameters) {
+		$body
+	}
+}
+
 $Interface $var= ($parameters) -> { $body }
 ```
 
@@ -101,8 +107,10 @@ Things to discuss:
 General form:
 
 ```java
-// method signature:
-void method(Type_1 name_1, Type_2 name_2, ...) { $body }
+// method
+$return method(Type_1 name_1, Type_2 name_2, ...) {
+	$body
+}
 
 // lambda
 (Type_1 name_1, Type_2 name_2, ...) -> { $body }
@@ -153,9 +161,26 @@ TodoFilter filter = todo -> { $body }
 General form:
 
 ```java
+// method
+$return method($parameters) {
+	$body // with possible return
+}
+
+// lambda
 ($parameters) -> {
-	// lines of code
-	// possible `return`
+	$body // with possible `return`
+}
+```
+
+Return type must be the same.
+
+=== Body As Block Or Line
+
+General form:
+
+```java
+($parameters) -> {
+	$body // with possible `return`
 }
 ```
 
@@ -198,8 +223,8 @@ TodoFilter filter = (Todo todo) -> {
 Usually:
 
 ```java
-TodoFilter filter = todo
-	-> todo.importance() == importance;
+TodoFilter filter = todo ->
+	todo.importance() == importance;
 ```
 
 === Matter Of Taste
@@ -207,17 +232,18 @@ TodoFilter filter = todo
 Where to line break on long lambdas?
 
 ```java
-filter = todo -> todo
+filter = todo -> todo // (1)
 	.importance() == importance;
 
-filter = todo ->
+filter = todo -> // (2)
 	todo.importance() == importance;
 
-filter = todo
+filter = todo // (3)
 	-> todo.importance() == importance;
 ```
 
-My preference: break after `\->`
+My preference: break after `\->` +
+i.e. `// (2)`
 
 === Exercise 3
 
@@ -293,7 +319,7 @@ public StringToInt toInt(String parameter) {
 
 === Effectively Final
 
-Implications:
+Implications for lambda body:
 
 * method parameters can not be reassigned
 * local variables can not be reassigned
@@ -305,7 +331,7 @@ Experiment with (non-) capturing lambda expressions
 
 === Why Effectively Final?
 
-Otherwise - if captured variables +
+Otherwise -- if captured variables +
 can be reassigned:
 
 * which value will a lambda observe?
@@ -331,7 +357,7 @@ This keeps programing model simpler!
 To assign a lambda to an interface +
 it must have exactly one abstract method.
 
-They are called _functional interfaces_!
+*They are called _functional interfaces_!*
 
 Can be marked with `@FunctionalInterface`, +
 which leads to compile error when not functional.
@@ -445,7 +471,8 @@ you can look up these interfaces!)
 
 === Method References
 
-We've seen a lot of these:
+We've seen a lot of lambdas, where +
+lambda parameters and method parameters coincide:
 
 ```java
 Consumer<String> printString = s -> print(s);
@@ -546,22 +573,25 @@ Create various kinds of method references
 
 === Summary
 
-Basic functional interfaces: +
-`Supplier`, `Consumer`, `Function`, `Operator`, `Predicate`
-
-Basic lambda expression:
-
+* functional interfaces are those, +
+with exactly one abstract method
+* basic functional interfaces: `Supplier`, +
+`Consumer`, `Function`, `Operator`, `Predicate`
+* basic lambda expression:
++
 ```java
-$interface $var= ($parameters) -> { $body }
+$Interface $var= ($parameters) -> { $body }
 ```
 
 === Summary
 
-* Interface must be functional, +
-* Parameters:
+For lambda expression:
+
+* interface must be functional
+* parameters:
 ** can have types
 ** must have parenthesis if more than one
-* Body:
+* body:
 ** can be block in curly braces
 ** can be expression of single line
 
