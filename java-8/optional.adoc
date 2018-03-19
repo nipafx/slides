@@ -1,0 +1,508 @@
+== Optional
+
+++++
+<table class="toc">
+	<tr><td>Lambda Expressions</td></tr>
+	<tr><td>Stream API</td></tr>
+	<tr class="toc-current"><td>Optional API</td></tr>
+	<tr><td>Default Methods</td></tr>
+</table>
+++++
+
+
+=== Motivation
+
+Some terminal stream operations +
+may not have a result:
+
+```java
+List<Todo> todos = // ...
+todos.stream()
+	.filter(todo -> todo.importance() == VERY)
+	.findAny();
+```
+
+What should they return?
+
+=== Motivation
+
+Returning `null`:
+
+* leads to buggy code (NPEs)
+* leads to ugly code (`null` checks)
+
+Instead return a type that signals +
+"there might not be a result" +
+but never `null`.
+
+⇝ `Optional`!
+
+Same logic applies to your code!
+
+
+== Optional Basics
+
+++++
+<table class="toc">
+	<tr class="toc-current"><td>Optional Basics</td></tr>
+	<tr><td>Usage Patterns</td></tr>
+	<tr><td>Value-Based Classes</td></tr>
+	<tr><td>Summary</td></tr>
+</table>
+++++
+
+=== What Is Optional?
+
+`Optional<T>`:
+
+* is a regular type
+* a container for zero or one elements:
+** `Optional` can be _empty_ / value is _absent_
+** `Optional` can be _non-empty_ / value is _present_
+** a `null` value counts as absent
+* has imperative and functional APIs +
+to work with absent and present values
+
+=== Creating An Optional
+
+Three ways to create an `Optional` yourself:
+
+* `Optional.of(T)` expects non-`null` value
+* `Optional.empty()` creates an empty optional
+* `Optional.ofNullable(T)` does the right thing
+
+Prefer using `of` and `empty` +
+to make code more expressive +
+and to fail early.
+
+=== Working With Optional
+
+The imperative way:
+
+* checks presence
+* gets value out
+* processes it further
+
+The functional way:
+
+* uses Stream-like methods (`filter`, `map`, etc.)
+* keeps `Optional` around as long as possible
+
+
+=== Checking Presence
+
+To check whether value is present:
+
+* `isPresent()` returns `true`/`false`
+
+Remember: `null` is absent! +
+(No ternary `boolean`.)
+
+=== Getting A Value Out
+
+Many ways to get a value out of an `Optional`. +
+All return present value but differ in absence:
+
+* `get()` throws `NoSuchElementException` +
+(will be deprecated; use `orElseThrow()` instead ⑩)
+* `orElse(T)` returns given default value
+* `orElseGet(Supplier<T>)` computes +
+default value and returns it
+* `orElseThrow(Supplier<X>)` computes +
+exception and throws it
+
+=== Getting A Value Out
+
+Example `isPresent`/`get`:
+
+```java
+Optional<String> nameOpt = // ... stream pipeline
+if (nameOpt.isPresent()) {
+	String name = nameOpt.get();
+//  use name
+}
+```
+
+=== Getting A Value Out
+
+Examples `orElse...`:
+
+```java
+String name;
+Optional<String> nameOpt = // ... stream pipeline
+name = nameOpt.orElse("John Doe");
+name = nameOpt.orElseGet(this::computeDefaultName);
+name = nameOpt.orElseThrow(() ->
+	new IllegalStateException("Name should be given."))
+```
+
+=== The Functional Way
+
+Keep `Optional` around as long as possible +
+and use it to process present value.
+
+Like on `Stream`, but eager:
+
+* `filter(Predicate<T>)`
+(can make `Optional` empty)
+* `map(Function<T, R>)`
+* `flatMap(Function<T, Optional<R>>)`
+* `ifPresent(Consumer<T>)` (like `Stream::forEach`)
+
+Do nothing on empty `Optional`.
+
+=== The Functional Way
+
+```java
+User user = // ...
+Optional<String> name = // ... stream pipeline
+name
+	.filter(this::hasNameDay)
+	.map(this::determineNameDay)
+	.ifPresent(nameDay -> register(user, nameDay));
+```
+
+=== The Functional Way
+
+Or simply continue stream pipeline:
+
+```java
+User user = // ... stream pipeline
+	.findAny() // terminal stream operation
+	.filter(this::hasNameDay) // on Optional
+	.map(this::determineNameDay)
+	.ifPresent(nameDay -> register(user, nameDay));
+```
+
+
+=== Getting A Value In
+
+So far:
+
+* `orElse...` help get present value out
+* `filter` can remove value
+
+How to recover from empty `Optional`?
+
+With `or(Supplier<Optional<T>>)`! ⑨
+
+=== Getting A value In
+
+```java
+public class Search {
+	Optional<Customer> inMemory(String id) { /*... */ };
+	Optional<Customer> onDisk(String id) { /*... */ };
+	Optional<Customer> remotely(String id) { /*... */ };
+
+	Optional<Customer> anywhere(String id) {
+		return inMemory(id)
+			.or(() -> onDisk(id))
+			.or(() -> remotely(id));
+	}
+
+}
+```
+
+
+== Usage Patterns
+
+++++
+<table class="toc">
+	<tr><td>Optional Basics</td></tr>
+	<tr class="toc-current"><td>Usage Patterns</td></tr>
+	<tr><td>Value-Based Classes</td></tr>
+	<tr><td>Summary</td></tr>
+</table>
+++++
+
+=== Usage Patterns
+
+The Java community strongly disagrees +
+on how to best use `Optional`.
+
+Some insights into the discussion...
+
+=== Basic Rules
+
+First some basic rules:
+
+* never, ever, ever just call `get` +
+without checking `isPresent` first
+* prefer functional style +
+(`map`, `flatMap`, `ifPresent`, `orElse`, ...)
+* make everyone setting `Optional` to `null` +
+buy a round of drinks or wear a silly hat
+
+=== Basic Rules
+
+Nobody (?) wants to see ...
+
+```java
+Optional.ofNullable(mango)
+	.ifPresent(System.out::println);
+```
+
+\... instead of ...
+
+```java
+if (mango != null)
+	System.out.println(mango);
+```
+
+=== Different Opinions
+
+* don't use it unless +
+absolutely necessary
+* use it as return value
+* use it everywhere
+
+=== Don't Use It!
+==== Assumptions
+
+* API is verbose and invites misuse
+* makes stack traces harder to debug
+* not serializable
+* unsupported by various frameworks
+* dereferencing reduces performance
+* instances increase memory consumption
+* no benefits over explicit `null` handling
+
+=== Don't Use It!
+==== Conclusions
+
+* `Optional` sucks
+* only use it if existing API returns it
+* unpack quickly!
+
+[role=small-note]
+(Mark Struberg, Stephen Connolly, Hugues Johnson)
+
+
+=== Limited Return Value
+==== Assumptions
+
+* http://blog.codefx.org/java/dev/design-optional[was designed] as a return value
+* not serializable
+* long-lived instances increase +
+memory consumption
+* boxing method arguments is verbose
+
+=== Limited Return Value
+==== Conclusions
+
+* use as return value if +
+returning `null` is error-prone
+* no instance variables
+* no method parameters
+* instances should generally be short-lived
+
+[role=small-note]
+(Stuart Marks, Brian Goetz)
+
+*⇝ This should be your default choice!*
+
+=== Return Value
+==== Assumptions
+
+* returning `null` is always error-prone
+* rest as before
+
+==== Conclusions
+
+* use as return value whenever +
+value can be absent
+* rest as before
+
+[role=small-note]
+(Stephen Colebourne)
+
+
+=== Use Everywhere!
+==== Assumptions
+
+* using `Optional` instead of `null` +
+lifts `null`-handling into the type system
+* makes any `null` an implementation error +
+(great for debugging)
+* performance arguments can be discarded +
+unless proven to be relevant
+
+=== Use Everywhere!
+==== Conclusions
+
+* avoid optionality through good design +
+(good recommendation in general)
+* use `Optional` instead of `null` everywhere
+* consider providing overloads +
+for optional method parameters
+
+[role=small-note]
+(Mario Fusco, me)
+
+=== Use Everywhere!
+==== Overload Example
+
+```java
+String bar(Optional<String> drink) {
+	return drink.map(this::bar)
+			.orElseGet(this::bar);
+}
+
+String bar(String drink) { /* ... */ }
+
+String bar() { /* ... */ }
+```
+
+=== Reflection on Usage
+
+Whatever you decide:
+
+* make it a team decision
+* put it into your code style
+* learn over time
+
+Relaxing rules is easier +
+than making them stricter!
+
+
+== Value-Based Classes
+
+++++
+<table class="toc">
+	<tr><td>Optional Basics</td></tr>
+	<tr><td>Usage Patterns</td></tr>
+	<tr class="toc-current"><td>Value-Based Classes</td></tr>
+	<tr><td>Summary</td></tr>
+</table>
+++++
+
+=== Value-Based Class?
+
+https://docs.oracle.com/javase/8/docs/api/java/lang/doc-files/ValueBased.html[`Optional` Javadoc] says:
+
+> This is a value-based class; use of identity-sensitive operations [...] on instances of `Optional` may have unpredictable results and should be avoided.
+
+What does it mean?
+
+=== Value Types
+
+Future Java will contain value types:
+
+* pass by value +
+(copied when passed as params)
+* immutable
+* no identity
+
+Very similar to today's primitives.
+
+=== No Identity?
+
+Class instances *have identity*:
+
+* each `new Integer(5)` creates a new instance
+* they are not identical (`!=`, different locks, ...)
+
+Value types will have *no identity*:
+
+* there are no two different `int 5`
+* only their value matters
+
+=== But Isn't This Java 8?
+
+From value types to value-based classes:
+
+* value types require wrappers/boxes +
+(just like primitives do today)
+* value-based classes might turn out +
+wrapping value types
+* as an optimization the JVM will +
+create and destroy them at will
+
+*⇝ Wrappers have identity _but_ it is unstable*
+
+[NOTE.speaker]
+--
+* vbc will be optimized in Java 10!
+--
+
+=== Identity Crisis
+
+```java
+LocalDateTime getLastLogin(User user);
+void storeMessage(LocalDateTime time, String message);
+
+String lastLoginMessage(User user) {
+	LocalDateTime lastLogin = getLastLogin(user); // <1>
+	String message = "Was " + lastLogin;
+	storeMessage(lastLogin, message); // <2>
+	return message;
+}
+```
+<1> might return an instance or a value
+<2> might receive an instance or a value
+
+
+=== Requirements For VBC
+
+declaration site::
+* final and immutable
+* `equals`, `hashCode`, `toString` +
+must _only_ rely on instance state
+* ...
+use site::
+* no use of `==`, identity hash code, +
+locking, serialization
+
+(None of this is checked by the JVM.)
+
+=== VBC in Java 8
+
+`java.util`::
+	`Optional`[`Double`, `Long`, `Int`]
+`java.time`::
+	`Duration`, `Instant`, `Period`, +
+	`Year`, `YearMonth`, `MonthDay`, +
+	`Local...`, `Offset...`, `Zoned...`
+`java.time.chrono`::
+	`HijrahDate`, `JapaneseDate`, `MinguaDate`, `ThaiBuddhistDate`
+
+[NOTE.speaker]
+--
+* Optional uses reference `equals` in its `equals`
+* date classes are serializable
+--
+
+=== Reflection on VBC
+
+With `Optional` and other value-based classes:
+
+* never rely on their identity
+* mainly no `==`, locking, serialization
+
+*If this works out,* +
+*performance hit all but disappears!*
+
+== Summary
+
+++++
+<table class="toc">
+	<tr><td>Optional Basics</td></tr>
+	<tr><td>Usage Patterns</td></tr>
+	<tr><td>Value-Based Classes</td></tr>
+	<tr class="toc-current"><td>Summary</td></tr>
+</table>
+++++
+
+=== Summary
+
+* get `Optional` from streams, other APIs +
+or create with `of`, `empty`, `ofNullable`
+* use like streams with `map`, `flatMap`, `filter`
+* process value with `ifPresent`
+* get value out with `get`, `orElse...`
+
+=== Summary
+
+* decide together where to use `Optional`
+* no identity-sensitive operations +
+like `==`, locking, serialization
