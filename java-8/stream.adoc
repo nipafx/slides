@@ -1,0 +1,1117 @@
+== Streams
+
+++++
+<table class="toc">
+	<tr><td>Lambda Expressions</td></tr>
+	<tr class="toc-current"><td>Stream API</td></tr>
+	<tr><td>Optional API</td></tr>
+	<tr><td>Default Methods</td></tr>
+</table>
+++++
+
+=== Demo
+
+=== Building Blocks
+
+Typical collection operations:
+
+* start with a collection (_source_)
+* perform operation on each element +
+(_filter_, _map_)
+* gather results (_reduce_, _collect_)
+
+Why not formalize that?
+
+=== Exercise 1
+
+Create Lambda-based collection processing API
+
+=== Loops vs <Whatever>
+
+What do you think about that API?
+
+=== Loops vs <Whatever>
+
+Loop upsides:
+
+* make side effects easier / more likely
+* are more efficient
+
+Loop downsides:
+
+* make it harder to see what's going on
+* make side effects easier / more likely
+* make optimization/parallelization harder
+
+=== A Word On MapReduce
+
+Google's MapReduce has the same logic:
+
+* split input across nodes
+* apply given function in parallel (_map_)
+* reduce resulting data in parallel (_reduce_)
+* reduce data across nodes (more _reduce_)
+
+
+== Stream API Basics
+
+++++
+<table class="toc">
+	<tr class="toc-current"><td>Stream API Basics</td></tr>
+	<tr><td>Stream Operations</td></tr>
+	<tr><td>More Stream APIs</td></tr>
+	<tr><td>Stream Details</td></tr>
+	<tr><td>Stream Pitfalls</td></tr>
+	<tr><td>Summary</td></tr>
+</table>
+++++
+
+=== Enter Streams!
+
+Streams have the same idea:
+
+* a collection as stream source
+* multitude of operations
+* terminal operations that create results
+
+*But*:
+
+* streams are lazy: +
+they do nothing until terminal operation
+* streams are clever: +
+lots of internal optimizations
+* streams come with support for parallelization
+
+=== Simple Stream Pipeline
+
+Your first _stream pipeline_:
+
+```java
+List<Todo> todos = // ...
+Set<String> = todos               // source
+	.stream()                     // start streaming
+	.map(Todo::description)       // operate on
+	.filter(d -> d.length > 10)   //     the stream
+	.collect(Collectors.toSet()); // terminal op.
+```
+
+=== Stream Basics
+
+* new package `java.util.stream` +
+with https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html[excellent Javadoc]
+* new interface `java.util.stream.Stream` +
+with all important operations
+
+=== Stream Terminology
+
+Every stream pipeline has three steps:
+
+Source (one)::
+Get a stream, notably from a collection +
+with `Collection::stream`
+Intermediate Operations (zero or more)::
+All methods on `Stream` that return a `Stream`, +
+notably `map` and `filter`
+Terminal Operation (one)::
+All methods on `Stream` that don't return a `Stream`, +
+notably `collect` and `reduce`
+
+=== Exercise 2
+
+Refactor use of self-made API to stream API
+
+
+== Stream Operations
+
+++++
+<table class="toc">
+	<tr><td>Stream API Basics</td></tr>
+	<tr class="toc-current"><td>Stream Operations</td></tr>
+	<tr><td>More Stream APIs</td></tr>
+	<tr><td>Stream Details</td></tr>
+	<tr><td>Stream Pitfalls</td></tr>
+	<tr><td>Summary</td></tr>
+</table>
+++++
+
+=== Common Use Cases
+
+* doing something
+* transformation
+* filtering
+* finding / checking presence
+* sorting / searching for min/max
+* reducing
+* grouping
+
+////
+doing something
+* forEach / forEachOrdered
+* peek
+transformation
+* map / flatMap
+* collect / to Array
+filtering
+* filter
+* limit / skip
+* takeWhile / dropWhile
+sorting / searching for min/max
+* distinct
+* min, max
+* sorted
+finding / checking presence
+* findAny / findFirst
+* allMatch / anyMatch / noneMatch
+reducing
+* count
+* reduce
+////
+
+=== Doing Something
+
+_"I have todos and want to print them"_
+
+```java
+List<Todo> todos = // ...
+Set<String> = todos.stream()
+	.forEach(System.out::println);
+```
+
+=== Doing Something
+
+_"I have a pipeline and want to see what's going on"_
+
+```java
+elements.stream()
+	.map(/* ... */)
+	.filter(/* ... */)
+	.peek(System.out::println)
+	.map(/* ... */)
+	.forEach(/* ... */)
+```
+
+*Careful*:
+
+Optimizations and surprising implementation details +
+make `peek` unpredictable.
+
+⇝ Never do anything important in `peek`!
+
+=== Doing Something
+
+Intermediate operations:
+
+* `peek(Consumer<T>)` (unreliable!)
+
+Terminal operations:
+
+* `forEach(Consumer<T>)`
+* `forEachOrdered(Consumer<T>)` (⇝ later)
+
+
+=== Transforming Collections
+
+_"I have users and need their last names"_
+
+```java
+List<User> users = // ...
+List<String> names = users.stream()
+	.map(User::name)
+	.map(Name::lastName)
+	.collect(toList());
+```
+
+`Collector` implementations for `collect`:
+
+* come from `Collectors` (⇝ later)
+* often statically imported
+
+=== Transforming Collections
+
+_"I have users and need their last names as an array"_
+
+```java
+List<User> users = // ...
+String[] names = users.stream()
+	.map(User::name)
+	.map(Name::lastName)
+	.toArray(length -> new String[length]);
+//  .toArray(String[]::new);
+```
+
+=== Transforming Collections
+
+_"I have users and need their orders as a list"_
+
+```java
+List<User> users = // ...
+List<Order> orders = users.stream()
+	// User::orders returns List<Order>
+	.map(User::orders)
+	// now we have a Stream<List<Order>>
+	.flatMap(Collection::stream)
+	// flatMap turned it into Stream<Order>
+	.collect(toList());
+```
+
+=== Transforming Collections
+
+Intermediate operations:
+
+* `map(Function<T, R>)`
+* `flatMap(Function<T, Stream<R>>)`
+
+Terminal operations:
+
+* `collect(Collector<T, A, R>)` (⇝ later)
+* `toArray(IntFunction<A[]>)`
+
+=== Filtering Collections
+
+_"I have drugs and need those with low stockpile"_
+
+```java
+List<Drug> drugs = // ...
+List<Drug> lowDrugs = drugs.stream()
+	.filter(drug ->
+		drug.inventory().isStockpileLow())
+	.collect(toList());
+```
+
+=== Filtering Collections
+
+_"I have drugs and need the first five with low stockpile"_
+
+```java
+List<Drug> drugs = // ...
+List<Drug> lowDrugs = drugs.stream()
+	.filter(drug ->
+		drug.inventory().isStockpileLow())
+	.limit(5)
+	.collect(toList());
+```
+
+=== Filtering Collections
+
+_"I have drugs and need those with low stockpile +
+beyond the first five"_
+
+```java
+List<Drug> drugs = // ...
+List<Drug> lowDrugs = drugs.stream()
+	.filter(drug ->
+		drug.inventory().isStockpileLow())
+	.skip(5)
+	.collect(toList());
+```
+
+=== Filtering Collections
+
+_"I have log messages and need warnings (or worse)"_
+
+```java
+List<Message> messages = // ...
+List<Message> afterWarning = messages.stream()
+	.filter(message ->
+		message.priority().atLeast(WARNING));
+	.collect(toList());
+```
+
+=== Filtering Collections
+
+_"I have log messages and need all after the first warning"_
+
+```java
+List<Message> messages = // ...
+List<Message> afterWarning = messages.stream()
+	.dropWhile(message ->
+		message.priority().lessThan(WARNING));
+	.collect(toList());
+```
+
+=== Filtering Collections
+
+_"I have log messages and need all before the first error"_
+
+```java
+List<Message> messages = // ...
+List<Message> afterWarning = messages.stream()
+	.takeWhile(message ->
+		message.priority().lessThan(ERROR));
+	.collect(toList());
+```
+
+=== Filtering Collections
+
+Intermediate operations:
+
+* `filter(Predicate<T>)`
+* `limit(int)`
+* `skip(int)`
+* `takeWhile(Predicate<T>)` ⑨
+* `dropWhile(Predicate<T>)` ⑨
+
+=== Sorting, Minima, Maxima
+
+_"I have todos and want to sort by natural order"_
+
+```java
+List<Todo> todos = // ...
+List<Todo> sorted = todos.stream()
+	.sorted()
+	.collect(toList());
+```
+
+Todo needs to implement `Comparable<Todo>`!
+
+=== Sorting, Minima, Maxima
+
+_"I have todos and want to sort by due date"_
+
+```java
+List<Todo> todos = // ...
+List<Todo> sorted = todos.stream()
+//  provide Comparator implementation with lambda
+	.sorted((todo1, todo2) ->
+		todo1.due().compareTo(todo2.due()))
+	.collect(toList());
+```
+
+Alternatively, use `Comparator::comparing` (⇝ later)
+
+=== Sorting, Minima, Maxima
+
+_"I have sorted elements and need to +
+do something in that order"_
+
+```java
+List<Element> elements = // ...
+elements.stream()
+	.sorted(/* ... */)
+	.forEachOrdered(/* ... */);
+```
+
+On sorted streams, use `forEachOrdered` +
+or stream API is free to ignore order!
+
+=== Sorting, Minima, Maxima
+
+_"I have todos and want the one with earliest due date"_
+
+```java
+List<Todo> todos = // ...
+Comparator<Todo> byDueDate = // ...
+Optional<Todo> sorted = todos.stream()
+	.min(byDueDate);
+```
+
+What's `Optional`?
+
+=== Quick Intro to Optional
+
+`Optional` is " `null` as a type":
+
+* `Optional<T>` may contain an instance of `T` or not (⇝ later)
+* check `isPresent()`, then `get()`
+* convert to `Stream<T>` by calling `stream()` ⑨
+* much more, but we talk about that later
+
+=== Sorting, Minima, Maxima
+
+_"I have todos and want the one with latest due date"_
+
+```java
+List<Todo> todos = // ...
+Comparator<Todo> byDueDate = // ...
+Optional<Todo> sorted = todos.stream()
+	.max(byDueDate);
+```
+
+=== Sorting, Minima, Maxima
+
+_"I have elements and need to deduplicate them"_
+
+```java
+List<Element> elements = // ...
+List<element> distinctElements = elements.stream()
+	.distinct()
+	.collect(toList());
+```
+
+Uses `Element::equals`.
+
+
+=== Sorting, Minima, Maxima
+
+_"I have elements and need to deduplicate them, +
+but their `equals` doesn't fit"_
+
+```java
+List<Element> elements = // ...
+List<element> distinctElements = elements.stream()
+	.map(WithMyEquals::neω)
+	.distinct()
+	.map(WithMyEquals::element)
+	.collect(toList());
+```
+
+Where `WithMyEuals` wraps `Element` +
+and implements desired `equals`.
+
+=== Sorting, Minima, Maxima
+
+Intermediate operations:
+
+* `sorted()` / `sorted(Comparator<T>)`  +
+(use with `forEachOrdered`!)
+* `distinct()`
+
+Terminal operations:
+
+* `min(Comparator<T>)`
+* `max(Comparator<T>)`
+
+=== Finding Things
+
+_"I have Todos and want_ the first `VERY` _important one"_
+
+```java
+List<Todo> todos = // ...
+Optional<Todo> veryImportant = todos.stream()
+	.filter(todo -> todo.importance() == VERY)
+	.findFirst();
+```
+
+=== Finding Things
+
+_"I have Todos and want_ any `VERY` _important one"_
+
+```java
+List<Todo> todos = // ...
+Optional<Todo> veryImportant = todos.stream()
+	.filter(todo -> todo.importance() == VERY)
+	.findAny();
+```
+
+=== Finding Things
+
+_"I have Todos and want_ the only `VERY` _important one"_
+
+```java
+List<Todo> todos = // ...
+Optional<Todo> veryImportant = todos.stream()
+	.filter(todo -> todo.importance() == VERY)
+//  there isn't really a good solution... ⇝ later
+	.reduce((t1, t2) ->
+		throw new IllegalStateException());
+```
+
+=== Finding Things
+
+_"I have Todos and want to know if_ any _is `VERY` important"_
+
+```java
+List<Todo> todos = // ...
+// DON'T DO THIS!
+// boolean isAnyVeryImportant = todos.stream()
+// 	.filter(todo -> todo.importance() == VERY)
+// 	.findAny()
+// 	.isPresent();
+boolean isAnyVeryImportant = todos.stream()
+	.anyMatch(todo -> todo.importance() == VERY)
+```
+
+=== Finding Things
+
+_"I have Todos and want to know if_ all _are `VERY` important"_
+
+```java
+List<Todo> todos = // ...
+boolean areAllVeryImportant = todos.stream()
+	.allMatch(todo -> todo.importance() == VERY)
+```
+
+=== Finding Things
+
+_"I have Todos and want to know if_ none _are `VERY` important"_
+
+```java
+List<Todo> todos = // ...
+boolean areNoneVeryImportant = todos.stream()
+	.noneMatch(todo -> todo.importance() == VERY)
+```
+
+=== Finding Things
+
+Intermediate operations:
+
+* `filter(Predicate<T>)`
+
+Terminal operations:
+
+* `findFirst()`
+* `findAny()`
+* `anyMatch(Predicate<T>)`
+* `allMatch(Predicate<T>)`
+* `noneMatch(Predicate<T>)`
+
+=== Reducing
+
+_"I have todos and want to concatenate their descriptions"_
+
+```java
+List<Todo> todos = // ...
+String descriptions = todos.stream()
+	.map(Todo::description)
+	.reduce("", (d1, d2)-> d1 + d2):
+```
+
+=== Reducing
+
+_"I have todos and want to concatenate their descriptions"_
+
+```java
+List<Todo> todos = // ...
+String descriptions = todos.stream()
+	.map(Todo::description)
+	.reduce("", (d1, d2)-> d1 + d2):
+```
+
+=== Reducing
+
+_"I have drugs and want to know how many have low stockpile"_
+
+```java
+List<Drug> drugs = // ...
+List<Drug> lowDrugs = drugs.stream()
+	.filter(drug ->
+		drug.inventory().isStockpileLow())
+	.count();
+```
+
+=== Reducing
+
+Terminal operations:
+
+* `reduce(BinaryOperator<T>)`
+* `reduce(T, BinaryOperator<T>)`
+* `count()`
+
+=== Exercise 3
+
+Solve problems with streams
+
+
+== More Stream APIs
+
+++++
+<table class="toc">
+	<tr><td>Stream API Basics</td></tr>
+	<tr><td>Stream Operations</td></tr>
+	<tr class="toc-current"><td>More Stream APIs</td></tr>
+	<tr><td>Stream Details</td></tr>
+	<tr><td>Stream Pitfalls</td></tr>
+	<tr><td>Summary</td></tr>
+</table>
+++++
+
+=== More Stream APIs
+
+* various sources
+* reductions in general
+* collectors in detail
+* primitive specializations
+
+=== Stream Sources
+
+Besides `Collection::stream`:
+
+* `Stream.of(T...)`
+* `Stream.iterate(T, UnaryOperator<T>)`
+* `Stream.iterate(T, Predicate<T>, UnaryOperator<T>)`
+* `Arrays.stream(T[])`
+* `BufferedReader.lines()`
+* `Files.lines(Path)`, `Files.list(Path)`
+* `Random.ints()`
+* more...
+
+=== Stream::iterate
+
+Creates an infinite stream:
+
+```java
+Stream.iterate(T seed,
+	UnaryOperator<T> next);
+```
+
+Example:
+
+```java
+Stream.iterate(0, i -> i + 1)
+	.forEach(System.out::println);
+```
+
+Prints all the (`int`) numbers.
+
+=== Stream::iterate
+
+Creates a possibly finite stream:
+
+```java
+Stream.iterate(T seed,
+	Predicate<T> hasNext, // ⑨
+	UnaryOperator<T> next);
+```
+
+Example:
+
+```java
+Stream
+	.iterate(0, i -> i < 5, i -> i + 1)
+	.forEach(System.out::println);
+```
+
+Prints `0`, `1`, `2`, `3`, `4`.
+
+=== Reduction
+
+Reduce elements of a stream to a final result.
+
+* `reduce(BinaryOperator<T>)` accumulates results +
+and returns `Optional<T>`
+* `reduce(T, BinaryOperator<T>)` accumulates result on identity
+
+=== Reduction
+
+Simple example:
+
+```java
+List<Integer> numbers = // ...
+int sum = numbers.stream()
+	.reduce(0, (x,y) -> x+y);
+```
+
+Weird example:
+
+```java
+List<T> elements = // ...
+Predicate<T> filter = // ...
+Optional<T> only = elements.stream()
+	.filter(filter)
+	.reduce((t1, t2) ->
+		throw new IllegalStateException());
+```
+
+=== Collectors
+
+Collectors are a special kind of reduction +
+where a mutable container is needed/created.
+
+`Collector<T, A, R>` has four parts:
+
+* `Supplier<A>` returns a new collection `A`
+* `BiConsumer<A, T>` adds an item `T` to `A`
+* `BinaryOperator<A>` combines two collections
+* `Function<A,R>` returns the final result `R`
+
+=== Collectors
+
+Example collecting strings to a `List<String>`:
+
+```java
+Collector<String, ?, List<String>> collector = Collector.of(
+	// Supplier<List<String>>
+	() -> new ArrayList<String>(),
+	// BiConsumer<List<String>, String>
+	(l, s) -> l.add(s),
+	// BinaryOperator<List<String>>
+	(l1, l2) -> { l1.addAll(l2); return l1; },
+	// Function<List<String>,List<String>>
+	l -> l
+);
+```
+
+=== Collectors
+
+Why so complicated? For parallelization!
+
+Think MapReduce -- each thread:
+
+* creates collections `A` (supplier)
+* fills them with its items `T` (biconsumer)
+
+Then one thread:
+
+* combines collections `A`
+* applies function to get `R`
+
+`A` and `R` can have different characteristics.
+
+=== Collectors
+
+Call methods on `Collectors`:
+
+* most importantly `toList` and `toSet`
+* `toMap` to map elements to key and values
+* `gropingBy` to get a `Map<K, List<T>>` or `Map<K, D>`
+* `partitioningBy` to get a +
+`Map<Boolean, List<T>>` or `Map<Boolean, D>`
+* `joining` to join strings
+
+=== Collectors
+
+Collectors are "stream complete":
+
+* `collectingAndThen` applies another finisher
+* `mappng` applies a function _within_ the collector
+
+=== Primitive Specializations
+
+`Stream<T>` has to box primitives ⇝ booh!
+
+Primitive specialization of `Stream`:
+
+* `DoubleStream`
+* `IntStream`
+* `LongStream`
+
+(Yes, no `FloatStream`)
+
+=== IntStream
+
+On the example if `IntStream` +
+(others are the same):
+
+* get one with static factory methods +
+or `Stream::mapToInt`
+* conceptually the same as `Stream`
+* uses primitive specializations of func. int.
+* have a few numeric special cases: +
+`average`, `max`, `min`, `sum`
+
+
+== Stream Details
+
+++++
+<table class="toc">
+	<tr><td>Stream API Basics</td></tr>
+	<tr><td>Stream Operations</td></tr>
+	<tr><td>More Stream APIs</td></tr>
+	<tr class="toc-current"><td>Stream Details</td></tr>
+	<tr><td>Stream Pitfalls</td></tr>
+	<tr><td>Summary</td></tr>
+</table>
+++++
+
+=== Stream Details
+
+* lazy
+* easy to parallelize
+* stateless vs stateful
+* short-circuiting
+* characteristics +
+and optimizations
+
+=== Streams Are Lazy
+
+All intermediate operations are lazy!
+
+* calling `map`, `filter`, etc. is "free" +
+even for large or infinite streams
+* only when terminal operation is called, +
+will pipeline be executed
+
+⇝ Terminal operation determines:
+
+* correctness
+* side effects
+* boundedness
+* performance (partially)
+
+=== Streams Are Easy To Parallelize
+
+Two ways to parallelize a pipeline:
+
+* call `Collection::parallelStream`
+* call `Stream::parallel`
+
+Streams will do the rest!
+
+One way to get back to normal:
+
+* call `Stream::sequential`
+
+=== Streams Are Easy To Parallelize
+
+That it's easy, doesn't mean you should do it often!
+
+Parallelization can cause a lot of problems +
+and has only one benefit: performance.
+
+As always with performance:
+
+* have clear requirements
+* measure whether you fulfill them
+* identify hotspots
+* research possible improvements
+* measure changes
+
+=== Streams Are Easy To Parallelize
+
+Guidelines for when parallelization +
+has the most potential:
+
+* many elements
+* CPU-intensive operations
+* stateless / side-effect free +
+operations
+
+=== Streams Are Clever
+
+* process each element as rarely as possible +
+(even though conceptually each is processed +
+once per operation)
+* short-circuiting operations prevent +
+processing entire stream
+* stream characteristics allow "no-op operations"
+
+=== Stateless vs Stateful
+
+Most intermediate operations are stateless:
+
+* do not store information (no state)
+* can compute elements independently
+
+Benefits:
+
+* low memory requirements
+* easy to (correctly) parallelize
+
+=== Stateless vs Stateful
+
+Some operations need to be stateful +
+(`distinct`, `sorted`, `limit`, `skip`)
+
+* store state during processing
+* may need to process some/many/all +
+elements before producing a result
+
+Downsides:
+
+* may require considerable memory
+* may lead to large overhead +
+when parallelized
+
+=== Short-Circuiting
+
+* `findFirst`, `findAny` stop processing +
+once an element is found
+* `anyMatch`, `allMatch`, `noneMatch` stop +
+as soon as result is determined
+* `limit`, `takeWhile` cut stream short
+
+=== Stream Characteristics
+
+Stream knows characteristics of its source:
+
+* _sized_ (e.g. `ArrayList`)
+* _distinct_ (e.g. `Set`)
+* _ordered_ (e.g. `List` or `SortedSet`)
+* _sorted_ (e.g. `SortedSet`)
+
+=== Stream Characteristics
+
+Operations clear, preserve, or inject
+these characteristics.
+
+Operations can benefit from them:
+
+* `count` may return immediately if _sized_
+* `distinct` may be no-op if _distinct_
+* `sorted`, `min`, `max` may be no-op if _sorted_
+* `findFirst` is like `findAny` if not _ordered_
+* parallelization is easier if not _ordered_
+
+
+== Possible Stream Pitfalls
+
+++++
+<table class="toc">
+	<tr><td>Stream API Basics</td></tr>
+	<tr><td>Stream Operations</td></tr>
+	<tr><td>More Stream APIs</td></tr>
+	<tr><td>Stream Details</td></tr>
+	<tr class="toc-current"><td>Stream Pitfalls</td></tr>
+	<tr><td>Summary</td></tr>
+</table>
+++++
+
+=== Possible Stream Pitfalls
+
+* no mutations
+* no storage
+* no reuse
+* minimize side effects
+
+=== Streams Do Not Mutate
+
+A stream pipeline +
+*never mutates the underlying collection*!
+
+All data is collected in terminal operation.
+
+If you need to mutate in place, +
+use imperative structures!
+
+=== Streams Are No Storage
+
+A stream pipeline +
+*does not hold data*!
+
+```java
+// if `orderRepository` goes down,
+// `orders` is useless!
+Stream<Orders> orders =
+	orderRepository.streamOrders();
+```
+
+If you need to keep data around, +
+use a collection!
+
+(Intermediate operations may amass data, +
+but they don't expose it.)
+
+=== Streams Can Not Be Reused
+
+Like `Iterator`, a stream pipeline +
+can not be reused.
+
+To process the stream again, recreate it.
+
+```java
+Supplier<Stream<Orders>> orders = () ->
+	orderRepository.streamOrders();
+// now, call orders.get() as often as you want
+```
+
+=== Beware Of Side Effects
+
+If code...
+
+* is executed in a stream pipeline and
+* has an effect on anything outside of it
+
+\... that is a _side effect_.
+
+* anything useful in `peek` or `forEach`
+* anything "non return value oriented" +
+in lambdas for other `Stream` methods
+
+=== Beware Of Side Effects
+
+A danger of side effects:
+
+* optimization may remove side effects
+
+Example:
+
+```java
+Stream.of("a", "b", "c")
+	.peek(auditLogger::log)
+	.count();
+```
+
+Nothing is logged... (Why?)
+
+=== Beware Of Side Effects
+
+Another danger of side effects:
+
+* optimization and parallelization may make +
+side effects unordered and unpredictable
+
+Example:
+
+```java
+List<Source> largeList = // ...
+List<Target> result = new ArrayList<>();
+largeList.parallelStream()
+//  [... snip stream operations ...]
+	.forEach(result::add);
+```
+
+`ArrayList` is not thread-safe.
+
+=== Beware Of Side Effects
+
+A specific side effect is mutation +
+of the stream source.
+
+This is called _interference_.
+
+Don't do it!
+
+(Unless collection is concurrent, +
+but even then it makes code complex.)
+
+=== Beware Of Side Effects
+
+Acceptable side effects:
+
+* logging
+* debugging
+
+Otherwise:
+
+* try to rely on the terminal operation, +
+particularly reduction
+* make sure side-effects are not critical
+* make sure methods called in side-effects +
+are order-independent, thread-safe. and performant
+
+
+== Summary
+
+++++
+<table class="toc">
+	<tr><td>Stream API Basics</td></tr>
+	<tr><td>Stream Operations</td></tr>
+	<tr><td>More Stream APIs</td></tr>
+	<tr><td>Stream Details</td></tr>
+	<tr><td>Stream Pitfalls</td></tr>
+	<tr class="toc-current"><td>Summary</td></tr>
+</table>
+++++
+
+=== Summary
+
+* source, intermediate, and terminal operations
+* there are primitive specializations
+* streams are lazy and not reusable
+* streams are easy to parallelize
+* should miniize side effects
+
+=== Summary
+
+Sources:
+
+* primarily collections
+* many other APIs return streams
+* define a stream's initial characteristics
+
+=== Summary
+
+Intermediate Operations:
+
+* can be stateless or stateful
+* can be short-circuiting
+* clear, preserve, or inject characteristics
+
+=== Summary:
+
+Terminal operations
+
+* largely define how a stream is processed
+* `reduce` and `collect` are powerful and important
+* can be short-circuiting
+* can be optimized based on characteristics
