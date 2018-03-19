@@ -1,0 +1,96 @@
+== Hello, Java 8
+
+```java
+() -> System.out.println("Hello, Java 8!")
+```
+
+=== About Me
+
+My name is *Nicolai* (Parlog)
+
+* Java since 2005, professionally since 2011
+* blogger since 2014
+* freelancing developer, speaker, trainer since 2016
+* published author "since" June 2018
+
+Main topics:
+
+* JDK feauters (language, APIs, JVM)
+* code quality (clean code and comments)
+* processes (code reviews, knowledge sharing)
+
+=== Code of Conduct
+
+* ask any question you have +
+as soon as you have it
+* ask your colleagues first
+* there are no stupid questions!
+* work in pairs or triples +
+(+1 for mixing skill levels)
+* consider taking notes
+
+=== Slides
+
+* online at http://slides.codefx.org/java-8[slides.codefx.org/java-8]
+* press "?" to learn how to navigate
+* there will be a permalink when the course is over
+* Java 9 specific content is marked with ⑨
+
+(Please share responsibly)
+
+=== Exercises
+
+* repository is at +
+https://github.com/nicolaiparlog/course-java-8[github.com/nicolaiparlog/course-java-8]
+* clone it now (please do not fork on GH)
+* will be unavailable by end of the week
+
+(Please share responsibly)
+
+=== A Very Short History
+
+Project Lambda started in 2010:
+
+* language features:
+** lambda expressions
+** default methods
+* library changes:
+** stream API
+** `Optional`
+** various smaller changes
+
+Java 8 shipped in March 2014.
+
+=== Paradigm Shift
+
+Lambdas make it easy to treat code as data.
+
+* passing "functions" was always easy in Java: +
+** use interface with single abstract method (e.g. `Runnable`)
+** pass instance of it
+* creating "functions" becomes really easy now:
++
+```java
+Runnable r = () -> System.out.println("Hello");
+```
+
+=== Paradigm Shift
+
+Makes it easier to parameterize behavior:
+
+* by _passing_ an action
+* instead of _configuring_ it
+
+=== Table of Content
+
+++++
+<table class="toc">
+	<tr><td>Lambda Expressions</td></tr>
+	<tr><td>Stream API</td></tr>
+	<tr><td>Optional API</td></tr>
+	<tr><td>Default Methods</td></tr>
+</table>
+++++
+
+There are many other additions in Java 8, +
+but we don't have time for them.
