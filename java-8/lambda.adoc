@@ -1,0 +1,578 @@
+== Lambda Expressions
+
+++++
+<table class="toc">
+	<tr class="toc-current"><td>Lambda Expressions</td></tr>
+	<tr><td>Stream API</td></tr>
+	<tr><td>Optional API</td></tr>
+	<tr><td>Default Methods</td></tr>
+	<tr><td>Summary</td></tr>
+</table>
+++++
+
+=== Lambda Expressions
+
+Make it easy to pass code as data, +
+by making it easy to create functions:
+
+```
+Runnable r = () -> System.out.println("Hello");
+```
+
+
+== Lambda Expressions
+
+++++
+<table class="toc">
+	<tr class="toc-current"><td>Lambda Expression Syntax</td></tr>
+	<tr><td>Lambdas vs Closures</td></tr>
+	<tr><td>Functional Interfaces</td></tr>
+	<tr><td>Method References</td></tr>
+	<tr><td>Summary</td></tr>
+</table>
+++++
+
+=== Exercise 1
+
+Pass code as data
+
+=== The Essence
+
+What's the essence of `TodoFilter` implementation?
+
+```java
+TodoFilter filter = new TodoFilter() {
+	@Override
+	public boolean passes(Todo todo) {
+		return todo.importance() == importance;
+	}
+}
+```
+
+* takes a `Todo`
+* executes 1 LOC
+* returns a `boolean`
+
+Do we really need 5 LOC to implement that?
+
+=== As Lambda
+
+As anonymous class:
+
+```java
+TodoFilter filter = new TodoFilter() {
+	@Override
+	public boolean passes(Todo todo) {
+		return todo.importance() == importance;
+	}
+}
+```
+
+As lambda expression:
+
+```java
+TodoFilter filter = todo ->
+	todo.importance() == importance;
+```
+
+😲
+
+=== Exercise 2
+
+Refactor anonymous classes to lambda expressions
+
+=== Lambda Expression
+
+To create an implementation of +
+an interface with a single abstract method:
+
+```java
+$Interface $var= ($parameters) -> { $body }
+```
+
+Things to discuss:
+
+* parameters
+* body
+* capturing variables
+
+=== Defining Parameters
+
+General form:
+
+```java
+// method signature:
+void method(Type_1 name_1, Type_2 name_2, ...) { $body }
+
+// lambda
+(Type_1 name_1, Type_2 name_2, ...) -> { $body }
+```
+
+Possible simplifications:
+
+* leave out types
+* leave out parenthesis +
+if single parameter
+
+=== Infer Parameter Types
+
+Compiler can infer types in most cases:
+
+```java
+// lambda
+(Type_1 name_1, Type_2 name_2, ...) -> { $body }
+
+// inferred
+(name_1, name_2, ...) -> { $body }
+```
+
+=== Single Parameter
+
+For single parameters, leave out parenthesis:
+
+```java
+// lambda
+(Type_1 name_1) -> { $body }
+
+// inferred
+Type_1 name_1 -> { $body }
+```
+
+=== Keep It "Simple"
+
+```java
+// instead of
+TodoFilter filter = (Todo todo) -> { $body }
+
+// usually
+TodoFilter filter = todo -> { $body }
+```
+
+=== Body As Block Or Line
+
+General form:
+
+```java
+($parameters) -> {
+	// lines of code
+	// possible `return`
+}
+```
+
+Example:
+
+```java
+TodoFilter filter = (Todo todo) -> {
+	boolean same = todo.importance() == importance;
+	return same;
+}
+```
+
+=== Single Line Body
+
+If body is a single line:
+
+* no curly braces
+* no `return`
+* no semicolon +
+(for the statement itself)
+
+Example:
+
+```java
+TodoFilter filter = (Todo todo) ->
+	todo.importance() == importance;
+```
+
+=== In Combination
+
+Instead of:
+
+```java
+TodoFilter filter = (Todo todo) -> {
+	boolean same = todo.importance() == importance;
+	return same;
+}
+```
+
+Usually:
+
+```java
+TodoFilter filter = todo
+	-> todo.importance() == importance;
+```
+
+=== Matter Of Taste
+
+Where to line break on long lambdas?
+
+```java
+filter = todo -> todo
+	.importance() == importance;
+
+filter = todo ->
+	todo.importance() == importance;
+
+filter = todo
+	-> todo.importance() == importance;
+```
+
+My preference: break after `\->`
+
+=== Exercise 3
+
+Create lambda expressions from scratch
+
+
+== Lambdas vs. Closures
+
+++++
+<table class="toc">
+	<tr><td>Lambda Expression Syntax</td></tr>
+	<tr class="toc-current"><td>Lambdas vs Closures</td></tr>
+	<tr><td>Functional Interfaces</td></tr>
+	<tr><td>Method References</td></tr>
+	<tr><td>Summary</td></tr>
+</table>
+++++
+
+=== Lambdas vs. Closures
+
+Two kinds of lambdas:
+
+non-capturing lambdas::
+use only the lambda's parameter(s)
+
+capturing lambdas / closures::
+use / capture / close over +
+fields, method parameters, local variables
+
+=== Lambdas vs. Closures
+
+```java
+private String field = "field";
+
+public StringToInt toInt(String parameter) {
+	String local = "local";
+	return s -> s.length()   // input
+		+ local.length()     // captures
+		+ parameter.length() // captures
+		+ field.length();    // captures
+}
+```
+
+=== Capturing Variables
+
+In anonymous classes:
+
+* method params and local vars +
+needed to be `final`
+* fields did not _and_ could be reassigned
+
+In lambda expressions:
+
+* method params and local vars +
+need to be *effectively final*
+* fields do not _and_ can be reassigned
+
+=== Effectively Final
+
+"If adding `final` would not +
+cause a compile error."
+
+```java
+public StringToInt toInt(String parameter) {
+	parameter = "new value";
+	String local = "local";
+	return s -> s.length()   // always ✔
+		+ local.length()     // eff. final ✔
+		+ parameter.length() // not eff. final ✘
+		+ field.length();    // always ✔
+}
+```
+
+=== Effectively Final
+
+Implications:
+
+* method parameters can not be reassigned
+* local variables can not be reassigned
+* fields _can_ be reassigned
+
+=== Exercise 4
+
+Experiment with (non-) capturing lambda expressions
+
+=== Why Effectively Final?
+
+Otherwise - if captured variables +
+can be reassigned:
+
+* which value will a lambda observe?
+* what happens under threading?
+
+This keeps programing model simpler!
+
+
+== Functional Interfaces
+
+++++
+<table class="toc">
+	<tr><td>Lambda Expression Syntax</td></tr>
+	<tr><td>Lambdas vs Closures</td></tr>
+	<tr class="toc-current"><td>Functional Interfaces</td></tr>
+	<tr><td>Method References</td></tr>
+	<tr><td>Summary</td></tr>
+</table>
+++++
+
+=== Functional Interfaces
+
+To assign a lambda to an interface +
+it must have exactly one abstract method.
+
+They are called _functional interfaces_!
+
+Can be marked with `@FunctionalInterface`, +
+which leads to compile error when not functional.
+
+=== Functional JDK
+
+JDK has many functional interfaces!
+
+* basic types
+* special cases
+* two parameters
+* primitive specializations
+
+=== Basic Func. Int.
+
+* `Supplier<T>`: `T get()`
++
+```java
+Supplier<String> s = () -> "foo";
+```
+* `Consumer<T>`: `void accept(T)`
++
+```java
+Consumer<String> c = s -> System.out.println(s);
+```
+* `Function<T, R>`: `R apply(T)`
++
+```java
+Function<String, Integer> f = s -> s.length();
+```
+
+=== Special Cases
+
+* `UnaryOperator<T>`: `T apply(T)`
++
+```java
+UnaryOperator<String> o = s -> s + s;
+```
+* `Predicate<T>`: `boolean test(T)`
++
+```java
+Predicate<String> p = s -> s.isEmpty();
+```
+
+=== Terminology
+
+Essential terminology:
+
+* `Supplier` returns something without input
+* `Consumer` uses something without return
+* `Function` transforms input into return
+* `Operator` works as `Function` but on the same type
+* `Predicate` tests something re `true`/`false`
+
+=== Two Parameters
+
+* no `BiSupplier<T>`
+* `BiConsumer<T, U>`: `void accept(T, U)`
++
+```java
+BiConsumer<String, Integer> c =
+	(s, i) -> System.out.println(s + ": " + i);
+```
+* `BiFunction<T, U, R>`: `R apply(T, U)`
++
+```java
+Function<String, Boolean, Integer> f =
+	(s, b) -> b ? s.length() : 0;
+```
+* `BinaryOperator<T>`: `T apply(T, T)`
+* `BiPredicate<T>`: `boolean test(T, U)`
+
+=== Primitive Specializations
+
+For `int`, `long`, `double` exist specializations:
+
+* `IntSupplier`: `int getAsInt()`
+* `IntConsumer`: `void accept(int)`
+* `IntFunction<R>`: `R apply(int)`
+* `ToIntFunction<T>`: `int applyAsInt(T)`
+* `IntUnaryOperator`: `int applyAsInt(int)`
+* `IntBinaryOperator`: `int applyAsInt(int, int)`
+* `IntPredicate`: `boolean test(int)`
+
+=== Functional Interfaces
+
+All of these can be found +
+in `java.util.function`:
+
+https://docs.oracle.com/javase/8/docs/api/java/util/function/package-summary.html[Java 8 Documentation]
+
+=== Exercise 5
+
+Get to know functional interfaces
+
+(Take some notes to make sure +
+you can look up these interfaces!)
+
+
+== Method References
+
+++++
+<table class="toc">
+	<tr><td>Lambda Expression Syntax</td></tr>
+	<tr><td>Lambdas vs Closures</td></tr>
+	<tr><td>Functional Interfaces</td></tr>
+	<tr class="toc-current"><td>Method References</td></tr>
+	<tr><td>Summary</td></tr>
+</table>
+++++
+
+=== Method References
+
+We've seen a lot of these:
+
+```java
+Consumer<String> printString = s -> print(s);
+```
+
+Then use a method reference:
+
+```java
+Consumer<String> printString = this::print;
+```
+
+=== Exercise 6
+
+Create simple method references
+
+=== Kinds Of References
+
+There are various kinds +
+of methods references:
+
+* to a static method
+* to a constructor
+* to an existing object
+* to the first parameter
+
+=== Static Reference
+
+Reference to a type's static method:
+
+```java
+public static void main(String[] args) {...}
+
+Consumer<String[]> main =
+//  args -> Type.main(args);
+	Type::main;
+```
+
+=== Constructor Reference
+
+Reference to a type's constructor:
+
+```java
+public Type(String s) {...}
+
+Function<String, Type> constructor =
+//  s -> new Type(s);
+	Type::new;
+```
+
+=== Object Reference
+
+Reference to a method +
+of an existing object:
+
+```java
+Type typeInstance = // ...
+Supplier<String> getFieldFromType =
+//  typeInstance -> typeInstance.getField();
+	typeInstance::getField;
+```
+
+=== Parameter Reference
+
+Reference to a method +
+of the first parameter:
+
+```java
+Function<Type, String> getFieldFromType =
+//  typeInstance -> typeInstance.getField();
+	Type::getField;
+```
+
+=== Reference Types
+
+* static method: `$TYPE::$METHOD`
+* constructor: `$TYPE::new`
+* instance method: `$INSTANCE::$METHOD`
+* method on first parameter: `$TYPE::$METHOD`
+
+=== Exercise 7
+
+Create various kinds of method references
+
+// TODO: Exercise to improve code with lambdas
+
+
+== Summary
+
+++++
+<table class="toc">
+	<tr><td>Lambda Expression Syntax</td></tr>
+	<tr><td>Lambdas vs Closures</td></tr>
+	<tr><td>Functional Interfaces</td></tr>
+	<tr><td>Method References</td></tr>
+	<tr class="toc-current"><td>Summary</td></tr>
+</table>
+++++
+
+=== Summary
+
+Basic functional interfaces: +
+`Supplier`, `Consumer`, `Function`, `Operator`, `Predicate`
+
+Basic lambda expression:
+
+```java
+$interface $var= ($parameters) -> { $body }
+```
+
+=== Summary
+
+* Interface must be functional, +
+* Parameters:
+** can have types
+** must have parenthesis if more than one
+* Body:
+** can be block in curly braces
+** can be expression of single line
+
+=== Summary
+
+* variables used in body must be effectively final
+* capturing lambdas use fields or non-lambda parameters
+
+Method reference:
+
+* static method: `$TYPE::$METHOD`
+* constructor: `$TYPE::new`
+* instance method: `$INSTANCE::$METHOD`
+* method on first parameter: `$TYPE::$METHOD`
