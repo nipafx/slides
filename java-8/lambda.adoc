@@ -549,7 +549,9 @@ Function<Type, String> getFieldFromType =
 
 * static method: `$TYPE::$METHOD`
 * constructor: `$TYPE::new`
-* instance method: `$INSTANCE::$METHOD`
+* instance method:
+** `$INSTANCE::$METHOD`
+** `this::$METHOD`
 * method on first parameter: `$TYPE::$METHOD`
 
 === Exercise 7

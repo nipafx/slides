@@ -178,7 +178,7 @@ _"I have todos and want to print them"_
 
 ```java
 List<Todo> todos = // ...
-Set<String> = todos.stream()
+todos.stream()
 	.forEach(System.out::println);
 ```
 
@@ -256,6 +256,19 @@ List<Order> orders = users.stream()
 	// now we have a Stream<List<Order>>
 	.flatMap(Collection::stream)
 	// flatMap turned it into Stream<Order>
+	.collect(toList());
+```
+
+=== Transforming Collections
+
+_"I have users and need their orders as a list"_
+
+Alternative:
+
+```java
+List<User> users = // ...
+List<Order> orders = users.stream()
+	.flatMap(user -> user.getOrders().stream())
 	.collect(toList());
 ```
 
@@ -572,16 +585,7 @@ String descriptions = todos.stream()
 	.reduce("", (d1, d2)-> d1 + d2):
 ```
 
-=== Reducing
-
-_"I have todos and want to concatenate their descriptions"_
-
-```java
-List<Todo> todos = // ...
-String descriptions = todos.stream()
-	.map(Todo::description)
-	.reduce("", (d1, d2)-> d1 + d2):
-```
+(In real life, use `Collectors.joining()` ⇝ later)
 
 === Reducing
 
