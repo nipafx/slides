@@ -62,6 +62,7 @@ Google's MapReduce has the same logic:
 	<tr><td>More Stream APIs</td></tr>
 	<tr><td>Stream Details</td></tr>
 	<tr><td>Stream Pitfalls</td></tr>
+	<tr><td>Using Streams in APIs</td></tr>
 	<tr><td>Summary</td></tr>
 </table>
 ++++
@@ -130,6 +131,7 @@ Refactor use of self-made API to stream API
 	<tr><td>More Stream APIs</td></tr>
 	<tr><td>Stream Details</td></tr>
 	<tr><td>Stream Pitfalls</td></tr>
+	<tr><td>Using Streams in APIs</td></tr>
 	<tr><td>Summary</td></tr>
 </table>
 ++++
@@ -615,6 +617,7 @@ Solve problems with streams
 	<tr class="toc-current"><td>More Stream APIs</td></tr>
 	<tr><td>Stream Details</td></tr>
 	<tr><td>Stream Pitfalls</td></tr>
+	<tr><td>Using Streams in APIs</td></tr>
 	<tr><td>Summary</td></tr>
 </table>
 ++++
@@ -632,7 +635,8 @@ Besides `Collection::stream`:
 
 * `Stream.of(T...)`
 * `Stream.iterate(T, UnaryOperator<T>)`
-* `Stream.iterate(T, Predicate<T>, UnaryOperator<T>)`
+* `Stream.iterate(` +
+`T, Predicate<T>, UnaryOperator<T>)` ⑨
 * `Arrays.stream(T[])`
 * `BufferedReader.lines()`
 * `Files.lines(Path)`, `Files.list(Path)`
@@ -677,6 +681,8 @@ Stream
 ```
 
 Prints `0`, `1`, `2`, `3`, `4`.
+
+=== Exercise 4
 
 === Reduction
 
@@ -756,7 +762,7 @@ Then one thread:
 === Collectors
 
 Rarely build collectors yourself; +
-instead Call methods on `Collectors`:
+instead call methods on `Collectors`:
 
 * most importantly `toList` and `toSet`
 * `toMap` to map elements to key and values
@@ -778,6 +784,8 @@ Collectors are harder to read than stream pipelines!
 * prefer using `Stream`
 * look for ways to represent +
 intermediate results
+
+=== Exercise 5
 
 === Primitive Specializations
 
@@ -811,6 +819,7 @@ or `Stream::mapToInt`
 	<tr><td>More Stream APIs</td></tr>
 	<tr class="toc-current"><td>Stream Details</td></tr>
 	<tr><td>Stream Pitfalls</td></tr>
+	<tr><td>Using Streams in APIs</td></tr>
 	<tr><td>Summary</td></tr>
 </table>
 ++++
@@ -875,6 +884,8 @@ has the most potential:
 * many elements
 * CPU-intensive operations
 * stateless / side-effect free operations
+
+https://www.youtube.com/watch?v=2nup6Oizpcw[Thinking in Parallel (Goetz, Marks)]
 
 === Streams Are Clever
 
@@ -952,6 +963,7 @@ Operations can benefit from them:
 	<tr><td>More Stream APIs</td></tr>
 	<tr><td>Stream Details</td></tr>
 	<tr class="toc-current"><td>Stream Pitfalls</td></tr>
+	<tr><td>Using Streams in APIs</td></tr>
 	<tr><td>Summary</td></tr>
 </table>
 ++++
@@ -1079,6 +1091,103 @@ Otherwise:
 order-independent, thread-safe, performant
 
 
+== Using Streams in APIs
+
+++++
+<table class="toc">
+	<tr><td>Stream API Basics</td></tr>
+	<tr><td>Stream Operations</td></tr>
+	<tr><td>More Stream APIs</td></tr>
+	<tr><td>Stream Details</td></tr>
+	<tr><td>Stream Pitfalls</td></tr>
+	<tr class="toc-current"><td>Using Streams in APIs</td></tr>
+	<tr><td>Summary</td></tr>
+</table>
+++++
+
+=== Interesting Stream Properties
+
+* streams are unmodifiable
+* streams are easy to transform
+* streams are lazy
+
+⇝ Good way to enrich data in layers.
+
+=== Enrichment Example
+
+```java
+Map<String, User> userById;
+Map<String, Address> addrById;
+
+Stream<User> users() {
+	return userById.values().stream();
+}
+
+Stream<UserAddress> userAddresses() {
+	return users()
+		.map(user -> UserAddress.of(
+				user, addrById.get(user.id())));
+}
+```
+
+=== Enrichment Example
+
+```java
+Map<Address, List<Order>> ordersByAddr;
+
+Stream<Order> ordersFor(UserAdress userAddr) {
+	return ordersByAddr
+		.get(userAddr.address()).stream();
+}
+
+Stream<Delivery> deliveriesFor(UserAdress userAddr) {
+	return ordersFor(userAddr)
+		.map(order -> Delivery.of(userAddr, order));
+}
+
+Stream<Delivery> deliveries() {
+	return userAddresses().flatMap(this::deliveriesFor);
+}
+```
+
+=== Guidelines
+
+* streams can only be traversed once +
+⇝ ideally, returned streams can be recreated endlessly
+* during traversal collection must not be mutated +
+⇝ stick to layers instead of cycles +
+(can be harder than it sounds)
+* decide carefully where to call `parallel()` +
+⇝ close to terminal operation is a good default
+
+=== Accepting Streams
+
+Returning streams is ok.
+
+What about passing them as parameters?
+
+* streams can only be traversed once!
+* caller must assume stream is traversed
+* works for obvious consumer functions
+* possibly a transformed stream can be returned
+
+=== Stream Param Example
+
+```java
+// consuming the passed stream
+void addUsers(Stream<User> users) {
+	users.forEach(this.users::add)
+}
+
+// transforming the passed stream
+Stream<UserAddress> userAddresses(Stream<User> users) {
+	return users
+		.map(user -> UserAddress.of(
+				user, addrById.get(user.id())));
+}
+```
+
+
 == Summary
 
 ++++
@@ -1099,6 +1208,7 @@ order-independent, thread-safe, performant
 * streams are lazy and not reusable
 * streams are easy to parallelize
 * should minimize side effects
+* think carefully how to use on your APIs
 
 === Summary
 
@@ -1116,11 +1226,39 @@ Intermediate Operations:
 * can be short-circuiting
 * clear, preserve, or inject characteristics
 
-=== Summary:
+=== Summary
 
-Terminal operations
+Terminal operations:
 
 * largely define how a stream is processed
 * `reduce` and `collect` are powerful and important
 * can be short-circuiting
 * can be optimized based on characteristics
+
+=== Summary
+
+Returning Streams:
+
+* returning streams is great +
+(unmodifiable but transformable)
+* preferably if streams can be recreated
+* can be used to gradually enrich data
+
+=== Summary
+
+Passing Streams:
+
+* caller must assume stream is traversed
+* works for obvious consumers
+* transformations can be hard to track
+* never return a traversed stream +
+(obvious, right?!)
+
+=== Summary
+
+But Look Out:
+
+* streams can only be traversed once
+* no mutation during traversal
+* don't make chains too long or +
+debuggability suffers
