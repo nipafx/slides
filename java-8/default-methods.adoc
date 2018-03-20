@@ -1,0 +1,236 @@
+== Default Methods
+
+++++
+<table class="toc">
+	<tr><td>Lambda Expressions</td></tr>
+	<tr><td>Stream API</td></tr>
+	<tr><td>Optional API</td></tr>
+	<tr class="toc-current"><td>Default Methods</td></tr>
+</table>
+++++
+
+=== Mmh...
+
+Where does `Collection::stream` come from?
+
+* new method on a public interface
+* breaks all third-party implementations
+
+=== Collection::stream
+
+Take a look at `Collection` interface:
+
+```java
+default Stream<E> stream() {
+	return StreamSupport.stream(spliterator(), false);
+}
+```
+
+* what's `default`?
+* why is there a method body?
+
+== Default Methods
+
+++++
+<table class="toc">
+	<tr class="toc-current"><td>Syntax &amp; Semantics</td></tr>
+	<tr><td>Existing Functionality</td></tr>
+	<tr><td>Kinds of Default Methods</td></tr>
+	<tr><td>Summary</td></tr>
+</table>
+++++
+
+=== Intention
+
+* add methods to interfaces +
+without breaking implementations
+* extend existing interfaces +
+to improve usability
+* easy programing model
+
+=== Default Method Syntax
+
+* keyword `default`
+* regular method signature and body
+* automatically `public` +
+(as all other interface methods)
+
+=== Resolution Strategy
+
+Rule #1::
+Classes win over interfaces.
+Rule #2::
+More specific interfaces win over less specific ones.
+Rule #3::
+There’s no Rule #3.
+
+=== Resolution Strategy
+
+* no rule #3 means occasional compile errors +
+that have to be fixed manually
+* it is possible to "reabstract" methods:
++
+```java
+abstract class MyCollection<E>
+		implements Collection<E> {
+
+	public abstract Stream<E> stream();
+
+}
+```
+* it is not possible to have default implementation +
+of methods on `Object` (e.g. `equals`/`hashCode`)
+
+=== Static Method Syntax
+
+Interfaces can now also have static methods.
+
+Syntax as usual:
+
+```java
+public static <T> Comparator<T> nullsLast(
+		Comparator<? super T> comparator) {
+	return new Comparators.NullComparator<>(false, comparator);
+}
+```
+
+
+== Existing Functionality
+
+++++
+<table class="toc">
+	<tr><td>Syntax &amp; Semantics</td></tr>
+	<tr class="toc-current"><td>Existing Functionality</td></tr>
+	<tr><td>Kinds of Default Methods</td></tr>
+	<tr><td>Summary</td></tr>
+</table>
+++++
+
+=== Existing Functionality
+
+Many functional interfaces have +
+usability default methods:
+
+* Collections
+* `Comparator`
+* functional interfaces
+
+=== Collections
+
+* `Iterable.forEach(Consumer<T>)`
+* `Collection.removeIf(Predicate<E>)`
+* `Collection.stream()`
+* `List.replaceAll(UnaryOperator<E>)`
+* `List.sort(Comparator<E>)`
+
+Many more on various collections.
+
+=== Comparator
+
+```java
+Comparator<Todo> comparator = Comparator
+	.comparing(todo -> todo.due());
+comparator = comparator.reversed();
+comparator = Comparator.nullsLast(comparator);
+```
+
+(Many more.)
+
+=== Functional Interfaces
+
+* `Function.andThen(Function<R, V>)`
+* `Function.identity()`
+* `Predicate.and(Predicate<T>)`
+* `Predicate.negate()`
+
+
+== Kinds of Default Methods
+
+++++
+<table class="toc">
+	<tr><td>Syntax &amp; Semantics</td></tr>
+	<tr><td>Existing Functionality</td></tr>
+	<tr class="toc-current"><td>Kinds of Default Methods</td></tr>
+	<tr><td>Summary</td></tr>
+</table>
+++++
+
+=== Three Kinds
+
+Default methods come in three flavors:
+
+* "optional" methods
+* "reasonable" implementations
+* "definitive" implementations
+
+=== "Optional" methods
+
+Barely useful implementation:
+
+```java
+// in Iterator
+default void remove() {
+	throw new UnsupportedOperationException("remove");
+}
+```
+
+* fulfill (weak) contract
+* look for them when +
+implementing interface
+
+=== "Reasonable" Implementation
+
+Useful implementation:
+
+```java
+// in Iterator
+default void forEach(Consumer<? super E> consumer) {
+	while (hasNext())
+		consumer.accept(next());
+}
+```
+
+* safe to use
+* might be overridden for better implementation
+
+=== "Definitive" Implementation
+
+Sometimes, there isn't really +
+any other possible implementation:
+
+```java
+default Predicate<T> and(Predicate<? super T> p) {
+	Objects.requireNonNull(p);
+	return (T t) -> test(t) && p.test(t);
+}
+```
+
+
+== Summary
+
+++++
+<table class="toc">
+	<tr><td>Syntax &amp; Semantics</td></tr>
+	<tr><td>Existing Functionality</td></tr>
+	<tr><td>Kinds of Default Methods</td></tr>
+	<tr class="toc-current"><td>Summary</td></tr>
+</table>
+++++
+
+=== Summary
+
+* interfaces can have instance methods:
+** add `default` keyword
+** implement as usually
+* interface can have static methods +
+just like classes
+
+Many existing and new interfaces +
+have default methods.
+
+=== Summary
+
+Method resolution:
+
+* methods from classes are _always_ preferred
+* default methods are "fall back"
