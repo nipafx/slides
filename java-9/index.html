@@ -23,10 +23,10 @@
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://www.codeeurope.pl/en"><img src="images/logo-code-europe.jpg" class="logo" style="{host-logo-style}"></a>
+		<a href="https://www.sbb.ch/"><img src="images/logo-sbb.jpg" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://www.codeeurope.pl/en">Code Europe</a></p>
-			<p><a href="https://twitter.com/code_europe">@code_europe</a></p>
+			<p><a href="https://www.sbb.ch/">SBB Ausbildungscamp</a></p>
+			<p><a href="https://twitter.com/RailService">@RailService</a></p>
 		</div>
 	</div>
 </div>
@@ -41,9 +41,9 @@
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://www.codeeurope.pl/en"><img src="images/logo-code-europe.jpg" class="logo" style="{host-logo-style}"></a>
+		<a href="https://www.sbb.ch/"><img src="images/logo-sbb.jpg" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://www.codeeurope.pl/en">Code Europe</a> / <a href="https://twitter.com/code_europe">@code_europe</a></p>
+			<p><a href="https://www.sbb.ch/">SBB Ausbildungscamp</a> / <a href="https://twitter.com/RailService">@RailService</a></p>
 		</div>
 	</div>
 </footer>
@@ -52,73 +52,45 @@
 		document.body.appendChild(document.querySelector('footer'));
 	})
 </script></div></section>
-<section><section id="_21st_of_september_2017"><h2>21st Of September 2017</h2></section><section id="_public_service_announcement"><h2>Public Service Announcement</h2><div class="ulist"><ul><li><p>this is a showcase, not a tutorial</p></li><li><p>slides at <a href="http://slides.codefx.org/">slides.codefx.org</a></p></li></ul></div></section><section id="_lots_to_talk_about"><h2>Lots to talk about!</h2><table class="toc">
-	<tr><td>Module System</td></tr>
+<section><section id="_public_service_announcement"><h2>Public Service Announcement</h2><div class="ulist"><ul><li><p>new release schedule</p></li><li><p>Oracle JDK ≠ OpenJDK</p></li><li><p>Java on the desktop</p></li></ul></div></section><section id="_new_release_schedule"><h2>New Release Schedule</h2><div class="ulist"><ul><li><p>starting with Java 9,<br>
+new major release every six months</p></li><li><p>Java 10 comes out <strong>today</strong>!</p></li><li><p>Java 11 comes out in September</p></li></ul></div></section><section id="_oracle_jdk_openjdk"><h2>Oracle JDK ≠ OpenJDK</h2><div class="ulist"><ul><li><p>no free Oracle JDK from Java 11 on</p></li><li><p>Oracle ships OpenJDK builds</p></li><li><p>but <strong>only for current major version</strong>:<br>
+⇝ 10 ⇝ 10.0.1 ⇝ 10.0.4<br>
+⇝ 11 ⇝ 11.0.1 ⇝ 11.0.4<br>
+⇝ 12 ⇝ 12.0.1 ⇝ 12.0.4<br></p></li><li><p>there is no <span style="text-decoration: line-through;">spoon</span> free LTS by Oracle!</p></li></ul></div>
+<div class="paragraph"><p>⇝ More in my weekly:<br>
+<a href="https://medium.com/codefx-weekly/no-free-java-lts-version-b850192745fb">No Free Java LTS Version?</a></p></div></section><section id="_java_on_the_desktop"><h2>Java on the desktop</h2><div class="paragraph"><p>Oracle released a<br>
+<em>Java Client Roadmap Update</em><br>
+with plans for:</p></div>
+<div class="ulist"><ul><li><p>Applets</p></li><li><p>Web Start</p></li><li><p>JavaFX</p></li><li><p>Swing/AWT</p></li></ul></div></section><section id="_applets"><h2>Applets</h2><div class="ulist"><ul><li><p>Applets are deprecated in Java 9</p></li><li><p>Applets are removed from Java SE 11</p></li><li><p>Applets won&#8217;t be in Oracle&#8217;s OpenJDK 11 builds</p></li></ul></div></section><section id="_web_start"><h2>Web Start</h2><div class="ulist"><ul><li><p>Web Start is deprecated in Java 9</p></li><li><p>Web Start is removed from Java SE 11</p></li><li><p>Web Start won&#8217;t be in Oracle&#8217;s OpenJDK 11 builds</p></li></ul></div></section><section id="_javafx"><h2>JavaFX</h2><div class="ulist"><ul><li><p>was never part of Java SE<br>
+(unlikely to change soon)</p></li><li><p>was never in Oracle&#8217;s OpenJDK builds<br>
+(just as unlikely to change)</p></li><li><p>will be <a href="https://twitter.com/holgerbrands/status/971428308708679680">removed from Oracle JDK 11</a></p></li></ul></div>
+<div class="paragraph"><p>If your project uses JavaFX,<br>
+you <strong>can&#8217;t rely</strong> on its presence<br>
+on your customers' machines!</p></div></section><section id="_javafx_2"><h2>JavaFX</h2><div class="paragraph"><p>Quote:</p></div>
+<div class="quoteblock"><blockquote style="color: black;">
+Oracle is working with interested third parties to make it easier to build and maintain JavaFX as a separately distributable open-source module.
+</blockquote></div>
+<div class="paragraph"><p>Not a quote:</p></div>
+<div class="quoteblock"><blockquote style="color: black;">
+Oracle wants to reduce/terminate investment in JavaFX.
+</blockquote></div></section><section id="_swing_awt"><h2>Swing/AWT</h2><div class="paragraph"><p>Quote:</p></div>
+<div class="quoteblock"><blockquote style="color: black;">
+Oracle will continue developing Swing and AWT in Java SE 8 and Java SE 11 (18.9 LTS).
+This means they will be supported by Oracle through at least 2026.
+</blockquote></div>
+<div class="paragraph"><p>What this doesn&#8217;t say:</p></div>
+<div class="ulist"><ul><li><p>support is free</p></li><li><p>support goes beyond Java 11</p></li></ul></div></section><section id="_swing_awt_2"><h2>Swing/AWT</h2><div class="paragraph"><p><strong>Hypothetically</strong> Oracle could<br>
+remove Swing/AWT from Java SE 12<br>
+and its statement still holds.</p></div>
+<div class="paragraph"><p>⇝ More in my weekly:<br>
+<a href="https://medium.com/codefx-weekly/java-desktop-quo-vadis-f0803166e36b">Java Desktop, Quo Vadis?</a></p></div></section><section id="_more_psas"><h2>More PSAs</h2><div class="paragraph"><p>To hear about such news:</p></div>
+<div class="ulist"><ul><li><p>follow me on Twitter: <a href="https://twitter.com/nipafx">@nipafx</a></p></li><li><p>subscribe to my weekly: <a href="http://blog.codefx.org/newsletter/">tiny.cc/fx-weekly</a></p></li></ul></div></section></section>
+<section><section id="_let_s_get_started"><h2>Let&#8217;s get started!</h2><div class="ulist"><ul><li><p>some features come with practical exercises</p></li><li><p>others are just showcased</p></li><li><p>slides at <a href="http://slides.codefx.org/">slides.codefx.org</a></p></li></ul></div></section><section id="_lots_to_talk_about"><h2>Lots to talk about!</h2><table class="toc">
 	<tr><td>Language Changes</td></tr>
 	<tr><td>New and Updated APIs</td></tr>
 	<tr><td>New JVM Features</td></tr>
 	<tr><td>Performance Improvements</td></tr>
 </table></section></section>
-<section><section id="_java_platform_module_system"><h2>Java Platform Module System</h2><h3>Delaying Java since 2008!</h3></section><section id="_jar_hell_is_bad_mkay"><h2>JAR Hell is bad, mkay?</h2><div class="paragraph"><p><strong>JARs have</strong>:</p></div>
-<div class="ulist"><ul><li><p>no name the JVM cares about</p></li><li><p>no explicit dependencies</p></li><li><p>no well-defined API</p></li><li><p>no concept of versions</p></li></ul></div>
-<div class="paragraph"><p><strong>Some consequences</strong>:</p></div>
-<div class="ulist"><ul><li><p><code>NoClassDefFoundError</code></p></li><li><p>no encapsulation across JARs</p></li><li><p>version conflicts</p></li></ul></div></section><section id="_modules"><h2>Modules</h2><div class="paragraph"><p><strong>Modules are like JARs but have</strong>:</p></div>
-<div class="ulist"><ul><li><p>proper names</p></li><li><p>explicit dependencies</p></li><li><p>a well-defined API</p></li><li><p>no concept of versions 😭</p></li></ul></div>
-<div class="paragraph"><p><strong>Important goals</strong>:</p></div>
-<div class="ulist"><ul><li><p>reliable configuration</p></li><li><p>strong encapsulation</p></li></ul></div></section><section id="_module_declaration"><h2>Module Declaration</h2><div class="paragraph"><p>A file <code>module-info.java</code>:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> java.sql {
-	<span class="hljs-keyword">requires transitive</span> java.logging
-	<span class="hljs-keyword">requires transitive</span> java.xml
-	<span class="hljs-keyword">uses</span> java.sql.Driver
-	<span class="hljs-keyword">exports</span> java.sql
-	<span class="hljs-keyword">exports</span> javax.sql
-	<span class="hljs-keyword">exports</span> javax.transaction.xa
-}</code></pre></div></div></section><section id="_reliable_configuration"><h2>Reliable Configuration</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> java.sql {
-	<span class="hljs-keyword">requires transitive</span> java.logging
-	<span class="hljs-keyword">requires transitive</span> java.xml
-}</code></pre></div></div>
-<div class="paragraph"><p>Module system enforces:</p></div>
-<div class="ulist"><ul><li><p>all required modules are present</p></li><li><p>no ambiguity</p></li><li><p>no static dependency cycles</p></li><li><p>no split packages</p></li></ul></div></section><section id="_strong_encapsulation"><h2>Strong Encapsulation</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> java.sql {
-	<span class="hljs-keyword">exports</span> java.sql
-	<span class="hljs-keyword">exports</span> javax.sql
-	<span class="hljs-keyword">exports</span> javax.transaction.xa
-}</code></pre></div></div>
-<div class="paragraph"><p>Say you want to access <code>java.sql.ResultSet</code>.</p></div>
-<div class="paragraph"><p>Module system only grants access if:</p></div>
-<div class="ulist"><ul><li><p><code>ResultSet</code> is public</p></li><li><p><code>java.sql</code> is exported by <em>java.sql</em></p></li><li><p>your module reads <em>java.sql</em></p></li></ul></div></section><section data-background-color="white" data-background-image="images/platform-modules.png" data-background-size="contain" data-state="empty"></section><section id="_services"><h2>Services</h2><div class="paragraph"><p>The module system as a service registry:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> java.sql {
-	<span class="hljs-keyword">uses</span> java.sql.Driver
-}
-
-<span class="hljs-keyword">module</span> mysql.driver {
-	<span class="hljs-keyword">provides</span> java.sql.Driver
-		<span class="hljs-keyword">with</span> com.mysql.MySQLDriver;
-}
-</code></pre></div></div></section><section id="_loading_services"><h2>Loading Services</h2><div class="paragraph"><p>Code in <em>java.sql</em> can do this:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Driver&gt; drivers = new ArrayList&lt;&gt;();
-ServiceLoader
-	.load(Driver.class)
-	.forEach(drivers::add);</code></pre></div></div></section><section id="_other_features"><h2>Other Features</h2><div class="ulist"><ul><li><p>finer grained dependencies and exports</p></li><li><p>open packages and modules (for reflection)</p></li><li><p>unnamed and automatic modules (for migration)</p></li><li><p>layers (for containers)</p></li><li><p><code>jlink</code> to create runtime images</p></li></ul></div></section><section id="_more_about_jpms"><h2>More About JPMS</h2><div class="ulist"><ul><li><p><a href="https://blog.codefx.org/java/java-module-system-tutorial/">Code First Java Module System Tutorial</a></p></li><li><p><a href="https://blog.codefx.org/java/java-9-migration-guide/">Java 9 Migration Guide</a></p></li><li><p><a href="https://blog.codefx.org/java/five-command-line-options-to-hack-the-java-9-module-system/">Command Line Options To Hack The JPMS</a></p></li><li><p><a href="https://blog.codefx.org/java/planning-your-java-9-update/">Planning Your Java 9 Update</a></p></li></ul></div></section><section id="_even_more_about_jpms"><h2>Even More About JPMS</h2><div style="float: left; width: 45%; margin:0px;">
-	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="images/cover-jms.png" style="margin: 0;"></a>
-	<p style="
-		position: fixed;
-		margin: -160px 0 0 60px;
-		transform: rotate(-8deg);
-		font-size: 28pt;
-		color: #cc0000;
-		text-shadow: 2px 2px 3px #660000;
-		font-weight: bold;
-		border: 5px solid #cc0000;
-		border-radius: 12px;
-		background-color: rgba(255,255,255,0.5);
-		padding: 2px 8px 7px 4px;
-">37% off with<br>code <em>fccparlog</em></p>
-</div>
-<div class="paragraph"><p>I&#8217;m writing a book!<br>
-EA available ⇝ <a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&amp;a_bid=869915cb">tiny.cc/jms</a></p></div>
-<div class="ulist"><ul><li><p>creating, building,<br>
-running modules</p></li><li><p>migration to Java 9</p></li><li><p>modularization</p></li><li><p>services and<br>
-advanced features</p></li><li><p>reflection and layers</p></li><li><p>custom runtime images</p></li></ul></div></section></section>
 <section id="_new_language_features"><h2>New Language Features</h2><table class="toc">
 	<tr><td>Private Interface Methods</td></tr>
 	<tr><td>Try-With-Resources</td></tr>
@@ -619,8 +591,8 @@ directly to new <code>byte[]</code>.</p></div></section><section id="_performanc
 and class data sharing (<a href="http://openjdk.java.net/jeps/250">JEP 250</a>)</p></li><li><p>contended locks (<a href="http://openjdk.java.net/jeps/143">JEP 143</a>)</p></li><li><p>security manager (<a href="http://openjdk.java.net/jeps/232">JEP 232</a>)</p></li><li><p>GHASH/RSA computation (<a href="http://openjdk.java.net/jeps/246">JEP 246</a>)</p></li><li><p>Java 2D rendering (<a href="http://openjdk.java.net/jeps/265">JEP 265</a>)</p></li></ul></div></section>
 <section id="_full_picture" data-background-image="images/shibuya-night.jpg" data-background-size="cover"><h2>Full Picture</h2>
 <div class="paragraph"><p>If you want the full picture:</p></div>
-<div class="paragraph"><p><strong>The Ultimate Guide To Java 9</strong><br>
-(<a href="https://www.sitepoint.com/ultimate-guide-to-java-9/">tiny.cc/java-9</a>)</p></div>
+<div class="paragraph"><p><strong>Code First Java 9 Tutorial</strong><br>
+<a href="https://blog.codefx.org/java/java-9-tutorial" class="bare">https://blog.codefx.org/java/java-9-tutorial</a></p></div>
 <div class="paragraph"><p>If you run into problems:</p></div>
 <div class="paragraph"><p><strong><a href="http://java9.wtf">java9.wtf</a></strong></p></div></section>
 <section id="_about_nicolai_parlog" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>About Nicolai Parlog</h2>
@@ -647,10 +619,8 @@ and class data sharing (<a href="http://openjdk.java.net/jeps/250">JEP 250</a>)<
 🐦 <a href="https://twitter.com/nipafx">@nipafx</a></p></div>
 <h3>Want More?</h3>
 <div class="paragraph"><p>⇜ Get <a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&amp;a_bid=869915cb">my book</a>!</p></div>
-<div class="paragraph"><p>Mail to<br>
-<a href="mailto:course@codefx.org">course@codefx.org</a><br>
-for a Java 9 training<br>
-in Stockholm</p></div></section>
+<div class="paragraph"><p>You can <a href="http://blog.codefx.org/hire-nicolai-parlog/">hire me</a>:</p></div>
+<div class="ulist"><ul><li><p>training (Java 8-11, JUnit 5)</p></li><li><p>consulting (Java 8-11)</p></li></ul></div></section>
 <section id="_image_credits"><h2>Image Credits</h2><div class="ulist"><ul><li><p><a href="https://pixabay.com/en/number-digit-nine-9-background-1982274/">nine</a>:
 <a href="https://pixabay.com/en/users/PIRO4D-2707530/">PIRO4D</a>,
 <a href="https://wiki.creativecommons.org/wiki/CC0">CC0</a></p></li><li><p><a href="https://www.flickr.com/photos/21496790@N06/5065834411">question-mark</a>:
