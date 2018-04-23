@@ -16,12 +16,12 @@
 
 include::../_shared/highlight.js.adoc[]
 
-:host-name: Code Europe
-:host-url: https://www.codeeurope.pl/en
-:host-logo-url: images/logo-code-europe.jpg
+:host-name: SBB Ausbildungscamp
+:host-url: https://www.sbb.ch/
+:host-logo-url: images/logo-sbb.jpg
 // :host-logo-style: background-color: transparent; border-width: 0;
-:host-twitter-name: @code_europe
-:host-twitter-url: https://twitter.com/code_europe
+:host-twitter-name: @RailService
+:host-twitter-url: https://twitter.com/RailService
 include::../_shared/event-on-title-and-footer.adoc[]
 
 
@@ -32,22 +32,28 @@ include::../_shared/event-on-title-and-footer.adoc[]
 
 // ⇝
 
-// TODO, how to get line by line out of process, JKS keystore is read-only, diff Javadoc for version updates
+////
+TODO
+* how to get line by line out of process
+* JKS keystore is read-only
+* diff Javadoc for version updates
+////
 
-== 21st Of September 2017
+include::../_shared/roadmap.adoc[]
 
-=== Public Service Announcement
+== Let's get started!
 
-* this is a showcase, not a tutorial
+* some features come with practical exercises
+* others are just showcased
 // * if you're shy, tweet questions +
 // with https://twitter.com/search?q=%23vdz17%20%40nipafx[#VDZ17 @nipafx]
 * slides at http://slides.codefx.org/[slides.codefx.org]
 
 === Lots to talk about!
 
+// <tr><td>Module System</td></tr>
 ++++
 <table class="toc">
-	<tr><td>Module System</td></tr>
 	<tr><td>Language Changes</td></tr>
 	<tr><td>New and Updated APIs</td></tr>
 	<tr><td>New JVM Features</td></tr>
@@ -60,7 +66,7 @@ include::../_shared/event-on-title-and-footer.adoc[]
 // P R E S E N T A T I O N //
 // ####################### //
 
-include::jpms.adoc[]
+// include::jpms.adoc[]
 
 include::language.adoc[]
 
