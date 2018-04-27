@@ -5,9 +5,9 @@
 	<tr><td>Stream Improvements</td></tr>
 	<tr><td>Optional Improvements</td></tr>
 	<tr><td>Collection Factories</td></tr>
-	<tr><td>Reactive Streams</td></tr>
 	<tr><td>Stack-Walking</td></tr>
 	<tr><td>OS Processes</td></tr>
+	<tr><td>Reactive Streams</td></tr>
 </table>
 ++++
 
@@ -22,9 +22,9 @@ many existing ones were improved.
 	<tr class="toc-current"><td>Stream Improvements</td></tr>
 	<tr><td>Optional Improvements</td></tr>
 	<tr><td>Collection Factories</td></tr>
-	<tr><td>Reactive Streams</td></tr>
 	<tr><td>Stack-Walking</td></tr>
 	<tr><td>OS Processes</td></tr>
+	<tr><td>Reactive Streams</td></tr>
 </table>
 ++++
 
@@ -120,9 +120,9 @@ Stream.of("a-", "b-", "c-", "de-", "f-")
 	<tr><td>Stream Improvements</td></tr>
 	<tr class="toc-current"><td>Optional Improvements</td></tr>
 	<tr><td>Collection Factories</td></tr>
-	<tr><td>Reactive Streams</td></tr>
 	<tr><td>Stack-Walking</td></tr>
 	<tr><td>OS Processes</td></tr>
+	<tr><td>Reactive Streams</td></tr>
 </table>
 ++++
 
@@ -245,9 +245,9 @@ void logLogin(String id) {
 	<tr><td>Stream Improvements</td></tr>
 	<tr><td>Optional Improvements</td></tr>
 	<tr class="toc-current"><td>Collection Factories</td></tr>
-	<tr><td>Reactive Streams</td></tr>
 	<tr><td>Stack-Walking</td></tr>
 	<tr><td>OS Processes</td></tr>
+	<tr><td>Reactive Streams</td></tr>
 </table>
 ++++
 
@@ -301,68 +301,6 @@ Q: Overloads on `Map::ofEntries`? 1
 
 
 
-== Reactive Streams
-
-++++
-<table class="toc">
-	<tr><td>Stream Improvements</td></tr>
-	<tr><td>Optional Improvements</td></tr>
-	<tr><td>Collection Factories</td></tr>
-	<tr class="toc-current"><td>Reactive Streams</td></tr>
-	<tr><td>Stack-Walking</td></tr>
-	<tr><td>OS Processes</td></tr>
-</table>
-++++
-
-
-The JDK as common ground +
-for reactive stream libraries.
-
-=== Reactive Types
-
-`Publisher`::
-* produces items to consume
-* can be subscribed to
-`Subscriber`::
-* subscribes to publisher
-* `onNext`, `onError`, `onComplete`
-`Subscription`::
-* connection between publisher and subscriber
-* `request`, `cancel`
-
-=== Reactive Flow
-==== Subscribing
-
-* create `Publisher pub` and `Subscriber sub`
-* call `pub.subscribe(sub)`
-* pub creates `Subscription script` +
-and calls `sub.onSubscription(script)`
-* `sub` can store `script`
-
-=== Reactive Flow
-==== Streaming
-
-* `sub` calls `script.request(10)`
-* `pub` calls `sub.onNext(element)` (max 10x)
-
-==== Canceling
-
-* `pub` may call `sub.OnError(err)` +
-or `sub.onComplete()`
-* `sub` may call `script.cancel()`
-
-=== Reactive APIs?
-
-JDK only provides three interfaces +
-and one simple implementation.
-
-(Also called *Flow API*.)
-
-No JDK API uses them. +
-(No reactive HTTP connections etc.)
-
-
-
 == Stack-Walking
 
 ++++
@@ -370,9 +308,9 @@ No JDK API uses them. +
 	<tr><td>Stream Improvements</td></tr>
 	<tr><td>Optional Improvements</td></tr>
 	<tr><td>Collection Factories</td></tr>
-	<tr><td>Reactive Streams</td></tr>
 	<tr class="toc-current"><td>Stack-Walking</td></tr>
 	<tr><td>OS Processes</td></tr>
+	<tr><td>Reactive Streams</td></tr>
 </table>
 ++++
 
@@ -466,9 +404,9 @@ image::images/stack-walker-limit-with-estimated-size.png[role="diagram"]
 	<tr><td>Stream Improvements</td></tr>
 	<tr><td>Optional Improvements</td></tr>
 	<tr><td>Collection Factories</td></tr>
-	<tr><td>Reactive Streams</td></tr>
 	<tr><td>Stack-Walking</td></tr>
 	<tr class="toc-current"><td>OS Processes</td></tr>
+	<tr><td>Reactive Streams</td></tr>
 </table>
 ++++
 
@@ -521,6 +459,68 @@ Interesting `static` methods:
 * command, arguments
 * start time
 * CPU time
+
+
+
+== Reactive Streams
+
+++++
+<table class="toc">
+	<tr><td>Stream Improvements</td></tr>
+	<tr><td>Optional Improvements</td></tr>
+	<tr><td>Collection Factories</td></tr>
+	<tr><td>Stack-Walking</td></tr>
+	<tr><td>OS Processes</td></tr>
+	<tr class="toc-current"><td>Reactive Streams</td></tr>
+</table>
+++++
+
+
+The JDK as common ground +
+for reactive stream libraries.
+
+=== Reactive Types
+
+`Publisher`::
+* produces items to consume
+* can be subscribed to
+`Subscriber`::
+* subscribes to publisher
+* `onNext`, `onError`, `onComplete`
+`Subscription`::
+* connection between publisher and subscriber
+* `request`, `cancel`
+
+=== Reactive Flow
+==== Subscribing
+
+* create `Publisher pub` and `Subscriber sub`
+* call `pub.subscribe(sub)`
+* pub creates `Subscription script` +
+and calls `sub.onSubscription(script)`
+* `sub` can store `script`
+
+=== Reactive Flow
+==== Streaming
+
+* `sub` calls `script.request(10)`
+* `pub` calls `sub.onNext(element)` (max 10x)
+
+==== Canceling
+
+* `pub` may call `sub.OnError(err)` +
+or `sub.onComplete()`
+* `sub` may call `script.cancel()`
+
+=== Reactive APIs?
+
+JDK only provides three interfaces +
+and one simple implementation.
+
+(Also called *Flow API*.)
+
+No JDK API uses them. +
+(No reactive HTTP connections etc.)
 
 
 
