@@ -256,9 +256,9 @@ public class DeprecatedImports {
 	<tr><td>Stream Improvements</td></tr>
 	<tr><td>Optional Improvements</td></tr>
 	<tr><td>Collection Factories</td></tr>
-	<tr><td>Reactive Streams</td></tr>
 	<tr><td>Stack-Walking</td></tr>
 	<tr><td>OS Processes</td></tr>
+	<tr><td>Reactive Streams</td></tr>
 </table>
 <div class="paragraph"><p>Some APIs are new,<br>
 many existing ones were improved.</p></div></section>
@@ -266,9 +266,9 @@ many existing ones were improved.</p></div></section>
 	<tr class="toc-current"><td>Stream Improvements</td></tr>
 	<tr><td>Optional Improvements</td></tr>
 	<tr><td>Collection Factories</td></tr>
-	<tr><td>Reactive Streams</td></tr>
 	<tr><td>Stack-Walking</td></tr>
 	<tr><td>OS Processes</td></tr>
+	<tr><td>Reactive Streams</td></tr>
 </table><div class="paragraph"><p>Small improvements to Java 8 streams.</p></div></section><section id="__code_stream_ofnullable_code"><h2><code>Stream::ofNullable</code></h2><div class="paragraph"><p>Creates a stream of zero or one elements:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">long zero = Stream.ofNullable(null).count();
 long one = Stream.ofNullable("42").count();</code></pre></div></div></section><section id="__code_stream_iterate_code"><h2><code>Stream::iterate</code></h2><div class="paragraph"><p>To use <code>for</code> even less&#8230;&#8203;</p></div>
@@ -305,9 +305,9 @@ Stream.iterate(
 	<tr><td>Stream Improvements</td></tr>
 	<tr class="toc-current"><td>Optional Improvements</td></tr>
 	<tr><td>Collection Factories</td></tr>
-	<tr><td>Reactive Streams</td></tr>
 	<tr><td>Stack-Walking</td></tr>
 	<tr><td>OS Processes</td></tr>
+	<tr><td>Reactive Streams</td></tr>
 </table><div class="paragraph"><p>Small improvements to Java 8 <code>Optional</code>.</p></div></section><section id="__code_optional_stream_code"><h2><code>Optional::stream</code></h2><div class="paragraph"><p>Turns an <code>Optional</code> into a <code>Stream</code><br>
 of zero or one elements:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;T&gt; stream();</code></pre></div></div></section><section id="_filter_map"><h2>Filter-Map &#8230;&#8203;</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">private Optional&lt;Customer&gt; findCustomer(String id) {
@@ -369,9 +369,9 @@ Stream&lt;Order&gt; findOrdersForCustomer(String id) {
 	<tr><td>Stream Improvements</td></tr>
 	<tr><td>Optional Improvements</td></tr>
 	<tr class="toc-current"><td>Collection Factories</td></tr>
-	<tr><td>Reactive Streams</td></tr>
 	<tr><td>Stack-Walking</td></tr>
 	<tr><td>OS Processes</td></tr>
+	<tr><td>Reactive Streams</td></tr>
 </table><div class="paragraph"><p>Creating ad-hoc collections more easily.</p></div></section><section id="_hope_is_pain"><h2>Hope is Pain</h2><div class="paragraph"><p>Wouldn&#8217;t this be awesome?</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;String&gt; list = [ "a", "b", "c" ];
 Map&lt;String, Integer&gt; map = [ "one" = 1, "two" = 2 ];</code></pre></div></div>
@@ -390,29 +390,13 @@ Q: Overloads on <code>of</code>? 10
 Q: Overloads on <code>Map::ofEntries</code>? 1</p></div></aside></section><section id="_interesting_details"><h2>Interesting Details</h2><div class="ulist"><ul><li><p>collections are immutable<br>
 (no immutability in type system, though)</p></li><li><p>collections are value-based</p></li><li><p><code>null</code> elements/keys/values are forbidden</p></li><li><p>iteration order is random between JVM starts<br>
 (except for lists, of course!)</p></li></ul></div></section></section>
-<section><section id="_reactive_streams"><h2>Reactive Streams</h2><table class="toc">
-	<tr><td>Stream Improvements</td></tr>
-	<tr><td>Optional Improvements</td></tr>
-	<tr><td>Collection Factories</td></tr>
-	<tr class="toc-current"><td>Reactive Streams</td></tr>
-	<tr><td>Stack-Walking</td></tr>
-	<tr><td>OS Processes</td></tr>
-</table><div class="paragraph"><p>The JDK as common ground<br>
-for reactive stream libraries.</p></div></section><section id="_reactive_types"><h2>Reactive Types</h2><div class="dlist"><dl><dt class="hdlist1"><code>Publisher</code></dt><dd><div class="ulist"><ul><li><p>produces items to consume</p></li><li><p>can be subscribed to</p></li></ul></div></dd><dt class="hdlist1"><code>Subscriber</code></dt><dd><div class="ulist"><ul><li><p>subscribes to publisher</p></li><li><p><code>onNext</code>, <code>onError</code>, <code>onComplete</code></p></li></ul></div></dd><dt class="hdlist1"><code>Subscription</code></dt><dd><div class="ulist"><ul><li><p>connection between publisher and subscriber</p></li><li><p><code>request</code>, <code>cancel</code></p></li></ul></div></dd></dl></div></section><section id="_reactive_flow"><h2>Reactive Flow</h2><h3>Subscribing</h3><div class="ulist"><ul><li><p>create <code>Publisher pub</code> and <code>Subscriber sub</code></p></li><li><p>call <code>pub.subscribe(sub)</code></p></li><li><p>pub creates <code>Subscription script</code><br>
-and calls <code>sub.onSubscription(script)</code></p></li><li><p><code>sub</code> can store <code>script</code></p></li></ul></div></section><section id="_reactive_flow_2"><h2>Reactive Flow</h2><h3>Streaming</h3><div class="ulist"><ul><li><p><code>sub</code> calls <code>script.request(10)</code></p></li><li><p><code>pub</code> calls <code>sub.onNext(element)</code> (max 10x)</p></li></ul></div>
-<h3>Canceling</h3><div class="ulist"><ul><li><p><code>pub</code> may call <code>sub.OnError(err)</code><br>
-or <code>sub.onComplete()</code></p></li><li><p><code>sub</code> may call <code>script.cancel()</code></p></li></ul></div></section><section id="_reactive_apis"><h2>Reactive APIs?</h2><div class="paragraph"><p>JDK only provides three interfaces<br>
-and one simple implementation.</p></div>
-<div class="paragraph"><p>(Also called <strong>Flow API</strong>.)</p></div>
-<div class="paragraph"><p>No JDK API uses them.<br>
-(No reactive HTTP connections etc.)</p></div></section></section>
 <section><section id="_stack_walking"><h2>Stack-Walking</h2><table class="toc">
 	<tr><td>Stream Improvements</td></tr>
 	<tr><td>Optional Improvements</td></tr>
 	<tr><td>Collection Factories</td></tr>
-	<tr><td>Reactive Streams</td></tr>
 	<tr class="toc-current"><td>Stack-Walking</td></tr>
 	<tr><td>OS Processes</td></tr>
+	<tr><td>Reactive Streams</td></tr>
 </table><div class="paragraph"><p>Examining the stack faster and easier.</p></div></section><section id="__code_stackwalker_foreach_code"><h2><code>StackWalker::forEach</code></h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">void forEach (Consumer&lt;StackFrame&gt;);</code></pre></div></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public static void main(String[] args) { one(); }
 static void one() { two(); }
@@ -448,9 +432,9 @@ Line 11</code></pre></div></div></section><section id="_options"><h2>Options</h2
 	<tr><td>Stream Improvements</td></tr>
 	<tr><td>Optional Improvements</td></tr>
 	<tr><td>Collection Factories</td></tr>
-	<tr><td>Reactive Streams</td></tr>
 	<tr><td>Stack-Walking</td></tr>
 	<tr class="toc-current"><td>OS Processes</td></tr>
+	<tr><td>Reactive Streams</td></tr>
 </table><div class="paragraph"><p>Improving interaction with OS processes.</p></div></section><section id="_simple_example"><h2>Simple Example</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="shell language-shell">ls /home/nipa/tmp | grep pdf</code></pre></div></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Path dir = Paths.get("/home/nipa/tmp");
 ProcessBuilder ls = new ProcessBuilder()
@@ -465,6 +449,22 @@ List&lt;Process&gt; lsThenGrep = ProcessBuilder
 <div class="paragraph"><p>Interesting <code>static</code> methods:</p></div>
 <div class="ulist"><ul><li><p><code>Stream&lt;ProcessHandle&gt; allProcesses();</code></p></li><li><p><code>Optional&lt;ProcessHandle&gt; of(long pid);</code></p></li><li><p><code>ProcessHandle current();</code></p></li></ul></div></section><section id="_more_information"><h2>More Information</h2><div class="paragraph"><p><code>ProcessHandle</code> can return <code>Info</code>:</p></div>
 <div class="ulist"><ul><li><p>command, arguments</p></li><li><p>start time</p></li><li><p>CPU time</p></li></ul></div></section></section>
+<section><section id="_reactive_streams"><h2>Reactive Streams</h2><table class="toc">
+	<tr><td>Stream Improvements</td></tr>
+	<tr><td>Optional Improvements</td></tr>
+	<tr><td>Collection Factories</td></tr>
+	<tr><td>Stack-Walking</td></tr>
+	<tr><td>OS Processes</td></tr>
+	<tr class="toc-current"><td>Reactive Streams</td></tr>
+</table><div class="paragraph"><p>The JDK as common ground<br>
+for reactive stream libraries.</p></div></section><section id="_reactive_types"><h2>Reactive Types</h2><div class="dlist"><dl><dt class="hdlist1"><code>Publisher</code></dt><dd><div class="ulist"><ul><li><p>produces items to consume</p></li><li><p>can be subscribed to</p></li></ul></div></dd><dt class="hdlist1"><code>Subscriber</code></dt><dd><div class="ulist"><ul><li><p>subscribes to publisher</p></li><li><p><code>onNext</code>, <code>onError</code>, <code>onComplete</code></p></li></ul></div></dd><dt class="hdlist1"><code>Subscription</code></dt><dd><div class="ulist"><ul><li><p>connection between publisher and subscriber</p></li><li><p><code>request</code>, <code>cancel</code></p></li></ul></div></dd></dl></div></section><section id="_reactive_flow"><h2>Reactive Flow</h2><h3>Subscribing</h3><div class="ulist"><ul><li><p>create <code>Publisher pub</code> and <code>Subscriber sub</code></p></li><li><p>call <code>pub.subscribe(sub)</code></p></li><li><p>pub creates <code>Subscription script</code><br>
+and calls <code>sub.onSubscription(script)</code></p></li><li><p><code>sub</code> can store <code>script</code></p></li></ul></div></section><section id="_reactive_flow_2"><h2>Reactive Flow</h2><h3>Streaming</h3><div class="ulist"><ul><li><p><code>sub</code> calls <code>script.request(10)</code></p></li><li><p><code>pub</code> calls <code>sub.onNext(element)</code> (max 10x)</p></li></ul></div>
+<h3>Canceling</h3><div class="ulist"><ul><li><p><code>pub</code> may call <code>sub.OnError(err)</code><br>
+or <code>sub.onComplete()</code></p></li><li><p><code>sub</code> may call <code>script.cancel()</code></p></li></ul></div></section><section id="_reactive_apis"><h2>Reactive APIs?</h2><div class="paragraph"><p>JDK only provides three interfaces<br>
+and one simple implementation.</p></div>
+<div class="paragraph"><p>(Also called <strong>Flow API</strong>.)</p></div>
+<div class="paragraph"><p>No JDK API uses them.<br>
+(No reactive HTTP connections etc.)</p></div></section></section>
 <section id="_a_mixed_bag_of_api_changes"><h2>A Mixed Bag Of API&nbsp;Changes</h2><div class="ulist"><ul><li><p>multi-resolution images (<a href="http://openjdk.java.net/jeps/251">JEP 251</a>)</p></li><li><p>native desktop integration (<a href="http://openjdk.java.net/jeps/272">JEP 272</a>)</p></li><li><p>deserialization filter (<a href="http://openjdk.java.net/jeps/290">JEP 290</a>)</p></li><li><p>HTTP/2 (<a href="http://openjdk.java.net/jeps/110">JEP 110</a>), DTLS (<a href="http://openjdk.java.net/jeps/219">JEP 219</a>),<br>
 TLS ALPN and OCSP stapling (<a href="http://openjdk.java.net/jeps/244">JEP 244</a>)</p></li><li><p>OASIS XML Catalogs 1.1 (<a href="http://openjdk.java.net/jeps/268">JEP 268</a>),<br>
 Xerces 2.11.0 (<a href="http://openjdk.java.net/jeps/255">JEP 255</a>)</p></li></ul></div>
