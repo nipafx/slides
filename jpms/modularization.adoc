@@ -74,7 +74,7 @@ and your dependencies were not?
 +
 [source,java]
 ----
-module advent {
+module calendar {
 	requires unnamed;
 }
 ----
@@ -115,7 +115,7 @@ derived from JAR name
 +
 [source,java]
 ----
-module advent {
+module calendar {
 	requires guava;
 }
 ----
