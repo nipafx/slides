@@ -171,6 +171,7 @@ java9 --add-modules java.xml.bind -cp 'monitor/target/libs/*':'monitor/target/ma
 ```
 . use `var` somewhere
 . build with `mvn clean install`
+. fix error in _monitor.utils_ by updating Mockito to 2.18.3
 . run with
 +
 ```
@@ -196,7 +197,7 @@ java10 --add-modules java.xml.bind -cp 'monitor/target/libs/*':'monitor/target/m
 </profile>
 ```
 . build with `mvn clean install`
-. replace `--add-modules` with third-party dependencies in REST's POM:
+. replace `--add-modules` with third-party dependencies in _monitor.rest_'s POM:
 +
 ```xml
 <dependency>
@@ -225,6 +226,8 @@ java10 --add-modules java.xml.bind -cp 'monitor/target/libs/*':'monitor/target/m
 ```
 java11 -cp 'monitor/target/libs/*':'monitor/target/main-1.0-SNAPSHOT.jar' monitor.Main
 ```
+
+TODO: the REST endpoint does not return anything and I blame the JAXB impl - investigate!
 
 ## Modularization
 
