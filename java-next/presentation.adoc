@@ -1,0 +1,92 @@
+= Java Next!
+:backend: revealjs
+:revealjs_theme: nipa-night
+:revealjsdir: ../_reveal.js
+:revealjs_controls: false
+:revealjs_progress: false
+:revealjs_slideNumber: false
+:revealjs_history: true
+:revealjs_center: true
+:revealjs_transition: slide
+:revealjs_backgroundTransition: fade
+:revealjs_parallaxBackgroundImage: images/merry-go-round.jpg
+:revealjs_parallaxBackgroundSize: 2560px 1440px
+
+include::../_shared/highlight.js.adoc[]
+
+++++
+<style>
+.reveal .title h2 {
+	font-size: 1.75em;
+}
+</style>
+<h2>New Releases, Amber, Valhalla, and More Goodies</h2>
+++++
+
+:host-name: Riga Dev Days
+:host-url: https://rigadevdays.lv/
+:host-logo-url: images/logo-riga-dev-days.png
+// :host-logo-style: background-color: transparent; border-width: 0;
+:host-twitter-name: @RigaDevDays
+:host-twitter-url: https://twitter.com/RigaDevDays
+include::../_shared/event-on-title-and-footer.adoc[]
+
+
+
+// ######### //
+// I N T R O //
+// ######### //
+
+// ⇝
+
+== Lots to talk about!
+
+++++
+<table class="toc">
+	<tr><td>Versions and Features</td></tr>
+	<tr><td>The New World</td></tr>
+	<tr><td>Projects To Look Out For</td></tr>
+</table>
+++++
+
+(Slides at http://slides.codefx.org/[slides.codefx.org].)
+
+// * if you're shy, tweet questions +
+// with https://twitter.com/search?q=%23vdz17%20%40nipafx[#VDZ17 @nipafx]
+
+
+// ####################### //
+// P R E S E N T A T I O N //
+// ####################### //
+
+////
+For each release:
+* which new features?
+* quickly introduce them
+* maybe point to underlying mechanism (e.g. invoke dynamic)?
+* where did it come from? (gif of "falling into lap?")
+* introduce project and its lifetime
+
+New release schedule:
+* interval
+* release branching and how features are merged
+* mention projects again
+* change of perception ~> focus on projects, not versions!
+	(when reading, and writing, in docs, tweets, posts, ...)
+
+Detour into Oracle JDK vs OpenJDK and Client Roadmap
+
+Projects
+* Amber
+* Valhalla
+* Loom
+* Sumatra
+////
+
+// ######### //
+// O U T R O //
+// ######### //
+
+include::../_shared/about-slide.adoc[]
+
+include::images/sources.adoc[]
