@@ -1,0 +1,35 @@
+== Java 10
+image::images/10.jpg[background, size=cover]
+
+++++
+<table class="toc">
+	<tr><td>Java 8</td></tr>
+	<tr><td>Java 9</td></tr>
+	<tr class="toc-current"><td>Java 10</td></tr>
+	<tr><td>Java 11</td></tr>
+</table>
+++++
+
+* released 03/2018
+* free support *ends 07/2018*
+
+=== What's the core of 10?
+image::images/10.jpg[background, size=cover]
+
+[%step]
+* https://blog.codefx.org/java/java-10-var-type-inference/[local-variable type inference]:
++
+[source,java]
+----
+var users = new ArrayList<User>();
+----
+* https://blog.codefx.org/java/application-class-data-sharing/[application class-data sharing] (hardly)
+
+[state="empty"]
+=== !
+image::images/amber.jpg[background, size=cover]
+
+=== Project Amber
+image::images/amber.jpg[background, size=cover]
+
+More on that later!

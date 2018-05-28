@@ -1,0 +1,62 @@
+== Java 8
+image::images/8-dark.jpg[background, size=cover]
+
+++++
+<table class="toc">
+	<tr class="toc-current"><td>Java 8</td></tr>
+	<tr><td>Java 9</td></tr>
+	<tr><td>Java 10</td></tr>
+	<tr><td>Java 11</td></tr>
+</table>
+++++
+
+* released 03/2014
+* free support *ends 01/2019*
+
+=== What's the core of 8?
+image::images/8-dark.jpg[background, size=cover]
+
+[%step]
+* `n \-> lambdas()` +
+and `Method::references`
+* `features.stream()`
+* `default method() { ... }`
+
+[state="empty",background-color="black"]
+=== !
+image::images/lambda.jpg[background, size=cover]
+
+=== Project Lambda
+image::images/lambda.jpg[background, size=cover]
+
+* launched with http://cr.openjdk.java.net/~mr/lambda/straw-man/[a straw-man] (12/2009):
++
+[source,java]
+----
+#(int x, int y)(x * y)
+----
+* 1st early draft review (11/2011):
++
+[source,java]
+----
+Callable<String> c = () -> "done";
+----
+* 2nd review (06/2012) and 3rd review (01/2013)
+* public review (12/2013) and final ballot (02/2014)
+
+=== Project Lambda
+image::images/lambda.jpg[background, size=cover]
+
+* lead by Brian Goetz
+* ran from 12/2009 to 02/2014
+* http://openjdk.java.net/projects/lambda/[project page]
+ / https://jcp.org/en/jsr/detail?id=335[JSR 335]
+* http://mail.openjdk.java.net/mailman/listinfo/lambda-dev[mailing list] (thousands of messages)
+
+=== Projects...
+image::images/lambda.jpg[background, size=cover]
+
+* start with an idea +
+that is then evolved
+* can take a long time
+* are fairly open
