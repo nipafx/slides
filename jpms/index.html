@@ -29,10 +29,10 @@
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://www.sbb.ch/"><img src="images/logo-sbb.jpg" class="logo" style="{host-logo-style}"></a>
+		<a href="https://rigadevdays.lv/"><img src="images/logo-riga-dev-days.png" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://www.sbb.ch/">SBB Ausbildungscamp</a></p>
-			<p><a href="https://twitter.com/RailService">@RailService</a></p>
+			<p><a href="https://rigadevdays.lv/">Riga Dev Days</a></p>
+			<p><a href="https://twitter.com/RigaDevDays">@RigaDevDays</a></p>
 		</div>
 	</div>
 </div>
@@ -47,9 +47,9 @@
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://www.sbb.ch/"><img src="images/logo-sbb.jpg" class="logo" style="{host-logo-style}"></a>
+		<a href="https://rigadevdays.lv/"><img src="images/logo-riga-dev-days.png" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://www.sbb.ch/">SBB Ausbildungscamp</a> / <a href="https://twitter.com/RailService">@RailService</a></p>
+			<p><a href="https://rigadevdays.lv/">Riga Dev Days</a> / <a href="https://twitter.com/RigaDevDays">@RigaDevDays</a></p>
 		</div>
 	</div>
 </footer>
@@ -59,7 +59,8 @@
 	})
 </script></div></section>
 <section id="_let_s_get_started"><h2>Let&#8217;s get started!</h2><div class="ulist"><ul><li><p>there&#8217;s much to talk about<br>
-⇝ this can only cover parts of the JPMS</p></li><li><p>slides at <a href="http://slides.codefx.org/">slides.codefx.org</a></p></li></ul></div></section>
+⇝ we may have to skip some details</p></li><li><p>slides at <a href="http://slides.codefx.org/">slides.codefx.org</a></p></li><li><p>exercises at<br>
+<a href="https://github.com/nicolaiparlog/course-jpms">github.com/nicolaiparlog/course-jpms</a></p></li></ul></div></section>
 <section><section id="_impedance_mismatch"><h2>Impedance Mismatch</h2><h3>Where the JVM disagrees with us</h3></section><section id="_how_do_you_think_about_software" data-background-image="images/binary-code.jpg" data-background-size="cover"><h2>How do you think about Software?</h2>
 <h3>What is it made of?</h3>
 <aside class="notes"><div class="ulist"><ul><li><p>"think about your favorite project"</p></li><li><p>"or about one you&#8217;re being paid for"</p></li></ul></div></aside></section><section id="_how_i_think_about_software" data-background-image="images/graph.png" data-background-size="cover"><h2>How I think about Software</h2>
@@ -423,6 +424,39 @@ at run time only</p></li><li><p>particularly valuable to open<br>
 for reflection</p></li></ul></div>
 <div class="paragraph"><p>Use to make types available for reflection<br>
 without making them public API.</p></div></section></section>
+<section><section id="_public_service_announcement"><h2>Public Service Announcement</h2><div class="ulist"><ul><li><p>new release schedule</p></li><li><p>Oracle JDK ≠ OpenJDK</p></li><li><p>Java on the desktop</p></li></ul></div></section><section id="_new_release_schedule"><h2>New Release Schedule</h2><div class="ulist"><ul><li><p>starting with Java 9,<br>
+new major release every six months</p></li><li><p>Java 10 is out since March</p></li><li><p>Java 11 comes out in September</p></li></ul></div></section><section id="_oracle_jdk_openjdk"><h2>Oracle JDK ≠ OpenJDK</h2><div class="ulist"><ul><li><p>no free Oracle JDK from Java 11 on</p></li><li><p>Oracle ships OpenJDK builds</p></li><li><p>but <strong>only for current major version</strong>:<br>
+⇝ 10 ⇝ 10.0.1 ⇝ 10.0.4<br>
+⇝ 11 ⇝ 11.0.1 ⇝ 11.0.4<br>
+⇝ 12 ⇝ 12.0.1 ⇝ 12.0.4<br></p></li><li><p>there is no <span style="text-decoration: line-through;">spoon</span> free LTS by Oracle!</p></li></ul></div>
+<div class="paragraph"><p>⇝ More in my weekly:<br>
+<a href="https://medium.com/codefx-weekly/no-free-java-lts-version-b850192745fb">No Free Java LTS Version?</a></p></div></section><section id="_java_on_the_desktop"><h2>Java on the desktop</h2><div class="paragraph"><p>Oracle released a<br>
+<em>Java Client Roadmap Update</em><br>
+with plans for:</p></div>
+<div class="ulist"><ul><li><p>Applets</p></li><li><p>Web Start</p></li><li><p>JavaFX</p></li><li><p>Swing/AWT</p></li></ul></div></section><section id="_applets"><h2>Applets</h2><div class="ulist"><ul><li><p>Applets are deprecated in Java 9</p></li><li><p>Applets are removed from Java SE 11</p></li><li><p>Applets won&#8217;t be in Oracle&#8217;s OpenJDK 11 builds</p></li></ul></div></section><section id="_web_start"><h2>Web Start</h2><div class="ulist"><ul><li><p>Web Start is deprecated in Java 9</p></li><li><p>Web Start is removed from Java SE 11</p></li><li><p>Web Start won&#8217;t be in Oracle&#8217;s OpenJDK 11 builds</p></li></ul></div></section><section id="_javafx"><h2>JavaFX</h2><div class="ulist"><ul><li><p>was never part of Java SE<br>
+(unlikely to change soon)</p></li><li><p>was never in Oracle&#8217;s OpenJDK builds<br>
+(just as unlikely to change)</p></li><li><p>will be <a href="https://twitter.com/holgerbrands/status/971428308708679680">removed from Oracle JDK 11</a></p></li></ul></div>
+<div class="paragraph"><p>If your project uses JavaFX,<br>
+you <strong>can&#8217;t rely</strong> on its presence<br>
+on your customers' machines!</p></div></section><section id="_javafx_2"><h2>JavaFX</h2><div class="paragraph"><p>Quote:</p></div>
+<div class="quoteblock"><blockquote style="color: black;">
+Oracle is working with interested third parties to make it easier to build and maintain JavaFX as a separately distributable open-source module.
+</blockquote></div>
+<div class="paragraph"><p>Not a quote:</p></div>
+<div class="quoteblock"><blockquote style="color: black;">
+Oracle wants to reduce/terminate investment in JavaFX.
+</blockquote></div></section><section id="_swing_awt"><h2>Swing/AWT</h2><div class="paragraph"><p>Quote:</p></div>
+<div class="quoteblock"><blockquote style="color: black;">
+Oracle will continue developing Swing and AWT in Java SE 8 and Java SE 11 (18.9 LTS).
+This means they will be supported by Oracle through at least 2026.
+</blockquote></div>
+<div class="paragraph"><p>What this doesn&#8217;t say:</p></div>
+<div class="ulist"><ul><li><p>support is free</p></li><li><p>support goes beyond Java 11</p></li></ul></div></section><section id="_swing_awt_2"><h2>Swing/AWT</h2><div class="paragraph"><p><strong>Hypothetically</strong> Oracle could<br>
+remove Swing/AWT from Java SE 12<br>
+and its statement still holds.</p></div>
+<div class="paragraph"><p>⇝ More in my weekly:<br>
+<a href="https://medium.com/codefx-weekly/java-desktop-quo-vadis-f0803166e36b">Java Desktop, Quo Vadis?</a></p></div></section><section id="_more_psas"><h2>More PSAs</h2><div class="paragraph"><p>To hear about such news:</p></div>
+<div class="ulist"><ul><li><p>follow me on Twitter: <a href="https://twitter.com/nipafx">@nipafx</a></p></li><li><p>subscribe to my weekly: <a href="http://blog.codefx.org/newsletter/">tiny.cc/fx-weekly</a></p></li></ul></div></section></section>
 <section><section id="_command_line_options"><h2>Command Line Options</h2><div class="paragraph"><p>The module system is pretty strict but&#8230;&#8203;</p></div><div class="ulist"><ul><li><p>&#8230;&#8203; not all modules are well-designed</p></li><li><p>&#8230;&#8203; not all use cases were intended</p></li></ul></div><div class="paragraph"><p>What to do then?</p></div><div class="paragraph"><p>Command line options to the rescue!<br>
 (I often call them "escape hatches".)</p></div></section><section id="_command_line_options_2"><h2>Command Line Options</h2><div class="paragraph"><p>All command line flags can be applied<br>
 to <code>javac</code> and <code>java</code>!</p></div>
