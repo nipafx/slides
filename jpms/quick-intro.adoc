@@ -84,10 +84,10 @@ image::images/advent-calendar-structure.png[role="diagram"]
 [source,java]
 ----
 public static void main(String[] args) {
-	List<SurpriseFactory> factories = asList(
+	List<SurpriseFactory> factories = List.of(
 		new ChocolateFactory(), new QuoteFactory());
 	Calendar cal = Calendar.create(factories);
-	println(cal.asText());
+	System.out.println(cal.asText());
 }
 ----
 

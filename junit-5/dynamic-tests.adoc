@@ -60,7 +60,7 @@ For more details, check https://blog.codefx.org/libraries/junit-5-dynamic-tests/
 ```java
 @TestFactory
 List<DynamicTest> createPointTests() {
-	return Arrays.asList(
+	return List.of(
 		dynamicTest(
 			"A Great Test For Point",
 			() -> { /* test code */ } ),
@@ -106,7 +106,7 @@ void pointTest(Point p) { /*...*/ }
 
 @TestFactory
 Stream<DynamicText> testingPoints() {
-	List<Point> points = asList(
+	List<Point> points = List.of(
 		/* create points */);
 	return DynamicTest.stream(
 		points,

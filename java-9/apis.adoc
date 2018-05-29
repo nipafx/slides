@@ -428,7 +428,7 @@ ProcessBuilder grepPdf = new ProcessBuilder()
 		.command("grep", "pdf")
 		.redirectOutput(Redirect.INHERIT);
 List<Process> lsThenGrep = ProcessBuilder
-		.startPipeline(asList(ls, grepPdf));
+		.startPipeline(List.of(ls, grepPdf));
 ```
 
 === Extended `Process`
