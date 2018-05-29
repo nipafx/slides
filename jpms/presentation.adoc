@@ -27,12 +27,12 @@
 
 include::../_shared/highlight.js.adoc[]
 
-:host-name: SBB Ausbildungscamp
-:host-url: https://www.sbb.ch/
-:host-logo-url: images/logo-sbb.jpg
+:host-name: Riga Dev Days
+:host-url: https://rigadevdays.lv/
+:host-logo-url: images/logo-riga-dev-days.png
 // :host-logo-style: background-color: transparent; border-width: 0;
-:host-twitter-name: @RailService
-:host-twitter-url: https://twitter.com/RailService
+:host-twitter-name: @RigaDevDays
+:host-twitter-url: https://twitter.com/RigaDevDays
 include::../_shared/event-on-title-and-footer.adoc[]
 
 
@@ -41,15 +41,16 @@ include::../_shared/event-on-title-and-footer.adoc[]
 // P R E S E N T A T I O N //
 // ####################### //
 
-// include::../_shared/roadmap.adoc[]
-
 == Let's get started!
 
 * there's much to talk about +
-⇝ this can only cover parts of the JPMS
+// ⇝ this can only cover parts of the JPMS
+⇝ we may have to skip some details
 // * if you're shy, tweet questions +
 // with https://twitter.com/search?q=%23vdz17%20%40nipafx[#VDZ17 @nipafx]
 * slides at http://slides.codefx.org/[slides.codefx.org]
+* exercises at +
+https://github.com/nicolaiparlog/course-jpms[github.com/nicolaiparlog/course-jpms]
 
 include::impedance-mismatch.adoc[]
 
@@ -60,6 +61,8 @@ include::basics.adoc[]
 // include::quick-intro.adoc[]
 
 include::advanced.adoc[]
+
+include::../_shared/roadmap.adoc[]
 
 include::command-line.adoc[]
 
