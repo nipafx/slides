@@ -1,0 +1,107 @@
+== Amber
+image::images/amber.jpg[background, size=cover]
+
+> Explore and incubate smaller, productivity-oriented Java language features.
+
+Profile:
+
+* http://openjdk.java.net/projects/amber/[project] /
+http://mail.openjdk.java.net/mailman/listinfo/amber-dev[mailing list]
+* launched March 2017, very active
+
+Already delivered `var` in Java 10!
+
+=== Motivation
+image::images/amber.jpg[background, size=cover]
+
+Compared to modern languages, Java:
+
+* can be cumbersome
+* lacks expressiveness
+* tends to require boilerplate
+
+Amber wants to improve that situation.
+
+=== Endeavors
+image::images/amber.jpg[background, size=cover]
+
+* string literals (http://openjdk.java.net/jeps/326[JEP 326])
+* switch expressions (http://openjdk.java.net/jeps/325[JEP 325])
+* pattern matching (http://openjdk.java.net/jeps/305[JEP 305])
+
+=== String literals
+image::images/amber.jpg[background, size=cover]
+
+[source,java]
+----
+String html =
+	`<html>
+		<body>
+			<p>"Hello, string literals!"</p>
+		</body>
+	</html>`;
+----
+
+Yeah:
+
+* multiline strings
+* no escaping of special characters
+
+=== Switch expressions
+image::images/amber.jpg[background, size=cover]
+
+[source,java]
+----
+int numLetters = switch (day) {
+	case MONDAY, FRIDAY, SUNDAY -> 6;
+	case TUESDAY -> 7;
+	case THURSDAY, SATURDAY -> 8;
+	case WEDNESDAY -> 9;
+};
+----
+
+Yeah:
+
+* `switch` "gets a value"
+* no more `break`!
+* compiler checks exhaustiveness
+
+=== Pattern matching
+image::images/amber.jpg[background, size=cover]
+
+[source,java]
+----
+String formatted = switch (obj) {
+	case Integer i -> String.format("int %d", i);
+	case Byte b    -> String.format("byte %d", b);
+	case Long l    -> String.format("long %d", l);
+	case Double d  -> String.format("double %f", d);
+	case String s  -> String.format("String %s", s);
+	default        -> obj.toString();
+}
+----
+
+Yeah:
+
+* more powerful conditions
+* no repetition between condition and block
+
+=== Pattern matching
+image::images/amber.jpg[background, size=cover]
+
+[source,java]
+----
+public int eval(Node n) {
+	return switch(n) {
+		case IntNode(int i) -> i;
+		case NegNode(Node n) -> -eval(n);
+		case AddNode(Node left, Node right) ->
+			eval(left) + eval(right);
+		case MulNode(Node left, Node right) ->
+			eval(left) * eval(right);
+		default -> throw new IllegalStateException(n);
+	};
+}
+----
+
+Goodbye visitor pattern!

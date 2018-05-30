@@ -1,0 +1,96 @@
+== Sumatra
+image::images/sumatra.jpg[background, size=cover]
+
+> Enable Java applications to take advantage of GPUs and APUs [...] to improve performance
+
+Profile:
+
+* http://openjdk.java.net/projects/sumatra/[project] /
+http://mail.openjdk.java.net/pipermail/sumatra-dev[mailing list] /
+http://openjdk.java.net/jeps/8047074[JEP draft]
+* launched June 2014, not much recent activity
+
+https://www.youtube.com/watch?v=BjdYRtL6qjg[_Java on the GPU: Where are we now?_] +
+by Dmitry Aleksandrov
+
+=== Motivation
+image::images/sumatra.jpg[background, size=cover]
+
+Why use the GPU?
+
+* can be more peformant
+* can be more energy-efficient
+
+Can't we do that already? +
+(Aparapi, JOCL)
+
+* not integrated into the JDK
+* require their own programming model
+
+=== Goals
+image::images/sumatra.jpg[background, size=cover]
+
+Basics:
+
+* create low-level API to uniformly access GPUs
+* use stream API as high-level API
+
+Ideally:
+
+* auto-detection of hardware and software stack
+* heuristic to decide when offloading makes sense
+* offload https://en.wikipedia.org/wiki/Embarrassingly_parallel[embarrassingly parallel] stream pipelines
+* on error, graceful fall-back to normal CPU execution
+
+=== Implementation
+image::images/sumatra.jpg[background, size=cover]
+
+For stream operations to offload:
+
+* extract lambda function
+* use Graal to compile to HSA kernel (runs on GPU)
+* extract lambda arguments and pass to HSA
+
+GPU operates on main memory +
+and has access to Java heap!
+
+=== Example
+image::images/sumatra.jpg[background, size=cover]
+
+[source,java]
+----
+public static void main(String[] args) {
+
+	final int length = 8;
+	int[] ina = new int[length];
+	int[] inb = new int[length];
+	int[] out = new int[length];
+
+	// ...
+
+}
+----
+
+[transition=none]
+=== Example
+image::images/sumatra.jpg[background, size=cover]
+
+[source,java]
+----
+// offloadable
+IntStream.range(0, length).parallel().forEach(p -> {
+	ina[p] = 1;
+	inb[p] = 2;
+});
+
+// offloadable
+IntStream.range(0, length).parallel().forEach(p -> {
+	out[p] = ina[p] + inb[p];
+});
+
+// not offloadable (native code)
+IntStream.range(0, length).forEach(p -> {
+	System.out.println(
+		out[p] + ", " + ina[p] + ", " + inb[p]);
+});
+----
