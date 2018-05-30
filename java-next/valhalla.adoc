@@ -1,0 +1,86 @@
+== Valhalla
+
+> Explore and incubate advanced Java VM and Language feature candidates.
+
+Profile:
+
+* http://openjdk.java.net/projects/valhalla/[project] /
+http://mail.openjdk.java.net/mailman/listinfo/valhalla-dev[mailing list]
+* launched July 2014, very active
+
+=== Motivation
+
+In Java, (almost) everything is a class:
+
+* mutable by default
+* memory access indirection
+* requires extra memory for header
+* allows locking and other +
+identity-based operations
+
+Wouldn't it be nice to create a custom `int`?
+
+=== Value types
+
+> Codes like a class, works like an `int`.
+
+[source,java]
+----
+public value Point {
+
+	public final int x;
+	public final int y;
+
+	public Point(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
+
+}
+----
+
+=== Value types
+
+[source,java]
+----
+public value Point {
+	public final int x;
+	public final int y;
+
+	// [...]
+
+}
+----
+
+Yeah:
+
+* enforced immutability
+* no `Object` header
+* identity doesn't matter
+* makes Java more expressive (think DDD)
+
+=== Generic specialization
+
+When everybody creates their own primitives +
+boxing becomes omni-present and very painful!
+
+[source,java]
+----
+List<int> ids = new ArrayList<>();
+----
+
+Yeah:
+
+* backed by an actual `int[]`
+* great performance
+
+=== Generic specialization
+
+Has immense effect inside the JDK!
+
+No more manual specializations:
+
+* functional interfaces
+* stream API
+* `Optional` API
+* etc.
