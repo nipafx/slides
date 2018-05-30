@@ -1,0 +1,409 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Java Next!</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="../_reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="../_reveal.js/css/theme/nipa-night.css" id="theme"><link href="../_reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>document.write( '<link rel="stylesheet" href="../_reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>Java Next!</h1><div class="preamble"><link rel="stylesheet" href="../_highlight.js/styles/monokai-sublime.css">
+<script src="../_highlight.js/highlight.pack.js"></script>
+<script>
+	window.onload = function() {
+		hljs.configure({
+			tabReplace: '    ',
+			languages: [ 'java' ]
+		})
+		var codes = document.getElementsByTagName('code');
+		for(var i = 0; i < codes.length; i++) {
+			hljs.highlightBlock(codes.item(i));
+		}
+		hljs.initHighlightingOnLoad();
+	}
+</script>
+<style>
+.reveal .title h2 {
+	font-size: 1.75em;
+}
+</style>
+<h2>New Releases, Amber, Valhalla, and More Goodies</h2>
+<div class="event">
+	<div class="participant">
+		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
+		<div class="name">
+			<p><a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a></p>
+			<p><a href="http://codefx.org">codefx.org</a>
+				/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a></p>
+		</div>
+	</div>
+	<div class="participant">
+		<a href="https://rigadevdays.lv/"><img src="images/logo-riga-dev-days.png" class="logo" style="{host-logo-style}"></a>
+		<div class="name">
+			<p><a href="https://rigadevdays.lv/">Riga Dev Days</a></p>
+			<p><a href="https://twitter.com/RigaDevDays">@RigaDevDays</a></p>
+		</div>
+	</div>
+</div>
+<!-- Just adding a footer does not work because reveal.js puts it into the slides and we couldn't get it out via CSS. So we move it via JavaScript. -->
+<footer>
+	<div class="participant">
+		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
+		<div class="name"><p>
+			<a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a>
+			/ <a href="http://codefx.org">codefx.org</a>
+			/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a>
+		</p></div>
+	</div>
+	<div class="participant">
+		<a href="https://rigadevdays.lv/"><img src="images/logo-riga-dev-days.png" class="logo" style="{host-logo-style}"></a>
+		<div class="name">
+			<p><a href="https://rigadevdays.lv/">Riga Dev Days</a> / <a href="https://twitter.com/RigaDevDays">@RigaDevDays</a></p>
+		</div>
+	</div>
+</footer>
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		document.body.appendChild(document.querySelector('footer'));
+	})
+</script></div></section>
+<section id="_lots_to_talk_about"><h2>Lots to talk about!</h2><table class="toc">
+	<tr><td>Versions and Features</td></tr>
+	<tr><td>The New World</td></tr>
+	<tr><td>Projects To Look Out For</td></tr>
+</table>
+<div class="paragraph"><p>(Slides at <a href="http://slides.codefx.org/">slides.codefx.org</a>.)</p></div></section>
+<section id="_versions_and_features"><h2>Versions and features</h2><table class="toc">
+	<tr class="toc-current"><td>Versions and Features</td></tr>
+	<tr><td>The New World</td></tr>
+	<tr><td>Projects To Look Out For</td></tr>
+</table>
+<div class="paragraph"><p>From Java 8 to Java 11.</p></div></section>
+<section><section id="_java_8" data-background-image="images/8-dark.jpg" data-background-size="cover"><h2>Java 8</h2><div class="ulist"><ul><li><p>released 03/2014</p></li><li><p>free support <strong>ends 01/2019</strong></p></li></ul></div></section><section id="_what_s_the_core_of_8" data-background-image="images/8-dark.jpg" data-background-size="cover"><h2>What&#8217;s the core of 8?</h2>
+<div class="ulist"><ul><li class="fragment"><p><code>n -&gt; lambdas()</code><br>
+and <code>Method::references</code></p></li><li class="fragment"><p><code>features.stream()</code></p></li><li class="fragment"><p><code>default method() { &#8230;&#8203; }</code></p></li></ul></div></section><section data-background-image="images/minions.gif" data-background-size="cover" data-state="empty"></section><section data-background-image="images/lambda.jpg" data-background-size="cover" data-state="empty"></section><section id="_project_lambda" data-background-image="images/lambda.jpg" data-background-size="cover"><h2>Project Lambda</h2>
+<div class="ulist"><ul><li><p>launched with <a href="http://cr.openjdk.java.net/~mr/lambda/straw-man/">a straw-man</a> (12/2009):</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">#(int x, int y)(x * y)</code></pre></div></div></li><li><p>1st early draft review (11/2011):</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Callable&lt;String&gt; c = () -&gt; "done";</code></pre></div></div></li><li><p>2nd review (06/2012) and 3rd review (01/2013)</p></li><li><p>public review (12/2013) and final ballot (02/2014)</p></li></ul></div></section><section id="_project_lambda_2" data-background-image="images/lambda.jpg" data-background-size="cover"><h2>Project Lambda</h2>
+<div class="ulist"><ul><li><p>lead by Brian Goetz</p></li><li><p>ran from 12/2009 to 02/2014</p></li><li><p><a href="http://openjdk.java.net/projects/lambda/">project page</a>
+/ <a href="https://jcp.org/en/jsr/detail?id=335">JSR 335</a></p></li><li><p><a href="http://mail.openjdk.java.net/mailman/listinfo/lambda-dev">mailing list</a> (thousands of messages)</p></li></ul></div></section><section id="_projects" data-background-image="images/lambda.jpg" data-background-size="cover"><h2>Projects&#8230;&#8203;</h2>
+<div class="ulist"><ul><li><p>start with an idea<br>
+that is then evolved</p></li><li><p>can take a long time</p></li><li><p>are fairly open</p></li></ul></div></section></section>
+<section><section id="_java_9" data-background-image="images/9-dark.jpg" data-background-size="cover"><h2>Java 9</h2><div class="ulist"><ul><li><p>released 09/2017</p></li><li><p>free support <strong>ended 01/2018</strong></p></li></ul></div></section><section id="_what_s_the_core_of_9" data-background-image="images/9-dark.jpg" data-background-size="cover"><h2>What&#8217;s the core of 9?</h2>
+<div class="ulist"><ul><li class="fragment"><p><a href="https://blog.codefx.org/java/java-module-system-tutorial/">the module system</a>:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">module jpms {
+	requires more.work;
+	exports migration.challenges;
+}</code></pre></div></div></li></ul></div></section><section id="_more_on_the_jpms" data-background-image="images/9-dark.jpg" data-background-size="cover"><h2>More on the JPMS</h2>
+<div style="width: 45%; margin:0px auto;">
+	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="images/cover-jms.png" style="margin: 0;"></a>
+	<p style="
+		position: fixed;
+		margin: -160px 0 0 60px;
+		transform: rotate(-8deg);
+		font-size: 28pt;
+		color: #cc0000;
+		text-shadow: 2px 2px 3px #660000;
+		font-weight: bold;
+		border: 5px solid #cc0000;
+		border-radius: 12px;
+		background-color: rgba(255,255,255,0.5);
+		padding: 2px 8px 7px 4px;
+">37% off with<br>code <em>fccparlog</em></p>
+	<p><a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb">tiny.cc/jms</a></p>
+</div></section><section data-background-image="images/jigsaw.jpg" data-background-size="cover" data-state="empty"></section><section id="_project_jigsaw" data-background-image="images/jigsaw.jpg" data-background-size="cover"><h2>Project Jigsaw</h2>
+<div class="ulist"><ul><li><p>launched 12/2008</p></li><li><p><a href="http://mreinhold.org/blog/jigsaw">announced by Mark Reinhold</a>:</p></li></ul></div>
+<div class="quoteblock"><blockquote><div class="paragraph"><p>Sun’s primary goal in the upcoming JDK 7 release will be to modularize the JDK [&#8230;&#8203;], which we hope to deliver early in 2010.</p></div></blockquote></div>
+<div class="paragraph"><p>😊</p></div></section><section id="_jigsaw_history" data-background-image="images/jigsaw.jpg" data-background-size="cover"><h2>Jigsaw history</h2>
+<div class="ulist"><ul><li><p>Oracle acquires Sun, Jigsaw is halted (2010)</p></li><li><p>Jigsaw starts exploratory phase (2011)</p></li><li><p>releases of Java 7 (2011) and Java 8 (2014)</p></li><li><p>exploratory phase ends with <a href="https://www.jcp.org/en/jsr/detail?id=376">JSR 376</a> (2014)</p></li><li><p>a prototype is released (09/2015)</p></li></ul></div></section><section data-background-image="images/sheldon.gif" data-background-size="cover" data-state="empty"></section><section id="_community_unrest" data-background-image="images/sheldon.gif" data-background-size="cover"><h2>Community unrest</h2>
+<div class="ulist"><ul><li><p>about lacking module isolation</p></li><li><p>about forbidden cyclic dependencies</p></li><li><p>about the concept of automatic modules</p></li><li><p>about migration challenges</p></li></ul></div></section><section id="_community_unrest_2" data-background-image="images/sheldon.gif" data-background-size="cover"><h2>Community unrest</h2>
+<div class="ulist"><ul><li><p>about <code>Unsafe</code> et. al.<br>
+⇝ <em>jdk.unsupported</em> exports them</p></li><li><p>about strong encapsulation<br>
+⇝ deactivated on JDK 9/10/11</p></li><li><p>about hostility to reflection<br>
+⇝ <code>opens</code> directive</p></li><li><p>and a few more</p></li></ul></div></section><section id="_jigsaw_history_2" data-background-image="images/jigsaw.jpg" data-background-size="cover"><h2>Jigsaw history</h2>
+<div class="ulist"><ul><li><p>Java 9 release was planned for 09/2016</p></li><li><p>Jigsaw delays it to 03/2017,<br>
+then 07/2017, then 09/2017</p></li><li><p>public review ballot (05/2017)</p></li></ul></div></section><section data-background-image="images/hulk.gif" data-background-size="cover" data-state="empty"></section><section id="_jigsaw_history_3" data-background-image="images/jigsaw.jpg" data-background-size="cover"><h2>Jigsaw history</h2>
+<div class="ulist"><ul><li><p>public review ballot
+<a href="https://medium.com/codefx-weekly/jsr-376-ballot-and-automatic-modules-edc75b148493">fails</a> (05/2017)</p></li><li><p>only change: encapsulation turned off</p></li><li><p>reconsideration ballot passes (06/2017)</p></li></ul></div>
+<div class="paragraph"><p>¯\_(ツ)_/¯</p></div></section><section id="_projects_2" data-background-image="images/jigsaw.jpg" data-background-size="cover"><h2>Projects&#8230;&#8203;</h2>
+<div class="ulist"><ul><li><p>can lead to very heated discussions</p></li><li><p>are subject to politics</p></li><li><p>take feedback into account and<br>
+adapt to new requirements</p></li><li><p>are not as open as they could be</p></li><li><p>can take a <em>very long</em> time and<br>
+delay Java releases</p></li></ul></div></section></section>
+<section><section id="_java_10" data-background-image="images/10.jpg" data-background-size="cover"><h2>Java 10</h2><div class="ulist"><ul><li><p>released 03/2018</p></li><li><p>free support <strong>ends 07/2018</strong></p></li></ul></div></section><section id="_what_s_the_core_of_10" data-background-image="images/10.jpg" data-background-size="cover"><h2>What&#8217;s the core of 10?</h2>
+<div class="ulist"><ul><li class="fragment"><p><a href="https://blog.codefx.org/java/java-10-var-type-inference/">local-variable type inference</a>:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">var users = new ArrayList&lt;User&gt;();</code></pre></div></div></li><li class="fragment"><p><a href="https://blog.codefx.org/java/application-class-data-sharing/">application class-data sharing</a> (hardly)</p></li></ul></div></section><section data-background-image="images/amber.jpg" data-background-size="cover" data-state="empty"></section><section id="_project_amber" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Project Amber</h2>
+<div class="paragraph"><p>More on that later!</p></div></section></section>
+<section><section id="_java_11" data-background-image="images/11.jpg" data-background-size="cover"><h2>Java 11</h2><div class="ulist"><ul><li><p>release 09/2018</p></li><li><p>free support <strong>ends 01/2019</strong><br>
+(yes, no free LTS&#8212;&#8203;more on that later)</p></li></ul></div></section><section id="_what_s_the_core_of_11" data-background-image="images/11.jpg" data-background-size="cover"><h2>What&#8217;s the core of 11?</h2>
+<div class="paragraph"><p>Err&#8230;&#8203;</p></div>
+<div class="ulist"><ul><li class="fragment"><p>single-file source-code programs:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">java HelloWorld.java</code></pre></div></div></li><li class="fragment"><p>reactive HTTP/2 client</p></li><li class="fragment"><p>Epsilon GC</p></li></ul></div></section><section data-background-image="images/baby.gif" data-background-size="cover" data-state="empty"></section><section id="_java_11_2" data-background-image="images/11.jpg" data-background-size="cover"><h2>Java 11</h2>
+<div class="ulist"><ul><li><p>no language changes</p></li><li><p>no monumental dev-facing features</p></li><li><p>this will become common</p></li><li><p>that&#8217;s not a bad thing!</p></li></ul></div></section></section>
+<section><section id="_the_new_world"><h2>The new world</h2><table class="toc">
+	<tr><td>Versions and Features</td></tr>
+	<tr class="toc-current"><td>The New World</td></tr>
+	<tr><td>Projects To Look Out For</td></tr>
+</table></section><section id="_old_release_cycle"><h2>Old release cycle</h2><h3>The plan</h3><div class="ulist"><ul><li><p>releases are driven by flagship features</p></li><li><p>new major release roughly every 2 years</p></li></ul></div></section><section id="_old_release_cycle_2"><h2>Old release cycle</h2><h3>The reality</h3><div class="ulist"><ul><li><p>Java 7 took 5 years</p></li><li><p>Java 8 took 3 years</p></li><li><p>Java 9 took 3.5 years</p></li></ul></div>
+<div class="paragraph"><p>"Bump an 'almost ready' feature<br>
+2+ years into the future?"</p></div>
+<div class="paragraph"><p>⇝ <strong>"Better to delay the release."</strong></p></div></section><section id="_downsides"><h2>Downsides</h2><div class="ulist"><ul><li><p>implemented features provide no value</p></li><li><p>increases reaction time</p></li><li><p>puts (political) pressure on projects</p></li><li><p>makes everybody grumpy</p></li></ul></div></section><section id="_the_new_world_2"><h2>The new world</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>If it hurts, do it more often.</p></div></blockquote></div>
+<div class="ulist"><ul><li><p>fixed six-month release cadence<br>
+(March and September)</p></li><li><p>ship everything that is ready</p></li></ul></div>
+<div class="paragraph"><p>All are major releases<br>
+with known quality guarantees.</p></div>
+<div class="paragraph"><p>⇝ No "beta versions"!</p></div></section><section id="_implementation"><h2>Implementation</h2><div class="ulist"><ul><li class="fragment"><p>features are developed in branches</p></li><li class="fragment"><p>merged into master when (nearly) finished</p></li><li class="fragment"><p>release branch created 3 months prior</p></li><li class="fragment"><p>only bug fixes merged to release branch</p></li></ul></div></section><section id="_upsides"><h2>Upsides</h2><div class="ulist"><ul><li><p>completed features get out earlier</p></li><li><p>no pressure to complete features "on time"</p></li><li><p>easier to incubate features</p></li><li><p>easier to react to changes in the ecosystem</p></li></ul></div></section><section id="_release_fatigue"><h2>Release fatigue?</h2><div class="paragraph"><p>"Java will change too fast."</p></div>
+<div class="paragraph"><p>"Constant migrations will be expensive."</p></div>
+<div class="paragraph"><p>"Test matrix will explode."</p></div>
+<div class="paragraph"><p>"Ecosystem will fragment."</p></div></section><section data-background-image="images/panic.gif" data-background-size="cover" data-state="empty"></section><section id="_fast_change"><h2>Fast Change</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>The rate of innovation doesn&#8217;t change.
+The rate of innovation delivery increases.</p></div></blockquote><div class="attribution">&#8212; Mark Reinhold</div></div>
+<div class="paragraph"><p>Maybe speed will pick up a little:</p></div>
+<div class="ulist"><ul><li><p>recent activities target low-hanging fruits</p></li><li><p>Oracle is focusing on Java core (my impression!)</p></li></ul></div></section><section id="_fast_change_2"><h2>Fast Change</h2><div class="paragraph"><p>By and large:</p></div>
+<div class="paragraph"><p><strong>Evolution will be <em>steadier</em>, not <em>faster</em>.</strong></p></div>
+<div class="paragraph"><p>(see Java 11)</p></div></section><section id="_expensive_migrations"><h2>Expensive migrations</h2><div class="paragraph"><p>Balance shifted between<br>
+<strong>compatibility vs evolution</strong>:</p></div>
+<div class="ulist"><ul><li><p><code>@Deprecated(forRemoval=true)</code></p></li><li><p>"one major release" is now 6 months, not 36</p></li><li><p>increasing bytecode level</p></li><li><p>incubating features (if used incorrectly)</p></li></ul></div></section><section id="_expensive_migrations_2"><h2>Expensive migrations</h2><div class="paragraph"><p>Yes, <a href="https://blog.codefx.org/java/java-9-migration-guide/#fixes-2">Java 9  migration is tough</a>!</p></div>
+<div class="paragraph"><p>But not the norm:</p></div>
+<div class="ulist"><ul><li><p>Java 10 is trivial</p></li><li><p>Java 11 is easy</p></li></ul></div>
+<div class="paragraph"><p>Oracle is still committed<br>
+to backwards compatibility!</p></div></section><section id="_expensive_migrations_3"><h2>Expensive migrations</h2><div class="paragraph"><p>Remedies:</p></div>
+<div class="ulist"><ul><li><p>stick to supported APIs</p></li><li><p>stick to standardized behavior</p></li><li><p>stick to well-maintained projects</p></li><li><p>keep dependencies and tools up to date</p></li></ul></div></section><section id="_jlink_can_help"><h2>JLink can help</h2><div class="paragraph"><p>Use <code>jlink</code> to create application images:</p></div>
+<div class="ulist"><ul><li><p>contain just the platform modules you need</p></li><li><p>contain your code and your dependencies</p></li><li><p>launch with <code>image/bin/your-app</code></p></li></ul></div>
+<div class="paragraph"><p>Single deployment unit,<br>
+independent of installed JRE.</p></div></section><section id="_jlink_considerations"><h2>JLink considerations</h2><div class="paragraph"><p>Independent of installed JRE:</p></div>
+<div class="ulist"><ul><li><p>no compatibility issues</p></li><li><p>no automatic performance gain</p></li><li><p>no automatic security updates</p></li></ul></div>
+<div class="paragraph"><p>Works great if you have<br>
+<strong>complete control</strong><br>
+over the deployment.</p></div>
+<div class="paragraph"><p>Not so much if you deliver software.</p></div></section><section id="_exploding_test_matrix"><h2>Exploding test matrix</h2><div class="paragraph"><p>As the range of supported versions increases&#8230;&#8203;</p></div>
+<div class="ulist"><ul><li><p>builds need to run against all of them</p></li><li><p>developers needs to switch between them</p></li></ul></div>
+<div class="paragraph"><p>Many tools already support this.<br>
+We need to know how.</p></div>
+<div class="paragraph"><p>Also: Moar automization!</p></div></section><section id="_fragmenting_ecosystem"><h2>Fragmenting Ecosystem</h2><div class="paragraph"><p>"This will be like Python 2/3!"</p></div>
+<div class="paragraph"><p>No.</p></div></section><section data-background-image="images/works-on-java-9.png" data-background-size="cover" data-state="empty"></section><section data-background-color="black" data-background-image="images/panic-calm.gif" data-background-size="contain" data-state="empty"></section><section id="_advice"><h2>Advice</h2><div class="ulist"><ul><li><p>find a suitable update cadence</p></li><li><p>test with each feature release</p></li><li><p>only rely on standardized behavior</p></li><li><p>heed deprecation warnings</p></li><li><p>keep dependencies and tools up to date</p></li><li><p>give <code>jlink</code> a try</p></li></ul></div>
+<div class="paragraph"><p>Most importantly:<br>
+Be aware of what&#8217;s coming!</p></div></section><section id="_be_aware"><h2>Be aware</h2><div class="paragraph"><p>Don&#8217;t focus on versions!</p></div>
+<div class="paragraph"><p><strong>Focus on projects and JEPs:</strong></p></div>
+<div class="ulist"><ul><li><p>large features are developed by <a href="http://openjdk.java.net/projects/">projects</a></p></li><li><p>smaller features are proposed by <a href="http://openjdk.java.net/jeps/0">JEP</a> only</p></li></ul></div>
+<div class="paragraph"><p>Let&#8217;s have a look at what&#8217;s coming!</p></div></section></section>
+<section><section id="_long_term_support"><h2>Long-term support</h2><div class="paragraph"><p>What if you (or your customers)<br>
+don&#8217;t want to update every six months?</p></div></section><section id="_oracle_jdk_vs_openjdk"><h2>Oracle JDK vs OpenJDK</h2><div class="paragraph"><p>Oracle JDK used to&#8230;&#8203;</p></div>
+<div class="ulist"><ul><li><p>contain more features</p></li><li><p>be perceived as more stable</p></li><li><p>be perceived as more performant</p></li></ul></div>
+<div class="paragraph"><p>As of Java 11, on a technical basis<br>
+<strong>Oracle JDK and OpenJDK are identical</strong>.</p></div></section><section id="_oracle_jdk_vs_openjdk_2"><h2>Oracle JDK vs OpenJDK</h2><div class="paragraph"><p>Only difference is license and support model:</p></div>
+<div class="ulist"><ul><li><p>Oracle ships OpenJDK at <a href="http://jdk.java.net/11/">jdk.java.net/$version</a>,<br>
+licensed under GPL+CE</p></li><li><p>Oracle JDK becomes fully commercial:<br>
+from 11 on, no free use in production</p></li></ul></div>
+<div class="paragraph"><p>⇝ Get used to using on OpenJDK.</p></div></section><section id="_oracle_support"><h2>Oracle support</h2><div class="paragraph"><p>What does Oracle support?</p></div>
+<div class="ulist"><ul><li><p>free updates for current major OpenJDK version</p></li><li><p>commercial support for Oracle JDK<br>
+for at least 3 years for Java 11, 17, 23, etc.</p></li></ul></div></section><section id="_oracle_support_2"><h2>Oracle support</h2><div class="paragraph"><p>How does Oracle handle bug/security/etc fixes?</p></div>
+<div class="ulist"><ul><li><p>usually developed on master (OpenJDK)</p></li><li><p>merged to current version&#8217;s branch (OpenJDK)</p></li><li><p>merged to current LTS version (internally)</p></li></ul></div>
+<div class="paragraph"><p><strong>LTS means merging fixes<br>
+into old OpenJDK branches.</strong></p></div></section><section id="_long_term_support_2"><h2>Long-term support</h2><div class="paragraph"><p>Commercial LTS by</p></div>
+<div class="ulist"><ul><li><p>Oracle</p></li><li><p>Azul</p></li><li><p>RedHat</p></li><li><p>&#8230;&#8203;</p></li></ul></div>
+<div class="paragraph"><p>Likely free LTS for OpenJDK<br>
+by <a href="https://adoptopenjdk.net/">Adopt OpenJDK</a>!</p></div>
+<div class="paragraph"><p>😁👍🎉🍾🤗</p></div></section></section>
+<section><section id="_projects_3"><h2>Projects</h2><table class="toc">
+	<tr><td>Versions and Features</td></tr>
+	<tr><td>The New World</td></tr>
+	<tr class="toc-current"><td>Projects To Look Out For</td></tr>
+</table><div class="paragraph"><p>Many great features on the horizon!</p></div></section><section id="_be_aware_2"><h2>Be aware</h2><div class="paragraph"><p>Don&#8217;t focus on versions!</p></div>
+<div class="paragraph"><p><strong>Focus on projects and JEPs:</strong></p></div>
+<div class="ulist"><ul><li><p>large features are developed by <a href="http://openjdk.java.net/projects/">projects</a></p></li><li><p>smaller features are proposed by <a href="http://openjdk.java.net/jeps/0">JEP</a> only</p></li></ul></div>
+<div class="paragraph"><p>Let&#8217;s have a look at what&#8217;s coming!</p></div></section><section id="_many_great_projects"><h2>Many great projects</h2><div class="dlist"><dl><dt class="hdlist1">Amber</dt><dd><p>Smaller, productivity-oriented language features</p></dd><dt class="hdlist1">Valhalla</dt><dd><p>Generic specialization and value types</p></dd><dt class="hdlist1">Loom</dt><dd><p>Fibers and continuations</p></dd><dt class="hdlist1">Metropolis</dt><dd><p>Graal and ahead-of-time compilation</p></dd><dt class="hdlist1">Sumatra</dt><dd><p>Java on the GPU and APU</p></dd></dl></div></section></section>
+<section><section id="_amber" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Amber</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>Explore and incubate smaller, productivity-oriented Java language features.</p></div></blockquote></div><div class="paragraph"><p>Profile:</p></div><div class="ulist"><ul><li><p><a href="http://openjdk.java.net/projects/amber/">project</a> /
+<a href="http://mail.openjdk.java.net/mailman/listinfo/amber-dev">mailing list</a></p></li><li><p>launched March 2017, very active</p></li></ul></div><div class="paragraph"><p>Already delivered <code>var</code> in Java 10!</p></div></section><section id="_motivation" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Motivation</h2>
+<div class="paragraph"><p>Compared to modern languages, Java:</p></div>
+<div class="ulist"><ul><li><p>can be cumbersome</p></li><li><p>lacks expressiveness</p></li><li><p>tends to require boilerplate</p></li></ul></div>
+<div class="paragraph"><p>Amber wants to improve that situation.</p></div></section><section id="_endeavors" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Endeavors</h2>
+<div class="ulist"><ul><li><p>string literals (<a href="http://openjdk.java.net/jeps/326">JEP 326</a>)</p></li><li><p>switch expressions (<a href="http://openjdk.java.net/jeps/325">JEP 325</a>)</p></li><li><p>pattern matching (<a href="http://openjdk.java.net/jeps/305">JEP 305</a>)</p></li></ul></div></section><section id="_string_literals" data-background-image="images/amber.jpg" data-background-size="cover"><h2>String literals</h2>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">String html =
+	`&lt;html&gt;
+		&lt;body&gt;
+			&lt;p&gt;"Hello, string literals!"&lt;/p&gt;
+		&lt;/body&gt;
+	&lt;/html&gt;`;</code></pre></div></div>
+<div class="paragraph"><p>Yeah:</p></div>
+<div class="ulist"><ul><li><p>multiline strings</p></li><li><p>no escaping of special characters</p></li></ul></div></section><section id="_switch_expressions" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Switch expressions</h2>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">int numLetters = switch (day) {
+	case MONDAY, FRIDAY, SUNDAY -&gt; 6;
+	case TUESDAY -&gt; 7;
+	case THURSDAY, SATURDAY -&gt; 8;
+	case WEDNESDAY -&gt; 9;
+};</code></pre></div></div>
+<div class="paragraph"><p>Yeah:</p></div>
+<div class="ulist"><ul><li><p><code>switch</code> "gets a value"</p></li><li><p>no more <code>break</code>!</p></li><li><p>compiler checks exhaustiveness</p></li></ul></div></section><section id="_pattern_matching" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Pattern matching</h2>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">String formatted = switch (obj) {
+	case Integer i -&gt; String.format("int %d", i);
+	case Byte b    -&gt; String.format("byte %d", b);
+	case Long l    -&gt; String.format("long %d", l);
+	case Double d  -&gt; String.format("double %f", d);
+	case String s  -&gt; String.format("String %s", s);
+	default        -&gt; obj.toString();
+}</code></pre></div></div>
+<div class="paragraph"><p>Yeah:</p></div>
+<div class="ulist"><ul><li><p>more powerful conditions</p></li><li><p>no repetition between condition and block</p></li></ul></div></section><section id="_pattern_matching_2" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Pattern matching</h2>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public int eval(Node n) {
+	return switch(n) {
+		case IntNode(int i) -&gt; i;
+		case NegNode(Node n) -&gt; -eval(n);
+		case AddNode(Node left, Node right) -&gt;
+			eval(left) + eval(right);
+		case MulNode(Node left, Node right) -&gt;
+			eval(left) * eval(right);
+		default -&gt; throw new IllegalStateException(n);
+	};
+}</code></pre></div></div>
+<div class="paragraph"><p>Goodbye visitor pattern!</p></div></section></section>
+<section><section id="_sumatra" data-background-image="images/sumatra.jpg" data-background-size="cover"><h2>Sumatra</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>Enable Java applications to take advantage of GPUs and APUs [&#8230;&#8203;] to improve performance</p></div></blockquote></div><div class="paragraph"><p>Profile:</p></div><div class="ulist"><ul><li><p><a href="http://openjdk.java.net/projects/sumatra/">project</a> /
+<a href="http://mail.openjdk.java.net/pipermail/sumatra-dev">mailing list</a> /
+<a href="http://openjdk.java.net/jeps/8047074">JEP draft</a></p></li><li><p>launched June 2014, not much recent activity</p></li></ul></div><div class="paragraph"><p><a href="https://www.youtube.com/watch?v=BjdYRtL6qjg"><em>Java on the GPU: Where are we now?</em></a><br>
+by Dmitry Aleksandrov</p></div></section><section id="_motivation_2" data-background-image="images/sumatra.jpg" data-background-size="cover"><h2>Motivation</h2>
+<div class="paragraph"><p>Why use the GPU?</p></div>
+<div class="ulist"><ul><li><p>can be more peformant</p></li><li><p>can be more energy-efficient</p></li></ul></div>
+<div class="paragraph"><p>Can&#8217;t we do that already?<br>
+(Aparapi, JOCL)</p></div>
+<div class="ulist"><ul><li><p>not integrated into the JDK</p></li><li><p>require their own programming model</p></li></ul></div></section><section id="_goals" data-background-image="images/sumatra.jpg" data-background-size="cover"><h2>Goals</h2>
+<div class="paragraph"><p>Basics:</p></div>
+<div class="ulist"><ul><li><p>create low-level API to uniformly access GPUs</p></li><li><p>use stream API as high-level API</p></li></ul></div>
+<div class="paragraph"><p>Ideally:</p></div>
+<div class="ulist"><ul><li><p>auto-detection of hardware and software stack</p></li><li><p>heuristic to decide when offloading makes sense</p></li><li><p>offload <a href="https://en.wikipedia.org/wiki/Embarrassingly_parallel">embarrassingly parallel</a> stream pipelines</p></li><li><p>on error, graceful fall-back to normal CPU execution</p></li></ul></div></section><section id="_implementation_2" data-background-image="images/sumatra.jpg" data-background-size="cover"><h2>Implementation</h2>
+<div class="paragraph"><p>For stream operations to offload:</p></div>
+<div class="ulist"><ul><li><p>extract lambda function</p></li><li><p>use Graal to compile to HSA kernel (runs on GPU)</p></li><li><p>extract lambda arguments and pass to HSA</p></li></ul></div>
+<div class="paragraph"><p>GPU operates on main memory<br>
+and has access to Java heap!</p></div></section><section id="_example" data-background-image="images/sumatra.jpg" data-background-size="cover"><h2>Example</h2>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public static void main(String[] args) {
+
+	final int length = 8;
+	int[] ina = new int[length];
+	int[] inb = new int[length];
+	int[] out = new int[length];
+
+	// ...
+
+}</code></pre></div></div></section><section id="_example_2" data-transition="none" data-background-image="images/sumatra.jpg" data-background-size="cover"><h2>Example</h2>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// offloadable
+IntStream.range(0, length).parallel().forEach(p -&gt; {
+	ina[p] = 1;
+	inb[p] = 2;
+});
+
+// offloadable
+IntStream.range(0, length).parallel().forEach(p -&gt; {
+	out[p] = ina[p] + inb[p];
+});
+
+// not offloadable (native code)
+IntStream.range(0, length).forEach(p -&gt; {
+	System.out.println(
+		out[p] + ", " + ina[p] + ", " + inb[p]);
+});</code></pre></div></div></section></section>
+<section id="_projects_4"><h2>Projects</h2><div class="paragraph"><p>To know what&#8217;s coming:</p></div>
+<div class="ulist"><ul><li><p>pick a project that interests you</p></li><li><p>look out for mentions</p></li><li><p>subscribe to the mailing list</p></li><li><p>find early access builds and try them</p></li><li><p>give feedback</p></li></ul></div>
+<div class="paragraph"><p>Tell your colleagues about it!</p></div></section>
+<section id="_about_nicolai_parlog" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>About Nicolai Parlog</h2>
+<div style="float: left; width: 45%; margin:0px;">
+	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="images/cover-jms.png" style="margin: 0;"></a>
+	<p style="
+		position: fixed;
+		margin: -160px 0 0 60px;
+		transform: rotate(-8deg);
+		font-size: 28pt;
+		color: #cc0000;
+		text-shadow: 2px 2px 3px #660000;
+		font-weight: bold;
+		border: 5px solid #cc0000;
+		border-radius: 12px;
+		background-color: rgba(255,255,255,0.5);
+		padding: 2px 8px 7px 4px;
+">37% off with<br>code <em>fccparlog</em></p>
+	<p><a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb">tiny.cc/jms</a></p>
+</div>
+<h3>Follow</h3>
+<div class="paragraph"><p>💻 <a href="http://codefx.org">codefx.org</a><br>
+▶ <a href="https://www.youtube.com/c/codefx">youtube.com/c/codefx</a><br>
+🐦 <a href="https://twitter.com/nipafx">@nipafx</a></p></div>
+<h3>Want More?</h3>
+<div class="paragraph"><p>⇜ Get <a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&amp;a_bid=869915cb">my book</a>!</p></div>
+<div class="paragraph"><p>You can <a href="http://blog.codefx.org/hire-nicolai-parlog/">hire me</a>:</p></div>
+<div class="ulist"><ul><li><p>training (Java 8-11, JUnit 5)</p></li><li><p>consulting (Java 8-11)</p></li></ul></div></section>
+<section id="_image_credits"><h2>Image Credits</h2><div class="ulist"><ul><li><p><a href="https://unsplash.com/photos/bEXy1YQNIII">merry-go-round</a>:
+<a href="https://unsplash.com/@ja5on">Jason Chen</a>,
+<a href="https://unsplash.com/license">Unsplash license</a></p></li><li><p><a href="https://pixabay.com/en/number-digit-eight-8-background-1982275/">eight</a>:
+<a href="https://pixabay.com/en/users/PIRO4D-2707530/">PIRO4D</a>,
+<a href="https://wiki.creativecommons.org/wiki/CC0">CC0</a></p></li><li><p><a href="https://00vapour.deviantart.com/">00vapour</a>:
+<a href="https://00vapour.deviantart.com/art/Lambda-255693641">Lambda</a>,
+<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">CC BY-NC-SA 3.0</a></p></li><li><p><a href="https://pixabay.com/en/number-digit-nine-9-background-1982274/">nine</a>:
+<a href="https://pixabay.com/en/users/PIRO4D-2707530/">PIRO4D</a>,
+<a href="https://wiki.creativecommons.org/wiki/CC0">CC0</a></p></li><li><p>jigsaw:
+<a href="https://www.flickr.com/photos/pagedooley/">Kevin Dooley</a>,
+<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a></p></li><li><p><a href="https://www.flickr.com/photos/29143375@N05/3960095289/">ten</a>:
+<a href="https://www.flickr.com/photos/29143375@N05/">Justin S. Campbell</a>,
+<a href="https://creativecommons.org/licenses/by-nd/2.0/">CC-BY-ND 2.0</a></p></li><li><p><a href="https://unsplash.com/photos/I1MGVZ42wnU">sumatra</a>:
+<a href="https://unsplash.com/@marcszeglat">Marc Szeglat</a>,
+<a href="https://unsplash.com/license">Unsplash license</a></p></li><li><p><a href="https://www.flickr.com/photos/21496790@N06/5065834411">question-mark</a>:
+<a href="http://milosevicmilos.com/">Milos Milosevic</a>,
+<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a></p></li></ul></div></section></div></div><script src="../_reveal.js/lib/js/head.min.js"></script><script src="../_reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+Reveal.initialize({
+  // Display controls in the bottom right corner
+  controls: false,
+  // Display a presentation progress bar
+  progress: false,
+  // Display the page number of the current slide
+  slideNumber: false,
+  // Push each slide change to the browser history
+  history: true,
+  // Enable keyboard shortcuts for navigation
+  keyboard: true,
+  // Enable the slide overview mode
+  overview: true,
+  // Vertical centering of slides
+  center: true,
+  // Enables touch navigation on devices with touch input
+  touch: true,
+  // Loop the presentation
+  loop: false,
+  // Change the presentation direction to be RTL
+  rtl: false,
+  // Turns fragments on and off globally
+  fragments: true,
+  // Flags if the presentation is running in an embedded mode,
+  // i.e. contained within a limited portion of the screen
+  embedded: false,
+  // Number of milliseconds between automatically proceeding to the
+  // next slide, disabled when set to 0, this value can be overwritten
+  // by using a data-autoslide attribute on your slides
+  autoSlide: 0,
+  // Stop auto-sliding after user input
+  autoSlideStoppable: true,
+  // Enable slide navigation via mouse wheel
+  mouseWheel: false,
+  // Hides the address bar on mobile devices
+  hideAddressBar: true,
+  // Opens links in an iframe preview overlay
+  previewLinks: false,
+  // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
+  // NOTE setting the theme in the config no longer works in reveal.js 3.x
+  //theme: Reveal.getQueryHash().theme || 'nipa-night',
+  // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+  transition: Reveal.getQueryHash().transition || 'slide',
+  // Transition speed (e.g., default, fast, slow)
+  transitionSpeed: 'default',
+  // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+  backgroundTransition: 'fade',
+  // Number of slides away from the current that are visible
+  viewDistance: 3,
+  // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+  parallaxBackgroundImage: 'images/merry-go-round.jpg',
+  // Parallax background size in CSS syntax (e.g., "2100px 900px")
+  parallaxBackgroundSize: '2560px 1440px',
+
+  // The "normal" size of the presentation, aspect ratio will be preserved
+  // when the presentation is scaled to fit different resolutions. Can be
+  // specified using percentage units.
+  width: 960,
+  height: 700,
+
+  // Factor of the display size that should remain empty around the content
+  margin: 0.1,
+
+  // Bounds for smallest/largest possible scale to apply to content
+  minScale: 0.2,
+  maxScale: 1.5,
+
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+      { src: '../_reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: '../_reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../_reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      
+      { src: '../_reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+      { src: '../_reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+  ]
+});</script></body></html>
