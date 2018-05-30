@@ -1,0 +1,71 @@
+== Long-term support
+
+What if you (or your customers) +
+don't want to update every six months?
+
+=== Oracle JDK vs OpenJDK
+
+Oracle JDK used to...
+
+* contain more features
+* be perceived as more stable
+* be perceived as more performant
+
+As of Java 11, on a technical basis +
+*Oracle JDK and OpenJDK are identical*.
+
+=== Oracle JDK vs OpenJDK
+
+Only difference is license and support model:
+
+* Oracle ships OpenJDK at http://jdk.java.net/11/[jdk.java.net/$version], +
+licensed under GPL+CE
+* Oracle JDK becomes fully commercial: +
+from 11 on, no free use in production
+
+⇝ Get used to using on OpenJDK.
+
+=== Oracle support
+
+What does Oracle support?
+
+* free updates for current major OpenJDK version
+* commercial support for Oracle JDK +
+for at least 3 years for Java 11, 17, 23, etc.
+
+=== Oracle support
+
+How does Oracle handle bug/security/etc fixes?
+
+* usually developed on master (OpenJDK)
+* merged to current version's branch (OpenJDK)
+* merged to current LTS version (internally)
+
+*LTS means merging fixes +
+into old OpenJDK branches.*
+
+=== Long-term support
+
+Commercial LTS by
+
+* Oracle
+* Azul
+* RedHat
+* ...
+
+Likely free LTS for OpenJDK +
+by https://adoptopenjdk.net/[Adopt OpenJDK]!
+
+😁👍🎉🍾🤗
+
+=== Advice
+
+* find a suitable update cadence
+* test with each feature release
+* only rely on standardized behavior
+* heed deprecation warnings
+* keep dependencies and tools up to date
+* give `jlink` a try
+
+Most importantly: +
+Be aware of what's coming!
