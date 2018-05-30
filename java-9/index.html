@@ -53,7 +53,7 @@
 	})
 </script></div></section>
 <section><section id="_public_service_announcement"><h2>Public Service Announcement</h2><div class="ulist"><ul><li><p>new release schedule</p></li><li><p>Oracle JDK ≠ OpenJDK</p></li><li><p>Java on the desktop</p></li></ul></div></section><section id="_new_release_schedule"><h2>New Release Schedule</h2><div class="ulist"><ul><li><p>starting with Java 9,<br>
-new major release every six months</p></li><li><p>Java 10 comes out <strong>today</strong>!</p></li><li><p>Java 11 comes out in September</p></li></ul></div></section><section id="_oracle_jdk_openjdk"><h2>Oracle JDK ≠ OpenJDK</h2><div class="ulist"><ul><li><p>no free Oracle JDK from Java 11 on</p></li><li><p>Oracle ships OpenJDK builds</p></li><li><p>but <strong>only for current major version</strong>:<br>
+new major release every six months</p></li><li><p>Java 10 is out since March</p></li><li><p>Java 11 comes out in September</p></li></ul></div></section><section id="_oracle_jdk_openjdk"><h2>Oracle JDK ≠ OpenJDK</h2><div class="ulist"><ul><li><p>no free Oracle JDK from Java 11 on</p></li><li><p>Oracle ships OpenJDK builds</p></li><li><p>but <strong>only for current major version</strong>:<br>
 ⇝ 10 ⇝ 10.0.1 ⇝ 10.0.4<br>
 ⇝ 11 ⇝ 11.0.1 ⇝ 11.0.4<br>
 ⇝ 12 ⇝ 12.0.1 ⇝ 12.0.4<br></p></li><li><p>there is no <span style="text-decoration: line-through;">spoon</span> free LTS by Oracle!</p></li></ul></div>
@@ -444,7 +444,7 @@ ProcessBuilder grepPdf = new ProcessBuilder()
 		.command("grep", "pdf")
 		.redirectOutput(Redirect.INHERIT);
 List&lt;Process&gt; lsThenGrep = ProcessBuilder
-		.startPipeline(asList(ls, grepPdf));</code></pre></div></div></section><section id="_extended_code_process_code"><h2>Extended <code>Process</code></h2><div class="paragraph"><p>Cool new methods on <code>Process</code>:</p></div>
+		.startPipeline(List.of(ls, grepPdf));</code></pre></div></div></section><section id="_extended_code_process_code"><h2>Extended <code>Process</code></h2><div class="paragraph"><p>Cool new methods on <code>Process</code>:</p></div>
 <div class="ulist"><ul><li><p><code>boolean supportsNormalTermination();</code></p></li><li><p><code>long pid();</code></p></li><li><p><code>CompletableFuture&lt;Process&gt; onExit();</code></p></li><li><p><code>Stream&lt;ProcessHandle&gt; children();</code></p></li><li><p><code>Stream&lt;ProcessHandle&gt; descendants();</code></p></li><li><p><code>ProcessHandle toHandle();</code></p></li></ul></div></section><section id="_new_code_processhandle_code"><h2>New <code>ProcessHandle</code></h2><div class="paragraph"><p>New functionality actually comes from <code>ProcessHandle</code>.</p></div>
 <div class="paragraph"><p>Interesting <code>static</code> methods:</p></div>
 <div class="ulist"><ul><li><p><code>Stream&lt;ProcessHandle&gt; allProcesses();</code></p></li><li><p><code>Optional&lt;ProcessHandle&gt; of(long pid);</code></p></li><li><p><code>ProcessHandle current();</code></p></li></ul></div></section><section id="_more_information"><h2>More Information</h2><div class="paragraph"><p><code>ProcessHandle</code> can return <code>Info</code>:</p></div>
