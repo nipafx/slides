@@ -178,3 +178,26 @@ image::images/works-on-java-9.png[background, size=cover]
 [state="empty",background-color="black"]
 === !
 image::images/panic-calm.gif[background, size=contain]
+
+=== Advice
+
+* find a suitable update cadence
+* test with each feature release
+* only rely on standardized behavior
+* heed deprecation warnings
+* keep dependencies and tools up to date
+* give `jlink` a try
+
+Most importantly: +
+Be aware of what's coming!
+
+=== Be aware
+
+Don't focus on versions!
+
+*Focus on projects and JEPs:*
+
+* large features are developed by http://openjdk.java.net/projects/[projects]
+* smaller features are proposed by http://openjdk.java.net/jeps/0[JEP] only
+
+Let's have a look at what's coming!
