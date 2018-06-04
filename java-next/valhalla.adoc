@@ -1,4 +1,5 @@
 == Valhalla
+image::images/valhalla.jpg[background, size=cover]
 
 > Explore and incubate advanced Java VM and Language feature candidates.
 
@@ -9,6 +10,7 @@ http://mail.openjdk.java.net/mailman/listinfo/valhalla-dev[mailing list]
 * launched July 2014, very active
 
 === Motivation
+image::images/valhalla.jpg[background, size=cover]
 
 In Java, (almost) everything is a class:
 
@@ -21,6 +23,7 @@ identity-based operations
 Wouldn't it be nice to create a custom `int`?
 
 === Value types
+image::images/valhalla.jpg[background, size=cover]
 
 > Codes like a class, works like an `int`.
 
@@ -40,14 +43,14 @@ public value Point {
 ----
 
 === Value types
+image::images/valhalla.jpg[background, size=cover]
 
 [source,java]
 ----
 public value Point {
+
 	public final int x;
 	public final int y;
-
-	// [...]
 
 }
 ----
@@ -55,13 +58,15 @@ public value Point {
 Yeah:
 
 * enforced immutability
+* no memory indirection!
 * no `Object` header
 * identity doesn't matter
 * makes Java more expressive (think DDD)
 
 === Generic specialization
+image::images/valhalla.jpg[background, size=cover]
 
-When everybody creates their own primitives +
+When everybody creates their own primitives, +
 boxing becomes omni-present and very painful!
 
 [source,java]
@@ -73,14 +78,26 @@ Yeah:
 
 * backed by an actual `int[]`
 * great performance
+* works with your value types
 
 === Generic specialization
+image::images/valhalla.jpg[background, size=cover]
 
 Has immense effect inside the JDK!
 
-No more manual specializations:
+* no more manual specializations:
+** functional interfaces
+** stream API
+** `Optional` API
+* better performance
 
-* functional interfaces
-* stream API
-* `Optional` API
-* etc.
+=== Generic specialization
+image::images/valhalla.jpg[background, size=cover]
+
+Has immense effect on your code!
+
+* less trade-offs between +
+design and performance
+* better performance
+* can express design more clearly
+* more robust APIs
