@@ -1,0 +1,17 @@
+== Migration Challenges
+
+++++
+<h3>What to look out for<br>when running on JDK 10</h3>
+++++
+
+=== Nothing much...
+
+Java 10 contains few breaking changes:
+
+* mostly removal of deprecated methods +
+and command line options
+* bytecode level increases to `54.0`
+
+Every release will do that.
+
+⇝ Get used to updating ASM, et al.

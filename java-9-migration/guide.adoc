@@ -169,9 +169,30 @@ java9 --add-modules java.xml.bind -cp 'monitor/target/libs/*':'monitor/target/ma
 	</properties>
 </profile>
 ```
-. use `var` somewhere
+. to use `var` somewhere, activate java-10 profile in IntelliJ and reimport
 . build with `mvn clean install`
 . fix error in _monitor.utils_ by updating Mockito to 2.18.3
+. in parent POM's Java 10 profile update ASM to preempt compiler problems
++
+```xml
+<build>
+	<plugins>
+		<!-- if compilation fails, try newer version of ASM
+				https://stackoverflow.com/q/49398894/2525313
+		-->
+		<plugin>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<dependencies>
+				<dependency>
+					<groupId>org.ow2.asm</groupId>
+					<artifactId>asm</artifactId>
+					<version>6.1.1</version>
+				</dependency>
+			</dependencies>
+		</plugin>
+	</plugins>
+</build>
+```
 . run with
 +
 ```
