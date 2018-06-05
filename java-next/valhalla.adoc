@@ -1,4 +1,4 @@
-== Valhalla
+== Project Valhalla
 image::images/valhalla.jpg[background, size=cover]
 
 > Explore and incubate advanced Java VM and Language feature candidates.
@@ -25,22 +25,21 @@ Wouldn't it be nice to create a custom `int`?
 === Value types
 image::images/valhalla.jpg[background, size=cover]
 
-> Codes like a class, works like an `int`.
-
 [source,java]
 ----
 public value Point {
 
-	public final int x;
-	public final int y;
+	private final int x;
+	private final int y;
 
-	public Point(int x, int y) {
-		this.x = x;
-		this.y = y;
-	}
+	// constructor, accessors,
+	// equals/hashCode/toString,
+	// and other methods
 
 }
 ----
+
+> Codes like a class, works like an `int`.
 
 === Value types
 image::images/valhalla.jpg[background, size=cover]
@@ -48,20 +47,18 @@ image::images/valhalla.jpg[background, size=cover]
 [source,java]
 ----
 public value Point {
-
-	public final int x;
-	public final int y;
-
+	private final int x;
+	private final int y;
 }
 ----
 
-Yeah:
+*Yeah:*
 
 * enforced immutability
-* no memory indirection!
-* no `Object` header
+* no memory indirection! (_flat_)
+* no `Object` header (_dense_)
 * identity doesn't matter
-* makes Java more expressive (think DDD)
+* makes Java more expressive
 
 === Values vs Data Classes
 image::images/valhalla.jpg[background, size=cover]
@@ -93,16 +90,17 @@ boxing becomes omni-present and very painful!
 List<int> ids = new ArrayList<>();
 ----
 
-Yeah:
+*Yeah:*
 
 * backed by an actual `int[]`
 * great performance
 * works with your value types
 
-=== Generic specialization
+=== Put together
 image::images/valhalla.jpg[background, size=cover]
 
-Has immense effect inside the JDK!
+Value types and generic specialization together, +
+have immense effects inside the JDK!
 
 * no more manual specializations:
 ** functional interfaces
@@ -110,12 +108,13 @@ Has immense effect inside the JDK!
 ** `Optional` API
 * better performance
 
-=== Generic specialization
+=== Put together
 image::images/valhalla.jpg[background, size=cover]
 
-Has immense effect on your code!
+Value types and generic specialization together, +
+have immense effects on your code!
 
-* less trade-offs between +
+* fewer trade-offs between +
 design and performance
 * better performance
 * can express design more clearly
