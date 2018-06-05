@@ -15,3 +15,43 @@ and command line options
 Every release will do that.
 
 ⇝ Get used to updating ASM, et al.
+
+
+
+== Migration Challenges
+
+++++
+<h3>What to look out for<br>when running on JDK 11</h3>
+++++
+
+=== Nothing much...
+
+Java 11 contains few breaking changes:
+
+* removal of deprecated classes/methods +
+and command line options
+* removal of deprecated Java EE modules
+* bytecode level increases to `55.0`
+
+=== Java EE Modules
+image::images/java-ee.jpg[background, size=cover]
+
+* _java.activation_ (`javax.activation`)
+* _java.corba_ (CORBA packages)
+* _java.transaction_ (`javax.transaction`)
+* _java.xml.bind_ (`javax.xml.bind.*`)
+* _java.xml.ws_ (JAX-WS packages)
+* _java.xml.ws.annotation_ (`javax.annotation`)
+
+⇝ Pick https://stackoverflow.com/a/48204154/2525313[a third-party implementation]
+
+
+
+== General Advice
+image::images/sign.jpg[background, size=cover]
+
+* only rely on standardized behavior
+* heed deprecation warnings (`jdeprscan`)
+* keep dependencies and tools up to date
+* build on each release (including EA)
+* report problems

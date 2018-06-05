@@ -203,7 +203,7 @@ java10 --add-modules java.xml.bind -cp 'monitor/target/libs/*':'monitor/target/m
 
 . edit `.mavenrc` to point to Java 11
 . show `mvn -v`
-. in parent POM copy paste Java 10 profile to create one for 11
+. in parent POM copy paste profile to create one for 11
 +
 ```xml
 <profile>
@@ -247,8 +247,21 @@ java10 --add-modules java.xml.bind -cp 'monitor/target/libs/*':'monitor/target/m
 ```
 java11 -cp 'monitor/target/libs/*':'monitor/target/main-1.0-SNAPSHOT.jar' monitor.Main
 ```
-
-TODO: the REST endpoint does not return anything and I blame the JAXB impl - investigate!
+. observe that `xml` endpoint does not return anything, but `json` does
+. activate `java-11` profile, reimport, and launch from IntelliJ
+. in `MonitorServer` change `catch (JAXBException ex)` to `catch (Throwable ex)` and observe the error
+. add this dependency:
++
+```xml
+<!-- HOW?! -->
+<dependency>
+	<groupId>com.sun.activation</groupId>
+	<artifactId>javax.activation</artifactId>
+	<version>1.2.0</version>
+</dependency>
+```
++
+(Was not needed before because https://docs.oracle.com/javase/9/docs/api/java.xml.bind-summary.html[`java.xml.bind` requires it])
 
 ////
 
