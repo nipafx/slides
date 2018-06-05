@@ -30,7 +30,7 @@ JAVA_HOME="/opt/jdk-9"
 ```xml
 <profiles>
 	<profile>
-		<id>java-9</id>
+		<id>java-9+</id>
 		<activation>
 			<jdk>[9,)</jdk>
 		</activation>
@@ -229,6 +229,8 @@ java11 -cp 'monitor/target/libs/*':'monitor/target/main-1.0-SNAPSHOT.jar' monito
 
 TODO: the REST endpoint does not return anything and I blame the JAXB impl - investigate!
 
+////
+
 ## Modularization
 
 ### Preparation
@@ -345,3 +347,5 @@ module monitor.rest {
 .. remove all `--add-modules` from compiling _monitor.rest_
 
 . maybe: `--main-class monitor.Main`
+
+////
