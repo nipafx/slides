@@ -1,4 +1,4 @@
-== Sumatra
+== Project Sumatra
 image::images/sumatra.jpg[background, size=cover]
 
 > Enable Java applications to take advantage of GPUs and APUs [...] to improve performance
@@ -33,7 +33,7 @@ image::images/sumatra.jpg[background, size=cover]
 Basics:
 
 * create low-level API to uniformly access GPUs
-* use stream API as high-level API
+* use streams as high-level API
 
 === Goals
 image::images/sumatra.jpg[background, size=cover]
@@ -74,7 +74,6 @@ public static void main(String[] args) {
 }
 ----
 
-[transition=none]
 === Example
 image::images/sumatra.jpg[background, size=cover]
 
