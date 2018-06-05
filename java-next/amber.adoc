@@ -1,4 +1,4 @@
-== Amber
+== Project Amber
 image::images/amber.jpg[background, size=cover]
 
 > Explore and incubate smaller, productivity-oriented Java language features.
@@ -14,7 +14,7 @@ Already delivered `var` in Java 10!
 === Motivation
 image::images/amber.jpg[background, size=cover]
 
-Compared to modern languages, Java:
+Java compared to more modern languages:
 
 * can be cumbersome
 * lacks expressiveness
@@ -28,6 +28,7 @@ image::images/amber.jpg[background, size=cover]
 * string literals (http://openjdk.java.net/jeps/326[JEP 326])
 * switch expressions (http://openjdk.java.net/jeps/325[JEP 325])
 * pattern matching (http://openjdk.java.net/jeps/305[JEP 305])
+* data classes (http://cr.openjdk.java.net/~briangoetz/amber/datum.html[exploration])
 
 === String literals
 image::images/amber.jpg[background, size=cover]
@@ -42,7 +43,7 @@ String html =
 	</html>`;
 ----
 
-Yeah:
+*Yeah:*
 
 * multiline strings
 * no escaping of special characters
@@ -60,7 +61,7 @@ int numLetters = switch (day) {
 };
 ----
 
-Yeah:
+*Yeah:*
 
 * `switch` "gets a value"
 * no more `break`!
@@ -71,17 +72,17 @@ image::images/amber.jpg[background, size=cover]
 
 [source,java]
 ----
-String formatted = switch (obj) {
+String formatted = switch (value) {
 	case Integer i -> String.format("int %d", i);
 	case Byte b    -> String.format("byte %d", b);
 	case Long l    -> String.format("long %d", l);
 	case Double d  -> String.format("double %f", d);
 	case String s  -> String.format("String %s", s);
-	default        -> obj.toString();
+	default        -> "unknown " + value.toString();
 }
 ----
 
-Yeah:
+*Yeah:*
 
 * more powerful conditions
 * no repetition between condition and block
@@ -97,11 +98,67 @@ public int eval(Node n) {
 		case NegNode(Node n) -> -eval(n);
 		case AddNode(Node left, Node right) ->
 			eval(left) + eval(right);
-		case MulNode(Node left, Node right) ->
-			eval(left) * eval(right);
 		default -> throw new IllegalStateException(n);
 	};
 }
 ----
 
-Goodbye visitor pattern!
+*Yeah:*
+
+* deconstructing complex objects
+* goodbye visitor pattern!
+
+=== Data Classes
+image::images/amber.jpg[background, size=cover]
+
+[source,java]
+----
+public datum Range(int low, int high) {
+
+	// compiler generates:
+	//  * constructor, deconstructor
+	//  * equals/hashCode/toString
+	//  * accessors low(), high()
+
+}
+----
+
+*Yeah:*
+
+* no boilerplate for plain "data carriers"
+* no room for error in `equals`/`hashCode`
+* makes Java more expressive
+
+=== Data Classes
+image::images/amber.jpg[background, size=cover]
+
+> The API for a data class models the state, the whole state, and nothing but the state.
+
+The deal:
+
+* give up encapsulation
+* couple API to internal state
+* get API for free
+
+=== Custom Data Classes
+image::images/amber.jpg[background, size=cover]
+
+[source,java]
+----
+public datum Range(int low, int high) {
+
+	@Override
+	public Range(int low, int high) {
+		if (low > high)
+			throw new IllegalArgumentException();
+		default.this(low, high);
+	}
+
+	public void setLow(int low) {
+		if (low > this.high)
+			throw new IllegalArgumentException();
+		this.low = low;
+	}
+
+}
+----

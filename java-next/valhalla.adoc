@@ -63,6 +63,25 @@ Yeah:
 * identity doesn't matter
 * makes Java more expressive (think DDD)
 
+=== Values vs Data Classes
+image::images/valhalla.jpg[background, size=cover]
+
+*Values:*
+
+* no identity
+* no self references
+* no mutability
+
+⇝ flat and dense memory layout
+
+*Data Classes:*
+
+* no encapsulation
+
+⇝ less boilerplate
+
+Might be combinable to "data value types".
+
 === Generic specialization
 image::images/valhalla.jpg[background, size=cover]
 
