@@ -26,12 +26,12 @@ Amber wants to improve that situation.
 === Endeavors
 image::images/amber.jpg[background, size=cover]
 
-* string literals (http://openjdk.java.net/jeps/326[JEP 326])
+* raw string literals (http://openjdk.java.net/jeps/326[JEP 326])
 * switch expressions (http://openjdk.java.net/jeps/325[JEP 325])
 * pattern matching (http://openjdk.java.net/jeps/305[JEP 305])
-* data classes (http://cr.openjdk.java.net/~briangoetz/amber/datum.html[exploration])
+* records (http://cr.openjdk.java.net/~briangoetz/amber/datum.html[exploration])
 
-=== String literals
+=== Raw string literals
 image::images/amber.jpg[background, size=cover]
 
 [source,java]
@@ -109,12 +109,12 @@ public int eval(Node n) {
 * deconstructing complex objects
 * goodbye visitor pattern!
 
-=== Data Classes
+=== Records
 image::images/amber.jpg[background, size=cover]
 
 [source,java]
 ----
-public datum Range(int low, int high) {
+public record Range(int low, int high) {
 
 	// compiler generates:
 	//  * constructor, deconstructor
@@ -130,10 +130,10 @@ public datum Range(int low, int high) {
 * no room for error in `equals`/`hashCode`
 * makes Java more expressive
 
-=== Data Classes
+=== Records
 image::images/amber.jpg[background, size=cover]
 
-> The API for a data class models the state, the whole state, and nothing but the state.
+> The API for a record models the state, the whole state, and nothing but the state.
 
 The deal:
 
@@ -141,18 +141,17 @@ The deal:
 * couple API to internal state
 * get API for free
 
-=== Custom Data Classes
+=== Customized records
 image::images/amber.jpg[background, size=cover]
 
 [source,java]
 ----
-public datum Range(int low, int high) {
+public record Range(int low, int high) {
 
-	@Override
-	public Range(int low, int high) {
+	// compiler knows signature and assigns to fields
+	public Range {
 		if (low > high)
 			throw new IllegalArgumentException();
-		default.this(low, high);
 	}
 
 	public void setLow(int low) {

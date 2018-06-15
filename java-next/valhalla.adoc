@@ -5,7 +5,7 @@ image::images/valhalla.jpg[background, size=cover]
 
 Profile:
 
-* led by Brian Goetz
+* led by Brian Goetz and John Rose
 * http://openjdk.java.net/projects/valhalla/[project] /
 http://mail.openjdk.java.net/mailman/listinfo/valhalla-dev[mailing list]
 * launched July 2014, very active
@@ -61,7 +61,7 @@ public value Point {
 * identity doesn't matter
 * makes Java more expressive
 
-=== Values vs Data Classes
+=== Values vs Records
 image::images/valhalla.jpg[background, size=cover]
 
 *Values:*
@@ -72,13 +72,13 @@ image::images/valhalla.jpg[background, size=cover]
 
 ⇝ flat and dense memory layout
 
-*Data Classes:*
+*Records:*
 
 * no encapsulation
 
 ⇝ less boilerplate
 
-Might be combinable to "data value types".
+Might be combinable to "value records".
 
 === Generic specialization
 image::images/valhalla.jpg[background, size=cover]
