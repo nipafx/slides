@@ -63,7 +63,9 @@
 	<tr><td>The New World</td></tr>
 	<tr><td>Projects To Look Out For</td></tr>
 </table>
-<div class="paragraph"><p>(Slides at <a href="http://slides.codefx.org/">slides.codefx.org</a>.)</p></div></section>
+<div class="paragraph"><p>Slides at <a href="http://slides.codefx.org/">slides.codefx.org</a>.</p></div>
+<div class="paragraph"><p>If you&#8217;re shy, tweet questions<br>
+with <a href="https://twitter.com/hashtag/JavaNext?src=hash">#JavaNext</a></p></div></section>
 <section id="_versions_and_features"><h2>Versions and features</h2><table class="toc">
 	<tr class="toc-current"><td>Versions and Features</td></tr>
 	<tr><td>The New World</td></tr>
@@ -72,8 +74,8 @@
 <div class="paragraph"><p>From Java 8 to Java 11.</p></div></section>
 <section><section id="_java_8" data-background-image="images/8-dark.jpg" data-background-size="cover"><h2>Java 8</h2><div class="ulist"><ul><li><p>released 03/2014</p></li><li><p>free support <strong>ends 01/2019</strong></p></li></ul></div></section><section id="_what_s_the_core_of_8" data-background-image="images/8-dark.jpg" data-background-size="cover"><h2>What&#8217;s the core of 8?</h2>
 <div class="ulist"><ul><li class="fragment"><p><code>n -&gt; lambdas()</code><br>
-and <code>Method::references</code></p></li><li class="fragment"><p><code>features.stream()</code></p></li><li class="fragment"><p><code>default method() { &#8230;&#8203; }</code></p></li></ul></div></section><section data-background-image="images/minions.gif" data-background-size="cover" data-state="empty"></section><section data-background-image="images/lambda.jpg" data-background-size="cover" data-state="empty"></section><section id="_project_lambda" data-background-image="images/lambda.jpg" data-background-size="cover"><h2>Project Lambda</h2>
-<div class="ulist"><ul><li><p>lead by Brian Goetz</p></li><li><p>ran from 12/2009 to 02/2014</p></li><li><p><a href="http://openjdk.java.net/projects/lambda/">project page</a>
+<code>Method::references</code></p></li><li class="fragment"><p><code>features.stream()</code></p></li><li class="fragment"><p><code>default method() { &#8230;&#8203; }</code></p></li></ul></div></section><section data-background-image="images/minions.gif" data-background-size="cover" data-state="empty"></section><section data-background-image="images/lambda.jpg" data-background-size="cover" data-state="empty"></section><section id="_project_lambda" data-background-image="images/lambda.jpg" data-background-size="cover"><h2>Project Lambda</h2>
+<div class="ulist"><ul><li><p>led by Brian Goetz</p></li><li><p>ran from 12/2009 to 02/2014</p></li><li><p><a href="http://openjdk.java.net/projects/lambda/">project page</a>
 / <a href="https://jcp.org/en/jsr/detail?id=335">JSR 335</a></p></li><li><p><a href="http://mail.openjdk.java.net/mailman/listinfo/lambda-dev">mailing list</a> (thousands of messages)</p></li></ul></div></section><section id="_project_lambda_2" data-background-image="images/lambda.jpg" data-background-size="cover"><h2>Project Lambda</h2>
 <div class="ulist"><ul><li><p>launched with <a href="http://cr.openjdk.java.net/~mr/lambda/straw-man/">a straw-man</a> (12/2009):</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">#(int x, int y)(x * y)</code></pre></div></div></li><li><p>1st early draft review (11/2011):</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Callable&lt;String&gt; c = () -&gt; "done";</code></pre></div></div></li><li><p>2nd review (06/2012) and 3rd review (01/2013)</p></li><li><p>public review (12/2013) and final ballot (02/2014)</p></li></ul></div></section><section id="_projects" data-background-image="images/lambda.jpg" data-background-size="cover"><h2>Projects&#8230;&#8203;</h2>
 <div class="ulist"><ul><li><p>start with an idea<br>
@@ -100,7 +102,7 @@ that is then evolved</p></li><li><p>can take a long time</p></li><li><p>are fair
 ">37% off with<br>code <em>fccparlog</em></p>
 	<p><a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb">tiny.cc/jms</a></p>
 </div></section><section data-background-image="images/jigsaw.jpg" data-background-size="cover" data-state="empty"></section><section id="_project_jigsaw" data-background-image="images/jigsaw.jpg" data-background-size="cover"><h2>Project Jigsaw</h2>
-<div class="ulist"><ul><li><p>launched 12/2008</p></li><li><p><a href="http://mreinhold.org/blog/jigsaw">announced by Mark Reinhold</a>:</p></li></ul></div>
+<div class="ulist"><ul><li><p>led by Mark Reinhold</p></li><li><p>launched 12/2008</p></li><li><p>from <a href="http://mreinhold.org/blog/jigsaw">the announcement</a>:</p></li></ul></div>
 <div class="quoteblock"><blockquote><div class="paragraph"><p>Sun’s primary goal in the upcoming JDK 7 release will be to modularize the JDK [&#8230;&#8203;], which we hope to deliver early in 2010.</p></div></blockquote></div>
 <div class="paragraph"><p>😊</p></div></section><section id="_jigsaw_history" data-background-image="images/jigsaw.jpg" data-background-size="cover"><h2>Jigsaw history</h2>
 <div class="ulist"><ul><li><p>Oracle acquires Sun, Jigsaw is halted (2010)</p></li><li><p>Jigsaw starts exploratory phase (2011)</p></li><li><p>releases of Java 7 (2011) and Java 8 (2014)</p></li><li><p>exploratory phase ends with <a href="https://www.jcp.org/en/jsr/detail?id=376">JSR 376</a> (2014)</p></li><li><p>a prototype is released (09/2015)</p></li></ul></div></section><section data-background-image="images/sheldon.gif" data-background-size="cover" data-state="empty"></section><section id="_community_unrest" data-background-image="images/sheldon.gif" data-background-size="cover"><h2>Community unrest</h2>
@@ -199,12 +201,12 @@ by <a href="https://adoptopenjdk.net/">Adopt OpenJDK</a>!</p></div></section><se
 <div class="ulist"><ul><li><p>large features are developed by <a href="http://openjdk.java.net/projects/">projects</a></p></li><li><p>smaller features are proposed by <a href="http://openjdk.java.net/jeps/0">JEP</a> only</p></li></ul></div>
 <div class="paragraph"><p>Let&#8217;s have a look at what&#8217;s coming!</p></div>
 <div class="paragraph"><p><em>(Straw-man syntax ahead!)</em></p></div></section><section id="_many_great_projects"><h2>Many great projects</h2><div class="dlist"><dl><dt class="hdlist1">Amber</dt><dd><p>Smaller, productivity-oriented language features</p></dd><dt class="hdlist1">Valhalla</dt><dd><p>Generic specialization and value types</p></dd><dt class="hdlist1">Loom</dt><dd><p>Fibers and continuations</p></dd><dt class="hdlist1">Metropolis</dt><dd><p>Graal and ahead-of-time compilation</p></dd><dt class="hdlist1">Sumatra</dt><dd><p>Java on the GPU and APU</p></dd></dl></div></section></section>
-<section><section id="_project_amber_2" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Project Amber</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>Explore and incubate smaller, productivity-oriented Java language features.</p></div></blockquote></div><div class="paragraph"><p>Profile:</p></div><div class="ulist"><ul><li><p><a href="http://openjdk.java.net/projects/amber/">project</a> /
+<section><section id="_project_amber_2" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Project Amber</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>Explore and incubate smaller, productivity-oriented Java language features.</p></div></blockquote></div><div class="paragraph"><p>Profile:</p></div><div class="ulist"><ul><li><p>led by Brian Goetz</p></li><li><p><a href="http://openjdk.java.net/projects/amber/">project</a> /
 <a href="http://mail.openjdk.java.net/mailman/listinfo/amber-dev">mailing list</a></p></li><li><p>launched March 2017, very active</p></li></ul></div><div class="paragraph"><p>Already delivered <code>var</code> in Java 10!</p></div></section><section id="_motivation" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Motivation</h2>
 <div class="paragraph"><p>Java compared to more modern languages:</p></div>
 <div class="ulist"><ul><li><p>can be cumbersome</p></li><li><p>lacks expressiveness</p></li><li><p>tends to require boilerplate</p></li></ul></div>
 <div class="paragraph"><p>Amber wants to improve that situation.</p></div></section><section id="_endeavors" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Endeavors</h2>
-<div class="ulist"><ul><li><p>string literals (<a href="http://openjdk.java.net/jeps/326">JEP 326</a>)</p></li><li><p>switch expressions (<a href="http://openjdk.java.net/jeps/325">JEP 325</a>)</p></li><li><p>pattern matching (<a href="http://openjdk.java.net/jeps/305">JEP 305</a>)</p></li><li><p>data classes (<a href="http://cr.openjdk.java.net/~briangoetz/amber/datum.html">exploration</a>)</p></li></ul></div></section><section id="_string_literals" data-background-image="images/amber.jpg" data-background-size="cover"><h2>String literals</h2>
+<div class="ulist"><ul><li><p>raw string literals (<a href="http://openjdk.java.net/jeps/326">JEP 326</a>)</p></li><li><p>switch expressions (<a href="http://openjdk.java.net/jeps/325">JEP 325</a>)</p></li><li><p>pattern matching (<a href="http://openjdk.java.net/jeps/305">JEP 305</a>)</p></li><li><p>records (<a href="http://cr.openjdk.java.net/~briangoetz/amber/datum.html">exploration</a>)</p></li></ul></div></section><section id="_raw_string_literals" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Raw string literals</h2>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">String html =
 	`&lt;html&gt;
 		&lt;body&gt;
@@ -241,8 +243,8 @@ by <a href="https://adoptopenjdk.net/">Adopt OpenJDK</a>!</p></div></section><se
 	};
 }</code></pre></div></div>
 <div class="paragraph"><p><strong>Yeah:</strong></p></div>
-<div class="ulist"><ul><li><p>deconstructing complex objects</p></li><li><p>goodbye visitor pattern!</p></li></ul></div></section><section id="_data_classes" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Data Classes</h2>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public datum Range(int low, int high) {
+<div class="ulist"><ul><li><p>deconstructing complex objects</p></li><li><p>goodbye visitor pattern!</p></li></ul></div></section><section id="_records" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Records</h2>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public record Range(int low, int high) {
 
 	// compiler generates:
 	//  * constructor, deconstructor
@@ -251,17 +253,16 @@ by <a href="https://adoptopenjdk.net/">Adopt OpenJDK</a>!</p></div></section><se
 
 }</code></pre></div></div>
 <div class="paragraph"><p><strong>Yeah:</strong></p></div>
-<div class="ulist"><ul><li><p>no boilerplate for plain "data carriers"</p></li><li><p>no room for error in <code>equals</code>/<code>hashCode</code></p></li><li><p>makes Java more expressive</p></li></ul></div></section><section id="_data_classes_2" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Data Classes</h2>
-<div class="quoteblock"><blockquote><div class="paragraph"><p>The API for a data class models the state, the whole state, and nothing but the state.</p></div></blockquote></div>
+<div class="ulist"><ul><li><p>no boilerplate for plain "data carriers"</p></li><li><p>no room for error in <code>equals</code>/<code>hashCode</code></p></li><li><p>makes Java more expressive</p></li></ul></div></section><section id="_records_2" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Records</h2>
+<div class="quoteblock"><blockquote><div class="paragraph"><p>The API for a record models the state, the whole state, and nothing but the state.</p></div></blockquote></div>
 <div class="paragraph"><p>The deal:</p></div>
-<div class="ulist"><ul><li><p>give up encapsulation</p></li><li><p>couple API to internal state</p></li><li><p>get API for free</p></li></ul></div></section><section id="_custom_data_classes" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Custom Data Classes</h2>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public datum Range(int low, int high) {
+<div class="ulist"><ul><li><p>give up encapsulation</p></li><li><p>couple API to internal state</p></li><li><p>get API for free</p></li></ul></div></section><section id="_customized_records" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Customized records</h2>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public record Range(int low, int high) {
 
-	@Override
-	public Range(int low, int high) {
+	// compiler knows signature and assigns to fields
+	public Range {
 		if (low &gt; high)
 			throw new IllegalArgumentException();
-		default.this(low, high);
 	}
 
 	public void setLow(int low) {
@@ -271,7 +272,7 @@ by <a href="https://adoptopenjdk.net/">Adopt OpenJDK</a>!</p></div></section><se
 	}
 
 }</code></pre></div></div></section></section>
-<section><section id="_project_valhalla" data-background-image="images/valhalla.jpg" data-background-size="cover"><h2>Project Valhalla</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>Explore and incubate advanced Java VM and Language feature candidates.</p></div></blockquote></div><div class="paragraph"><p>Profile:</p></div><div class="ulist"><ul><li><p><a href="http://openjdk.java.net/projects/valhalla/">project</a> /
+<section><section id="_project_valhalla" data-background-image="images/valhalla.jpg" data-background-size="cover"><h2>Project Valhalla</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>Explore and incubate advanced Java VM and Language feature candidates.</p></div></blockquote></div><div class="paragraph"><p>Profile:</p></div><div class="ulist"><ul><li><p>led by Brian Goetz and John Rose</p></li><li><p><a href="http://openjdk.java.net/projects/valhalla/">project</a> /
 <a href="http://mail.openjdk.java.net/mailman/listinfo/valhalla-dev">mailing list</a></p></li><li><p>launched July 2014, very active</p></li></ul></div></section><section id="_motivation_2" data-background-image="images/valhalla.jpg" data-background-size="cover"><h2>Motivation</h2>
 <div class="paragraph"><p>In Java, (almost) everything is a class:</p></div>
 <div class="ulist"><ul><li><p>mutable by default</p></li><li><p>memory access indirection</p></li><li><p>requires extra memory for header</p></li><li><p>allows locking and other<br>
@@ -293,14 +294,14 @@ identity-based operations</p></li></ul></div>
 	private final int y;
 }</code></pre></div></div>
 <div class="paragraph"><p><strong>Yeah:</strong></p></div>
-<div class="ulist"><ul><li><p>enforced immutability</p></li><li><p>no memory indirection! (<em>flat</em>)</p></li><li><p>no <code>Object</code> header (<em>dense</em>)</p></li><li><p>identity doesn&#8217;t matter</p></li><li><p>makes Java more expressive</p></li></ul></div></section><section id="_values_vs_data_classes" data-background-image="images/valhalla.jpg" data-background-size="cover"><h2>Values vs Data Classes</h2>
+<div class="ulist"><ul><li><p>enforced immutability</p></li><li><p>no memory indirection! (<em>flat</em>)</p></li><li><p>no <code>Object</code> header (<em>dense</em>)</p></li><li><p>identity doesn&#8217;t matter</p></li><li><p>makes Java more expressive</p></li></ul></div></section><section id="_values_vs_records" data-background-image="images/valhalla.jpg" data-background-size="cover"><h2>Values vs Records</h2>
 <div class="paragraph"><p><strong>Values:</strong></p></div>
 <div class="ulist"><ul><li><p>no identity</p></li><li><p>no self references</p></li><li><p>no mutability</p></li></ul></div>
 <div class="paragraph"><p>⇝ flat and dense memory layout</p></div>
-<div class="paragraph"><p><strong>Data Classes:</strong></p></div>
+<div class="paragraph"><p><strong>Records:</strong></p></div>
 <div class="ulist"><ul><li><p>no encapsulation</p></li></ul></div>
 <div class="paragraph"><p>⇝ less boilerplate</p></div>
-<div class="paragraph"><p>Might be combinable to "data value types".</p></div></section><section id="_generic_specialization" data-background-image="images/valhalla.jpg" data-background-size="cover"><h2>Generic specialization</h2>
+<div class="paragraph"><p>Might be combinable to "value records".</p></div></section><section id="_generic_specialization" data-background-image="images/valhalla.jpg" data-background-size="cover"><h2>Generic specialization</h2>
 <div class="paragraph"><p>When everybody creates their own primitives,<br>
 boxing becomes omni-present and very painful!</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;int&gt; ids = new ArrayList&lt;&gt;();</code></pre></div></div>
