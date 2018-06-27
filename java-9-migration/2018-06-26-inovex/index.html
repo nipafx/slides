@@ -1,0 +1,291 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>To JAR Hell And Back</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="_reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="_reveal.js/css/theme/nipa-night.css" id="theme"><link href="_reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>document.write( '<link rel="stylesheet" href="_reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>To JAR Hell And Back</h1><div class="preamble"><link rel="stylesheet" href="_highlight.js/styles/monokai-sublime.css">
+<script src="_highlight.js/highlight.pack.js"></script>
+<script>
+	window.onload = function() {
+		hljs.configure({
+			tabReplace: '    ',
+			languages: [ 'java' ]
+		})
+		var codes = document.getElementsByTagName('code');
+		for(var i = 0; i < codes.length; i++) {
+			hljs.highlightBlock(codes.item(i));
+		}
+		hljs.initHighlightingOnLoad();
+	}
+</script>
+<style>
+.reveal .title h2 {
+	font-size: 1.75em;
+}
+</style>
+<h2>A Live Migration To Java 11</h2>
+<div class="event">
+	<div class="participant">
+		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
+		<div class="name">
+			<p><a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a></p>
+			<p><a href="http://codefx.org">codefx.org</a>
+				/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a></p>
+		</div>
+	</div>
+	<div class="participant">
+		<a href="https://www.inovex.de"><img src="images/logo-inovex.png" class="logo" style="background-color: #111; border-color: #FFF;"></a>
+		<div class="name">
+			<p><a href="https://www.inovex.de">Inovex</a></p>
+			<p><a href="https://twitter.com/inovexgmbh">@inovexgmbh</a></p>
+		</div>
+	</div>
+</div>
+<!-- Just adding a footer does not work because reveal.js puts it into the slides and we couldn't get it out via CSS. So we move it via JavaScript. -->
+<footer>
+	<div class="participant">
+		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
+		<div class="name"><p>
+			<a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a>
+			/ <a href="http://codefx.org">codefx.org</a>
+			/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a>
+		</p></div>
+	</div>
+	<div class="participant">
+		<a href="https://www.inovex.de"><img src="images/logo-inovex.png" class="logo" style="background-color: #111; border-color: #FFF;"></a>
+		<div class="name">
+			<p><a href="https://www.inovex.de">Inovex</a> / <a href="https://twitter.com/inovexgmbh">@inovexgmbh</a></p>
+		</div>
+	</div>
+</footer>
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		document.body.appendChild(document.querySelector('footer'));
+	})
+</script></div></section>
+<section id="_public_service_announcement"><h2>Public Service Announcement</h2><div class="ulist"><ul><li><p>this is about running on Java 9, 10, and 11<br>
+(not about creating modules)</p></li><li><p>we&#8217;re only looking at the bad and the ugly</p></li><li><p>slides at <a href="http://slides.codefx.org/">slides.codefx.org</a></p></li><li><p>code on GitHub at<br>
+<a href="https://github.com/CodeFX-org/demo-java-9-migration">CodeFX-org/demo-java-9-migration</a></p></li></ul></div></section>
+<section><section id="_java_platform_module_system"><h2>Java Platform Module System</h2><h3>Delaying Java since 2008!</h3></section><section id="_jar_hell_is_bad_mkay"><h2>JAR Hell is bad, mkay?</h2><div class="paragraph"><p><strong>JARs have</strong>:</p></div>
+<div class="ulist"><ul><li><p>no name the JVM cares about</p></li><li><p>no explicit dependencies</p></li><li><p>no well-defined API</p></li><li><p>no concept of versions</p></li></ul></div>
+<div class="paragraph"><p><strong>Some consequences</strong>:</p></div>
+<div class="ulist"><ul><li><p><code>NoClassDefFoundError</code></p></li><li><p>no encapsulation across JARs</p></li><li><p>version conflicts</p></li></ul></div></section><section id="_modules"><h2>Modules</h2><div class="paragraph"><p><strong>Modules are like JARs but have</strong>:</p></div>
+<div class="ulist"><ul><li><p>proper names</p></li><li><p>explicit dependencies</p></li><li><p>a well-defined API</p></li><li><p>no concept of versions 😭</p></li></ul></div>
+<div class="paragraph"><p><strong>Important goals</strong>:</p></div>
+<div class="ulist"><ul><li><p>reliable configuration</p></li><li><p>strong encapsulation</p></li></ul></div></section><section id="_module_declaration"><h2>Module Declaration</h2><div class="paragraph"><p>A file <code>module-info.java</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> java.sql {
+	<span class="hljs-keyword">requires transitive</span> java.logging
+	<span class="hljs-keyword">requires transitive</span> java.xml
+	<span class="hljs-keyword">uses</span> java.sql.Driver
+	<span class="hljs-keyword">exports</span> java.sql
+	<span class="hljs-keyword">exports</span> javax.sql
+	<span class="hljs-keyword">exports</span> javax.transaction.xa
+}</code></pre></div></div></section><section id="_reliable_configuration"><h2>Reliable Configuration</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> java.sql {
+	<span class="hljs-keyword">requires transitive</span> java.logging
+	<span class="hljs-keyword">requires transitive</span> java.xml
+}</code></pre></div></div>
+<div class="paragraph"><p>Module system enforces:</p></div>
+<div class="ulist"><ul><li><p>all required modules are present</p></li><li><p>no ambiguity</p></li><li><p>no static dependency cycles</p></li><li><p>no split packages</p></li></ul></div></section><section id="_strong_encapsulation"><h2>Strong Encapsulation</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> java.sql {
+	<span class="hljs-keyword">exports</span> java.sql
+	<span class="hljs-keyword">exports</span> javax.sql
+	<span class="hljs-keyword">exports</span> javax.transaction.xa
+}</code></pre></div></div>
+<div class="paragraph"><p>Say you want to access <code>java.sql.ResultSet</code>.</p></div>
+<div class="paragraph"><p>Module system only grants access if:</p></div>
+<div class="ulist"><ul><li><p><code>ResultSet</code> is public</p></li><li><p><code>java.sql</code> is exported by <em>java.sql</em></p></li><li><p>your module reads <em>java.sql</em></p></li></ul></div></section><section data-background-color="white" data-background-image="images/platform-modules.png" data-background-size="contain" data-state="empty"></section><section id="_other_features"><h2>Other Features</h2><div class="ulist"><ul><li><p>decoupling via services</p></li><li><p>finer grained dependencies and exports</p></li><li><p>open packages and modules (for reflection)</p></li><li><p>unnamed and automatic modules (for migration)</p></li><li><p>layers (for containers)</p></li><li><p><code>jlink</code> to create runtime images</p></li></ul></div></section><section id="_of_modules_and_jars"><h2>Of Modules And JARs</h2><div class="paragraph"><p>Modularized JDK and legacy JARs have to cooperate.</p></div>
+<div class="paragraph"><p>Two requirements:</p></div>
+<div class="ulist"><ul><li><p>for the module system to work,<br>
+everything needs to be a module</p></li><li><p>for compatibility, the class path<br>
+and regular JARs have to keep working</p></li></ul></div></section><section id="_the_unnamed_module"><h2>The Unnamed Module</h2><div class="paragraph"><p>The <strong>Unnamed Module</strong><br>
+contains <em>all</em> JARs on the class path<br>
+(including modular JARs).</p></div>
+<div class="ulist"><ul><li><p>has no name (surprise!)</p></li><li><p>can read all modules</p></li><li><p>exports all packages</p></li></ul></div>
+<div class="paragraph"><p>Inside the unnamed module<br>
+"the chaos of the class path" lives on.</p></div>
+<aside class="notes"><div class="ulist"><ul><li><p>one unnamed module per class loader</p></li></ul></div></aside></section></section>
+<section><section id="_migration_challenges"><h2>Migration Challenges</h2><h3>What to look out for<br>when running on JDK 9</h3></section><section id="_break_stuff" data-background-image="images/broken-glass.jpg" data-background-size="cover"><h2>Break Stuff</h2>
+<div class="paragraph"><p>Some internal changes <a href="https://blog.codefx.org/java/java-9-migration-guide/">break existing code</a>!</p></div>
+<div class="paragraph"><p>Just by running on JDK 9<br>
+(even without modularizing the application).</p></div></section><section id="_internal_apis" data-background-image="images/internals.jpg" data-background-size="cover"><h2>Internal APIs</h2>
+<div class="ulist"><ul><li><p>internal APIs are:</p><div class="ulist"><ul><li><p>all in <code>sun.*</code></p></li><li><p>most in <code>com.sun.*</code><br>
+(unless marked <code>@jdk.Exported</code>)</p></li></ul></div></li><li><p>encapsulated at compile time</p></li><li><p>accessible at run time<br>
+for some time</p></li><li><p>critical APIs may survive longer<br>
+(e.g. <code>sun.misc.Unsafe</code>)</p></li></ul></div></section><section id="_what_to_look_for"><h2>What to look for?</h2><div class="paragraph"><p><a href="https://blog.codefx.org/tools/jdeps-tutorial-analyze-java-project-dependencies/">JDeps</a> can report internal dependencies:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">$ jdeps --jdk-internals
+	-recursive --class-path 'libs/*'
+	scaffold-hunter-2.6.3.jar
+
+&gt; batik-codec.jar -&gt; JDK removed internal API
+&gt;     JPEGImageWriter -&gt; JPEGCodec
+&gt; guava-18.0.jar -&gt; jdk.unsupported
+&gt;     Striped64 -&gt; Unsafe
+&gt; scaffold-hunter-2.6.3.jar -&gt; java.desktop
+&gt;     SteppedComboBox -&gt; WindowsComboBoxUI</code></pre></div></div></section><section id="_what_else_to_look_for"><h2>What else to look for?</h2><div class="ulist"><ul><li><p>look for reflection, especially</p><div class="ulist"><ul><li><p><code>Class::forName</code></p></li><li><p><code>AccessibleObject::setAccessible</code></p></li></ul></div></li><li><p>recursively check your dependencies!</p></li></ul></div></section><section id="_what_to_do"><h2>What to do?</h2><div class="olist arabic"><ol class="arabic"><li><p>fix your code</p></li><li><p>contact library developers</p></li><li><p>look for alternatives<br>
+(in the JDK or other libraries)</p></li><li><p>consider command line flags<br>
+<code>--add-exports</code>, <code>--add-opens</code>, or<br>
+<code>--illegal-access</code></p></li></ol></div></section><section id="_java_ee_modules" data-background-image="images/java-ee.jpg" data-background-size="cover"><h2>Java EE Modules</h2>
+<div class="ulist"><ul><li><p><em>java.activation</em> (<code>javax.activation</code>)</p></li><li><p><em>java.corba</em> (CORBA packages)</p></li><li><p><em>java.transaction</em> (<code>javax.transaction</code>)</p></li><li><p><em>java.xml.bind</em> (<code>javax.xml.bind.*</code>)</p></li><li><p><em>java.xml.ws</em> (JAX-WS packages)</p></li><li><p><em>java.xml.ws.annotation</em> (<code>javax.annotation</code>)</p></li></ul></div>
+<div class="paragraph"><p>These are</p></div>
+<div class="ulist"><ul><li><p>deprecated for removal</p></li><li><p>not resolved by default</p></li></ul></div></section><section id="_what_to_look_for_2"><h2>What to look for?</h2><div class="paragraph"><p>JDeps shows dependencies on platform modules:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">$ jdeps -summary sh-2.6.3.jar
+
+&gt; sh-2.6.3.jar -&gt; java.base
+&gt; sh-2.6.3.jar -&gt; java.datatransfer
+&gt; sh-2.6.3.jar -&gt; java.desktop
+&gt; sh-2.6.3.jar -&gt; java.logging
+&gt; sh-2.6.3.jar -&gt; java.prefs
+&gt; sh-2.6.3.jar -&gt; java.sql
+&gt; sh-2.6.3.jar -&gt; java.xml</code></pre></div></div></section><section id="_what_to_do_2"><h2>What to do?</h2><div class="ulist"><ul><li><p>pick <a href="https://stackoverflow.com/a/48204154/2525313">a third-party implementation</a></p></li><li><p>add Java EE platform modules<br>
+with <code>--add-modules</code></p></li></ul></div></section><section id="_split_packages" data-background-image="images/cut.jpg" data-background-size="cover"><h2>Split Packages</h2>
+<div class="ulist"><ul><li><p>packages should have a unique origin</p></li><li><p>no module must read the same package<br>
+from two modules</p></li></ul></div>
+<div class="paragraph"><p>The implementation is even stricter:</p></div>
+<div class="ulist"><ul><li><p>no two modules must contain<br>
+the same package (exported or not)</p></li><li><p>split packages on class path<br>
+are inaccessible</p></li></ul></div></section><section id="_examples"><h2>Examples</h2><div class="ulist"><ul><li><p>some libraries split <code>java.xml.*</code>, e.g. <a href="http://search.maven.org/#artifactdetails|xml-apis|xml-apis|2.0.2|jar">xml-apis</a></p></li><li><p>some <a href="https://issues.jboss.org/browse/WFLY-6375?_sscc=t">JBoss modules</a> split, e.g.,<br>
+<code>java.transaction</code>, <code>java.xml.ws</code></p></li><li><p><a href="http://mvnrepository.com/artifact/com.google.code.findbugs/jsr305">jsr305</a> splits <code>javax.annotation</code></p></li></ul></div></section><section id="_what_to_look_for_3"><h2>What to look for?</h2><div class="paragraph"><p>JDeps reports split packages:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">$ jdeps -summary
+	-recursive --class-path 'libs/*'
+	project.jar
+
+&gt; split package: javax.annotation
+&gt;     [jrt:/java.xml.ws.annotation,
+&gt;         libs/jsr305-3.0.2.jar]</code></pre></div></div></section><section id="_what_to_do_3"><h2>What to do?</h2><div class="paragraph"><p>Your artifacts:</p></div>
+<div class="olist arabic"><ol class="arabic"><li><p>rename one of the packages</p></li><li><p>merge package into the same artifact</p></li><li><p>merge the artifacts</p></li><li><p>place both artifacts on the class path</p></li></ol></div>
+<div class="paragraph"><p>Otherwise:</p></div>
+<div class="olist arabic"><ol class="arabic" start="5"><li><p>upgrade the JDK module with the artifact</p></li><li><p><code>--patch-module</code> with the artifact&#8217;s content</p></li></ol></div></section><section id="_run_time_images" data-background-image="images/cells.jpg" data-background-size="cover"><h2>Run-Time Images</h2>
+<div class="ulist"><ul><li><p>new JDK/JRE layout</p></li><li><p>internal JARs are gone (e.g. <code>rt.jar</code>, <code>tools.jar</code>)</p></li><li><p>JARs are now JMODs</p></li><li><p>application class loader is no <code>URLClassLoader</code><br>
+(no way to append to its class path)</p></li><li><p>new URL schema for run-time image content</p></li></ul></div></section><section id="_what_to_look_for_4"><h2>What to look for?</h2><div class="ulist"><ul><li><p>does the code rummage around<br>
+in the JDK / JRE folder?</p></li><li><p>are URLs to JDK classes / resources handcrafted?</p></li><li><p>search for casts to <code>URLClassLoader</code></p></li></ul></div></section><section id="_obsolete" data-background-image="images/obsolete.jpg" data-background-size="cover"><h2>Obsolete</h2>
+<div class="ulist"><ul><li><p>Compact Profiles</p></li><li><p>Extension Mechanism</p></li><li><p>Endorsed Standards Override Mechanism</p></li><li><p>Boot Class Path Override</p></li><li><p>JRE version selection with <code>-version:N</code></p></li></ul></div>
+<aside class="notes"><div class="ulist"><ul><li><p>ext. mech.: makes custom APIs available to all applications running on the JDK</p></li><li><p>first 2 replaced by upgradeable modules.</p></li></ul></div></aside></section><section id="_but_wait_there_s_more" data-background-image="images/shibuya-night.jpg" data-background-size="cover"><h2>But wait, there&#8217;s more!</h2>
+<div class="paragraph"><p>Yes, yes, there&#8217;s more:</p></div>
+<div class="paragraph"><p><strong>Java 9 Migration Guide</strong><br>
+(<a href="https://blog.codefx.org/java/java-9-migration-guide/">tiny.cc/java-9-migration</a>)</p></div>
+<div class="paragraph"><p>Background:</p></div>
+<div class="ulist"><ul><li><p><a href="https://blog.codefx.org/java/planning-your-java-9-update/">Planning Your Java 9 Update</a></p></li><li><p><a href="https://blog.codefx.org/java/five-command-line-options-to-hack-the-java-9-module-system/">JPMS Command Line Options</a></p></li><li><p><a href="https://blog.codefx.org/tools/jdeps-tutorial-analyze-java-project-dependencies/">JDeps Tutorial</a></p></li></ul></div>
+<div class="paragraph"><p>And there are new version strings:</p></div>
+<div class="ulist"><ul><li><p>goodbye <code>1.9.0_31</code>, hello <code>9.1.4</code><br>
+(soon  <code>18.3</code>?)</p></li></ul></div></section><section id="_general_advice_i" data-background-image="images/sign.jpg" data-background-size="cover"><h2>General Advice I</h2>
+<div class="paragraph"><p>The most relevant for most applications:</p></div>
+<div class="ulist"><ul><li><p>internal APIs</p></li><li><p>split packages</p></li><li><p>Java EE modules</p></li></ul></div></section><section id="_general_advice_ii" data-background-image="images/sign.jpg" data-background-size="cover"><h2>General Advice II</h2>
+<div class="ulist"><ul><li><p>get your code in shape<br>
+(and prevent relapses)</p></li><li><p>check your dependencies and tools</p></li><li><p>if any are suspicious<br>
+(automatically true for IDEs, build tools):</p><div class="ulist"><ul><li><p>make sure they&#8217;re alive</p></li><li><p><strong>get them up to date!</strong></p></li><li><p>or look for alternatives</p></li></ul></div></li><li><p>download Java 9 and <strong>try it!</strong></p></li></ul></div></section></section>
+<section><section id="_migration_challenges_2"><h2>Migration Challenges</h2><h3>What to look out for<br>when running on JDK 10</h3></section><section id="_nothing_much"><h2>Nothing much&#8230;&#8203;</h2><div class="paragraph"><p>Java 10 contains few breaking changes:</p></div>
+<div class="ulist"><ul><li><p>mostly removal of deprecated methods<br>
+and command line options</p></li><li><p>bytecode level increases to <code>54.0</code></p></li></ul></div>
+<div class="paragraph"><p>Every release will do that.</p></div>
+<div class="paragraph"><p>⇝ Get used to updating ASM, et al.</p></div></section></section>
+<section><section id="_migration_challenges_3"><h2>Migration Challenges</h2><h3>What to look out for<br>when running on JDK 11</h3></section><section id="_nothing_much_2"><h2>Nothing much&#8230;&#8203;</h2><div class="paragraph"><p>Java 11 contains few breaking changes:</p></div>
+<div class="ulist"><ul><li><p>removal of deprecated classes/methods<br>
+and command line options</p></li><li><p>removal of deprecated Java EE modules</p></li><li><p>bytecode level increases to <code>55.0</code></p></li></ul></div></section><section id="_java_ee_modules_2" data-background-image="images/java-ee.jpg" data-background-size="cover"><h2>Java EE Modules</h2>
+<div class="ulist"><ul><li><p><em>java.activation</em> (<code>javax.activation</code>)</p></li><li><p><em>java.corba</em> (CORBA packages)</p></li><li><p><em>java.transaction</em> (<code>javax.transaction</code>)</p></li><li><p><em>java.xml.bind</em> (<code>javax.xml.bind.*</code>)</p></li><li><p><em>java.xml.ws</em> (JAX-WS packages)</p></li><li><p><em>java.xml.ws.annotation</em> (<code>javax.annotation</code>)</p></li></ul></div>
+<div class="paragraph"><p>⇝ Pick <a href="https://stackoverflow.com/a/48204154/2525313">a third-party implementation</a></p></div></section></section>
+<section id="_general_advice" data-background-image="images/sign.jpg" data-background-size="cover"><h2>General Advice</h2>
+<div class="ulist"><ul><li><p>only rely on standardized behavior</p></li><li><p>heed deprecation warnings (<code>jdeprscan</code>)</p></li><li><p>keep dependencies and tools up to date</p></li><li><p>build on each release (including EA)</p></li><li><p>report problems</p></li></ul></div></section>
+<section id="_about_nicolai_parlog" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>About Nicolai Parlog</h2>
+<div style="float: left; width: 45%; margin:0px;">
+	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="images/cover-jms.png" style="margin: 0;"></a>
+	<p style="
+		position: fixed;
+		margin: -160px 0 0 60px;
+		transform: rotate(-8deg);
+		font-size: 28pt;
+		color: #cc0000;
+		text-shadow: 2px 2px 3px #660000;
+		font-weight: bold;
+		border: 5px solid #cc0000;
+		border-radius: 12px;
+		background-color: rgba(255,255,255,0.5);
+		padding: 2px 8px 7px 4px;
+">37% off with<br>code <em>fccparlog</em></p>
+	<p><a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb">tiny.cc/jms</a></p>
+</div>
+<h3>Follow</h3>
+<div class="paragraph"><p>💻 <a href="http://codefx.org">codefx.org</a><br>
+▶ <a href="https://www.youtube.com/c/codefx">youtube.com/c/codefx</a><br>
+🐦 <a href="https://twitter.com/nipafx">@nipafx</a></p></div>
+<h3>Want More?</h3>
+<div class="paragraph"><p>⇜ Get <a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&amp;a_bid=869915cb">my book</a>!</p></div>
+<div class="paragraph"><p>You can <a href="http://blog.codefx.org/hire-nicolai-parlog/">hire me</a>:</p></div>
+<div class="ulist"><ul><li><p>training (Java 8-11, JUnit 5)</p></li><li><p>consulting (Java 8-11)</p></li></ul></div></section>
+<section id="_image_credits"><h2>Image Credits</h2><div class="ulist"><ul><li><p><a href="https://pixabay.com/en/bison-buffalo-group-herd-snow-2237654/">buffalos</a>:
+<a href="https://pixabay.com/en/users/skeeze-272447/">skeeze</a>,
+<a href="https://wiki.creativecommons.org/wiki/CC0">CC0</a></p></li><li><p><a href="https://www.flickr.com/photos/21496790@N06/5065834411">question-mark</a>:
+<a href="http://milosevicmilos.com/">Milos Milosevic</a>,
+<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a></p></li><li><p>sign:
+<a href="https://www.flickr.com/photos/duncharris/">Duncan Harris</a>,
+<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA 2.0</a></p></li></ul></div></section></div></div><script src="_reveal.js/lib/js/head.min.js"></script><script src="_reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+Reveal.initialize({
+  // Display controls in the bottom right corner
+  controls: false,
+  // Display a presentation progress bar
+  progress: false,
+  // Display the page number of the current slide
+  slideNumber: false,
+  // Push each slide change to the browser history
+  history: true,
+  // Enable keyboard shortcuts for navigation
+  keyboard: true,
+  // Enable the slide overview mode
+  overview: true,
+  // Vertical centering of slides
+  center: true,
+  // Enables touch navigation on devices with touch input
+  touch: true,
+  // Loop the presentation
+  loop: false,
+  // Change the presentation direction to be RTL
+  rtl: false,
+  // Turns fragments on and off globally
+  fragments: true,
+  // Flags if the presentation is running in an embedded mode,
+  // i.e. contained within a limited portion of the screen
+  embedded: false,
+  // Number of milliseconds between automatically proceeding to the
+  // next slide, disabled when set to 0, this value can be overwritten
+  // by using a data-autoslide attribute on your slides
+  autoSlide: 0,
+  // Stop auto-sliding after user input
+  autoSlideStoppable: true,
+  // Enable slide navigation via mouse wheel
+  mouseWheel: false,
+  // Hides the address bar on mobile devices
+  hideAddressBar: true,
+  // Opens links in an iframe preview overlay
+  previewLinks: false,
+  // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
+  // NOTE setting the theme in the config no longer works in reveal.js 3.x
+  //theme: Reveal.getQueryHash().theme || 'nipa-night',
+  // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+  transition: Reveal.getQueryHash().transition || 'slide',
+  // Transition speed (e.g., default, fast, slow)
+  transitionSpeed: 'default',
+  // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+  backgroundTransition: 'fade',
+  // Number of slides away from the current that are visible
+  viewDistance: 3,
+  // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+  parallaxBackgroundImage: 'images/migration.jpg',
+  // Parallax background size in CSS syntax (e.g., "2100px 900px")
+  parallaxBackgroundSize: '3000px 2000px',
+
+  // The "normal" size of the presentation, aspect ratio will be preserved
+  // when the presentation is scaled to fit different resolutions. Can be
+  // specified using percentage units.
+  width: 960,
+  height: 700,
+
+  // Factor of the display size that should remain empty around the content
+  margin: 0.1,
+
+  // Bounds for smallest/largest possible scale to apply to content
+  minScale: 0.2,
+  maxScale: 1.5,
+
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+      { src: '_reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: '_reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '_reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      
+      { src: '_reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+      { src: '_reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+  ]
+});</script></body></html>
