@@ -1,0 +1,78 @@
+== OMG, why?!
+
+++++
+<div style="height: 550px;">
+<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">public Color randomFavoriteColor() {
+	while (true)
+		Color favorite = randomColor();
+		if (isNotWhiteish(favorite))
+			return favorite;
+}</code></pre></div></div>
+<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">public Color randomFavoriteColor() {
+	while (true)
+		Color favorite = randomColor();
+		// In China white is often seen
+		// as a color of mourning and
+		// some Chinese users did not
+		// like it. We hence disallow
+		// whitish colors as favorites.
+		// For details see issue #1534.
+		if (isNotWhitish(favorite))
+			return favorite;
+}</code></pre></div></div>
+</div>
+++++
+
+[NOTE.speaker]
+--
+
+--
+
+
+=== Historical Context
+
+* clarifies why (oh why?) +
+code looks the way it does
+* can document paths not taken
+
+
+=== Analysis
+
+Actuality::
+* negligible
+Location::
+* not that important
+Alternatives::
+* commit messages
+* issues, wikis
+
+
+=== Costs
+
+* *composition*: moderate
+* *maintenance*: negligible
+* *confusion*: low
+* *obstruction*:
+** can be hidden
+** and viewed on demand
+
+
+=== Benefits
+
+* *explain what happens*: somewhat
+* *keep abstractions intact*: no
+* *top down over bottom up*: no
+* *documenting intent*: yes
+
+
+=== Verdict
+
+> Even better!
+
+&nbsp;
+
+* costs are negligible
+* benefits are considerable
+
+These are great breadcrumbs +
+when tracking down bugs!

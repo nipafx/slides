@@ -1,0 +1,66 @@
+== Where Does This Leave Us?
+
+Let's move away from
+
+> All comments are failures.
+
+Instead
+
+> Comments are a tool to facilitate understanding.
+> We should use it wisely!
+
+// TODO, quote "Psychopath who knows where you live" by John F. Wood
+
+=== Clean Comments
+
+For individual comments:
+
+* make obvious which kind they are
+* put yourself in your reader's mind
+* strive for high locality
+* get them reviewed
+
+[NOTE.speaker]
+--
+* use phrases like "at the time of writing"
+* use @apiNote, @implNote
+* use different styles: /** vs /* vs //
+--
+
+
+=== Clean Comments
+
+This is my proposal:
+
+* avoid _narrations_ whenever possible
+* always have a paragraph that explains +
+a class's central abstraction
+* add _contracts_ to reused APIs
+* provide as much _context_ as possible
+
+
+=== Clean Comments
+
+But the details depend on many factors:
+
+* team:
+** size
+** technical backgrounds
+* code base:
+** size
+** heterogeneity
+** ownership
+
+
+=== Clean Comments
+
+So:
+
+* get the team together and +
+speak *freely* about comments
+* go through the code base and +
+*discuss* concrete examples
+* settle on a *shared approach* and +
+include it in your style guide
+* use pair programming or code reviews +
+to *adapt and enforce*

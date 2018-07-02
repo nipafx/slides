@@ -1,0 +1,66 @@
+== What does it do?
+
+```java
+public int activeUserCountSince(Date date) {
+	int activeUserCount = 0;
+	// loop through the users
+	for (User user : users)
+		// check whether user logged in
+		if (user.loggedInSince(date))
+			// increase activeUserCount
+			activeUserCount++;
+	return activeUserCount;
+}
+```
+
+
+=== Narrations
+
+Usually inline comments.
+
+* explain what the code does
+* speak on a very technical level
+
+
+=== Analysis
+
+Actuality::
+* very high
+* need to be absolutely up to date!
+Location::
+* right on the narrated line(s)
+Alternatives::
+* good names
+* transparent design
+* well-known patterns
+
+
+=== Costs
+
+// TODO, make all costs/benefits into diagrams
+
+* *composition*: medium
+* *maintenance*: high
+* *confusion*: high risk
+* *obstruction*: yes, can't be hidden
+
+
+=== Benefits
+
+* *explain what happens*: yes
+* *keep abstractions intact*: no
+* *top down over bottom up*: no
+* *documenting intent*: a little
+
+
+=== Verdict
+
+> Narrations suck!
+
+&nbsp;
+
+With one exception:
+
+* arcane language features are used
+* there is no alternative
+* there is no way to improve readability

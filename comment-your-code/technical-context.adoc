@@ -1,0 +1,95 @@
+== How does it work?
+
+++++
+<div style="height: 550px;">
+<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">/**
+ * When keys are Comparable, this class may
+ * use comparison order among keys to help
+ * break ties.
+ */
+public class HashMap&lt;K, V&gt; { }</code></pre></div></div>
+<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">/**
+ * When keys are Comparable, this class may
+ * use comparison order among keys to help
+ * break ties.
+ */
+public class HashMap&lt;K, V&gt; {
+	/* This map usually acts as a binned
+	 * (bucketed) hash table, but when bins
+	 * get too large, they are transformed
+	 * into bins of TreeNodes, each
+	 * structured similarly to those in
+     * java.util.TreeMap. */
+}</code></pre></div></div>
+</div>
+++++
+
+[NOTE.speaker]
+--
+* another example: a class explaining that a factory is required
+--
+
+
+=== Technical Context
+
+Often non-Javadoc blocks +
+at the beginning of a class/method.
+
+(Check out
+http://blog.codefx.org/java/new-javadoc-tags/[`@apiNote` and `@implNote`].)
+
+* clarify what code is _for_
+* when to use it and when not
+* explain implementation details
+
+(This is *not* a contract!)
+
+[NOTE.speaker]
+--
+* can even give examples
+* contracts make a promise, context comments explain why it was made
+--
+
+
+=== Analysis
+
+Actuality::
+* not that important
+Location::
+* not that important
+Alternatives::
+* demos
+* existing code (limited)
+
+
+=== Costs
+
+* *composition*: moderate
+* *maintenance*: not so much
+* *confusion*: possible
+* *obstruction*:
+** can be hidden
+** and viewed on demand
+
+
+=== Benefits
+
+* *explain what happens*: somewhat
+* *keep abstractions intact*: a little
+* *top down over bottom up*: to a degree
+* *documenting intent*: yes
+
+
+=== Verdict
+
+> A clear winner!
+
+&nbsp;
+
+* costs are moderate
+* benefits are considerable
+
+[NOTE.speaker]
+--
+* avoid confusion with contracts
+--

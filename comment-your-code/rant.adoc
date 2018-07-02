@@ -1,0 +1,97 @@
+[state="empty"]
+== !
+
+image::images/all_code_and_no_comments.png[background, size=cover]
+
+
+=== The Axiom
+
+> Comments are always failures.
+
+(Some guy with a book.)
+
+He's wrong!
+
+
+=== Self Documenting Code
+
+I don't care about your code!
+
+I want to know what happens when I use it!
+
+* pre- & postconditions
+* what return value can I expect?
+* thread-safety
+* (im)mutability
+
+
+[NOTE.speaker]
+--
+* good names, small methods, SOLID, ... don't help here
+* observed behavior != contract
+* how many interface implementations am I supposed to check?
+* what if I have to implement an interface?
+* You're code is not a special snowflake - it's the all singing all dancing crap of the world.
+* I am in a hurry and have to get shit done.
+--
+
+
+=== Tests
+
+I care even less about your tests!
+
+How do you test this?
+
+* "for all" propositions
+* thread-safety
+* (im)mutability
+
+[NOTE.speaker]
+--
+* do you have tests for interfaces?
+* test coverage better be > 90%.
+--
+
+
+=== Tests
+
+Ever heard *RTFT*? +
+(Read The &*☠# Tests) +
+
+
+No?
+
+What was I thinking about?
+
+
+=== Comments Age
+
+That's like saying +
+"Car's crash".
+
+So? Do we get rid of them?
+
+[NOTE.speaker]
+--
+* crashes are caused by negligence
+* are often punishable by law
+* do not harm the overall benefit
+--
+
+
+=== Comments Age
+
+What about names?
+
+* do they age?
+* do you update them?
+
+Yes?!
+
+Then update the comments, too!
+
+
+[state="empty"]
+=== !
+
+image::images/comment-your-fucking-code.jpg[background, size=cover]

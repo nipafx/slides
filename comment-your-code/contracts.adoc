@@ -1,0 +1,109 @@
+== What Does It Promise?
+
+++++
+<div style="height: 550px;">
+<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">public interface Map&lt;K, V&gt; {
+	/**
+	 * ...............................
+	 * ................................
+	 * ....................................
+	 * ....................................
+	 *
+	 * @return .......................
+	 *         ....................
+	 */
+	int size();
+}</code></pre></div></div>
+<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">public interface Map&lt;K, V&gt; {
+	/**
+	 * Returns the number of key-value
+	 * mappings in this map. ..........
+	 * ....................................
+	 * ....................................
+	 *
+	 * @return the number of key-value
+	 *         mappings in this map
+	 */
+	int size();
+}</code></pre></div></div>
+<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">public interface Map&lt;K, V&gt; {
+	/**
+	 * Returns the number of key-value
+	 * mappings in this map. If the map
+	 * contains more than Integer.MAX_VALUE
+	 * elements, returns Integer.MAX_VALUE.
+	 *
+	 * @return the number of key-value
+	 *         mappings in this map
+	 */
+	int size();
+}</code></pre></div></div>
+</div>
+++++
+
+
+=== Contract Comments
+
+(or just _Contracts_)
+
+Usually JavaDoc on classes and methods.
+
+They define
+
+* the code's central abstraction
+* pre- and postconditions
+* quirks
+
+[NOTE.speaker]
+--
+* highlight "define" (not "describe")
+* they make a promise
+--
+
+
+=== Analysis
+
+Actuality::
+* high
+Location::
+* right on the class or method
+Alternatives::
+* good names (limited)
+* tests (limited)
+
+
+=== Costs
+
+* *composition*: high
+* *maintenance*: considerable
+* *confusion*: high risk
+* *obstruction*:
+** can be hidden
+** and viewed on demand
+
+
+=== Benefits
+
+* *explain what happens*: yes
+* *keep abstractions intact*: yes
+* *top down over bottom up*: to a degree
+* *documenting intent*: no
+
+
+=== Verdict
+
+> It's complicated.
+
+&nbsp;
+
+* costs are high if code changes often
+* benefits are high if code is read often
+
+⇝ The more stable & reused the code, +
+the better the outcome!
+
+[NOTE.speaker]
+--
+* "resused" often implies "stable" by necessity
+* good documentation improves discoverability and adoption
+--
