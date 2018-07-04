@@ -1,0 +1,136 @@
+== Not your father's VCS
+
+Forget other version control systems (VCS)!
+
+Git has...
+
+* repositories
+* `add`, `checkout`, `commit`
+* branches, merges
+
+...but they don't mean +
+what you think they do.
+
+Here's how Git is different.
+
+=== Changes vs snapshots
+
+Many VCS operate on changes:
+
+image::https://git-scm.com/book/en/v2/images/deltas.png[role="diagram"]
+
+=== Changes vs snapshots
+
+Git operates on snapshots:
+
+image::https://git-scm.com/book/en/v2/images/snapshots.png[role="diagram"]
+
+=== Changes vs snapshots
+
+*Each commit references +
+all files and folders!*
+
+Consequence for file moves:
+
+* are not tracked, essentially `delete + add`
+* computes similarity to reconstruct moves
+
+=== (De)Centralized
+
+Many VCS need a central repository to
+
+* see the history
+* checkout commits
+* create commits
+
+Git creates a +
+*local, self-sufficient* +
+copy of the repo!
+
+=== Git's folder
+
+Local `.git` folder contains:
+
+* all files and folders ever committed
+* all commits, branches, and messages
+
+(More on that later.)
+
+=== Everything's local
+
+Local operations are fast, e.g.:
+
+* checking out a commit
+* looking at the log
+* creating a commit
+* creating a branch
+
+Interaction with remotes +
+though `pull` and `push`.
+
+=== 5 > 2
+
+Many VCS have two stages:
+
+* checked-out files
+* remote repository
+
+Git has five:
+
+* working tree
+* stash
+* index / staging
+* local repository
+* remote repository
+
+=== 5 stages
+
+working tree:: plain files that you change
+stash:: park changes for a moment
+index / stage:: the parts of your changes you want to commit
+local repository:: the committed snapshots
+remote repository:: push and pull snapshots
+
+[state="empty",background-color="white"]
+=== !
+image::https://qph.ec.quoracdn.net/main-qimg-d151c0543baa145e6252c1ec95199963.webp[background, size=contain]
+// image::https://qph.ec.quoracdn.net/main-qimg-d151c0543baa145e6252c1ec95199963.webp[role="diagram"]
+
+=== Basic workflow
+
+* pull remote changes into working tree
+* edit working tree
+* stage selected changes to index
+* commit index to local repository
+* push commits to remote repository
+
+=== Commits
+
+Git's commits:
+
+* know their parents
+* are immutable, even if local
+* can be "edited and rearranged" +
+(new commits are created)
+
+=== Everything's safe
+
+* common Git operations +
+don't delete data
+* once it's in `.git`, it's safe!
+* just need to find a way +
+to get it back out
+
+=== VCS vs Git
+
+[cols="<,^,>"]
+|===
+| | Old-school VCS | Git
+
+| world view | changes | snapshots
+| organized | centralized | decentralized
+| operations | need remote | all local
+| workflow | few steps | more steps
+| commits | immovable | malleable
+| recovery | it depends... | (almost) always
+|===

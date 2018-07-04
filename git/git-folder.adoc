@@ -1,0 +1,161 @@
+== Git's innards
+
+What follows are _not basics_! +
+Few Git users know them.
+
+*But*:
+
+* I wish I knew them earlier
+* make Git less magic
+* make Git more predictable
+
+=== Git's folder
+
+Local `.git` folder contains:
+
+* all files and folders ever committed
+* all commits and messages
+
+How?
+
+=== Git's folder
+
+Some files and folders in `.git`:
+
+[source,none]
+----
+.git
+├── HEAD    // points to current commit
+├── config  // repo configuration
+├── index   // captures all tracked files
+├── logs    // history of branch HEADs
+├── objects // hashed blobs of all files
+└── refs    // HEADs for current branch
+----
+
+=== Key-value store
+
+Git uses `.git/objects` as key-value store.
+
+Given an object (e.g. file or text):
+
+* uses SHA-1 to generate a 40 char hash
+* compresses object to binary blob
+* stores blob under hash
+
+=== Key-value store
+
+Hash is split:
+
+* first 2 chars become folder name
+* last 38 chats become file name
+
+[source,none]
+----
+.git/objects
+├── 5c
+│   └── 0b7ade5e0b1e915c575e7271d2a88dad573dd0
+├── 94
+│   ├── 059158d176cc6761e83e5a0c52c48b2deb7325
+│   └── 1a46385f8c02c4f12e6af2adc1616b7fcca9f3
+└── b2
+    └── 175898375cf78bed686625af84df01bd5c01ff
+----
+
+The file is just a binary blob.
+
+=== Objects
+
+All these are objects:
+
+* files
+* folders / trees
+* commits
+
+=== Files
+
+. compressed to blobs
+. stored under their hash in `.git/objects`
+
+=== Folders / trees
+
+. turned into files:
++
+[source]
+----
+100644 blob c3ef2aa README.md
+100644 blob 770358f pom.xml
+040000 tree b8b055e src
+----
+
+. compressed to blobs
+. stored under their hash in `.git/objects`
+
+=== Commits
+
+. turned into files:
++
+[source,none]
+----
+tree 81999e9
+parent d729e58
+author Nicolai Parlog
+    <nipa@codefx.org> 1530020370 +0200
+
+Add configuration for Disy workflow
+----
+
+. compressed to blobs
+. stored under their hash in `.git/objects`
+
+[state="empty",background-color="white"]
+=== !
+image::https://aboullaite.me/content/images/2017/06/git-objects.png[background, size=contain]
+// image::https://aboullaite.me/content/images/2017/06/git-objects.png[role="diagram"]
+
+=== Branches and Tags
+
+Branches and tags:
+
+* are turned into files +
+containing a commit hash
+* stored in `.git/refs/heads` +
+or `.git/refs/tags`
+
+That's why branches are free!
+
+=== HEAD
+
+`HEAD` reflects checked out commit.
+
+It's a file `.git/HEAD` that contains _either_:
+
+* name of current branch _or_
+* hash of current commit +
+if not on a branch +
+(called _detached HEAD_)
+
+=== Making a new commit
+
+. build tree for root folder:
+** reference unchanged files/trees
+** create new objects were needed
+. point branch indicated by `HEAD` to new tree
+
+=== Checking out a commit
+
+. find commit in `.git/objects`
+. to rebuild working tree:
+** walk hashed objects
+** uncompress blobs
+. update `HEAD` to commit +
+(now detached)
+
+=== Checking out a branch
+
+. find branch in `.git/refs/heads`
+. find indicated commit in `.git/objects`
+. to rebuild working tree:
+** walk hashed objects
+** uncompress blobs
+. update `HEAD` to branch
