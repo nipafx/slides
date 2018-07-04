@@ -1,26 +1,26 @@
 [state="empty"]
 == !
-
 image::images/all_code_and_no_comments.png[background, size=cover]
-
 
 === The Axiom
 
-> Comments are always failures.
-
-(Some guy with a book.)
+[quote,Some guy with a book]
+____
+Comments are always failures.
+____
 
 He's wrong!
 
-
 === Self Documenting Code
 
-I don't care about your code!
+*I don't care about your code!*
 
-I want to know what happens when I use it!
+I'm in a hurry, +
+what happens when I use it?
 
 * pre- & postconditions
-* what return value can I expect?
+* return value range
+* side-effects
 * thread-safety
 * (im)mutability
 
@@ -35,16 +35,29 @@ I want to know what happens when I use it!
 * I am in a hurry and have to get shit done.
 --
 
+=== Self-documenting code
+
+Let's say I care about the code +
+(*which I don't!*)...
+
+I have to change it, +
+why does it look like this?
+
+* considered alternatives
+* code-shaping requirements
+* overall architecture
+* design principles
 
 === Tests
 
-I care even less about your tests!
+*I care even less about your tests!*
 
 How do you test this?
 
 * "for all" propositions
 * thread-safety
 * (im)mutability
+* interfaces
 
 [NOTE.speaker]
 --
@@ -52,19 +65,38 @@ How do you test this?
 * test coverage better be > 90%.
 --
 
-
 === Tests
 
 Ever heard *RTFT*? +
-(Read The &*☠# Tests) +
-
+(Read The &*☠# Tests)
 
 No?
 
 What was I thinking about?
 
+=== What we got so far...
 
-=== Comments Age
+Your clean code and tests *suck* for:
+
+* quickly determining expected behavior
+* understanding larger concepts
+* conveying rationale for decisions
+
+=== Comments are hard
+
+[quote,Kevlin Henney]
+____
+A common fallacy is to assume authors of incomprehensible code will somehow be able to express themselves lucidly and clearly in comments.
+____
+
+Schroedinger's developer...
+
+* can write squeaky clean code
+* can not write in their mother tongue
+
+🤔
+
+=== Comments age
 
 That's like saying +
 "Car's crash".
@@ -74,12 +106,11 @@ So? Do we get rid of them?
 [NOTE.speaker]
 --
 * crashes are caused by negligence
-* are often punishable by law
-* do not harm the overall benefit
+* crashes are often punishable by law
+* crashes are acceptable given the benefits
 --
 
-
-=== Comments Age
+=== Comments age
 
 What about names?
 
@@ -90,8 +121,19 @@ Yes?!
 
 Then update the comments, too!
 
-
-[state="empty"]
+[state="empty",background-color="black"]
 === !
+image::images/comment-your-fucking-code.jpg[background, size=contain]
 
-image::images/comment-your-fucking-code.jpg[background, size=cover]
+[NOTE.speaker]
+--
+* I'm a hipster, alternative insurance
+* wanted a contract, but invited to hq:
+** "working company over unread contracts" policy
+** crisp org structure
+** great architecture, good design
+** attentive employees with great names
+** call or visit customers
+** given, when, then
+* just send us money and we'll cover you
+--

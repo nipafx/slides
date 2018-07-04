@@ -1,0 +1,158 @@
+[state="empty"]
+== !
+image::images/clean-architecture.jpg[background, size=cover]
+
+[NOTE.speaker]
+--
+* I'm a hipster, alternative insurance
+* wanted a contract, but invited to hq:
+** "working company over unread contracts" policy
+** crisp org structure
+** great architecture, good design
+** attentive employees with great names
+** call or visit customers
+** given, when, then
+* just send us money and we'll cover you
+--
+
+=== The Axiom
+
+[quote,Uncle Bob in "Clean Code"]
+____
+Comments are always failures.
+____
+
+He's wrong!
+
+=== Self-documenting code
+
+*I don't care about the code!*
+
+I'm in a hurry, +
+what happens when I use it?
+
+* pre- & postconditions
+* return value range
+* side-effects
+* thread-safety
+* (im)mutability
+
+=== Self-documenting code
+
+I'm in a hurry!
+
+* good names, small methods, SOLID, ... +
+only go so far
+* how many interface implementations +
+am I supposed to check?
+* what if I have to implement an interface?
+
+=== Self-documenting code
+
+*I care about the code!*
+
+I have to change it, +
+why does it look like this?
+
+* considered alternatives
+* code-shaping requirements
+* overall architecture
+* design principles
+
+=== Self-documenting code
+
+I have to change it!
+
+* good names, small methods, ... +
+are almost useless
+* SOLID helps! 👍
+* ubiquitous patterns help +
+what about lesser known ones?
+
+Still, most information +
+not expressible in code!
+
+=== Tests
+
+*I care even less about the tests!*
+
+How do you test this?
+
+* "for all" propositions
+* thread-safety
+* (im)mutability
+* interfaces
+
+Test coverage better be > 90%!
+
+=== Tests
+
+Tests are observations:
+
+* take time to generalize
+* are _not_ a contract
+* only explain _what_, never _why_
+
+=== Tests
+
+Ever heard *RTFT*? +
+(Read The &*☠# Tests)
+
+No?
+
+What was I thinking about?
+
+=== Interlude
+
+Self-documenting code and tests are great for:
+
+* understanding little pieces of code
+* editing code
+
+They are really bad for:
+
+* quickly determining expected behavior
+* understanding larger concepts
+* conveying rationale for decisions
+
+=== Comments are hard
+
+[quote,Kevlin Henney]
+____
+A common fallacy is to assume authors of incomprehensible code will somehow be able to express themselves lucidly and clearly in comments.
+____
+
+=== So is code...
+
+[quote,Yours Truly]
+____
+A common fallacy is to assume developers incapable to express themselves lucidly and clearly in a natural language will somehow be able to write lucid and clean code.
+____
+
+=== Comments age
+
+That's like saying +
+"Car's crash".
+
+So? Do we get rid of them?
+
+Crashes:
+
+* are caused by negligence
+* are often punishable by law
+* are acceptable given the benefits
+
+=== Comments age
+
+What about names?
+
+* do they age?
+* are they updated?
+
+Yes?!
+
+But comments can't be? 🤔
+
+[state="empty",background-color="white"]
+=== !
+image::images/baby-bathwater.jpg[background, size=contain]
