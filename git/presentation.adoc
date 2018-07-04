@@ -1,0 +1,50 @@
+= Git Crash Course
+:backend: revealjs
+:revealjs_theme: nipa-night
+:revealjsdir: ../_reveal.js
+:revealjs_controls: false
+:revealjs_progress: false
+:revealjs_slideNumber: false
+:revealjs_history: true
+:revealjs_center: true
+:revealjs_transition: slide
+:revealjs_backgroundTransition: fade
+:revealjs_parallaxBackgroundImage: images/tree.jpg
+:revealjs_parallaxBackgroundSize: 2048px 1440px
+
+:imagedir: images
+
+// ++++
+// <h2>From The Ground Up</h2>
+// ++++
+
+include::../_shared/highlight.js.adoc[]
+
+:host-name: Disy
+:host-url: https://www.disy.de/
+:host-logo-url: images/logo-disy.png
+// :host-logo-style: background-color: transparent; border-width: 0;
+:host-twitter-name: @DisyNet
+:host-twitter-url: https://twitter.com/DisyNet
+include::../_shared/event-on-title-and-footer.adoc[]
+
+
+// ####################### //
+// P R E S E N T A T I O N //
+// ####################### //
+
+////
+TODO:
+
+* add roadmap
+* delete local branches
+* use `git bisect` (or something) to locate commit that broke the test
+////
+
+// ######### //
+// O U T R O //
+// ######### //
+
+// include::../_shared/about-slide.adoc[]
+
+include::images/sources.adoc[]
