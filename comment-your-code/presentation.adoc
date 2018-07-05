@@ -26,14 +26,18 @@ include::../_shared/highlight.js.adoc[]
 include::../_shared/event-on-title-and-footer.adoc[]
 
 ////
+TODO: ToC
+* costs, benefits, and requirements
+* kinds of comments
+* clean comments
+
 TODO:
-* Include http://commadot.com/wp-content/uploads/2009/02/wtf.png::[this] and mark one WTF on each side as "prevented by comments", meaning clean code gets much better but bad code still sucks
-* reference external standards
-* mention tools like Swagger and SpringRESTdocs in Contract Comments
-* in Contract Comments, elaborate on "Writing and maintaining comments that fulfill this promise requires determination, an eye for detail, and unambiguous language."
-* pick some of these http://stackoverflow.com/q/184618
-* find the quote about the psycho knowing where you live
-* stress that clean code is great and you should use it; just add comments
+
+Ich finde es spannend, wenn du an deinem eigenen Code zeigst wie und was du kommentierst und wo du der Meinung bist das es evtl. zu viel ist bzw. welchen Mehrwert der Kommentar bringt. Und wenn das in einer IDE stattfindet, kann man auch direkt "clean code" Vorschläg aus dem Publikum ausprobieren und gegenüberstellen.
+
+Wir gehen zusammen (oder du und ich in Vorbereitung) über ein Stück Code und du sagst wo dir Kommentare fehlen bzw. du gerne mehr Informationen gehabt hättest. Vorschlag für den code ist ein boolean expression parser den ich für junit geschrieben habe [1] und denke das es Clean Code ist. Auf die Weise ist das kein bashing von Dritten und evlt. bekommen wir auch noch einen Pull-Request raus. Das können wir dann im Treffen mit den Anwesenden am konkreten Beispiel durchdiskutieren.
+
+(Mail from 13th of May, 20:48)
 ////
 
 // include::rant.adoc[]
@@ -52,6 +56,8 @@ include::contracts.adoc[]
 include::technical-context.adoc[]
 
 include::historical-context.adoc[]
+
+// TODO: consider adding a section on fun comments from http://stackoverflow.com/q/184618
 
 include::clean-comments.adoc[]
 
