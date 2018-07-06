@@ -4,36 +4,35 @@ or
 
 +++<h2>Why Everybody Hates Comments</h2>+++
 
+=== The Costs Of Comments
+
+* initial composition
+* maintenance
+* confusion
+* obstruction
 
 === Initial Composition
 
 Writing a comment is harder...
 
-* ... the later it is done
-* ... the more complex the code is
-* ... the more precise the comment is
+* the later it is done
+* the more complex the topic is
+* the more precise the comment is
 
 Usually affordable +
 compared to writing code and tests.
-
-[NOTE.speaker]
---
-* cost is capped when abstraction works well
---
-
 
 === Maintenance
 
 What do to with comments +
 when code changes?
 
-* updating ⇝ takes time
-* leaving unchanged ⇝ causes confusion
-* deletion ⇝ wastes past efforts
+* nothing ⇝ may cause confusion
+* update ⇝ takes time
+* delete ⇝ wastes past efforts
 
 Whatever schema you decide on +
 *maintenance is critical*!
-
 
 === Maintenance
 
@@ -47,17 +46,15 @@ Whatever schema you decide on +
 * pesky, time-consuming, error-prone
 --
 
-
 === Confusion
 
-Comments that are
+Comments that are...
 
 * outdated
 * ambiguous
-* lacking detail
+* lack detail
 
-cause confusion!
-
+...cause confusion!
 
 === Confusion
 
@@ -71,13 +68,11 @@ Deteriorates trust in comments.
 * good coding techniques reduce risk
 --
 
-
 === Obstruction
 
 Takes up screen space.
 
 (Fold that shit!)
-
 
 === Why Everybody _Really_ Hates Comments
 

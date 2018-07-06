@@ -1,45 +1,69 @@
-////
-TODO:
-* Include http://commadot.com/wp-content/uploads/2009/02/wtf.png[this] and mark one WTF on each side as "prevented by comments", meaning clean code gets much better but bad code still sucks
-////
+== The benefits of comments
 
-== The Benefits Of Comments
+* explain what happens
+* keep abstractions intact
+* enable top-down learning
+* document intent
+* spur redesign
+* save lives!
 
-Small note: +
-Benefits suffer from diminishing returns.
+=== Explain what happens
 
+[source,java]
+----
+// check whether user logged in
+if (user.loggedInSince(date))
+	// increase activeUserCount
+	activeUserCount++;
+----
 
-=== Explain What Happens
+=== Explain what happens
 
 Duh!
 
 * intrinsically redundant
 * can cause confusion
 
-Might be necessary +
-for arcane language features.
+May be helpful when using +
+arcane language features.
 
+=== Keep abstractions intact
 
-=== Keep Abstractions Intact
+[source,java]
+----
+public interface Map<K, V> {
 
-Every unit of code provides an abstraction.
+	/**
+	 * Associates the specified value
+	 * with the specified key in this
+	 * map (optional operation).
+	 *
+	 * [...]
+	 */
+	V put(K key, V value);
 
-* do one thing and to it well
-* hide how it does it
+}
+----
+
+=== Keep abstractions intact
+
+Every unit of code provides an abstraction:
+
+* does one thing and does it well
+* hides how it does it
 * should not require  us +
 to look past the abstraction
 
 The core to modularizing any non-trivial problem!
 
-
-=== Keep Abstractions Intact
+=== Keep abstractions intact
 
 Abstractions provide two benefits:
 
 * reuse code
 * reuse understanding
 
-Comments can help with both!
+*Comments can help with both!*
 
 [NOTE.speaker]
 --
@@ -48,49 +72,82 @@ Comments can help with both!
 * you have to build a new context
 --
 
+=== Top-down vs bottom-up
 
-=== Top Down vs Bottom Up
-
-* most people learn better top down
-* clean code, tests, ... +
-are a bottom up approach
+* most people learn better top-down
+* clean code, tests, ... are bottom-up approaches
 
 Comments can be *signposts*, +
 helping to stay on +
 the right *level of abstraction*.
 
+=== Document intent
 
-[NOTE.speaker]
---
-* similar to keeping abstractions intact
---
+[source,java]
+----
+public class ArrayList<E> {
 
+	// non-private to simplify nested class access
+	transient Object[] elementData;
 
-=== Document Intent
+}
+----
+
+////
+=== Document intent
 
 Context is invaluable when revisiting code!
 
 * why?
 * no seriously, WHY?
 * why the &*☠#?!
+////
 
+[state="empty",background-color="white"]
+=== !
+image::http://commadot.com/wp-content/uploads/2009/02/wtf.png[background, size=contain]
 
-=== Document Intent
+=== Document intent
 
-* other tools contain this info
+Context is invaluable when revisiting code!
+
+* other tools may contain this info
 * working through them takes time
 * and is transient!
 
-Comments can be 2nd line of defense.
+*Comments can be 2nd line of defense.*
 
+=== Spur redesign
 
-=== Spur Redesign
+[quote,Mike Bostok]
+____
+It’s funny how writing documentation can spur redesign: it’s easier to simplify a complex API than try to document it completely.
+____
 
-> It’s funny how writing documentation can spur redesign:
-it’s easier to simplify a complex API than try to document it completely.
+(https://twitter.com/mbostock/status/681561150127878144[Source])
 
-(Mike Bostok https://twitter.com/mbostock/status/681561150127878144[on Twitter].)
+=== Spur redesign
 
-// TODO, quote "Psychopath who knows where you live" by John F. Wood
+If it takes a long time to...
 
-// TODO: "May save your life" https://stackoverflow.com/a/878436 Shining
+* describe behavior on a high level
+* cover all special cases
+* explain rationale behind a decision
+
+...maybe the code needs to be improved.
+
+*You become your own reviewer!*
+
+=== Safe lives
+
+[quote,John F. Woods]
+____
+Always code as if the guy who ends up maintaining your code will be a
+violent psychopath who knows where you live. Code for readability.
+____
+
+(https://groups.google.com/forum/#!msg/comp.lang.c++/rYCO5yn4lXw/oITtSkZOtoUJ[Source])
+
+[state="empty"]
+=== !
+image::https://homemcr.org/app/uploads/2011/12/the-shining-940x460.jpg[background, size=cover]
