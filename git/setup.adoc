@@ -1,0 +1,39 @@
+== Setting Git up
+
+* https://git-scm.com/book/en/v2/Getting-Started-Installing-Git[installation]
+* https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup[configuration]
+
+=== Configuration
+
+Git can be configured with `git config` +
+on three levels:
+
+* `--system` for all users +
+(in `etc` or install folder)
+* `--global` for one user +
+(in `~/.gitconfig`)
+* `--local` for one repository +
+(in repo in `.git/config`)
+
+=== Global configuration
+
+Configure with `git config --global`:
+
+* `user.name` (your LDAP user name)
+* `user.email` (your Disy address)
+* `core.editor` (unless you enjoy vi)
+
+=== Disy configuration
+
+To automate authentication +
+https://docs.gitlab.com/ee/ssh/[set up SSH keys].
+
+For https://conf.disy.net/x/ChAlF[Disy's Git workflow] +
+configure with `git config --global`:
+
+* `pull.rebase true` (prevents merges on pull)
+* `merge.ff only` (prevents merge commits)
+
+=== Your turn!
+
+https://git1.disy.net/code-academy/code-academy/blob/master/git/01-setup.md[Install and configure Git]
