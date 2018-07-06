@@ -14,12 +14,14 @@ public class HashMap&lt;K, V&gt; { }</code></pre></div></div>
  * break ties.
  */
 public class HashMap&lt;K, V&gt; {
+
 	/* This map usually acts as a binned
 	 * (bucketed) hash table, but when bins
 	 * get too large, they are transformed
 	 * into bins of TreeNodes, each
 	 * structured similarly to those in
-     * java.util.TreeMap. */
+	 * java.util.TreeMap. */
+
 }</code></pre></div></div>
 </div>
 ++++
@@ -28,7 +30,6 @@ public class HashMap&lt;K, V&gt; {
 --
 * another example: a class explaining that a factory is required
 --
-
 
 === Technical Context
 
@@ -50,7 +51,6 @@ http://blog.codefx.org/java/new-javadoc-tags/[`@apiNote` and `@implNote`].)
 * contracts make a promise, context comments explain why it was made
 --
 
-
 === Analysis
 
 Currency::
@@ -61,26 +61,23 @@ Alternatives::
 * demos
 * existing code (limited)
 
-
 // TODO: turn costs and benefits onto graphs
 
 === Costs
 
 * *composition*: moderate
-* *maintenance*: not so much
+* *maintenance*: low
 * *confusion*: possible
 * *obstruction*:
 ** can be hidden
 ** and viewed on demand
 
-
 === Benefits
 
-* *explain what happens*: somewhat
-* *keep abstractions intact*: a little
-* *top down over bottom up*: to a degree
-* *documenting intent*: yes
-
+* *explain what happens*: moderate
+* *keep abstractions intact*: moderate
+* *top down over bottom up*: yes
+* *documenting intent*: oh, yes!
 
 === Verdict
 

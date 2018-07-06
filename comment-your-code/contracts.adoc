@@ -3,6 +3,7 @@
 ++++
 <div style="height: 550px;">
 <div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">public interface Map&lt;K, V&gt; {
+
 	/**
 	 * ...............................
 	 * ................................
@@ -13,8 +14,10 @@
 	 *         ....................
 	 */
 	int size();
+
 }</code></pre></div></div>
 <div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">public interface Map&lt;K, V&gt; {
+
 	/**
 	 * Returns the number of key-value
 	 * mappings in this map. ..........
@@ -25,8 +28,10 @@
 	 *         mappings in this map
 	 */
 	int size();
+
 }</code></pre></div></div>
 <div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">public interface Map&lt;K, V&gt; {
+
 	/**
 	 * Returns the number of key-value
 	 * mappings in this map. If the map
@@ -37,18 +42,16 @@
 	 *         mappings in this map
 	 */
 	int size();
+
 }</code></pre></div></div>
 </div>
 ++++
 
-
 === Contract Comments
-
-(or just _Contracts_)
 
 Usually JavaDoc on classes and methods.
 
-They define
+They define:
 
 * the code's central abstraction
 * pre- and postconditions
@@ -60,7 +63,6 @@ They define
 * they make a promise
 --
 
-
 === Analysis
 
 Currency::
@@ -70,7 +72,6 @@ Proximity::
 Alternatives::
 * good names (limited)
 * tests (limited)
-
 
 // TODO: turn costs and benefits onto graphs
 
@@ -83,14 +84,12 @@ Alternatives::
 ** can be hidden
 ** and viewed on demand
 
-
 === Benefits
 
 * *explain what happens*: yes
 * *keep abstractions intact*: yes
-* *top down over bottom up*: to a degree
-* *documenting intent*: no
-
+* *top down over bottom up*: moderate
+* *documenting intent*: rarely
 
 === Verdict
 
@@ -106,6 +105,6 @@ the better the outcome!
 
 [NOTE.speaker]
 --
-* "resused" often implies "stable" by necessity
+* "reused" often implies "stable" by necessity
 * good documentation improves discoverability and adoption
 --
