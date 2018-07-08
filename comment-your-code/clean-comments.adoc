@@ -1,71 +1,154 @@
-////
-TODO
-* reference external standards (what for? Javadoc?)
-* mention tools like Swagger and SpringRESTdocs
-* elaborate on "Writing and maintaining comments that fulfill this promise requires determination, an eye for detail, and unambiguous language."
-* stress that clean code is great and you should use it; just add comments
-* point out that people complaining of aging comments are usually the ones letting them age
-////
+== Comments are a tool
 
-== Where Does This Leave Us?
-
-Let's move away from
+Let's move away from:
 
 > All comments are failures.
 
-Instead
+Instead:
 
 > Comments are a tool to facilitate understanding.
 > We should use it wisely!
 
+=== Clean comments
 
-=== Clean Comments
-
-For individual comments:
+Write clean code and good tests. +
+Then add *clean comments*:
 
 * make obvious which kind they are
-* put yourself in your reader's mind
 * strive for high proximity
-* get them reviewed
+* use unambiguous language
+* consider readers and maintainers
 
-[NOTE.speaker]
---
-* use phrases like "at the time of writing"
-* use @apiNote, @implNote
-* use different styles: /** vs /* vs //
---
+Get comments reviewed!
 
+=== Clean narrations
 
-=== Clean Comments
+What?
 
-This is my proposal:
+* avoid whenever possible
+* strive for clean code
 
-* avoid _narrations_ whenever possible
-* always have a paragraph that explains +
-a class's central abstraction
-* add _contracts_ to reused APIs
-* provide as much _context_ as possible
+How?
 
+* use line comments (`//` in Java)
+* place directly on line
 
-=== Clean Comments
+=== Clean contracts
 
-But the details depend on many factors:
+What?
+
+* describe _every_ top-level element's +
+(class, interface, endpoint, etc.) +
+central abstraction
+
+From there on, it's up for debate:
+
+* prefer stable elements
+* prefer reused elements
+* heed diminishing returns
+
+=== Clean contracts
+
+How many and how detailed +
+depends on many factors:
 
 * team:
-** size
-** technical backgrounds
+** size 📈
+** technical backgrounds 📈
+** stability 📉
 * code base:
-** size
-** heterogeneity
-** ownership
+** size 📈
+** heterogeneity 📈
+** ownership 📉
 
+=== Clean contracts
 
-=== Clean Comments
+How?
 
-So:
+* use tools
+** for Java: proper http://www.oracle.com/technetwork/java/javase/tech/index-jsp-135444.html[JavaDoc] (`/** */`)
+** for REST:
+https://swagger.io/[Swagger], or
+https://docs.spring.io/spring-restdocs/docs/current/reference/html5/[Spring REST Docs]
+// (https://www.youtube.com/watch?v=iWj-t69EdN4[introductory talk])
+* promise results not steps +
+(declarative, not imperative)
+* promise only what is required _and_ tested
+
+=== Clean technical context
+
+What?
+
+* non-trivial implementation
+* trade-off between alternatives
+* operational or developmental requirements
+
+=== Clean technical context
+
+How?
+
+* look into http://blog.codefx.org/java/new-javadoc-tags/[`@apiNote` and `@implNote`]
+* multi-line comments (with `/* */`) +
+at start of type or method
+* strive for high-level description
+* cite/link issues, wikis, etc.
+
+=== Clean historical context
+
+What?
+
+* non-obvious user requirements
+* "temporary" solutions (and alternatives)
+
+How?
+
+* use phrases like _"at the time of writing"_
+* line (`//`) or multi-line comments (`/* */`)
+* cite/link issues, wikis, etc.
+
+=== Side note
+
+Include non-source files:
+
+* build tooling ("Why this version of Guava?")
+* configurations ("Why does CI store artifacts?")
+* documentation (yay, recursion!)
+* etc.
+
+=== Maintaining comments
+
+What's impacted when you change code?
+
+* surrounding class
+* callers
+* tests
+
+Check comments on those elements! +
+("Reverse-proximity")
+
+=== Maintaining comments
+
+Pair programming? Code reviews? +
+Keep comments in mind!
+
+(N.B., developers complaining of aging comments +
+are usually the ones letting them age.)
+
+=== Clean comments
+
+Bottom line:
+
+* avoid narrations
+* describe central abstractions
+* decide how many/detailed contracts
+* always provide context
+
+=== Clean comments
+
+My recommendations:
 
 * get the team together and +
-speak *freely* about comments
+*speak freely* about comments
 * go through the code base and +
 *discuss* concrete examples
 * settle on a *shared approach* and +
