@@ -73,23 +73,10 @@ Alternatives::
 * good names (limited)
 * tests (limited)
 
-// TODO: turn costs and benefits onto graphs
+=== Contract Comments
 
-=== Costs
-
-* *composition*: high
-* *maintenance*: considerable
-* *confusion*: high risk
-* *obstruction*:
-** can be hidden
-** and viewed on demand
-
-=== Benefits
-
-* *explain what happens*: yes
-* *keep abstractions intact*: yes
-* *top down over bottom up*: moderate
-* *documenting intent*: rarely
+// source: see presentation.adoc
+image::images/analysis-contracts.png[role="diagram"]
 
 === Verdict
 

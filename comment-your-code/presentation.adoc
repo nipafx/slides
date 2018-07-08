@@ -62,3 +62,155 @@ include::therapy.adoc[]
 include::clean-comments.adoc[]
 
 include::../_shared/about-slide.adoc[]
+
+////
+AMACHARTS (https://live.amcharts.com) CODE FOR DIAGRAMS
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Costs & Benefits of Comments | amCharts</title>
+		<meta name="description" content="chart created using amCharts live editor" />
+
+		<!-- amCharts javascript sources -->
+		<script type="text/javascript" src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+		<script type="text/javascript" src="https://www.amcharts.com/lib/3/serial.js"></script>
+
+		<!-- amCharts plugins -->
+		<script type="text/javascript" src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+		<link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css">
+
+		<!-- amCharts javascript code -->
+		<script type="text/javascript">
+			AmCharts.makeChart("chartdiv",
+				{
+					"type": "serial",
+					"categoryField": "category",
+					"startDuration": 1,
+					"color": "#000",
+					"fontSize": 24,
+					"handDrawn": true,
+					"handDrawScatter": 3,
+					"export": {
+						"enabled": true
+					},
+					"categoryAxis": {
+						"gridPosition": "start",
+						"gridAlpha": 0
+					},
+					"trendLines": [],
+					"graphs": [
+						{
+							"balloonColor": "",
+							"balloonText": "[[title]] of [[category]]:[[value]]",
+							"colorField": "color",
+							"fillAlphas": 1,
+							"fillColorsField": "color",
+							"id": "costs",
+							"labelColorField": "color",
+							"legendAlpha": 0,
+							"legendColor": "undefined",
+							"lineColorField": "color",
+							"tabIndex": 0,
+							"title": "Costs & Benefits",
+							"type": "column",
+							"valueField": "historical context"
+						}
+					],
+					"guides": [],
+					"valueAxes": [
+						{
+							"id": "ValueAxis-1",
+							"maximum": 4,
+							"minimum": 0,
+							"autoGridCount": false,
+							"gridAlpha": 0,
+							"labelsEnabled": false,
+							"title": ""
+						}
+					],
+					"allLabels": [],
+					"balloon": {},
+					"titles": [
+						{
+							"bold": false,
+							"id": "Title-1",
+							"size": 32,
+							"text": "Costs & Benefits"
+						}
+					],
+					"dataProvider": [
+						{
+							"category": "Composition",
+							"color": "#f02c30",
+							"narration": "2",
+							"contract": "4",
+							"technical-context": "2",
+							"historical context": "1"
+						},
+						{
+							"category": "Maintenance",
+							"color": "#f02c30",
+							"narration": "4",
+							"contract": "3",
+							"technical-context": "1",
+							"historical context": "0"
+						},
+						{
+							"category": "Confusion",
+							"color": "#f02c30",
+							"narration": "3",
+							"contract": "4",
+							"technical-context": "2",
+							"historical context": "1"
+						},
+						{
+							"category": "Obstruction",
+							"color": "#f02c30",
+							"narration": "4",
+							"contract": "1",
+							"technical-context": "1",
+							"historical context": "1"
+						},
+						{
+							"category": "Explanation",
+							"color": "#30f02c",
+							"narration": "4",
+							"contract": "3",
+							"technical-context": "3",
+							"historical context": "1"
+						},
+						{
+							"category": "Abstraction",
+							"color": "#30f02c",
+							"narration": "0",
+							"contract": "4",
+							"technical-context": "2",
+							"historical context": "1"
+						},
+						{
+							"category": "Top-down",
+							"color": "#30f02c",
+							"narration": "0",
+							"contract": "3",
+							"technical-context": "3",
+							"historical context": "2"
+						},
+						{
+							"category": "Intent",
+							"color": "#30f02c",
+							"narration": "2",
+							"contract": "1",
+							"technical-context": "3",
+							"historical context": "4"
+						}
+					]
+				}
+			);
+		</script>
+	</head>
+	<body>
+		<div id="chartdiv" style="width: 100%; height: 400px; background-color: #FFFFFF;" ></div>
+	</body>
+</html>
+////
