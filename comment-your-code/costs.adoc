@@ -1,17 +1,24 @@
-== The Costs Of Comments
+== The costs
 
-or
+++++
+<table class="toc">
+	<tr><td>Costs And Benefits</td></tr>
+	<tr class="toc-current"><td><ul><li>Costs</li></ul></td></tr>
+	<tr><td><ul><li>Benefits</li></ul></td></tr>
+	<tr><td><ul><li>Observations</li></ul></td></tr>
+	<tr><td>Kinds Of Comments</td></tr>
+	<tr><td>Clean Comments</td></tr>
+</table>
+++++
 
-+++<h2>Why Everybody Hates Comments</h2>+++
-
-=== The Costs Of Comments
+=== Why most devs hate comments
 
 * initial composition
 * maintenance
 * confusion
 * obstruction
 
-=== Initial Composition
+=== Initial composition
 
 Writing a comment is harder...
 
@@ -24,7 +31,7 @@ compared to writing code and tests.
 
 === Maintenance
 
-What do to with comments +
+What to do with comments +
 when code changes?
 
 * nothing ⇝ may cause confusion
@@ -74,7 +81,7 @@ Takes up screen space.
 
 (Fold that shit!)
 
-=== Why Everybody _Really_ Hates Comments
+=== Why devs _really_ hate comments
 
 * they may be hard to write
 * they turn nothing green

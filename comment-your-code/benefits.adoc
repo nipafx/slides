@@ -1,4 +1,17 @@
-== The benefits of comments
+== The benefits
+
+++++
+<table class="toc">
+	<tr><td>Costs And Benefits</td></tr>
+	<tr><td><ul><li>Costs</li></ul></td></tr>
+	<tr class="toc-current"><td><ul><li>Benefits</li></ul></td></tr>
+	<tr><td><ul><li>Observations</li></ul></td></tr>
+	<tr><td>Kinds Of Comments</td></tr>
+	<tr><td>Clean Comments</td></tr>
+</table>
+++++
+
+=== Why some devs love comments
 
 * explain what happens
 * keep abstractions intact
@@ -37,8 +50,6 @@ public interface Map<K, V> {
 	 * Associates the specified value
 	 * with the specified key in this
 	 * map (optional operation).
-	 *
-	 * [...]
 	 */
 	V put(K key, V value);
 

@@ -1,4 +1,18 @@
-== OMG, why?!
+== Historical context
+
+++++
+<table class="toc">
+	<tr><td>Costs And Benefits</td></tr>
+	<tr><td>Kinds Of Comments</td></tr>
+	<tr><td><ul><li>Narrations</li></ul></td></tr>
+	<tr><td><ul><li>Contracts</li></ul></td></tr>
+	<tr><td><ul><li>Technical Context</li></ul></td></tr>
+	<tr class="toc-current"><td><ul><li>Historical Context</li></ul></td></tr>
+	<tr><td>Clean Comments</td></tr>
+</table>
+++++
+
+=== OMG, why?!
 
 ++++
 <div style="height: 550px;">
@@ -11,12 +25,13 @@
 <div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">public Color randomFavoriteColor() {
 	while (true)
 		Color favorite = randomColor();
-		// In China white is often seen
-		// as a color of mourning and
-		// some Chinese users did not
-		// like it. We hence disallow
-		// whitish colors as favorites.
-		// For details see issue #1534.
+		/* In China white is often seen
+		 * as a color of mourning and
+		 * some Chinese users did not
+		 * like it. We hence disallow
+		 * whitish colors as favorites.
+		 * For details see issue #1534.
+		 */
 		if (isNotWhitish(favorite))
 			return favorite;
 }</code></pre></div></div>

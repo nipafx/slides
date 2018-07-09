@@ -1,4 +1,14 @@
-== Comments are a tool
+== Clean comments
+
+++++
+<table class="toc">
+	<tr><td>Costs And Benefits</td></tr>
+	<tr><td>Kinds Of Comments</td></tr>
+	<tr class="toc-current"><td>Clean Comments</td></tr>
+</table>
+++++
+
+=== Comments are a tool
 
 Let's move away from:
 
@@ -17,7 +27,7 @@ Then add *clean comments*:
 * make obvious which kind they are
 * strive for high proximity
 * use unambiguous language
-* consider readers and maintainers
+* consider API users _and_ maintainers
 
 Get comments reviewed!
 
@@ -58,7 +68,7 @@ depends on many factors:
 ** stability 📉
 * code base:
 ** size 📈
-** heterogeneity 📈
+** technologies 📈
 ** ownership 📉
 
 === Clean contracts
@@ -68,7 +78,7 @@ How?
 * use tools
 ** for Java: proper http://www.oracle.com/technetwork/java/javase/tech/index-jsp-135444.html[JavaDoc] (`/** */`)
 ** for REST:
-https://swagger.io/[Swagger], or
+https://swagger.io/[Swagger] or
 https://docs.spring.io/spring-restdocs/docs/current/reference/html5/[Spring REST Docs]
 // (https://www.youtube.com/watch?v=iWj-t69EdN4[introductory talk])
 * promise results not steps +
@@ -88,7 +98,7 @@ What?
 How?
 
 * look into http://blog.codefx.org/java/new-javadoc-tags/[`@apiNote` and `@implNote`]
-* multi-line comments (with `/* */`) +
+* multi-line comments (`/* */`) +
 at start of type or method
 * strive for high-level description
 * cite/link issues, wikis, etc.
@@ -103,7 +113,7 @@ What?
 How?
 
 * use phrases like _"at the time of writing"_
-* line (`//`) or multi-line comments (`/* */`)
+* multi-line comments (`/* */`)
 * cite/link issues, wikis, etc.
 
 === Side note

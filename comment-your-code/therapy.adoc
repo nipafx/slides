@@ -1,5 +1,15 @@
 == Emotions
 
+++++
+<table class="toc">
+	<tr><td>Costs And Benefits</td></tr>
+	<tr><td>Kinds Of Comments</td></tr>
+	<tr><td><ul><li>...</li></ul></td></tr>
+	<tr class="toc-current"><td><ul><li>Emotional</li></ul></td></tr>
+	<tr><td>Clean Comments</td></tr>
+</table>
+++++
+
 (Real comments ahead; https://stackoverflow.com/q/184618[more].)
 
 === Humor
@@ -72,7 +82,8 @@ stop(); // Hammertime!
 [source,php]
 ----
 // Replaces with spaces the braces
-// in cases where braces in places cause stasis
+// in cases where braces in places
+// cause stasis
 $str = str_replace(array("\{","\}")," ",$str);
 ----
 
@@ -80,4 +91,4 @@ $str = str_replace(array("\{","\}")," ",$str);
 
 We're working with unfeeling material.
 
-*Comments can be therapeutic!*
+*Comments can be therapeutic!* 😁
