@@ -1,0 +1,79 @@
+= Guide: Git Crash Course
+
+== Getting started
+
+=== Basic commands
+
+Initialize:
+
+* `git init`
+* open second terminal in `.git`, run `tree`
+
+First commit:
+
+* create, stage, commit `README.md`
+* use `git status`, `git diff`, `git log`
+* in `.git`, run `tree`, show `objects`
+* `cat HEAD` and `cat .git/refs/heads/master`
+* `git cat-file -p` the commit, tree, and README
+* point out that folder and file names are not determined by blob
+
+Second commit:
+
+* create, stage, commit `LICENSE.md`
+* use `git status`, `git diff`, `git log`
+* in `.git`, run `tree`, show `objects`
+* `cat HEAD` and `cat .git/refs/heads/master`
+* `git cat-file -p` the new commit, tree, LICENSE
+* point out that README is references with same hash
+
+Third commit:
+
+* edit, stage with `--patch`, commit `README.md`
+* use `git status`, `git diff`, `git log`
+* in `.git`, run `tree`, show `objects`
+* identify commit hash on command line
+* `git cat-file -p` the new commit, tree, and README
+* point out that README is stored again with new text
+* point out that LICENSE is references with same hash
+* `git cat-file -p` the old README
+* point out that both versions are stored
+
+Remove and rename files.
+
+=== Undoing changes
+
+Make changes, undo them with:
+
+* `git checkout`
+* `git reset --hard`
+* `git clean`
+
+=== Ignoring changes
+
+Create `.gitignore` and matching files.
+
+=== Interacting with remotes
+
+Clone a repo:
+
+* create repo in GitLab, initialize with README and license
+* `git clone` it
+* show same commits in UI and on command line
+* `git remote -v`
+* make and push changes
+* show changes in GitLab
+
+Add a repo:
+
+* create empty repo in GitLab
+* `git remote add` in existing demo repo
+* push changes
+* show changes in GitLab
+
+Pull changes:
+
+* make changes in GitLab and show new commit
+* pull changes
+
+Explain why Git's model requires pull, then push.

@@ -1,0 +1,46 @@
+== Getting started
+
+* working locally
+* working with remotes
+
+=== Basic commands
+
+Editing:
+
+* `git init` to create a new repo
+* `git add` to stage changes
+* `git commit` to commit staged changes
+
+Observing:
+
+* `git log` to see past commits
+* `git status` to see changed files
+* `git diff` to see changes
+
+=== Undoing changes
+
+* `git checkout` to restore a file or folder to HEAD
+* `git reset --hard` to restore working tree to commit
+* `git clean` to delete untracked files
+
+=== Ignoring changes
+
+Add files, directories, and patterns +
+to ignore to `.gitignore`.
+
+=== Interacting with remotes
+
+To register remotes:
+
+* `git clone` to clone an existing repo
+* `git remote add` to add a new remote
+
+To transfer commits:
+
+* `git pull` to pull new commits
+* `git push` to push your commits
+
+=== Your turn!
+
+Take first steps with Git, +
+https://git1.disy.net/code-academy/code-academy/blob/master/git/02-basic-local.md[locally] and https://git1.disy.net/code-academy/code-academy/blob/master/git/02-basic-remote.md[remotely].
