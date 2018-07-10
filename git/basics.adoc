@@ -14,13 +14,14 @@ Editing:
 Observing:
 
 * `git log` to see past commits
+* `git checkout $commit` to check out a commit
 * `git status` to see changed files
 * `git diff` to see changes
 
 === Undoing changes
 
-* `git checkout` to restore a file or folder to HEAD
-* `git reset --hard` to restore working tree to commit
+* `git checkout $file` to restore a file/folder to HEAD
+* `git reset --hard $commit` to restore to commit
 * `git clean` to delete untracked files
 
 === Ignoring changes
@@ -32,8 +33,8 @@ to ignore to `.gitignore`.
 
 To register remotes:
 
-* `git clone` to clone an existing repo
-* `git remote add` to add a new remote
+* `git clone $url` to clone an existing repo
+* `git remote add $name $url` to add a new remote
 
 To transfer commits:
 

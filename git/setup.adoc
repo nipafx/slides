@@ -23,17 +23,28 @@ Configure with `git config --global`:
 * `user.email` (your Disy address)
 * `core.editor` (unless you enjoy vi)
 
+Example:
+
+```
+git config --global user.name "Nicolai Parlog"
+```
+
 === Disy configuration
 
 To automate authentication +
 https://docs.gitlab.com/ee/ssh/[set up SSH keys].
 
-For https://conf.disy.net/x/ChAlF[Disy's Git workflow] +
-configure with `git config --global`:
+For https://conf.disy.net/x/ChAlF[Disy's Git workflow]:
 
 * `pull.rebase true` (prevents merges on pull)
 * `merge.ff only` (prevents merge commits)
 
+Example:
+
+```
+git config --global pull.rebase true
+```
+
 === Your turn!
 
-https://git1.disy.net/code-academy/code-academy/blob/master/git/01-setup.md[Install and configure Git]
+https://git1.disy.net/code-academy/code-academy/blob/master/git/01-setup.md[Install and configure Git.]
