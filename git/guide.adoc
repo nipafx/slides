@@ -83,3 +83,52 @@ Pull changes:
 * pull changes
 
 Explain why Git's model requires pull, then push.
+
+
+== Going deeper
+
+=== Branching
+
+* show output of `git branch`
+* `git checkout` an old commit
+* make new commit
+* show output of `git branch`
+* show content of `.git/HEAD` and `.git/refs/heads`
+
+=== Branches
+
+* `git branch` for current commit
+* show output of `git branch`
+* show content of `.git/HEAD` and `.git/refs/heads`
+
+=== Handling branches
+
+* `git branch` to see local branches
+* `git branch -vv` to see local branches with more info
+* `git branch -a $branch` to see all branches
+* `git branch -d $branch` to delete merged branch
+* `git branch -D $branch` to delete branch
+* `git log --oneline --decorate --graph --all` +
+to see log with branches
+
+Go to http://git-school.github.io/visualizing-git/[Visualizing Git].
+
+=== Merges
+
+Fast forward:
+
+* create a branch, make a few commits
+* `git log`
+* check out `master`
+* merge fast-forward
+* `git log`
+
+Merge commit:
+
+* create a branch, make a few commits
+* `git log`
+* check out `master`, make commits
+* merge
+* `git log`, `git look`
+
+Go to http://git-school.github.io/visualizing-git/[Visualizing Git].

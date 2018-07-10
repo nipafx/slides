@@ -1,0 +1,39 @@
+== Branching & Merging
+
+=== Branching
+
+* branching occurs when two commits +
+have the same parent
+* a _branch_ is just a pointer to a commit
+
+=== Branches
+
+* `git branch $name` creates a new branch
+* `git checkout $branch` to check out branch
+* `git checkout -b $name` is 2-in-1: +
+creates and checks out
+
+=== Handling branches
+
+* `git branch` to see local branches
+* `git branch --no-merged` to see unmerged branches
+* `git branch -vv` to see local branches with more info
+* `git branch -d $branch` to delete merged branch
+* `git branch -D $branch` to delete branch
+* `git log --oneline --decorate --graph --all` +
+to see log with branches
+
+=== Merges
+
+A _merge_ brings commits +
+from one branch into another:
+
+* `git merge` merges named branch +
+into current branch
+
+Two possible results:
+
+* can be _fast-forward_ if named branch +
+contains all commits of current branch
+* can create a merge commit +
+("just" a commit with two parents)
