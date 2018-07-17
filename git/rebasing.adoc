@@ -1,0 +1,105 @@
+== Rebasing
+
+=== Too many merges
+
+So far:
+
+* whether working on `master` or a branch, +
+branching will happen all the time
+* every merge creates a merge commit:
++
+image::https://git-scm.com/book/en/v2/images/basic-rebase-2.png[role="diagram"]
+
+=== Too many merges
+
+15 developers, pushing twice a day
+
+*30 merge commits a day!*
+
+😨
+
+=== Too many merges
+
+Wouldn't it be nice to edit a commit's parent?
+
+image::https://git-scm.com/book/en/v2/images/basic-rebase-3.png[role="diagram"]
+
+* `C4` had `C2` as _base_ (other word for parent)
+* `C4'` is like `C4`, but has new base `C3`
+* `C4` was _rebased_
+
+=== Rebasing
+
+While we're editing, why not...
+
+* apply a change elsewhere? +
+(e.g. on a different branch)
+* edit changes before applying them?
+* edit the message?
+* split and combine changes?
+
+Rebasing allows all of that!
+
+=== Rebasing
+
+Remember, changes don't get lost:
+
+* commits are _immutable_
+* graph of commits is _append-only_
+
+Instead, rebasing...
+
+* creates new commits from existing ones
+* points branch to new commits
+
+⇝ Old commits remain available for recovery!
+
+=== Rebase
+
+Two important rebasing use cases:
+
+* replaying a branch on updated master
+* editing commits in an unpublished branch
+
+=== Replaying a branch
+
+Situation:
+
+* you are working on a branch
+* you want to apply the changes +
+to `master` without merging
+
+Solution:
+
+```
+git checkout $branch
+git rebase master
+git checkout master
+git merge $branch
+```
+
+=== Editing commits
+
+Situation:
+
+* you are working on a branch
+* you want to clean up the commits +
+to prepare them for pushing
+
+Solution:
+
+```
+git checkout $branch
+git rebase -i $commit
+```
+
+(Rebases all commits after `$commit`.)
+
+=== Rebasing
+
+No rebase if working tree has changes: +
+`git stash` +
+(Later: `git stash pop`)
+
+If a rebase gets out of hand: +
+`git rebase --abort`

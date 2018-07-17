@@ -85,7 +85,7 @@ Pull changes:
 Explain why Git's model requires pull, then push.
 
 
-== Going deeper
+== Branching & Merging
 
 === Branching
 
@@ -130,5 +130,44 @@ Merge commit:
 * check out `master`, make commits
 * merge
 * `git log`, `git look`
+
+Go to http://git-school.github.io/visualizing-git/[Visualizing Git].
+
+
+== Rebasing
+
+=== Replaying a branch
+
+Prepare:
+
+* create a branch, make a few commits
+* `git log`
+* check out `master`, make a few commits
+* `git log`
+
+Rebase:
+
+* on branch, `git rebase master`
+* show that old commits still exit
+* `git reset --hard $old-commit`
+* `git reset --hard $new-commit`
+
+Prepare with conflict:
+
+* on branch, make a few commits
+* check out `master`, make a few commits *with conflict*
+
+Rebase:
+
+* on branch, `git rebase master`
+* show conflict resolution
+* show `git rebase --abort`
+
+=== Editing commits
+
+* create a branch, make a few commits
+* `git log`
+* `git rebase -i $commit`
+* explain a few options
 
 Go to http://git-school.github.io/visualizing-git/[Visualizing Git].
