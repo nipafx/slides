@@ -1,0 +1,63 @@
+== Git Workflow @ Disy
+
+=== What we don't want
+
+We don't want:
+
+* long-lived branches
+* merge commits
+
+=== Configuration
+
+Consequences:
+
+* GitLab was configured to reject new branches
+* Git was configured (with `git config`) +
+to prevent non-fast-forward merges
+
+=== How to develop
+
+Two possibilities:
+
+* on master
+* on local branch
+
+=== Developing on `master`
+
+Working on `master` is simpler:
+
+* commit changes on `master`
+* `git pull` was configured +
+to rebase your commits
+* `git push`
+
+=== Developing on branch
+
+Working on a branch is cleaner:
+
+* commit changes on your `$branch`
+* rebase on updated `master`
+* fast-forward `master` to `$branch`
+* `git push`
+
+=== Developing on branch
+
+Once a branch is done:
+
+* on `master`, `git branch -D $branch`
+
+(This only removes the entry +
+in `.git/refs/heads`)
+
+=== Release branches
+
+Default workflow for release branches:
+
+* develop/review on `master`
+* apply individual commits to `$release` +
+with `git cherry-pick $commit`
+
+=== Your turn
+
+Carefully read +
+https://conf.disy.net/display/PRD/Git+Workflow+@+Disy[_Git Workflow @ Disy_]
