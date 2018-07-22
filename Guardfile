@@ -13,11 +13,7 @@ watch(/^([^\/]*)\/(.*\.adoc)$/) {|modified|
 		# Asciidoctor.render_file seems to have problems with include directives
 		# (http://asciidoctor.org/news/3/#3-swap-an-include-for-a-link)
 		# so I use the command line call instead.
-		# Furthermore, an incompatibility between Asciidoctor v1.5.6 and
-		# Asciidoctor-Reveal.js 1.0.4 makes it necessary to use Bundler, so
-		# 1.5.4 can be used.
-		# (Details: https://github.com/asciidoctor/asciidoctor-reveal.js/issues/132)
-		`bundle exec asciidoctor-revealjs -T _asciidoctor-reveal.js/templates/slim #{folder}/presentation.adoc -o _slides/#{folder}/index.html`
+		`bundle exec asciidoctor-revealjs #{folder}/presentation.adoc -o _slides/#{folder}/index.html`
 	end
 }
 end
