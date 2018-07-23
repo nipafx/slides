@@ -1,69 +1,72 @@
-[data-state="no-title"]
+[state=no-title]
 == Setup & Tools
 
-++++
-<table class="toc">
-	<tr><td>Basics</td></tr>
-	<tr><td>Dynamic Tests</td></tr>
-	<tr><td>Parameterized Tests</td></tr>
-	<tr><td>Extensions</td></tr>
-	<tr><td>Architecture</td></tr>
-	<tr class="toc-current"><td>Setup &amp; Tools</td></tr>
-</table>
-++++
+*Setup & Tools*
 
+=== Writing tests
 
-=== Writing Tests
-
-++++
-<h3>As Easy As Pie!</h3>
-++++
-
-
-Add this:
+Add test dependency:
 
 ```shell
 org.junit.jupiter
 junit-jupiter-api
-5.0.0-M4
+5.2.0
 ```
 
 Have fun!
 
+=== Writing tests
 
-=== Running Tests
+No specific test library support required. +
+These all work out of the box:
 
-++++
-<h3>Native support is w.i.p.</h3>
-++++
+* Mockito, PowerMock
+* Hamcrest, AssertJ, +
+Google Truth, FestAssert
 
-* *Maven*: work started https://issues.apache.org/jira/browse/SUREFIRE-1206[#1206]
-// (https://github.com/junit-team/junit5/issues/31[#31], https://issues.apache.org/jira/browse/SUREFIRE-1206[#1206], http://markmail.org/message/nx6qzkarj7r6eyf5#query:+page:1+mid:nx6qzkarj7r6eyf5+state:results[mails])
-* *Gradle*: work started https://github.com/gradle/gradle/issues/1037[#1037]
-* *IntelliJ*: since https://blog.jetbrains.com/idea/2016/08/using-junit-5-in-intellij-idea/[2016.2]; https://youtrack.jetbrains.com/issue/IDEA-170817[2017.1.2] required for M4
-* *Eclipse*: EA support with 4.7 M4 +
-with some extra work https://bugs.eclipse.org/bugs/show_bug.cgi?id=488566[#488566]
+=== Running tests
+
+Add test dependency:
+
+```shell
+org.junit.jupiter
+junit-jupiter-engine
+5.2.0
+```
+
+=== Running tests
+
+With build tools:
+
+* *Maven*:
+** since Surefire 2.22.0
+** add `test` dependency on engine
+* *Gradle*:
+** since 4.6
+** add `testRuntime` dependency on engine
+** activate JUnit 5:
++
+[source,groovy]
+----
+test {
+	useJUnitPlatform()
+}
+----
+
+=== Running tests
+
+With IDEs:
+
+* *IntelliJ*: since https://blog.jetbrains.com/idea/2016/08/using-junit-5-in-intellij-idea/[2016.2],
+but https://blog.jetbrains.com/idea/2017/11/intellij-idea-2017-3-junit-support/[2017.3] recommended
+* *Eclipse*: since https://www.eclipse.org/eclipse/news/4.7.1a/#junit-5-support"[Oxygen.1a (4.7.1a)]
 // search for all issues with "JUnit" in them:
 // https://netbeans.org/bugzilla/buglist.cgi?quicksearch=JUnit%205
 * *NetBeans*: not even an issue
 
+=== Running tests
 
-=== Running Tests
-
-++++
-<h3>With Build Tools</h3>
-++++
-
-JUnit 5 team provides rudimentary +
-Gradle plugin and Maven Surefire provider +
-(see http://junit.org/junit5/docs/snapshot/user-guide/#build-support[user guide] for details)
-
-
-=== Running Tests
-
-++++
-<h3>As Part Of JUnit 4</h3>
-++++
+As part of JUnit 4
 
 * individual classes:
 +
@@ -79,14 +82,9 @@ public class JUnit5Test { ... }
 public class JUnit5TestSuite { }
 ```
 
+=== Running tests
 
-=== Running Tests
-
-++++
-<h3>From Console</h3>
-++++
-
-There is a https://blog.codefx.org/libraries/junit-5-setup/#Command-Line-For-The-Win[console launcher]:
+There is a console launcher:
 
 ```bash
 # run all tests
@@ -99,16 +97,12 @@ java -jar junit-platform-console-standalone.jar
 	--select-class ${fully_qualified_test_class_name}
 ```
 
+=== Setup & Tools
+==== Summary
 
-=== Tools & Setup
+* native support in Maven, Gradle, IntelliJ, Eclipse +
+(remember to add the engine as dependency)
+* for outdated tools, run with JUnit 4
+* console launcher as last resort
 
-++++
-<h3>Summary</h3>
-++++
-
-* you can start writing tests right away
-* only IntelliJ has native support
-* provisional Maven/Gradle integration works
-* running with JUnit 4 is a good compromise
-
-(Read about http://blog.codefx.org/libraries/junit-5-setup/[the setup details].)
+⇝ Read http://blog.codefx.org/libraries/junit-5-setup/[more about setup details].
