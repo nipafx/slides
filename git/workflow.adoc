@@ -40,7 +40,8 @@ Working on `master` is simpler:
 
 * commit changes on `master`
 * `git pull` was configured +
-to rebase your commits
+to rebase your commits +
+_(here be conflicts!)_
 * `git push`
 
 === Developing on branch
@@ -48,7 +49,8 @@ to rebase your commits
 Working on a branch is cleaner:
 
 * commit changes on your `$branch`
-* rebase on updated `master`
+* rebase on updated `master` +
+_(here be conflicts!)_
 * fast-forward `master` to `$branch`
 * `git push`
 
