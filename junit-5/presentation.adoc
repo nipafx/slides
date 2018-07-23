@@ -27,43 +27,11 @@ include::../_shared/highlight.js.adoc[]
 include::../_shared/event-on-title-and-footer.adoc[]
 
 
-
-// ############### //
-// H E A D S   U P //
-// ############### //
-
-
-== Heads Up
-
-JUnit 5 is work in progress!
-
-This is based on *Milestone 4* +
-(released 1st of April 2017).
-
-*GA release* is tentatively scheduled for September!
-
-Give *feedback*!
-
-
-=== JUnit 5 Links:
-
-User guide::
-	http://junit.org/junit5/docs/snapshot/user-guide[junit.org/junit5/docs/snapshot/user-guide]
-GitHub repository::
-	https://github.com/junit-team/junit5[github.com/junit-team/junit5]
-Twitter::
-	https://twitter.com/junitteam[@junitteam]
-Articles on my blog::
-	http://blog.codefx.org/tag/junit-5/[blog.codefx.org/tag/junit-5/]
-Slides::
-	http://slides.codefx.org[slides.codefx.org]
-
-
-
 // ####################### //
 // P R E S E N T A T I O N //
 // ####################### //
 
+include::heads-up.adoc[]
 
 include::basics.adoc[]
 
@@ -77,23 +45,7 @@ include::architecture.adoc[]
 
 include::setup.adoc[]
 
-
-
-// ######### //
-// O U T R O //
-// ######### //
-
-== Next Generation Testing On The JVM
-
-* new API is an incremental improvement +
-full of thoughtful details
-* dynamic tests are an important concept
-* wohoo, native parameterized tests!
-* extension model looks very promising
-* architecture opens up the platform
-* tool support is not there yet
-
-(Read http://blog.codefx.org/tag/junit-5/[more about JUnit 5].)
+include::summary.adoc[]
 
 include::../_shared/about-slide.adoc[]
 
