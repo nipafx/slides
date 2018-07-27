@@ -1,19 +1,9 @@
-[data-state="no-title"]
+[state=no-title]
 == Basics
 
-++++
-<table class="toc">
-	<tr class="toc-current"><td>Basics</td></tr>
-	<tr><td>Dynamic Tests</td></tr>
-	<tr><td>Parameterized Tests</td></tr>
-	<tr><td>Extensions</td></tr>
-	<tr><td>Architecture</td></tr>
-	<tr><td>Setup &amp; Tools</td></tr>
-</table>
-++++
+*Basics*
 
-
-=== What's New?
+=== What's new?
 
 ```java
 class JUnit5Test {
@@ -30,8 +20,7 @@ class JUnit5Test {
 <p class="fragment current-visible">⇝ Package visibility suffices!</p>
 ++++
 
-
-=== What's New?
+=== What's new?
 
 ```java
 @BeforeAll
@@ -51,8 +40,7 @@ static void afterAll() { ... }
 <p class="fragment current-visible">⇝ Lifecycle annotations have new names.</p>
 ++++
 
-
-=== What's New?
+=== What's new?
 
 ```java
 @Test
@@ -66,8 +54,7 @@ void failingTest() {
 <p class="fragment current-visible">⇝ <code>@Ignore</code> is now <code>@Disabled</code>.</p>
 ++++
 
-
-=== What's New?
+=== What's new?
 
 ```java
 @Test
@@ -82,8 +69,7 @@ void failingTest() {
 <p class="fragment" data-fragment-index="1">But how?</p>
 ++++
 
-
-=== What's New?
+=== What's new?
 
 ```java
 @Test
@@ -103,8 +89,7 @@ void assertAllProperties() {
 <p class="fragment current-visible">⇝ <code>assertAll</code> gathers results from multiple assertions</p>
 ++++
 
-
-=== What's New?
+=== What's new?
 
 Output if `assertAll` fails:
 
@@ -116,54 +101,33 @@ org.opentest4j.MultipleFailuresError:
 	expected: <63> but was: <42>
 ```
 
-
-=== What's New?
+=== What's new?
 
 ```java
-class CountTest {
-	// lifecycle and tests
-	@Nested
-	class CountGreaterZero {
-		// lifecycle and tests
-		@Nested
-		class CountMuchGreaterZero {
-			// lifecycle and tests
-		}
-	}
+@DisplayName("A stack")
+class StackTest {
+
+	@Test
+	@DisplayName("when new, is empty")
+	void isEmpty() { /*...*/ }
+
+	@Test
+	@DisplayName("when new and popped, "
+			+ "throws EmptyStackException")
+	void throwsExceptionWhenPopped() { /*...*/ }
+
 }
 ```
 
-++++
-<p class="fragment current-visible">⇝ <code>@Nested</code> to organize tests in inner classes</p>
-++++
+=== What's new?
 
+Effects of using `@DisplayName`:
 
-=== What's New?
-
-```java
-@DisplayName("A count")
-class CountTest {
-	@Nested
-	@DisplayName("when greater zero")
-	class CountGreaterZero {
-		@Test
-		@DisplayName("is positive")
-		void isPositive() { ... }
-	}
-}
-```
+image::images/testing-a-stack.png[DisplayName, 900]
 
 ++++
 <p class="fragment current-visible">⇝ <code>@DisplayName</code> to show a nice name</p>
 ++++
-
-
-=== What's new?
-
-The effects of `@Nested` and `@DisplayName`:
-
-image::images/testing-a-stack.png[Nested and DisplayName, 900]
-
 
 === What's new?
 
@@ -175,28 +139,15 @@ void someTest(MyServer server) {
 ```
 
 ++++
-<div class="fragment current-visible">
-	<p>⇝ Test has parameters!</p>
-	<p>But where do they come from?</p>
-</div>
+<p class="fragment" data-fragment-index="0,1">⇝ Test has parameters!</p>
+<p class="fragment" data-fragment-index="1">But where do they come from?</p>
 ++++
 
-
-=== What's New?
-
-++++
-<h3>Summary</h3>
-++++
+=== What's new?
+==== Summary
 
 * lifecycle works much like before
 * many details were improved
-* `@Nested` and `@DisplayName` +
-make a nice couple
+* `@DisplayName` improves readability
+* seamless extension
 * parameter injection
-
-++++
-<p class="fragment current-visible">
-That's all very nice but how is it<br>
-<i>Next Generation Testing</i>?
-</p>
-++++
