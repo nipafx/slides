@@ -1,19 +1,9 @@
-[data-state="no-title"]
-== Dynamic Tests
+[state=no-title]
+== Dynamic tests
 
-++++
-<table class="toc">
-	<tr><td>Basics</td></tr>
-	<tr class="toc-current"><td>Dynamic Tests</td></tr>
-	<tr><td>Parameterized Tests</td></tr>
-	<tr><td>Extensions</td></tr>
-	<tr><td>Architecture</td></tr>
-	<tr><td>Setup &amp; Tools</td></tr>
-</table>
-++++
+*Dynamic tests*
 
-
-=== Defining Tests
+=== Defining tests
 
 Up to now tests were identified
 
@@ -24,38 +14,23 @@ Up to now tests were identified
 
 ⇝ Tests had to be known at compile time.
 
-
-=== Defining Tests
+=== Defining tests
 
 *So what?!*
 
-What if we want to create tests
+What if we want to create tests at run time?
 
-* for a set of parameters
-* based on non-source files
-* with lambdas
+=== Junit 5 to the rescue!
 
-⇝ We need to define tests at run time.
+Dynamic tests allow creation of tests at run time.
 
-
-=== Dynamic Tests To The Rescue!
-
-Allow creation of tests at run time.
-
-* tests are wrapped into `DynamicTest`-s
-* methods that create them +
+* a test is wrapped into `DynamicTest`
+* a bunch of them can be wrapped +
+into `DynamicContainer`
+* methods that create either of them +
 are annotated with `@TestFactory`
 
-These are fully-fledged tests:
-
-* integrated into lifecycle (https://github.com/junit-team/junit5/issues/378[soon])
-* viewed by tools as separate tests
-
-For more details, check https://blog.codefx.org/libraries/junit-5-dynamic-tests/[this post].
-
-
-////
-=== Creating Tests
+=== Creating tests
 
 ```java
 @TestFactory
@@ -71,26 +46,56 @@ List<DynamicTest> createPointTests() {
 }
 ```
 
+=== Creating containers
+
+```java
+	@TestFactory
+	List<DynamicContainer> registeredTests() {
+		return asList(
+			dynamicContainer(
+				"Dynamic Container #1",
+				asList( /* dynamic tests */ )),
+			dynamicContainer(
+				"Dynamic Container #2",
+				asList( /* dynamic tests */ ))
+		);
+	}
+}
+```
 
 === Implementation
 
 The rest is straight-forward:
 
 . JUnit detects `@TestFactory` methods
-. calls them to generate tests
+. calls them to generate containers and tests
 . adds tests to the test tree
 . eventually runs them
 
+=== Running dynamic tests
 
-=== Parameterized Tests
+Viewed by tools as separate tests:
+
+image::images/dynamic-containers.png[Dynamic containers and tests, 900]
+
+=== Lifecycle
+
+Not integrated into the lifecycle
+(https://github.com/junit-team/junit5/issues/378[#378]):
+
+* `@Before/AfterAll` only called +
+once per `@TestFactory`
+* dynamic tests use shared state
+
+////
+=== Parameterized tests
 
 ```java
 void pointTest(Point p) { /*...*/ }
 
 @TestFactory
 Stream<DynamicText> testingPoints() {
-	return Stream.of(
-			/* create points */)
+	return Stream.of(/* create points */)
 		.map(p ->
 			dynamicTest(
 				"Testing " + p,
@@ -98,16 +103,14 @@ Stream<DynamicText> testingPoints() {
 }
 ```
 
-
-=== Parameterized Tests
+=== Parameterized tests
 
 ```java
 void pointTest(Point p) { /*...*/ }
 
 @TestFactory
 Stream<DynamicText> testingPoints() {
-	List<Point> points = List.of(
-		/* create points */);
+	List<Point> points = /* create points */;
 	return DynamicTest.stream(
 		points,
 		p -> "Testing " + p,
@@ -115,8 +118,7 @@ Stream<DynamicText> testingPoints() {
 }
 ```
 
-
-=== File-Based Tests
+=== File-based Tests
 
 ```java
 void pointTest(Point p) { /*...*/ }
@@ -131,11 +133,9 @@ Stream<DynamicText> testingPoints() {
 			() -> pointTest(p)));
 }
 ```
+////
 
-
-=== Lambda Tests
-
-So what about lambdas?
+=== Lambda tests
 
 This would be great:
 
@@ -151,8 +151,7 @@ class PointTest {
 
 But how?
 
-
-=== Lambda Tests
+=== Lambda tests
 
 ```java
 public class LambdaTest {
@@ -164,14 +163,14 @@ public class LambdaTest {
 		tests.add(dynamicTest(name, test));
 	}
 
-	@TestFactory List<DynamicTest> tests() {
+	@TestFactory
+	List<DynamicTest> tests() {
 		return tests;
 	}
 }
 ```
 
-
-=== Lambda Tests
+=== Lambda tests
 
 ```java
 class PointTest extends LambdaTest {{
@@ -188,8 +187,7 @@ class PointTest extends LambdaTest {{
 * code therein is run during construction
 * JUnit will pick up the tests by calling `tests()`
 
-
-=== Lambda Tests
+=== Lambda tests
 
 While we're hacking... what about this?
 
@@ -203,29 +201,18 @@ class PointTest extends LambdaTest {{
 }}
 ```
 
-Learn how to access +
-a lambda's parameter name +
+Access a lambda's parameter name +
 with
-http://benjiweber.co.uk/blog/2015/08/17/lambda-parameter-names-with-reflection/[this one weird trick].
+http://benjiweber.co.uk/blog/2015/08/17/lambda-parameter-names-with-reflection/[this one weird trick] +
+(that stopped working on Java 9).
 
+=== Dynamic tests
+==== Summary
 
-=== Dynamic Tests
+* to create tests at run time:
+** write method that returns collection +
+of `DynamicTest`/`DynamicContainer`
+** annotate with `@TestFactory`
+* not fully integrated in lifecycle
 
-++++
-<h3>Summary</h3>
-++++
-
-* with `@TestFactory` and `DynamicTest` +
-we can create tests at run time:
-** for sets of parameters
-** based on external input
-** as lambdas (yay!)
-* not fully integrated in lifecycle (yet? https://github.com/junit-team/junit5/issues/378[#378])
-
-++++
-<p class="fragment current-visible">
-That's all very nice but is this already<br>
-<i>Next Generation Testing</i>?
-</p>
-++++
-////
+⇝ Read https://blog.codefx.org/libraries/junit-5-dynamic-tests/[more about dynamic tests].
