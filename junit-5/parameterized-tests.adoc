@@ -1,19 +1,9 @@
-[data-state="no-title"]
-== Parameterized Tests
+[state=no-title]
+== Parameterized tests
 
-++++
-<table class="toc">
-	<tr><td>Basics</td></tr>
-	<tr><td>Dynamic Tests</td></tr>
-	<tr class="toc-current"><td>Parameterized Tests</td></tr>
-	<tr><td>Extensions</td></tr>
-	<tr><td>Architecture</td></tr>
-	<tr><td>Setup &amp; Tools</td></tr>
-</table>
-++++
+*Parameterized tests*
 
-
-=== Parameterizing Tests
+=== Parameterizing tests
 
 Dominant use case for parameterizing tests:
 
@@ -23,43 +13,66 @@ Dominant use case for parameterizing tests:
 
 JUnit 5 has native support for that!
 
-=== Parameterizing Tests
+=== Parameterizing tests
+
+Require another dependency:
+
+```shell
+org.junit.jupiter
+junit-jupiter-params
+5.2.0
+```
+
+=== Parameterizing tests
+
+Easy to get started:
+
+* declare test method with `@ParameterizedTest`
+* define input data with different sources
+* JUnit does the rest
 
 ```java
 @ParameterizedTest
 @ValueSource(strings = { " Hello", "JUnit" })
-void testValues(String word) { ... }
+void testValues(String word) { /*...*/ }
 ```
-
-* declare test method with `@ParameterizedTest`
-* define input data with different sources
-* JUnit does the rest:
 
 image::images/parameterized-test.png[Parameterized tests, 400]
 
-=== Argument Sources
+=== Parameterized tests
+
+Details to look into:
+
+* argument sources
+* argument converters
+* argument aggregators
+* lifecycle integration
+* naming tests
+
+=== Argument sources
 
 Parameterized tests need sources for arguments.
 
 These are included:
 
-* `@ValueSource` is very simple +
+* `@ValueSource` is very simple, +
 but only works for single arguments
-* `@EnumSource` injects some or all enum values
+* `@EnumSource` injects some or all enum values, +
+but only works for single arguments
 * `@MethodSource` calls a method to create args
 * `@CsvSource` allows defining args as CSV strings
 * `@CsvFileSource` loads args from CSV file
 
 More than one source can be used per method!
 
-=== Enum Source
+=== Enum source
 
 Calling a test with all values of an enum:
 
 ```java
 @ParameterizedTest
 @EnumSource(TimeUnit.class)
-void testAllEnumValues(TimeUnit unit) { ... }
+void testAllEnumValues(TimeUnit unit) { /*...*/ }
 ```
 
 Calling a test with a few values of an enum:
@@ -69,104 +82,110 @@ Calling a test with a few values of an enum:
 @EnumSource(
 	value = TimeUnit.class,
 	names = {"NANOSECONDS", "MICROSECONDS"})
-void testSomeEnumValues(TimeUnit unit) { ... }
+void testSomeEnumValues(TimeUnit unit) { /*...*/ }
 ```
 
-=== Method Source
+=== Method source
 
 Call a method to provide arguments:
 
 ```java
 @ParameterizedTest
-@MethodSource(names = "createWords")
-void testWords(String word) { ... }
+@MethodSource("createWords")
+void testWords(String word) { /*...*/ }
 
 static Stream<String> createWords() {
 	return Stream.of("Hello", "JUnit");
 }
 ```
 
-=== Method Source
+=== Method source
+
+Properties of argument-providing method:
+
+* must be `static`
+* can be in other class +
+(e.g. `"org.codefx.Words#provide"`)
+* name does not have to be specified +
+if same as parameterized test method:
++
+```java
+@ParameterizedTest
+@MethodSource
+void testWords(String word) { /*...*/ }
+
+static Stream<String> testWords() { /*...*/ }
+```
+
+=== Method source
 
 For multiple arguments, return `Arguments`:
 
 ```java
 @ParameterizedTest
-@MethodSource(names = "createWordsWithLength")
-void testLength(String word, int length) { ... }
+@MethodSource("createWordsWithLength")
+void testLength(String word, int length) { /*...*/ }
 
 static Stream<Arguments> createWordsWithLength() {
 	return Stream.of(
-			create("Hello", 5),
-			create("JUnit 5", 7));
+		Arguments.of("Hello", 5),
+		Arguments.of("JUnit 5", 7));
 }
 ```
 
-=== CSV Sources
+=== CSV sources
 
 Define values as CSV strings:
 
 ```java
 @ParameterizedTest
-@CsvSource({ "(0/0), 0", "(0/1), 1", "(1/1), 1.41" })
-void testPointNorm(String point, double norm) { ... }
+@CsvSource({ "(0/0), 0", "(0/1), 1" })
+void testPointNorm(
+	String point, double norm) { /*...*/ }
 ```
 
 * each string provides args for one execution
 * strings are split by comma to get individual args
+* strings can be converted to other objects +
+(more on that later)
 
-=== Argument Converters
+=== CSV file sources
 
-How do strings get converted?
-
-* JUnit handles primitives, enums, `java.time.*`
-* you can implement `ArgumentConverter` +
-and apply with `@ConvertWith`:
+You can also load strings from CSV files:
 
 ```java
 @ParameterizedTest
-@CsvSource({ "(0/0), 0", "(0/1), 1", "(1/1), 1.41" })
+@CsvFileSource(resources = "/point-norms.csv")
 void testPointNorm(
-	@ConvertWith(PointConverter.class) Point point,
-	double norm) { ... }
+	String point, double norm) { /*...*/ }
 ```
 
-
-=== CSV File Sources
-
-This also applies to CSV files:
-
-```java
-@ParameterizedTest
-@CsvFileSource(resources = "/pointNorms.csv")
-void testPointNorm(
-	@ConvertWith(PointConverter.class) Point point,
-	double norm) { ... }
-```
-
-=== More Sources
+=== Your sources
 
 You can create your own sources:
 
 . implement `ArgumentsProvider`
+. apply with `@ArgumentsSource`
+
+=== Your sources
+
+. implement `ArgumentsProvider`
 
 ```java
-static class RandomIntegerProvider
+class RandomIntegerProvider
 		implements ArgumentsProvider {
 
 	@Override
-	public Stream<Arguments> arguments(...) {
+	public Stream<Arguments> arguments( /*...*/ ) {
 		return new Random().ints(0, 10)
-			.mapToObj(ObjectArrayArguments::create)
+			.mapToObj(Arguments::of)
 			.limit(3);
 	}
 
 }
 ```
 
-=== More Sources
-
-You can create your own sources:
+=== Your sources
 
 [start=2]
 . apply with `@ArgumentsSource`
@@ -174,28 +193,250 @@ You can create your own sources:
 ```java
 @ParameterizedTest
 @ArgumentsSource(RandomIntegerProvider.class)
-void testRandomIntegers(Integer argument) { ... }
+void testRandomIntegers(Integer argument) { /*...*/ }
 ```
 
-=== Parameterized Tests
+=== Argument converters
 
-++++
-<h3>Summary</h3>
-++++
+We've seen lots of strings. +
+How are they converted?
+
+* JUnit handles many common types
+* matching factory or constructor
+* `ArgumentConverter` implementations
+
+=== JUnit's converters
+
+JUnit converts strings to common types:
+
+* primitives and their wrappers with `valueOf`
+* enums with `valueOf`
+* `java.time.*` from ISO representations
+* `File` with `File::new`
+* `Path` with `Paths::get`
+* `UUID` with `UUID::fromString`
+
+And a few more...
+
+=== Factory methods
+
+JUnit can call non-private members +
+that accept a single `String` argument:
+
+* such a `static` method if there's exactly one
+* otherwise such a constructor if there is one
+
+=== Factory methods
+
+Example:
+
+```java
+@ParameterizedTest
+@CsvSource({ "(0/0), 0", "(0/1), 1" })
+void testPointNorm(
+	Point point, double norm) { /*...*/ }
+
+class Point {
+
+	/** Creates a point from an '(x/y)' string */
+	static Point from(String xy) { /*...*/ }
+
+}
+```
+
+=== Your converter
+
+You can create your own converters:
+
+. implement `ArgumentConverter`
+. apply with `@ConvertWith`
+
+(Yes, very similar to argument providers.)
+
+=== Your converter
+
+. implement `ArgumentConverter`
+
+```java
+class PointConverter
+		implements ArgumentConverter {
+
+	@Override
+	public Object convert(
+			Object input, /*...*/ )
+			throws ArgumentConversionException {
+		if (input instanceof String)
+			return Point.from((String) input);
+		throw new ArgumentConversionException(
+			input + " is no valid point");
+	}
+
+}
+```
+
+=== Your converter
+
+[start=2]
+. apply with `@ConvertWith`
+
+```java
+@ParameterizedTest
+@CsvSource({ "(0/0), 0", "(0/1), 1" })
+void testPointNorm(
+	@ConvertWith(PointConverter.class)
+	Point point,
+	double norm) { /*...*/ }
+```
+
+(Not the best example because `Point` +
+qualifies for factory conversion.)
+
+=== Argument aggregators
+
+Some sources (particularly CSV) +
+may provide _many_ arguments.
+
+Aggregate them into objects:
+
+* use `ArgumentsAccessor`
+* `ArgumentsAggregator` implementation
+
+=== Argument accessor
+
+```java
+@ParameterizedTest
+@CsvSource({ "0, 0, 0", "1.414, 1, 1" })
+void testPointNorm(
+		double norm, ArgumentsAccessor args) {
+	Point point = Point.from(
+		args.getDouble(1), args.getDouble(2));
+	assertEquals(norm, point.norm(), 0.01);
+}
+```
+
+=== Your aggregator
+
+Reuse common aggregations:
+
+. implement `ArgumentsAccessor`
+. apply with `@AggregateWith`
+
+(By now, this pattern should bore you.)
+
+=== Your aggregator
+
+. implement `ArgumentsAccessor`
+
+```java
+class PointAggregator
+		implements ArgumentsAggregator {
+
+	@Override
+	public Object aggregateArguments(
+			ArgumentsAccessor args, /*...*/ )
+			throws ArgumentsAggregationException {
+		return Point.from(
+			args.getDouble(1), args.getDouble(2));
+	}
+
+}
+```
+
+=== Your aggregator
+
+[start=2]
+. apply with `@AggregateWith`
+
+```java
+@ParameterizedTest
+@CsvSource({ "0, 0, 0", "1.414, 1, 1" })
+void testPointNorm(
+		double norm,
+		@AggregateWith(PointAggregator.class)
+		Point point) {
+	assertEquals(norm, point.norm(), 0.01);
+}
+```
+
+=== Your aggregator
+
+Two details to note:
+
+* aggregated parameters must come last +
+in parameter list
+* `ArgumentsAccessor::get...` converts:
+** common types (hence `getDouble`)
+** with factories if they exist
+
+=== Full integration
+
+Parameterized tests are fully integrated:
+
+* `@ParameterizedTest` method is container
+* each invocation is a single test
+* each test has regular lifecycle:
+** `@Before/AfterEach` are executed
+** other parameters can be injected +
+(must come last)
+* parameterized and other tests can be mixed
+
+=== Parameterized names
+
+Names can be customized:
+
+* `@DisplayName` on `@ParameterizedTest` +
+defines test container name
+* `name` property of `@ParameterizedTest` +
+defines each test's name
+
+```java
+@DisplayName("Roman numeral")
+@ParameterizedTest(name = "\"{0}\" should be {1}")
+@CsvSource({ "I, 1", "II, 2", "V, 5" })
+void numeral(String word, int number) { /*...*/ }
+```
+
+=== Parameterized names
+
+```java
+@DisplayName("Roman numeral")
+@ParameterizedTest(name = "\"{0}\" should be {1}")
+@CsvSource({ "I, 1", "II, 2", "V, 5" })
+void numeral(String word, int number) { /*...*/ }
+```
+
+image::images/parameterized-fancy-name.png[Parameterized tests with proper names, 700]
+
+=== Parameterized names
+
+Placeholders in `@ParameterizedTest`-'s `name`:
+
+`{index}`:: current invocation’s index, starting with 1
+`{arguments}`:: `"{0}, {1}, ... {n}"` for `n` parameters
+`{i}`:: the `i`-th parameter's argument value
+
+=== Parameterized tests
+==== Summary
 
 JUnit 5 has native support for +
 one variant of parameterized tests:
 
-* declare test method with `@ParameterizedTest`
-* define input data with different sources, e.g. +
-`@ValueSource`, `@MethodSource`, `@CsvSource`, +
-or self-made sources
+* declare with `@ParameterizedTest`:
+** can be properly named
+** fully integrated into lifecycle
+* then worry about arguments
 
-Other variants can be implemented via extensions!
+=== Parameterized tests
+==== Summary
 
-++++
-<p class="fragment current-visible">
-That's all very nice but is this already<br>
-<i>Next Generation Testing</i>?
-</p>
-++++
+Parameters need arguments:
+
+* define input with different sources, e.g. +
+`@ValueSource`, `@MethodSource`, `@CsvSource`,
+* convert strings to more complex classes
+* aggregate arguments to more complex classes
+
+JUnit comes with many implementations, +
+but it's easy to add your own.
+
+⇝ Read https://blog.codefx.org/libraries/junit-5-parameterized-tests/[more about parameterized tests].
