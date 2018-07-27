@@ -1,0 +1,174 @@
+[state=no-title]
+== Nested tests
+
+*Nested tests*
+
+=== Testing a stack
+
+Behavior of a `Stack`:
+
+* on a new stack...
+** `empty()` returns `true`
+** `pop()` and `peek()` throw
+** `push()` works
+
+=== Testing a stack
+
+Behavior of a `Stack`:
+
+* on new a stack after `push()`...
+** `empty()` returns `false`
+** `pop()` and `peek()` work
+** `push()` works
+* on new a stack after `push()` and `pop()`...
+** `empty()` returns `true`
+
+=== Grouped by state
+
+These tests form groups +
+defined by their initial state:
+
+* new `Stack()`
+* new `Stack()`, then `push()`
+* new `Stack()`, then `push()`, then `pop()`
+
+And state is incremental!
+
+=== Nested tests
+
+With nested tests:
+
+* group tests with same initial state
+* create an inner class for each group
+* nest according to state
+* use `@BeforeEach` to build state
+
+=== Grouping tests
+
+Inner class per group of tests:
+
+```java
+class StackTest {
+
+	@Nested
+	class WhenNew {
+
+		@Nested
+		class AfterPushing {
+
+			@Nested
+			class AfterPopping { }
+
+		}
+	}
+}
+```
+
+=== Building state
+
+Use `@BeforeEach`:
+
+```java
+class StackTest {
+	Stack<Object> stack;
+
+	@Nested
+	class WhenNew {
+
+		@BeforeEach
+		void createNewStack() {
+			stack = new Stack<>();
+		}
+
+		// continued
+
+	}
+}
+```
+
+[transition=none]
+=== Building state
+
+Use `@BeforeEach`:
+
+```java
+class StackTest {
+	@Nested
+	class WhenNew {
+		@Nested
+		class AfterPushing {
+
+			@BeforeEach
+			void pushAnElement() {
+				stack.push("element");
+			}
+
+		}
+	}
+}
+```
+
+=== Building state
+
+Called outside-in:
+
+```java
+// in StackTest.WhenNew
+//     ⇝ called first
+@BeforeEach
+void createNewStack() {
+	stack = new Stack<>();
+}
+
+// in StackTest.WhenNew.AfterPushing
+//     ⇝ called second
+@BeforeEach
+void pushAnElement() {
+	stack.push(anElement);
+}
+```
+
+=== Building state
+
+Note:
+
+* inner classes want to access +
+outer class' state
+* `@Nested` classes can't be `static`!
+* no `@BeforeAll`, `@AfterAll`!
+
+=== Nested and named
+
+```java
+@DisplayName("A new stack")
+class StackTest {
+
+	@Test @DisplayName("is empty")
+	void isEmpty() { /*...*/ }
+
+	@Nested @DisplayName("after pushing an element")
+	class AfterPushing {
+
+		@Test @DisplayName("it is no longer empty")
+		void isNotEmpty() { /*...*/ }
+
+	}
+}
+```
+
+=== Nested and named
+
+The effects of `@Nested` and `@DisplayName`:
+
+image::images/testing-a-stack-nested.png[Nested and DisplayName, 900]
+
+=== Nested tests
+==== Summary
+
+* look out for groups of tests +
+with same initial state
+* give each group a non-static +
+inner class with `@Nested`
+* nest inner classes if state is incremental
+* rely on outside-in calls on `@BeforeEach` +
+to build state incrementally
