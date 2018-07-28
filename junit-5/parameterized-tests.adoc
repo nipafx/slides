@@ -165,7 +165,7 @@ void testPointNorm(
 You can create your own sources:
 
 . implement `ArgumentsProvider`
-. apply with `@ArgumentsSource`
+. register with `@ArgumentsSource`
 
 === Your sources
 
@@ -188,7 +188,7 @@ class RandomIntegerProvider
 === Your sources
 
 [start=2]
-. apply with `@ArgumentsSource`
+. register with `@ArgumentsSource`
 
 ```java
 @ParameterizedTest
@@ -249,7 +249,7 @@ class Point {
 You can create your own converters:
 
 . implement `ArgumentConverter`
-. apply with `@ConvertWith`
+. register with `@ConvertWith`
 
 (Yes, very similar to argument providers.)
 
@@ -277,7 +277,7 @@ class PointConverter
 === Your converter
 
 [start=2]
-. apply with `@ConvertWith`
+. register with `@ConvertWith`
 
 ```java
 @ParameterizedTest
@@ -319,7 +319,7 @@ void testPointNorm(
 Reuse common aggregations:
 
 . implement `ArgumentsAccessor`
-. apply with `@AggregateWith`
+. register with `@AggregateWith`
 
 (By now, this pattern should bore you.)
 
@@ -345,7 +345,7 @@ class PointAggregator
 === Your aggregator
 
 [start=2]
-. apply with `@AggregateWith`
+. register with `@AggregateWith`
 
 ```java
 @ParameterizedTest

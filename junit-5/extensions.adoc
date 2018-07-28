@@ -1,24 +1,10 @@
-[data-state="no-title"]
+[state=no-title]
 == Extensions
 
-++++
-<table class="toc">
-	<tr><td>Basics</td></tr>
-	<tr><td>Dynamic Tests</td></tr>
-	<tr><td>Parameterized Tests</td></tr>
-	<tr class="toc-current"><td>Extensions</td></tr>
-	<tr><td>Architecture</td></tr>
-	<tr><td>Setup &amp; Tools</td></tr>
-</table>
-++++
+**Extensions**
 
-
-////
 === Extensions in JUnit 4
-
-++++
-<h3>Runners</h3>
-++++
+==== Runners
 
 Manage a test's full lifecycle.
 
@@ -31,12 +17,8 @@ public class MyTest { ... }
 * heavyweight
 * exclusive
 
-
 === Extensions in JUnit 4
-
-++++
-<h3>Rules</h3>
-++++
+==== Rules
 
 Execute code before and after statements.
 
@@ -52,7 +34,6 @@ public class MyTest {
 * lightweight
 * limited to before/after behavior
 
-
 === Extensions in JUnit 4
 
 Extension model is not optimal:
@@ -61,10 +42,8 @@ Extension model is not optimal:
 ** each with limitations
 ** but with considerable overlap
 * composition can cause problems
-////
 
-
-=== Approach To Extension
+=== Approaching extensions
 
 From JUnit 5's
 https://github.com/junit-team/junit5/wiki/Core-Principles[Core Principles]:
@@ -74,21 +53,19 @@ https://github.com/junit-team/junit5/wiki/Core-Principles[Core Principles]:
 Quite literally, +
 JUnit 5 has _Extension Points_
 
+=== Extension points
 
-=== Extension Points
+* instance post processor
+* template invocation
+* execution condition
+* `@BeforeAll` and `@BeforeEach`
+* parameter resolution
+* before test execution
+* after test execution
+* exception handling
+* `@AfterEach` and `@AfterAll`
 
-* Instance Post Processor
-* Template Invocation
-* Container and Test Execution Condition
-* BeforeAll and BeforeEach Callbacks
-* Parameter Resolution
-* Before Test Execution
-* After Test Execution
-* Exception Handling
-* AfterEach and AfterAll Callbacks
-
-
-=== Implementing Extensions
+=== Implementing extensions
 
 * one interface for each extension point
 * method arguments capture context
@@ -97,16 +74,14 @@ JUnit 5 has _Extension Points_
 public interface BeforeEachCallback
 		extends Extension {
 
-	void beforeEach(
-		TestExtensionContext context);
+	void beforeEach(ExtensionContext context);
 }
 ```
 
 * an extension can use multiple points +
 to implement its feature
 
-
-=== Benchmark Extension
+=== Benchmark extension
 
 We want to benchmark our tests!
 
@@ -118,8 +93,7 @@ How?
 * before test execution: store test launch time
 * after test execution: print elapsed time
 
-
-=== Benchmark Extension
+=== Benchmark extension
 
 ```java
 public class BenchmarkExtension implements
@@ -132,27 +106,25 @@ public class BenchmarkExtension implements
 }
 ```
 
-
-=== Benchmark Extension
+=== Benchmark extension
 
 ```java
 @Override
 public void beforeTestExecution(
-		TestExtensionContext context) {
+		ExtensionContext context) {
 	launchTime = currentTimeMillis();
 }
 
 @Override
 public void afterTestExecution(
-		TestExtensionContext context) {
+		ExtensionContext context) {
 	printf("Test '%s' took %d ms.%n",
 		context.getDisplayName(),
 		currentTimeMillis() - launchTime);
 }
 ```
 
-
-=== Other Examples
+=== Other examples
 
 Remember This?
 
@@ -166,16 +138,15 @@ void failingTest() {
 
 Let's see how it works!
 
-
-=== Disabled Extension
+=== Disabled extension
 
 ```java
 public class DisabledOnFridayCondition
-		implements TestExecutionCondition {
+		implements ExecutionCondition {
 
 	@Override
 	public ConditionEvaluationResult evaluate(
-			TestExtensionContext context) {
+			ExtensionContext context) {
 		if (isFriday())
 			return disabled("Weekend!");
 		else
@@ -185,8 +156,7 @@ public class DisabledOnFridayCondition
 }
 ```
 
-
-=== Other Examples
+=== Other examples
 
 What about parameter injection?
 
@@ -197,36 +167,36 @@ void someTest(MyServer server) {
 }
 ```
 
-
-=== Parameter Injection
+=== Parameter injection
 
 ```java
 public class MyServerParameterResolver
 		implements ParameterResolver {
 
 	@Override
-	public boolean supports(ParameterContext p, ...) {
+	public boolean supportsParameter(
+			ParameterContext pCtx, /*...*/) {
 		return MyServer.class
-			== p.getParameter().getType();
+			== pCtx.getParameter().getType();
 	}
 
 	@Override
-	public Object resolve(ParameterContext p, ...) {
+	public Object resolveParameter(
+			ParameterContext pCtx, /*...*/) {
 		return new MyServer();
 	}
 
 }
 ```
 
-
-////
-=== Extension Context
+=== Extension context
 
 Quick look at `ExtensionContext`:
 
 ```java
 // every node has its own context
 Optional<ExtensionContext> getParent();
+ExtensionContext getRoot();
 
 // some node-related info
 String getUniqueId();
@@ -234,30 +204,28 @@ String getDisplayName();
 Set<String> getTags();
 
 // don't use System.out !
-void publishReportEntry(
-		Map<String, String> map);
+void publishReportEntry(String key, String value);
+
+// configure your extension with system properties
+Optional<String> getConfigurationParameter(String key)
 ```
 
-
-=== Extension Context
+=== Extension context
 
 Quick look at `ExtensionContext`:
 
 ```java
 // to reflect over the test class/method
 Optional<AnnotatedElement> getElement();
-Optional<Class> getTestClass();
+Optional<Class<?>> getTestClass();
 Optional<Method> getTestMethod();
+Optional<Lifecycle> getTestInstanceLifecycle();
 
 // use the store to safe extension state
-// (extensions should be stateless;
-//  did I mention that?)
-Store getStore();
 Store getStore(Namespace namespace);
 ```
 
-
-=== Stateless Extensions
+=== Stateless extensions
 
 JUnit makes no promises regarding +
 extension instance lifecycle!
@@ -270,17 +238,13 @@ Use the `Store`, Luke!
 * hierarchical
 * key-value
 
-
-=== Extension Store
-
-+++<h3>Namespaced</h3>+++
+=== Extension store
+==== Namespaced
 
 Store is accessed via `ExtensionContext` +
-given a `Namespace`
+given a `Namespace`:
 
 ```java
-// forwards with a default namespace
-Store getStore();
 Store getStore(Namespace namespace);
 ```
 
@@ -288,22 +252,18 @@ Store getStore(Namespace namespace);
 on each other's toes
 * could allow deliberate communication!
 
+=== Extension store
+==== Hierarchical
 
-=== Extension Store
-
-+++<h3>Hierarchical</h3>+++
-
-Reads from the store forward to other stores:
+Reads from the store forward to parent stores:
 
 * method store ⇝ class store
 * nested class store ⇝ surrounding class store
 
 Writes always go to the called store.
 
-
-=== Extension Store
-
-+++<h3>Key-Value</h3>+++
+=== Extension store
+==== Key-Value
 
 The store is essentially a map:
 
@@ -319,8 +279,7 @@ Object remove(Object key)
 
 Overloads with type tokens exist.
 
-
-=== Stateless Benchmark
+=== Stateless benchmark
 
 ```java
 void storeNowAsLaunchTime(
@@ -336,24 +295,42 @@ long loadLaunchTime(
 			.get(KEY, long.class);
 }
 ```
-////
 
+=== Breather
 
-=== Applying Extensions
+Where were we?
 
-How do we apply extensions?
+* extensions implement interfaces
+* use `ExecutionContext` for interaction
+* use `Store` to be stateless
+
+We know how to create extensions.
+
+How do we apply them?
+
+=== Registering extensions
+
+Three ways to register extensions:
+
+* declarative with `@ExtendWith`
+* programmatically with `@RegisterExtension`
+* automatically with service loader
+
+=== Declarative
+
+Use `@ExtendWith` to register extension +
+with annotation:
 
 ```java
 @ExtendWith(DisabledOnFridayCondition.class)
-class JUnit5Test {
+class SomeTest {
 	...
 }
 ```
 
 That's technical and verbose... :(
 
-
-=== Applying Extensions
+=== Declarative
 
 https://en.wikibooks.org/wiki/Java_Programming/Annotations/Meta-Annotations[Meta-annotations] to the rescue!
 
@@ -362,8 +339,7 @@ https://en.wikibooks.org/wiki/Java_Programming/Annotations/Meta-Annotations[Meta
 
 ⇝ We can create our own annotations!
 
-
-=== Creating Annotations
+=== Creating annotations
 
 ```java
 @ExtendWith(DisabledOnFridayCondition.class)
@@ -380,25 +356,57 @@ public @interface IntegrationTest { }
 void testLogin(MyServer server) { ... }
 ```
 
+=== Programmatic
 
-// TODO, explain support for JUnit 4 rules
+Annotations only accept +
+compile time constants.
 
+```java
+@DisabledByFormula(
+	"After Mayan b'ak'tun 13",
+	// Nope 😩
+	now().isAfter(MAYAN_B_AK_TUN_13))
+class DisabledByFormulaTest {
+
+	private static final LocalDateTime
+		MAYAN_B_AK_TUN_13 = of(2012, 12, 21, 0, 0);
+}
+```
+
+=== Programmatic
+
+Instead declare extension as field +
+and annotate with `@RegisterExtension`:
+
+```java
+class DisabledByFormulaTest {
+
+	private static final LocalDateTime
+		MAYAN_B_AK_TUN_13 = of(2012, 12, 21, 0, 0);
+
+	@RegisterExtension
+	static DisabledByFormula FORMULA = disabledWhen(
+			"After Mayan b'ak'tun 13",
+			now().isAfter(MAYAN_B_AK_TUN_13));
+}
+```
+
+=== Automatic
+
+You can use Java's service loader +
+to register extensions globally, +
+(i.e. without putting them into code) +
+but I won't go into it here.
+
+⇝ https://junit.org/junit5/docs/current/user-guide/#extensions-registration-automatic[User guide on global registration].
 
 === Extensions
+==== Summary
 
-++++
-<h3>Summary</h3>
-++++
+* many extension points provide +
+flexibility and composability
+* extensions implement various interfaces
+* can access test context and a store
+* are usually registered via meta-annotations
 
-* flexibility because of many extension points
-* extensions compose well
-* customizable due to meta-annotations
-
-(We left out http://blog.codefx.org/design/architecture/junit-5-extension-model/[some details].)
-
-++++
-<p class="fragment current-visible">
-That's all very nice but how is it<br>
-<i>Next Generation Testing</i>?
-</p>
-++++
+⇝ Read http://blog.codefx.org/design/architecture/junit-5-extension-model/[more about extensions].
