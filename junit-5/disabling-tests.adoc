@@ -1,0 +1,155 @@
+[state=no-title]
+== Disabling tests
+
+*Disabling Tests*
+
+=== Failing tests
+
+Why do tests fail?
+
+. something broke for good ⇝ fix it
+. something broke temporarily ⇝ `@Disabled`
+. something fails under certain circumstances +
+⇝ conditionally `@Disabled`
+
+We'll talk about the latter.
+
+=== Conditional tests
+
+JUnit 5 comes with lots of conditions +
+based on:
+
+* operating system
+* Java version
+* system properties
+* environment variables
+* scripts
+
+=== Conditional tests
+
+They all come in two forms:
+
+* `@Enabled...`
+* `@Disabled...`
+
+Just slap them on the test method:
+
+```java
+@Test
+@EnabledOnOs(OS.LINUX)
+void runsOnLinux() { /*...*/ }
+```
+
+=== OS conditions
+
+Based on operating system +
+(`LINUX`, `WINDOWS`, `MAC`, ...):
+
+```java
+@EnabledOnOs(LINUX)
+@EnabledOnOs({ WINDOWS, MAC })
+@DisabledOnOs(LINUX)
+@DisabledOnOs({ WINDOWS, MAC })
+```
+
+=== Java version condition
+
+Based on Java version +
+(`JAVA_8`, `JAVA_9`, `JAVA_10`, ...):
+
+```java
+@EnabledOnJre(JAVA_8)
+@EnabledOnJre({ JAVA_9, JAVA_10 })
+@DisabledOnJre(JAVA_8)
+@DisabledOnJre({ JAVA_9, JAVA_10 })
+```
+
+=== Environment
+
+Based on system properties or environment variables +
+(matched by regular expression):
+
+```java
+@EnabledIfSystemProperty(
+	named = "os.arch", matches = ".*64.*")
+@DisabledIfSystemProperty(
+	named = "ci-server", matches = "true")
+
+@EnabledIfEnvironmentVariable(
+	named = "ENV", matches = "staging-server")
+@DisabledIfEnvironmentVariable(
+	named = "ENV", matches = ".*development.*")
+```
+
+=== Scripted conditions
+
+`@EnabledIf`/`@DisabledIf` accept JS scripts:
+
+```java
+@Test
+@EnabledIf(value = {
+	"load('nashorn:mozilla_compat.js')",
+	"importPackage(java.time)",
+	"var today = LocalDate.now()",
+	"var tomorrow = today.plusDays(1)",
+	"tomorrow.isAfter(today)" })
+void theDayAfterTomorrow() { /*...*/ }
+```
+
+=== Scripted conditions
+
+Uses Nashorn, but http://openjdk.java.net/jeps/335[Nashorn is deprecated]!
+
+Other Java Scripting API engines can be specified:
+
+```java
+@Test
+@EnabledIf(
+	value = /*...*/,
+	engine = /*...*/ )
+void theDayAfterTomorrow() { /*...*/ }
+```
+
+=== Combining conditions
+
+These conditions can be combined:
+
+* only one condition from each group +
+(OS, version, sys prop, env var, script)
+* if one disables, test is disabled
+
+On Linux and Java 10, does this test run?
+
+```java
+@Test
+@EnabledOnOs(OS.LINUX)
+@DisabledOnJre(JRE.JAVA_10)
+void moreConditions() { /*...*/ }
+```
+
+=== Disabling conditions
+
+To check which disabled tests actually fail:
+
+* https://junit.org/junit5/docs/current/user-guide/#running-tests-config-params[configure JUnit 5] with +
+`junit.jupiter.conditions.deactivate`
+* use property to define reg ex for class name
+* matching condition classes are not evaluated
+
+Example:
+
+`junit.jupiter.conditions.deactivate=*` +
+deactivates all conditions, i.e. all tests are executed.
+
+=== Disabling tests
+==== Summary
+
+Conditional test execution:
+
+* annotate tests with annotations +
+`@Enabled...` or `@Disabled...`
+* pick from various conditions +
+(OS, version, sys prop, env var)
+* combine them if necessary
+* in extreme cases, write a script
+* disable by configuration
