@@ -1,0 +1,215 @@
+[state=no-title]
+== From 4 to 5
+
+*From 4 to 5*
+
+=== From 4 to 5
+
+You have Vintage and Jupiter running side by side.
+
+Now you're wondering:
+
+* Is JUnit 4 still supported?
+* Do I have to migrate old tests?
+* Will I use Jupiter for all new tests?
+
+The answers will surprise you!
+
+=== Is JUnit 4 supported?
+
+Officially, yes:
+
+[quote, 'https://junit.org/junit5/docs/current/user-guide/#migrating-from-junit4[JUnit 5 user guide]']
+____
+[T]he JUnit team will continue to provide maintenance and bug fix releases for the JUnit 4.x baseline
+____
+
+=== Is JUnit 4 supported?
+
+But:
+
+image::images/junit-4-commits.png[role="diagram",width=900]
+
+(Commits from 07/2017 to 07/2018 - note the y-axis!)
+
+Last release: +
+4 Dec 2014.
+
+=== Is JUnit 4 supported?
+
+¯\\_(ツ)_/¯
+
+Doesn't matter, though:
+
+* it's not security relevant
+* it does a very good job
+* it's very stable
+
+⇝ Unless you're waiting for important bug-fixes +
+or new features, JUnit 4 is doing just fine!
+
+=== Migrating old tests
+
+My view on the matter:
+
+* no reason to migrate running tests
+* consider migrating tests that are +
+edited because of code changes
+* be careful about runners and rules!
+
+=== Runners and rules
+
+What about runners and rules (r&r)?
+
+* you might heavily rely on a few r&r's
+* Jupiter has a brand new extension model
+* it's totally different from JUnit 4's
+* generally, r&r's don't (and won't) work in Jupiter
+* a few runners are supported
+
+=== Supported rules
+
+Limited support:
+
+* add this artifact:
++
+```shell
+org.junit.jupiter
+junit-jupiter-migrationsupport
+5.2.0
+```
+* add `@EnableRuleMigrationSupport` +
+to Jupiter test class
+* use selected rules as in JUnit 4
+
+=== Supported rules
+
+```java
+@EnableRuleMigrationSupport
+class JUnit4RuleInJupiter {
+
+	@Rule
+	public ExpectedException thrown =
+		ExpectedException.none();
+
+	@Test
+	void useExpectedExceptionRule() {
+		List<Object> list = List.of();
+		thrown.expect(
+			IndexOutOfBoundsException.class);
+		list.get(0);
+	}
+}
+```
+
+=== Supported rules
+
+Which rules are supported?
+
+* `org.junit.rules.ExternalResource` +
+(e.g. `TemporaryFolder`)
+* `org.junit.rules.Verifier` +
+(e.g. `ErrorCollector`)
+* `org.junit.rules.ExpectedException`
+
+=== What about others?
+
+Jupiter has a powerful extension model:
+
+* covers most existing use cases
+* most r&r's can be reimplemented
+* some already were
+
+If you need a runner or rule as an extension, +
+consider contributing to extensions projects!
+
+=== Spring extension
+
+To replace +
+`SpringJUnit4ClassRunner`, `SpringRunner`, +
+`SpringClassRule`, and `SpringMethodRule`:
+
+* add this artifact:
++
+```shell
+org.springframework
+spring-test
+5.0.7.RELEASE
+```
+* use `@ExtendWith(SpringExtension.class)`
+
+=== Mockito extension
+
+To replace `MockitoRule` and `MockitoJUnitRunner`:
+
+* add this artifact:
++
+```shell
+org.mockito
+mockito-junit-jupiter
+2.20.1
+```
+* use `@ExtendWith(MockitoExtension.class)`
+
+=== Mockito extension
+
+```java
+@ExtendWith(MockitoExtension.class)
+class MockitoTest {
+
+	@InjectMocks private Circle circle;
+	@Mock private Point center;
+
+	@Test
+	void shouldInjectMocks() {
+		assertThat(center).isNotNull();
+		assertThat(circle).isNotNull();
+		assertThat(circle.center()).isSameAs(center);
+	}
+}
+```
+
+=== Moar extensions
+
+If you need a runner or rule as an extension:
+
+* for tool-specific extensions, +
+contact that project
+* for generic extensions +
+or if projects don't want, +
+contact https://junit-pioneer.org[JUnit Pioneer]
+
+*Consider contributing!*
+
+=== Where were we?
+
+Migration:
+
+* by default, only migrate tests +
+when they need to be edited
+* heavy reliance on r&r may +
+complicate migration
+* search for or develop +
+appropriate extensions
+
+=== What about new tests?
+
+*By default, new tests should +
+be written with Jupiter.*
+
+But migration-caveats apply: +
+Reliance on r&r may result in new JUnit 4 tests.
+
+That's not a problem!
+
+=== From 4 to 5
+==== Summary
+
+* JUnit 4 moves very slowly +
+but is stable and reliable
+* by default:
+** migrate 3/4 tests only on demand
+** write new tests against Jupiter
+* use of runners and rules may +
+hinder writing Jupiter tests
+* support extension projects

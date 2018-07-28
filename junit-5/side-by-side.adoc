@@ -1,0 +1,43 @@
+[state=no-title]
+== Side by side
+
+*Side by Side*
+
+=== So what about all those JUnit 3/4 tests?
+
+You *don't have to* update them!
+
+Instead run old and new tests side by side.
+
+=== Side by side
+
+Dependencies:
+
+* keep JUnit 3.x or 4.x around
+* add Vintage engine:
++
+```shell
+org.junit.jupiter
+junit-vintage-engine
+5.2.0
+```
+* add Jupiter API and engine
+
+Now you can run JUnit 3/4 via JUnit Platform! 👍
+
+=== Side by side
+
+Note:
+
+* old and new APIs use different +
+package names, so no conflicts!
+* `@Category(Type.class)` becomes +
+`@Tag("fully.qualified.name.of.Type")`
+* remember to use up-to-date tools:
++
+--
+** Maven and Gradle run 3/4 via platform 😀
+** IntelliJ runs 3/4 via support for 4 😟
+--
++
+let's hope the discrepancy causes no problems!
