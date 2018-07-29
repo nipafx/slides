@@ -1,0 +1,67 @@
+[state=no-title]
+== Test instance lifecycle
+
+*Test Instance Lifecycle*
+
+=== Test instances
+
+By default, JUnit 5 creates +
+*a new instance for each test*, +
+meaning one instance per:
+
+* `@Test` method
+* `@TestFactory` method +
+(but not for each dynamic test!)
+* parameterized test
+
+=== Test instances
+
+You want to use +
+*the same instance* +
+for all tests?
+
+`@TestInstance(Lifecycle.PER_CLASS)`
+
+=== Test instance per class
+
+```java
+@TestInstance(Lifecycle.PER_CLASS)
+class ClassTestInstanceTest {
+	private static int CLASS_TEST_COUNT = 0;
+	private int instanceTestCount = 0;
+
+	@Test void test_1() { incAndCheckCounts(); }
+	@Test void test_2() { incAndCheckCounts(); }
+
+	private void incAndCheckCounts() {
+		CLASS_TEST_COUNT++;
+		instanceTestCount++;
+		// fails with instance per test
+		assertThat(instanceTestCount)
+			.isEqualTo(CLASS_TEST_COUNT);
+	}
+}
+```
+
+=== Default instance lifecycle
+
+You can https://junit.org/junit5/docs/current/user-guide/#running-tests-config-params[configure JUnit 5] +
+to change the default behavior
+to _instance per class_:
+
+```
+junit.jupiter.testinstance.lifecycle.default=per_class
+```
+
+=== Test instance per class
+
+Comments on test class lifecycle:
+
+* this changes a few details +
+of JUnit 5's behavior
+* refer to https://junit.org/junit5/docs/current/user-guide/#writing-tests-test-instance-lifecycle[the user guide] +
+and search the entire document +
+for `Lifecycle.PER_CLASS`!
+* I don't find this very useful +
+(but I never used it, so...)
+* I will not mention differences here
