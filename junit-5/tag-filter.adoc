@@ -1,0 +1,98 @@
+[state=no-title]
+== Tagging and filtering
+
+*Tagging And Filtering*
+
+=== Tagging and filtering
+
+Not all tests are created equal, maybe:
+
+* always run unit tests
+* run db tests on demand
+* run integration tests on CI
+
+We need:
+
+* a way to mark test groups
+* a way to execute individual groups
+
+=== Tagging tests
+
+JUnit 5's `@Tag` marks tests:
+
+```java
+@Test
+@Tag("unit")
+class UserTest { }
+
+@Test
+@Tag("db")
+class UserRepositoryTest { }
+
+@Test
+@Tag("integration")
+class UserServiceTest { }
+```
+
+=== Tagging tests
+
+Should I tag "default" unit tests?
+
+* not necessarily
+* but it's possible and convenient with +
+meta-annotations (more on that later)
+
+=== Tagging tests
+
+Tags are just strings:
+
+* not `null`
+* can't contain:
+** `, ( ) & | !`
+** whitespace
+** ISO control characters
+
+=== Filtering tests
+
+In Maven:
+
+```xml
+<plugin>
+	<artifactId>maven-surefire-plugin</artifactId>
+	<version>2.22.0</version>
+	<configuration>
+		<groups>unit</groups>
+		<!-- <excludedGroups>db</excludedGroups> -->
+	</configuration>
+</plugin>
+```
+
+=== Filtering tests
+
+In Maven:
+
+* Surefire and Failsafe may run different tags
+* use profiles to activate different tags
+
+=== Filtering tests
+
+In Gradle:
+
+```groovy
+test {
+	useJUnitPlatform {
+		includeTags 'unit'
+		// excludeTags 'db'
+	}
+}
+```
+
+=== Tagging and filtering
+==== Summary
+
+To separate different groups of tests:
+
+* use `@Tag` on tests +
+(or other annotations)
+* use build configuration +
+to run only desired tags
