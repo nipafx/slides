@@ -1,0 +1,67 @@
+== Extensions
+
+++++
+<table class="toc">
+	<tr><td>First Steps</td></tr>
+	<tr><td>Mechanisms</td></tr>
+	<tr><td>Sophisticated Tests</td></tr>
+	<tr><td>From 4 To 5</td></tr>
+	<tr class="toc-current"><td>Extensions</td></tr>
+		<tr><td><ul><li>Extension Points</li></ul></td></tr>
+		<tr><td><ul><li>Extension Context</li></ul></td></tr>
+		<tr><td><ul><li>Registering Extensions</li></ul></td></tr>
+</table>
+++++
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>First Steps</td></tr> \
+	<tr><td>Mechanisms</td></tr> \
+	<tr><td>Sophisticated Tests</td></tr> \
+	<tr><td>From 4 To 5</td></tr> \
+	<tr><td>Extensions</td></tr> \
+		<tr class="toc-current"><td><ul><li>Extension Points</li></ul></td></tr> \
+		<tr><td><ul><li>Extension Context</li></ul></td></tr> \
+		<tr><td><ul><li>Registering Extensions</li></ul></td></tr> \
+</table> \
+]
+include::extension-points.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>First Steps</td></tr> \
+	<tr><td>Mechanisms</td></tr> \
+	<tr><td>Sophisticated Tests</td></tr> \
+	<tr><td>From 4 To 5</td></tr> \
+	<tr><td>Extensions</td></tr> \
+		<tr><td><ul><li>Extension Points</li></ul></td></tr> \
+		<tr class="toc-current"><td><ul><li>Extension Context</li></ul></td></tr> \
+		<tr><td><ul><li>Registering Extensions</li></ul></td></tr> \
+</table> \
+]
+include::extension-context.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>First Steps</td></tr> \
+	<tr><td>Mechanisms</td></tr> \
+	<tr><td>Sophisticated Tests</td></tr> \
+	<tr><td>From 4 To 5</td></tr> \
+	<tr><td>Extensions</td></tr> \
+		<tr><td><ul><li>Extension Points</li></ul></td></tr> \
+		<tr><td><ul><li>Extension Context</li></ul></td></tr> \
+		<tr class="toc-current"><td><ul><li>Registering Extensions</li></ul></td></tr> \
+</table> \
+]
+include::registering-extensions.adoc[]
+
+=== Extensions
+==== Summary
+
+* many extension points provide +
+flexibility and composability
+* extensions implement various interfaces
+* can access test context and a store
+* are usually registered via meta-annotations
+
+⇝ Read http://blog.codefx.org/design/architecture/junit-5-extension-model/[more about extensions].

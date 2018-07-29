@@ -1,0 +1,123 @@
+== Extension context
+
+{toc}
+
+=== Extension context
+
+Quick look at `ExtensionContext`:
+
+```java
+// every node has its own context
+Optional<ExtensionContext> getParent();
+ExtensionContext getRoot();
+
+// some node-related info
+String getUniqueId();
+String getDisplayName();
+Set<String> getTags();
+
+// don't use System.out !
+void publishReportEntry(String key, String value);
+
+// configure your extension with system properties
+Optional<String> getConfigurationParameter(String key)
+```
+
+=== Extension context
+
+Quick look at `ExtensionContext`:
+
+```java
+// to reflect over the test class/method
+Optional<AnnotatedElement> getElement();
+Optional<Class<?>> getTestClass();
+Optional<Method> getTestMethod();
+Optional<Lifecycle> getTestInstanceLifecycle();
+
+// use the store to safe extension state
+Store getStore(Namespace namespace);
+```
+
+=== Stateless extensions
+
+JUnit makes no promises regarding +
+extension instance lifecycle!
+
+*⇝ Extensions must be stateless!*
+
+Use the `Store`, Luke!
+
+* namespaced
+* hierarchical
+* key-value
+
+=== Extension store
+==== Namespaced
+
+Store is accessed via `ExtensionContext` +
+given a `Namespace`:
+
+```java
+Store getStore(Namespace namespace);
+```
+
+* keeps extensions from stepping +
+on each other's toes
+* could allow deliberate communication!
+
+=== Extension store
+==== Hierarchical
+
+Reads from the store forward to parent stores:
+
+* method store ⇝ class store
+* nested class store ⇝ surrounding class store
+
+Writes always go to the called store.
+
+=== Extension store
+==== Key-Value
+
+The store is essentially a map:
+
+```java
+Object getObject(Object key);
+Object getOrComputeIfAbsent(
+		K key, Function creator);
+
+void put(Object key, Object value)
+
+Object remove(Object key)
+```
+
+Overloads with type tokens exist.
+
+=== Stateless benchmark
+
+```java
+void storeNowAsLaunchTime(
+		ExtensionContext context) {
+	long now = currentTimeMillis();
+	context.getStore(NAMESPACE)
+			.put(KEY, now);
+}
+
+long loadLaunchTime(
+		ExtensionContext context) {
+	return context.getStore(NAMESPACE)
+			.get(KEY, long.class);
+}
+```
+
+=== Extension context
+==== Summary
+
+* extensions implement interfaces
+* use `ExecutionContext` for interaction
+* use `Store` to be stateless
+
+We know how to create extensions.
+
+==== What's next?
+
+⇝ Registering them!

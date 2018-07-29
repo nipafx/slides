@@ -1,0 +1,200 @@
+== Extension points
+
+{toc}
+
+=== Extensions in JUnit 4
+==== Runners
+
+Manage a test's full lifecycle.
+
+```java
+@RunWith(MockitoJUnitRunner.class)
+public class MyTest { ... }
+```
+
+* very flexible
+* heavyweight
+* exclusive
+
+=== Extensions in JUnit 4
+==== Rules
+
+Execute code before and after statements.
+
+```java
+public class MyTest {
+	@Rule
+	public MockitoRule rule =
+		MockitoJUnit.rule();
+}
+```
+
+* added in 4.7
+* lightweight
+* limited to before/after behavior
+
+=== Extensions in JUnit 4
+
+Extension model is not optimal:
+
+* two competing mechanisms
+** each with limitations
+** but with considerable overlap
+* composition can cause problems
+
+=== Approaching extensions
+
+From JUnit 5's
+https://github.com/junit-team/junit5/wiki/Core-Principles[Core Principles]:
+
+> Prefer extension points over features
+
+Quite literally, +
+JUnit 5 has _Extension Points_
+
+=== Extension points
+
+* instance post processor
+* template invocation
+* execution condition
+* `@BeforeAll` and `@BeforeEach`
+* parameter resolution
+* before test execution
+* after test execution
+* exception handling
+* `@AfterEach` and `@AfterAll`
+
+=== Implementing extensions
+
+* one interface for each extension point
+* method arguments capture context
+
+```java
+public interface BeforeEachCallback
+		extends Extension {
+
+	void beforeEach(ExtensionContext context);
+}
+```
+
+* an extension can use multiple points +
+to implement its feature
+
+=== Benchmark extension
+
+We want to benchmark our tests!
+
+* for each test method
+* write the elapsed time to console
+
+How?
+
+* before test execution: store test launch time
+* after test execution: print elapsed time
+
+=== Benchmark extension
+
+```java
+public class BenchmarkExtension implements
+		BeforeTestExecutionCallback,
+		AfterTestExecutionCallback {
+
+	private long launchTime;
+
+	// ...
+}
+```
+
+=== Benchmark extension
+
+```java
+@Override
+public void beforeTestExecution( /*...*/ ) {
+	launchTime = currentTimeMillis();
+}
+
+@Override
+public void afterTestExecution( /*...*/ ) {
+	printf("Test '%s' took %d ms.%n",
+		context.getDisplayName(),
+		currentTimeMillis() - launchTime);
+}
+```
+
+=== Other examples
+
+Remember This?
+
+```java
+@Test
+@DisabledOnFriday
+void failingTest() {
+	assertTrue(false);
+}
+```
+
+Let's see how it works!
+
+=== Disabled extension
+
+```java
+public class DisabledOnFridayCondition
+		implements ExecutionCondition {
+
+	@Override
+	public ConditionEvaluationResult evaluate( /*...*/ ) {
+		if (isFriday())
+			return disabled("Weekend!");
+		else
+			return enabled("Fix it!");
+	}
+
+}
+```
+
+=== Other examples
+
+What about parameter injection?
+
+```java
+@Test
+void someTest(MyServer server) {
+	// do something with `server`
+}
+```
+
+=== Parameter injection
+
+```java
+public class MyServerParameterResolver
+		implements ParameterResolver {
+
+	@Override
+	public boolean supportsParameter(
+			ParameterContext pCtx, /*...*/) {
+		return MyServer.class
+			== pCtx.getParameter().getType();
+	}
+
+	@Override
+	public Object resolveParameter(
+			ParameterContext pCtx, /*...*/) {
+		return new MyServer();
+	}
+
+}
+```
+
+=== Extension points
+==== Summary
+
+* Jupiter provides many extension points
+* each extension point is an interface
+* extensions implement various interfaces
+* implementations are called when +
+test execution reaches corresponding point
+
+==== What's next?
+
+* accessing test context
+* registering extensions

@@ -1,0 +1,104 @@
+== Registering extensions
+
+{toc}
+
+=== Three ways...
+
+Three ways to register extensions:
+
+* declaratively with `@ExtendWith`
+* programmatically with `@RegisterExtension`
+* automatically with service loader
+
+=== Declarative
+
+Use `@ExtendWith` to register extension +
+with annotation:
+
+```java
+@ExtendWith(DisabledOnFridayCondition.class)
+class SomeTest {
+	...
+}
+```
+
+That's technical and verbose... :(
+
+=== Declarative
+
+https://en.wikibooks.org/wiki/Java_Programming/Annotations/Meta-Annotations[Meta-annotations] to the rescue!
+
+* JUnit 5's annotations are meta-annotations
+* JUnit 5 checks recursively for annotations
+
+⇝ We can create our own annotations!
+
+=== Creating annotations
+
+```java
+@ExtendWith(DisabledOnFridayCondition.class)
+public @interface DisabledOnFriday { }
+
+@Test
+@Tag("integration")
+@ExtendWith(BenchmarkExtension.class)
+@ExtendWith(MyServerParameterResolver.class)
+public @interface IntegrationTest { }
+
+@IntegrationTest
+@DisabledOnFriday
+void testLogin(MyServer server) { ... }
+```
+
+=== Programmatic
+
+Annotations only accept +
+compile time constants.
+
+```java
+@DisabledByFormula(
+	"After Mayan b'ak'tun 13",
+	// Nope 😩
+	now().isAfter(MAYAN_B_AK_TUN_13))
+class DisabledByFormulaTest {
+
+	private static final LocalDateTime
+		MAYAN_B_AK_TUN_13 = of(2012, 12, 21, 0, 0);
+}
+```
+
+=== Programmatic
+
+Instead declare extension as field +
+and annotate with `@RegisterExtension`:
+
+```java
+class DisabledByFormulaTest {
+
+	private static final LocalDateTime
+		MAYAN_B_AK_TUN_13 = of(2012, 12, 21, 0, 0);
+
+	@RegisterExtension
+	static DisabledByFormula FORMULA = disabledWhen(
+			"After Mayan b'ak'tun 13",
+			now().isAfter(MAYAN_B_AK_TUN_13));
+}
+```
+
+=== Automatic
+
+You can use Java's service loader +
+to register extensions globally, +
+(i.e. without putting them into code) +
+but I won't go into it here.
+
+⇝ https://junit.org/junit5/docs/current/user-guide/#extensions-registration-automatic[User guide on global registration].
+
+=== Registering extensions
+==== Summary
+
+Extensions can be registered in three ways:
+
+* declaratively with `@ExtendWith`
+* programmatically with `@RegisterExtension`
+* automatically with service loader
