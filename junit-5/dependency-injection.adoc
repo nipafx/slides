@@ -1,0 +1,70 @@
+[state=no-title]
+== Dependency injection
+
+*Dependency Injection*
+
+=== Parameters everywhere!
+
+In JUnit 5, these can have parameters:
+
+* constructors
+* methods annotated with
+** `@Test`, `@TestFactory` +
+`@ParameterizedTest`, `@RepeatedTest`
+** `@BeforeAll`, `@AfterAll` +
+`@BeforeEach`, `@AfterEach`
+
+=== Where from?
+
+Where do parameters come from?
+
+* JUnit
+* extensions
+* you
+
+=== JUnit's parameters
+
+JUnit resolves parameters:
+
+* `TestInfo` -- to access:
+** display name and tags
+** test class and method
+* `TestReporter` -- to publish messages
+* `RepetitionInfo` -- for repeated tests
+
+=== Extensions' parameters
+
+For example https://junit-pioneer.org[JUnit Pioneer]:
+
+```java
+@Test
+@ExtendWith(TempDirectory.class)
+void test(@TempDir Path tempDir) { /*...*/ }
+```
+
+=== Extensions' parameters
+
+For example _org.springframework : spring-test_:
+
+```java
+// or use @ContextConfiguration
+@ExtendWith(SpringExtension.class)
+public class ApiControllerTest {
+	private final ApiController controller;
+
+	public ApiControllerTest(
+			@Autowired ApiController controller) {
+		this.controller = controller;
+	}
+
+	@Test
+	public testController() { /*...*/ }
+}
+```
+
+=== Your parameters
+
+You can resolve your own parameters! +
+(Great reason to write an extension. 😃)
+
+More on that later...
