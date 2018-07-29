@@ -1,0 +1,112 @@
+[state=no-title]
+== Configuring JUnit
+
+*Configuring JUnit*
+
+=== Global configuration
+
+These can be configured globally:
+
+* test instance lifecycle
+* deactivated conditions
+* automatic extensions
+
+(So far.)
+
+=== Configuration parameters
+
+A configuration parameter is +
+a simple key-value pair, e.g.:
+
+```
+junit.jupiter.conditions.deactivate = *
+```
+
+=== Defining parameters
+
+Three ways to define parameters:
+
+* build tool
+* system properties
+* configuration file
+
+(In order of precedence +
+from high to low.)
+
+=== Defining parameters
+
+With Maven:
+
+```xml
+<plugin>
+	<artifactId>maven-surefire-plugin</artifactId>
+	<configuration>
+		<properties>
+			<configurationParameters>
+				junit.jupiter.conditions.deactivate = *
+			</configurationParameters>
+		</properties>
+	</configuration>
+	<dependencies>
+		...
+	</dependencies>
+</plugin>
+```
+
+=== Defining parameters
+
+With Gradle:
+
+```java
+test {
+	useJUnitPlatform()
+	systemProperties = [
+		'junit.jupiter.conditions.deactivate': '*'
+	]
+}
+```
+
+Wait, that's actually +
+a system property!
+
+=== Defining parameters
+
+With system properties:
+
+Add command line parameter +
+to launching JVM.
+
+```
+-Djunit.jupiter.conditions.deactivate=*
+```
+
+=== Defining parameters
+
+With a Java properties file +
+named `junit-platform.properties` +
+in `src/test/resources`.
+
+```
+junit.jupiter.conditions.deactivate=*
+```
+
+=== Defining parameters
+
+Where best define parameters?
+
+Consider:
+
+* build tool configuration +
+is not picked up by IDEs (yet?)
+* system properties need +
+to be configured manually +
+for IDEs and build tools
+
+=== Defining parameters
+
+Where best define parameters?
+
+* for local experiments: +
+⇝ system properties
+* for permanent configuration: +
+⇝ properties file

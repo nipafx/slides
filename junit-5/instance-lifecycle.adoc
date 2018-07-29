@@ -37,15 +37,15 @@ class ClassTestInstanceTest {
 		CLASS_TEST_COUNT++;
 		instanceTestCount++;
 		// fails with instance per test
-		assertThat(instanceTestCount)
-			.isEqualTo(CLASS_TEST_COUNT);
+		assertEquals(
+			CLASS_TEST_COUNT, instanceTestCount);
 	}
 }
 ```
 
 === Default instance lifecycle
 
-You can https://junit.org/junit5/docs/current/user-guide/#running-tests-config-params[configure JUnit 5] +
+You can link:#configuring_junit[configure JUnit] +
 to change the default behavior
 to _instance per class_:
 

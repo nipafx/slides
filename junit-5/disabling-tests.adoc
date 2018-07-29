@@ -131,7 +131,7 @@ void moreConditions() { /*...*/ }
 
 To check which disabled tests actually fail:
 
-* https://junit.org/junit5/docs/current/user-guide/#running-tests-config-params[configure JUnit 5] with +
+* link:#configuring_junit[configure JUnit] with +
 `junit.jupiter.conditions.deactivate`
 * use property to define reg ex for class name
 * matching condition classes are not evaluated
