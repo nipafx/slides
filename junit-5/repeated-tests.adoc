@@ -1,0 +1,59 @@
+[state=no-title]
+== Repeated tests
+
+*Repeated Tests*
+
+=== Repeated tests
+
+Ever wanted to run +
+the same test 5 times?
+
+No? But now you can:
+
+```java
+@RepeatedTest(5)
+void againAndAgainAndAgain() { /*...*/ }
+```
+
+* annotated method is a container
+* each invocation is a test
+
+=== Repeated tests
+
+There isn't much more to it:
+
+* `@DisplayName` defines container name
+* `@RepeatedTest(name)` defines test name:
+** `{displayName}` (`@RepeatedTest`-'s name)
+** `{currentRepetition}`
+** `{totalRepetitions}`
+* `RepetitionInfo` provides current and +
+total repetition count
+
+=== Repeated tests
+
+```java
+class RepeatedInvocationTest {
+	private static int REPS = 0;
+
+	@DisplayName("Calling repeated...")
+	@RepeatedTest(value = 5,
+		name = "... {currentRepetition}th"
+			"of {totalRepetitions} times")
+	void repeated(RepetitionInfo reps) {
+		REPS++;
+		// getCurrentRepetition starts with 1
+		assertEquals(REPS, reps.getCurrentRepetition());
+		assertEquals(5, reps.getTotalRepetitions());
+	}
+
+}
+```
+
+=== Repeated tests
+
+Et voilà:
+
+image::images/repeated-test.png[Parameterized tests, width=900]
+
+Let's not dwell on this...
