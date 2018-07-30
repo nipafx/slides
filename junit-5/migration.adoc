@@ -166,6 +166,24 @@ class MockitoTest {
 }
 ```
 
+=== JUnit Pioneer
+
+Drop-in replacement for JUnit 4's `@Test`:
+
+```java
+package org.junitpioneer.vintage;
+public @interface Test {
+	Class<? extends Throwable> expected()
+		default None.class;
+	long timeout() default 0L;
+}
+```
+
+* runs tests in Jupiter
+* offers `expected` and `timeout`
+* long-running tests fail
+* *are not aborted*!
+
 === Moar extensions
 
 If you need a runner or rule as an extension:
@@ -178,6 +196,7 @@ contact https://junit-pioneer.org[JUnit Pioneer]
 
 *Consider contributing!*
 
+////
 === Breather
 
 Where were we?
@@ -190,6 +209,7 @@ complicate migration
 appropriate extensions
 
 On to new tests!
+////
 
 === What about new tests?
 

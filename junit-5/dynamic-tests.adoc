@@ -203,7 +203,7 @@ class PointTest extends LambdaTest {{
 Access a lambda's parameter name +
 with
 http://benjiweber.co.uk/blog/2015/08/17/lambda-parameter-names-with-reflection/[this one weird trick] +
-(that stopped working on Java 9).
+(that https://bugs.openjdk.java.net/browse/JDK-8138729[stopped working] on Java 9).
 
 === Dynamic tests
 ==== Summary

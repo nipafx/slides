@@ -86,7 +86,7 @@ Based on system properties or environment variables +
 
 ```java
 @Test
-@EnabledIf(value = {
+@EnabledIf({
 	"load('nashorn:mozilla_compat.js')",
 	"importPackage(java.time)",
 	"var today = LocalDate.now()",

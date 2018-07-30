@@ -17,18 +17,16 @@ We need:
 
 === Tagging tests
 
-JUnit 5's `@Tag` marks tests:
+JUnit 5's `@Tag` marks tests +
+(classes or methods):
 
 ```java
-@Test
 @Tag("unit")
 class UserTest { }
 
-@Test
 @Tag("db")
 class UserRepositoryTest { }
 
-@Test
 @Tag("integration")
 class UserServiceTest { }
 ```
@@ -77,6 +75,18 @@ test {
 	}
 }
 ```
+
+=== Filtering tests
+
+In IntelliJ:
+
+* see https://www.jetbrains.com/help/idea/run-debug-configuration-junit.html[JUnit configurations]
+* search for _@Tag_
+
+In Eclipse:
+
+* see https://www.eclipse.org/community/eclipse_newsletter/2017/october/article5.php[Eclipse newsletter]
+* search for _Tagging and filtering_
 
 === Tagging tests
 
