@@ -135,10 +135,16 @@ To check which disabled tests actually fail:
 * use property to define reg ex for class name
 * matching condition classes are not evaluated
 
+=== Disabling conditions
+
 Example:
 
-`junit.jupiter.conditions.deactivate=*` +
-deactivates all conditions, i.e. all tests are executed.
+```
+junit.jupiter.conditions.deactivate=*
+```
+
+Deactivates all conditions. +
+⇝ All tests are executed.
 
 === Disabling tests
 ==== Summary

@@ -20,8 +20,8 @@ No specific test library support required. +
 These all work out of the box:
 
 * Mockito, PowerMock
-* Hamcrest, AssertJ, +
-Google Truth, FestAssert
+* AssertJ, Google Truth, +
+Hamcrest, FestAssert
 
 === Running tests
 
@@ -104,4 +104,4 @@ java -jar junit-platform-console-standalone.jar
 * for outdated tools, run with JUnit 4
 * console launcher as last resort
 
-⇝ Read http://blog.codefx.org/libraries/junit-5-setup/[more about setup details].
+⇝ http://blog.codefx.org/libraries/junit-5-setup/[More about setup details].

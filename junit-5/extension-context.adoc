@@ -16,7 +16,7 @@ String getUniqueId();
 String getDisplayName();
 Set<String> getTags();
 
-// don't use System.out !
+// don't use System.out!
 void publishReportEntry(String key, String value);
 
 // configure your extension with system properties
@@ -34,18 +34,18 @@ Optional<Class<?>> getTestClass();
 Optional<Method> getTestMethod();
 Optional<Lifecycle> getTestInstanceLifecycle();
 
-// use the store to safe extension state
+// use the store for extension state
 Store getStore(Namespace namespace);
 ```
 
 === Stateless extensions
 
 JUnit makes no promises regarding +
-extension instance lifecycle!
+extension instance lifecycle.
 
 *⇝ Extensions must be stateless!*
 
-Use the `Store`, Luke!
+Use the `Store`, Luke:
 
 * namespaced
 * hierarchical
@@ -63,7 +63,7 @@ Store getStore(Namespace namespace);
 
 * keeps extensions from stepping +
 on each other's toes
-* could allow deliberate communication!
+* could allow deliberate communication 🤔
 
 === Extension store
 ==== Hierarchical
@@ -115,9 +115,3 @@ long loadLaunchTime(
 * extensions implement interfaces
 * use `ExecutionContext` for interaction
 * use `Store` to be stateless
-
-We know how to create extensions.
-
-==== What's next?
-
-⇝ Registering them!

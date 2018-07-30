@@ -29,12 +29,9 @@ Three ways to define parameters:
 * system properties
 * configuration file
 
-(In order of precedence +
-from high to low.)
+(In order of decreasing precedence.)
 
-=== Defining parameters
-
-With Maven:
+=== With Maven
 
 ```xml
 <plugin>
@@ -42,7 +39,7 @@ With Maven:
 	<configuration>
 		<properties>
 			<configurationParameters>
-				junit.jupiter.conditions.deactivate = *
+				junit.jupiter.conditions.deactivate=*
 			</configurationParameters>
 		</properties>
 	</configuration>
@@ -52,9 +49,7 @@ With Maven:
 </plugin>
 ```
 
-=== Defining parameters
-
-With Gradle:
+=== With Gradle
 
 ```java
 test {
@@ -65,25 +60,23 @@ test {
 }
 ```
 
-Wait, that's actually +
-a system property!
+Wait, that's actually a system property!
 
-=== Defining parameters
-
-With system properties:
+=== With system properties
 
 Add command line parameter +
-to launching JVM.
+to launching JVM:
 
 ```
 -Djunit.jupiter.conditions.deactivate=*
 ```
 
-=== Defining parameters
+=== With a properties file
 
-With a Java properties file +
-named `junit-platform.properties` +
-in `src/test/resources`.
+Create a Java properties file:
+
+* in `src/test/resources`
+* named `junit-platform.properties`
 
 ```
 junit.jupiter.conditions.deactivate=*

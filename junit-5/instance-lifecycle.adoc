@@ -45,7 +45,7 @@ class ClassTestInstanceTest {
 === Default instance lifecycle
 
 You can link:#configuring_junit[configure JUnit] +
-to change the default behavior
+to change the default behavior +
 to _instance per class_:
 
 ```
@@ -54,13 +54,13 @@ junit.jupiter.testinstance.lifecycle.default=per_class
 
 === Test instance per class
 
-Comments on test class lifecycle:
+On test class lifecycle:
 
 * this changes a few details +
 of JUnit 5's behavior
 * refer to https://junit.org/junit5/docs/current/user-guide/#writing-tests-test-instance-lifecycle[the user guide] +
 and search the entire document +
-for `Lifecycle.PER_CLASS`!
+for `Lifecycle.PER_CLASS`
+* I will not mention differences here
 * I don't find this very useful +
 (but I never used it, so...)
-* I will not mention differences here

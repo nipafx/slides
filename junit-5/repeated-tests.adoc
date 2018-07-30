@@ -19,18 +19,6 @@ void againAndAgainAndAgain() { /*...*/ }
 
 === Repeated tests
 
-There isn't much more to it:
-
-* `@DisplayName` defines container name
-* `@RepeatedTest(name)` defines test name:
-** `{displayName}` (`@RepeatedTest`-'s name)
-** `{currentRepetition}`
-** `{totalRepetitions}`
-* `RepetitionInfo` provides current and +
-total repetition count
-
-=== Repeated tests
-
 ```java
 class RepeatedInvocationTest {
 	private static int REPS = 0;
@@ -54,5 +42,17 @@ class RepeatedInvocationTest {
 Et voilà:
 
 image::images/repeated-test.png[Parameterized tests, width=900]
+
+=== Repeated tests
+
+There's no more to it:
+
+* `@DisplayName` defines container name
+* `@RepeatedTest(name)` defines test name:
+** `{displayName}` (`@RepeatedTest`-'s name)
+** `{currentRepetition}`
+** `{totalRepetitions}`
+* `RepetitionInfo` provides current and +
+total repetition count
 
 Let's not dwell on this...

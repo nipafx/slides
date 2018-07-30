@@ -139,17 +139,18 @@ outer class' state
 === Nested and named
 
 ```java
-@DisplayName("A new stack")
+@DisplayName("A stack")
 class StackTest {
 
-	@Test @DisplayName("is empty")
-	void isEmpty() { /*...*/ }
+	@Nested @DisplayName("when new")
+	class WhenNew {
 
-	@Nested @DisplayName("after pushing an element")
-	class AfterPushing {
+		@Test @DisplayName("is empty")
+		void isEmpty() { /* ... */ }
 
-		@Test @DisplayName("it is no longer empty")
-		void isNotEmpty() { /*...*/ }
+		@Nested
+		@DisplayName("after pushing an element")
+		class AfterPushing { /*...*/ }
 
 	}
 }
@@ -159,7 +160,7 @@ class StackTest {
 
 The effects of `@Nested` and `@DisplayName`:
 
-image::images/testing-a-stack-nested.png[Nested and DisplayName, 900]
+image::images/testing-a-stack-nested.png[Nested and DisplayName, width=900]
 
 === Nested tests
 ==== Summary
@@ -169,5 +170,5 @@ with same initial state
 * give each group a non-static +
 inner class with `@Nested`
 * nest inner classes if state is incremental
-* rely on outside-in calls on `@BeforeEach` +
+* rely on outside-in calls to `@BeforeEach` +
 to build state incrementally

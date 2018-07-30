@@ -35,14 +35,6 @@ class UserServiceTest { }
 
 === Tagging tests
 
-Should I tag "default" unit tests?
-
-* not necessarily
-* but it's possible and convenient with +
-meta-annotations (more on that later)
-
-=== Tagging tests
-
 Tags are just strings:
 
 * not `null`
@@ -70,14 +62,14 @@ In Maven:
 
 In Maven:
 
-* Surefire and Failsafe may run different tags
+* Surefire and Failsafe can run different tags
 * use profiles to activate different tags
 
 === Filtering tests
 
 In Gradle:
 
-```groovy
+```java
 test {
 	useJUnitPlatform {
 		includeTags 'unit'
@@ -85,6 +77,14 @@ test {
 	}
 }
 ```
+
+=== Tagging tests
+
+Should I tag "default" unit tests?
+
+* not necessarily
+* but it's possible and convenient with +
+meta-annotations (more on that later)
 
 === Tagging and filtering
 ==== Summary

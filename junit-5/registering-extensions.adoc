@@ -10,7 +10,7 @@ Three ways to register extensions:
 * programmatically with `@RegisterExtension`
 * automatically with service loader
 
-=== Declarative
+=== Declaratively
 
 Use `@ExtendWith` to register extension +
 with annotation:
@@ -24,7 +24,7 @@ class SomeTest {
 
 That's technical and verbose... :(
 
-=== Declarative
+=== Declaratively
 
 https://en.wikibooks.org/wiki/Java_Programming/Annotations/Meta-Annotations[Meta-annotations] to the rescue!
 
@@ -50,10 +50,9 @@ public @interface IntegrationTest { }
 void testLogin(MyServer server) { ... }
 ```
 
-=== Programmatic
+=== Programmatically
 
-Annotations only accept +
-compile time constants.
+Annotations only accept compile-time constants:
 
 ```java
 @DisabledByFormula(
@@ -67,7 +66,7 @@ class DisabledByFormulaTest {
 }
 ```
 
-=== Programmatic
+=== Programmatically
 
 Instead declare extension as field +
 and annotate with `@RegisterExtension`:
@@ -85,7 +84,7 @@ class DisabledByFormulaTest {
 }
 ```
 
-=== Automatic
+=== Automatically
 
 You can use Java's service loader +
 to register extensions globally, +

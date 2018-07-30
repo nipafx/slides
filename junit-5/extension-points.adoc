@@ -80,7 +80,7 @@ public interface BeforeEachCallback
 * an extension can use multiple points +
 to implement its feature
 
-=== Benchmark extension
+=== Example extension
 
 We want to benchmark our tests!
 
@@ -193,8 +193,3 @@ public class MyServerParameterResolver
 * extensions implement various interfaces
 * implementations are called when +
 test execution reaches corresponding point
-
-==== What's next?
-
-* accessing test context
-* registering extensions

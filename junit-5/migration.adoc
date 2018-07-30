@@ -27,12 +27,11 @@ ____
 
 But:
 
-image::images/junit-4-commits.png[role="diagram",width=900]
+image::images/junit-4-commits.png[role="diagram", width=900]
 
-(Commits from 07/2017 to 07/2018 - note the y-axis!)
+(Commits 07/2017-07/2018 -- note the y-axis!)
 
-Last release: +
-4 Dec 2014.
+Last release: 12/2014.
 
 === Is JUnit 4 supported?
 
@@ -44,8 +43,9 @@ Doesn't matter, though:
 * it does a very good job
 * it's very stable
 
-⇝ Unless you're waiting for important bug-fixes +
-or new features, JUnit 4 is doing just fine!
+⇝ Unless you're waiting for +
+important bug-fixes or new features, +
+JUnit 4 is doing just fine!
 
 === Migrating old tests
 
@@ -61,10 +61,10 @@ edited because of code changes
 What about runners and rules (r&r)?
 
 * you might heavily rely on a few r&r's
-* Jupiter has a brand new extension model
-* it's totally different from JUnit 4's
+* Jupiter has a brand new extension model +
+(it's totally different from JUnit 4's)
 * generally, r&r's don't (and won't) work in Jupiter
-* a few runners are supported
+* a few rules are supported
 
 === Supported rules
 
@@ -85,7 +85,7 @@ to Jupiter test class
 
 ```java
 @EnableRuleMigrationSupport
-class JUnit4RuleInJupiter {
+class JUnit4RuleInJupiterTest {
 
 	@Rule
 	public ExpectedException thrown =
@@ -119,9 +119,6 @@ Jupiter has a powerful extension model:
 * most r&r's can be reimplemented
 * some already were
 
-If you need a runner or rule as an extension, +
-consider contributing to extensions projects!
-
 === Spring extension
 
 To replace +
@@ -135,7 +132,8 @@ org.springframework
 spring-test
 5.0.7.RELEASE
 ```
-* use `@ExtendWith(SpringExtension.class)`
+* use `@ExtendWith(SpringExtension.class)` +
+or the combined `@SpringJUnitConfig`
 
 === Mockito extension
 
@@ -161,9 +159,9 @@ class MockitoTest {
 
 	@Test
 	void shouldInjectMocks() {
-		assertThat(center).isNotNull();
-		assertThat(circle).isNotNull();
-		assertThat(circle.center()).isSameAs(center);
+		assertNotNull(center);
+		assertNotNull(circle);
+		assertSame(center, circle.center());
 	}
 }
 ```
@@ -180,9 +178,9 @@ contact https://junit-pioneer.org[JUnit Pioneer]
 
 *Consider contributing!*
 
-=== Where were we?
+=== Breather
 
-Migration:
+Where were we?
 
 * by default, only migrate tests +
 when they need to be edited
@@ -190,6 +188,8 @@ when they need to be edited
 complicate migration
 * search for or develop +
 appropriate extensions
+
+On to new tests!
 
 === What about new tests?
 

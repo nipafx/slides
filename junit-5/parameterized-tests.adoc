@@ -14,7 +14,7 @@ JUnit 5 has native support for that!
 
 === Parameterizing tests
 
-Require another dependency:
+Require a dedicated dependency:
 
 ```shell
 org.junit.jupiter
@@ -28,7 +28,6 @@ Easy to get started:
 
 * declare test method with `@ParameterizedTest`
 * define input data with different sources
-* JUnit does the rest
 
 ```java
 @ParameterizedTest
@@ -36,7 +35,7 @@ Easy to get started:
 void testValues(String word) { /*...*/ }
 ```
 
-image::images/parameterized-test.png[Parameterized tests, 400]
+image::images/parameterized-test.png[Parameterized tests, width=600]
 
 === Parameterized tests
 
@@ -118,17 +117,19 @@ static Stream<String> testWords() { /*...*/ }
 
 === Method source
 
-For multiple arguments, return `Arguments`:
+For multiple parameters, return `Arguments`:
 
 ```java
 @ParameterizedTest
-@MethodSource("createWordsWithLength")
-void testLength(String word, int length) { /*...*/ }
+@MethodSource("createWords")
+void testWordLengths(String word, int length) {
+	/*...*/
+}
 
-static Stream<Arguments> createWordsWithLength() {
+static Stream<Arguments> createWords() {
 	return Stream.of(
 		Arguments.of("Hello", 5),
-		Arguments.of("JUnit 5", 7));
+		Arguments.of("Parameterized", 13));
 }
 ```
 
@@ -374,7 +375,7 @@ Parameterized tests are fully integrated:
 * `@ParameterizedTest` method is container
 * each invocation is a single test
 * each test has regular lifecycle:
-** `@Before/AfterEach` are executed
+** `@Before-`/`@AfterEach` are executed
 ** other parameters can be injected +
 (must come last)
 * parameterized and other tests can be mixed
@@ -404,7 +405,7 @@ void numeral(String word, int number) { /*...*/ }
 void numeral(String word, int number) { /*...*/ }
 ```
 
-image::images/parameterized-fancy-name.png[Parameterized tests with proper names, 700]
+image::images/parameterized-fancy-name.png[Parameterized tests with proper names, width=900]
 
 === Parameterized names
 
@@ -418,7 +419,7 @@ Placeholders in `@ParameterizedTest`-'s `name`:
 ==== Summary
 
 JUnit 5 has native support for +
-one variant of parameterized tests:
+(one variant of) parameterized tests:
 
 * declare with `@ParameterizedTest`:
 ** can be properly named
@@ -438,4 +439,4 @@ Parameters need arguments:
 JUnit comes with many implementations, +
 but it's easy to add your own.
 
-⇝ Read https://blog.codefx.org/libraries/junit-5-parameterized-tests/[more about parameterized tests].
+⇝ https://blog.codefx.org/libraries/junit-5-parameterized-tests/[More about parameterized tests].

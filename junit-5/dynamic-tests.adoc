@@ -75,14 +75,14 @@ The rest is straight-forward:
 
 Viewed by tools as separate tests:
 
-image::images/dynamic-containers.png[Dynamic containers and tests, 900]
+image::images/dynamic-containers.png[Dynamic containers and tests, width=900]
 
 === Lifecycle
 
 Not integrated into the lifecycle
 (https://github.com/junit-team/junit5/issues/378[#378]):
 
-* `@Before/AfterAll` only called +
+* `@Before-`/`@AfterAll` only called +
 once per `@TestFactory`
 * dynamic tests use shared state
 
@@ -214,4 +214,4 @@ of `DynamicTest`/`DynamicContainer`
 ** annotate with `@TestFactory`
 * not fully integrated in lifecycle
 
-⇝ Read https://blog.codefx.org/libraries/junit-5-dynamic-tests/[more about dynamic tests].
+⇝ https://blog.codefx.org/libraries/junit-5-dynamic-tests/[More about dynamic tests].

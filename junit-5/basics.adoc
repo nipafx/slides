@@ -43,35 +43,6 @@ static void afterAll() { ... }
 
 ```java
 @Test
-@Disabled("Y U No Pass?!")
-void failingTest() {
-	assertTrue(false);
-}
-```
-
-++++
-<p class="fragment current-visible">⇝ <code>@Ignore</code> is now <code>@Disabled</code>.</p>
-++++
-
-=== What's new?
-
-```java
-@Test
-@DisabledOnFriday
-void failingTest() {
-	assertTrue(false);
-}
-```
-
-++++
-<p class="fragment" data-fragment-index="0,1">⇝ Convenient Extensibility.</p>
-<p class="fragment" data-fragment-index="1">But how?</p>
-++++
-
-=== What's new?
-
-```java
-@Test
 void assertAllProperties() {
 	Address ad = new Address(
 	  "City", "Street", "42");
@@ -103,6 +74,49 @@ org.opentest4j.MultipleFailuresError:
 === What's new?
 
 ```java
+@Test
+@Disabled("Y U No Pass?!")
+void failingTest() {
+	assertTrue(false);
+}
+```
+
+++++
+<p class="fragment current-visible">⇝ <code>@Ignore</code> is now <code>@Disabled</code>.</p>
+++++
+
+=== What's new?
+
+```java
+@Test
+@EnabledOnOs(OS.LINUX)
+void runsOnLinux() {
+	assertTrue(IS_FREE_SOFTWARE);
+}
+```
+
+++++
+<p class="fragment current-visible">⇝ Conditional execution with <code>@Disabled</code> variants!</p>
+++++
+
+=== What's new?
+
+```java
+@Test
+@DisabledOnFriday
+void failingTest() {
+	assertTrue(false);
+}
+```
+
+++++
+<p class="fragment" data-fragment-index="0,1">⇝ Convenient Extensibility.</p>
+<p class="fragment" data-fragment-index="1">But how?</p>
+++++
+
+=== What's new?
+
+```java
 @DisplayName("A stack")
 class StackTest {
 
@@ -122,11 +136,37 @@ class StackTest {
 
 Effects of using `@DisplayName`:
 
-image::images/testing-a-stack.png[DisplayName, 900]
+image::images/testing-a-stack.png[DisplayName, width=900]
 
 ++++
-<p class="fragment current-visible">⇝ <code>@DisplayName</code> to show a nice name</p>
+<p class="fragment current-visible">⇝ Human-readable names!</p>
 ++++
+
+=== What's new?
+
+```java
+class CountTest {
+	// lifecycle and tests
+	@Nested
+	class CountGreaterZero {
+		// lifecycle and tests
+		@Nested
+		class CountMuchGreaterZero {
+			// lifecycle and tests
+		}
+	}
+}
+```
+
+++++
+<p class="fragment current-visible">⇝ <code>@Nested</code> to organize tests in inner classes!</p>
+++++
+
+=== What's new?
+
+`@Nested` works great with `@DisplayName`:
+
+image::images/testing-a-stack-nested.png["Nested and named tests", width=900]
 
 === What's new?
 
@@ -143,10 +183,30 @@ void someTest(MyServer server) {
 ++++
 
 === What's new?
+
+```java
+@ParameterizedTest
+@MethodSource("createWords")
+void testWordLengths(String word, int length) {
+	assertEquals(length, word.length());
+}
+
+static Stream<Arguments> createWords() {
+	return Stream.of(
+		Arguments.of("Hello", 5),
+		Arguments.of("Parameterized", 13));
+}
+```
+
+++++
+<p class="fragment current-visible">⇝ Stellar support for parameterized tests!</p>
+++++
+
+=== What's new?
 ==== Summary
 
 * lifecycle works much like before
-* many details were improved
 * `@DisplayName` improves readability
+* many details were improved
+* awesome new features
 * seamless extension
-* parameter injection
