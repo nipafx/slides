@@ -112,6 +112,7 @@ long loadLaunchTime(
 === Extension context
 ==== Summary
 
-* extensions implement interfaces
-* use `ExecutionContext` for interaction
+* use `ExecutionContext` to access +
+information about the test, e.g. +
+parents, tags, test class/method
 * use `Store` to be stateless

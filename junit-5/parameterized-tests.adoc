@@ -314,18 +314,21 @@ void testPointNorm(
 }
 ```
 
+(No parameterized arguments can +
+come after `ArgumentAccessor`!)
+
 === Your aggregator
 
 Reuse common aggregations:
 
-. implement `ArgumentsAccessor`
+. implement `ArgumentsAggregator`
 . register with `@AggregateWith`
 
 (By now, this pattern should bore you.)
 
 === Your aggregator
 
-. implement `ArgumentsAccessor`
+. implement `ArgumentsAggregator`
 
 ```java
 class PointAggregator

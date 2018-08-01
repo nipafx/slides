@@ -44,8 +44,7 @@ static void afterAll() { ... }
 ```java
 @Test
 void assertAllProperties() {
-	Address ad = new Address(
-	  "City", "Street", "42");
+	Address ad = new Address("City", "Street", "42");
 
 	assertAll("address",
 	  () -> assertEquals("C", ad.city),

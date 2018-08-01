@@ -82,7 +82,7 @@ image::images/dynamic-containers.png[Dynamic containers and tests, width=900]
 Not integrated into the lifecycle
 (https://github.com/junit-team/junit5/issues/378[#378]):
 
-* `@Before-`/`@AfterAll` only called +
+* `@Before-`/`@AfterEach` only called +
 once per `@TestFactory`
 * dynamic tests use shared state
 

@@ -21,6 +21,8 @@ Where do parameters come from?
 * extensions
 * you
 
+Sources can be freely combined!
+
 === JUnit's parameters
 
 JUnit resolves parameters:
@@ -67,3 +69,12 @@ You can resolve your own parameters! +
 (Great reason to write an extension. 😃)
 
 More on that later...
+
+=== Dependency injection
+==== Summary
+
+* "everything" can have parameters
+* parameters are resolved by +
+JUnit, extensions, you, +
+or any combination thereof
+* use that to keep test code clean
