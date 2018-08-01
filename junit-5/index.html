@@ -120,8 +120,7 @@ void afterEach() { ... }
 static void afterAll() { ... }</code></pre></div></div>
 <p class="fragment current-visible">⇝ Lifecycle annotations have new names.</p></section><section id="whats_new_3"><h2>What&#8217;s new?</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@Test
 void assertAllProperties() {
-	Address ad = new Address(
-	  "City", "Street", "42");
+	Address ad = new Address("City", "Street", "42");
 
 	assertAll("address",
 	  () -&gt; assertEquals("C", ad.city),
@@ -304,7 +303,8 @@ to run only desired tags</p></li></ul></div></section></section>
 <div class="ulist"><ul><li><p>constructors</p></li><li><p>methods annotated with</p><div class="ulist"><ul><li><p><code>@Test</code>, <code>@TestFactory</code><br>
 <code>@ParameterizedTest</code>, <code>@RepeatedTest</code></p></li><li><p><code>@BeforeAll</code>, <code>@AfterAll</code><br>
 <code>@BeforeEach</code>, <code>@AfterEach</code></p></li></ul></div></li></ul></div></section><section id="where_from"><h2>Where from?</h2><div class="paragraph"><p>Where do parameters come from?</p></div>
-<div class="ulist"><ul><li><p>JUnit</p></li><li><p>extensions</p></li><li><p>you</p></li></ul></div></section><section id="junits_parameters"><h2>JUnit&#8217;s parameters</h2><div class="paragraph"><p>JUnit resolves parameters:</p></div>
+<div class="ulist"><ul><li><p>JUnit</p></li><li><p>extensions</p></li><li><p>you</p></li></ul></div>
+<div class="paragraph"><p>Sources can be freely combined!</p></div></section><section id="junits_parameters"><h2>JUnit&#8217;s parameters</h2><div class="paragraph"><p>JUnit resolves parameters:</p></div>
 <div class="ulist"><ul><li><p><code>TestInfo</code>&#8201;&#8212;&#8201;to access:</p><div class="ulist"><ul><li><p>display name and tags</p></li><li><p>test class and method</p></li></ul></div></li><li><p><code>TestReporter</code>&#8201;&#8212;&#8201;to publish messages</p></li><li><p><code>RepetitionInfo</code>&#8201;&#8212;&#8201;for repeated tests</p></li></ul></div></section><section id="extensions_parameters"><h2>Extensions' parameters</h2><div class="paragraph"><p>For example <a href="https://junit-pioneer.org">JUnit Pioneer</a>:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@Test
 @ExtendWith(TempDirectory.class)
@@ -323,7 +323,9 @@ public class ApiControllerTest {
 	public testController() { /*...*/ }
 }</code></pre></div></div></section><section id="your_parameters"><h2>Your parameters</h2><div class="paragraph"><p>You can resolve your own parameters!<br>
 (Great reason to write an extension. 😃)</p></div>
-<div class="paragraph"><p>More on that later&#8230;&#8203;</p></div></section></section>
+<div class="paragraph"><p>More on that later&#8230;&#8203;</p></div></section><section id="dependency_injection_2"><h2>Dependency injection</h2><h3>Summary</h3><div class="ulist"><ul><li><p>"everything" can have parameters</p></li><li><p>parameters are resolved by<br>
+JUnit, extensions, you,<br>
+or any combination thereof</p></li><li><p>use that to keep test code clean</p></li></ul></div></section></section>
 <section><section id="test_instance_lifecycle"><h2>Test instance lifecycle</h2><div class="paragraph"><p> <table class="toc"> <tr><td>First Steps</td></tr> <tr><td>Mechanisms</td></tr> <tr><td><ul><li>Disabling Tests</li></ul></td></tr> <tr><td><ul><li>Tagging And Filtering</li></ul></td></tr> <tr><td><ul><li>Dependency Injection</li></ul></td></tr> <tr class="toc-current"><td><ul><li>Test Instance Lifecycle</li></ul></td></tr> <tr><td><ul><li>Configuring JUnit</li></ul></td></tr> <tr><td>&#8230;&#8203;</td></tr> </table> </p></div></section><section id="test_instances"><h2>Test instances</h2><div class="paragraph"><p>By default, JUnit 5 creates<br>
 <strong>a new instance for each test</strong>,<br>
 meaning one instance per:</p></div>
@@ -486,18 +488,13 @@ class StackTest {
 with same initial state</p></li><li><p>give each group a non-static<br>
 inner class with <code>@Nested</code></p></li><li><p>nest inner classes if state is incremental</p></li><li><p>rely on outside-in calls to <code>@BeforeEach</code><br>
 to build state incrementally</p></li></ul></div></section></section>
-<section><section id="repeated_tests"><h2>Repeated tests</h2><div class="paragraph"><p> <table class="toc"> <tr><td>First Steps</td></tr> <tr><td>Mechanisms</td></tr> <tr><td>Sophisticated Tests</td></tr> <tr><td><ul><li>Nested Tests</li></ul></td></tr> <tr class="toc-current"><td><ul><li>Repeated Tests</li></ul></td></tr> <tr><td><ul><li>Parameterized Tests</li></ul></td></tr> <tr><td><ul><li>Dynamic Tests</li></ul></td></tr> <tr><td>From 4 To 5</td></tr> <tr><td>Extensions</td></tr> </table> </p></div></section><section id="repeated_tests_2"><h2>Repeated tests</h2><div class="paragraph"><p>Ever wanted to run<br>
+<section><section id="repeated_tests"><h2>Repeated tests</h2><div class="paragraph"><p> <table class="toc"> <tr><td>First Steps</td></tr> <tr><td>Mechanisms</td></tr> <tr><td>Sophisticated Tests</td></tr> <tr><td><ul><li>Nested Tests</li></ul></td></tr> <tr class="toc-current"><td><ul><li>Repeated Tests</li></ul></td></tr> <tr><td><ul><li>Parameterized Tests</li></ul></td></tr> <tr><td><ul><li>Dynamic Tests</li></ul></td></tr> <tr><td>From 4 To 5</td></tr> <tr><td>Extensions</td></tr> </table> </p></div></section><section id="repeating_tests"><h2>Repeating tests</h2><div class="paragraph"><p>Ever wanted to run<br>
 the same test 5 times?</p></div>
-<div class="paragraph"><p>No? But now you can:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@RepeatedTest(5)
-void againAndAgainAndAgain() { /*...*/ }</code></pre></div></div>
-<div class="ulist"><ul><li><p>annotated method is a container</p></li><li><p>each invocation is a test</p></li></ul></div></section><section id="repeated_tests_3"><h2>Repeated tests</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">class RepeatedInvocationTest {
+<div class="ulist"><ul><li><p>to ferry out concurrency bugs</p></li><li><p>to gather performance data</p></li></ul></div></section><section id="repeated_tests_2"><h2>Repeated tests</h2><div class="paragraph"><p>Here&#8217;s how:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">class RepeatedInvocationTest {
 	private static int REPS = 0;
 
-	@DisplayName("Calling repeated...")
-	@RepeatedTest(value = 5,
-		name = "... {currentRepetition}th"
-			"of {totalRepetitions} times")
+	@RepeatedTest(5)
 	void repeated(RepetitionInfo reps) {
 		REPS++;
 		// getCurrentRepetition starts with 1
@@ -505,11 +502,24 @@ void againAndAgainAndAgain() { /*...*/ }</code></pre></div></div>
 		assertEquals(5, reps.getTotalRepetitions());
 	}
 
+}</code></pre></div></div></section><section id="full_integration"><h2>Full integration</h2><div class="paragraph"><p>Repeated tests are fully integrated:</p></div>
+<div class="ulist"><ul><li><p><code>@RepeatedTest</code> method is container</p></li><li><p>each invocation is a single test</p></li><li><p>each test has regular lifecycle:</p><div class="ulist"><ul><li><p><code>@Before-</code>/<code>@AfterEach</code> are executed</p></li><li><p>parameters can be injected<br></p></li></ul></div></li><li><p>repeated and other tests can be mixed</p></li></ul></div></section><section id="repeated_names"><h2>Repeated names</h2><div class="paragraph"><p>Default display names:</p></div>
+<div class="ulist"><ul><li><p>for <code>@RepeatedTest</code> container: method name</p></li><li><p>for generated tests:</p><div class="listingblock"><div class="content"><pre class="highlight"><code>repetition {currentRepetition} of {totalRepetition}</code></pre></div></div></li></ul></div></section><section id="repeated_names_2"><h2>Repeated names</h2><div class="paragraph"><p>Custom display names:</p></div>
+<div class="ulist"><ul><li><p><code>@DisplayName</code> on <code>@RepeatedTest</code><br>
+defines test container name</p></li><li><p><code>@RepeatedTest(name)</code> defines<br>
+each test&#8217;s name</p><div class="ulist"><ul><li><p><code>{displayName}</code>: <code>@RepeatedTest</code>-'s name</p></li><li><p><code>{currentRepetition}</code></p></li><li><p><code>{totalRepetitions}</code></p></li></ul></div></li></ul></div></section><section id="repeated_tests_3"><h2>Repeated tests</h2><div class="paragraph"><p>Custom display names:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">class RepeatedInvocationTest {
+
+	@DisplayName("Calling repeated...")
+	@RepeatedTest(value = 5,
+		name = "... {currentRepetition}th"
+			"of {totalRepetitions} times")
+	void repeated(RepetitionInfo reps) { /*...*/ }
+
 }</code></pre></div></div></section><section id="repeated_tests_4"><h2>Repeated tests</h2><div class="paragraph"><p>Et voilà:</p></div>
-<div class="imageblock" style=""><img src="images/repeated-test.png" alt="Parameterized tests" width="900"></div></section><section id="repeated_tests_5"><h2>Repeated tests</h2><div class="paragraph"><p>There&#8217;s no more to it:</p></div>
-<div class="ulist"><ul><li><p><code>@DisplayName</code> defines container name</p></li><li><p><code>@RepeatedTest(name)</code> defines test name:</p><div class="ulist"><ul><li><p><code>{displayName}</code> (<code>@RepeatedTest</code>-'s name)</p></li><li><p><code>{currentRepetition}</code></p></li><li><p><code>{totalRepetitions}</code></p></li></ul></div></li><li><p><code>RepetitionInfo</code> provides current and<br>
-total repetition count</p></li></ul></div>
-<div class="paragraph"><p>Let&#8217;s not dwell on this&#8230;&#8203;</p></div></section></section>
+<div class="imageblock" style=""><img src="images/repeated-test.png" alt="Parameterized tests" width="900"></div></section><section id="repetition_info"><h2>Repetition Info</h2><div class="paragraph"><p>To access information about repetitions:</p></div>
+<div class="ulist"><ul><li><p>declare parameter <code>RepetitionInfo</code><br>
+(injected by JUnit)</p></li><li><p>query for current and total repetition count</p></li></ul></div></section><section id="repeated_tests_5"><h2>Repeated tests</h2><h3>Summary</h3><div class="ulist"><ul><li><p>use <code>@RepeatedTest(n)</code> to repeat test <code>n</code> times</p></li><li><p>configure test names with <code>name</code> attribute</p></li><li><p>use <code>RepetitionInfo</code> to access repetition counts</p></li></ul></div></section></section>
 <section><section id="parameterized_tests"><h2>Parameterized tests</h2><div class="paragraph"><p> <table class="toc"> <tr><td>First Steps</td></tr> <tr><td>Mechanisms</td></tr> <tr><td>Sophisticated Tests</td></tr> <tr><td><ul><li>Nested Tests</li></ul></td></tr> <tr><td><ul><li>Repeated Tests</li></ul></td></tr> <tr class="toc-current"><td><ul><li>Parameterized Tests</li></ul></td></tr> <tr><td><ul><li>Dynamic Tests</li></ul></td></tr> <tr><td>From 4 To 5</td></tr> <tr><td>Extensions</td></tr> </table> </p></div></section><section id="parameterizing_tests"><h2>Parameterizing tests</h2><div class="paragraph"><p>Dominant use case for parameterizing tests:</p></div>
 <div class="ulist"><ul><li><p>have a test method</p></li><li><p>define input data</p></li><li><p>run the method once per input</p></li></ul></div>
 <div class="paragraph"><p>JUnit 5 has native support for that!</p></div></section><section id="parameterizing_tests_2"><h2>Parameterizing tests</h2><div class="paragraph"><p>Require a dedicated dependency:</p></div>
@@ -636,9 +646,11 @@ void testPointNorm(
 	Point point = Point.from(
 		args.getDouble(1), args.getDouble(2));
 	assertEquals(norm, point.norm(), 0.01);
-}</code></pre></div></div></section><section id="your_aggregator"><h2>Your aggregator</h2><div class="paragraph"><p>Reuse common aggregations:</p></div>
-<div class="olist arabic"><ol class="arabic"><li><p>implement <code>ArgumentsAccessor</code></p></li><li><p>register with <code>@AggregateWith</code></p></li></ol></div>
-<div class="paragraph"><p>(By now, this pattern should bore you.)</p></div></section><section id="your_aggregator_2"><h2>Your aggregator</h2><div class="olist arabic"><ol class="arabic"><li><p>implement <code>ArgumentsAccessor</code></p></li></ol></div>
+}</code></pre></div></div>
+<div class="paragraph"><p>(No parameterized arguments can<br>
+come after <code>ArgumentAccessor</code>!)</p></div></section><section id="your_aggregator"><h2>Your aggregator</h2><div class="paragraph"><p>Reuse common aggregations:</p></div>
+<div class="olist arabic"><ol class="arabic"><li><p>implement <code>ArgumentsAggregator</code></p></li><li><p>register with <code>@AggregateWith</code></p></li></ol></div>
+<div class="paragraph"><p>(By now, this pattern should bore you.)</p></div></section><section id="your_aggregator_2"><h2>Your aggregator</h2><div class="olist arabic"><ol class="arabic"><li><p>implement <code>ArgumentsAggregator</code></p></li></ol></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">class PointAggregator
 		implements ArgumentsAggregator {
 
@@ -660,21 +672,18 @@ void testPointNorm(
 	assertEquals(norm, point.norm(), 0.01);
 }</code></pre></div></div></section><section id="your_aggregator_4"><h2>Your aggregator</h2><div class="paragraph"><p>Two details to note:</p></div>
 <div class="ulist"><ul><li><p>aggregated parameters must come last<br>
-in parameter list</p></li><li><p><code>ArgumentsAccessor::get&#8230;&#8203;</code> converts:</p><div class="ulist"><ul><li><p>common types (hence <code>getDouble</code>)</p></li><li><p>with factories if they exist</p></li></ul></div></li></ul></div></section><section id="full_integration"><h2>Full integration</h2><div class="paragraph"><p>Parameterized tests are fully integrated:</p></div>
+in parameter list</p></li><li><p><code>ArgumentsAccessor::get&#8230;&#8203;</code> converts:</p><div class="ulist"><ul><li><p>common types (hence <code>getDouble</code>)</p></li><li><p>with factories if they exist</p></li></ul></div></li></ul></div></section><section id="full_integration_2"><h2>Full integration</h2><div class="paragraph"><p>Parameterized tests are fully integrated:</p></div>
 <div class="ulist"><ul><li><p><code>@ParameterizedTest</code> method is container</p></li><li><p>each invocation is a single test</p></li><li><p>each test has regular lifecycle:</p><div class="ulist"><ul><li><p><code>@Before-</code>/<code>@AfterEach</code> are executed</p></li><li><p>other parameters can be injected<br>
-(must come last)</p></li></ul></div></li><li><p>parameterized and other tests can be mixed</p></li></ul></div></section><section id="parameterized_names"><h2>Parameterized names</h2><div class="paragraph"><p>Names can be customized:</p></div>
+(must come last)</p></li></ul></div></li><li><p>parameterized and other tests can be mixed</p></li></ul></div></section><section id="parameterized_names"><h2>Parameterized names</h2><div class="paragraph"><p>Default display names:</p></div>
+<div class="ulist"><ul><li><p>for <code>@ParameterizedTest</code> container: method name</p></li><li><p>for generated tests:</p><div class="listingblock"><div class="content"><pre class="highlight"><code>[{index}] {arguments}</code></pre></div></div></li></ul></div></section><section id="parameterized_names_2"><h2>Parameterized names</h2><div class="paragraph"><p>Custom display names:</p></div>
 <div class="ulist"><ul><li><p><code>@DisplayName</code> on <code>@ParameterizedTest</code><br>
-defines test container name</p></li><li><p><code>name</code> property of <code>@ParameterizedTest</code><br>
-defines each test&#8217;s name</p></li></ul></div>
+defines test container name</p></li><li><p><code>@ParameterizedTest(name)</code> defines<br>
+each test&#8217;s name:</p><div class="ulist"><ul><li><p><code>{index}</code>: current invocation, starting with 1</p></li><li><p><code>{arguments}</code>: <code>"{0}, {1}, &#8230;&#8203; {n}"</code></p></li><li><p><code>{i}</code>: the <code>i</code>-th argument&#8217;s value</p></li></ul></div></li></ul></div></section><section id="parameterized_names_3"><h2>Parameterized names</h2><div class="paragraph"><p>Custom display names:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@DisplayName("Roman numeral")
 @ParameterizedTest(name = "\"{0}\" should be {1}")
 @CsvSource({ "I, 1", "II, 2", "V, 5" })
-void numeral(String word, int number) { /*...*/ }</code></pre></div></div></section><section id="parameterized_names_2"><h2>Parameterized names</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@DisplayName("Roman numeral")
-@ParameterizedTest(name = "\"{0}\" should be {1}")
-@CsvSource({ "I, 1", "II, 2", "V, 5" })
 void numeral(String word, int number) { /*...*/ }</code></pre></div></div>
-<div class="imageblock" style=""><img src="images/parameterized-fancy-name.png" alt="Parameterized tests with proper names" width="900"></div></section><section id="parameterized_names_3"><h2>Parameterized names</h2><div class="paragraph"><p>Placeholders in <code>@ParameterizedTest</code>-'s <code>name</code>:</p></div>
-<div class="dlist"><dl><dt class="hdlist1"><code>{index}</code></dt><dd><p>current invocation’s index, starting with 1</p></dd><dt class="hdlist1"><code>{arguments}</code></dt><dd><p><code>"{0}, {1}, &#8230;&#8203; {n}"</code> for <code>n</code> parameters</p></dd><dt class="hdlist1"><code>{i}</code></dt><dd><p>the <code>i</code>-th parameter&#8217;s argument value</p></dd></dl></div></section><section id="parameterized_tests_3"><h2>Parameterized tests</h2><h3>Summary</h3><div class="paragraph"><p>JUnit 5 has native support for<br>
+<div class="imageblock" style=""><img src="images/parameterized-fancy-name.png" alt="Parameterized tests with proper names" width="900"></div></section><section id="parameterized_tests_3"><h2>Parameterized tests</h2><h3>Summary</h3><div class="paragraph"><p>JUnit 5 has native support for<br>
 (one variant of) parameterized tests:</p></div>
 <div class="ulist"><ul><li><p>declare with <code>@ParameterizedTest</code>:</p><div class="ulist"><ul><li><p>can be properly named</p></li><li><p>fully integrated into lifecycle</p></li></ul></div></li><li><p>then worry about arguments</p></li></ul></div></section><section id="parameterized_tests_4"><h2>Parameterized tests</h2><h3>Summary</h3><div class="paragraph"><p>Parameters need arguments:</p></div>
 <div class="ulist"><ul><li><p>define input with different sources, e.g.<br>
@@ -715,7 +724,7 @@ List&lt;DynamicTest&gt; createPointTests() {
 <div class="olist arabic"><ol class="arabic"><li><p>JUnit detects <code>@TestFactory</code> methods</p></li><li><p>calls them to generate containers and tests</p></li><li><p>adds tests to the test tree</p></li><li><p>eventually runs them</p></li></ol></div></section><section id="running_dynamic_tests"><h2>Running dynamic tests</h2><div class="paragraph"><p>Viewed by tools as separate tests:</p></div>
 <div class="imageblock" style=""><img src="images/dynamic-containers.png" alt="Dynamic containers and tests" width="900"></div></section><section id="lifecycle"><h2>Lifecycle</h2><div class="paragraph"><p>Not integrated into the lifecycle
 (<a href="https://github.com/junit-team/junit5/issues/378">#378</a>):</p></div>
-<div class="ulist"><ul><li><p><code>@Before-</code>/<code>@AfterAll</code> only called<br>
+<div class="ulist"><ul><li><p><code>@Before-</code>/<code>@AfterEach</code> only called<br>
 once per <code>@TestFactory</code></p></li><li><p>dynamic tests use shared state</p></li></ul></div></section><section id="lambda_tests"><h2>Lambda tests</h2><div class="paragraph"><p>This would be great:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">class PointTest {
 
@@ -1042,7 +1051,9 @@ long loadLaunchTime(
 		ExtensionContext context) {
 	return context.getStore(NAMESPACE)
 			.get(KEY, long.class);
-}</code></pre></div></div></section><section id="extension_context_4"><h2>Extension context</h2><h3>Summary</h3><div class="ulist"><ul><li><p>extensions implement interfaces</p></li><li><p>use <code>ExecutionContext</code> for interaction</p></li><li><p>use <code>Store</code> to be stateless</p></li></ul></div></section></section>
+}</code></pre></div></div></section><section id="extension_context_4"><h2>Extension context</h2><h3>Summary</h3><div class="ulist"><ul><li><p>use <code>ExecutionContext</code> to access<br>
+information about the test, e.g.<br>
+parents, tags, test class/method</p></li><li><p>use <code>Store</code> to be stateless</p></li></ul></div></section></section>
 <section><section id="registering_extensions"><h2>Registering extensions</h2><div class="paragraph"><p> <table class="toc"> <tr><td>First Steps</td></tr> <tr><td>Mechanisms</td></tr> <tr><td>Sophisticated Tests</td></tr> <tr><td>From 4 To 5</td></tr> <tr><td>Extensions</td></tr> <tr><td><ul><li>Extension Points</li></ul></td></tr> <tr><td><ul><li>Extension Context</li></ul></td></tr> <tr class="toc-current"><td><ul><li>Registering Extensions</li></ul></td></tr> </table> </p></div></section><section id="three_ways"><h2>Three ways&#8230;&#8203;</h2><div class="paragraph"><p>Three ways to register extensions:</p></div>
 <div class="ulist"><ul><li><p>declaratively with <code>@ExtendWith</code></p></li><li><p>programmatically with <code>@RegisterExtension</code></p></li><li><p>automatically with service loader</p></li></ul></div></section><section id="declaratively"><h2>Declaratively</h2><div class="paragraph"><p>Use <code>@ExtendWith</code> to register extension<br>
 with annotation:</p></div>
