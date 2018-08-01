@@ -2,31 +2,23 @@
 
 {toc}
 
-=== Repeated tests
+=== Repeating tests
 
 Ever wanted to run +
 the same test 5 times?
 
-No? But now you can:
-
-```java
-@RepeatedTest(5)
-void againAndAgainAndAgain() { /*...*/ }
-```
-
-* annotated method is a container
-* each invocation is a test
+* to ferry out concurrency bugs
+* to gather performance data
 
 === Repeated tests
+
+Here's how:
 
 ```java
 class RepeatedInvocationTest {
 	private static int REPS = 0;
 
-	@DisplayName("Calling repeated...")
-	@RepeatedTest(value = 5,
-		name = "... {currentRepetition}th"
-			"of {totalRepetitions} times")
+	@RepeatedTest(5)
 	void repeated(RepetitionInfo reps) {
 		REPS++;
 		// getCurrentRepetition starts with 1
@@ -37,22 +29,73 @@ class RepeatedInvocationTest {
 }
 ```
 
+=== Full integration
+
+Repeated tests are fully integrated:
+
+* `@RepeatedTest` method is container
+* each invocation is a single test
+* each test has regular lifecycle:
+** `@Before-`/`@AfterEach` are executed
+** parameters can be injected +
+* repeated and other tests can be mixed
+
+=== Repeated names
+
+Default display names:
+
+* for `@RepeatedTest` container: method name
+* for generated tests:
++
+```
+repetition {currentRepetition} of {totalRepetition}
+```
+
+=== Repeated names
+
+Custom display names:
+
+* `@DisplayName` on `@RepeatedTest` +
+defines test container name
+* `@RepeatedTest(name)` defines +
+each test's name
+** `{displayName}`: `@RepeatedTest`-'s name
+** `{currentRepetition}`
+** `{totalRepetitions}`
+
+=== Repeated tests
+
+Custom display names:
+
+```java
+class RepeatedInvocationTest {
+
+	@DisplayName("Calling repeated...")
+	@RepeatedTest(value = 5,
+		name = "... {currentRepetition}th"
+			"of {totalRepetitions} times")
+	void repeated(RepetitionInfo reps) { /*...*/ }
+
+}
+```
+
 === Repeated tests
 
 Et voilà:
 
 image::images/repeated-test.png[Parameterized tests, width=900]
 
+=== Repetition Info
+
+To access information about repetitions:
+
+* declare parameter `RepetitionInfo` +
+(injected by JUnit)
+* query for current and total repetition count
+
 === Repeated tests
+==== Summary
 
-There's no more to it:
-
-* `@DisplayName` defines container name
-* `@RepeatedTest(name)` defines test name:
-** `{displayName}` (`@RepeatedTest`-'s name)
-** `{currentRepetition}`
-** `{totalRepetitions}`
-* `RepetitionInfo` provides current and +
-total repetition count
-
-Let's not dwell on this...
+* use `@RepeatedTest(n)` to repeat test `n` times
+* configure test names with `name` attribute
+* use `RepetitionInfo` to access repetition counts
