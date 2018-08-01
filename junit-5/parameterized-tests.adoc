@@ -385,21 +385,30 @@ Parameterized tests are fully integrated:
 
 === Parameterized names
 
-Names can be customized:
+Default display names:
 
-* `@DisplayName` on `@ParameterizedTest` +
-defines test container name
-* `name` property of `@ParameterizedTest` +
-defines each test's name
-
-```java
-@DisplayName("Roman numeral")
-@ParameterizedTest(name = "\"{0}\" should be {1}")
-@CsvSource({ "I, 1", "II, 2", "V, 5" })
-void numeral(String word, int number) { /*...*/ }
+* for `@ParameterizedTest` container: method name
+* for generated tests:
++
+```
+[{index}] {arguments}
 ```
 
 === Parameterized names
+
+Custom display names:
+
+* `@DisplayName` on `@ParameterizedTest` +
+defines test container name
+* `@ParameterizedTest(name)` defines +
+each test's name:
+** `{index}`: current invocation, starting with 1
+** `{arguments}`: `"{0}, {1}, ... {n}"`
+** `{i}`: the `i`-th argument's value
+
+=== Parameterized names
+
+Custom display names:
 
 ```java
 @DisplayName("Roman numeral")
@@ -409,14 +418,6 @@ void numeral(String word, int number) { /*...*/ }
 ```
 
 image::images/parameterized-fancy-name.png[Parameterized tests with proper names, width=900]
-
-=== Parameterized names
-
-Placeholders in `@ParameterizedTest`-'s `name`:
-
-`{index}`:: current invocation’s index, starting with 1
-`{arguments}`:: `"{0}, {1}, ... {n}"` for `n` parameters
-`{i}`:: the `i`-th parameter's argument value
 
 === Parameterized tests
 ==== Summary
