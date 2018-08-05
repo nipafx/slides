@@ -43,21 +43,19 @@ ____
 Separation of concerns:
 
 . an API to write tests against
-. a mechanism to discover and run tests
-. an API for tools to run tests
+. an API to discover and run tests
 
 === Approach in JUnit 5
 
 Separation of concerns V 2.0:
 
 . an API to write tests against
-. a mechanism to discover and run tests
+. an API to discover and run tests
 [loweralpha]
 .. specific engine per variant of tests +
 (e.g. JUnit 4 or JUnit 5)
 .. orchestration of engines
 .. API between them
-. an API for tools to run tests
 
 === Subprojects & modules
 

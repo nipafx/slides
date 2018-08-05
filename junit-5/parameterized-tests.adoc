@@ -211,7 +211,7 @@ JUnit converts strings to common types:
 
 * primitives and their wrappers with `valueOf`
 * enums with `valueOf`
-* `java.time.*` from ISO representations
+* `java.time.*` from ISO 8601 representations
 * `File` with `File::new`
 * `Path` with `Paths::get`
 * `UUID` with `UUID::fromString`
