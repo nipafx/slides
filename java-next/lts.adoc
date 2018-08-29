@@ -3,39 +3,40 @@
 What if you (or your customers) +
 don't want to update every six months?
 
-// TODO: It should be possible to shorten this without loosing essential information
-
 === Oracle JDK vs OpenJDK
 
-Oracle JDK used to...
+Sun/Oracle JDK used to...
 
 * contain more features
 * be perceived as more stable
 * be perceived as more performant
 
-As of Java 11, on a technical basis +
+As of Java 11, on a technical basis, +
 *Oracle JDK and OpenJDK are identical*.
 
 === Oracle JDK vs OpenJDK
 
 Only difference is license and support model:
 
-* Oracle ships OpenJDK at http://jdk.java.net/11/[jdk.java.net/$version], +
+* Oracle ships *OpenJDK* at http://jdk.java.net[jdk.java.net], +
 licensed under GPL+CE
-* Oracle JDK becomes fully commercial: +
+* *Oracle JDK* is fully commercial: +
 from 11 on, no free use in production
 
-⇝ Get used to using on OpenJDK.
+⇝ Get used to rely on *OpenJDK*.
 
 === Oracle support
 
 What does Oracle support?
 
-* free updates for current major OpenJDK version
-* commercial support for Oracle JDK +
-for at least 3 years for Java 11, 17, 23, etc.
+* free updates for current *OpenJDK* version +
+(i.e. six months)
+* commercial support for *Oracle JDK* +
+for at least 3 years for Java 11, 17, 23, etc. +
+(called https://www.oracle.com/java/java-se-subscription.html[_Java SE Subscription_];
+https://www.oracle.com/technetwork/java/javaseproducts/javasesubscription-data-sheet-4891969.pdf[prices])
 
-⇝ No Free LTS by Oracle.
+⇝ No free LTS by Oracle.
 
 [state="empty"]
 === !
@@ -43,26 +44,38 @@ image::images/shock.gif[background, size=cover]
 
 === Oracle support
 
-How does Oracle handle bug/security/etc fixes?
+How does *Oracle* handle bug/security/etc fixes?
 
-* usually developed on master (OpenJDK)
-* merged to current version's branch (OpenJDK)
-* merged to current LTS version (internally)
+* usually developed on "master" (*OpenJDK*)
+* merged to current version's "branch" (*OpenJDK*)
+* merged to current LTS version (*Oracle JDK*)
 
 *LTS means merging fixes +
-into old OpenJDK branches.*
+into old OpenJDK versions.*
 
-=== Long-term support
+=== Commercial LTS
 
-Commercial LTS by
-
-* Oracle
-* Azul
-* RedHat
+* https://www.oracle.com/java/java-se-subscription.html[Oracle]
+* https://developer.ibm.com/javasdk/support/lifecycle/[IBM]
+* https://access.redhat.com/articles/1299013[RedHat]
+* https://www.azul.com/products/azul_support_roadmap/[Azul]
 * ...
 
-Likely free LTS for OpenJDK +
-by https://adoptopenjdk.net/[Adopt OpenJDK]!
+=== Free LTS
+
+Current http://mail.openjdk.java.net/pipermail/jdk-dev/2018-August/001823.html[discussions] give hope:
+
+* free LTS for *OpenJDK* 11, 17, 23, etc. +
+  by the community
+* built and shipped  by https://adoptopenjdk.net/[Adopt OpenJDK]!
+
+=== Free LTS
+
+[quote, 'Andrew Haley, Red Hat (http://mail.openjdk.java.net/pipermail/jdk-dev/2018-August/001826.html[link])']
+____
+[L]et me assure you of one thing: whether by Oracle or Red Hat or someone else, JDK LTS releases will continue to be supported.
+We all have a lot invested in Java, and we won't let it fall.
+____
 
 [state="empty"]
 === !
