@@ -6,6 +6,7 @@ Thanks to GitHub Pages you can see them on [slides.codefx.org](http://slides.cod
 
 * [setup](#setup)
 	* [repository structure](#repository-structure)
+	* [Asciidoctor](#asciidoctor)
 * [editing](#editing)
 	* [slides](#slides)
 	* [themes](#themes)
@@ -47,18 +48,23 @@ After checkout, the submodule needs to be initialized:
 git submodule update
 ```
 
+### Asciidoctor
+
+After installing [bundler](https://bundler.io/), run `bundle install` to install all required Ruby gems.
+
 ## Editing...
 
 ### Slides
 
-To generate the slide deck you'll need to [install Asciidoctor](http://asciidoctor.org/docs/install-toolchain/) and run this in the repository's root:
+To generate a slide deck (for example _java-next_), you need to run this in the repository's root:
 
 ```
-bundle exec asciidoctor-revealjs -T _asciidoctor-reveal.js/templates/slim _template/presentation.adoc -o _slides/_template/index.html
+bundle exec asciidoctor-revealjs java-next/presentation.adoc -o _slides/java-next/index.html
 ```
 
-If you want to automate that, you can install [guard](https://rubygems.org/gems/guard/versions/2.13.0) and run `guard start` in the same folder.
-It calls the exact same command (instead of using the asciidoctor gem directly) because that [does not resolve include-directives](http://asciidoctor.org/news/3/#3-swap-an-include-for-a-link) (at least not on my machine).
+If you want to automate that, you can run `bundle exec guard` in the same folder.
+It detects file system changes and calls the same command for the edited slide deck.
+(It does not use the asciidoctor gem directly because that [does not resolve include-directives](http://asciidoctor.org/news/3/#3-swap-an-include-for-a-link) - at least not on my machine.)
 
 ### Themes
 
