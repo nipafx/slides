@@ -1,0 +1,111 @@
+== Project Loom
+image::images/loom.jpg[background, size=cover]
+
+> Fibers, delimited continuations, explicit tail-call
+
+Profile:
+
+* led by Ron Pressler
+* http://openjdk.java.net/projects/loom/[project] /
+https://wiki.openjdk.java.net/display/loom/Main[wiki] /
+http://mail.openjdk.java.net/mailman/listinfo/loom-dev[mailing list] /
+talks:
+https://www.youtube.com/watch?v=fpyub8fbrVE[0],
+https://www.youtube.com/watch?v=J31o0ZMQEnI[1]
+* launched January 2018
+
+=== Motivation
+image::images/loom.jpg[background, size=cover]
+
+Imagine a hypothetical request:
+
+. interpret request
+. query database (_blocks_)
+. process data for response
+
+JVM resource utilization:
+
+* good for tasks 1., 3.
+* really bad for task 2.
+
+How to implement that request?
+
+=== Motivation
+image::images/loom.jpg[background, size=cover]
+
+Synchronous (simple)::
+* thread per request
+* blocks on certain calls
+* bad thread utilization
+Asynchronous (not so simple)::
+* use non-blocking APIs with futures
+* incompatible with synchronous code
+* great thread utilization (scalable!)
+
+[NOTE.speaker]
+--
+* common CPU load: 5-30%
+--
+
+=== Enter fibers!
+image::images/loom.jpg[background, size=cover]
+
+A fiber:
+
+* looks like a thread to devs
+* low memory footprint ([k]bytes)
+* small switching cost
+* *scheduled by the JVM*, not the OS
+
+=== Fiber management
+image::images/loom.jpg[background, size=cover]
+
+The JVM manages fibers:
+
+* runs them in a thread pool
+* makes fibers _yield_ on blocking calls +
+(*frees the thread!*)
+* _continues_ fibers when calls return
+
+=== Fiber example
+image::images/loom.jpg[background, size=cover]
+
+Remember the hypothetical request:
+
+. interpret request
+. query database (_blocks_)
+. process data for response
+
+In a fiber:
+
+[%step]
+* JVM submits fiber for request to thread pool
+* when 2. wants to park, fiber yields
+* JVM hands thread back to pool +
+* when 2. wants to unpark, JVM resubmits fiber
+* fiber continues with 3. (how?)
+
+=== Fibers
+image::images/loom.jpg[background, size=cover]
+
+*Yeah:*
+
+* great thread utilization
+* code is written/debugged as if synchronous
+* legacy code _may_ be forward compatible
+
+=== Continuations
+image::images/loom.jpg[background, size=cover]
+
+How do fibers _continue_?
+
+* use continuations (low-level API)
+* JVM stores and restores call stack
+
+=== Project Loom
+image::images/loom.jpg[background, size=cover]
+
+Makes threading more pleasant:
+
+* simple programming model
+* great thread utilization
