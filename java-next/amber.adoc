@@ -1,14 +1,19 @@
 == Project Amber
 image::images/amber.jpg[background, size=cover]
 
-> Explore and incubate smaller, productivity-oriented Java language features.
+> Smaller, productivity-oriented Java language features
 
 Profile:
 
 * led by Brian Goetz
 * http://openjdk.java.net/projects/amber/[project] /
-http://mail.openjdk.java.net/mailman/listinfo/amber-dev[mailing list]
-* launched March 2017, very active
+https://wiki.openjdk.java.net/display/amber/Main[wiki] /
+http://mail.openjdk.java.net/mailman/listinfo/amber-dev[mailing list] /
+talks:
+https://www.youtube.com/watch?v=A-mxj2vhVAA&t=13m58s[0],
+https://www.youtube.com/watch?v=qul2B8iPC-o[1],
+https://www.youtube.com/watch?v=n3_8YcYKScw[2]
+* launched March 2017
 
 Already delivered `var` in Java 10!
 
@@ -21,7 +26,7 @@ Java compared to more modern languages:
 * lacks expressiveness
 * tends to require boilerplate
 
-Amber wants to improve that situation.
+Amber wants to improve that situation!
 
 === Endeavors
 image::images/amber.jpg[background, size=cover]
@@ -49,11 +54,14 @@ String html =
 * multiline strings
 * no escaping of special characters
 
+http://openjdk.java.net/jeps/12[Preview] in http://jdk.java.net/12/[Java 12]!
+
 === Switch expressions
 image::images/amber.jpg[background, size=cover]
 
 [source,java]
 ----
+DayOfWeek day = // ...
 int numLetters = switch (day) {
 	case MONDAY, FRIDAY, SUNDAY -> 6;
 	case TUESDAY -> 7;
@@ -73,6 +81,7 @@ image::images/amber.jpg[background, size=cover]
 
 [source,java]
 ----
+Object value = // ...
 String formatted = switch (value) {
 	case Integer i -> String.format("int %d", i);
 	case Byte b    -> String.format("byte %d", b);
@@ -93,15 +102,14 @@ image::images/amber.jpg[background, size=cover]
 
 [source,java]
 ----
-public int eval(Node n) {
-	return switch(n) {
-		case IntNode(int i) -> i;
-		case NegNode(Node n) -> -eval(n);
-		case AddNode(Node left, Node right) ->
-			eval(left) + eval(right);
-		default -> throw new IllegalStateException(n);
-	};
-}
+Node n = // ...
+int result = switch(n) {
+	case IntNode(int i) -> i;
+	case NegNode(Node n) -> -eval(n);
+	case AddNode(Node left, Node right) ->
+		eval(left) + eval(right);
+	default -> throw new IllegalStateException(n);
+};
 ----
 
 *Yeah:*
@@ -162,3 +170,14 @@ public record Range(int low, int high) {
 
 }
 ----
+
+=== Project Amber
+image::images/amber.jpg[background, size=cover]
+
+Makes Java more expressive:
+
+* type inference with `var`
+* raw string literals
+* switch expressions
+* pattern matching
+* records

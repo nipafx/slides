@@ -1,8 +1,6 @@
 == Java 9
 image::images/9-dark.jpg[background, size=cover]
 
-// TODO: consider cutting this short
-
 // ++++
 // <table class="toc">
 // 	<tr><td>Java 8</td></tr>
@@ -60,8 +58,21 @@ image::images/jigsaw.jpg[background, size=cover]
 image::images/jigsaw.jpg[background, size=cover]
 
 * led by Mark Reinhold
-* launched 12/2008
-* from http://mreinhold.org/blog/jigsaw[the announcement]:
+* ran from 12/2008 to 09/2017
+* http://openjdk.java.net/projects/jigsaw/[project page] /
+https://jcp.org/en/jsr/detail?id=376[JSR 376] /
+http://mail.openjdk.java.net/mailman/listinfo/jigsaw-dev[mailing list]
+* many talks, e.g. at JavaOne 2015:
+https://blog.codefx.org/java/dev/javaone-2015-prepare-for-jdk-9/[0],
+https://blog.codefx.org/java/dev/javaone-2015-introduction-to-modular-development/[1],
+https://blog.codefx.org/java/dev/javaone-2015-advanced-modular-development/[2],
+https://blog.codefx.org/java/dev/javaone-2015-under-the-hood-of-project-jigsaw/[3]
+
+
+=== Project Jigsaw
+image::images/jigsaw.jpg[background, size=cover]
+
+From http://mreinhold.org/blog/jigsaw[Mark Reinhold's announcement]:
 
 > Sun’s primary goal in the upcoming JDK 7 release will be to modularize the JDK [...], which we hope to deliver early in 2010.
 
@@ -80,6 +91,7 @@ image::images/jigsaw.jpg[background, size=cover]
 === !
 image::images/sheldon.gif[background, size=cover]
 
+////
 === Community unrest
 image::images/sheldon.gif[background, size=cover]
 
@@ -99,8 +111,9 @@ image::images/sheldon.gif[background, size=cover]
 * about hostility to reflection +
 ⇝ `opens` directive
 * and a few more
+////
 
-=== Jigsaw history
+=== Java 9 history
 image::images/jigsaw.jpg[background, size=cover]
 
 * Java 9 release was planned for 09/2016

@@ -55,16 +55,16 @@ A fiber:
 * looks like a thread to devs
 * low memory footprint ([k]bytes)
 * small switching cost
-* *scheduled by the JVM*, not the OS
+* *scheduled by the JVM*
 
 === Fiber management
 image::images/loom.jpg[background, size=cover]
 
 The JVM manages fibers:
 
-* runs them in a thread pool
+* runs them in a pool of _carrier threads_
 * makes fibers _yield_ on blocking calls +
-(*frees the thread!*)
+(*frees the carrier thread!*)
 * _continues_ fibers when calls return
 
 === Fiber example
@@ -79,10 +79,10 @@ Remember the hypothetical request:
 In a fiber:
 
 [%step]
-* JVM submits fiber for request to thread pool
-* when 2. wants to park, fiber yields
+* JVM submits fiber to thread pool
+* when 2. blocks, fiber yields
 * JVM hands thread back to pool +
-* when 2. wants to unpark, JVM resubmits fiber
+* when 2. unblocks, JVM resubmits fiber
 * fiber continues with 3. (how?)
 
 === Fibers

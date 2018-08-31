@@ -1,17 +1,16 @@
 == Project Sumatra
 image::images/sumatra.jpg[background, size=cover]
 
-> Enable Java applications to take advantage of GPUs and APUs [...] to improve performance
+> Take advantage of GPUs and APUs to improve performance
 
 Profile:
 
 * http://openjdk.java.net/projects/sumatra/[project] /
+https://wiki.openjdk.java.net/display/Sumatra/Main[wiki]
 http://mail.openjdk.java.net/pipermail/sumatra-dev[mailing list] /
-http://openjdk.java.net/jeps/8047074[JEP draft]
+http://openjdk.java.net/jeps/8047074[JEP draft] /
+https://www.youtube.com/watch?v=BjdYRtL6qjg[talk]
 * launched June 2014, not much recent activity
-
-https://www.youtube.com/watch?v=BjdYRtL6qjg[_Java on the GPU: Where are we now?_] +
-by Dmitry Aleksandrov
 
 === Motivation
 image::images/sumatra.jpg[background, size=cover]
@@ -96,3 +95,9 @@ IntStream.range(0, length).forEach(p -> {
 		out[p] + ", " + ina[p] + ", " + inb[p]);
 });
 ----
+
+=== Project Sumatra
+image::images/sumatra.jpg[background, size=cover]
+
+Makes embarrassingly parallel workloads +
+much faster by utilizing GPUs.

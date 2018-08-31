@@ -24,7 +24,7 @@
 "Bump an 'almost ready' feature +
 2+ years into the future?"
 
-⇝ *"Better to delay the release."*
+*⇝ "Better to delay the release."*
 
 === Downsides
 
@@ -49,15 +49,15 @@ with known quality guarantees.
 === Implementation
 
 [%step]
-* features are developed in branches
-* merged into master when (nearly) finished
-* release branch created 3 months prior
-* only bug fixes merged to release branch
+* features are developed in "branches"
+* merged into "master" when (nearly) finished
+* "release branch" created 3 months prior
+* only bug fixes merged to "release branch"
 
 === Upsides
 
 * completed features get out earlier
-* no pressure to complete features "on time"
+* no pressure to complete features on time
 * easier to incubate features
 * easier to react to changes in the ecosystem
 
@@ -99,16 +99,6 @@ By and large:
 
 === Expensive migrations
 
-Balance shifted between +
-*compatibility vs evolution*:
-
-* `@Deprecated(forRemoval=true)`
-* "one major release" is now 6 months, not 36
-* increasing bytecode level
-* incubating features (if used incorrectly)
-
-=== Expensive migrations
-
 Yes, https://blog.codefx.org/java/java-9-migration-guide/#fixes-2[Java 9  migration is tough]!
 
 But not the norm:
@@ -121,15 +111,25 @@ to backwards compatibility!
 
 === Expensive migrations
 
+Balance shifted between +
+*compatibility vs evolution*:
+
+* `@Deprecated(forRemoval=true)`
+* "one major release" is now 6 months, not 36
+* increasing bytecode level
+* incubating features (if used incorrectly)
+
+=== Expensive migrations
+
 Remedies:
 
 * stick to supported APIs
 * stick to standardized behavior
 * stick to well-maintained projects
 * keep dependencies and tools up to date
+* consider using `jlink`
 
-// TODO: consider making JLink just a bullet to shorten this part
-
+////
 === JLink can help
 
 Use `jlink` to create application images:
@@ -154,16 +154,17 @@ Works great if you have +
 over the deployment.
 
 Not so much if you deliver software.
+////
 
 === Exploding test matrix
 
 As the range of supported versions increases...
 
 * builds need to run against all of them
-* developers needs to switch between them
+* developers need to switch between them
 
 Many tools already support this. +
-We need to know how.
+*⇝ We need to know how.*
 
 Also: Moar automization!
 

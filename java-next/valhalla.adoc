@@ -1,14 +1,19 @@
 == Project Valhalla
 image::images/valhalla.jpg[background, size=cover]
 
-> Explore and incubate advanced Java VM and Language feature candidates.
+> Advanced Java VM and Language feature candidates
 
 Profile:
 
 * led by Brian Goetz and John Rose
 * http://openjdk.java.net/projects/valhalla/[project] /
-http://mail.openjdk.java.net/mailman/listinfo/valhalla-dev[mailing list]
-* launched July 2014, very active
+https://wiki.openjdk.java.net/display/valhalla/Main[wiki] /
+http://mail.openjdk.java.net/mailman/listinfo/valhalla-dev[mailing list] /
+talks:
+https://www.youtube.com/watch?v=Tc9vs_HFHVo[0],
+https://www.youtube.com/watch?v=A-mxj2vhVAA&t=35m10s[1],
+https://www.youtube.com/watch?v=_26KZAegYRM[2]
+* launched July 2014
 
 === Motivation
 image::images/valhalla.jpg[background, size=cover]
@@ -28,28 +33,28 @@ image::images/valhalla.jpg[background, size=cover]
 
 [source,java]
 ----
-public value Point {
+public value Range {
 
-	private final int x;
-	private final int y;
+	// implicitly final
+	private int low;
+	private int high;
 
-	// constructor, accessors,
-	// equals/hashCode/toString,
-	// and other methods
+	// you write:
+	//  * constructor, static factories
+	//  * equals/hashCode/toString
+	//  * accessors, etc.
 
 }
 ----
-
-> Codes like a class, works like an `int`.
 
 === Value types
 image::images/valhalla.jpg[background, size=cover]
 
 [source,java]
 ----
-public value Point {
-	private final int x;
-	private final int y;
+public value Range {
+	private int low;
+	private int high;
 }
 ----
 
@@ -57,25 +62,31 @@ public value Point {
 
 * enforced immutability
 * no memory indirection! (_flat_)
-* no `Object` header (_dense_)
-* identity doesn't matter
+* no `Object` header! (_dense_)
 * makes Java more expressive
+
+=== Value types
+image::images/valhalla.jpg[background, size=cover]
+
+> Codes like a class, works like an `int`.
+
+The deal:
+
+* give up identity / mutability +
+(and self references)
+* get flat and dense memory layout
 
 === Values vs Records
 image::images/valhalla.jpg[background, size=cover]
 
-*Values:*
+==== Values
 
-* no identity
-* no self references
-* no mutability
-
+no identity / mutability +
 ⇝ flat and dense memory layout
 
-*Records:*
+==== Records
 
-* no encapsulation
-
+no encapsulation +
 ⇝ less boilerplate
 
 Might be combinable to "value records".
@@ -83,7 +94,7 @@ Might be combinable to "value records".
 === Generic specialization
 image::images/valhalla.jpg[background, size=cover]
 
-When everybody creates their own primitives, +
+When everybody creates their own "primitives", +
 boxing becomes omni-present and very painful!
 
 [source,java]
@@ -120,3 +131,11 @@ design and performance
 * better performance
 * can express design more clearly
 * more robust APIs
+
+=== Project Valhalla
+image::images/valhalla.jpg[background, size=cover]
+
+Makes Java more expressive and performant:
+
+* value types
+* primitive specialization
