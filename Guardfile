@@ -13,7 +13,7 @@ watch(/^([^\/]*)\/(.*\.adoc)$/) {|modified|
 		# Asciidoctor.render_file seems to have problems with include directives
 		# (http://asciidoctor.org/news/3/#3-swap-an-include-for-a-link)
 		# so I use the command line call instead.
-		`bundle exec asciidoctor-revealjs #{folder}/presentation.adoc -o _slides/#{folder}/index.html`
+		`bundle exec asciidoctor-revealjs #{folder}/_presentation.adoc -o _slides/#{folder}/index.html`
 	end
 }
 end

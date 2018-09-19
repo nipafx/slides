@@ -59,7 +59,7 @@ After installing [bundler](https://bundler.io/), run `bundle install` to install
 To generate a slide deck (for example _java-next_), you need to run this in the repository's root:
 
 ```
-bundle exec asciidoctor-revealjs java-next/presentation.adoc -o _slides/java-next/index.html
+bundle exec asciidoctor-revealjs java-next/_presentation.adoc -o _slides/java-next/index.html
 ```
 
 If you want to automate that, you can run `bundle exec guard` in the same folder.
