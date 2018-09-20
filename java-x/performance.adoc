@@ -2,17 +2,19 @@
 
 ++++
 <table class="toc">
-	<tr><td>Compact Strings</td></tr>
-	<tr><td>Indified String Concatenation</td></tr>
+	<tr><td>Compact Strings ⑨</td></tr>
+	<tr><td>Indified String Concatenation ⑨</td></tr>
 </table>
 ++++
 
-== Compact Strings
+
+
+== Performance
 
 ++++
 <table class="toc">
-	<tr class="toc-current"><td>Compact Strings</td></tr>
-	<tr><td>Indified String Concatenation</td></tr>
+	<tr class="toc-current"><td>Compact Strings ⑨</td></tr>
+	<tr><td>Indified String Concatenation ⑨</td></tr>
 </table>
 ++++
 
@@ -58,15 +60,14 @@ Depending on circumstances:
 
 
 
-== Indified String Concatenation
+== Performance
 
 ++++
 <table class="toc">
-	<tr><td>Compact Strings</td></tr>
-	<tr class="toc-current"><td>Indified String Concatenation</td></tr>
+	<tr><td>Compact Strings ⑨</td></tr>
+	<tr class="toc-current"><td>Indified String Concatenation ⑨</td></tr>
 </table>
 ++++
-
 
 `"Improving" + "String" + "Concatenation"`
 
@@ -139,7 +140,9 @@ Depending on circumstances:
 
 
 
-== A Mixed Bag Of Performance Improvements
+== A Mixed Bag Of Performance
+
+In Java 9:
 
 * cgroup-memory limits
 * something with interned strings +
