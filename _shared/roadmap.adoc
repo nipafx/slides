@@ -6,58 +6,56 @@
 
 === New Release Schedule
 
-* starting with Java 9, +
-new major release every six months
-* Java 10 is out since March
-* Java 11 comes out in September
+New feature release every six months:
+
+* Sep 2017: Java 9
+* Mar 2018: Java 10
+* *Sep 2018: Java 11*
+* Mar 2019: Java 12
 
 === Oracle JDK ≠ OpenJDK
 
-* no free Oracle JDK from Java 11 on
+* Oracle JDK 11+ is fully commercial
 * Oracle ships OpenJDK builds
 * but *only for current major version*: +
-⇝ 10 ⇝ 10.0.1 ⇝ 10.0.4 +
-⇝ 11 ⇝ 11.0.1 ⇝ 11.0.4 +
-⇝ 12 ⇝ 12.0.1 ⇝ 12.0.4 +
+⇝ 10 ⇝ 10.0.1 ⇝ 10.0.2 +
+⇝ 11 ⇝ 11.0.1 ⇝ 11.0.2 (*Dec 2018*) +
+⇝ 12 ⇝ 12.0.1 ⇝ 12.0.2 +
 * there is no pass:[<span style="text-decoration: line-through;">spoon</span>] free LTS by Oracle!
 
-⇝ More in my weekly: +
+⇝ More in my newsletter: +
 https://medium.com/codefx-weekly/no-free-java-lts-version-b850192745fb[No Free Java LTS Version?]
 
 === Java on the desktop
 
-Oracle released a +
-_Java Client Roadmap Update_ +
-with plans for:
+In March 2018, Oracle released a +
+_Java Client Roadmap Update_ (https://www.oracle.com/technetwork/java/javase/javaclientroadmapupdate2018mar-4414431.pdf[PDF]).
+
+Describes plans for:
 
 * Applets
 * Web Start
 * JavaFX
 * Swing/AWT
 
-=== Applets
+=== Applets & Web Start
 
-* Applets are deprecated in Java 9
-* Applets are removed from Java SE 11
-* Applets won't be in Oracle's OpenJDK 11 builds
-
-=== Web Start
-
-* Web Start is deprecated in Java 9
-* Web Start is removed from Java SE 11
-* Web Start won't be in Oracle's OpenJDK 11 builds
+* deprecated in Java SE 9
+* removed from Java SE 11
+* not in Oracle's JDK 11 builds
 
 === JavaFX
 
-* was never part of Java SE +
-(unlikely to change soon)
-* was never in Oracle's OpenJDK builds +
-(just as unlikely to change)
-* will be https://twitter.com/holgerbrands/status/971428308708679680[removed from Oracle JDK 11]
+* was never part of Java SE
+* was never in Oracle's OpenJDK builds
+* not in Oracle's JDK 11 builds
+* now standalone project at https://openjfx.io/[openjfx.io]
 
 If your project uses JavaFX, +
 you *can't rely* on its presence +
 on your customers' machines!
+
+⇝ Bring it along as dependency.
 
 === JavaFX
 
@@ -99,7 +97,7 @@ What this doesn't say:
 remove Swing/AWT from Java SE 12 +
 and its statement still holds.
 
-⇝ More in my weekly: +
+⇝ More in my newsletter: +
 https://medium.com/codefx-weekly/java-desktop-quo-vadis-f0803166e36b[Java Desktop, Quo Vadis?]
 
 === More PSAs
@@ -107,4 +105,4 @@ https://medium.com/codefx-weekly/java-desktop-quo-vadis-f0803166e36b[Java Deskto
 To hear about such news:
 
 * follow me on Twitter: https://twitter.com/nipafx[@nipafx]
-* subscribe to my weekly: http://blog.codefx.org/newsletter/[tiny.cc/fx-weekly]
+* subscribe to my newsletter: http://blog.codefx.org/newsletter/[tiny.cc/fx-weekly]
