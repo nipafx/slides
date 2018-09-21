@@ -3,7 +3,7 @@
 ++++
 <table class="toc">
 	<tr><td>Collection Factories ⑨</td></tr>
-	<tr><td>Stream Improvements ⑨</td></tr>
+	<tr><td>Stream Improvements ⑨⑩</td></tr>
 	<tr><td>Optional Improvements ⑨</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
@@ -21,7 +21,7 @@ many existing ones were improved.
 ++++
 <table class="toc">
 	<tr class="toc-current"><td>Collection Factories ⑨</td></tr>
-	<tr><td>Stream Improvements ⑨</td></tr>
+	<tr><td>Stream Improvements ⑨⑩</td></tr>
 	<tr><td>Optional Improvements ⑨</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
@@ -83,7 +83,7 @@ Q: Overloads on `Map::ofEntries`? 1
 ++++
 <table class="toc">
 	<tr><td>Collection Factories ⑨</td></tr>
-	<tr class="toc-current"><td>Stream Improvements ⑨</td></tr>
+	<tr class="toc-current"><td>Stream Improvements ⑨⑩</td></tr>
 	<tr><td>Optional Improvements ⑨</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
@@ -93,21 +93,22 @@ Q: Overloads on `Map::ofEntries`? 1
 
 Small improvements to Java 8 streams.
 
-=== `Stream::ofNullable`
+=== Of Nullable ⑨
 
-Creates a stream of zero or one elements:
+Create a stream of zero or one elements:
 
 ```java
 long zero = Stream.ofNullable(null).count();
 long one = Stream.ofNullable("42").count();
 ```
 
-=== `Stream::iterate`
+=== Iterate ⑨
 
 To use `for` even less...
 
 ```java
-iterate(T seed,
+iterate(
+	T seed,
 	Predicate<T> hasNext,
 	UnaryOperator<T> next);
 ```
@@ -121,7 +122,7 @@ Stream
 // output: 1 2 4 8
 ```
 
-=== `Stream::iterate`
+=== Iterate ⑨
 
 Counter Example:
 
@@ -138,7 +139,7 @@ Stream.iterate(
 * then `hasMoreElements()`
 * ⇝ fail
 
-=== `Stream::takeWhile`
+=== Take While ⑨
 
 Stream as long as a condition is true:
 
@@ -156,7 +157,7 @@ Stream.of("a-", "b-", "c-", "", "e-")
 // output: a-b-c-
 ```
 
-=== `Stream::dropWhile`
+=== Drop While ⑨
 
 Ignore as long as a condition is true:
 
@@ -174,6 +175,23 @@ Stream.of("a-", "b-", "c-", "de-", "f-")
 // output: de-f-
 ```
 
+=== Collect Unmodifiable ⑩
+
+Create unmodifiable collections +
+(in the sense of `List::of` et al) +
+with `Collectors`:
+
+```java
+Collector<T, ?, List<T>> toUnmodifiableList();
+
+Collector<T, ?, Set<T>> toUnmodifiableSet();
+
+Collector<T, ?, Map<K,U>> toUnmodifiableMap(
+	Function<T, K> keyMapper,
+	Function<T, U> valueMapper);
+// plus overload with merge function
+```
+
 
 
 == New or Updated APIs
@@ -181,7 +199,7 @@ Stream.of("a-", "b-", "c-", "de-", "f-")
 ++++
 <table class="toc">
 	<tr><td>Collection Factories ⑨</td></tr>
-	<tr><td>Stream Improvements ⑨</td></tr>
+	<tr><td>Stream Improvements ⑨⑩</td></tr>
 	<tr class="toc-current"><td>Optional Improvements ⑨</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
@@ -306,7 +324,7 @@ void logLogin(String id) {
 ++++
 <table class="toc">
 	<tr><td>Collection Factories ⑨</td></tr>
-	<tr><td>Stream Improvements ⑨</td></tr>
+	<tr><td>Stream Improvements ⑨⑩</td></tr>
 	<tr><td>Optional Improvements ⑨</td></tr>
 	<tr class="toc-current"><td>Reactive Streams ⑨</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
@@ -367,7 +385,7 @@ No JDK API uses them. +
 ++++
 <table class="toc">
 	<tr><td>Collection Factories ⑨</td></tr>
-	<tr><td>Stream Improvements ⑨</td></tr>
+	<tr><td>Stream Improvements ⑨⑩</td></tr>
 	<tr><td>Optional Improvements ⑨</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
 	<tr class="toc-current"><td>Stack-Walking ⑨</td></tr>
@@ -462,7 +480,7 @@ image::images/stack-walker-limit-with-estimated-size.png[role="diagram"]
 ++++
 <table class="toc">
 	<tr><td>Collection Factories ⑨</td></tr>
-	<tr><td>Stream Improvements ⑨</td></tr>
+	<tr><td>Stream Improvements ⑨⑩</td></tr>
 	<tr><td>Optional Improvements ⑨</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
