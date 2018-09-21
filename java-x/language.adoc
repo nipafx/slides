@@ -2,6 +2,7 @@
 
 ++++
 <table class="toc">
+	<tr><td>Local-Variable Type Inference ⑩</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
 	<tr><td>Diamond Operator ⑨</td></tr>
@@ -16,6 +17,124 @@
 
 ++++
 <table class="toc">
+	<tr class="toc-current"><td>Local-Variable Type Inference ⑩</td></tr>
+	<tr><td>Private Interface Methods ⑨</td></tr>
+	<tr><td>Try-With-Resources ⑨</td></tr>
+	<tr><td>Diamond Operator ⑨</td></tr>
+	<tr><td>SafeVarargs ⑨</td></tr>
+	<tr><td>Deprecation Warnings ⑨</td></tr>
+</table>
+++++
+
+Type inference with `var`. +
+Less typing, but still strongly typed.
+
+
+=== Type Duplication
+
+We're used to duplicating +
+type information:
+
+```java
+URL codefx = new URL("http://codefx.org");
+URLConnection connection = codefx.openConnection();
+Reader reader = new BufferedReader(
+	new InputStreamReader(
+		connection.getInputStream()));
+```
+
+Not so bad?
+
+=== Type Duplication
+
+What about this?
+
+```java
+No no = new No();
+AmountIncrease<BigDecimal> more =
+	new BigDecimalAmountIncrease();
+HorizontalConnection<LinePosition, LinePosition>
+	jumping =
+		new HorizontalLinePositionConnection();
+Variable variable = new Constant(5);
+List<String> names = List.of("Max", "Maria");
+```
+
+=== Type Deduplication
+
+Can't somebody else do that? +
+Compiler knows the types!
+
+Enter `var`:
+
+```java
+var codefx = new URL("http://codefx.org");
+var connection = codefx.openConnection();
+var reader = new BufferedReader(
+	new InputStreamReader(
+		connection.getInputStream()));
+```
+
+=== Rules of `var`
+
+// [%step]
+. not a keyword, but a _reserved type name_ +
+  ⇝ variables/fields can be named `var`
+. only works for local variables, `for`, `try` +
+  ⇝ no `var` on fields or in method signatures
+. compiler infers type from right-hand side +
+  ⇝ rhs has to *exist* and *define a type*
+. compiler writes type into bytecode +
+  ⇝ no run-time component
+
+=== What About Readability?
+
+This *is* about readability!
+
+* less redundancy
+* aligned variable names
+* more focus on variable names
+* more intermediate variables
+
+=== Aligned Variable Names
+
+```java
+var no = new No();
+var more = new BigDecimalAmountIncrease();
+var jumping = new HorizontalLinePositionConnection();
+var variable = new Constant(5);
+var names = List.of("Max", "Maria");
+```
+
+=== What About Readability?
+
+Still think omitting types is always bad?
+
+Ever wrote a lambda without declaring types?
+
+```java
+rhetoricalQuestion.answer(yes -> "see my point?");
+```
+
+=== More on `var`
+
+* First Contact With `var` In Java 10 +
+💻 https://blog.codefx.org/java/java-10-var-type-inference/[tiny.cc/java-var] /
+▶ http://tiny.cc/java-var-yt[tiny.cc/java-var-yt]
+* `var` and ...
+** https://blog.codefx.org/java/intersection-types-var/[intersection types]
+** https://blog.codefx.org/java/traits-var/[traits]
+** https://blog.codefx.org/java/tricks-var-anonymous-classes/[anonymous classes]
+* http://openjdk.java.net/projects/amber/LVTIstyle.html[official style guidelines]
+* https://snyk.io/blog/local-type-inference-java-cheat-sheet[cheat sheet]
+
+
+
+== New Language Features
+
+++++
+<table class="toc">
+	<tr><td>Local-Variable Type Inference ⑩</td></tr>
 	<tr class="toc-current"><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
 	<tr><td>Diamond Operator ⑨</td></tr>
@@ -70,6 +189,7 @@ Just like private methods in abstract classes:
 
 ++++
 <table class="toc">
+	<tr><td>Local-Variable Type Inference ⑩</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr class="toc-current"><td>Try-With-Resources ⑨</td></tr>
 	<tr><td>Diamond Operator ⑨</td></tr>
@@ -134,6 +254,7 @@ Q: Can instance be created but not assigned? No.
 
 ++++
 <table class="toc">
+	<tr><td>Local-Variable Type Inference ⑩</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
 	<tr class="toc-current"><td>Diamond Operator ⑨</td></tr>
@@ -199,6 +320,7 @@ Box<?> createCrazyBox(Object content) {
 
 ++++
 <table class="toc">
+	<tr><td>Local-Variable Type Inference ⑩</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
 	<tr><td>Diamond Operator ⑨</td></tr>
@@ -292,6 +414,7 @@ can be applied to private methods.
 
 ++++
 <table class="toc">
+	<tr><td>Local-Variable Type Inference ⑩</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
 	<tr><td>Diamond Operator ⑨</td></tr>
