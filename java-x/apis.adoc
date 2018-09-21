@@ -2,12 +2,12 @@
 
 ++++
 <table class="toc">
+	<tr><td>Collection Factories ⑨</td></tr>
 	<tr><td>Stream Improvements ⑨</td></tr>
 	<tr><td>Optional Improvements ⑨</td></tr>
-	<tr><td>Collection Factories ⑨</td></tr>
+	<tr><td>Reactive Streams ⑨</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
-	<tr><td>Reactive Streams ⑨</td></tr>
 </table>
 ++++
 
@@ -15,16 +15,79 @@ Some APIs are new, +
 many existing ones were improved.
 
 
+
 == New or Updated APIs
 
 ++++
 <table class="toc">
-	<tr class="toc-current"><td>Stream Improvements ⑨</td></tr>
+	<tr class="toc-current"><td>Collection Factories ⑨</td></tr>
+	<tr><td>Stream Improvements ⑨</td></tr>
 	<tr><td>Optional Improvements ⑨</td></tr>
-	<tr><td>Collection Factories ⑨</td></tr>
+	<tr><td>Reactive Streams ⑨</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
+</table>
+++++
+
+Creating ad-hoc collections more easily.
+
+=== Hope is Pain
+
+Wouldn't this be awesome?
+
+```java
+List<String> list = [ "a", "b", "c" ];
+Map<String, Integer> map = [ "one" = 1, "two" = 2 ];
+```
+
+Not gonna happen!
+
+* language change is costly
+* binds language to collection framework
+* strongly favors specific collections
+
+=== Next Best Thing
+
+```java
+List<String> list = List.of("a", "b", "c");
+Map<String, Integer> mapImmediate = Map.of(
+		"one", 1,
+		"two", 2,
+		"three", 3);
+Map<String, Integer> mapEntries = Map.ofEntries(
+		entry("one", 1),
+		entry("two", 2),
+		entry("three", 3));
+```
+
+[NOTE.speaker]
+--
+Q: Where does `entry` come from? `Map`
+Q: Overloads on `of`? 10
+Q: Overloads on `Map::ofEntries`? 1
+--
+
+=== Interesting Details
+
+* collections are immutable +
+(no immutability in type system, though)
+* collections are value-based
+* `null` elements/keys/values are forbidden
+* iteration order is random between JVM starts +
+(except for lists, of course!)
+
+
+
+== New or Updated APIs
+
+++++
+<table class="toc">
+	<tr><td>Collection Factories ⑨</td></tr>
+	<tr class="toc-current"><td>Stream Improvements ⑨</td></tr>
+	<tr><td>Optional Improvements ⑨</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
+	<tr><td>Stack-Walking ⑨</td></tr>
+	<tr><td>OS Processes ⑨</td></tr>
 </table>
 ++++
 
@@ -117,12 +180,12 @@ Stream.of("a-", "b-", "c-", "de-", "f-")
 
 ++++
 <table class="toc">
+	<tr><td>Collection Factories ⑨</td></tr>
 	<tr><td>Stream Improvements ⑨</td></tr>
 	<tr class="toc-current"><td>Optional Improvements ⑨</td></tr>
-	<tr><td>Collection Factories ⑨</td></tr>
+	<tr><td>Reactive Streams ⑨</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
-	<tr><td>Reactive Streams ⑨</td></tr>
 </table>
 ++++
 
@@ -242,61 +305,60 @@ void logLogin(String id) {
 
 ++++
 <table class="toc">
+	<tr><td>Collection Factories ⑨</td></tr>
 	<tr><td>Stream Improvements ⑨</td></tr>
 	<tr><td>Optional Improvements ⑨</td></tr>
-	<tr class="toc-current"><td>Collection Factories ⑨</td></tr>
+	<tr class="toc-current"><td>Reactive Streams ⑨</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
-	<tr><td>Reactive Streams ⑨</td></tr>
 </table>
 ++++
 
-Creating ad-hoc collections more easily.
+The JDK as common ground +
+for reactive stream libraries.
 
-=== Hope is Pain
+=== Reactive Types
 
-Wouldn't this be awesome?
+`Publisher`::
+* produces items to consume
+* can be subscribed to
+`Subscriber`::
+* subscribes to publisher
+* `onNext`, `onError`, `onComplete`
+`Subscription`::
+* connection between publisher and subscriber
+* `request`, `cancel`
 
-```java
-List<String> list = [ "a", "b", "c" ];
-Map<String, Integer> map = [ "one" = 1, "two" = 2 ];
-```
+=== Reactive Flow
+==== Subscribing
 
-Not gonna happen!
+* create `Publisher pub` and `Subscriber sub`
+* call `pub.subscribe(sub)`
+* pub creates `Subscription script` +
+and calls `sub.onSubscription(script)`
+* `sub` can store `script`
 
-* language change is costly
-* binds language to collection framework
-* strongly favors specific collections
+=== Reactive Flow
+==== Streaming
 
-=== Next Best Thing
+* `sub` calls `script.request(10)`
+* `pub` calls `sub.onNext(element)` (max 10x)
 
-```java
-List<String> list = List.of("a", "b", "c");
-Map<String, Integer> mapImmediate = Map.of(
-		"one", 1,
-		"two", 2,
-		"three", 3);
-Map<String, Integer> mapEntries = Map.ofEntries(
-		entry("one", 1),
-		entry("two", 2),
-		entry("three", 3));
-```
+==== Canceling
 
-[NOTE.speaker]
---
-Q: Where does `entry` come from? `Map`
-Q: Overloads on `of`? 10
-Q: Overloads on `Map::ofEntries`? 1
---
+* `pub` may call `sub.OnError(err)` +
+or `sub.onComplete()`
+* `sub` may call `script.cancel()`
 
-=== Interesting Details
+=== Reactive APIs?
 
-* collections are immutable +
-(no immutability in type system, though)
-* collections are value-based
-* `null` elements/keys/values are forbidden
-* iteration order is random between JVM starts +
-(except for lists, of course!)
+JDK only provides three interfaces +
+and one simple implementation.
+
+(Also called *Flow API*.)
+
+No JDK API uses them. +
+(No reactive HTTP connections etc.)
 
 
 
@@ -304,15 +366,14 @@ Q: Overloads on `Map::ofEntries`? 1
 
 ++++
 <table class="toc">
+	<tr><td>Collection Factories ⑨</td></tr>
 	<tr><td>Stream Improvements ⑨</td></tr>
 	<tr><td>Optional Improvements ⑨</td></tr>
-	<tr><td>Collection Factories ⑨</td></tr>
+	<tr><td>Reactive Streams ⑨</td></tr>
 	<tr class="toc-current"><td>Stack-Walking ⑨</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
-	<tr><td>Reactive Streams ⑨</td></tr>
 </table>
 ++++
-
 
 Examining the stack faster and easier.
 
@@ -400,15 +461,14 @@ image::images/stack-walker-limit-with-estimated-size.png[role="diagram"]
 
 ++++
 <table class="toc">
+	<tr><td>Collection Factories ⑨</td></tr>
 	<tr><td>Stream Improvements ⑨</td></tr>
 	<tr><td>Optional Improvements ⑨</td></tr>
-	<tr><td>Collection Factories ⑨</td></tr>
+	<tr><td>Reactive Streams ⑨</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
 	<tr class="toc-current"><td>OS Processes ⑨</td></tr>
-	<tr><td>Reactive Streams ⑨</td></tr>
 </table>
 ++++
-
 
 Improving interaction with OS processes.
 
@@ -458,67 +518,6 @@ Interesting `static` methods:
 * command, arguments
 * start time
 * CPU time
-
-
-
-== New or Updated APIs
-
-++++
-<table class="toc">
-	<tr><td>Stream Improvements ⑨</td></tr>
-	<tr><td>Optional Improvements ⑨</td></tr>
-	<tr><td>Collection Factories ⑨</td></tr>
-	<tr><td>Stack-Walking ⑨</td></tr>
-	<tr><td>OS Processes ⑨</td></tr>
-	<tr class="toc-current"><td>Reactive Streams ⑨</td></tr>
-</table>
-++++
-
-The JDK as common ground +
-for reactive stream libraries.
-
-=== Reactive Types
-
-`Publisher`::
-* produces items to consume
-* can be subscribed to
-`Subscriber`::
-* subscribes to publisher
-* `onNext`, `onError`, `onComplete`
-`Subscription`::
-* connection between publisher and subscriber
-* `request`, `cancel`
-
-=== Reactive Flow
-==== Subscribing
-
-* create `Publisher pub` and `Subscriber sub`
-* call `pub.subscribe(sub)`
-* pub creates `Subscription script` +
-and calls `sub.onSubscription(script)`
-* `sub` can store `script`
-
-=== Reactive Flow
-==== Streaming
-
-* `sub` calls `script.request(10)`
-* `pub` calls `sub.onNext(element)` (max 10x)
-
-==== Canceling
-
-* `pub` may call `sub.OnError(err)` +
-or `sub.onComplete()`
-* `sub` may call `script.cancel()`
-
-=== Reactive APIs?
-
-JDK only provides three interfaces +
-and one simple implementation.
-
-(Also called *Flow API*.)
-
-No JDK API uses them. +
-(No reactive HTTP connections etc.)
 
 
 
