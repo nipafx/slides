@@ -4,7 +4,7 @@
 <table class="toc">
 	<tr><td>Collection Factories ⑨</td></tr>
 	<tr><td>Stream Improvements ⑨⑩</td></tr>
-	<tr><td>Optional Improvements ⑨</td></tr>
+	<tr><td>Optional Improvements ⑨⑩⑪</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
@@ -22,7 +22,7 @@ many existing ones were improved.
 <table class="toc">
 	<tr class="toc-current"><td>Collection Factories ⑨</td></tr>
 	<tr><td>Stream Improvements ⑨⑩</td></tr>
-	<tr><td>Optional Improvements ⑨</td></tr>
+	<tr><td>Optional Improvements ⑨⑩⑪</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
@@ -84,7 +84,7 @@ Q: Overloads on `Map::ofEntries`? 1
 <table class="toc">
 	<tr><td>Collection Factories ⑨</td></tr>
 	<tr class="toc-current"><td>Stream Improvements ⑨⑩</td></tr>
-	<tr><td>Optional Improvements ⑨</td></tr>
+	<tr><td>Optional Improvements ⑨⑩⑪</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
@@ -200,7 +200,7 @@ Collector<T, ?, Map<K,U>> toUnmodifiableMap(
 <table class="toc">
 	<tr><td>Collection Factories ⑨</td></tr>
 	<tr><td>Stream Improvements ⑨⑩</td></tr>
-	<tr class="toc-current"><td>Optional Improvements ⑨</td></tr>
+	<tr class="toc-current"><td>Optional Improvements ⑨⑩⑪</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
@@ -209,8 +209,104 @@ Collector<T, ?, Map<K,U>> toUnmodifiableMap(
 
 Small improvements to Java 8 `Optional`.
 
+=== Is Empty ⑪
 
-=== `Optional::stream`
+No more `!foo.isPresent()`:
+
+```java
+boolean isEmpty()
+```
+
+Does exactly what +
+you think it does.
+
+=== Or Else Throw ⑩
+
+`Optional::get` invites misuse +
+by calling it reflexively.
+
+Maybe `get` wasn't the best name? +
+New:
+
+```java
+T orElseThrow()
+```
+
+Works exactly as `get`, +
+but more self-documenting.
+
+=== Aligned Names
+
+Name in line with other accessors:
+
+```java
+T orElse(T other)
+T orElseGet(Supplier<T> supplier)
+T orElseThrow()
+	throws NoSuchElementException
+T orElseThrow(
+	Supplier<X> exceptionSupplier)
+	throws X
+```
+
+=== Get Considered Harmful
+
+https://bugs.openjdk.java.net/browse/JDK-8160606[JDK-8160606]
+will deprecate +
+`Optional::get`.
+
+* when?
+* for removal?
+
+We'll see...
+
+=== Or ⑨
+
+Choose a non-empty `Optional`:
+
+```java
+Optional<T> or(Supplier<Optional<T>> supplier);
+```
+
+=== Find in Many Places
+
+```java
+public interface Search {
+	Optional<Customer> inMemory(String id);
+	Optional<Customer> onDisk(String id);
+	Optional<Customer> remotely(String id);
+
+	default Optional<Customer> anywhere(String id) {
+		return inMemory(id)
+			.or(() -> onDisk(id))
+			.or(() -> remotely(id));
+	}
+
+}
+```
+
+=== If Present Or Else ⑨
+
+Like `ifPresent` but do something if empty:
+
+```java
+void ifPresentOrElse(
+	Consumer<T> action,
+	Runnable emptyAction);
+```
+
+Example:
+
+```java
+void logLogin(String id) {
+	findCustomer(id)
+		.ifPresentOrElse(
+			this::logCustomerLogin,
+			() -> logUnknownLogin(id));
+}
+```
+
+=== Stream ⑨
 
 Turns an `Optional` into a `Stream` +
 of zero or one elements:
@@ -271,52 +367,6 @@ Stream<Order> findOrdersForCustomer(String id) {
 }
 ```
 
-=== `Optional::or`
-
-Choose a non-empty `Optional`:
-
-```java
-Optional<T> or(Supplier<Optional<T>> supplier);
-```
-
-=== Find in Many Places
-
-```java
-public interface Search {
-	Optional<Customer> inMemory(String id);
-	Optional<Customer> onDisk(String id);
-	Optional<Customer> remotely(String id);
-
-	default Optional<Customer> anywhere(String id) {
-		return inMemory(id)
-			.or(() -> onDisk(id))
-			.or(() -> remotely(id));
-	}
-
-}
-```
-
-=== `ifPresentOrElse`
-
-Like `ifPresent` but do something if empty:
-
-```java
-void ifPresentOrElse(
-	Consumer<T> action,
-	Runnable emptyAction);
-```
-
-Example:
-
-```java
-void logLogin(String id) {
-	findCustomer(id)
-		.ifPresentOrElse(
-			this::logCustomerLogin,
-			() -> logUnknownLogin(id));
-}
-```
-
 
 
 == New or Updated APIs
@@ -325,7 +375,7 @@ void logLogin(String id) {
 <table class="toc">
 	<tr><td>Collection Factories ⑨</td></tr>
 	<tr><td>Stream Improvements ⑨⑩</td></tr>
-	<tr><td>Optional Improvements ⑨</td></tr>
+	<tr><td>Optional Improvements ⑨⑩⑪</td></tr>
 	<tr class="toc-current"><td>Reactive Streams ⑨</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
@@ -386,7 +436,7 @@ No JDK API uses them. +
 <table class="toc">
 	<tr><td>Collection Factories ⑨</td></tr>
 	<tr><td>Stream Improvements ⑨⑩</td></tr>
-	<tr><td>Optional Improvements ⑨</td></tr>
+	<tr><td>Optional Improvements ⑨⑩⑪</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
 	<tr class="toc-current"><td>Stack-Walking ⑨</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
@@ -481,7 +531,7 @@ image::images/stack-walker-limit-with-estimated-size.png[role="diagram"]
 <table class="toc">
 	<tr><td>Collection Factories ⑨</td></tr>
 	<tr><td>Stream Improvements ⑨⑩</td></tr>
-	<tr><td>Optional Improvements ⑨</td></tr>
+	<tr><td>Optional Improvements ⑨⑩⑪</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
 	<tr class="toc-current"><td>OS Processes ⑨</td></tr>
