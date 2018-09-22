@@ -2,6 +2,7 @@
 
 ++++
 <table class="toc">
+	<tr><td>String Improvements ⑪</td></tr>
 	<tr><td>Collection Factories ⑨</td></tr>
 	<tr><td>Stream Improvements ⑨⑩</td></tr>
 	<tr><td>Optional Improvements ⑨⑩⑪</td></tr>
@@ -20,6 +21,103 @@ many existing ones were improved.
 
 ++++
 <table class="toc">
+	<tr class="toc-current"><td>String Improvements ⑪</td></tr>
+	<tr><td>Collection Factories ⑨</td></tr>
+	<tr><td>Stream Improvements ⑨⑩</td></tr>
+	<tr><td>Optional Improvements ⑨⑩⑪</td></tr>
+	<tr><td>Reactive Streams ⑨</td></tr>
+	<tr><td>Stack-Walking ⑨</td></tr>
+	<tr><td>OS Processes ⑨</td></tr>
+</table>
+++++
+
+Small improvements to `String`.
+
+=== Strip White Space
+
+Getting rid of white space:
+
+```java
+String strip();
+String stripLeading();
+String stripTrailing();
+```
+
+Only at beginning and end of string:
+
+```java
+" foo bar ".strip().equals("foo bar");
+```
+
+=== What About Trim?
+
+Wait, what about `trim()`?
+
+* `trim()` defines white space as:
++
+____
+any character whose codepoint +
+is less than or equal to `'U+0020'` +
+(the space character)
+____
+* `strip()` relies on `Character::isWhitespace`, +
+  which covers many more cases
+
+=== Is Blank?
+
+Is a string only white space?
+
+```java
+boolean isBlank();
+```
+
+Functionally equivalent to:
+
+```java
+string.isBlank() == string.strip().isEmpty();
+```
+
+=== Life Hack
+
+As soon as Java APIs get new method, +
+scour StackOverflow for easy karma!
+
+image::images/so-repeat-string-q.png[role="diagram"]
+
+=== Life Hack
+
+Formerly accepted answer:
+
+image::images/so-repeat-string-a-old.png[role="diagram"]
+
+😍
+
+=== Life Hack
+
+Ta-da!
+
+image::images/so-repeat-string-a.png[role="diagram"]
+
+=== Streaming Lines
+
+Processing a string's lines:
+
+```java
+Stream<String> lines();
+```
+
+* splits a string on `"\n"`, `"\r"`, `"\r\n"`
+* lines do not include terminator
+* more performant than `split("\R")`
+* lazy!
+
+
+
+== New or Updated APIs
+
+++++
+<table class="toc">
+	<tr><td>String Improvements ⑪</td></tr>
 	<tr class="toc-current"><td>Collection Factories ⑨</td></tr>
 	<tr><td>Stream Improvements ⑨⑩</td></tr>
 	<tr><td>Optional Improvements ⑨⑩⑪</td></tr>
@@ -29,7 +127,7 @@ many existing ones were improved.
 </table>
 ++++
 
-Creating ad-hoc collections more easily.
+Easy creation of ad-hoc collections.
 
 === Hope is Pain
 
@@ -82,6 +180,7 @@ Q: Overloads on `Map::ofEntries`? 1
 
 ++++
 <table class="toc">
+	<tr><td>String Improvements ⑪</td></tr>
 	<tr><td>Collection Factories ⑨</td></tr>
 	<tr class="toc-current"><td>Stream Improvements ⑨⑩</td></tr>
 	<tr><td>Optional Improvements ⑨⑩⑪</td></tr>
@@ -198,6 +297,7 @@ Collector<T, ?, Map<K,U>> toUnmodifiableMap(
 
 ++++
 <table class="toc">
+	<tr><td>String Improvements ⑪</td></tr>
 	<tr><td>Collection Factories ⑨</td></tr>
 	<tr><td>Stream Improvements ⑨⑩</td></tr>
 	<tr class="toc-current"><td>Optional Improvements ⑨⑩⑪</td></tr>
@@ -373,6 +473,7 @@ Stream<Order> findOrdersForCustomer(String id) {
 
 ++++
 <table class="toc">
+	<tr><td>String Improvements ⑪</td></tr>
 	<tr><td>Collection Factories ⑨</td></tr>
 	<tr><td>Stream Improvements ⑨⑩</td></tr>
 	<tr><td>Optional Improvements ⑨⑩⑪</td></tr>
@@ -434,6 +535,7 @@ No JDK API uses them. +
 
 ++++
 <table class="toc">
+	<tr><td>String Improvements ⑪</td></tr>
 	<tr><td>Collection Factories ⑨</td></tr>
 	<tr><td>Stream Improvements ⑨⑩</td></tr>
 	<tr><td>Optional Improvements ⑨⑩⑪</td></tr>
@@ -529,6 +631,7 @@ image::images/stack-walker-limit-with-estimated-size.png[role="diagram"]
 
 ++++
 <table class="toc">
+	<tr><td>String Improvements ⑪</td></tr>
 	<tr><td>Collection Factories ⑨</td></tr>
 	<tr><td>Stream Improvements ⑨⑩</td></tr>
 	<tr><td>Optional Improvements ⑨⑩⑪</td></tr>
