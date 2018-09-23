@@ -2,6 +2,7 @@
 
 ++++
 <table class="toc">
+	<tr><td>Application Class-Data Sharing⑩</td></tr>
 	<tr><td>Compact Strings ⑨</td></tr>
 	<tr><td>Indified String Concatenation ⑨</td></tr>
 </table>
@@ -13,6 +14,118 @@
 
 ++++
 <table class="toc">
+	<tr class="toc-current"><td>Application Class-Data Sharing⑩</td></tr>
+	<tr><td>Compact Strings ⑨</td></tr>
+	<tr><td>Indified String Concatenation ⑨</td></tr>
+</table>
+++++
+
+Improving application launch times.
+
+=== Class-Data
+
+JVM steps to execute a class's bytecode:
+
+* looks up class in JAR
+* loads bytecode
+* verifies bytecode
+* stores class-data in +
+internal data structure
+
+This takes quite some time.
+
+If classes don't change, the resulting +
+class-data is always the same!
+
+=== Class-Data Sharing
+
+Idea behind class-data sharing:
+
+* create class-data once
+* dump it into an archive
+* reuse the archive in future launches +
+  (file is mapped into memory)
+
+=== Effects
+
+My experiments with a large desktop app:
+
+* archive has 250 MB for ~24k classes
+* launch time reduced from 15s to 12s
+
+*Bonus*: Archive can be shared across JVMs.
+
+=== Class-Data Sharing
+
+Two variants:
+
+CDS:: Just for JDK classes +
+(⑫ includes archive - http://openjdk.java.net/jeps/341[JEP 341])
+AppCDS:: JDK + application classes
+
+We will focus on AppCDS.
+
+=== AppCDS - Step #1
+
+Create a list of classes
+
+```sh
+$ java
+	-XX:+UseAppCDS
+	-XX:DumpLoadedClassList=classes.lst
+	# class path for dependencies
+	-jar app.jar
+```
+
+Then, `classes.lst` contains +
+slash-separated names of loaded classes.
+
+=== AppCDS - Step #2
+
+Use the list to create the archive:
+
+```sh
+$ java
+	-XX:+UseAppCDS
+	-Xshare:dump
+	-XX:SharedClassListFile=classes.lst
+	-XX:SharedArchiveFile=app-cds.jsa
+	--class-path app.jar # plus dependencies
+```
+
+Creates archive `app-cds.jsa`.
+
+=== AppCDS - Step #3
+
+Use the archive:
+
+```sh
+$ java
+	-XX:+UseAppCDS
+	-Xshare:on
+	-XX:SharedArchiveFile=app-cds.jsa
+	# class path for dependencies
+	-jar app.jar
+```
+
+=== More On (App)CDS
+
+For more, read this article: +
+https://blog.codefx.org/java/application-class-data-sharing/[tiny.cc/app-cds]
+
+* observe sharing with `-Xlog:class+load` +
+  (https://blog.codefx.org/java/unified-logging-with-the-xlog-option/[unified logging])
+* no wildcards or exploded JARs on class path
+* archive invalidation
+* module path not yet supported
+
+
+
+== Performance
+
+++++
+<table class="toc">
+	<tr><td>Application Class-Data Sharing⑩</td></tr>
 	<tr class="toc-current"><td>Compact Strings ⑨</td></tr>
 	<tr><td>Indified String Concatenation ⑨</td></tr>
 </table>
@@ -64,6 +177,7 @@ Depending on circumstances:
 
 ++++
 <table class="toc">
+	<tr><td>Application Class-Data Sharing⑩</td></tr>
 	<tr><td>Compact Strings ⑨</td></tr>
 	<tr class="toc-current"><td>Indified String Concatenation ⑨</td></tr>
 </table>
