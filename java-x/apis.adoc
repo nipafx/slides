@@ -8,7 +8,7 @@
 	<tr><td>Optional Improvements ⑨⑩⑪</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
-	<tr><td>OS Processes ⑨</td></tr>
+	<tr><td>OS Process Improvements ⑨</td></tr>
 </table>
 ++++
 
@@ -27,7 +27,7 @@ many existing ones were improved.
 	<tr><td>Optional Improvements ⑨⑩⑪</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
-	<tr><td>OS Processes ⑨</td></tr>
+	<tr><td>OS Process Improvements ⑨</td></tr>
 </table>
 ++++
 
@@ -123,7 +123,7 @@ Stream<String> lines();
 	<tr><td>Optional Improvements ⑨⑩⑪</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
-	<tr><td>OS Processes ⑨</td></tr>
+	<tr><td>OS Process Improvements ⑨</td></tr>
 </table>
 ++++
 
@@ -204,7 +204,7 @@ public Customer(List<Order> orders) {
 	<tr><td>Optional Improvements ⑨⑩⑪</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
-	<tr><td>OS Processes ⑨</td></tr>
+	<tr><td>OS Process Improvements ⑨</td></tr>
 </table>
 ++++
 
@@ -321,7 +321,7 @@ Collector<T, ?, Map<K,U>> toUnmodifiableMap(
 	<tr class="toc-current"><td>Optional Improvements ⑨⑩⑪</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
-	<tr><td>OS Processes ⑨</td></tr>
+	<tr><td>OS Process Improvements ⑨</td></tr>
 </table>
 ++++
 
@@ -497,7 +497,7 @@ Stream<Order> findOrdersForCustomer(String id) {
 	<tr><td>Optional Improvements ⑨⑩⑪</td></tr>
 	<tr class="toc-current"><td>Reactive Streams ⑨</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
-	<tr><td>OS Processes ⑨</td></tr>
+	<tr><td>OS Process Improvements ⑨</td></tr>
 </table>
 ++++
 
@@ -559,7 +559,7 @@ No JDK API uses them. +
 	<tr><td>Optional Improvements ⑨⑩⑪</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
 	<tr class="toc-current"><td>Stack-Walking ⑨</td></tr>
-	<tr><td>OS Processes ⑨</td></tr>
+	<tr><td>OS Process Improvements ⑨</td></tr>
 </table>
 ++++
 
@@ -655,7 +655,7 @@ image::images/stack-walker-limit-with-estimated-size.png[role="diagram"]
 	<tr><td>Optional Improvements ⑨⑩⑪</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
-	<tr class="toc-current"><td>OS Processes ⑨</td></tr>
+	<tr class="toc-current"><td>OS Process Improvements ⑨</td></tr>
 </table>
 ++++
 
@@ -710,9 +710,9 @@ Interesting `static` methods:
 
 
 
-== A Mixed Bag Of API&nbsp;Changes
+== A Mixed Bag Of New/Improved APIs
 
-In Java 9:
+*In Java 9:*
 
 * multi-resolution images (http://openjdk.java.net/jeps/251[JEP 251])
 * native desktop integration (http://openjdk.java.net/jeps/272[JEP 272])
@@ -722,10 +722,50 @@ TLS ALPN and OCSP stapling (http://openjdk.java.net/jeps/244[JEP 244])
 * OASIS XML Catalogs 1.1 (http://openjdk.java.net/jeps/268[JEP 268]), +
 Xerces 2.11.0 (http://openjdk.java.net/jeps/255[JEP 255])
 // TODO does this include Xerxes support for XSLT 2?
+// * Unicode support in `PropertyResourceBundle` (http://openjdk.java.net/jeps/226[JEP 226])
 
 Many lower-level APIs.
 
 ////
-* Unicode support via `PropertyResourceBundle` (http://openjdk.java.net/jeps/226[JEP 226])
-* Unicode 8.0 support (http://openjdk.java.net/jeps/227[JEP 227], http://openjdk.java.net/jeps/267[JEP 267])
+TODO
+* how to get line by line out of process
+* JKS keystore is read-only
+* mention diff Javadoc for version updates
 ////
+
+=== A Mixed Bag Of New&nbsp;I/O&nbsp;Methods
+
+*In Java 10 & 11:*
+
+```java
+Path.of(String); // ~ Paths.get(String)
+
+Files.readString(Path);
+Files.writeString(Path, CharSequence, ...);
+
+Reader.transferTo(Writer);
+ByteArrayInputStream.transferTo(OutputStream);
+
+Reader.nullReader();
+Writer.nullWriter();
+InputStream.nullInputStream();
+OutputStream.nullOutputStream();
+```
+
+// TODO expand I/O additions
+
+=== A Mixed Bag Of New Methods
+
+*In Java 10:*
+
+```java
+DateTimeFormatter.localizedBy(Locale locale);
+```
+
+*In Java 11:*
+
+```java
+Collection.toArray(IntFunction<T[]> generator);
+Predicate.not(Predicate<T> target); // static
+Pattern.asMatchPredicate(); // ⇝ Predicate<String>
+```

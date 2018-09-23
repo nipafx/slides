@@ -256,12 +256,35 @@ Depending on circumstances:
 
 == A Mixed Bag Of Performance
 
-In Java 9:
+*In Java 9:*
 
-* cgroup-memory limits
-* something with interned strings +
-and class data sharing (http://openjdk.java.net/jeps/250[JEP 250])
+* G1 default GC (http://openjdk.java.net/jeps/248[JEP 248])
+* cgroup-memory limits (https://bugs.openjdk.java.net/browse/JDK-8170888[JDK-8170888])
 * contended locks (http://openjdk.java.net/jeps/143[JEP 143])
 * security manager (http://openjdk.java.net/jeps/232[JEP 232])
-* GHASH/RSA computation (http://openjdk.java.net/jeps/246[JEP 246])
+// * intern strings in CDS archives (http://openjdk.java.net/jeps/250[JEP 250])
 * Java 2D rendering (http://openjdk.java.net/jeps/265[JEP 265])
+* GHASH/RSA computation (http://openjdk.java.net/jeps/246[JEP 246])
+* Java-level JVM compiler interface (http://openjdk.java.net/jeps/243[JEP 243])
+
+=== A Mixed Bag Of Performance
+
+*In Java 10:*
+
+* Graal -- Java-based JIT compiler (http://openjdk.java.net/jeps/317[JEP 317])
+* parallel full GC for G1 (http://openjdk.java.net/jeps/307[JEP 307])
+* thread-local handshakes (http://openjdk.java.net/jeps/312[JEP 312])
+
+*In Java 11:*
+
+* Epsilon GC (http://openjdk.java.net/jeps/318[JEP 318])
+* ZGC (experimental, http://openjdk.java.net/jeps/333[JEP 333])
+* low-overhead heap profiling (http://openjdk.java.net/jeps/331[JEP 331])
+
+////
+TODO expand:
+* G1 (http://mail.openjdk.java.net/pipermail/hotspot-gc-use/2018-June/002759.html)
+* Epsilon GC
+* Flight Recorder http://openjdk.java.net/jeps/328
+* Low-Overhead Heap Profiling
+////

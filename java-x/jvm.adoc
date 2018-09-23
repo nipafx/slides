@@ -255,12 +255,29 @@ Module descriptor for _system.out.logger_:
 Module system and JDK take care of the rest!
 
 
+
 == A Mixed Bag Of New&nbsp;JVM&nbsp;Features
 
-In Java 9:
+*In Java 9:*
 
 * new version strings (http://openjdk.java.net/jeps/223[JEP 223])
 * GNU-style command line options (http://openjdk.java.net/jeps/293[JEP 293])
 * unified logging (http://openjdk.java.net/jeps/158[JEP 158], http://openjdk.java.net/jeps/271[JEP 271], https://blog.codefx.org/java/unified-logging-with-the-xlog-option/[tutorial])
 * command line flag validation (http://openjdk.java.net/jeps/245[JEP 245])
 * reserved stack areas (http://openjdk.java.net/jeps/270[JEP 270])
+* Unicode 7 & 8 (JEPS http://openjdk.java.net/jeps/227[227] & http://openjdk.java.net/jeps/267[267])
+
+// TODO expand unified logging
+
+=== A Mixed Bag Of New&nbsp;JVM&nbsp;Features
+
+*In Java 10:*
+
+* alternative memory device support (http://openjdk.java.net/jeps/316[JEP 316])
+
+*In Java 11:*
+
+* Unicode 9 & 10 (http://openjdk.java.net/jeps/327[JEP 327])
+* Curve25519 and Curve448 (http://openjdk.java.net/jeps/324[JEP 324])
+* ChaCha20 and Poly1305 (http://openjdk.java.net/jeps/329[JEP 329])
+* partial TLS 1.3 support (http://openjdk.java.net/jeps/332[JEP 332])

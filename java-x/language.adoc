@@ -78,13 +78,15 @@ var reader = new BufferedReader(
 === Rules of `var`
 
 // [%step]
-. not a keyword, but a _reserved type name_ +
+* not a keyword, but a _reserved type name_ +
   ⇝ variables/fields can be named `var`
-. only works for local variables, `for`, `try` +
+* only works for local variables, `for`, `try` +
   ⇝ no `var` on fields or in method signatures
-. compiler infers type from right-hand side +
+* also on lambda parameters ⑪
+  ⇝ annotate inferred type on lambda parameters
+* compiler infers type from right-hand side +
   ⇝ rhs has to *exist* and *define a type*
-. compiler writes type into bytecode +
+* compiler writes type into bytecode +
   ⇝ no run-time component
 
 === What About Readability?
