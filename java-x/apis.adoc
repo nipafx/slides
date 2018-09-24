@@ -7,6 +7,7 @@
 	<tr><td>Stream Improvements ⑨⑩</td></tr>
 	<tr><td>Optional Improvements ⑨⑩⑪</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
+	<tr><td>Reactive HTTP/2 Client ⑪</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
 	<tr><td>OS Process Improvements ⑨</td></tr>
 </table>
@@ -26,6 +27,7 @@ many existing ones were improved.
 	<tr><td>Stream Improvements ⑨⑩</td></tr>
 	<tr><td>Optional Improvements ⑨⑩⑪</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
+	<tr><td>Reactive HTTP/2 Client ⑪</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
 	<tr><td>OS Process Improvements ⑨</td></tr>
 </table>
@@ -122,6 +124,7 @@ Stream<String> lines();
 	<tr><td>Stream Improvements ⑨⑩</td></tr>
 	<tr><td>Optional Improvements ⑨⑩⑪</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
+	<tr><td>Reactive HTTP/2 Client ⑪</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
 	<tr><td>OS Process Improvements ⑨</td></tr>
 </table>
@@ -203,6 +206,7 @@ public Customer(List<Order> orders) {
 	<tr class="toc-current"><td>Stream Improvements ⑨⑩</td></tr>
 	<tr><td>Optional Improvements ⑨⑩⑪</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
+	<tr><td>Reactive HTTP/2 Client ⑪</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
 	<tr><td>OS Process Improvements ⑨</td></tr>
 </table>
@@ -320,6 +324,7 @@ Collector<T, ?, Map<K,U>> toUnmodifiableMap(
 	<tr><td>Stream Improvements ⑨⑩</td></tr>
 	<tr class="toc-current"><td>Optional Improvements ⑨⑩⑪</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
+	<tr><td>Reactive HTTP/2 Client ⑪</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
 	<tr><td>OS Process Improvements ⑨</td></tr>
 </table>
@@ -496,6 +501,7 @@ Stream<Order> findOrdersForCustomer(String id) {
 	<tr><td>Stream Improvements ⑨⑩</td></tr>
 	<tr><td>Optional Improvements ⑨⑩⑪</td></tr>
 	<tr class="toc-current"><td>Reactive Streams ⑨</td></tr>
+	<tr><td>Reactive HTTP/2 Client ⑪</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
 	<tr><td>OS Process Improvements ⑨</td></tr>
 </table>
@@ -558,6 +564,173 @@ No JDK API uses them. +
 	<tr><td>Stream Improvements ⑨⑩</td></tr>
 	<tr><td>Optional Improvements ⑨⑩⑪</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
+	<tr class="toc-current"><td>Reactive HTTP/2 Client ⑪</td></tr>
+	<tr><td>Stack-Walking ⑨</td></tr>
+	<tr><td>OS Process Improvements ⑨</td></tr>
+</table>
+++++
+
+HTTP/2! And reactive! Woot!
+
+=== Basic Flow
+
+To send a request and get a response:
+
+* use builder to create immutable `HttpClient`
+* use builder to create immutable `HttpRequest`
+* pass request to client to receive `HttpResponse`
+
+=== Building a Client
+
+```java
+HttpClient client = HttpClient.newBuilder()
+	.version(HTTP_2)
+	.connectTimeout(ofSeconds(5))
+	.followRedirects(ALWAYS)
+	.build();
+```
+
+More options:
+
+* proxy
+* SSL context/parameters
+* authenticator
+* cookie handler
+
+=== Building a Request
+
+```java
+HttpRequest request = HttpRequest.newBuilder()
+	.GET()
+	.uri(URI.create("http://codefx.org"))
+	.setHeader("header-name", "header-value")
+	.build();
+```
+
+* more HTTP methods (duh!)
+* individual timeout
+* individual HTTP version
+* request `"100 CONTINUE"` before sending body
+
+=== Receiving a Response
+
+```java
+// the generic `String`...
+HttpResponse<String> response = client.send(
+	request,
+	// ... comes from this body handler ...
+	BodyHandlers.ofString());
+// ... and defines `body()`s return type
+String body = response.body();
+```
+
+* status code, headers, SSL session
+* request
+* intermediate responses +
+  (redirection, authentication)
+
+=== Reactive?
+
+Great, but where's the reactive sauce?
+
+Three places:
+
+* send request asynchronously
+* provide request body with +
+  `Publisher<ByteBuffer>`
+* receive response body with +
+  `Subscriber<String>` or +
+  `Subscriber<List<ByteBuffer>>`
+
+=== Asynchronous Request
+
+Submit request to thread pool until completes:
+
+```java
+CompletableFuture<String> responseBody = client
+	.sendAsync(request, BodyHandlers.ofString())
+	.thenApply(this::logHeaders)
+	.thenApply(HttpResponse::body);
+```
+
+* uses "a default executor" to field requests +
+// (currently `Executors::newCachedThreadPool`)
+* pool can be defined when client is built with +
+  `HttpClient.Builder.executor(Executor)`
+
+=== Reactive Request Body
+
+If a request has a long body, +
+no need to prepare it in its entirety:
+
+```java
+Publisher<ByteBuffer> body = // ...
+HttpRequest post = HttpRequest.newBuilder()
+	.POST(BodyPublishers.fromPublisher(body))
+	.build();
+client.send(post, BodyHandlers.ofString())
+```
+
+* `client` subscribes to `body`
+* as `body` publishes byte buffers, +
+  `client` sends them over the wire
+
+=== Reactive Response Body
+
+If a response has a long body, +
+no need to wait before processing:
+
+```java
+Subscriber<String> body = // ...
+HttpResponse<Void> response = client.send(
+	request,
+	BodyHandlers.fromLineSubscriber(subscriber));
+```
+
+* `client` subscribes `body` to itself
+* as `client` receives response bytes, +
+  it parses to lines and passes to `body`
+
+=== Reactive Benefits
+
+Benefits of reactive +
+request/response bodies:
+
+* receiver applies backpressure:
+** on requests, `client`
+** on responses, `body`
+* `body` controls memory usage
+* early errors lead to partial processing
+* need "reactive tools" to create `body` +
+  from higher-level Java objects (e.g. `File`)
+
+=== Web Sockets
+
+*Short version:*
+
+* there's a class `WebSocket`
+* `send[Text|Binary|...]` methods +
+return `ComplatableFuture`
+* socket calls `Listener` methods +
+`on[Text|Binary|...]`
+
+(`WebSocket` and `Listener` behave like +
+`Subscription` and `Subscriber`.)
+
+*No long version.* 😛
+
+
+
+== New or Updated APIs
+
+++++
+<table class="toc">
+	<tr><td>String Improvements ⑪</td></tr>
+	<tr><td>Collection Factories ⑨⑩</td></tr>
+	<tr><td>Stream Improvements ⑨⑩</td></tr>
+	<tr><td>Optional Improvements ⑨⑩⑪</td></tr>
+	<tr><td>Reactive Streams ⑨</td></tr>
+	<tr><td>Reactive HTTP/2 Client ⑪</td></tr>
 	<tr class="toc-current"><td>Stack-Walking ⑨</td></tr>
 	<tr><td>OS Process Improvements ⑨</td></tr>
 </table>
@@ -654,6 +827,7 @@ image::images/stack-walker-limit-with-estimated-size.png[role="diagram"]
 	<tr><td>Stream Improvements ⑨⑩</td></tr>
 	<tr><td>Optional Improvements ⑨⑩⑪</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
+	<tr><td>Reactive HTTP/2 Client ⑪</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
 	<tr class="toc-current"><td>OS Process Improvements ⑨</td></tr>
 </table>
