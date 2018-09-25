@@ -710,7 +710,7 @@ request/response bodies:
 
 * there's a class `WebSocket`
 * `send[Text|Binary|...]` methods +
-return `ComplatableFuture`
+return `CompletableFuture`
 * socket calls `Listener` methods +
 `on[Text|Binary|...]`
 
