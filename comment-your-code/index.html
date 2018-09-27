@@ -27,10 +27,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://2018.javazone.no/"><img src="images/logo-javazone-2018.png" class="logo" style="{host-logo-style}"></a>
+		<a href="https://www.softwerkskammer.org/"><img src="images/logo-softwerkskammer.png" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://2018.javazone.no/">JavaZone</a></p>
-			<p><a href="https://twitter.com/javazone">@javazone</a></p>
+			<p><a href="https://www.softwerkskammer.org/">Softwerkskammer</a></p>
+			<p><a href="https://twitter.com/softwerkskammer">@softwerkskammer</a></p>
 		</div>
 	</div>
 </div>
@@ -45,9 +45,9 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://2018.javazone.no/"><img src="images/logo-javazone-2018.png" class="logo" style="{host-logo-style}"></a>
+		<a href="https://www.softwerkskammer.org/"><img src="images/logo-softwerkskammer.png" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://2018.javazone.no/">JavaZone</a> / <a href="https://twitter.com/javazone">@javazone</a></p>
+			<p><a href="https://www.softwerkskammer.org/">Softwerkskammer</a> / <a href="https://twitter.com/softwerkskammer">@softwerkskammer</a></p>
 		</div>
 	</div>
 </footer>
@@ -205,6 +205,10 @@ printFirstDollarWord() {
 	Optional&lt;String&gt; dollarWord =
 		firstMatch(elements, s -&gt; s.startsWith("$"));
 	System.out.println(dollarWord);
+}</code></pre></div></div></section><section id="explain_the_arcane_2"><h2>Explain the arcane</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public void close() throws IOException {
+	try (OutputStream ostream = out) {
+		flush();
+	}
 }</code></pre></div></div></section><section id="verdict"><h2>Verdict</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>Narrations suck!</p></div></blockquote></div>
 <div class="paragraph"><p>&nbsp;</p></div>
 <div class="paragraph"><p>Unless all of these are met:</p></div>
