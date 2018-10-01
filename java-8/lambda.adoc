@@ -19,6 +19,10 @@ by making it easy to create functions:
 Runnable r = () -> System.out.println("Hello");
 ```
 
+=== Exercise 1
+
+Pass code as data
+
 
 == Lambda Expressions
 
@@ -32,10 +36,6 @@ Runnable r = () -> System.out.println("Hello");
 </table>
 ++++
 
-=== Exercise 1
-
-Pass code as data
-
 === The Essence
 
 What's the essence of `TodoFilter` implementation?
@@ -46,7 +46,7 @@ TodoFilter filter = new TodoFilter() {
 	public boolean passes(Todo todo) {
 		return todo.importance() == importance;
 	}
-}
+};
 ```
 
 * takes a `Todo`
@@ -65,7 +65,7 @@ TodoFilter filter = new TodoFilter() {
 	public boolean passes(Todo todo) {
 		return todo.importance() == importance;
 	}
-}
+};
 ```
 
 As lambda expression:
@@ -77,23 +77,39 @@ TodoFilter filter = todo ->
 
 😲
 
+=== Simplified Syntax
+
+To create an implementation of +
+an interface with a *simple* abstract method:
+
+```java
+interface $Interface {
+	$result method($parameter) {
+		return $expression;
+	}
+}
+```
+```java
+$Interface $var = $parameter -> $expression;
+```
+
 === Exercise 2
 
 Refactor anonymous classes to lambda expressions
 
 === Lambda Expression
 
-To create an implementation of +
-an interface with a single abstract method:
+General form:
 
 ```java
 interface $Interface {
-	$return method($parameters) {
+	$result method($parameters) {
 		$body
 	}
 }
-
-$Interface $var= ($parameters) -> { $body }
+```
+```java
+$Interface $var = ($parameters) -> { $body };
 ```
 
 Things to discuss:
@@ -108,12 +124,12 @@ General form:
 
 ```java
 // method
-$return method(Type_1 name_1, Type_2 name_2, ...) {
+$result method(Type_1 name_1, Type_2 name_2, ...) {
 	$body
 }
 
 // lambda
-(Type_1 name_1, Type_2 name_2, ...) -> { $body }
+(Type_1 name_1, Type_2 name_2, ...) -> { $body };
 ```
 
 Possible simplifications:
@@ -128,10 +144,10 @@ Compiler can infer types in most cases:
 
 ```java
 // lambda
-(Type_1 name_1, Type_2 name_2, ...) -> { $body }
+(Type_1 name_1, Type_2 name_2, ...) -> { $body };
 
 // inferred
-(name_1, name_2, ...) -> { $body }
+(name_1, name_2, ...) -> { $body };
 ```
 
 === Single Parameter
@@ -140,20 +156,20 @@ For single parameters, leave out parenthesis:
 
 ```java
 // lambda
-(Type_1 name_1) -> { $body }
+(Type_1 name_1) -> { $body };
 
 // inferred
-Type_1 name_1 -> { $body }
+Type_1 name_1 -> { $body };
 ```
 
 === Keep It "Simple"
 
 ```java
 // instead of
-TodoFilter filter = (Todo todo) -> { $body }
+TodoFilter filter = (Todo todo) -> { $body };
 
 // usually
-TodoFilter filter = todo -> { $body }
+TodoFilter filter = todo -> { $body };
 ```
 
 === Body As Block Or Line
@@ -162,7 +178,7 @@ General form:
 
 ```java
 // method
-$return method($parameters) {
+$result method($parameters) {
 	$body // with possible return
 }
 
@@ -171,8 +187,6 @@ $return method($parameters) {
 	$body // with possible `return`
 }
 ```
-
-Return type must be the same.
 
 === Body As Block Or Line
 
@@ -428,7 +442,7 @@ Function<String, Boolean, Integer> f =
 	(s, b) -> b ? s.length() : 0;
 ```
 * `BinaryOperator<T>`: `T apply(T, T)`
-* `BiPredicate<T>`: `boolean test(T, U)`
+* `BiPredicate<T, U>`: `boolean test(T, U)`
 
 === Primitive Specializations
 
@@ -580,7 +594,7 @@ with exactly one abstract method
 * basic lambda expression:
 +
 ```java
-$Interface $var= ($parameters) -> { $body }
+$Interface $var= ($parameters) -> { $body };
 ```
 
 === Summary
