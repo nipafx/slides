@@ -82,7 +82,7 @@ not expressible in code!</p></div></section><section id="tests"><h2>Tests</h2><d
 <div class="ulist"><ul><li><p>understanding little pieces of code</p></li><li><p>editing code</p></li></ul></div>
 <div class="paragraph"><p>They are really bad for:</p></div>
 <div class="ulist"><ul><li><p>quickly determining expected behavior</p></li><li><p>understanding larger concepts</p></li><li><p>conveying rationale for decisions</p></li></ul></div></section><section id="comments_are_hard"><h2>Comments are hard</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>A common fallacy is to assume authors of incomprehensible code will somehow be able to express themselves lucidly and clearly in comments.</p></div></blockquote><div class="attribution">&#8212; Kevlin Henney</div></div></section><section id="so_is_code"><h2>So is code&#8230;&#8203;</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>A common fallacy is to assume developers incapable to express themselves lucidly and clearly in a natural language will somehow be able to write lucid and clean code.</p></div></blockquote><div class="attribution">&#8212; Yours Truly</div></div></section><section id="comments_age"><h2>Comments age</h2><div class="paragraph"><p>That&#8217;s like saying<br>
-"Car&#8217;s crash".</p></div>
+"Cars crash".</p></div>
 <div class="paragraph"><p>So? Do we get rid of them?</p></div>
 <div class="paragraph"><p>Crashes:</p></div>
 <div class="ulist"><ul><li><p>are caused by negligence</p></li><li><p>are often punishable by law</p></li><li><p>are acceptable given the benefits</p></li></ul></div></section><section id="comments_age_2"><h2>Comments age</h2><div class="paragraph"><p>What about names?</p></div>
@@ -303,8 +303,21 @@ public class HashMap&lt;K, V&gt; {
 	 * java.util.TreeMap. */
 
 }</code></pre></div></div>
-</div>
-<aside class="notes"><div class="ulist"><ul><li><p>another example: a class explaining that a factory is required</p></li></ul></div></aside></section><section id="technical_context_2"><h2>Technical Context</h2><div class="paragraph"><p>Often non-Javadoc blocks<br>
+</div></section><section id="why_is_it_weird"><h2>Why is it weird?</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// nested try? 🤔
+try (var baos = new ByteArrayOutputStream();) {
+	try (var zos = new ZipOutputStream(baos);) {
+		fillZipFile(zos);
+	}
+	return baos.toByteArray();
+}
+
+// this is much better (but wrong!)
+try (	var baos = new ByteArrayOutputStream();
+		var zos = new ZipOutputStream(baos);) {
+	fillZipFile(zos);
+	return baos.toByteArray();
+}</code></pre></div></div>
+<aside class="notes"><div class="ulist"><ul><li><p><code>zos.close()</code> adds ZIP signature (otherwise ZIP file is corrupted)</p></li><li><p>must be called <em>before</em> <code>baos.toByteArray()</code></p></li></ul></div></aside></section><section id="technical_context_2"><h2>Technical Context</h2><div class="paragraph"><p>Often non-Javadoc blocks<br>
 at the beginning of a class/method.</p></div>
 <div class="paragraph"><p>(Check out
 <a href="http://blog.codefx.org/java/new-javadoc-tags/"><code>@apiNote</code> and <code>@implNote</code></a>.)</p></div>
