@@ -40,10 +40,31 @@ public class HashMap&lt;K, V&gt; {
 </div>
 ++++
 
+=== Why is it weird?
+
+```java
+// nested try? 🤔
+try (var baos = new ByteArrayOutputStream();) {
+	try (var zos = new ZipOutputStream(baos);) {
+		fillZipFile(zos);
+	}
+	return baos.toByteArray();
+}
+
+// this is much better (but wrong!)
+try (	var baos = new ByteArrayOutputStream();
+		var zos = new ZipOutputStream(baos);) {
+	fillZipFile(zos);
+	return baos.toByteArray();
+}
+```
+
 [NOTE.speaker]
 --
-* another example: a class explaining that a factory is required
+* `zos.close()` adds ZIP signature (otherwise ZIP file is corrupted)
+* must be called _before_ `baos.toByteArray()`
 --
+
 
 === Technical Context
 
