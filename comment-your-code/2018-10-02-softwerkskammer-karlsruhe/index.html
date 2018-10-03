@@ -1,0 +1,556 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Comment That &amp;*☠# Code</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="_reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="_reveal.js/css/theme/nipa-night.css" id="theme"><link href="_reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>var link = document.createElement( 'link' );
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = window.location.search.match( /print-pdf/gi ) ? "_reveal.js/css/print/pdf.css" : "_reveal.js/css/print/paper.css";
+document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="_reveal.js/lib/js/html5shiv.js"></script><![endif]--></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>Comment That &amp;*☠# Code</h1><div class="preamble"><link rel="stylesheet" href="_highlight.js/styles/monokai-sublime.css">
+<script src="_highlight.js/highlight.pack.js"></script>
+<script>
+	window.onload = function() {
+		hljs.configure({
+			tabReplace: '    ',
+			languages: [ 'java' ]
+		})
+		var codes = document.getElementsByTagName('code');
+		for(var i = 0; i < codes.length; i++) {
+			hljs.highlightBlock(codes.item(i));
+		}
+		hljs.initHighlightingOnLoad();
+	}
+</script>
+<div class="event">
+	<div class="participant">
+		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
+		<div class="name">
+			<p><a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a></p>
+			<p><a href="http://codefx.org">codefx.org</a>
+				/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a></p>
+		</div>
+	</div>
+	<div class="participant">
+		<a href="https://www.softwerkskammer.org/"><img src="images/logo-softwerkskammer.png" class="logo" style="{host-logo-style}"></a>
+		<div class="name">
+			<p><a href="https://www.softwerkskammer.org/">Softwerkskammer</a></p>
+			<p><a href="https://twitter.com/softwerkskammer">@softwerkskammer</a></p>
+		</div>
+	</div>
+</div>
+<!-- Just adding a footer does not work because reveal.js puts it into the slides and we couldn't get it out via CSS. So we move it via JavaScript. -->
+<footer>
+	<div class="participant">
+		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
+		<div class="name"><p>
+			<a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a>
+			/ <a href="http://codefx.org">codefx.org</a>
+			/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a>
+		</p></div>
+	</div>
+	<div class="participant">
+		<a href="https://www.softwerkskammer.org/"><img src="images/logo-softwerkskammer.png" class="logo" style="{host-logo-style}"></a>
+		<div class="name">
+			<p><a href="https://www.softwerkskammer.org/">Softwerkskammer</a> / <a href="https://twitter.com/softwerkskammer">@softwerkskammer</a></p>
+		</div>
+	</div>
+</footer>
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		document.body.appendChild(document.querySelector('footer'));
+	})
+</script></div></section>
+<section><section data-background-image="images/clean-architecture.jpg" data-background-size="cover" data-state="empty"><aside class="notes"><div class="ulist"><ul><li><p>I&#8217;m a hipster, alternative insurance</p></li><li><p>wanted a contract, but invited to hq:</p><div class="ulist"><ul><li><p>"working company over unread contracts" policy</p></li><li><p>crisp org structure</p></li><li><p>great architecture, good design</p></li><li><p>attentive employees with great names</p></li><li><p>call or visit customers</p></li><li><p>given, when, then</p></li></ul></div></li><li><p>just send us money and we&#8217;ll cover you</p></li></ul></div></aside></section><section id="the_axiom"><h2>The Axiom</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>Comments are always failures.</p></div></blockquote><div class="attribution">&#8212; Uncle Bob in "Clean Code"</div></div>
+<div class="paragraph"><p>He&#8217;s wrong!</p></div></section><section id="self_documenting_code"><h2>Self-documenting code</h2><div class="paragraph"><p><strong>I don&#8217;t care about the code!</strong></p></div>
+<div class="paragraph"><p>I&#8217;m in a hurry,<br>
+<strong>what</strong> happens when I use it?</p></div>
+<div class="ulist"><ul><li><p>pre- &amp; postconditions</p></li><li><p>return value range</p></li><li><p>side-effects</p></li><li><p>thread-safety</p></li><li><p>(im)mutability</p></li></ul></div></section><section id="self_documenting_code_2"><h2>Self-documenting code</h2><div class="paragraph"><p>I&#8217;m in a hurry!</p></div>
+<div class="ulist"><ul><li><p>good names, small methods, SOLID, &#8230;&#8203;<br>
+only go so far</p></li><li><p>how many interface implementations<br>
+am I supposed to check?</p></li><li><p>what if I have to implement an interface?</p></li></ul></div></section><section id="self_documenting_code_3"><h2>Self-documenting code</h2><div class="paragraph"><p><strong>I care about the code!</strong></p></div>
+<div class="paragraph"><p>I have to change it,<br>
+<strong>why</strong> does it look like this?</p></div>
+<div class="ulist"><ul><li><p>considered alternatives</p></li><li><p>code-shaping requirements</p></li><li><p>overall architecture</p></li><li><p>design principles</p></li></ul></div></section><section id="self_documenting_code_4"><h2>Self-documenting code</h2><div class="paragraph"><p>I have to change it!</p></div>
+<div class="ulist"><ul><li><p>good names, small methods, &#8230;&#8203;<br>
+are almost useless</p></li><li><p>SOLID helps! 👍</p></li><li><p>ubiquitous patterns help;<br>
+what about lesser known ones?</p></li></ul></div>
+<div class="paragraph"><p>Still, most information<br>
+not expressible in code!</p></div></section><section id="tests"><h2>Tests</h2><div class="paragraph"><p><strong>I care even less about the tests!</strong></p></div>
+<div class="paragraph"><p>How do you test this?</p></div>
+<div class="ulist"><ul><li><p>"for all" propositions</p></li><li><p>thread-safety</p></li><li><p>(im)mutability</p></li><li><p>interfaces</p></li></ul></div>
+<div class="paragraph"><p>Test coverage better be &gt; 90%!</p></div></section><section id="tests_2"><h2>Tests</h2><div class="paragraph"><p>Tests are observations:</p></div>
+<div class="ulist"><ul><li><p>take time to generalize</p></li><li><p>are <em>not</em> a contract</p></li><li><p>only explain <em>what</em>, never <em>why</em></p></li></ul></div></section><section id="tests_3"><h2>Tests</h2><div class="paragraph"><p>Ever heard <strong>RTFT</strong>?<br>
+(Read The &amp;*☠# Tests)</p></div>
+<div class="paragraph"><p>No?</p></div>
+<div class="paragraph"><p>What was I thinking about?</p></div></section><section id="interlude"><h2>Interlude</h2><div class="paragraph"><p>Self-documenting code and tests are great for:</p></div>
+<div class="ulist"><ul><li><p>understanding little pieces of code</p></li><li><p>editing code</p></li></ul></div>
+<div class="paragraph"><p>They are really bad for:</p></div>
+<div class="ulist"><ul><li><p>quickly determining expected behavior</p></li><li><p>understanding larger concepts</p></li><li><p>conveying rationale for decisions</p></li></ul></div></section><section id="comments_are_hard"><h2>Comments are hard</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>A common fallacy is to assume authors of incomprehensible code will somehow be able to express themselves lucidly and clearly in comments.</p></div></blockquote><div class="attribution">&#8212; Kevlin Henney</div></div></section><section id="so_is_code"><h2>So is code&#8230;&#8203;</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>A common fallacy is to assume developers incapable to express themselves lucidly and clearly in a natural language will somehow be able to write lucid and clean code.</p></div></blockquote><div class="attribution">&#8212; Yours Truly</div></div></section><section id="comments_age"><h2>Comments age</h2><div class="paragraph"><p>That&#8217;s like saying<br>
+"Cars crash".</p></div>
+<div class="paragraph"><p>So? Do we get rid of them?</p></div>
+<div class="paragraph"><p>Crashes:</p></div>
+<div class="ulist"><ul><li><p>are caused by negligence</p></li><li><p>are often punishable by law</p></li><li><p>are acceptable given the benefits</p></li></ul></div></section><section id="comments_age_2"><h2>Comments age</h2><div class="paragraph"><p>What about names?</p></div>
+<div class="ulist"><ul><li><p>do they age?</p></li><li><p>are they updated?</p></li></ul></div>
+<div class="paragraph"><p>Yes?!</p></div>
+<div class="paragraph"><p>But comments can&#8217;t be? 🤔</p></div></section><section data-background-color="white" data-background-image="images/baby-bathwater.jpg" data-background-size="contain" data-state="empty"></section></section>
+<section><section id="the_costs"><h2>The costs</h2><table class="toc">
+	<tr><td>Costs And Benefits</td></tr>
+	<tr class="toc-current"><td><ul><li>Costs</li></ul></td></tr>
+	<tr><td><ul><li>Benefits</li></ul></td></tr>
+	<tr><td><ul><li>Observations</li></ul></td></tr>
+	<tr><td>Kinds Of Comments</td></tr>
+	<tr><td>Clean Comments</td></tr>
+</table></section><section id="why_most_devs_hate_comments"><h2>Why most devs hate comments</h2><div class="ulist"><ul><li><p>initial composition</p></li><li><p>maintenance</p></li><li><p>confusion</p></li><li><p>obstruction</p></li></ul></div></section><section id="initial_composition"><h2>Initial composition</h2><div class="paragraph"><p>Writing a comment is harder&#8230;&#8203;</p></div>
+<div class="ulist"><ul><li><p>the later it is done</p></li><li><p>the more complex the topic is</p></li><li><p>the more precise the comment is</p></li></ul></div>
+<div class="paragraph"><p>Usually affordable<br>
+compared to writing code and tests.</p></div></section><section id="maintenance"><h2>Maintenance</h2><div class="paragraph"><p>What to do with comments<br>
+when code changes?</p></div>
+<div class="ulist"><ul><li><p>nothing ⇝ may cause confusion</p></li><li><p>update ⇝ takes time</p></li><li><p>delete ⇝ wastes past efforts</p></li></ul></div>
+<div class="paragraph"><p>Whatever schema you decide on<br>
+<strong>maintenance is critical</strong>!</p></div></section><section id="maintenance_2"><h2>Maintenance</h2><div class="ulist"><ul><li><p><strong>changing</strong> comments takes little time</p></li><li><p>but <strong>finding</strong> them can be hard</p></li></ul></div>
+<div class="paragraph"><p>⇝ Comments and code must be close!</p></div>
+<aside class="notes"><div class="ulist"><ul><li><p>pesky, time-consuming, error-prone</p></li></ul></div></aside></section><section id="confusion"><h2>Confusion</h2><div class="paragraph"><p>Comments that are&#8230;&#8203;</p></div>
+<div class="ulist"><ul><li><p>outdated</p></li><li><p>ambiguous</p></li><li><p>lack detail</p></li></ul></div>
+<div class="paragraph"><p>&#8230;&#8203;cause confusion!</p></div></section><section id="confusion_2"><h2>Confusion</h2><div class="paragraph"><p>Costs are unpredictable<br>
+but potentially enormous!</p></div>
+<div class="paragraph"><p>Deteriorates trust in comments.</p></div>
+<aside class="notes"><div class="ulist"><ul><li><p>good coding techniques reduce risk</p></li></ul></div></aside></section><section id="obstruction"><h2>Obstruction</h2><div class="paragraph"><p>Takes up screen space.</p></div>
+<div class="paragraph"><p>(Fold that shit!)</p></div></section><section id="why_devs_really_hate_comments"><h2>Why devs <em>really</em> hate comments</h2><div class="ulist"><ul><li><p>they may be hard to write</p></li><li><p>they turn nothing green</p></li><li><p>nobody gets a pat on the back<br>
+for a clever comment</p></li></ul></div>
+<p class="fragment current-visible">Get over it!</p></section></section>
+<section><section id="the_benefits"><h2>The benefits</h2><table class="toc">
+	<tr><td>Costs And Benefits</td></tr>
+	<tr><td><ul><li>Costs</li></ul></td></tr>
+	<tr class="toc-current"><td><ul><li>Benefits</li></ul></td></tr>
+	<tr><td><ul><li>Observations</li></ul></td></tr>
+	<tr><td>Kinds Of Comments</td></tr>
+	<tr><td>Clean Comments</td></tr>
+</table></section><section id="why_some_devs_love_comments"><h2>Why some devs love comments</h2><div class="ulist"><ul><li><p>explain what happens</p></li><li><p>keep abstractions intact</p></li><li><p>enable top-down learning</p></li><li><p>document intent</p></li><li><p>spur redesign</p></li><li><p>save lives!</p></li></ul></div></section><section id="explain_what_happens"><h2>Explain what happens</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// check whether user logged in
+if (user.loggedInSince(date))
+	// increase activeUserCount
+	activeUserCount++;</code></pre></div></div></section><section id="explain_what_happens_2"><h2>Explain what happens</h2><div class="paragraph"><p>Duh!</p></div>
+<div class="ulist"><ul><li><p>intrinsically redundant</p></li><li><p>can cause confusion</p></li></ul></div>
+<div class="paragraph"><p>May be helpful when using<br>
+arcane language features.</p></div></section><section id="keep_abstractions_intact"><h2>Keep abstractions intact</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public interface Map&lt;K, V&gt; {
+
+	/**
+	 * Associates the specified value
+	 * with the specified key in this
+	 * map (optional operation).
+	 */
+	V put(K key, V value);
+
+}</code></pre></div></div></section><section id="keep_abstractions_intact_2"><h2>Keep abstractions intact</h2><div class="paragraph"><p>Every unit of code provides an abstraction:</p></div>
+<div class="ulist"><ul><li><p>does one thing and does it well</p></li><li><p>hides how it does it</p></li><li><p>should not require  us<br>
+to look past the abstraction</p></li></ul></div>
+<div class="paragraph"><p>The core to modularizing any non-trivial problem!</p></div></section><section id="keep_abstractions_intact_3"><h2>Keep abstractions intact</h2><div class="paragraph"><p>Abstractions provide two benefits:</p></div>
+<div class="ulist"><ul><li><p>reuse code</p></li><li><p>reuse understanding</p></li></ul></div>
+<div class="paragraph"><p><strong>Comments can help with both!</strong></p></div>
+<aside class="notes"><div class="ulist"><ul><li><p>abstractions lose value if I have to step into them</p></li><li><p>tests, clean code, &#8230;&#8203; only shines then</p></li><li><p>you have to build a new context</p></li></ul></div></aside></section><section id="top_down_vs_bottom_up"><h2>Top-down vs bottom-up</h2><div class="ulist"><ul><li><p>most people learn better top-down</p></li><li><p>clean code, tests, &#8230;&#8203; are bottom-up approaches</p></li></ul></div>
+<div class="paragraph"><p>Comments can be <strong>signposts</strong>,<br>
+helping to stay on<br>
+the right <strong>level of abstraction</strong>.</p></div></section><section id="document_intent"><h2>Document intent</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class ArrayList&lt;E&gt; {
+
+	// non-private to simplify nested class access
+	transient Object[] elementData;
+
+}</code></pre></div></div></section><section data-background-color="white" data-background-image="http://commadot.com/wp-content/uploads/2009/02/wtf.png" data-background-size="contain" data-state="empty"></section><section id="document_intent_2"><h2>Document intent</h2><div class="paragraph"><p>Context is invaluable when revisiting code!</p></div>
+<div class="ulist"><ul><li><p>other tools may contain this info</p></li><li><p>working through them takes time</p></li><li><p>and is transient!</p></li></ul></div>
+<div class="paragraph"><p><strong>Comments can be 2nd line of defense.</strong></p></div></section><section id="spur_redesign"><h2>Spur redesign</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>It’s funny how writing documentation can spur redesign: it’s easier to simplify a complex API than try to document it completely.</p></div></blockquote><div class="attribution">&#8212; Mike Bostok</div></div>
+<div class="paragraph"><p>(<a href="https://twitter.com/mbostock/status/681561150127878144">Source</a>)</p></div></section><section id="spur_redesign_2"><h2>Spur redesign</h2><div class="paragraph"><p>If it takes a long time to&#8230;&#8203;</p></div>
+<div class="ulist"><ul><li><p>describe behavior on a high level</p></li><li><p>cover all special cases</p></li><li><p>explain rationale behind a decision</p></li></ul></div>
+<div class="paragraph"><p>&#8230;&#8203;maybe the code needs to be improved.</p></div>
+<div class="paragraph"><p><strong>You become your own reviewer!</strong></p></div></section><section id="safe_lives"><h2>Safe lives</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>Always code as if the guy who ends up maintaining your code will be a
+violent psychopath who knows where you live. Code for readability.</p></div></blockquote><div class="attribution">&#8212; John F. Woods</div></div>
+<div class="paragraph"><p>(<a href="https://groups.google.com/forum/#!msg/comp.lang.c++/rYCO5yn4lXw/oITtSkZOtoUJ">Source</a>)</p></div></section><section data-background-image="https://homemcr.org/app/uploads/2011/12/the-shining-940x460.jpg" data-background-size="cover" data-state="empty"></section></section>
+<section><section id="some_observations"><h2>Some observations</h2><table class="toc">
+	<tr><td>Costs And Benefits</td></tr>
+	<tr><td><ul><li>Costs</li></ul></td></tr>
+	<tr><td><ul><li>Benefits</li></ul></td></tr>
+	<tr class="toc-current"><td><ul><li>Observations</li></ul></td></tr>
+	<tr><td>Kinds Of Comments</td></tr>
+	<tr><td>Clean Comments</td></tr>
+</table></section><section id="looking_closer"><h2>Looking closer&#8230;&#8203;</h2><div class="ulist"><ul><li><p>currency</p></li><li><p>proximity</p></li><li><p>alternatives</p></li></ul></div></section><section id="currency"><h2>Currency</h2><div class="paragraph"><p>(No, not money; "up-to-dateness")</p></div>
+<div class="ulist"><ul><li><p>some comments need to be very up-to-date</p></li><li><p>others can be slightly or even totally outdated</p></li></ul></div>
+<div class="paragraph"><p>This influences costs:</p></div>
+<div class="ulist"><ul><li><p>maintenance</p></li><li><p>confusion</p></li></ul></div></section><section id="proximity"><h2>Proximity</h2><div class="paragraph"><p>How far can a comment be away<br>
+from what it describes?</p></div>
+<div class="ulist"><ul><li><p>some must basically be on the same line</p></li><li><p>others can be some classes away<br>
+because they span several concepts</p></li></ul></div>
+<div class="paragraph"><p>It is hard to update far-away comments!</p></div></section><section id="alternatives"><h2>Alternatives</h2><div class="paragraph"><p>There are plenty of alternatives to comments:</p></div>
+<div class="ulist"><ul><li><p>clean code</p></li><li><p>tests, demos</p></li><li><p>version control</p></li><li><p>issue tracker</p></li><li><p>wiki</p></li></ul></div>
+<div class="paragraph"><p>But not all work for every use case.</p></div></section></section>
+<section><section id="narrations"><h2>Narrations</h2><table class="toc">
+	<tr><td>Costs And Benefits</td></tr>
+	<tr><td>Kinds Of Comments</td></tr>
+	<tr class="toc-current"><td><ul><li>Narrations</li></ul></td></tr>
+	<tr><td><ul><li>Contracts</li></ul></td></tr>
+	<tr><td><ul><li>Technical Context</li></ul></td></tr>
+	<tr><td><ul><li>Historical Context</li></ul></td></tr>
+	<tr><td>Clean Comments</td></tr>
+</table></section><section id="what_does_it_do"><h2>What does it do?</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public int activeUserCountSince(Date date) {
+	int activeUserCount = 0;
+	// loop through the users
+	for (User user : users)
+		// check whether user logged in
+		if (user.loggedInSince(date))
+			// increase activeUserCount
+			activeUserCount++;
+	return activeUserCount;
+}</code></pre></div></div></section><section id="narrations_2"><h2>Narrations</h2><div class="paragraph"><p>Usually inline comments.</p></div>
+<div class="ulist"><ul><li><p>explain what the code does</p></li><li><p>speak on a very technical level</p></li></ul></div></section><section id="analysis"><h2>Analysis</h2><div class="dlist"><dl><dt class="hdlist1">Currency</dt><dd><div class="ulist"><ul><li><p>very high, need to be absolutely up to date!</p></li></ul></div></dd><dt class="hdlist1">Proximity</dt><dd><div class="ulist"><ul><li><p>right on the narrated line(s)</p></li></ul></div></dd><dt class="hdlist1">Alternatives</dt><dd><div class="ulist"><ul><li><p>good names</p></li><li><p>transparent design</p></li><li><p>well-known patterns</p></li></ul></div></dd></dl></div></section><section id="narrations_3"><h2>Narrations</h2><div class="imageblock diagram" style=""><img src="images/analysis-narrations.png" alt="analysis narrations"></div></section><section id="explain_the_arcane"><h2>Explain the arcane</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">&lt;T extends Closeable &amp; Iterator&lt;String&gt;&gt; T
+	createCloseableIterator() { /*...*/ }
+
+&lt;E, T extends Closeable &amp; Iterator&lt;E&gt;&gt; Optional&lt;E&gt;
+	firstMatch(T elements, Predicate&lt;E&gt; p) { /*...*/ }
+
+printFirstDollarWord() {
+	var elements = createCloseableIterator();
+	Optional&lt;String&gt; dollarWord =
+		firstMatch(elements, s -&gt; s.startsWith("$"));
+	System.out.println(dollarWord);
+}</code></pre></div></div></section><section id="explain_the_arcane_2"><h2>Explain the arcane</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public void close() throws IOException {
+	try (OutputStream ostream = out) {
+		flush();
+	}
+}</code></pre></div></div></section><section id="verdict"><h2>Verdict</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>Narrations suck!</p></div></blockquote></div>
+<div class="paragraph"><p>&nbsp;</p></div>
+<div class="paragraph"><p>Unless all of these are met:</p></div>
+<div class="ulist"><ul><li><p>arcane language features are used</p></li><li><p>there is no alternative</p></li><li><p>there is no way to improve readability</p></li></ul></div></section></section>
+<section><section id="contracts"><h2>Contracts</h2><table class="toc">
+	<tr><td>Costs And Benefits</td></tr>
+	<tr><td>Kinds Of Comments</td></tr>
+	<tr><td><ul><li>Narrations</li></ul></td></tr>
+	<tr class="toc-current"><td><ul><li>Contracts</li></ul></td></tr>
+	<tr><td><ul><li>Technical Context</li></ul></td></tr>
+	<tr><td><ul><li>Historical Context</li></ul></td></tr>
+	<tr><td>Clean Comments</td></tr>
+</table></section><section id="what_does_it_promise"><h2>What Does It Promise?</h2><div style="height: 550px;">
+<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">public interface Map&lt;K, V&gt; {
+
+	/**
+	 * ...............................
+	 * ................................
+	 * ....................................
+	 * ....................................
+	 *
+	 * @return .......................
+	 *         ....................
+	 */
+	int size();
+
+}</code></pre></div></div>
+<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">public interface Map&lt;K, V&gt; {
+
+	/**
+	 * Returns the number of key-value
+	 * mappings in this map. ..........
+	 * ....................................
+	 * ....................................
+	 *
+	 * @return the number of key-value
+	 *         mappings in this map
+	 */
+	int size();
+
+}</code></pre></div></div>
+<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">public interface Map&lt;K, V&gt; {
+
+	/**
+	 * Returns the number of key-value
+	 * mappings in this map. If the map
+	 * contains more than Integer.MAX_VALUE
+	 * elements, returns Integer.MAX_VALUE.
+	 *
+	 * @return the number of key-value
+	 *         mappings in this map
+	 */
+	int size();
+
+}</code></pre></div></div>
+</div></section><section id="contracts_2"><h2>Contracts</h2><div class="paragraph"><p>Usually JavaDoc on classes and methods.</p></div>
+<div class="paragraph"><p>They define:</p></div>
+<div class="ulist"><ul><li><p>the code&#8217;s central abstraction</p></li><li><p>pre- and postconditions</p></li><li><p>quirks</p></li></ul></div>
+<aside class="notes"><div class="ulist"><ul><li><p>highlight "define" (not "describe")</p></li><li><p>they make a promise</p></li></ul></div></aside></section><section id="analysis_2"><h2>Analysis</h2><div class="dlist"><dl><dt class="hdlist1">Currency</dt><dd><div class="ulist"><ul><li><p>high</p></li></ul></div></dd><dt class="hdlist1">Proximity</dt><dd><div class="ulist"><ul><li><p>right on the class or method</p></li></ul></div></dd><dt class="hdlist1">Alternatives</dt><dd><div class="ulist"><ul><li><p>good names (limited)</p></li><li><p>tests (limited)</p></li></ul></div></dd></dl></div></section><section id="contracts_3"><h2>Contracts</h2><div class="imageblock diagram" style=""><img src="images/analysis-contracts.png" alt="analysis contracts"></div></section><section id="verdict_2"><h2>Verdict</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>It&#8217;s complicated.</p></div></blockquote></div>
+<div class="paragraph"><p>&nbsp;</p></div>
+<div class="ulist"><ul><li><p>costs are high if code changes often</p></li><li><p>benefits are high if code is read often</p></li></ul></div>
+<div class="paragraph"><p>⇝ The more stable &amp; reused the code,<br>
+the better the outcome!</p></div>
+<aside class="notes"><div class="ulist"><ul><li><p>"reused" often implies "stable" by necessity</p></li><li><p>good documentation improves discoverability and adoption</p></li></ul></div></aside></section></section>
+<section><section id="technical_context"><h2>Technical context</h2><table class="toc">
+	<tr><td>Costs And Benefits</td></tr>
+	<tr><td>Kinds Of Comments</td></tr>
+	<tr><td><ul><li>Narrations</li></ul></td></tr>
+	<tr><td><ul><li>Contracts</li></ul></td></tr>
+	<tr class="toc-current"><td><ul><li>Technical Context</li></ul></td></tr>
+	<tr><td><ul><li>Historical Context</li></ul></td></tr>
+	<tr><td>Clean Comments</td></tr>
+</table></section><section id="how_does_it_work"><h2>How does it work?</h2><div style="height: 550px;">
+<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">/**
+ * When keys are Comparable, this class may
+ * use comparison order among keys to help
+ * break ties.
+ */
+public class HashMap&lt;K, V&gt; { }</code></pre></div></div>
+<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">/**
+ * When keys are Comparable, this class may
+ * use comparison order among keys to help
+ * break ties.
+ */
+public class HashMap&lt;K, V&gt; {
+
+	/* This map usually acts as a binned
+	 * (bucketed) hash table, but when bins
+	 * get too large, they are transformed
+	 * into bins of TreeNodes, each
+	 * structured similarly to those in
+	 * java.util.TreeMap. */
+
+}</code></pre></div></div>
+</div></section><section id="why_is_it_weird"><h2>Why is it weird?</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// nested try? 🤔
+try (var baos = new ByteArrayOutputStream();) {
+	try (var zos = new ZipOutputStream(baos);) {
+		fillZipFile(zos);
+	}
+	return baos.toByteArray();
+}
+
+// this is much better (but wrong!)
+try (	var baos = new ByteArrayOutputStream();
+		var zos = new ZipOutputStream(baos);) {
+	fillZipFile(zos);
+	return baos.toByteArray();
+}</code></pre></div></div>
+<aside class="notes"><div class="ulist"><ul><li><p><code>zos.close()</code> adds ZIP signature (otherwise ZIP file is corrupted)</p></li><li><p>must be called <em>before</em> <code>baos.toByteArray()</code></p></li></ul></div></aside></section><section id="technical_context_2"><h2>Technical Context</h2><div class="paragraph"><p>Often non-Javadoc blocks<br>
+at the beginning of a class/method.</p></div>
+<div class="paragraph"><p>(Check out
+<a href="http://blog.codefx.org/java/new-javadoc-tags/"><code>@apiNote</code> and <code>@implNote</code></a>.)</p></div>
+<div class="ulist"><ul><li><p>clarify what code is <em>for</em></p></li><li><p>when to use it and when not</p></li><li><p>explain implementation details</p></li></ul></div>
+<div class="paragraph"><p>(This is <strong>not</strong> a contract!)</p></div>
+<aside class="notes"><div class="ulist"><ul><li><p>can even give examples</p></li><li><p>contracts make a promise, context comments explain why it was made</p></li></ul></div></aside></section><section id="analysis_3"><h2>Analysis</h2><div class="dlist"><dl><dt class="hdlist1">Currency</dt><dd><div class="ulist"><ul><li><p>not that important</p></li></ul></div></dd><dt class="hdlist1">Proximity</dt><dd><div class="ulist"><ul><li><p>not that important</p></li></ul></div></dd><dt class="hdlist1">Alternatives</dt><dd><div class="ulist"><ul><li><p>demos</p></li><li><p>existing code (limited)</p></li></ul></div></dd></dl></div></section><section id="technical_context_3"><h2>Technical Context</h2><div class="imageblock diagram" style=""><img src="images/analysis-technical-context.png" alt="analysis technical context"></div></section><section id="verdict_3"><h2>Verdict</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>A clear winner!</p></div></blockquote></div>
+<div class="paragraph"><p>&nbsp;</p></div>
+<div class="ulist"><ul><li><p>costs are moderate</p></li><li><p>benefits are considerable</p></li></ul></div>
+<aside class="notes"><div class="ulist"><ul><li><p>avoid confusion with contracts</p></li></ul></div></aside></section></section>
+<section><section id="historical_context"><h2>Historical context</h2><table class="toc">
+	<tr><td>Costs And Benefits</td></tr>
+	<tr><td>Kinds Of Comments</td></tr>
+	<tr><td><ul><li>Narrations</li></ul></td></tr>
+	<tr><td><ul><li>Contracts</li></ul></td></tr>
+	<tr><td><ul><li>Technical Context</li></ul></td></tr>
+	<tr class="toc-current"><td><ul><li>Historical Context</li></ul></td></tr>
+	<tr><td>Clean Comments</td></tr>
+</table></section><section id="omg_why"><h2>OMG, why?!</h2><div style="height: 550px;">
+<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">public Color randomFavoriteColor() {
+	while (true)
+		Color favorite = randomColor();
+		if (isNotWhiteish(favorite))
+			return favorite;
+}</code></pre></div></div>
+<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">public Color randomFavoriteColor() {
+	while (true)
+		Color favorite = randomColor();
+		/* In China white is often seen
+		 * as a color of mourning and
+		 * some Chinese users did not
+		 * like it. We hence disallow
+		 * whitish colors as favorites.
+		 * For details see issue #1534.
+		 */
+		if (isNotWhitish(favorite))
+			return favorite;
+}</code></pre></div></div>
+</div></section><section id="historical_context_2"><h2>Historical Context</h2><div class="ulist"><ul><li><p>clarifies why (oh why?)<br>
+code looks the way it does</p></li><li><p>can document paths not taken</p></li></ul></div></section><section id="analysis_4"><h2>Analysis</h2><div class="dlist"><dl><dt class="hdlist1">Currency</dt><dd><div class="ulist"><ul><li><p>negligible</p></li></ul></div></dd><dt class="hdlist1">Proximity</dt><dd><div class="ulist"><ul><li><p>not that important</p></li></ul></div></dd><dt class="hdlist1">Alternatives</dt><dd><div class="ulist"><ul><li><p>commit messages</p></li><li><p>issues, wikis</p></li></ul></div></dd></dl></div></section><section id="historical_context_3"><h2>Historical Context</h2><div class="imageblock diagram" style=""><img src="images/analysis-historical-context.png" alt="analysis historical context"></div></section><section id="verdict_4"><h2>Verdict</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>Even better!</p></div></blockquote></div>
+<div class="paragraph"><p>&nbsp;</p></div>
+<div class="ulist"><ul><li><p>costs are negligible</p></li><li><p>benefits are considerable</p></li></ul></div>
+<div class="paragraph"><p>These are great breadcrumbs<br>
+when tracking down bugs!</p></div></section></section>
+<section><section id="emotions"><h2>Emotions</h2><table class="toc">
+	<tr><td>Costs And Benefits</td></tr>
+	<tr><td>Kinds Of Comments</td></tr>
+	<tr><td><ul><li>...</li></ul></td></tr>
+	<tr class="toc-current"><td><ul><li>Emotional</li></ul></td></tr>
+	<tr><td>Clean Comments</td></tr>
+</table><div class="paragraph"><p>(Real comments ahead; <a href="https://stackoverflow.com/q/184618">more</a>.)</p></div></section><section id="humor"><h2>Humor</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">long john; // silver</code></pre></div></div>
+<hr>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">stop(); // Hammertime!</code></pre></div></div>
+<hr>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// sometimes I believe compiler
+// ignores all my comments</code></pre></div></div></section><section id="guilt"><h2>Guilt</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// I'm sorry.</code></pre></div></div></section><section id="fear"><h2>Fear</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// I am not sure if we need this,
+// but too scared to delete.</code></pre></div></div></section><section id="defiance"><h2>Defiance</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// I am not responsible of this code.
+// They made me write it, against my will.</code></pre></div></div></section><section id="frustration"><h2>Frustration</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// When I wrote this, only God and I
+// understood what I was doing
+// Now, God only knows</code></pre></div></div></section><section id="foreboding"><h2>Foreboding</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// I dedicate all this code, all my work,
+// to my wife, Darlene, who will have to
+// support me and our three children and
+// the dog once it gets released into the
+// public.</code></pre></div></div></section><section id="creativity"><h2>Creativity</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="php language-php">// Replaces with spaces the braces
+// in cases where braces in places
+// cause stasis
+$str = str_replace(array("\{","\}")," ",$str);</code></pre></div></div></section><section id="therapy"><h2>Therapy</h2><div class="paragraph"><p>We&#8217;re working with unfeeling material.</p></div>
+<div class="paragraph"><p><strong>Comments can be therapeutic!</strong> 😁</p></div></section></section>
+<section><section id="clean_comments"><h2>Clean comments</h2><table class="toc">
+	<tr><td>Costs And Benefits</td></tr>
+	<tr><td>Kinds Of Comments</td></tr>
+	<tr class="toc-current"><td>Clean Comments</td></tr>
+</table></section><section id="comments_are_a_tool"><h2>Comments are a tool</h2><div class="paragraph"><p>Let&#8217;s move away from:</p></div>
+<div class="quoteblock"><blockquote><div class="paragraph"><p>All comments are failures.</p></div></blockquote></div>
+<div class="paragraph"><p>Instead:</p></div>
+<div class="quoteblock"><blockquote><div class="paragraph"><p>Comments are a tool to facilitate understanding.
+We should use it wisely!</p></div></blockquote></div></section><section id="clean_comments_2"><h2>Clean comments</h2><div class="paragraph"><p>Write clean code and good tests.<br>
+Then add <strong>clean comments</strong>:</p></div>
+<div class="ulist"><ul><li><p>make obvious which kind they are</p></li><li><p>strive for high proximity</p></li><li><p>use unambiguous language</p></li><li><p>consider API users <em>and</em> maintainers</p></li></ul></div>
+<div class="paragraph"><p>Get comments reviewed!</p></div></section><section id="clean_narrations"><h2>Clean narrations</h2><div class="paragraph"><p>What?</p></div>
+<div class="ulist"><ul><li><p>avoid whenever possible</p></li><li><p>strive for clean code</p></li></ul></div>
+<div class="paragraph"><p>How?</p></div>
+<div class="ulist"><ul><li><p>use line comments (<code>//</code> in Java)</p></li><li><p>place directly on line</p></li></ul></div></section><section id="clean_contracts"><h2>Clean contracts</h2><div class="paragraph"><p>What?</p></div>
+<div class="ulist"><ul><li><p>describe <em>every</em> top-level element&#8217;s<br>
+(class, interface, endpoint, etc.)<br>
+central abstraction</p></li></ul></div>
+<div class="paragraph"><p>From there on, it&#8217;s up for debate:</p></div>
+<div class="ulist"><ul><li><p>prefer stable elements</p></li><li><p>prefer reused elements</p></li><li><p>heed diminishing returns</p></li></ul></div></section><section id="clean_contracts_2"><h2>Clean contracts</h2><div class="paragraph"><p>How many and how detailed<br>
+depends on many factors:</p></div>
+<div class="ulist"><ul><li><p>team:</p><div class="ulist"><ul><li><p>size 📈</p></li><li><p>technical backgrounds 📈</p></li><li><p>stability 📉</p></li></ul></div></li><li><p>code base:</p><div class="ulist"><ul><li><p>size 📈</p></li><li><p>technologies 📈</p></li><li><p>ownership 📉</p></li></ul></div></li></ul></div></section><section id="clean_contracts_3"><h2>Clean contracts</h2><div class="paragraph"><p>How?</p></div>
+<div class="ulist"><ul><li><p>use tools</p><div class="ulist"><ul><li><p>for Java: proper <a href="http://www.oracle.com/technetwork/java/javase/tech/index-jsp-135444.html">JavaDoc</a> (<code>/** */</code>)</p></li><li><p>for REST:
+<a href="https://swagger.io/">Swagger</a> or
+<a href="https://docs.spring.io/spring-restdocs/docs/current/reference/html5/">Spring REST Docs</a></p></li></ul></div></li><li><p>promise results not steps<br>
+(declarative, not imperative)</p></li><li><p>promise only what is required <em>and</em> tested</p></li></ul></div></section><section id="clean_technical_context"><h2>Clean technical context</h2><div class="paragraph"><p>What?</p></div>
+<div class="ulist"><ul><li><p>non-trivial implementation</p></li><li><p>trade-off between alternatives</p></li><li><p>operational or developmental requirements</p></li></ul></div></section><section id="clean_technical_context_2"><h2>Clean technical context</h2><div class="paragraph"><p>How?</p></div>
+<div class="ulist"><ul><li><p>look into <a href="http://blog.codefx.org/java/new-javadoc-tags/"><code>@apiNote</code> and <code>@implNote</code></a></p></li><li><p>multi-line comments (<code>/* */</code>)<br>
+at start of type or method</p></li><li><p>strive for high-level description</p></li><li><p>cite/link issues, wikis, etc.</p></li></ul></div></section><section id="clean_historical_context"><h2>Clean historical context</h2><div class="paragraph"><p>What?</p></div>
+<div class="ulist"><ul><li><p>non-obvious requirements</p></li><li><p>"temporary" solutions (and alternatives)</p></li></ul></div>
+<div class="paragraph"><p>How?</p></div>
+<div class="ulist"><ul><li><p>use phrases like <em>"at the time of writing"</em></p></li><li><p>multi-line comments (<code>/* */</code>)</p></li><li><p>cite/link issues, wikis, etc.</p></li></ul></div></section><section id="side_note"><h2>Side note</h2><div class="paragraph"><p>Include non-source files:</p></div>
+<div class="ulist"><ul><li><p>build tooling ("Why this version of Guava?")</p></li><li><p>configurations ("Why does CI store artifacts?")</p></li><li><p>documentation (yay, recursion!)</p></li><li><p>etc.</p></li></ul></div></section><section id="maintaining_comments"><h2>Maintaining comments</h2><div class="paragraph"><p>What&#8217;s impacted when you change code?</p></div>
+<div class="ulist"><ul><li><p>surrounding class</p></li><li><p>callers</p></li><li><p>tests</p></li></ul></div>
+<div class="paragraph"><p>Check comments on those elements!<br>
+("Reverse-proximity")</p></div></section><section id="maintaining_comments_2"><h2>Maintaining comments</h2><div class="paragraph"><p>Pair programming? Code reviews?<br>
+Keep comments in mind!</p></div>
+<div class="paragraph"><p>(N.B., developers complaining of aging comments<br>
+are usually the ones letting them age.)</p></div></section><section id="clean_comments_3"><h2>Clean comments</h2><div class="paragraph"><p>Bottom line:</p></div>
+<div class="ulist"><ul><li><p>avoid narrations</p></li><li><p>describe central abstractions</p></li><li><p>decide how many/detailed contracts</p></li><li><p>always provide context</p></li></ul></div></section><section id="clean_comments_4"><h2>Clean comments</h2><div class="paragraph"><p>My recommendations:</p></div>
+<div class="ulist"><ul><li><p>get the team together and<br>
+<strong>speak freely</strong> about comments</p></li><li><p>go through the code base and<br>
+<strong>discuss</strong> concrete examples</p></li><li><p>settle on a <strong>shared approach</strong> and<br>
+include it in your style guide</p></li><li><p>use pair programming or code reviews<br>
+to <strong>adapt and enforce</strong></p></li></ul></div></section></section>
+<section id="about_nicolai_parlog" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>About Nicolai Parlog</h2>
+<div style="float: left; width: 45%; margin:0px;">
+	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="images/cover-jms.png" style="margin: 0;"></a>
+	<p style="
+		position: fixed;
+		margin: -160px 0 0 60px;
+		transform: rotate(-8deg);
+		font-size: 28pt;
+		color: #cc0000;
+		text-shadow: 2px 2px 3px #660000;
+		font-weight: bold;
+		border: 5px solid #cc0000;
+		border-radius: 12px;
+		background-color: rgba(255,255,255,0.5);
+		padding: 2px 8px 7px 4px;
+">37% off with<br>code <em>fccparlog</em></p>
+	<p><a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb">tiny.cc/jms</a></p>
+</div>
+<h3>Follow</h3>
+<div class="paragraph"><p>💻 <a href="http://codefx.org">codefx.org</a><br>
+▶ <a href="https://www.youtube.com/c/codefx">youtube.com/c/codefx</a><br>
+🐦 <a href="https://twitter.com/nipafx">@nipafx</a></p></div>
+<h3>Want More?</h3>
+<div class="paragraph"><p>⇜ Get <a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&amp;a_bid=869915cb">my book</a>!</p></div>
+<div class="paragraph"><p>You can <a href="http://blog.codefx.org/hire-nicolai-parlog/">hire me</a>:</p></div>
+<div class="ulist"><ul><li><p>training (Java 8-11, JUnit 5)</p></li><li><p>consulting (Java 8-11)</p></li></ul></div></section>
+<section id="image_credits"><h2>Image Credits</h2><div class="ulist"><ul><li><p><a href="https://unsplash.com/photos/tk7OAxsXNL0">letters</a>:
+<a href="https://unsplash.com/@marcusdepaula">Marcus dePaul</a>,
+<a href="https://unsplash.com/license">Unsplash license</a></p></li><li><p><a href="https://unsplash.com/photos/VsBl5PwVZpY">architecture</a>:
+<a href="https://unsplash.com/@ssdriscoll">Steve driscoll</a>,
+<a href="https://unsplash.com/license">Unsplash license</a></p></li><li><p><a href="https://www.flickr.com/photos/21496790@N06/5065834411">question-mark</a>:
+<a href="http://milosevicmilos.com/">Milos Milosevic</a>,
+<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a></p></li><li><p>charts with <a href="https://www.amcharts.com/">amCharts</a></p></li></ul></div></section></div></div><script src="_reveal.js/lib/js/head.min.js"></script><script src="_reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+Reveal.initialize({
+  // Display controls in the bottom right corner
+  controls: false,
+  // Display a presentation progress bar
+  progress: false,
+  // Set a per-slide timing for speaker notes, null means none
+  defaultTiming: null,
+  // Display the page number of the current slide
+  slideNumber: false,
+  // Push each slide change to the browser history
+  history: true,
+  // Enable keyboard shortcuts for navigation
+  keyboard: true,
+  // Enable the slide overview mode
+  overview: true,
+  // Vertical centering of slides
+  center: true,
+  // Enables touch navigation on devices with touch input
+  touch: true,
+  // Loop the presentation
+  loop: false,
+  // Change the presentation direction to be RTL
+  rtl: false,
+  // Randomizes the order of slides each time the presentation loads
+  shuffle: false,
+  // Turns fragments on and off globally
+  fragments: true,
+  // Flags if the presentation is running in an embedded mode,
+  // i.e. contained within a limited portion of the screen
+  embedded: false,
+  // Flags if we should show a help overlay when the questionmark
+  // key is pressed
+  help: true,
+  // Flags if speaker notes should be visible to all viewers
+  showNotes: false,
+  // Global override for autolaying embedded media (video/audio/iframe)
+  // - null: Media will only autoplay if data-autoplay is present
+  // - true: All media will autoplay, regardless of individual setting
+  // - false: No media will autoplay, regardless of individual setting
+  autoPlayMedia: null,
+  // Number of milliseconds between automatically proceeding to the
+  // next slide, disabled when set to 0, this value can be overwritten
+  // by using a data-autoslide attribute on your slides
+  autoSlide: 0,
+  // Stop auto-sliding after user input
+  autoSlideStoppable: true,
+  // Enable slide navigation via mouse wheel
+  mouseWheel: false,
+  // Hides the address bar on mobile devices
+  hideAddressBar: true,
+  // Opens links in an iframe preview overlay
+  previewLinks: false,
+  // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
+  // NOTE setting the theme in the config no longer works in reveal.js 3.x
+  //theme: Reveal.getQueryHash().theme || 'nipa-night',
+  // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+  transition: Reveal.getQueryHash().transition || 'slide',
+  // Transition speed (e.g., default, fast, slow)
+  transitionSpeed: 'default',
+  // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+  backgroundTransition: 'fade',
+  // Number of slides away from the current that are visible
+  viewDistance: 3,
+  // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+  parallaxBackgroundImage: 'images/letters.jpg',
+  // Parallax background size in CSS syntax (e.g., "2100px 900px")
+  parallaxBackgroundSize: '5122px 3414px',
+
+  // The "normal" size of the presentation, aspect ratio will be preserved
+  // when the presentation is scaled to fit different resolutions. Can be
+  // specified using percentage units.
+  width: 960,
+  height: 700,
+
+  // Factor of the display size that should remain empty around the content
+  margin: 0.1,
+
+  // Bounds for smallest/largest possible scale to apply to content
+  minScale: 0.2,
+  maxScale: 1.5,
+
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+      { src: '_reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: '_reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '_reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      
+      { src: '_reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: '_reveal.js/plugin/notes/notes.js', async: true }
+  ]
+});</script></body></html>
