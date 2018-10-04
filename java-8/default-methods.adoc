@@ -36,6 +36,7 @@ default Stream<E> stream() {
 	<tr class="toc-current"><td>Syntax &amp; Semantics</td></tr>
 	<tr><td>Existing Functionality</td></tr>
 	<tr><td>Kinds of Default Methods</td></tr>
+	<tr><td>Interface Evolution</td></tr>
 	<tr><td>Summary</td></tr>
 </table>
 ++++
@@ -50,10 +51,16 @@ to improve usability
 
 === Default Method Syntax
 
+```java
+// in `List`
+default void sort(Comparator<? super E> c) {
+	// do the sorting
+}
+```
+
 * keyword `default`
 * regular method signature and body
-* automatically `public` +
-(as all other interface methods)
+* automatically `public` (as usual)
 
 === Resolution Strategy
 
@@ -62,12 +69,14 @@ Classes win over interfaces.
 Rule #2::
 More specific interfaces win over less specific ones.
 Rule #3::
-There’s no Rule #3.
+There's no Rule #3.
 
-=== Resolution Strategy
+=== Implications of Rule #1
 
-* no rule #3 means occasional compile errors +
-that have to be fixed manually
+(_Classes win over interfaces_)
+
+* it is not possible to have default implementation +
+of methods on `Object` (e.g. `equals`/`hashCode`)
 * it is possible to "reabstract" methods:
 +
 ```java
@@ -78,21 +87,98 @@ abstract class MyCollection<E>
 
 }
 ```
-* it is not possible to have default implementation +
-of methods on `Object` (e.g. `equals`/`hashCode`)
 
-=== Static Method Syntax
+=== Implications of Rule #2
 
-Interfaces can now also have static methods.
+(_More specific interfaces win over less specific ones._)
+
+An interface extending another can provide +
+a more suitable default implementation.
+
+=== Example for Rule #2
+
+```java
+// in `Map`
+default V getOrDefault(Object key, V defaultValue) {
+	V v;
+	return (((v = get(key)) != null) || containsKey(key))
+		? v
+		: defaultValue;
+}
+
+// in `ConcurrentMap`
+default V getOrDefault(Object key, V defaultValue) {
+	V v;
+	return ((v = get(key)) != null) ? v : defaultValue;
+}
+```
+
+=== Implications of Rule #3
+
+(_There's no Rule #3_)
+
+Occasional compile errors +
+that have to be fixed manually.
+
+Two choices:
+
+* you can properly implement the method
+* you can call a specific default method:
++
+```java
+public void collidingMethod() {
+	ImplementedInterface.super
+		.collidingMethod();
+}
+```
+
+=== Exercise 1
+
+Adding default methods and +
+observing resolution strategy.
+
+=== Static Interface Methods
+
+Interfaces can now also have static methods. +
+(*These are not "static default" methods!*)
 
 Syntax as usual:
 
 ```java
 public static <T> Comparator<T> nullsLast(
 		Comparator<? super T> comparator) {
-	return new Comparators.NullComparator<>(false, comparator);
+	return new Comparators
+		.NullComparator<>(false, comparator);
 }
 ```
+
+=== Static Interface Methods
+
+Use cases:
+
+* factory methods for implementations +
+(e.g. `List::of`; if you can bare it)
+* utility methods for an interface +
+(e.g. `Predicate::not`)
+
+=== Private Interface Methods
+
+Interfaces can now also have private methods. ⑨ +
+(*These are not "private default" methods!*)
+
+Syntax as usual:
+
+```java
+private String concat(String... args);
+	// ...
+}
+```
+
+=== Private Interface Methods
+
+Use case:
+
+Reusing code in default methods.
 
 
 == Existing Functionality
@@ -102,6 +188,7 @@ public static <T> Comparator<T> nullsLast(
 	<tr><td>Syntax &amp; Semantics</td></tr>
 	<tr class="toc-current"><td>Existing Functionality</td></tr>
 	<tr><td>Kinds of Default Methods</td></tr>
+	<tr><td>Interface Evolution</td></tr>
 	<tr><td>Summary</td></tr>
 </table>
 ++++
@@ -151,6 +238,7 @@ comparator = Comparator.nullsLast(comparator);
 	<tr><td>Syntax &amp; Semantics</td></tr>
 	<tr><td>Existing Functionality</td></tr>
 	<tr class="toc-current"><td>Kinds of Default Methods</td></tr>
+	<tr><td>Interface Evolution</td></tr>
 	<tr><td>Summary</td></tr>
 </table>
 ++++
@@ -206,6 +294,169 @@ default Predicate<T> and(Predicate<? super T> p) {
 ```
 
 
+== Default Methods
+
+++++
+<table class="toc">
+	<tr><td>Syntax &amp; Semantics</td></tr>
+	<tr><td>Existing Functionality</td></tr>
+	<tr><td>Kinds of Default Methods</td></tr>
+	<tr class="toc-current"><td>Interface Evolution</td></tr>
+	<tr><td>Summary</td></tr>
+</table>
+++++
+
+=== Interface Evolution
+
+If your code has clients that +
+you have no control over...
+
+* open-source library
+* internal library
+* extensible application
+
+\... then evolving interfaces +
+always breaks code.
+
+Default methods to the rescue!
+
+=== General Approach
+
+New Version::
+
+* interface is transitional (old and new outline)
+* default methods ensure existing code works
+
+Transition::
+
+* client moves from old to new outline
+* default methods ensure code keeps working
+
+New Version::
+
+* removes old outline
+
+=== Adding Methods
+
+Reasonable default impl exists:
+
+New Version::
+
+* add the method with default impl
+* internal impls can override
+* internal callers use new method
+
+Transition::
+
+* external callers use the method
+
+That's it.
+
+=== Adding Methods
+
+No reasonable default impl exists:
+
+New Version::
+
+* add method with default impl throwing UOE
+* override method in all internal impls
+
+Transition::
+
+* external impls override the method
+* external callers use the method
+
+New Version::
+
+* make method abstract
+* internal callers use new method
+
+=== Removing Methods
+
+No external impls exist:
+
+New Version::
+
+* deprecate method
+* internal callers stop calling method
+
+Transition::
+
+* external callers stop using the method
+
+New Version::
+
+* remove the method
+
+(No default methods required.)
+
+=== Removing Methods
+
+External impls exist:
+
+New Version::
+
+* deprecate method
+* provide default impl throwing UOE
+* internal callers stop calling method
+
+Transition::
+
+* external callers stop using the method
+* external impls of the method are removed
+
+New Version::
+
+* remove the method
+
+=== Replacing Methods
+
+Applies with new signature (name, parameters, ...), +
+where methods are "functionally equivalent".
+
+Otherwise it's a matter of adding new +
+and removing old method.
+
+=== Replacing Methods
+
+New Version::
+
+* add _new_ with default impl calling _old_
+* provide default impl of _old_ calling _new_
+* deprecate _old_
+* internal impls override _new_ instead of _old_
+* internal callers use _new_ instead of _old_
+
+Wtf, circular call?
+
+* ensures it does not matter which version is impl'd
+* must be thoroughly documented; tests help
+
+=== Replacing Methods
+
+Transition::
+
+* external impls override _new_ instead of _old_
+* external callers use _new_ instead of _old_
+
+New Version::
+
+* make _new_ abstract
+* remove _old_
+
+=== Evolution Summary
+
+If clients can be expected to update their code +
+default methods allow interface evolution +
+without breaking client code.
+
+Mode is always the same:
+
+* release version with transitional outline
+* give clients time to update
+* release version with new outline
+
+
 == Summary
 
 ++++
@@ -213,24 +464,28 @@ default Predicate<T> and(Predicate<? super T> p) {
 	<tr><td>Syntax &amp; Semantics</td></tr>
 	<tr><td>Existing Functionality</td></tr>
 	<tr><td>Kinds of Default Methods</td></tr>
+	<tr><td>Interface Evolution</td></tr>
 	<tr class="toc-current"><td>Summary</td></tr>
 </table>
 ++++
 
 === Summary
 
+Syntax & Semantics:
+
 * interfaces can have instance methods:
 ** add `default` keyword
 ** implement as usually
-* interface can have static methods +
-just like classes
+* method resolution:
+** methods from classes are _always_ preferred
+** default methods are "fall back"
+* interface can have static and private +
+methods just like classes
+
+=== Summary
 
 Many existing and new interfaces +
 have default methods.
 
-=== Summary
-
-Method resolution:
-
-* methods from classes are _always_ preferred
-* default methods are "fall back"
+You can use them to evolve interfaces +
+without breaking clients.

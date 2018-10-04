@@ -204,7 +204,7 @@ Example:
 TodoFilter filter = (Todo todo) -> {
 	boolean same = todo.importance() == importance;
 	return same;
-}
+};
 ```
 
 === Single Line Body
@@ -231,7 +231,7 @@ Instead of:
 TodoFilter filter = (Todo todo) -> {
 	boolean same = todo.importance() == importance;
 	return same;
-}
+};
 ```
 
 Usually:
