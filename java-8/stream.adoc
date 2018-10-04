@@ -537,7 +537,7 @@ List<Todo> todos = // ...
 // 	.findAny()
 // 	.isPresent();
 boolean isAnyVeryImportant = todos.stream()
-	.anyMatch(todo -> todo.importance() == VERY)
+	.anyMatch(todo -> todo.importance() == VERY);
 ```
 
 === Finding Things
@@ -547,7 +547,7 @@ _"I have Todos and want to know if_ all _are `VERY` important"_
 ```java
 List<Todo> todos = // ...
 boolean areAllVeryImportant = todos.stream()
-	.allMatch(todo -> todo.importance() == VERY)
+	.allMatch(todo -> todo.importance() == VERY);
 ```
 
 === Finding Things
@@ -557,7 +557,7 @@ _"I have Todos and want to know if_ none _are `VERY` important"_
 ```java
 List<Todo> todos = // ...
 boolean areNoneVeryImportant = todos.stream()
-	.noneMatch(todo -> todo.importance() == VERY)
+	.noneMatch(todo -> todo.importance() == VERY);
 ```
 
 === Finding Things
@@ -582,7 +582,7 @@ _"I have todos and want to concatenate their descriptions"_
 List<Todo> todos = // ...
 String descriptions = todos.stream()
 	.map(Todo::description)
-	.reduce("", (d1, d2)-> d1 + d2):
+	.reduce("", (d1, d2)-> d1 + d2);
 ```
 
 (In real life, use `Collectors.joining()` ⇝ later)
@@ -593,7 +593,7 @@ _"I have drugs and want to know how many have low stockpile"_
 
 ```java
 List<Drug> drugs = // ...
-List<Drug> lowDrugs = drugs.stream()
+long lowDrugsCount = drugs.stream()
 	.filter(drug ->
 		drug.inventory().isStockpileLow())
 	.count();
@@ -638,9 +638,15 @@ Solve problems with streams
 Besides `Collection::stream`:
 
 * `Stream.of(T...)`
+* `Stream.ofNullable(T)` ⑨
 * `Stream.iterate(T, UnaryOperator<T>)`
 * `Stream.iterate(` +
 `T, Predicate<T>, UnaryOperator<T>)` ⑨
+
+=== Stream Sources
+
+Besides `Collection::stream` and `Stream`:
+
 * `Arrays.stream(T[])`
 * `BufferedReader.lines()`
 * `Files.lines(Path)`, `Files.list(Path)`
@@ -772,6 +778,13 @@ instead call methods on `Collectors`:
 
 * most importantly `toList` and `toSet`
 * `toMap` to map elements to key and values
+* `toUnmodifiable...` creates unmodifiable +
+`List`, `Set`, or `Map` ⑩
+
+=== Collectors
+
+More collectors:
+
 * `groupingBy` to get a +
 `Map<K, List<T>>` or `Map<K, D>`
 * `partitioningBy` to get a +
@@ -814,7 +827,7 @@ On the example of `IntStream` +
 or `Stream::mapToInt`
 * conceptually the same as `Stream`
 * uses primitive specializations of func. int.
-* have a few numeric special cases: +
+* has a few numeric special cases: +
 `average`, `max`, `min`, `sum`
 
 
