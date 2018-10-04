@@ -32,12 +32,12 @@ TODO
 
 include::../_shared/highlight.js.adoc[]
 
-:host-name: Riga Dev Days
-:host-url: https://rigadevdays.lv/
-:host-logo-url: images/logo-riga-dev-days.png
+:host-name: Accenture
+:host-url: https://www.accenture.de
+:host-logo-url: images/logo-accenture.jpg
 // :host-logo-style: background-color: transparent; border-width: 0;
-:host-twitter-name: @RigaDevDays
-:host-twitter-url: https://twitter.com/RigaDevDays
+:host-twitter-name: @AccentureDACH
+:host-twitter-url: https://twitter.com/AccentureDACH
 include::../_shared/event-on-title-and-footer.adoc[]
 
 
@@ -48,14 +48,16 @@ include::../_shared/event-on-title-and-footer.adoc[]
 
 == Let's get started!
 
-* there's much to talk about +
+// * there's much to talk about +
 // ⇝ this can only cover parts of the JPMS
-⇝ we may have to skip some details
+// ⇝ we may have to skip some details
 // * if you're shy, tweet questions +
 // with https://twitter.com/search?q=%23vdz17%20%40nipafx[#VDZ17 @nipafx]
-* slides at http://slides.codefx.org/[slides.codefx.org]
+* slides at http://slides.codefx.org/jpms[slides.codefx.org/jpms]
 * exercises at +
 https://github.com/nicolaiparlog/course-jpms[github.com/nicolaiparlog/course-jpms]
+
+(Please share responsibly)
 
 include::impedance-mismatch.adoc[]
 
@@ -65,19 +67,19 @@ include::basics.adoc[]
 
 // include::quick-intro.adoc[]
 
-include::../_shared/roadmap.adoc[]
+// include::../_shared/roadmap.adoc[]
 
-include::advanced.adoc[]
-
-include::command-line.adoc[]
+include::jlink.adoc[]
 
 include::migration.adoc[]
 
-include::modularization.adoc[]
+include::command-line.adoc[]
 
 include::jdeps.adoc[]
 
-include::jlink.adoc[]
+include::modularization.adoc[]
+
+include::advanced.adoc[]
 
 // include::osgi.adoc[]
 
