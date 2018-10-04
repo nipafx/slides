@@ -94,6 +94,7 @@ The functional way:
 To check whether value is present:
 
 * `isPresent()` returns `true`/`false`
+* `isEmpty()` returns `!isPresent()` ⑪
 
 Remember: `null` is absent! +
 (No ternary `boolean`.)
@@ -103,38 +104,44 @@ Remember: `null` is absent! +
 Many ways to get a value out of an `Optional`. +
 All return present value but differ in absence:
 
-* `get()` throws `NoSuchElementException` +
-(will be deprecated; use `orElseThrow()` instead ⑩)
 * `orElse(T)` returns given default value
 * `orElseGet(Supplier<T>)` computes +
 default value and returns it
+* `orElseThrow()` throws +
+`NoSuchElementException` ⑩ +
+(in ⑧ & ⑨, use `get()`)
 * `orElseThrow(Supplier<X>)` computes +
 exception and throws it
 
 === Getting A Value Out
 
-Example `isPresent`/`get`:
+Canonical example `isPresent()`/`orElseThrow()`:
 
 ```java
-Optional<String> nameOpt = // ... stream pipeline
+Optional<String> nameOpt = /* stream pipeline */;
 if (nameOpt.isPresent()) {
-	String name = nameOpt.get();
+//  String name = nameOpt.get(); // ⑧ & ⑨
+	String name = nameOpt.orElseThrow(); // ⑩+
 //  use name
 }
 ```
 
 === Getting A Value Out
 
-Examples `orElse...`:
+Handling absence less imperatively:
 
 ```java
 String name;
-Optional<String> nameOpt = // ... stream pipeline
+Optional<String> nameOpt = /* stream pipeline */;
 name = nameOpt.orElse("John Doe");
 name = nameOpt.orElseGet(this::computeDefaultName);
 name = nameOpt.orElseThrow(() ->
-	new IllegalStateException("Name should be given."))
+	new IllegalStateException("Name should be given."));
 ```
+
+=== Exercise 1
+
+Imperative use of `Optional`.
 
 === The Functional Way
 
@@ -153,8 +160,8 @@ Like on `Stream`, but eager:
 === The Functional Way
 
 ```java
-User user = // ...
-Optional<String> name = // ... stream pipeline
+User user = /* ... */;
+Optional<String> name = /* stream pipeline */;
 name
 	.filter(this::hasNameDay)
 	.map(this::determineNameDay)
@@ -166,13 +173,23 @@ name
 Or simply continue stream pipeline:
 
 ```java
-User user = // ... stream pipeline
+User user = /* ... */;
+/* stream pipeline */
 	.findAny() // terminal stream operation
 	.filter(this::hasNameDay) // on Optional
 	.map(this::determineNameDay)
 	.ifPresent(nameDay -> register(user, nameDay));
 ```
 
+=== The Functional Way
+
+Like with streams, +
+this doesn't work well +
+with checked exceptions.
+
+* use `if`-`isPresent()`-`orElseThrow()` +
+to get back to imperative code
+* do it as late as possible
 
 === Getting A Value In
 
@@ -183,7 +200,7 @@ So far:
 
 How to recover from empty `Optional`?
 
-With `or(Supplier<Optional<T>>)`! ⑨
+With `or(Supplier<Optional<T>>)`. ⑨
 
 === Getting A value In
 
@@ -199,6 +216,71 @@ public class Search {
 			.or(() -> remotely(id));
 	}
 
+}
+```
+
+=== Exercise 2
+
+Functional use of `Optional`.
+
+=== Optionals In Streams
+
+What happens if `Optional`-returning method +
+is called in a stream pipeline?
+
+```java
+private Optional<Customer> findCustomer(String id) {
+	// ...
+}
+
+Stream<Customer> findCustomers(List<String> ids) {
+	return ids.stream()
+		.map(this::findCustomer)
+		// now we have a Stream<Optional<Customer>>;
+		// how do we get to Stream<Customer>?
+}
+```
+
+=== In Java 8
+
+Filter and map:
+
+```java
+Stream<Customer> findCustomers(List<String> ids) {
+	return ids.stream()
+		.map(this::findCustomer)
+		.filter(Optional::isPresent)
+		.map(Optional::get) // no orElseThrow() yet
+}
+```
+
+*Only do this on Java 8!*
+
+=== In Java 9 And Later
+
+To turn an `Optional` into a `Stream` +
+of zero or one element(s):
+
+* `Stream<T> stream();` ⑨
+
+=== In Java 9 And Later
+
+Turn into stream and flat-map:
+
+```java
+Stream<Customer> findCustomers(List<String> ids) {
+	return ids.stream()
+		.map(this::findCustomer)
+		.flatMap(Optional::stream);
+}
+```
+
+Alternatively, in one step:
+
+```java
+Stream<Customer> findCustomers(List<String> ids) {
+	return ids.stream()
+		.flatMap(id -> findCustomer(id).stream());
 }
 ```
 
@@ -225,8 +307,8 @@ Some insights into the discussion...
 
 First some basic rules:
 
-* never, ever, ever just call `get` +
-without checking `isPresent` first
+* never, ever, ever call `get()`/`orElseThrow()` +
+without checking `isPresent()` first
 * prefer functional style +
 (`map`, `flatMap`, `ifPresent`, `orElse`, ...)
 * make everyone setting `Optional` to `null` +

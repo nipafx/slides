@@ -29,8 +29,8 @@ Some insights into the discussion...
 
 First some basic rules:
 
-* never, ever, ever just call `get` +
-without checking `isPresent` first
+* never, ever, ever call `get()`/`orElseThrow()` +
+without checking `isPresent()` first
 * prefer functional style +
 (`map`, `flatMap`, `ifPresent`, `orElse`, ...)
 * make everyone setting `Optional` to `null` +
