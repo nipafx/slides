@@ -3,6 +3,7 @@
 ++++
 <table class="toc">
 	<tr><td>Launch Source File ⑪</td></tr>
+	<tr><td>Unified Logging ⑨</td></tr>
 	<tr><td>Multi-Release JARs ⑨</td></tr>
 	<tr><td>Redirected Platform Logging ⑨</td></tr>
 </table>
@@ -15,13 +16,13 @@
 ++++
 <table class="toc">
 	<tr class="toc-current"><td>Launch Source File ⑪</td></tr>
+	<tr><td>Unified Logging ⑨</td></tr>
 	<tr><td>Multi-Release JARs ⑨</td></tr>
 	<tr><td>Redirected Platform Logging ⑨</td></tr>
 </table>
 ++++
 
 Faster feedback with fewer tools.
-
 
 === Launching A Single Source File
 
@@ -99,11 +100,144 @@ hello-java-11
 ++++
 <table class="toc">
 	<tr><td>Launch Source File ⑪</td></tr>
-	<tr class="toc-current"><td>Multi-Release JARs ⑨</td></tr>
+	<tr class="toc-current"><td>Unified Logging ⑨</td></tr>
+	<tr><td>Multi-Release JARs ⑨</td></tr>
 	<tr><td>Redirected Platform Logging ⑨</td></tr>
 </table>
 ++++
 
+Observing the JVM at work.
+
+=== Unified Logging
+
+New logging infrastructure for the JVM +
+(e.g. OS interaction, threading, GC, etc.):
+
+* JVM log messages pass through new mechanism +
+* works similar to known logging frameworks:
+** textual messages
+** log level
+** time stamps
+** meta information (like subsystem)
+* output can be configured with `-Xlog`
+
+=== Unified Logging
+
+image::images/unified-logging.png[role="diagram"]
+
+=== First Try
+
+Plain use of `-Xlog`:
+
+```sh
+$ java -Xlog -version
+
+# truncated a few messages
+> [0.002s][info][os       ] HotSpot is running ...
+# truncated a lot of messages
+```
+
+You can see:
+
+* JVM uptime (2ms)
+* log level (`info`)
+* tags (`os`)
+* message
+
+=== Configuring `-Xlog`
+
+This can be configured:
+
+* which messages to show
+* where messages go
+* what messages should say
+
+How? `-Xlog:help` lists all options.
+
+=== Which Messages?
+
+Configure with _selectors_: `$TAG_SET=$LEVEL`:
+
+```sh
+# "exactly gc" on "warning"
+-Xlog:gc=warning
+# "including gc" on "warning"
+-Xlog:gc*=warning
+# "exactly gc and os" on "debug"
+-Xlog:gc+os=debug
+# "gc" on "debug" and "os" on warning
+-Xlog:gc=debug,os=warning
+```
+
+Defaults:
+
+```sh
+-Xlog       # the same as -Xlog:all
+-Xlog:$TAG  # same as -Xlog:$TAG=info
+```
+
+=== Where Do Messages Go?
+
+Three possible locations:
+
+* `stdout` (default)
+* `stderr`
+* `file=$FILENAME` +
+  (file rotation is possible)
+
+Example:
+
+```sh
+# all debug messages into application.log
+-Xlog:all=debug:file=application.log
+```
+
+=== Which Information?
+
+_Decorators_ define what is shown:
+
+* `time`: time and date (also in ms and ns)
+* `uptime`: time since JVM start (also in ms and ns)
+* `pid`: process identifier
+* `tid`: thread identifier
+* `level`: log level
+* `tags`: tag-set
+
+Example:
+
+```sh
+# show uptime in ms and level
+-Xlog:all:stdout:level,uptimemillis
+```
+
+=== Put Together
+
+Formal syntax:
+
+```sh
+-Xlog:$SELECTORS:$OUTPUT:$DECORATORS:$OUTPUT_OPTS
+```
+
+* `$SELECTORS` are pairs of tag sets and log levels +
+  (the docs call this _what-expression_)
+* `$OUTPUT` is `stdout`, `stderr`, or `file=<filename>`
+* `$DECORATORS` define what is shown
+* `$OUTPUT_OPTS` configure file rotation
+
+Elements have to be defined from left to right. +
+(No skipping!)
+
+
+== JVM Features
+
+++++
+<table class="toc">
+	<tr><td>Launch Source File ⑪</td></tr>
+	<tr><td>Unified Logging ⑨</td></tr>
+	<tr class="toc-current"><td>Multi-Release JARs ⑨</td></tr>
+	<tr><td>Redirected Platform Logging ⑨</td></tr>
+</table>
+++++
 
 "Do this on Java X, do that on Java Y."
 
@@ -186,6 +320,7 @@ Great Success!
 ++++
 <table class="toc">
 	<tr><td>Launch Source File ⑪</td></tr>
+	<tr><td>Unified Logging ⑨</td></tr>
 	<tr><td>Multi-Release JARs ⑨</td></tr>
 	<tr class="toc-current"><td>Redirected Platform Logging ⑨</td></tr>
 </table>
@@ -197,7 +332,8 @@ as backend for JDK logging.
 
 === Loggers and Finders
 
-New logging infrastructure inside the JDK:
+New logging infrastructure for the core libraries +
+(i.e. this does not apply to JVM log messages!)
 
 * new interface `System.Logger`
 * used by JDK classes
@@ -262,7 +398,6 @@ Module system and JDK take care of the rest!
 
 * new version strings (http://openjdk.java.net/jeps/223[JEP 223])
 * GNU-style command line options (http://openjdk.java.net/jeps/293[JEP 293])
-* unified logging (http://openjdk.java.net/jeps/158[JEP 158], http://openjdk.java.net/jeps/271[JEP 271], https://blog.codefx.org/java/unified-logging-with-the-xlog-option/[tutorial])
 * command line flag validation (http://openjdk.java.net/jeps/245[JEP 245])
 * reserved stack areas (http://openjdk.java.net/jeps/270[JEP 270])
 * Unicode 7 & 8 (JEPS http://openjdk.java.net/jeps/227[227] & http://openjdk.java.net/jeps/267[267])
