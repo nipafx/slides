@@ -22,13 +22,13 @@ This is about `jlink`.
 
 === A Minimal JDK Image
 
-Create with `jlink`
+Create with `jlink`:
 
 [source,bash]
 ----
 $ jlink
 #   define output folder for the image
-    --output jdk
+    --output jdk-minimal
 #   where to find modules?
     --module-path $JAVA_HOME/jmods
 #   which modules to add (includes dependencies!)
@@ -39,24 +39,21 @@ Try it out:
 
 [source,bash]
 ----
-$ jdk/bin/java --list-modules
+$ jdk-minimal/bin/java --list-modules
 > java.base
 ----
 
 
 === Image For A Backend
 
-// TODO all these modules are deprecated, find another example
-
-Say you use JAX-WS, JAXP, JAXB, JDBC, and JUL:
+Say you use JAXP, JDBC, and JUL:
 
 [source,bash]
 ----
 $ jlink
-    --output jdk
-    --module-path $JAVA_HOME/jmods
-    --add-modules java.xml.ws,java.xml,java.xml.bind
-	--add-modules java.sql,java.logging
+	--output jdk-backend
+	--module-path $JAVA_HOME/jmods # obsolete in ⑪
+	--add-modules java.xml,java.sql,java.logging
 ----
 
 
@@ -64,22 +61,12 @@ $ jlink
 
 [source,bash]
 ----
-$ jdk/bin/java --list-modules
-> java.activation
+$ jdk-backend/bin/java --list-modules
 > java.base
-> java.compiler
-> java.datatransfer
-> java.desktop
 > java.logging
-> java.management
-> java.prefs
 > java.sql
+> java.transaction.xa
 > java.xml
-> java.xml.bind
-> java.xml.ws
-> java.xml.ws.annotation
-> jdk.httpserver
-> jdk.unsupported
 ----
 
 
@@ -101,18 +88,18 @@ Creating the image:
 [source,bash]
 ----
 $ jlink
-    --output jdk
-    --module-path $JAVA_HOME/jmods:mods
-    --add-modules advent
+	--output app-image
+	--module-path $JAVA_HOME/jmods:mods
+	--add-modules advent
 #   services are not resolves automatically
-    --add-modules factory.surprise,factory.chocolate
+	--add-modules factory.surprise,factory.chocolate
 ----
 
 Launching the app:
 
 [source,bash]
 ----
-jdk/bin/java --module advent
+app-image/bin/java --module advent
 ----
 
 
@@ -123,7 +110,7 @@ You can even create a launcher:
 [source,bash]
 ----
 $ jlink
-    --output jdk
+    --output app-image
     --module-path $JAVA_HOME/jmods:mods
     --add-modules advent,...
 #   --launcher <name>=<module>[/<mainclass>]
@@ -134,7 +121,7 @@ Launching the app:
 
 [source,bash]
 ----
-jdk/bin/calendar
+app-image/bin/calendar
 ----
 
 

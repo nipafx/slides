@@ -277,11 +277,25 @@ $ jar --create
 $ java --module-path mods --module advent
 ----
 
-[NOTE.speaker]
---
-* explain module path
---
 
+=== A single module
+
+++++
+<h3>The Module Path</h3>
+++++
+
+* used by `java`, `javac`, and other tools +
+  to look up dependencies
+* accepts a list of artifacts or folders
+* intended for modular artifacts
+
+Example use:
+
+[source,bash]
+----
+# `mods` is a directory with JARs
+$ java --module-path mods # ...
+----
 
 === A single module
 
@@ -365,4 +379,26 @@ $ jar --create
     ${*.class}
 # launch the application
 $ java --module-path mods --module advent
+----
+
+=== Multiple Modules
+
+++++
+<h3>The Module Source Path</h3>
+++++
+
+With _multi-module compilation_, several +
+modules can be compiled at once.
+
+* used by `javac` to look up source files
+* defines a folder structure
+* uses `*` as placeholder for module name
+
+Example use:
+
+[source,bash]
+----
+javac
+	--module-source-path "./*/src/main/java"
+	# ...
 ----

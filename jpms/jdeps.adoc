@@ -15,7 +15,8 @@ detect dependencies
 
 === Simplest Invocation
 
-```bash
+[source,bash]
+----
 $ jdeps sh-2.6.3.jar
 
 > sh-2.6.3.jar -> java.base
@@ -31,11 +32,12 @@ $ jdeps sh-2.6.3.jar
 >    edu.udo.sh -> java.lang             java.base
 >    edu.udo.sh -> javax.swing           java.desktop
 # ... truncated many more package dependencies ...
-```
+----
 
 === Analyzing Dependencies
 
-```bash
+[source,bash]
+----
 $ jdeps
 	--class-path 'libs/*' -recursive
 	sh-2.6.3.jar
@@ -49,11 +51,12 @@ $ jdeps
 > sh-2.6.3.jar -> libs/guava-18.0.jar
 # ... truncated more module/JAR dependencies...
 # ... truncated many, many package dependencies ...
-```
+----
 
 === Creating Graphs
 
-```bash
+[source,bash]
+----
 $ jdeps
 	--class-path 'libs/*' -recursive
 	--dot-output dots
@@ -61,7 +64,7 @@ $ jdeps
 # sed -i 's/-1.0-SNAPSHOT.jar//g' summary.dot
 # sed -i '/java.base/d' summary.dot
 $ dot -Tpng -O dots/summary.dot
-```
+----
 
 [state="empty",background-color="white"]
 === !
@@ -70,9 +73,16 @@ image::images/jdeps-scaffoldhunter-jars.png[background, size=contain]
 
 === JDK-Internal APIs
 
-```bash
-$ jdeps
-	--class-path 'libs/*' -recursive
-	--jdk-internals
+[source,bash]
+----
+$ jdeps --jdk-internals
+	-recursive --class-path 'libs/*'
 	sh-2.6.3.jar
-```
+
+> batik-codec.jar -> JDK removed internal API
+>     JPEGImageWriter -> JPEGCodec
+> guava-18.0.jar -> jdk.unsupported
+>     Striped64 -> Unsafe
+> sh-2.6.3.jar -> java.desktop
+>     SteppedComboBox -> WindowsComboBoxUI
+----

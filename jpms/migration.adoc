@@ -1,7 +1,7 @@
 == Migration Challenges
 
 ++++
-<h3>What to look out for<br>when running on JDK 9</h3>
+<h3>What to look out for<br>when running on JDK 11</h3>
 ++++
 
 
@@ -10,7 +10,7 @@ image::images/broken-glass.jpg[background, size=cover]
 
 Some internal changes https://blog.codefx.org/java/java-9-migration-guide/[break existing code]!
 
-Just by running on JDK 9 +
+Just by running on JDK 11 +
 (even without modularizing the application).
 
 // http://openjdk.java.net/jeps/261[JEP 261] contains a list of risks.
@@ -78,10 +78,10 @@ image::images/java-ee.jpg[background, size=cover]
 * _java.xml.ws_ (JAX-WS packages)
 * _java.xml.ws.annotation_ (`javax.annotation`)
 
-These are
+These were
 
-* deprecated for removal
-* not resolved by default
+* deprecated for removal in ⑨
+* removed in ⑪
 
 
 === What to look for?
@@ -104,9 +104,7 @@ $ jdeps -summary sh-2.6.3.jar
 
 === What to do?
 
-* pick https://stackoverflow.com/a/48204154/2525313[a third-party implementation]
-* add Java EE platform modules +
-with `--add-modules`
+Pick https://stackoverflow.com/a/48204154/2525313[a third-party implementation].
 
 
 === Split Packages
@@ -215,8 +213,7 @@ Background:
 
 And there are new version strings:
 
-* goodbye `1.9.0_31`, hello `9.1.4` +
-(soon  `18.3`?)
+* goodbye `1.9.0_31`, hello `9.0.1` +
 
 
 === General Advice I
@@ -240,4 +237,4 @@ image::images/sign.jpg[background, size=cover]
 ** make sure they're alive
 ** *get them up to date!*
 ** or look for alternatives
-* download Java 9 and *try it!*
+* download Java 11 and *try it!*

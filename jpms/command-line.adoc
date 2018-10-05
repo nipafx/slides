@@ -37,6 +37,7 @@ $ java --module-path mods
 ----
 
 
+////
 === Add Java EE Modules
 
 Java EE modules are not resolved by default! +
@@ -50,6 +51,7 @@ Java EE modules are not resolved by default! +
 
 They need to be added with `--add-modules` or +
 be replaced with https://stackoverflow.com/a/48204154/2525313[third party dependencies].
+////
 
 === Add Readability Edges
 
