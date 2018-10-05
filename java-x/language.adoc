@@ -75,17 +75,56 @@ var reader = new BufferedReader(
 		connection.getInputStream()));
 ```
 
+=== Locality
+
+How much information is used for inference?
+
+* type inference can be +
+  arbitrarily complex/powerful
+* critical resource is not +
+  compiler but developer
+* code should be readable +
+  (without compiler/IDE)
+
+⇝ Better to keep it simple!
+
+=== "Action at a distance"
+
+```java
+// inferred as `int`
+var id = 123;
+if (id < 100) {
+	// very long branch
+} else {
+	// oh boy, much more code...
+}
+
+// now we add this line:
+id = "124";
+```
+
+What type should `id` be?
+
+Where does the error show up?
+
 === Rules of `var`
 
-// [%step]
-* not a keyword, but a _reserved type name_ +
-  ⇝ variables/fields can be named `var`
+Hence, `var` only works in limited scopes:
+
+[%step]
+* compiler infers type from right-hand side +
+  ⇝ rhs has to *exist* and *define a type*
 * only works for local variables, `for`, `try` +
   ⇝ no `var` on fields or in method signatures
 * also on lambda parameters ⑪ +
   ⇝ annotate inferred type on lambda parameters
-* compiler infers type from right-hand side +
-  ⇝ rhs has to *exist* and *define a type*
+
+=== Rules of `var`
+
+Two more:
+
+* not a keyword, but a _reserved type name_ +
+  ⇝ variables/fields can be named `var`
 * compiler writes type into bytecode +
   ⇝ no run-time component
 
@@ -94,9 +133,9 @@ var reader = new BufferedReader(
 This *is* about readability!
 
 * less redundancy
-* aligned variable names
-* more focus on variable names
 * more intermediate variables
+* more focus on variable names
+* aligned variable names
 
 === Aligned Variable Names
 
@@ -118,17 +157,41 @@ Ever wrote a lambda without declaring types?
 rhetoricalQuestion.answer(yes -> "see my point?");
 ```
 
+=== Style Guidelines
+
+Principles from the
+http://openjdk.java.net/projects/amber/LVTIstyle.html[official style guidelines]:
+
+[%step]
+. Reading code is more important than writing it.
+. Code should be clear from local reasoning.
+. Code readability shouldn't depend on IDEs.
+. Explicit types are a tradeoff.
+
+=== Style Guidelines
+
+Guidelines:
+
+[%step]
+. Choose variable names that provide useful info.
+. Minimize the scope of local variables.
+. Consider `var` when the initializer provides sufficient information to the reader.
+. Use `var` to break up chained or nested expressions.
+. Don't worry too much about "programming to the interface".
+. Take care when using `var` with diamonds or generics.
+. Take care when using `var` with literals.
+
 === More on `var`
 
 * First Contact With `var` In Java 10 +
 💻 https://blog.codefx.org/java/java-10-var-type-inference/[tiny.cc/java-var] /
 ▶ http://tiny.cc/java-var-yt[tiny.cc/java-var-yt]
+* https://snyk.io/blog/local-type-inference-java-cheat-sheet[cheat sheet] (*⇜ print when getting started!*)
+* http://openjdk.java.net/projects/amber/LVTIstyle.html[official style guidelines]
 * `var` and ...
 ** https://blog.codefx.org/java/intersection-types-var/[intersection types]
 ** https://blog.codefx.org/java/traits-var/[traits]
 ** https://blog.codefx.org/java/tricks-var-anonymous-classes/[anonymous classes]
-* http://openjdk.java.net/projects/amber/LVTIstyle.html[official style guidelines]
-* https://snyk.io/blog/local-type-inference-java-cheat-sheet[cheat sheet]
 
 
 
