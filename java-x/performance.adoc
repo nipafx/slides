@@ -48,7 +48,8 @@ Idea behind class-data sharing:
 
 === Effects
 
-My experiments with a large desktop app:
+My experiments with a large desktop app +
+(focusing on classes required for launch):
 
 * archive has 250 MB for ~24k classes
 * launch time reduced from 15s to 12s
@@ -60,7 +61,7 @@ My experiments with a large desktop app:
 Two variants:
 
 CDS:: Just for JDK classes +
-(⑫ includes archive - http://openjdk.java.net/jeps/341[JEP 341])
+(⑫ includes archive -- http://openjdk.java.net/jeps/341[JEP 341])
 AppCDS:: JDK + application classes
 
 We will focus on AppCDS.
@@ -71,9 +72,8 @@ Create a list of classes
 
 ```sh
 $ java
-	-XX:+UseAppCDS
 	-XX:DumpLoadedClassList=classes.lst
-	# class path for dependencies
+	# [... class path for dependencies ...]
 	-jar app.jar
 ```
 
@@ -86,7 +86,6 @@ Use the list to create the archive:
 
 ```sh
 $ java
-	-XX:+UseAppCDS
 	-Xshare:dump
 	-XX:SharedClassListFile=classes.lst
 	-XX:SharedArchiveFile=app-cds.jsa
@@ -101,23 +100,64 @@ Use the archive:
 
 ```sh
 $ java
-	-XX:+UseAppCDS
 	-Xshare:on
 	-XX:SharedArchiveFile=app-cds.jsa
 	# class path for dependencies
 	-jar app.jar
 ```
 
+=== Heed The Class Path
+
+What are the two biggest challenges +
+in software development?
+
+[%step]
+. naming
+. cache invalidation
+. off-by-one errors
+
+=== Heed The Class Path
+
+The archive is a cache!
+
+It's invalid when:
+
+* a JAR is updated
+* class path is reordered
+* a JAR is added +
+  (unless when appended)
+
+=== Heed The Class Path
+
+To invalidate the archive:
+
+* during creation:
+** Java stores used class path in archive
+** class path may not contain wild cards
+** class path may not contain exploded JARs
+* when used: +
+** Java checks whether stored path +
+   is prefix of current path
+
+=== Module Path?
+
+Class path, class path... +
+what about the module path?
+
+[quote, 'http://openjdk.java.net/jeps/310[JEP 310]']
+____
+In this release, CDS cannot archive classes from user-defined modules (such as those specified in `--module-path`).
+We plan to add that support in a future release.
+____
+
 === More On (App)CDS
 
 For more, read this article: +
 https://blog.codefx.org/java/application-class-data-sharing/[tiny.cc/app-cds]
 
-* observe sharing with `-Xlog:class+load` +
-  (https://blog.codefx.org/java/unified-logging-with-the-xlog-option/[unified logging])
-* no wildcards or exploded JARs on class path
-* archive invalidation
-* module path not yet supported
+Observe sharing with +
+`-Xlog:class+load` +
+(https://blog.codefx.org/java/unified-logging-with-the-xlog-option/[unified logging])
 
 
 
