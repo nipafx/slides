@@ -1,0 +1,512 @@
+== Updated APIs
+
+++++
+<table class="toc">
+	<tr><td>String ⑪</td></tr>
+	<tr><td>Stream ⑨⑩</td></tr>
+	<tr><td>Optional ⑨⑩⑪</td></tr>
+	<tr><td>OS Processes ⑨</td></tr>
+</table>
+++++
+
+Existing APIs are continuously improved.
+
+
+
+== Updated APIs
+
+++++
+<table class="toc">
+	<tr class="toc-current"><td>String ⑪</td></tr>
+	<tr><td>Stream ⑨⑩</td></tr>
+	<tr><td>Optional ⑨⑩⑪</td></tr>
+	<tr><td>OS Processes ⑨</td></tr>
+</table>
+++++
+
+Small improvements to `String`.
+
+=== Strip White Space
+
+Getting rid of white space:
+
+```java
+String strip();
+String stripLeading();
+String stripTrailing();
+```
+
+Only at beginning and end of string:
+
+```java
+" foo bar ".strip().equals("foo bar");
+```
+
+=== What About Trim?
+
+Wait, what about `trim()`?
+
+* `trim()` defines white space as:
++
+____
+any character whose codepoint +
+is less than or equal to `'U+0020'` +
+(the space character)
+____
+* `strip()` relies on `Character::isWhitespace`, +
+  which covers many more cases
+
+=== Is Blank?
+
+Is a string only white space?
+
+```java
+boolean isBlank();
+```
+
+Functionally equivalent to:
+
+```java
+string.isBlank() == string.strip().isEmpty();
+```
+
+=== Life Hack
+
+As soon as Java APIs get new method, +
+scour StackOverflow for easy karma!
+
+image::images/so-repeat-string-q.png[role="diagram"]
+
+=== Life Hack
+
+Formerly accepted answer:
+
+image::images/so-repeat-string-a-old.png[role="diagram"]
+
+😍
+
+=== Life Hack
+
+Ta-da!
+
+image::images/so-repeat-string-a.png[role="diagram"]
+
+=== Streaming Lines
+
+Processing a string's lines:
+
+```java
+Stream<String> lines();
+```
+
+* splits a string on `"\n"`, `"\r"`, `"\r\n"`
+* lines do not include terminator
+* more performant than `split("\R")`
+* lazy!
+
+
+
+== Updated APIs
+
+++++
+<table class="toc">
+	<tr><td>String ⑪</td></tr>
+	<tr class="toc-current"><td>Stream ⑨⑩</td></tr>
+	<tr><td>Optional ⑨⑩⑪</td></tr>
+	<tr><td>OS Processes ⑨</td></tr>
+</table>
+++++
+
+Small improvements to Java 8 streams.
+
+=== Of Nullable ⑨
+
+Create a stream of zero or one elements:
+
+```java
+long zero = Stream.ofNullable(null).count();
+long one = Stream.ofNullable("42").count();
+```
+
+=== Iterate ⑨
+
+To use `for` even less...
+
+```java
+iterate(
+	T seed,
+	Predicate<T> hasNext,
+	UnaryOperator<T> next);
+```
+
+Example:
+
+```java
+Stream
+	.iterate(1, i -> i<=10, i -> 2*i)
+	.forEach(System.out::println);
+// output: 1 2 4 8
+```
+
+=== Iterate ⑨
+
+Counter Example:
+
+```java
+Enumeration<Integer> en = // ...
+Stream.iterate(
+		en.nextElement(),
+		el -> en.hasMoreElements(),
+		el -> en.nextElement())
+	.forEach(System.out::println);
+```
+
+* first `nextElement()`
+* then `hasMoreElements()`
+* ⇝ fail
+
+=== Take While ⑨
+
+Stream as long as a condition is true:
+
+```java
+Stream<T> takeWhile(Predicate<T> predicate);
+```
+
+Example:
+
+```java
+Stream.of("a-", "b-", "c-", "", "e-")
+	.takeWhile(s -> !s.isEmpty());
+	.forEach(System.out::print);
+
+// output: a-b-c-
+```
+
+=== Drop While ⑨
+
+Ignore as long as a condition is true:
+
+```java
+Stream<T> dropWhile(Predicate<T> predicate);
+```
+
+Example:
+
+```java
+Stream.of("a-", "b-", "c-", "de-", "f-")
+	.dropWhile(s -> s.length() <= 2);
+	.forEach(System.out::print);
+
+// output: de-f-
+```
+
+=== Collect Unmodifiable ⑩
+
+Create unmodifiable collections +
+(in the sense of `List::of` et al) +
+with `Collectors`:
+
+```java
+Collector<T, ?, List<T>> toUnmodifiableList();
+
+Collector<T, ?, Set<T>> toUnmodifiableSet();
+
+Collector<T, ?, Map<K,U>> toUnmodifiableMap(
+	Function<T, K> keyMapper,
+	Function<T, U> valueMapper);
+// plus overload with merge function
+```
+
+
+
+== Updated APIs
+
+++++
+<table class="toc">
+	<tr><td>String ⑪</td></tr>
+	<tr><td>Stream ⑨⑩</td></tr>
+	<tr class="toc-current"><td>Optional ⑨⑩⑪</td></tr>
+	<tr><td>OS Processes ⑨</td></tr>
+</table>
+++++
+
+Small improvements to Java 8 `Optional`.
+
+=== Is Empty ⑪
+
+No more `!foo.isPresent()`:
+
+```java
+boolean isEmpty()
+```
+
+Does exactly what +
+you think it does.
+
+=== Or Else Throw ⑩
+
+`Optional::get` invites misuse +
+by calling it reflexively.
+
+Maybe `get` wasn't the best name? +
+New:
+
+```java
+T orElseThrow()
+```
+
+Works exactly as `get`, +
+but more self-documenting.
+
+=== Aligned Names
+
+Name in line with other accessors:
+
+```java
+T orElse(T other)
+T orElseGet(Supplier<T> supplier)
+T orElseThrow()
+	throws NoSuchElementException
+T orElseThrow(
+	Supplier<X> exceptionSupplier)
+	throws X
+```
+
+=== Get Considered Harmful
+
+https://bugs.openjdk.java.net/browse/JDK-8160606[JDK-8160606]
+will deprecate +
+`Optional::get`.
+
+* when?
+* for removal?
+
+We'll see...
+
+=== Or ⑨
+
+Choose a non-empty `Optional`:
+
+```java
+Optional<T> or(Supplier<Optional<T>> supplier);
+```
+
+=== Find in Many Places
+
+```java
+public interface Search {
+	Optional<Customer> inMemory(String id);
+	Optional<Customer> onDisk(String id);
+	Optional<Customer> remotely(String id);
+
+	default Optional<Customer> anywhere(String id) {
+		return inMemory(id)
+			.or(() -> onDisk(id))
+			.or(() -> remotely(id));
+	}
+
+}
+```
+
+=== If Present Or Else ⑨
+
+Like `ifPresent` but do something if empty:
+
+```java
+void ifPresentOrElse(
+	Consumer<T> action,
+	Runnable emptyAction);
+```
+
+Example:
+
+```java
+void logLogin(String id) {
+	findCustomer(id)
+		.ifPresentOrElse(
+			this::logCustomerLogin,
+			() -> logUnknownLogin(id));
+}
+```
+
+=== Stream ⑨
+
+Turns an `Optional` into a `Stream` +
+of zero or one elements:
+
+```java
+Stream<T> stream();
+```
+
+=== Filter-Map ...
+
+```java
+private Optional<Customer> findCustomer(String id) {
+	// ...
+}
+
+Stream<Customer> findCustomers(List<String> ids) {
+	return ids.stream()
+		.map(this::findCustomer)
+		// now we have a Stream<Optional<Customer>>
+		.filter(Optional::isPresent)
+		.map(Optional::get)
+}
+```
+
+[transition=none]
+=== ... in one Step
+
+```java
+private Optional<Customer> findCustomer(String id) {
+	// ...
+}
+
+Stream<Customer> findCustomers(List<String> ids) {
+	return ids.stream()
+		.map(this::findCustomer)
+		// now we have a Stream<Optional<Customer>>
+		// we can now filter-map in one step
+		.flatMap(Optional::stream)
+}
+```
+
+=== From Eager to Lazy
+
+`List<Order> getOrders(Customer c)` is expensive:
+
+```java
+List<Order> findOrdersForCustomer(String id) {
+	return findCustomer(id)
+		.map(this::getOrders) // eager
+		.orElse(new ArrayList<>());
+}
+
+Stream<Order> findOrdersForCustomer(String id) {
+	return findCustomer(id)
+		.stream()
+		.map(this::getOrders) // lazy
+		.flatMap(List::stream);
+}
+```
+
+
+
+== Updated APIs
+
+++++
+<table class="toc">
+	<tr><td>String ⑪</td></tr>
+	<tr><td>Stream ⑨⑩</td></tr>
+	<tr><td>Optional ⑨⑩⑪</td></tr>
+	<tr class="toc-current"><td>OS Processes ⑨</td></tr>
+</table>
+++++
+
+Improving interaction with OS processes.
+
+=== Simple Example
+
+```shell
+ls /home/nipa/tmp | grep pdf
+```
+
+```java
+Path dir = Paths.get("/home/nipa/tmp");
+ProcessBuilder ls = new ProcessBuilder()
+		.command("ls")
+		.directory(dir.toFile());
+ProcessBuilder grepPdf = new ProcessBuilder()
+		.command("grep", "pdf")
+		.redirectOutput(Redirect.INHERIT);
+List<Process> lsThenGrep = ProcessBuilder
+		.startPipeline(List.of(ls, grepPdf));
+```
+
+=== Extended `Process`
+
+Cool new methods on `Process`:
+
+* `boolean supportsNormalTermination();`
+* `long pid();`
+* `CompletableFuture<Process> onExit();`
+* `Stream<ProcessHandle> children();`
+* `Stream<ProcessHandle> descendants();`
+* `ProcessHandle toHandle();`
+
+=== New `ProcessHandle`
+
+New functionality actually comes from `ProcessHandle`.
+
+Interesting `static` methods:
+
+* `Stream<ProcessHandle> allProcesses();`
+* `Optional<ProcessHandle> of(long pid);`
+* `ProcessHandle current();`
+
+=== More Information
+
+`ProcessHandle` can return `Info`:
+
+* command, arguments
+* start time
+* CPU time
+
+
+
+== A Mixed Bag Of Updated&nbsp;APIs
+
+*In Java 9:*
+
+* OASIS XML Catalogs 1.1 (http://openjdk.java.net/jeps/268[JEP 268]), +
+Xerces 2.11.0 (http://openjdk.java.net/jeps/255[JEP 255])
+// TODO does this include Xerxes support for XSLT 2?
+* Unicode support in +
+`PropertyResourceBundle` (http://openjdk.java.net/jeps/226[JEP 226])
+
+Many lower-level APIs.
+
+////
+TODO
+* how to get line by line out of process
+* JKS keystore is read-only
+* mention diff Javadoc for version updates
+////
+
+=== A Mixed Bag Of New&nbsp;I/O&nbsp;Methods
+
+*In Java 10 & 11:*
+
+```java
+Path.of(String); // ~ Paths.get(String)
+
+Files.readString(Path);
+Files.writeString(Path, CharSequence, ...);
+
+Reader.transferTo(Writer);
+ByteArrayInputStream.transferTo(OutputStream);
+
+Reader.nullReader();
+Writer.nullWriter();
+InputStream.nullInputStream();
+OutputStream.nullOutputStream();
+```
+
+// TODO expand I/O additions
+
+=== A Mixed Bag Of New&nbsp;Methods
+
+*In Java 10:*
+
+```java
+DateTimeFormatter.localizedBy(Locale locale);
+```
+
+*In Java 11:*
+
+```java
+Collection.toArray(IntFunction<T[]> generator);
+Predicate.not(Predicate<T> target); // static
+Pattern.asMatchPredicate(); // ⇝ Predicate<String>
+```

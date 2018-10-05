@@ -1,0 +1,418 @@
+== New APIs
+
+++++
+<table class="toc">
+	<tr><td>Collection Factories ⑨⑩</td></tr>
+	<tr><td>Reactive Streams ⑨</td></tr>
+	<tr><td>Reactive HTTP/2 Client ⑪</td></tr>
+	<tr><td>Stack-Walking ⑨</td></tr>
+</table>
+++++
+
+New APIs are added over time.
+
+
+
+== New APIs
+
+++++
+<table class="toc">
+	<tr class="toc-current"><td>Collection Factories ⑨⑩</td></tr>
+	<tr><td>Reactive Streams ⑨</td></tr>
+	<tr><td>Reactive HTTP/2 Client ⑪</td></tr>
+	<tr><td>Stack-Walking ⑨</td></tr>
+</table>
+++++
+
+Easy creation of ad-hoc collections.
+
+=== Hope is Pain
+
+Wouldn't this be awesome?
+
+```java
+List<String> list = [ "a", "b", "c" ];
+Map<String, Integer> map = [ "one" = 1, "two" = 2 ];
+```
+
+Not gonna happen!
+
+* language change is costly
+* binds language to collection framework
+* strongly favors specific collections
+
+=== Next Best Thing ⑨
+
+```java
+List<String> list = List.of("a", "b", "c");
+Map<String, Integer> mapImmediate = Map.of(
+		"one", 1,
+		"two", 2,
+		"three", 3);
+Map<String, Integer> mapEntries = Map.ofEntries(
+		entry("one", 1),
+		entry("two", 2),
+		entry("three", 3));
+```
+
+[NOTE.speaker]
+--
+Q: Where does `entry` come from? `Map`
+Q: Overloads on `of`? 10
+Q: Overloads on `Map::ofEntries`? 1
+--
+
+=== Interesting Details
+
+* collections are immutable +
+(no immutability in type system, though)
+* collections are value-based
+* `null` elements/keys/values are forbidden
+* iteration order is random between JVM starts +
+(except for lists, of course!)
+
+=== Immutable Copies ⑩
+
+Creating immutable copies:
+
+```java
+/* on List */ List<E> copyOf(Collection<E> coll);
+/* on Set */ Set<E> copyOf(Collection<E> coll);
+/* on Map */ Map<K, V> copyOf(Map<K,V> map);
+```
+
+Great for defensive copies:
+
+```java
+public Customer(List<Order> orders) {
+	this.orders = List.copyOf(orders);
+}
+```
+
+
+
+== New APIs
+
+++++
+<table class="toc">
+	<tr><td>Collection Factories ⑨⑩</td></tr>
+	<tr class="toc-current"><td>Reactive Streams ⑨</td></tr>
+	<tr><td>Reactive HTTP/2 Client ⑪</td></tr>
+	<tr><td>Stack-Walking ⑨</td></tr>
+</table>
+++++
+
+The JDK as common ground +
+for reactive stream libraries.
+
+=== Reactive Types
+
+`Publisher`::
+* produces items to consume
+* can be subscribed to
+`Subscriber`::
+* subscribes to publisher
+* `onNext`, `onError`, `onComplete`
+`Subscription`::
+* connection between publisher and subscriber
+* `request`, `cancel`
+
+=== Reactive Flow
+==== Subscribing
+
+* create `Publisher pub` and `Subscriber sub`
+* call `pub.subscribe(sub)`
+* pub creates `Subscription script` +
+and calls `sub.onSubscription(script)`
+* `sub` can store `script`
+
+=== Reactive Flow
+==== Streaming
+
+* `sub` calls `script.request(10)`
+* `pub` calls `sub.onNext(element)` (max 10x)
+
+==== Canceling
+
+* `pub` may call `sub.OnError(err)` +
+or `sub.onComplete()`
+* `sub` may call `script.cancel()`
+
+=== Reactive APIs?
+
+JDK only provides three interfaces +
+and one simple implementation.
+
+(Also called *Flow API*.)
+
+No JDK API uses them. +
+(No reactive HTTP connections etc.)
+
+
+
+== New APIs
+
+++++
+<table class="toc">
+	<tr><td>Collection Factories ⑨⑩</td></tr>
+	<tr><td>Reactive Streams ⑨</td></tr>
+	<tr class="toc-current"><td>Reactive HTTP/2 Client ⑪</td></tr>
+	<tr><td>Stack-Walking ⑨</td></tr>
+</table>
+++++
+
+HTTP/2! And reactive! Woot!
+
+=== Basic Flow
+
+To send a request and get a response:
+
+* use builder to create immutable `HttpClient`
+* use builder to create immutable `HttpRequest`
+* pass request to client to receive `HttpResponse`
+
+=== Building a Client
+
+```java
+HttpClient client = HttpClient.newBuilder()
+	.version(HTTP_2)
+	.connectTimeout(ofSeconds(5))
+	.followRedirects(ALWAYS)
+	.build();
+```
+
+More options:
+
+* proxy
+* SSL context/parameters
+* authenticator
+* cookie handler
+
+=== Building a Request
+
+```java
+HttpRequest request = HttpRequest.newBuilder()
+	.GET()
+	.uri(URI.create("http://codefx.org"))
+	.setHeader("header-name", "header-value")
+	.build();
+```
+
+* more HTTP methods (duh!)
+* individual timeout
+* individual HTTP version
+* request `"100 CONTINUE"` before sending body
+
+=== Receiving a Response
+
+```java
+// the generic `String`...
+HttpResponse<String> response = client.send(
+	request,
+	// ... comes from this body handler ...
+	BodyHandlers.ofString());
+// ... and defines `body()`s return type
+String body = response.body();
+```
+
+* status code, headers, SSL session
+* request
+* intermediate responses +
+  (redirection, authentication)
+
+=== Reactive?
+
+Great, but where's the reactive sauce?
+
+Three places:
+
+* send request asynchronously
+* provide request body with +
+  `Publisher<ByteBuffer>`
+* receive response body with +
+  `Subscriber<String>` or +
+  `Subscriber<List<ByteBuffer>>`
+
+=== Asynchronous Request
+
+Submit request to thread pool until completes:
+
+```java
+CompletableFuture<String> responseBody = client
+	.sendAsync(request, BodyHandlers.ofString())
+	.thenApply(this::logHeaders)
+	.thenApply(HttpResponse::body);
+```
+
+* uses "a default executor" to field requests +
+// (currently `Executors::newCachedThreadPool`)
+* pool can be defined when client is built with +
+  `HttpClient.Builder.executor(Executor)`
+
+=== Reactive Request Body
+
+If a request has a long body, +
+no need to prepare it in its entirety:
+
+```java
+Publisher<ByteBuffer> body = // ...
+HttpRequest post = HttpRequest.newBuilder()
+	.POST(BodyPublishers.fromPublisher(body))
+	.build();
+client.send(post, BodyHandlers.ofString())
+```
+
+* `client` subscribes to `body`
+* as `body` publishes byte buffers, +
+  `client` sends them over the wire
+
+=== Reactive Response Body
+
+If a response has a long body, +
+no need to wait before processing:
+
+```java
+Subscriber<String> body = // ...
+HttpResponse<Void> response = client.send(
+	request,
+	BodyHandlers.fromLineSubscriber(subscriber));
+```
+
+* `client` subscribes `body` to itself
+* as `client` receives response bytes, +
+  it parses to lines and passes to `body`
+
+=== Reactive Benefits
+
+Benefits of reactive +
+request/response bodies:
+
+* receiver applies backpressure:
+** on requests, `client`
+** on responses, `body`
+* `body` controls memory usage
+* early errors lead to partial processing
+* need "reactive tools" to create `body` +
+  from higher-level Java objects (e.g. `File`)
+
+=== Web Sockets
+
+*Short version:*
+
+* there's a class `WebSocket`
+* `send[Text|Binary|...]` methods +
+return `CompletableFuture`
+* socket calls `Listener` methods +
+`on[Text|Binary|...]`
+
+(`WebSocket` and `Listener` behave like +
+`Subscription` and `Subscriber`.)
+
+*No long version.* 😛
+
+
+
+== New APIs
+
+++++
+<table class="toc">
+	<tr><td>Collection Factories ⑨⑩</td></tr>
+	<tr><td>Reactive Streams ⑨</td></tr>
+	<tr><td>Reactive HTTP/2 Client ⑪</td></tr>
+	<tr class="toc-current"><td>Stack-Walking ⑨</td></tr>
+</table>
+++++
+
+Examining the stack faster and easier.
+
+=== `StackWalker::forEach`
+
+```java
+void forEach (Consumer<StackFrame>);
+```
+
+```java
+public static void main(String[] args) { one(); }
+static void one() { two(); }
+static void two() {
+	StackWalker.getInstance()
+		.forEach(System.out::println);
+}
+
+// output
+StackWalkingExample.two(StackWalking.java:14)
+StackWalkingExample.one(StackWalking.java:11)
+StackWalkingExample.main(StackWalking.java:10)
+```
+
+=== `StackWalker::walk`
+
+```java
+T walk (Function<Stream<StackFrame>, T>);
+```
+
+```java
+static void three() {
+	String line = StackWalker.getInstance().walk(
+		frames -> frames
+			.filter(f -> f.getMethodName().contains("one"))
+			.findFirst()
+			.map(f -> "Line " + f.getLineNumber())
+			.orElse("Unknown line");
+	);
+	System.out.println(line);
+}
+
+// output
+Line 11
+```
+
+=== Options
+
+`getInstance` takes options as arguments:
+
+* `SHOW_REFLECT_FRAMES` for reflection frames
+* `SHOW_HIDDEN_FRAMES` e.g. for lambda frames
+* `RETAIN_CLASS_REFERENCE` for `Class<?>`
+
+=== Frames and Traces
+
+`forEach` and `walk` operate on `StackFrame`:
+
+* class and method name
+* class as `Class<?>`
+* bytecode index and isNative
+
+Can upgrade to `StackTraceElement` (expensive):
+
+* file name and line number
+
+=== Performance I
+
+image::images/stack-walker-vs-exception.png[role="diagram"]
+
+=== Performance II
+
+image::images/stack-walker-limit-with-estimated-size.png[role="diagram"]
+
+=== Performance III
+
+* creating `StackTraceElement` is expensive +
+(for file name and line number)
+* lazy evaluation pays off for partial traversal
+
+(Benchmarks performed by https://twitter.com/arnaudroger[Arnaud Roger])
+
+
+
+== A Mixed Bag Of New APIs
+
+*In Java 9:*
+
+* multi-resolution images (http://openjdk.java.net/jeps/251[JEP 251])
+* native desktop integration (http://openjdk.java.net/jeps/272[JEP 272])
+* deserialization filter (http://openjdk.java.net/jeps/290[JEP 290])
+* DTLS (http://openjdk.java.net/jeps/219[JEP 219]),
+  TLS ALPN and OCSP stapling (http://openjdk.java.net/jeps/244[JEP 244])
+
+Many lower-level APIs.
