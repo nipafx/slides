@@ -36,6 +36,7 @@ default Stream<E> stream() {
 	<tr class="toc-current"><td>Syntax &amp; Semantics</td></tr>
 	<tr><td>Existing Functionality</td></tr>
 	<tr><td>Kinds of Default Methods</td></tr>
+	<tr><td>Fluent Decorators</td></tr>
 	<tr><td>Interface Evolution</td></tr>
 	<tr><td>Summary</td></tr>
 </table>
@@ -188,6 +189,7 @@ Reusing code in default methods.
 	<tr><td>Syntax &amp; Semantics</td></tr>
 	<tr class="toc-current"><td>Existing Functionality</td></tr>
 	<tr><td>Kinds of Default Methods</td></tr>
+	<tr><td>Fluent Decorators</td></tr>
 	<tr><td>Interface Evolution</td></tr>
 	<tr><td>Summary</td></tr>
 </table>
@@ -238,6 +240,7 @@ comparator = Comparator.nullsLast(comparator);
 	<tr><td>Syntax &amp; Semantics</td></tr>
 	<tr><td>Existing Functionality</td></tr>
 	<tr class="toc-current"><td>Kinds of Default Methods</td></tr>
+	<tr><td>Fluent Decorators</td></tr>
 	<tr><td>Interface Evolution</td></tr>
 	<tr><td>Summary</td></tr>
 </table>
@@ -301,6 +304,142 @@ default Predicate<T> and(Predicate<? super T> p) {
 	<tr><td>Syntax &amp; Semantics</td></tr>
 	<tr><td>Existing Functionality</td></tr>
 	<tr><td>Kinds of Default Methods</td></tr>
+	<tr class="toc-current"><td>Fluent Decorators</td></tr>
+	<tr><td>Interface Evolution</td></tr>
+	<tr><td>Summary</td></tr>
+</table>
+++++
+
+=== Decorator Pattern
+
+image::images/decorator.png[role="diagram"]
+
+```java
+Component component = /*...*/;
+Component decorated =
+	new SomeDecorator(
+		new AnotherDecorator(component));
+```
+
+=== Fluent Decorators
+
+With lambda expressions and default methods +
+we can apply decorators fluently:
+
+```java
+Component component = /*...*/;
+Component decorated = DecoratingComponent.from(component)
+	.some() // applies `SomeDecorator`
+	.another("param") // applies `AnotherDecorator`
+	.decorate(YetAnotherDecorator::new);
+```
+
+How?
+
+=== Fluent Decorators
+
+image::images/decorator-8.png[role="diagram"]
+
+The `DecoratingComponent` interface:
+
+* extends `Component`
+* is implemented by all decorators
+* offers methods that wrap `this` +
+  in decorator and return it
+
+=== Decorating Component
+
+```java
+interface DecoratingC extends Component {
+
+	static DecoratingC from(Component component) {
+		return new DecoratingComponent() {
+			// implement by forwarding to component
+		};
+	}
+
+	default DecoratingC decorate(
+		Function<DecoratingC, DecoratingC> decorator) {
+		return decorator.apply(this);
+	}
+
+}
+```
+
+=== Generic Decoration
+
+This _generic decoration_ +
+allows chains like the following:
+
+```java
+Component component = /*...*/;
+Component decorated = DecoratingComponent.from(component)
+	.decorate(SomeDecorator::new);
+	.decorate(c -> new AnotherDecorator(c, "param"));
+	.decorate(YetAnotherDecorator::new);
+```
+
+=== Specific Decoration
+
+```java
+interface DecoratingC extends Component {
+
+	default DecoratingC some()
+		return decorate(SomeDecorator::new);
+	}
+
+	default DecoratingC another(String s)
+		return decorate(
+			c -> new AnotherDecorator(c, s));
+	}
+
+}
+```
+
+=== Fluent Decoration
+
+Real-life example:
+
+```java
+HyperlinkListener listener =
+	this::changeHtmlViewBackgroundColor;
+listener = DecoratingHyperlinkListener.from(listener)
+	.onHoverMakeVisible(urlLabel)
+	.onHoverSetUrlOn(urlLabel)
+	.logEvents()
+	.decorate(l ->
+		new OnActivateHighlightComponent(l, urlLabel))
+	.decorate(OnEnterLogUrl::new);
+```
+
+=== Why Default Methods?
+
+Why not put these methods on `AbstractDecorator`?
+
+* clumps up responsibilities:
++
+====
+** enabling easy implementation of `Component`
+** decorating instances of `Component`
+====
++
+(change for different reasons)
+* requires implementation of abstract helper class
+* makes abstract helper class prominent
+
+=== Exercise 2
+
+Implement a fluent decorator API.
+
+
+== Default Methods
+
+++++
+<table class="toc">
+	<tr><td>Syntax &amp; Semantics</td></tr>
+	<tr><td>Existing Functionality</td></tr>
+	<tr><td>Kinds of Default Methods</td></tr>
+	<tr><td>Fluent Decorators</td></tr>
 	<tr class="toc-current"><td>Interface Evolution</td></tr>
 	<tr><td>Summary</td></tr>
 </table>
@@ -487,5 +626,7 @@ methods just like classes
 Many existing and new interfaces +
 have default methods.
 
-You can use them to evolve interfaces +
-without breaking clients.
+Specific use cases:
+
+* create fluent decorator APIs
+* evolve interfaces without breaking clients
