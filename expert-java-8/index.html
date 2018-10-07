@@ -33,10 +33,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://www.andrena.de/objektforum"><img src="images/logo-objektforum-stuttgart.png" class="logo" style="background-color: transparent; border-width: 0;"></a>
+		<a href="https://www.accenture.de"><img src="images/logo-accenture.jpg" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://www.andrena.de/objektforum">Objektforum Stuttart</a></p>
-			<p><a href="https://twitter.com/hashtag/objektforum?src=hash">#objektforum</a></p>
+			<p><a href="https://www.accenture.de">Accenture</a></p>
+			<p><a href="https://twitter.com/AccentureDACH">@AccentureDACH</a></p>
 		</div>
 	</div>
 </div>
@@ -51,9 +51,9 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://www.andrena.de/objektforum"><img src="images/logo-objektforum-stuttgart.png" class="logo" style="background-color: transparent; border-width: 0;"></a>
+		<a href="https://www.accenture.de"><img src="images/logo-accenture.jpg" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://www.andrena.de/objektforum">Objektforum Stuttart</a> / <a href="https://twitter.com/hashtag/objektforum?src=hash">#objektforum</a></p>
+			<p><a href="https://www.accenture.de">Accenture</a> / <a href="https://twitter.com/AccentureDACH">@AccentureDACH</a></p>
 		</div>
 	</div>
 </footer>
@@ -306,8 +306,8 @@ surviving an ad-hoc filter:</p></div>
 	<tr><td>Not a Monad</td></tr>
 </table><div class="paragraph"><p>The Java community strongly disagrees<br>
 on how to best use <code>Optional</code>.</p></div><div class="paragraph"><p>Some insights into the discussion&#8230;&#8203;</p></div></section><section id="basic_rules"><h2>Basic Rules</h2><div class="paragraph"><p>First some basic rules:</p></div>
-<div class="ulist"><ul><li><p>never, ever, ever just call <code>get</code><br>
-without checking <code>isPresent</code> first</p></li><li><p>prefer functional style<br>
+<div class="ulist"><ul><li><p>never, ever, ever call <code>get()</code>/<code>orElseThrow()</code><br>
+without checking <code>isPresent()</code> first</p></li><li><p>prefer functional style<br>
 (<code>map</code>, <code>flatMap</code>, <code>ifPresent</code>, <code>orElse</code>, &#8230;&#8203;)</p></li><li><p>make everyone setting <code>Optional</code> to <code>null</code><br>
 buy a round of drinks or wear a silly hat</p></li></ul></div></section><section id="basic_rules_2"><h2>Basic Rules</h2><div class="paragraph"><p>Nobody (?) wants to see &#8230;&#8203;</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Optional.ofNullable(mango)
@@ -352,7 +352,7 @@ than making them stricter!</p></div></section><section id="additional_sources_2"
 that requires us to be careful with what we do.</p></div></section><section id="value_based_class"><h2>Value-Based Class?</h2><div class="paragraph"><p>Did you RTFM?</p></div>
 <div class="paragraph"><p><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/doc-files/ValueBased.html"><code>Optional</code> Javadoc</a> says:</p></div>
 <div class="quoteblock"><blockquote><div class="paragraph"><p>This is a value-based class; use of identity-sensitive operations [&#8230;&#8203;] on instances of <code>Optional</code> may have unpredictable results and should be avoided.</p></div></blockquote></div>
-<div class="paragraph"><p>What does it mean?</p></div></section><section id="value_types_in_future_java"><h2>Value Types In Future Java</h2><div class="paragraph"><p>Future Java (2019?) will contain value types:</p></div>
+<div class="paragraph"><p>What does it mean?</p></div></section><section id="value_types_in_future_java"><h2>Value Types In Future Java</h2><div class="paragraph"><p>A future Java will contain value types:</p></div>
 <div class="ulist"><ul><li><p>pass by value<br>
 (copied when passed as params)</p></li><li><p>immutable</p></li><li><p>no identity</p></li></ul></div>
 <div class="paragraph"><p>Very similar to today&#8217;s primitives.</p></div></section><section id="no_identity"><h2>No Identity?</h2><div class="paragraph"><p>Class instances <strong>have identity</strong>:</p></div>
@@ -383,8 +383,7 @@ locking, serialization</p></li></ul></div></dd></dl></div>
 <div class="ulist"><ul><li><p>never rely on their identity</p></li><li><p>mainly no <code>==</code>, locking, serialization</p></li></ul></div>
 <div class="paragraph"><p><strong>If this works out,</strong><br>
 <strong>performance hit all but disappears!</strong></p></div>
-<h3>Additional Sources</h3><div class="paragraph"><p><a href="http://blog.codefx.org/java/value-based-classes/">Value-Based Classes</a> (codefx.org)</p></div>
-<aside class="notes"><div class="ulist"><ul><li><p>can reference mutable objects</p></li></ul></div></aside></section></section>
+<h3>Additional Sources</h3><div class="paragraph"><p><a href="http://blog.codefx.org/java/value-based-classes/">Value-Based Classes</a> (codefx.org)</p></div></section></section>
 <section><section id="optional_4"><h2>Optional</h2><table class="toc">
 	<tr><td>Usage Patterns</td></tr>
 	<tr><td>Value-Based Class</td></tr>
@@ -418,7 +417,85 @@ functions have side effects<br>
 if <code>null</code> was special cased</p></li></ul></div>
 <h3>Additional Sources</h3><div class="paragraph"><p><a href="https://developer.atlassian.com/blog/2015/08/optional-broken/">More on Optional Being Broken</a> (atlassian.com)</p></div>
 <div class="paragraph"><p><a href="https://www.sitepoint.com/how-optional-breaks-the-monad-laws-and-why-it-matters/">&#8230;&#8203; and Why It Matters</a> (sitepoint.com)</p></div></section></section>
-<section><section id="default_methods"><h2>Default Methods</h2><h3>Interface Evolution</h3></section><section id="general_approach"><h2>General Approach</h2><div class="dlist"><dl><dt class="hdlist1">New Version</dt><dd><div class="ulist"><ul><li><p>interface is transitional (old and new outline)</p></li><li><p>default methods ensure existing code works</p></li></ul></div></dd><dt class="hdlist1">Transition</dt><dd><div class="ulist"><ul><li><p>client moves from old to new outline</p></li><li><p>default methods ensure code keeps working</p></li></ul></div></dd><dt class="hdlist1">New Version</dt><dd><div class="ulist"><ul><li><p>removes old outline</p></li></ul></div></dd></dl></div></section><section id="adding_methods"><h2>Adding Methods</h2><div class="paragraph"><p>Reasonable default impl exists:</p></div>
+<section id="default_methods"><h2>Default Methods</h2><table class="toc">
+	<tr><td>Fluent Decorators</td></tr>
+	<tr><td>Interface Evolution</td></tr>
+</table></section>
+<section><section id="default_methods_2"><h2>Default Methods</h2><table class="toc">
+	<tr class="toc-current"><td>Fluent Decorators</td></tr>
+	<tr><td>Interface Evolution</td></tr>
+</table><div class="paragraph"><p>Fluent implementation of<br>
+the decorator pattern</p></div></section><section id="decorator_pattern"><h2>Decorator Pattern</h2><div class="imageblock diagram" style=""><img src="images/decorator.png" alt="decorator"></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Component component = /*...*/;
+Component decorated =
+	new SomeDecorator(
+		new AnotherDecorator(component));</code></pre></div></div></section><section id="fluent_decorators"><h2>Fluent Decorators</h2><div class="paragraph"><p>With lambda expressions and default methods<br>
+we can apply decorators fluently:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Component component = /*...*/;
+Component decorated = DecoratingComponent.from(component)
+	.some() // applies `SomeDecorator`
+	.another("param") // applies `AnotherDecorator`
+	.decorate(YetAnotherDecorator::new);</code></pre></div></div>
+<div class="paragraph"><p>How?</p></div></section><section id="fluent_decorators_2"><h2>Fluent Decorators</h2><div class="imageblock diagram" style=""><img src="images/decorator-8.png" alt="decorator 8"></div>
+<div class="paragraph"><p>The <code>DecoratingComponent</code> interface:</p></div>
+<div class="ulist"><ul><li><p>extends <code>Component</code></p></li><li><p>is implemented by all decorators</p></li><li><p>offers methods that wrap <code>this</code><br>
+in decorator and return it</p></li></ul></div></section><section id="decorating_component"><h2>Decorating Component</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">interface DecoratingC extends Component {
+
+	static DecoratingC from(Component component) {
+		return new DecoratingComponent() {
+			// implement by forwarding to component
+		};
+	}
+
+	default DecoratingC decorate(
+		Function&lt;DecoratingC, DecoratingC&gt; decorator) {
+		return decorator.apply(this);
+	}
+
+}</code></pre></div></div></section><section id="generic_decoration"><h2>Generic Decoration</h2><div class="paragraph"><p>This <em>generic decoration</em><br>
+allows chains like the following:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Component component = /*...*/;
+Component decorated = DecoratingComponent.from(component)
+	.decorate(SomeDecorator::new);
+	.decorate(c -&gt; new AnotherDecorator(c, "param"));
+	.decorate(YetAnotherDecorator::new);</code></pre></div></div></section><section id="specific_decoration"><h2>Specific Decoration</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">interface DecoratingC extends Component {
+
+	default DecoratingC some()
+		return decorate(SomeDecorator::new);
+	}
+
+	default DecoratingC another(String s)
+		return decorate(
+			c -&gt; new AnotherDecorator(c, s));
+	}
+
+}</code></pre></div></div></section><section id="fluent_decoration"><h2>Fluent Decoration</h2><div class="paragraph"><p>Real-life example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">HyperlinkListener listener =
+	this::changeHtmlViewBackgroundColor;
+listener = DecoratingHyperlinkListener.from(listener)
+	.onHoverMakeVisible(urlLabel)
+	.onHoverSetUrlOn(urlLabel)
+	.logEvents()
+	.decorate(l -&gt;
+		new OnActivateHighlightComponent(l, urlLabel))
+	.decorate(OnEnterLogUrl::new);</code></pre></div></div></section><section id="why_default_methods"><h2>Why Default Methods?</h2><div class="paragraph"><p>Why not put these methods on <code>AbstractDecorator</code>?</p></div>
+<div class="ulist"><ul><li><p>clumps up responsibilities:</p><div class="exampleblock"><div class="content"><div class="ulist"><ul><li><p>enabling easy implementation of <code>Component</code></p></li><li><p>decorating instances of <code>Component</code></p></li></ul></div></div></div>
+<div class="paragraph"><p>(change for different reasons)</p></div></li><li><p>requires implementation of abstract helper class</p></li><li><p>makes abstract helper class prominent</p></li></ul></div></section><section id="reflection_on_decorator"><h2>Reflection On Decorator</h2><div class="paragraph"><p>To implement fluent deocators:</p></div>
+<div class="ulist"><ul><li><p>add an additional interface</p></li><li><p>add default method for generic decoration</p></li><li><p>maybe add methods for specific decoration</p></li></ul></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">interface DecoratingComponent extends Component {
+	static DC from(Component component);
+	default DC decorate(Function&lt;DC, DC&gt; decorator);
+	default DC log(Level level);
+}</code></pre></div></div></section></section>
+<section><section id="default_methods_3"><h2>Default Methods</h2><table class="toc">
+	<tr><td>Fluent Decorators</td></tr>
+	<tr class="toc-current"><td>Interface Evolution</td></tr>
+</table><div class="paragraph"><p>Evolving interfaces without breaking code.</p></div></section><section id="interface_evolution"><h2>Interface Evolution</h2><div class="paragraph"><p>If your code has clients that<br>
+you have no control over&#8230;&#8203;</p></div>
+<div class="ulist"><ul><li><p>open-source library</p></li><li><p>internal library</p></li><li><p>extensible application</p></li></ul></div>
+<div class="paragraph"><p>... then evolving interfaces<br>
+always breaks code.</p></div>
+<div class="paragraph"><p>Default methods to the rescue!</p></div></section><section id="general_approach"><h2>General Approach</h2><div class="dlist"><dl><dt class="hdlist1">New Version</dt><dd><div class="ulist"><ul><li><p>interface is transitional (old and new outline)</p></li><li><p>default methods ensure existing code works</p></li></ul></div></dd><dt class="hdlist1">Transition</dt><dd><div class="ulist"><ul><li><p>client moves from old to new outline</p></li><li><p>default methods ensure code keeps working</p></li></ul></div></dd><dt class="hdlist1">New Version</dt><dd><div class="ulist"><ul><li><p>removes old outline</p></li></ul></div></dd></dl></div></section><section id="adding_methods"><h2>Adding Methods</h2><div class="paragraph"><p>Reasonable default impl exists:</p></div>
 <div class="dlist"><dl><dt class="hdlist1">New Version</dt><dd><div class="ulist"><ul><li><p>add the method with default impl</p></li><li><p>internal impls can override</p></li><li><p>internal callers use new method</p></li></ul></div></dd><dt class="hdlist1">Transition</dt><dd><div class="ulist"><ul><li><p>external callers use the method</p></li></ul></div></dd></dl></div>
 <div class="paragraph"><p>That&#8217;s it.</p></div></section><section id="adding_methods_2"><h2>Adding Methods</h2><div class="paragraph"><p>No reasonable default impl exists:</p></div>
 <div class="dlist"><dl><dt class="hdlist1">New Version</dt><dd><div class="ulist"><ul><li><p>add method with default impl throwing UOE</p></li><li><p>override method in all internal impls</p></li></ul></div></dd><dt class="hdlist1">Transition</dt><dd><div class="ulist"><ul><li><p>external impls override the method</p></li><li><p>external callers use the method</p></li></ul></div></dd><dt class="hdlist1">New Version</dt><dd><div class="ulist"><ul><li><p>make method abstract</p></li><li><p>internal callers use new method</p></li></ul></div></dd></dl></div></section><section id="removing_methods"><h2>Removing Methods</h2><div class="paragraph"><p>No external impls exist:</p></div>
