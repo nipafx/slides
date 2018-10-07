@@ -36,8 +36,6 @@ default Stream<E> stream() {
 	<tr class="toc-current"><td>Syntax &amp; Semantics</td></tr>
 	<tr><td>Existing Functionality</td></tr>
 	<tr><td>Kinds of Default Methods</td></tr>
-	<tr><td>Fluent Decorators</td></tr>
-	<tr><td>Interface Evolution</td></tr>
 	<tr><td>Summary</td></tr>
 </table>
 ++++
@@ -189,8 +187,6 @@ Reusing code in default methods.
 	<tr><td>Syntax &amp; Semantics</td></tr>
 	<tr class="toc-current"><td>Existing Functionality</td></tr>
 	<tr><td>Kinds of Default Methods</td></tr>
-	<tr><td>Fluent Decorators</td></tr>
-	<tr><td>Interface Evolution</td></tr>
 	<tr><td>Summary</td></tr>
 </table>
 ++++
@@ -240,8 +236,6 @@ comparator = Comparator.nullsLast(comparator);
 	<tr><td>Syntax &amp; Semantics</td></tr>
 	<tr><td>Existing Functionality</td></tr>
 	<tr class="toc-current"><td>Kinds of Default Methods</td></tr>
-	<tr><td>Fluent Decorators</td></tr>
-	<tr><td>Interface Evolution</td></tr>
 	<tr><td>Summary</td></tr>
 </table>
 ++++
@@ -297,305 +291,6 @@ default Predicate<T> and(Predicate<? super T> p) {
 ```
 
 
-== Default Methods
-
-++++
-<table class="toc">
-	<tr><td>Syntax &amp; Semantics</td></tr>
-	<tr><td>Existing Functionality</td></tr>
-	<tr><td>Kinds of Default Methods</td></tr>
-	<tr class="toc-current"><td>Fluent Decorators</td></tr>
-	<tr><td>Interface Evolution</td></tr>
-	<tr><td>Summary</td></tr>
-</table>
-++++
-
-=== Decorator Pattern
-
-image::images/decorator.png[role="diagram"]
-
-```java
-Component component = /*...*/;
-Component decorated =
-	new SomeDecorator(
-		new AnotherDecorator(component));
-```
-
-=== Fluent Decorators
-
-With lambda expressions and default methods +
-we can apply decorators fluently:
-
-```java
-Component component = /*...*/;
-Component decorated = DecoratingComponent.from(component)
-	.some() // applies `SomeDecorator`
-	.another("param") // applies `AnotherDecorator`
-	.decorate(YetAnotherDecorator::new);
-```
-
-How?
-
-=== Fluent Decorators
-
-image::images/decorator-8.png[role="diagram"]
-
-The `DecoratingComponent` interface:
-
-* extends `Component`
-* is implemented by all decorators
-* offers methods that wrap `this` +
-  in decorator and return it
-
-=== Decorating Component
-
-```java
-interface DecoratingC extends Component {
-
-	static DecoratingC from(Component component) {
-		return new DecoratingComponent() {
-			// implement by forwarding to component
-		};
-	}
-
-	default DecoratingC decorate(
-		Function<DecoratingC, DecoratingC> decorator) {
-		return decorator.apply(this);
-	}
-
-}
-```
-
-=== Generic Decoration
-
-This _generic decoration_ +
-allows chains like the following:
-
-```java
-Component component = /*...*/;
-Component decorated = DecoratingComponent.from(component)
-	.decorate(SomeDecorator::new);
-	.decorate(c -> new AnotherDecorator(c, "param"));
-	.decorate(YetAnotherDecorator::new);
-```
-
-=== Specific Decoration
-
-```java
-interface DecoratingC extends Component {
-
-	default DecoratingC some()
-		return decorate(SomeDecorator::new);
-	}
-
-	default DecoratingC another(String s)
-		return decorate(
-			c -> new AnotherDecorator(c, s));
-	}
-
-}
-```
-
-=== Fluent Decoration
-
-Real-life example:
-
-```java
-HyperlinkListener listener =
-	this::changeHtmlViewBackgroundColor;
-listener = DecoratingHyperlinkListener.from(listener)
-	.onHoverMakeVisible(urlLabel)
-	.onHoverSetUrlOn(urlLabel)
-	.logEvents()
-	.decorate(l ->
-		new OnActivateHighlightComponent(l, urlLabel))
-	.decorate(OnEnterLogUrl::new);
-```
-
-=== Why Default Methods?
-
-Why not put these methods on `AbstractDecorator`?
-
-* clumps up responsibilities:
-+
-====
-** enabling easy implementation of `Component`
-** decorating instances of `Component`
-====
-+
-(change for different reasons)
-* requires implementation of abstract helper class
-* makes abstract helper class prominent
-
-=== Exercise 2
-
-Implement a fluent decorator API.
-
-
-== Default Methods
-
-++++
-<table class="toc">
-	<tr><td>Syntax &amp; Semantics</td></tr>
-	<tr><td>Existing Functionality</td></tr>
-	<tr><td>Kinds of Default Methods</td></tr>
-	<tr><td>Fluent Decorators</td></tr>
-	<tr class="toc-current"><td>Interface Evolution</td></tr>
-	<tr><td>Summary</td></tr>
-</table>
-++++
-
-=== Interface Evolution
-
-If your code has clients that +
-you have no control over...
-
-* open-source library
-* internal library
-* extensible application
-
-\... then evolving interfaces +
-always breaks code.
-
-Default methods to the rescue!
-
-=== General Approach
-
-New Version::
-
-* interface is transitional (old and new outline)
-* default methods ensure existing code works
-
-Transition::
-
-* client moves from old to new outline
-* default methods ensure code keeps working
-
-New Version::
-
-* removes old outline
-
-=== Adding Methods
-
-Reasonable default impl exists:
-
-New Version::
-
-* add the method with default impl
-* internal impls can override
-* internal callers use new method
-
-Transition::
-
-* external callers use the method
-
-That's it.
-
-=== Adding Methods
-
-No reasonable default impl exists:
-
-New Version::
-
-* add method with default impl throwing UOE
-* override method in all internal impls
-
-Transition::
-
-* external impls override the method
-* external callers use the method
-
-New Version::
-
-* make method abstract
-* internal callers use new method
-
-=== Removing Methods
-
-No external impls exist:
-
-New Version::
-
-* deprecate method
-* internal callers stop calling method
-
-Transition::
-
-* external callers stop using the method
-
-New Version::
-
-* remove the method
-
-(No default methods required.)
-
-=== Removing Methods
-
-External impls exist:
-
-New Version::
-
-* deprecate method
-* provide default impl throwing UOE
-* internal callers stop calling method
-
-Transition::
-
-* external callers stop using the method
-* external impls of the method are removed
-
-New Version::
-
-* remove the method
-
-=== Replacing Methods
-
-Applies with new signature (name, parameters, ...), +
-where methods are "functionally equivalent".
-
-Otherwise it's a matter of adding new +
-and removing old method.
-
-=== Replacing Methods
-
-New Version::
-
-* add _new_ with default impl calling _old_
-* provide default impl of _old_ calling _new_
-* deprecate _old_
-* internal impls override _new_ instead of _old_
-* internal callers use _new_ instead of _old_
-
-Wtf, circular call?
-
-* ensures it does not matter which version is impl'd
-* must be thoroughly documented; tests help
-
-=== Replacing Methods
-
-Transition::
-
-* external impls override _new_ instead of _old_
-* external callers use _new_ instead of _old_
-
-New Version::
-
-* make _new_ abstract
-* remove _old_
-
-=== Evolution Summary
-
-If clients can be expected to update their code +
-default methods allow interface evolution +
-without breaking client code.
-
-Mode is always the same:
-
-* release version with transitional outline
-* give clients time to update
-* release version with new outline
-
-
 == Summary
 
 ++++
@@ -603,7 +298,6 @@ Mode is always the same:
 	<tr><td>Syntax &amp; Semantics</td></tr>
 	<tr><td>Existing Functionality</td></tr>
 	<tr><td>Kinds of Default Methods</td></tr>
-	<tr><td>Interface Evolution</td></tr>
 	<tr class="toc-current"><td>Summary</td></tr>
 </table>
 ++++

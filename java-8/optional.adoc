@@ -45,8 +45,9 @@ Same logic applies to your code!
 ++++
 <table class="toc">
 	<tr class="toc-current"><td>Optional Basics</td></tr>
-	<tr><td>Usage Patterns</td></tr>
-	<tr><td>Value-Based Classes</td></tr>
+	<tr><td>The Imperative Way</td></tr>
+	<tr><td>The Functional Way</td></tr>
+	<tr><td>Optionals In Streams</td></tr>
 	<tr><td>Summary</td></tr>
 </table>
 ++++
@@ -88,6 +89,18 @@ The functional way:
 * uses Stream-like methods (`filter`, `map`, etc.)
 * keeps `Optional` around as long as possible
 
+
+== The Imperative Way
+
+++++
+<table class="toc">
+	<tr><td>Optional Basics</td></tr>
+	<tr class="toc-current"><td>The Imperative Way</td></tr>
+	<tr><td>The Functional Way</td></tr>
+	<tr><td>Optionals In Streams</td></tr>
+	<tr><td>Summary</td></tr>
+</table>
+++++
 
 === Checking Presence
 
@@ -142,6 +155,19 @@ name = nameOpt.orElseThrow(() ->
 === Exercise 1
 
 Imperative use of `Optional`.
+
+
+== The Functional Way
+
+++++
+<table class="toc">
+	<tr><td>Optional Basics</td></tr>
+	<tr><td>The Imperative Way</td></tr>
+	<tr class="toc-current"><td>The Functional Way</td></tr>
+	<tr><td>Optionals In Streams</td></tr>
+	<tr><td>Summary</td></tr>
+</table>
+++++
 
 === The Functional Way
 
@@ -223,6 +249,19 @@ public class Search {
 
 Functional use of `Optional`.
 
+
+== Optionals In Streams
+
+++++
+<table class="toc">
+	<tr><td>Optional Basics</td></tr>
+	<tr><td>The Imperative Way</td></tr>
+	<tr><td>The Functional Way</td></tr>
+	<tr class="toc-current"><td>Optionals In Streams</td></tr>
+	<tr><td>Summary</td></tr>
+</table>
+++++
+
 === Optionals In Streams
 
 What happens if `Optional`-returning method +
@@ -285,291 +324,14 @@ Stream<Customer> findCustomers(List<String> ids) {
 ```
 
 
-== Usage Patterns
-
-++++
-<table class="toc">
-	<tr><td>Optional Basics</td></tr>
-	<tr class="toc-current"><td>Usage Patterns</td></tr>
-	<tr><td>Value-Based Classes</td></tr>
-	<tr><td>Summary</td></tr>
-</table>
-++++
-
-=== Usage Patterns
-
-The Java community strongly disagrees +
-on how to best use `Optional`.
-
-Some insights into the discussion...
-
-=== Basic Rules
-
-First some basic rules:
-
-* never, ever, ever call `get()`/`orElseThrow()` +
-without checking `isPresent()` first
-* prefer functional style +
-(`map`, `flatMap`, `ifPresent`, `orElse`, ...)
-* make everyone setting `Optional` to `null` +
-buy a round of drinks or wear a silly hat
-
-=== Basic Rules
-
-Nobody (?) wants to see ...
-
-```java
-Optional.ofNullable(mango)
-	.ifPresent(System.out::println);
-```
-
-\... instead of ...
-
-```java
-if (mango != null)
-	System.out.println(mango);
-```
-
-=== Different Opinions
-
-* don't use it unless +
-absolutely necessary
-* use it as return value
-* use it everywhere
-
-=== Don't Use It!
-==== Assumptions
-
-* API is verbose and invites misuse
-* makes stack traces harder to debug
-* not serializable
-* unsupported by various frameworks
-* dereferencing reduces performance
-* instances increase memory consumption
-* no benefits over explicit `null` handling
-
-=== Don't Use It!
-==== Conclusions
-
-* `Optional` sucks
-* only use it if existing API returns it
-* unpack quickly!
-
-[role=small-note]
-(Mark Struberg, Stephen Connolly, Hugues Johnson)
-
-
-=== Limited Return Value
-==== Assumptions
-
-* http://blog.codefx.org/java/dev/design-optional[was designed] as a return value
-* not serializable
-* long-lived instances increase +
-memory consumption
-* boxing method arguments is verbose
-
-=== Limited Return Value
-==== Conclusions
-
-* use as return value if +
-returning `null` is error-prone
-* no instance variables
-* no method parameters
-* instances should generally be short-lived
-
-[role=small-note]
-(Stuart Marks, Brian Goetz)
-
-*⇝ This should be your default choice!*
-
-=== Return Value
-==== Assumptions
-
-* returning `null` is always error-prone
-* rest as before
-
-==== Conclusions
-
-* use as return value whenever +
-value can be absent
-* rest as before
-
-[role=small-note]
-(Stephen Colebourne)
-
-
-=== Use Everywhere!
-==== Assumptions
-
-* using `Optional` instead of `null` +
-lifts `null`-handling into the type system
-* makes any `null` an implementation error +
-(great for debugging)
-* performance arguments can be discarded +
-unless proven to be relevant
-
-=== Use Everywhere!
-==== Conclusions
-
-* avoid optionality through good design +
-(good recommendation in general)
-* use `Optional` instead of `null` everywhere
-* consider providing overloads +
-for optional method parameters
-
-[role=small-note]
-(Mario Fusco, me)
-
-=== Use Everywhere!
-==== Overload Example
-
-```java
-String bar(Optional<String> drink) {
-	return drink.map(this::bar)
-			.orElseGet(this::bar);
-}
-
-String bar(String drink) { /* ... */ }
-
-String bar() { /* ... */ }
-```
-
-=== Reflection on Usage
-
-Whatever you decide:
-
-* make it a team decision
-* put it into your code style
-* learn over time
-
-Relaxing rules is easier +
-than making them stricter!
-
-
-== Value-Based Classes
-
-++++
-<table class="toc">
-	<tr><td>Optional Basics</td></tr>
-	<tr><td>Usage Patterns</td></tr>
-	<tr class="toc-current"><td>Value-Based Classes</td></tr>
-	<tr><td>Summary</td></tr>
-</table>
-++++
-
-=== Value-Based Class?
-
-https://docs.oracle.com/javase/8/docs/api/java/lang/doc-files/ValueBased.html[`Optional` Javadoc] says:
-
-> This is a value-based class; use of identity-sensitive operations [...] on instances of `Optional` may have unpredictable results and should be avoided.
-
-What does it mean?
-
-=== Value Types
-
-Future Java will contain value types:
-
-* pass by value +
-(copied when passed as params)
-* immutable
-* no identity
-
-Very similar to today's primitives.
-
-=== No Identity?
-
-Class instances *have identity*:
-
-* each `new Integer(5)` creates a new instance
-* they are not identical (`!=`, different locks, ...)
-
-Value types will have *no identity*:
-
-* there are no two different `int 5`
-* only their value matters
-
-=== But Isn't This Java 8?
-
-From value types to value-based classes:
-
-* value types require wrappers/boxes +
-(just like primitives do today)
-* value-based classes might turn out +
-wrapping value types
-* as an optimization the JVM will +
-create and destroy them at will
-
-*⇝ Wrappers have identity _but_ it is unstable*
-
-[NOTE.speaker]
---
-* vbc will be optimized in Java 10!
---
-
-=== Identity Crisis
-
-```java
-LocalDateTime getLastLogin(User user);
-void storeMessage(LocalDateTime time, String message);
-
-String lastLoginMessage(User user) {
-	LocalDateTime lastLogin = getLastLogin(user); // <1>
-	String message = "Was " + lastLogin;
-	storeMessage(lastLogin, message); // <2>
-	return message;
-}
-```
-<1> might return an instance or a value
-<2> might receive an instance or a value
-
-
-=== Requirements For VBC
-
-declaration site::
-* final and immutable
-* `equals`, `hashCode`, `toString` +
-must _only_ rely on instance state
-* ...
-use site::
-* no use of `==`, identity hash code, +
-locking, serialization
-
-(None of this is checked by the JVM.)
-
-=== VBC in Java 8
-
-`java.util`::
-	`Optional`[`Double`, `Long`, `Int`]
-`java.time`::
-	`Duration`, `Instant`, `Period`, +
-	`Year`, `YearMonth`, `MonthDay`, +
-	`Local...`, `Offset...`, `Zoned...`
-`java.time.chrono`::
-	`HijrahDate`, `JapaneseDate`, `MinguaDate`, `ThaiBuddhistDate`
-
-[NOTE.speaker]
---
-* Optional uses reference `equals` in its `equals`
-* date classes are serializable
---
-
-=== Reflection on VBC
-
-With `Optional` and other value-based classes:
-
-* never rely on their identity
-* mainly no `==`, locking, serialization
-
-*If this works out,* +
-*performance hit all but disappears!*
-
 == Summary
 
 ++++
 <table class="toc">
 	<tr><td>Optional Basics</td></tr>
-	<tr><td>Usage Patterns</td></tr>
-	<tr><td>Value-Based Classes</td></tr>
+	<tr><td>The Imperative Way</td></tr>
+	<tr><td>The Functional Way</td></tr>
+	<tr><td>Optionals In Streams</td></tr>
 	<tr class="toc-current"><td>Summary</td></tr>
 </table>
 ++++
@@ -581,9 +343,3 @@ or create with `of`, `empty`, `ofNullable`
 * use like streams with `map`, `flatMap`, `filter`
 * process value with `ifPresent`
 * get value out with `get`, `orElse...`
-
-=== Summary
-
-* decide together where to use `Optional`
-* no identity-sensitive operations +
-like `==`, locking, serialization

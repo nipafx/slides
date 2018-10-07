@@ -174,6 +174,22 @@ Why not put these methods on `AbstractDecorator`?
 * requires implementation of abstract helper class
 * makes abstract helper class prominent
 
+=== Reflection On Decorator
+
+To implement fluent deocators:
+
+* add an additional interface
+* add default method for generic decoration
+* maybe add methods for specific decoration
+
+```java
+interface DecoratingComponent extends Component {
+	static DC from(Component component);
+	default DC decorate(Function<DC, DC> decorator);
+	default DC log(Level level);
+}
+```
+
 
 
 == Default Methods
