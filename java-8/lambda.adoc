@@ -90,7 +90,11 @@ interface $Interface {
 }
 ```
 ```java
-$Interface $var = $parameter -> $expression;
+// instead of `$Interface variable = new $Interface {...}`
+$Interface variable = $parameter -> $expression;
+
+// instead of `call(new $Interface {...})`
+call($parameter -> $expression);
 ```
 
 === Exercise 2
@@ -109,7 +113,7 @@ interface $Interface {
 }
 ```
 ```java
-$Interface $var = ($parameters) -> { $body };
+$Interface variable = ($parameters) -> { $body };
 ```
 
 Things to discuss:
@@ -124,12 +128,12 @@ General form:
 
 ```java
 // method
-$result method(Type_1 name_1, Type_2 name_2, ...) {
+$result method(TypeA a, TypeB b, ...) {
 	$body
 }
 
 // lambda
-(Type_1 name_1, Type_2 name_2, ...) -> { $body };
+(TypeA a, TypeB b, ...) -> { $body };
 ```
 
 Possible simplifications:
@@ -144,10 +148,10 @@ Compiler can infer types in most cases:
 
 ```java
 // lambda
-(Type_1 name_1, Type_2 name_2, ...) -> { $body };
+(TypeA a, TypeB b, ...) -> { $body };
 
 // inferred
-(name_1, name_2, ...) -> { $body };
+(a, b, ...) -> { $body };
 ```
 
 === Single Parameter
@@ -156,10 +160,10 @@ For single parameters, leave out parenthesis:
 
 ```java
 // lambda
-(Type_1 name_1) -> { $body };
+(TypeA a) -> { $body };
 
 // inferred
-Type_1 name_1 -> { $body };
+TypeA a -> { $body };
 ```
 
 === Keep It "Simple"
@@ -179,7 +183,7 @@ General form:
 ```java
 // method
 $result method($parameters) {
-	$body // with possible return
+	$body // with possible `return`
 }
 
 // lambda
@@ -243,7 +247,7 @@ TodoFilter filter = todo ->
 
 === Matter Of Taste
 
-Where to line break on long lambdas?
+Where to break lines on long lambdas?
 
 ```java
 filter = todo -> todo // (1)
@@ -303,13 +307,13 @@ public StringToInt toInt(String parameter) {
 
 === Capturing Variables
 
-In anonymous classes:
+Before Java 8 (in anonymous classes):
 
 * method params and local vars +
 needed to be `final`
 * fields did not _and_ could be reassigned
 
-In lambda expressions:
+Since Java 8 (anonymous classes & lambdas):
 
 * method params and local vars +
 need to be *effectively final*
@@ -331,6 +335,16 @@ public StringToInt toInt(String parameter) {
 }
 ```
 
+=== Why Effectively Final?
+
+Otherwise -- if captured variables +
+can be reassigned:
+
+* which value will a lambda observe?
+* what happens under threading?
+
+This keeps programming model simpler!
+
 === Effectively Final
 
 Implications for lambda body:
@@ -342,16 +356,6 @@ Implications for lambda body:
 === Exercise 4
 
 Experiment with (non-) capturing lambda expressions
-
-=== Why Effectively Final?
-
-Otherwise -- if captured variables +
-can be reassigned:
-
-* which value will a lambda observe?
-* what happens under threading?
-
-This keeps programing model simpler!
 
 
 == Functional Interfaces
@@ -463,6 +467,8 @@ in `java.util.function`:
 
 https://docs.oracle.com/javase/8/docs/api/java/util/function/package-summary.html[Java 8 Documentation]
 
+https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/function/package-summary.html[Java 11 Documentation]
+
 === Exercise 5
 
 Get to know functional interfaces
@@ -517,6 +523,7 @@ of methods references:
 Reference to a type's static method:
 
 ```java
+// in class `Type`
 public static void main(String[] args) {...}
 
 Consumer<String[]> main =
@@ -544,7 +551,7 @@ of an existing object:
 ```java
 Type typeInstance = // ...
 Supplier<String> getFieldFromType =
-//  typeInstance -> typeInstance.getField();
+//  () -> typeInstance.getField();
 	typeInstance::getField;
 ```
 
@@ -587,14 +594,14 @@ Create various kinds of method references
 
 === Summary
 
-* functional interfaces are those, +
-with exactly one abstract method
+* functional interfaces are those with +
+  *exactly one abstract method*
 * basic functional interfaces: `Supplier`, +
-`Consumer`, `Function`, `Operator`, `Predicate`
+  `Consumer`, `Function`, `Operator`, `Predicate`
 * basic lambda expression:
 +
 ```java
-$Interface $var= ($parameters) -> { $body };
+$Interface variable = ($parameters) -> { $body };
 ```
 
 === Summary

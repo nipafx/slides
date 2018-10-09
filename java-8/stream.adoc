@@ -35,11 +35,12 @@ What do you think about that API?
 Loop upsides:
 
 * are more efficient
+* are easier to debug
 * make side effects easier / more likely
 
 Loop downsides:
 
-* make it harder to see what's going on
+* mix looping with domain logic
 * make optimization/parallelization harder
 * make side effects easier / more likely
 
@@ -417,7 +418,7 @@ _"I have todos and want the one with earliest due date"_
 ```java
 List<Todo> todos = // ...
 Comparator<Todo> byDueDate = // ...
-Optional<Todo> sorted = todos.stream()
+Optional<Todo> min = todos.stream()
 	.min(byDueDate);
 ```
 
@@ -440,7 +441,7 @@ _"I have todos and want the one with latest due date"_
 ```java
 List<Todo> todos = // ...
 Comparator<Todo> byDueDate = // ...
-Optional<Todo> sorted = todos.stream()
+Optional<Todo> max = todos.stream()
 	.max(byDueDate);
 ```
 
@@ -640,16 +641,6 @@ Besides `Collection::stream`:
 * `Stream.iterate(` +
 `T, Predicate<T>, UnaryOperator<T>)` ⑨
 
-=== Stream Sources
-
-Besides `Collection::stream` and `Stream`:
-
-* `Arrays.stream(T[])`
-* `BufferedReader.lines()`
-* `Files.lines(Path)`, `Files.list(Path)`
-* `Random.ints()`
-* more...
-
 === Stream::iterate
 
 Creates an infinite stream:
@@ -688,6 +679,16 @@ Stream
 ```
 
 Prints `0`, `1`, `2`, `3`, `4`.
+
+=== Stream Sources
+
+Besides `Collection::stream` and `Stream`:
+
+* `Arrays.stream(T[])`
+* `BufferedReader.lines()`
+* `Files.lines(Path)`, `Files.list(Path)`
+* `Random.ints()`
+* more...
 
 === Exercise 4
 
@@ -740,16 +741,17 @@ where a mutable container is needed/created.
 Example collecting strings to a `List<String>`:
 
 ```java
-Collector<String, ?, List<String>> collector = Collector.of(
-	// Supplier<List<String>>
-	() -> new ArrayList<String>(),
-	// BiConsumer<List<String>, String>
-	(l, s) -> l.add(s),
-	// BinaryOperator<List<String>>
-	(l1, l2) -> { l1.addAll(l2); return l1; },
-	// Function<List<String>,List<String>>
-	l -> l
-);
+Collector<String, ?, List<String>> collector = Collector
+	.of(
+		// Supplier<List<String>>
+		() -> new ArrayList<String>(),
+		// BiConsumer<List<String>, String>
+		(l, s) -> l.add(s),
+		// BinaryOperator<List<String>>
+		(l1, l2) -> { l1.addAll(l2); return l1; },
+		// Function<List<String>,List<String>>
+		l -> l
+	);
 ```
 
 === Collectors
@@ -821,11 +823,12 @@ On the example of `IntStream` +
 (others are the same):
 
 * get one with static factory methods +
-or `Stream::mapToInt`
+  or `Stream::mapToInt`
 * conceptually the same as `Stream`
-* uses primitive specializations of func. int.
+* uses primitive specializations of +
+  functional interfaces
 * has a few numeric special cases: +
-`average`, `max`, `min`, `sum`
+  `average`, `max`, `min`, `sum`
 
 
 == Stream Details
@@ -1127,7 +1130,7 @@ order-independent, thread-safe, performant
 * streams are lazy and not reusable
 * streams are easy to parallelize
 * should minimize side effects
-* think carefully how to use on your APIs
+* think carefully how to use in your APIs
 
 === Summary
 
