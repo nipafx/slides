@@ -1,0 +1,625 @@
+== Functional Programming
+
+++++
+<table class="toc">
+	<tr><td>Lambda Expressions</td></tr>
+	<tr><td>Stream API</td></tr>
+	<tr><td>Optional API</td></tr>
+	<tr class="toc-current"><td>FP Basics</td></tr>
+	<tr><td>Default Methods</td></tr>
+	<tr><td>Summary</td></tr>
+</table>
+++++
+
+A noob's guide.
+
+////
+TODO
+* construction as partial application
+* encoding state in type system ~> compiler can catch "runtime" errors
+////
+
+
+== Common problems
+
+++++
+<table class="toc">
+	<tr class="toc-current"><td>Common Problems in OOP</td></tr>
+	<tr><td>FP Essentials</td></tr>
+	<tr><td>Solutions</td></tr>
+	<tr><td>Summary</td></tr>
+</table>
+++++
+
+=== Unreliable state
+
+Ever had this problem?
+
+* created or received an object
+* called desired method on it
+* watched it fail
+
+⇝ Object can have state that makes methods fail.
+
+⇝ Further configuration expected and required.
+
+=== Unreliable state
+
+Ever had this problem?
+
+* refactored some code
+* watched it work as expected
+* watched tests/prod fail in +
+  seemingly unrelated code with +
+  seemingly unrelated error
+
+⇝ Refactored code had a non-obvious +
+  effect across the code base.
+
+⇝ Distant parts of the code base are connected +
+  by shared, state-changing objects.
+
+=== Unreliable state
+
+Ever had this problem?
+
+* tried to implement a class' contract
+* failed to do it in a simple manner +
+  because of many corner cases?
+
+⇝ Changing state typically increases +
+space of possible states.
+
+⇝ Large state space typically leads +
+to many corner cases.
+
+=== Unreliable state
+
+Downsides:
+
+* hard to reason about
+* error-prone, fragile, and frustrating
+* requires specialized knowledge to use correctly
+* causes concurrency problems ("race conditions")
+* hard to test & reuse
+
+=== Exposed state
+
+Common situation:
+
+* class `State` encapsulates fields
+* class `Action` needs their content +
+  to perform an action
+
+Common solution:
+
+* `State` exposes all fields with getters
+* `Action` "gets" needed content
+
+=== Exposed state
+
+Downsides:
+
+* `State` has weak encapsulation
+* `Action` is tightly coupled to `State`
+
+This makes them hard to evolve.
+
+=== Mixed concerns
+
+Business logic is often mixed +
+with code that handles:
+
+* looping
+* lazy initialization
+* concurrency
+* ...
+
+Such code has several responsibilities!
+
+=== Mixed concerns
+
+Downsides:
+
+* easier to get wrong
+* duplication
+* longer and more complex code
+* code has more reasons to change
+
+=== Common problems
+
+Caused by moving parts.
+
+* unreliable state
+* exposed state
+* mixed concerns
+
+=== Moving parts
+
+[quote, 'https://twitter.com/mfeathers/status/29581296216[Michael Feathers]']
+____
+OO makes code understandable by encapsulating moving parts.
+FP makes code understandable by minimizing moving parts.
+____
+
+
+
+== FP Essentials
+
+++++
+<table class="toc">
+	<tr><td>Common Problems in OOP</td></tr>
+	<tr class="toc-current"><td>FP Essentials</td></tr>
+	<tr><td>Solutions</td></tr>
+	<tr><td>Summary</td></tr>
+</table>
+++++
+
+=== Functional Programming!
+
+Essentials:
+
+* compose _functions_, not _classes_
+* prefer _immutable_ classes
+* avoid _side effects_
+* prefer _pure functions_
+
+=== Functional programming!
+
+Tools:
+
+* _composition_
+* _currying_
+* _partial application_
+
+=== Functional programming!
+
+Enjoy:
+
+* _declarative_ instead of _imperative_
+* _referential transparency_
+* _laziness_
+* _thread-safety_
+
+=== Functional programming!
+
+Let's discuss basics:
+
+* _functions_ vs _classes_
+* _immutability_
+* _side effects_
+* _pure functions_
+
+=== Functions over classes
+
+[cols="h,2*",options="header"]
+|===
+| | OOP | FP
+| centers around | nouns | verbs
+| composition of | instances | actions
+| passing | messages | results
+| computation by | changing state | evaluation
+|===
+
+=== Functions in Java
+
+Common terminology:
+
+* a _method_ belongs to an object
+* a _function_ stands alone
+
+In that sense, Java has no functions.
+
+With _function_ we typically mean +
+instances of functional interfaces.
+
+=== Immutability
+
+> An object's (observable) state never changes
+
+=== Immutability in Java
+
+To implement an immutable class:
+
+* make all fields `final`
+* make defensive copies of mutable +
+  constructor arguments
+* never expose mutable field (e.g. `List`)
+* never mutate a mutable field or argument
+* make class `final` or constructor `private`
+
+=== Immutability
+
+Benefits:
+
+* often easier to implement
+* behave predictably
+* easy to test
+* can be safely shared between +
+  objects and threads
+
+=== Side effects
+
+> An observable change of the outside world
+
+=== Side effects in Java
+
+To avoid side effects:
+
+* no assignments to fields
+* no mutating method calls +
+  on fields and arguments
+
+In Java, there is no good way +
+to identify functions without side effects.
+
+=== Side effects
+
+Avoiding side effects makes code:
+
+* more predictable
+* easier to refactor and compose
+* easier to test
+
+=== Pure functions
+
+> A side-effect free function whose return value is only defined by the arguments
+
+=== Pure functions in Java
+
+To have pure functions:
+
+* no access of non-constant fields
+* no mutating method calls on arguments
+
+In Java, there is no good way +
+to identify pure functions.
+
+=== Pure functions
+
+Benefits of pure functions:
+
+* even more predictable (meaningful signature)
+* even easier to refactor and compose
+* even easier to test
+* results in _referential transparency_
+
+=== Functional programming!
+
+Let's discuss tools:
+
+* _composition_
+* _currying_
+* _partial application_
+
+=== Composition
+
+> Combine (simple) functions to build more powerful ones
+
+How-to:
+
+* composed function has input of the first function
+* passes result of a function as input to next function
+* composed function has result of the last function
+
+=== Composition in Java
+
+```java
+// hand-rolled
+static <T, R, V> Function<T, V> compose(
+		Function<T, R> first, Function<R, V> second) {
+	return t -> {
+		R firstResult = first.apply(t);
+		V secondResult = second.apply(firstResult);
+		return secondResult;
+	}
+}
+
+// use
+Function<String, Integer> length = String::length;
+Function<Integer, String> toString = Integer::toString;
+Function<String, String> lengthToString =
+	compose(length, toString);
+```
+
+=== Composition in Java
+
+```java
+// on `Function<T, R>`
+default <V> Function<T, V> andThen(Function<R, V> after) {
+	return (T t) -> after.apply(this.apply(t));
+}
+
+// use
+Function<String, Integer> length = String::length;
+Function<Integer, String> toString = Integer::toString;
+Function<String, String> lengthToString =
+	length.andThen(toString);
+```
+
+=== Currying
+
+> Transforming a function with multiple arguments into a sequence of functions, each with a single argument
+
+=== Currying in Java
+
+```java
+public <T, U , R> Function<T, Function<U, R>> curry(
+		BiFunction<T, U, R> f) {
+//	return t -> (u -> f.apply(t, u));
+	return t -> u -> f.apply(t, u);
+}
+
+BiFunction<User, Credentials, Login>
+	login = (user, creds) -> logIn(user, creds);
+Function<User, Function<Credentials, LoginResult>>
+	cLogin = curry(login);
+```
+
+=== Currying
+
+Benefits:
+
+* makes you feel smart
+* conceptual prerequisite for +
+  partial application
+
+=== Partial application
+
+> Fixing some of a function's arguments, producing one with fewer arguments
+
+=== Partial app. in Java
+
+```java
+public static <T, U, R> Function<U, R> partial(
+		BiFunction<T, U, R> f, T t) {
+	return u -> f.apply(t, u);
+}
+
+BiFunction<Level, String, Logger> newLogger =
+	Logger::new;
+Function<String, Logger> newLoggerWithLevel =
+	partial(newLogger, Level.INFO);
+```
+
+=== Partial app. in Java
+
+```java
+public static <T, R> Supplier<R> partial(
+		Function<T, R> f, T t) {
+	return () -> f.apply(t);
+}
+
+Function<String, Logger> newLoggerWithLevel =
+	partial(newLogger, Level.INFO);
+Supplier<Logger> newLoggerWithLevelAndSubsystem =
+	partial(newLoggerWithLevel, "Authentication");
+```
+
+=== Partial application
+
+Benefits:
+
+* elegant approach to configuration
+* eliminates entire patterns +
+  (factory, builder)
+
+=== Functional programming!
+
+Let's discuss effects:
+
+* _declarative_ instead of _imperative_
+* _referential transparency_
+* _laziness_
+* _thread-safety_
+
+=== Declarative
+
+> Solve problems without specifying an exact procedure to be followed
+
+=== Declarative Java
+
+Code expresses _what_ needs to happen...
+
+```java
+todos.stream()
+	.filter(todo -> todo.importance().isAtLeast(VERY))
+	.map(Todo::description)
+	.collect(joining("\n"))
+```
+
+\... instead of _how_.
+
+```java
+String descs = "";
+for (Todo todo : todos) {
+	if (todo.importance().isAtLeast(VERY)) {
+		String description = todo.description();
+		descs += description + "\n";
+	}
+}
+descs = descs.substring(0, descs.length() - 2);
+```
+
+=== Declarative
+
+Declarative programming style:
+
+* makes code more readable
+* separates business logic from +
+  implementation details
+* enables improvements across code base +
+  (correctness, performance, ...)
+
+=== Referential transparency
+
+> An expression always evaluates to the same result in any context
+
+(A consequence of using pure functions.)
+
+=== Referential transparency
+
+Benefits:
+
+* easy to reason about, test, refactor, reuse, compose
+* enables (automatic) optimizations:
+** lazy evaluation
+** parallelization
+** memoization (i.e. caching)
+
+=== Laziness
+
+> The runtime can defer execution until the latest possible point in time
+
+(A consequence of using pure functions.)
+
+Benefits:
+
+* avoids unnecessary computations
+
+=== Parallelization
+
+> The runtime can parallelize computations to optimize resource usage
+
+(A consequence of using pure functions.)
+
+Benefits:
+
+* optimal resource utilization
+* no self-rolled concurrency
+
+
+== Solutions to common problems
+
+++++
+<table class="toc">
+	<tr><td>Common Problems in OOP</td></tr>
+	<tr><td>FP Essentials</td></tr>
+	<tr class="toc-current"><td>Solutions</td></tr>
+	<tr><td>Summary</td></tr>
+</table>
+++++
+
+=== Solutions to common problems
+
+We discussed these common OOP problems:
+
+* unreliable state
+* exposed state
+* mixed concerns
+
+Let's see how FP can address them.
+
+=== Unreliable state
+
+Mechanisms:
+
+* immutability
+* no side effects
+* pure functions
+
+=== Unreliable state
+
+Solutions:
+
+* create object in working state
+* instead of changing state:
+** when "configuring", return new type
+** when "updating", recreate
+* pass input as parameters
+* encode all effects in return value
+
+=== Exposed state
+
+Mechanisms:
+
+* compose functions, not classes
+
+Solution:
+
+* keep state encapsulated
+* pass actions as lambdas
+
+=== Exposed state
+
+Example:
+
+```java
+// in `State`:
+public <T> T execute(Function<String, T> action) {
+	return action.apply(stringState);
+}
+
+// in `Action`
+Result result = state
+	.execute(string -> action(string));
+```
+
+=== Exposed state
+
+Next-level solution:
+
+* let `State` configure action
+
+```java
+// in `State`:
+public <T> Supplier<T> configure(
+		Function<String, T> action) {
+	return () -> action.apply(stringState);
+}
+
+// in `Action`
+Supplier<Result> deferredAction = state
+	.configure(string -> action(string));
+// later...
+Result result = deferredAction.get();
+```
+
+=== Mixed concerns
+
+Mechanisms:
+
+* compose functions, not classes
+
+Solution:
+
+* separate concerns
+* pass actions as lambdas
+
+=== Mixed concerns
+
+Example:
+
+```java
+private final Lazy<String> name =
+	Lazy.of(() -> createName()));
+
+// later
+String n = name.get();
+```
+
+== Summary
+
+++++
+<table class="toc">
+	<tr><td>Common Problems in OOP</td></tr>
+	<tr><td>FP Essentials</td></tr>
+	<tr><td>Solutions</td></tr>
+	<tr class="toc-current"><td>Summary</td></tr>
+</table>
+++++
+
+=== Summary
+
+FP can ease some common problems of OOP:
+
+* make state more reliable with immutability
+* encapsulate state and separate concerns +
+  by passing actions
+* improve concurrency with immutability +
+  and pure functions
+
+These benefits are gradual.
+
+Writing subsystems in a functional style +
+with OOP-style boundary makes sense!
