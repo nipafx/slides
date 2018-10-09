@@ -70,10 +70,11 @@ as soon as you have it</p></li><li><p>ask your colleagues first</p></li><li><p>t
 <div class="paragraph"><p>Java 8 shipped in March 2014.</p></div></section><section id="paradigm_shift"><h2>Paradigm Shift</h2><div class="paragraph"><p>Lambdas make it easy to treat code as data.</p></div>
 <div class="ulist"><ul><li><p>passing "functions" was always easy in Java:<br></p><div class="ulist"><ul><li><p>use interface with single abstract method<br>
 (e.g. <code>Runnable</code>)</p></li><li><p>pass instance of it</p></li></ul></div></li><li><p>creating "functions" becomes really easy now:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Runnable r = () -&gt; System.out.println("Hello");</code></pre></div></div></li></ul></div></section><section id="paradigm_shift_2"><h2>Paradigm Shift</h2><div class="paragraph"><p>Makes it easier to parameterize behavior:</p></div>
-<div class="ulist"><ul><li><p>by <em>passing</em> an action</p></li><li><p>instead of <em>configuring</em> it</p></li></ul></div></section><section id="table_of_content"><h2>Table of Content</h2><table class="toc">
+<div class="ulist"><ul><li><p>by <em>passing</em> an action</p></li><li><p>instead of <em>configuring</em> it</p></li></ul></div></section><section id="table_of_contents"><h2>Table of Contents</h2><table class="toc">
 	<tr><td>Lambda Expressions</td></tr>
 	<tr><td>Stream API</td></tr>
 	<tr><td>Optional API</td></tr>
+	<tr><td>FP Basics</td></tr>
 	<tr><td>Default Methods</td></tr>
 </table>
 <div class="paragraph"><p>There are many other additions in Java 8,<br>
@@ -82,6 +83,7 @@ but we don&#8217;t have time for them.</p></div></section></section>
 	<tr class="toc-current"><td>Lambda Expressions</td></tr>
 	<tr><td>Stream API</td></tr>
 	<tr><td>Optional API</td></tr>
+	<tr><td>FP Basics</td></tr>
 	<tr><td>Default Methods</td></tr>
 	<tr><td>Summary</td></tr>
 </table></section><section id="lambda_expressions_2"><h2>Lambda Expressions</h2><div class="paragraph"><p>Make it easy to pass code as data,<br>
@@ -118,42 +120,46 @@ an interface with a <strong>simple</strong> abstract method:</p></div>
 		return $expression;
 	}
 }</code></pre></div></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">$Interface $var = $parameter -&gt; $expression;</code></pre></div></div></section><section id="exercise_2"><h2>Exercise 2</h2><div class="paragraph"><p>Refactor anonymous classes to lambda expressions</p></div></section><section id="lambda_expression"><h2>Lambda Expression</h2><div class="paragraph"><p>General form:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// instead of `$Interface variable = new $Interface {...}`
+$Interface variable = $parameter -&gt; $expression;
+
+// instead of `call(new $Interface {...})`
+call($parameter -&gt; $expression);</code></pre></div></div></section><section id="exercise_2"><h2>Exercise 2</h2><div class="paragraph"><p>Refactor anonymous classes to lambda expressions</p></div></section><section id="lambda_expression"><h2>Lambda Expression</h2><div class="paragraph"><p>General form:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">interface $Interface {
 	$result method($parameters) {
 		$body
 	}
 }</code></pre></div></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">$Interface $var = ($parameters) -&gt; { $body };</code></pre></div></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">$Interface variable = ($parameters) -&gt; { $body };</code></pre></div></div>
 <div class="paragraph"><p>Things to discuss:</p></div>
 <div class="ulist"><ul><li><p>parameters</p></li><li><p>body</p></li><li><p>capturing variables</p></li></ul></div></section><section id="defining_parameters"><h2>Defining Parameters</h2><div class="paragraph"><p>General form:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// method
-$result method(Type_1 name_1, Type_2 name_2, ...) {
+$result method(TypeA a, TypeB b, ...) {
 	$body
 }
 
 // lambda
-(Type_1 name_1, Type_2 name_2, ...) -&gt; { $body };</code></pre></div></div>
+(TypeA a, TypeB b, ...) -&gt; { $body };</code></pre></div></div>
 <div class="paragraph"><p>Possible simplifications:</p></div>
 <div class="ulist"><ul><li><p>leave out types</p></li><li><p>leave out parenthesis<br>
 if single parameter</p></li></ul></div></section><section id="infer_parameter_types"><h2>Infer Parameter Types</h2><div class="paragraph"><p>Compiler can infer types in most cases:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// lambda
-(Type_1 name_1, Type_2 name_2, ...) -&gt; { $body };
+(TypeA a, TypeB b, ...) -&gt; { $body };
 
 // inferred
-(name_1, name_2, ...) -&gt; { $body };</code></pre></div></div></section><section id="single_parameter"><h2>Single Parameter</h2><div class="paragraph"><p>For single parameters, leave out parenthesis:</p></div>
+(a, b, ...) -&gt; { $body };</code></pre></div></div></section><section id="single_parameter"><h2>Single Parameter</h2><div class="paragraph"><p>For single parameters, leave out parenthesis:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// lambda
-(Type_1 name_1) -&gt; { $body };
+(TypeA a) -&gt; { $body };
 
 // inferred
-Type_1 name_1 -&gt; { $body };</code></pre></div></div></section><section id="keep_it_simple"><h2>Keep It "Simple"</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// instead of
+TypeA a -&gt; { $body };</code></pre></div></div></section><section id="keep_it_simple"><h2>Keep It "Simple"</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// instead of
 TodoFilter filter = (Todo todo) -&gt; { $body };
 
 // usually
 TodoFilter filter = todo -&gt; { $body };</code></pre></div></div></section><section id="body_as_block_or_line"><h2>Body As Block Or Line</h2><div class="paragraph"><p>General form:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// method
 $result method($parameters) {
-	$body // with possible return
+	$body // with possible `return`
 }
 
 // lambda
@@ -179,7 +185,7 @@ $result method($parameters) {
 };</code></pre></div></div>
 <div class="paragraph"><p>Usually:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">TodoFilter filter = todo -&gt;
-	todo.importance() == importance;</code></pre></div></div></section><section id="matter_of_taste"><h2>Matter Of Taste</h2><div class="paragraph"><p>Where to line break on long lambdas?</p></div>
+	todo.importance() == importance;</code></pre></div></div></section><section id="matter_of_taste"><h2>Matter Of Taste</h2><div class="paragraph"><p>Where to break lines on long lambdas?</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">filter = todo -&gt; todo // (1)
 	.importance() == importance;
 
@@ -206,10 +212,10 @@ public StringToInt toInt(String parameter) {
 		+ local.length()     // captures
 		+ parameter.length() // captures
 		+ field.length();    // captures
-}</code></pre></div></div></section><section id="capturing_variables"><h2>Capturing Variables</h2><div class="paragraph"><p>In anonymous classes:</p></div>
+}</code></pre></div></div></section><section id="capturing_variables"><h2>Capturing Variables</h2><div class="paragraph"><p>Before Java 8 (in anonymous classes):</p></div>
 <div class="ulist"><ul><li><p>method params and local vars<br>
 needed to be <code>final</code></p></li><li><p>fields did not <em>and</em> could be reassigned</p></li></ul></div>
-<div class="paragraph"><p>In lambda expressions:</p></div>
+<div class="paragraph"><p>Since Java 8 (anonymous classes &amp; lambdas):</p></div>
 <div class="ulist"><ul><li><p>method params and local vars<br>
 need to be <strong>effectively final</strong></p></li><li><p>fields do not <em>and</em> can be reassigned</p></li></ul></div></section><section id="effectively_final"><h2>Effectively Final</h2><div class="paragraph"><p>"If adding <code>final</code> would not<br>
 cause a compile error."</p></div>
@@ -220,11 +226,11 @@ cause a compile error."</p></div>
 		+ local.length()     // eff. final ✔
 		+ parameter.length() // not eff. final ✘
 		+ field.length();    // always ✔
-}</code></pre></div></div></section><section id="effectively_final_2"><h2>Effectively Final</h2><div class="paragraph"><p>Implications for lambda body:</p></div>
-<div class="ulist"><ul><li><p>method parameters can not be reassigned</p></li><li><p>local variables can not be reassigned</p></li><li><p>fields <em>can</em> be reassigned</p></li></ul></div></section><section id="exercise_4"><h2>Exercise 4</h2><div class="paragraph"><p>Experiment with (non-) capturing lambda expressions</p></div></section><section id="why_effectively_final"><h2>Why Effectively Final?</h2><div class="paragraph"><p>Otherwise&#8201;&#8212;&#8201;if captured variables<br>
+}</code></pre></div></div></section><section id="why_effectively_final"><h2>Why Effectively Final?</h2><div class="paragraph"><p>Otherwise&#8201;&#8212;&#8201;if captured variables<br>
 can be reassigned:</p></div>
 <div class="ulist"><ul><li><p>which value will a lambda observe?</p></li><li><p>what happens under threading?</p></li></ul></div>
-<div class="paragraph"><p>This keeps programing model simpler!</p></div></section></section>
+<div class="paragraph"><p>This keeps programming model simpler!</p></div></section><section id="effectively_final_2"><h2>Effectively Final</h2><div class="paragraph"><p>Implications for lambda body:</p></div>
+<div class="ulist"><ul><li><p>method parameters can not be reassigned</p></li><li><p>local variables can not be reassigned</p></li><li><p>fields <em>can</em> be reassigned</p></li></ul></div></section><section id="exercise_4"><h2>Exercise 4</h2><div class="paragraph"><p>Experiment with (non-) capturing lambda expressions</p></div></section></section>
 <section><section id="functional_interfaces"><h2>Functional Interfaces</h2><table class="toc">
 	<tr><td>Lambda Expression Syntax</td></tr>
 	<tr><td>Lambdas vs Closures</td></tr>
@@ -242,7 +248,8 @@ which leads to compile error when not functional.</p></div></section><section id
 	(s, b) -&gt; b ? s.length() : 0;</code></pre></div></div></li><li><p><code>BinaryOperator&lt;T&gt;</code>: <code>T apply(T, T)</code></p></li><li><p><code>BiPredicate&lt;T, U&gt;</code>: <code>boolean test(T, U)</code></p></li></ul></div></section><section id="primitive_specializations"><h2>Primitive Specializations</h2><div class="paragraph"><p>For <code>int</code>, <code>long</code>, <code>double</code> exist specializations:</p></div>
 <div class="ulist"><ul><li><p><code>IntSupplier</code>: <code>int getAsInt()</code></p></li><li><p><code>IntConsumer</code>: <code>void accept(int)</code></p></li><li><p><code>IntFunction&lt;R&gt;</code>: <code>R apply(int)</code></p></li><li><p><code>ToIntFunction&lt;T&gt;</code>: <code>int applyAsInt(T)</code></p></li><li><p><code>IntUnaryOperator</code>: <code>int applyAsInt(int)</code></p></li><li><p><code>IntBinaryOperator</code>: <code>int applyAsInt(int, int)</code></p></li><li><p><code>IntPredicate</code>: <code>boolean test(int)</code></p></li></ul></div></section><section id="functional_interfaces_3"><h2>Functional Interfaces</h2><div class="paragraph"><p>All of these can be found<br>
 in <code>java.util.function</code>:</p></div>
-<div class="paragraph"><p><a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/package-summary.html">Java 8 Documentation</a></p></div></section><section id="exercise_5"><h2>Exercise 5</h2><div class="paragraph"><p>Get to know functional interfaces</p></div>
+<div class="paragraph"><p><a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/package-summary.html">Java 8 Documentation</a></p></div>
+<div class="paragraph"><p><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/function/package-summary.html">Java 11 Documentation</a></p></div></section><section id="exercise_5"><h2>Exercise 5</h2><div class="paragraph"><p>Get to know functional interfaces</p></div>
 <div class="paragraph"><p>(Take some notes to make sure<br>
 you can look up these interfaces!)</p></div></section></section>
 <section><section id="method_references"><h2>Method References</h2><table class="toc">
@@ -258,7 +265,8 @@ lambda parameters and method parameters coincide:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Consumer&lt;String&gt; printString = this::print;</code></pre></div></div></section><section id="exercise_6"><h2>Exercise 6</h2><div class="paragraph"><p>Create simple method references</p></div></section><section id="kinds_of_references"><h2>Kinds Of References</h2><div class="paragraph"><p>There are various kinds<br>
 of methods references:</p></div>
 <div class="ulist"><ul><li><p>to a static method</p></li><li><p>to a constructor</p></li><li><p>to an existing object</p></li><li><p>to the first parameter</p></li></ul></div></section><section id="static_reference"><h2>Static Reference</h2><div class="paragraph"><p>Reference to a type&#8217;s static method:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public static void main(String[] args) {...}
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// in class `Type`
+public static void main(String[] args) {...}
 
 Consumer&lt;String[]&gt; main =
 //  args -&gt; Type.main(args);
@@ -271,7 +279,7 @@ Function&lt;String, Type&gt; constructor =
 of an existing object:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Type typeInstance = // ...
 Supplier&lt;String&gt; getFieldFromType =
-//  typeInstance -&gt; typeInstance.getField();
+//  () -&gt; typeInstance.getField();
 	typeInstance::getField;</code></pre></div></div></section><section id="parameter_reference"><h2>Parameter Reference</h2><div class="paragraph"><p>Reference to a method<br>
 of the first parameter:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Function&lt;Type, String&gt; getFieldFromType =
@@ -283,9 +291,9 @@ of the first parameter:</p></div>
 	<tr><td>Functional Interfaces</td></tr>
 	<tr><td>Method References</td></tr>
 	<tr class="toc-current"><td>Summary</td></tr>
-</table></section><section id="summary_2"><h2>Summary</h2><div class="ulist"><ul><li><p>functional interfaces are those,<br>
-with exactly one abstract method</p></li><li><p>basic functional interfaces: <code>Supplier</code>,<br>
-<code>Consumer</code>, <code>Function</code>, <code>Operator</code>, <code>Predicate</code></p></li><li><p>basic lambda expression:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">$Interface $var= ($parameters) -&gt; { $body };</code></pre></div></div></li></ul></div></section><section id="summary_3"><h2>Summary</h2><div class="paragraph"><p>For lambda expression:</p></div>
+</table></section><section id="summary_2"><h2>Summary</h2><div class="ulist"><ul><li><p>functional interfaces are those with<br>
+<strong>exactly one abstract method</strong></p></li><li><p>basic functional interfaces: <code>Supplier</code>,<br>
+<code>Consumer</code>, <code>Function</code>, <code>Operator</code>, <code>Predicate</code></p></li><li><p>basic lambda expression:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">$Interface variable = ($parameters) -&gt; { $body };</code></pre></div></div></li></ul></div></section><section id="summary_3"><h2>Summary</h2><div class="paragraph"><p>For lambda expression:</p></div>
 <div class="ulist"><ul><li><p>interface must be functional</p></li><li><p>parameters:</p><div class="ulist"><ul><li><p>can have types</p></li><li><p>must have parenthesis if more than one</p></li></ul></div></li><li><p>body:</p><div class="ulist"><ul><li><p>can be block in curly braces</p></li><li><p>can be expression of single line</p></li></ul></div></li></ul></div></section><section id="summary_4"><h2>Summary</h2><div class="ulist"><ul><li><p>variables used in body must be effectively final</p></li><li><p>capturing lambdas use fields or non-lambda parameters</p></li></ul></div>
 <div class="paragraph"><p>Method reference:</p></div>
 <div class="ulist"><ul><li><p>static method: <code>$TYPE::$METHOD</code></p></li><li><p>constructor: <code>$TYPE::new</code></p></li><li><p>instance method: <code>$INSTANCE::$METHOD</code></p></li><li><p>method on first parameter: <code>$TYPE::$METHOD</code></p></li></ul></div></section></section>
@@ -293,14 +301,15 @@ with exactly one abstract method</p></li><li><p>basic functional interfaces: <co
 	<tr><td>Lambda Expressions</td></tr>
 	<tr class="toc-current"><td>Stream API</td></tr>
 	<tr><td>Optional API</td></tr>
+	<tr><td>FP Basics</td></tr>
 	<tr><td>Default Methods</td></tr>
 </table></section><section id="demo"><h2>Demo</h2></section><section id="building_blocks"><h2>Building Blocks</h2><div class="paragraph"><p>Typical collection operations:</p></div>
 <div class="ulist"><ul><li><p>start with a collection (<em>source</em>)</p></li><li><p>perform operation on each element<br>
 (<em>filter</em>, <em>map</em>)</p></li><li><p>gather results (<em>reduce</em>, <em>collect</em>)</p></li></ul></div>
 <div class="paragraph"><p>Why not formalize that?</p></div></section><section id="exercise_1_2"><h2>Exercise 1</h2><div class="paragraph"><p>Create Lambda-based collection processing API</p></div></section><section id="loops_vs_whatever"><h2>Loops vs &lt;Whatever&gt;</h2><div class="paragraph"><p>What do you think about that API?</p></div></section><section id="loops_vs_whatever_2"><h2>Loops vs &lt;Whatever&gt;</h2><div class="paragraph"><p>Loop upsides:</p></div>
-<div class="ulist"><ul><li><p>are more efficient</p></li><li><p>make side effects easier / more likely</p></li></ul></div>
+<div class="ulist"><ul><li><p>are more efficient</p></li><li><p>are easier to debug</p></li><li><p>make side effects easier / more likely</p></li></ul></div>
 <div class="paragraph"><p>Loop downsides:</p></div>
-<div class="ulist"><ul><li><p>make it harder to see what&#8217;s going on</p></li><li><p>make optimization/parallelization harder</p></li><li><p>make side effects easier / more likely</p></li></ul></div></section><section id="a_word_on_mapreduce"><h2>A Word On MapReduce</h2><div class="paragraph"><p>Google&#8217;s MapReduce has the same logic:</p></div>
+<div class="ulist"><ul><li><p>mix looping with domain logic</p></li><li><p>make optimization/parallelization harder</p></li><li><p>make side effects easier / more likely</p></li></ul></div></section><section id="a_word_on_mapreduce"><h2>A Word On MapReduce</h2><div class="paragraph"><p>Google&#8217;s MapReduce has the same logic:</p></div>
 <div class="ulist"><ul><li><p>split input across nodes</p></li><li><p>apply given function in parallel (<em>map</em>)</p></li><li><p>reduce resulting data in parallel (<em>reduce</em>)</p></li><li><p>reduce data across nodes (more <em>reduce</em>)</p></li></ul></div></section></section>
 <section><section id="stream_api_basics"><h2>Stream API Basics</h2><table class="toc">
 	<tr class="toc-current"><td>Stream API Basics</td></tr>
@@ -437,14 +446,14 @@ elements.stream()
 or stream API is free to ignore order!</p></div></section><section id="sorting_minima_maxima_4"><h2>Sorting, Minima, Maxima</h2><div class="paragraph"><p><em>"I have todos and want the one with earliest due date"</em></p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Todo&gt; todos = // ...
 Comparator&lt;Todo&gt; byDueDate = // ...
-Optional&lt;Todo&gt; sorted = todos.stream()
+Optional&lt;Todo&gt; min = todos.stream()
 	.min(byDueDate);</code></pre></div></div>
 <div class="paragraph"><p>What&#8217;s <code>Optional</code>?</p></div></section><section id="quick_intro_to_optional"><h2>Quick Intro to Optional</h2><div class="paragraph"><p><code>Optional</code> is " <code>null</code> as a type":</p></div>
 <div class="ulist"><ul><li><p><code>Optional&lt;T&gt;</code> may contain an instance of <code>T</code> or not</p></li><li><p>check <code>isPresent()</code>, then <code>get()</code></p></li><li><p>convert to <code>Stream&lt;T&gt;</code> by calling <code>stream()</code> ⑨</p></li></ul></div>
 <div class="paragraph"><p>More details later.</p></div></section><section id="sorting_minima_maxima_5"><h2>Sorting, Minima, Maxima</h2><div class="paragraph"><p><em>"I have todos and want the one with latest due date"</em></p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Todo&gt; todos = // ...
 Comparator&lt;Todo&gt; byDueDate = // ...
-Optional&lt;Todo&gt; sorted = todos.stream()
+Optional&lt;Todo&gt; max = todos.stream()
 	.max(byDueDate);</code></pre></div></div></section><section id="sorting_minima_maxima_6"><h2>Sorting, Minima, Maxima</h2><div class="paragraph"><p><em>"I have elements and need to deduplicate them"</em></p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Element&gt; elements = // ...
 List&lt;element&gt; distinctElements = elements.stream()
@@ -515,8 +524,7 @@ long lowDrugsCount = drugs.stream()
 	<tr><td>Summary</td></tr>
 </table></section><section id="more_stream_apis_2"><h2>More Stream APIs</h2><div class="ulist"><ul><li><p>various sources</p></li><li><p>reductions in general</p></li><li><p>collectors in detail</p></li><li><p>primitive specializations</p></li></ul></div></section><section id="stream_sources"><h2>Stream Sources</h2><div class="paragraph"><p>Besides <code>Collection::stream</code>:</p></div>
 <div class="ulist"><ul><li><p><code>Stream.of(T&#8230;&#8203;)</code></p></li><li><p><code>Stream.ofNullable(T)</code> ⑨</p></li><li><p><code>Stream.iterate(T, UnaryOperator&lt;T&gt;)</code></p></li><li><p><code>Stream.iterate(</code><br>
-<code>T, Predicate&lt;T&gt;, UnaryOperator&lt;T&gt;)</code> ⑨</p></li></ul></div></section><section id="stream_sources_2"><h2>Stream Sources</h2><div class="paragraph"><p>Besides <code>Collection::stream</code> and <code>Stream</code>:</p></div>
-<div class="ulist"><ul><li><p><code>Arrays.stream(T[])</code></p></li><li><p><code>BufferedReader.lines()</code></p></li><li><p><code>Files.lines(Path)</code>, <code>Files.list(Path)</code></p></li><li><p><code>Random.ints()</code></p></li><li><p>more&#8230;&#8203;</p></li></ul></div></section><section id="streamiterate"><h2>Stream::iterate</h2><div class="paragraph"><p>Creates an infinite stream:</p></div>
+<code>T, Predicate&lt;T&gt;, UnaryOperator&lt;T&gt;)</code> ⑨</p></li></ul></div></section><section id="streamiterate"><h2>Stream::iterate</h2><div class="paragraph"><p>Creates an infinite stream:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream.iterate(T seed,
 	UnaryOperator&lt;T&gt; next);</code></pre></div></div>
 <div class="paragraph"><p>Example:</p></div>
@@ -531,7 +539,8 @@ again and again&#8230;&#8203;</p></div></section><section id="streamiterate_2"><
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream
 	.iterate(0, i -&gt; i &lt; 5, i -&gt; i + 1)
 	.forEach(System.out::println);</code></pre></div></div>
-<div class="paragraph"><p>Prints <code>0</code>, <code>1</code>, <code>2</code>, <code>3</code>, <code>4</code>.</p></div></section><section id="exercise_4_2"><h2>Exercise 4</h2><div class="paragraph"><p>Create stream from various sources</p></div></section><section id="reduction"><h2>Reduction</h2><div class="paragraph"><p>Reduce elements of a stream to a final result.</p></div>
+<div class="paragraph"><p>Prints <code>0</code>, <code>1</code>, <code>2</code>, <code>3</code>, <code>4</code>.</p></div></section><section id="stream_sources_2"><h2>Stream Sources</h2><div class="paragraph"><p>Besides <code>Collection::stream</code> and <code>Stream</code>:</p></div>
+<div class="ulist"><ul><li><p><code>Arrays.stream(T[])</code></p></li><li><p><code>BufferedReader.lines()</code></p></li><li><p><code>Files.lines(Path)</code>, <code>Files.list(Path)</code></p></li><li><p><code>Random.ints()</code></p></li><li><p>more&#8230;&#8203;</p></li></ul></div></section><section id="exercise_4_2"><h2>Exercise 4</h2><div class="paragraph"><p>Create stream from various sources</p></div></section><section id="reduction"><h2>Reduction</h2><div class="paragraph"><p>Reduce elements of a stream to a final result.</p></div>
 <div class="ulist"><ul><li><p><code>reduce(BinaryOperator&lt;T&gt;)</code><br>
 accumulates results and returns <code>Optional&lt;T&gt;</code></p></li><li><p><code>reduce(T, BinaryOperator&lt;T&gt;)</code><br>
 accumulates result on identity</p></li></ul></div></section><section id="reduction_2"><h2>Reduction</h2><div class="paragraph"><p>Simple example:</p></div>
@@ -548,16 +557,17 @@ Optional&lt;T&gt; only = elements.stream()
 where a mutable container is needed/created.</p></div>
 <div class="paragraph"><p><code>Collector&lt;T, A, R&gt;</code> has four parts:</p></div>
 <div class="ulist"><ul><li><p><code>Supplier&lt;A&gt;</code> returns a new collection <code>A</code></p></li><li><p><code>BiConsumer&lt;A, T&gt;</code> adds an item <code>T</code> to <code>A</code></p></li><li><p><code>BinaryOperator&lt;A&gt;</code> combines two collections</p></li><li><p><code>Function&lt;A,R&gt;</code> returns the final result <code>R</code></p></li></ul></div></section><section id="collectors_2"><h2>Collectors</h2><div class="paragraph"><p>Example collecting strings to a <code>List&lt;String&gt;</code>:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Collector&lt;String, ?, List&lt;String&gt;&gt; collector = Collector.of(
-	// Supplier&lt;List&lt;String&gt;&gt;
-	() -&gt; new ArrayList&lt;String&gt;(),
-	// BiConsumer&lt;List&lt;String&gt;, String&gt;
-	(l, s) -&gt; l.add(s),
-	// BinaryOperator&lt;List&lt;String&gt;&gt;
-	(l1, l2) -&gt; { l1.addAll(l2); return l1; },
-	// Function&lt;List&lt;String&gt;,List&lt;String&gt;&gt;
-	l -&gt; l
-);</code></pre></div></div></section><section id="collectors_3"><h2>Collectors</h2><div class="paragraph"><p>Why so complicated? For parallelization!</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Collector&lt;String, ?, List&lt;String&gt;&gt; collector = Collector
+	.of(
+		// Supplier&lt;List&lt;String&gt;&gt;
+		() -&gt; new ArrayList&lt;String&gt;(),
+		// BiConsumer&lt;List&lt;String&gt;, String&gt;
+		(l, s) -&gt; l.add(s),
+		// BinaryOperator&lt;List&lt;String&gt;&gt;
+		(l1, l2) -&gt; { l1.addAll(l2); return l1; },
+		// Function&lt;List&lt;String&gt;,List&lt;String&gt;&gt;
+		l -&gt; l
+	);</code></pre></div></div></section><section id="collectors_3"><h2>Collectors</h2><div class="paragraph"><p>Why so complicated? For parallelization!</p></div>
 <div class="paragraph"><p>Think MapReduce&#8201;&#8212;&#8201;each thread:</p></div>
 <div class="ulist"><ul><li><p>creates collections <code>A</code> (<code>Supplier&lt;A&gt;</code>)</p></li><li><p>fills them with its items <code>T</code> (<code>BiConsumer&lt;A, T&gt;</code>)</p></li></ul></div>
 <div class="paragraph"><p>Then one thread:</p></div>
@@ -577,7 +587,8 @@ intermediate results</p></li></ul></div></section><section id="exercise_5_2"><h2
 <div class="ulist"><ul><li><p><code>DoubleStream</code></p></li><li><p><code>IntStream</code></p></li><li><p><code>LongStream</code></p></li></ul></div></section><section id="intstream"><h2>IntStream</h2><div class="paragraph"><p>On the example of <code>IntStream</code><br>
 (others are the same):</p></div>
 <div class="ulist"><ul><li><p>get one with static factory methods<br>
-or <code>Stream::mapToInt</code></p></li><li><p>conceptually the same as <code>Stream</code></p></li><li><p>uses primitive specializations of func. int.</p></li><li><p>has a few numeric special cases:<br>
+or <code>Stream::mapToInt</code></p></li><li><p>conceptually the same as <code>Stream</code></p></li><li><p>uses primitive specializations of<br>
+functional intterfaces</p></li><li><p>has a few numeric special cases:<br>
 <code>average</code>, <code>max</code>, <code>min</code>, <code>sum</code></p></li></ul></div></section></section>
 <section><section id="stream_details"><h2>Stream Details</h2><table class="toc">
 	<tr><td>Stream API Basics</td></tr>
@@ -697,6 +708,7 @@ debuggability suffers</p></li></ul></div></section></section>
 	<tr><td>Lambda Expressions</td></tr>
 	<tr><td>Stream API</td></tr>
 	<tr class="toc-current"><td>Optional API</td></tr>
+	<tr><td>FP Basics</td></tr>
 	<tr><td>Default Methods</td></tr>
 </table></section><section id="motivation"><h2>Motivation</h2><div class="paragraph"><p>Some terminal stream operations<br>
 may not have a result:</p></div>
@@ -840,10 +852,215 @@ of zero or one element(s):</p></div>
 	<tr class="toc-current"><td>Summary</td></tr>
 </table></section><section id="summary_14"><h2>Summary</h2><div class="ulist"><ul><li><p>get <code>Optional</code> from streams, other APIs<br>
 or create with <code>of</code>, <code>empty</code>, <code>ofNullable</code></p></li><li><p>use like streams with <code>map</code>, <code>flatMap</code>, <code>filter</code></p></li><li><p>process value with <code>ifPresent</code></p></li><li><p>get value out with <code>get</code>, <code>orElse&#8230;&#8203;</code></p></li></ul></div></section></section>
+<section id="functional_programming"><h2>Functional Programming</h2><table class="toc">
+	<tr><td>Lambda Expressions</td></tr>
+	<tr><td>Stream API</td></tr>
+	<tr><td>Optional API</td></tr>
+	<tr class="toc-current"><td>FP Basics</td></tr>
+	<tr><td>Default Methods</td></tr>
+	<tr><td>Summary</td></tr>
+</table>
+<div class="paragraph"><p>A noob&#8217;s guide.</p></div></section>
+<section><section id="common_problems"><h2>Common problems</h2><table class="toc">
+	<tr class="toc-current"><td>Common Problems in OOP</td></tr>
+	<tr><td>FP Essentials</td></tr>
+	<tr><td>Solutions</td></tr>
+	<tr><td>Summary</td></tr>
+</table></section><section id="unreliable_state"><h2>Unreliable state</h2><div class="paragraph"><p>Ever had this problem?</p></div>
+<div class="ulist"><ul><li><p>created or received an object</p></li><li><p>called desired method on it</p></li><li><p>watched it fail</p></li></ul></div>
+<div class="paragraph"><p>⇝ Object can have state that makes methods fail.</p></div>
+<div class="paragraph"><p>⇝ Further configuration expected and required.</p></div></section><section id="unreliable_state_2"><h2>Unreliable state</h2><div class="paragraph"><p>Ever had this problem?</p></div>
+<div class="ulist"><ul><li><p>refactored some code</p></li><li><p>watched it work as expected</p></li><li><p>watched tests/prod fail in<br>
+seemingly unrelated code with<br>
+seemingly unrelated error</p></li></ul></div>
+<div class="paragraph"><p>⇝ Refactored code had a non-obvious<br>
+  effect across the code base.</p></div>
+<div class="paragraph"><p>⇝ Distant parts of the code base are connected<br>
+  by shared, state-changing objects.</p></div></section><section id="unreliable_state_3"><h2>Unreliable state</h2><div class="paragraph"><p>Ever had this problem?</p></div>
+<div class="ulist"><ul><li><p>tried to implement a class' contract</p></li><li><p>failed to do it in a simple manner<br>
+because of many corner cases?</p></li></ul></div>
+<div class="paragraph"><p>⇝ Changing state typically increases<br>
+space of possible states.</p></div>
+<div class="paragraph"><p>⇝ Large state space typically leads<br>
+to many corner cases.</p></div></section><section id="unreliable_state_4"><h2>Unreliable state</h2><div class="paragraph"><p>Downsides:</p></div>
+<div class="ulist"><ul><li><p>hard to reason about</p></li><li><p>error-prone, fragile, and frustrating</p></li><li><p>requires specialized knowledge to use correctly</p></li><li><p>causes concurrency problems ("race conditions")</p></li><li><p>hard to test &amp; reuse</p></li></ul></div></section><section id="exposed_state"><h2>Exposed state</h2><div class="paragraph"><p>Common situation:</p></div>
+<div class="ulist"><ul><li><p>class <code>State</code> encapsulates fields</p></li><li><p>class <code>Action</code> needs their content<br>
+to perform an action</p></li></ul></div>
+<div class="paragraph"><p>Common solution:</p></div>
+<div class="ulist"><ul><li><p><code>State</code> exposes all fields with getters</p></li><li><p><code>Action</code> "gets" needed content</p></li></ul></div></section><section id="exposed_state_2"><h2>Exposed state</h2><div class="paragraph"><p>Downsides:</p></div>
+<div class="ulist"><ul><li><p><code>State</code> has weak encapsulation</p></li><li><p><code>Action</code> is tightly coupled to <code>State</code></p></li></ul></div>
+<div class="paragraph"><p>This makes them hard to evolve.</p></div></section><section id="mixed_concerns"><h2>Mixed concerns</h2><div class="paragraph"><p>Business logic is often mixed<br>
+with code that handles:</p></div>
+<div class="ulist"><ul><li><p>looping</p></li><li><p>lazy initialization</p></li><li><p>concurrency</p></li><li><p>&#8230;&#8203;</p></li></ul></div>
+<div class="paragraph"><p>Such code has several responsibilities!</p></div></section><section id="mixed_concerns_2"><h2>Mixed concerns</h2><div class="paragraph"><p>Downsides:</p></div>
+<div class="ulist"><ul><li><p>easier to get wrong</p></li><li><p>duplication</p></li><li><p>longer and more complex code</p></li><li><p>code has more reasons to change</p></li></ul></div></section><section id="common_problems_2"><h2>Common problems</h2><div class="paragraph"><p>Caused by moving parts.</p></div>
+<div class="ulist"><ul><li><p>unreliable state</p></li><li><p>exposed state</p></li><li><p>mixed concerns</p></li></ul></div></section><section id="moving_parts"><h2>Moving parts</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>OO makes code understandable by encapsulating moving parts.
+FP makes code understandable by minimizing moving parts.</p></div></blockquote><div class="attribution">&#8212; <a href="https://twitter.com/mfeathers/status/29581296216">Michael Feathers</a></div></div></section></section>
+<section><section id="fp_essentials"><h2>FP Essentials</h2><table class="toc">
+	<tr><td>Common Problems in OOP</td></tr>
+	<tr class="toc-current"><td>FP Essentials</td></tr>
+	<tr><td>Solutions</td></tr>
+	<tr><td>Summary</td></tr>
+</table></section><section id="functional_programming_2"><h2>Functional Programming!</h2><div class="paragraph"><p>Essentials:</p></div>
+<div class="ulist"><ul><li><p>compose <em>functions</em>, not <em>classes</em></p></li><li><p>prefer <em>immutable</em> classes</p></li><li><p>avoid <em>side effects</em></p></li><li><p>prefer <em>pure functions</em></p></li></ul></div></section><section id="functional_programming_3"><h2>Functional programming!</h2><div class="paragraph"><p>Tools:</p></div>
+<div class="ulist"><ul><li><p><em>composition</em></p></li><li><p><em>currying</em></p></li><li><p><em>partial application</em></p></li></ul></div></section><section id="functional_programming_4"><h2>Functional programming!</h2><div class="paragraph"><p>Enjoy:</p></div>
+<div class="ulist"><ul><li><p><em>declarative</em> instead of <em>imperative</em></p></li><li><p><em>referential transparency</em></p></li><li><p><em>laziness</em></p></li><li><p><em>thread-safety</em></p></li></ul></div></section><section id="functional_programming_5"><h2>Functional programming!</h2><div class="paragraph"><p>Let&#8217;s discuss basics:</p></div>
+<div class="ulist"><ul><li><p><em>functions</em> vs <em>classes</em></p></li><li><p><em>immutability</em></p></li><li><p><em>side effects</em></p></li><li><p><em>pure functions</em></p></li></ul></div></section><section id="functions_over_classes"><h2>Functions over classes</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:33.3333%"><col style="width:33.3333%"><col style="width:33.3334%"></colgroup><thead><tr><th class="tableblock halign-left valign-top"></th><th class="tableblock halign-left valign-top">OOP</th><th class="tableblock halign-left valign-top">FP</th></tr><tbody><tr><th class="tableblock halign-left valign-top"><p class="tableblock header">centers around</p></th><td class="tableblock halign-left valign-top"><p class="tableblock">nouns</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">verbs</p></td></tr><tr><th class="tableblock halign-left valign-top"><p class="tableblock header">composition of</p></th><td class="tableblock halign-left valign-top"><p class="tableblock">instances</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">actions</p></td></tr><tr><th class="tableblock halign-left valign-top"><p class="tableblock header">passing</p></th><td class="tableblock halign-left valign-top"><p class="tableblock">messages</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">results</p></td></tr><tr><th class="tableblock halign-left valign-top"><p class="tableblock header">computation by</p></th><td class="tableblock halign-left valign-top"><p class="tableblock">changing state</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">evaluation</p></td></tr></table></section><section id="functions_in_java"><h2>Functions in Java</h2><div class="paragraph"><p>Common terminology:</p></div>
+<div class="ulist"><ul><li><p>a <em>method</em> belongs to an object</p></li><li><p>a <em>function</em> stands alone</p></li></ul></div>
+<div class="paragraph"><p>In that sense, Java has no functions.</p></div>
+<div class="paragraph"><p>With <em>function</em> we typically mean<br>
+instances of functional interfaces.</p></div></section><section id="immutability"><h2>Immutability</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>An object&#8217;s (observable) state never changes</p></div></blockquote></div></section><section id="immutability_in_java"><h2>Immutability in Java</h2><div class="paragraph"><p>To implement an immutable class:</p></div>
+<div class="ulist"><ul><li><p>make all fields <code>final</code></p></li><li><p>make defensive copies of mutable<br>
+constructor arguments</p></li><li><p>never expose mutable field (e.g. <code>List</code>)</p></li><li><p>never mutate a mutable field or argument</p></li><li><p>make class <code>final</code> or constructor <code>private</code></p></li></ul></div></section><section id="immutability_2"><h2>Immutability</h2><div class="paragraph"><p>Benefits:</p></div>
+<div class="ulist"><ul><li><p>often easier to implement</p></li><li><p>behave predictably</p></li><li><p>easy to test</p></li><li><p>can be safely shared between<br>
+objects and threads</p></li></ul></div></section><section id="side_effects"><h2>Side effects</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>An observable change of the outside world</p></div></blockquote></div></section><section id="side_effects_in_java"><h2>Side effects in Java</h2><div class="paragraph"><p>To avoid side effects:</p></div>
+<div class="ulist"><ul><li><p>no assignments to fields</p></li><li><p>no mutating method calls<br>
+on fields and arguments</p></li></ul></div>
+<div class="paragraph"><p>In Java, there is no good way<br>
+to identify functions without side effects.</p></div></section><section id="side_effects_2"><h2>Side effects</h2><div class="paragraph"><p>Avoiding side effects makes code:</p></div>
+<div class="ulist"><ul><li><p>more predictable</p></li><li><p>easier to refactor and compose</p></li><li><p>easier to test</p></li></ul></div></section><section id="pure_functions"><h2>Pure functions</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>A side-effect free function whose return value is only defined by the arguments</p></div></blockquote></div></section><section id="pure_functions_in_java"><h2>Pure functions in Java</h2><div class="paragraph"><p>To have pure functions:</p></div>
+<div class="ulist"><ul><li><p>no access of non-constant fields</p></li><li><p>no mutating method calls on arguments</p></li></ul></div>
+<div class="paragraph"><p>In Java, there is no good way<br>
+to identify pure functions.</p></div></section><section id="pure_functions_2"><h2>Pure functions</h2><div class="paragraph"><p>Benefits of pure functions:</p></div>
+<div class="ulist"><ul><li><p>even more predictable (meaningful signature)</p></li><li><p>even easier to refactor and compose</p></li><li><p>even easier to test</p></li><li><p>results in <em>referential transparency</em></p></li></ul></div></section><section id="functional_programming_6"><h2>Functional programming!</h2><div class="paragraph"><p>Let&#8217;s discuss tools:</p></div>
+<div class="ulist"><ul><li><p><em>composition</em></p></li><li><p><em>currying</em></p></li><li><p><em>partial application</em></p></li></ul></div></section><section id="composition"><h2>Composition</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>Combine (simple) functions to build more powerful ones</p></div></blockquote></div>
+<div class="paragraph"><p>How-to:</p></div>
+<div class="ulist"><ul><li><p>composed function has input of the first function</p></li><li><p>passes result of a function as input to next function</p></li><li><p>composed function has result of the last function</p></li></ul></div></section><section id="composition_in_java"><h2>Composition in Java</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// hand-rolled
+static &lt;T, R, V&gt; Function&lt;T, V&gt; compose(
+		Function&lt;T, R&gt; first, Function&lt;R, V&gt; second) {
+	return t -&gt; {
+		R firstResult = first.apply(t);
+		V secondResult = second.apply(firstResult);
+		return secondResult;
+	}
+}
+
+// use
+Function&lt;String, Integer&gt; length = String::length;
+Function&lt;Integer, String&gt; toString = Integer::toString;
+Function&lt;String, String&gt; lengthToString =
+	compose(length, toString);</code></pre></div></div></section><section id="composition_in_java_2"><h2>Composition in Java</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// on `Function&lt;T, R&gt;`
+default &lt;V&gt; Function&lt;T, V&gt; andThen(Function&lt;R, V&gt; after) {
+	return (T t) -&gt; after.apply(this.apply(t));
+}
+
+// use
+Function&lt;String, Integer&gt; length = String::length;
+Function&lt;Integer, String&gt; toString = Integer::toString;
+Function&lt;String, String&gt; lengthToString =
+	length.andThen(toString);</code></pre></div></div></section><section id="currying"><h2>Currying</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>Transforming a function with multiple arguments into a sequence of functions, each with a single argument</p></div></blockquote></div></section><section id="currying_in_java"><h2>Currying in Java</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public &lt;T, U , R&gt; Function&lt;T, Function&lt;U, R&gt;&gt; curry(
+		BiFunction&lt;T, U, R&gt; f) {
+//	return t -&gt; (u -&gt; f.apply(t, u));
+	return t -&gt; u -&gt; f.apply(t, u);
+}
+
+BiFunction&lt;User, Credentials, Login&gt;
+	login = (user, creds) -&gt; logIn(user, creds);
+Function&lt;User, Function&lt;Credentials, LoginResult&gt;&gt;
+	cLogin = curry(login);</code></pre></div></div></section><section id="currying_2"><h2>Currying</h2><div class="paragraph"><p>Benefits:</p></div>
+<div class="ulist"><ul><li><p>makes you feel smart</p></li><li><p>conceptual prerequisite for<br>
+partial application</p></li></ul></div></section><section id="partial_application"><h2>Partial application</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>Fixing some of a function&#8217;s arguments, producing one with fewer arguments</p></div></blockquote></div></section><section id="partial_app_in_java"><h2>Partial app. in Java</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public static &lt;T, U, R&gt; Function&lt;U, R&gt; partial(
+		BiFunction&lt;T, U, R&gt; f, T t) {
+	return u -&gt; f.apply(t, u);
+}
+
+BiFunction&lt;Level, String, Logger&gt; newLogger =
+	Logger::new;
+Function&lt;String, Logger&gt; newLoggerWithLevel =
+	partial(newLogger, Level.INFO);</code></pre></div></div></section><section id="partial_app_in_java_2"><h2>Partial app. in Java</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public static &lt;T, R&gt; Supplier&lt;R&gt; partial(
+		Function&lt;T, R&gt; f, T t) {
+	return () -&gt; f.apply(t);
+}
+
+Function&lt;String, Logger&gt; newLoggerWithLevel =
+	partial(newLogger, Level.INFO);
+Supplier&lt;Logger&gt; newLoggerWithLevelAndSubsystem =
+	partial(newLoggerWithLevel, "Authentication");</code></pre></div></div></section><section id="partial_application_2"><h2>Partial application</h2><div class="paragraph"><p>Benefits:</p></div>
+<div class="ulist"><ul><li><p>elegant approach to configuration</p></li><li><p>eliminates entire patterns<br>
+(factory, builder)</p></li></ul></div></section><section id="functional_programming_7"><h2>Functional programming!</h2><div class="paragraph"><p>Let&#8217;s discuss effects:</p></div>
+<div class="ulist"><ul><li><p><em>declarative</em> instead of <em>imperative</em></p></li><li><p><em>referential transparency</em></p></li><li><p><em>laziness</em></p></li><li><p><em>thread-safety</em></p></li></ul></div></section><section id="declarative"><h2>Declarative</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>Solve problems without specifying an exact procedure to be followed</p></div></blockquote></div></section><section id="declarative_java"><h2>Declarative Java</h2><div class="paragraph"><p>Code expresses <em>what</em> needs to happen&#8230;&#8203;</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">todos.stream()
+	.filter(todo -&gt; todo.importance().isAtLeast(VERY))
+	.map(Todo::description)
+	.collect(joining("\n"))</code></pre></div></div>
+<div class="paragraph"><p>... instead of <em>how</em>.</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">String descs = "";
+for (Todo todo : todos) {
+	if (todo.importance().isAtLeast(VERY)) {
+		String description = todo.description();
+		descs += description + "\n";
+	}
+}
+descs = descs.substring(0, descs.length() - 2);</code></pre></div></div></section><section id="declarative_2"><h2>Declarative</h2><div class="paragraph"><p>Declarative programming style:</p></div>
+<div class="ulist"><ul><li><p>makes code more readable</p></li><li><p>separates business logic from<br>
+implementation details</p></li><li><p>enables improvements across code base<br>
+(correctness, performance, &#8230;&#8203;)</p></li></ul></div></section><section id="referential_transparency"><h2>Referential transparency</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>An expression always evaluates to the same result in any context</p></div></blockquote></div>
+<div class="paragraph"><p>(A consequence of using pure functions.)</p></div></section><section id="referential_transparency_2"><h2>Referential transparency</h2><div class="paragraph"><p>Benefits:</p></div>
+<div class="ulist"><ul><li><p>easy to reason about, test, refactor, reuse, compose</p></li><li><p>enables (automatic) optimizations:</p><div class="ulist"><ul><li><p>lazy evaluation</p></li><li><p>parallelization</p></li><li><p>memoization (i.e. caching)</p></li></ul></div></li></ul></div></section><section id="laziness"><h2>Laziness</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>The runtime can defer execution until the latest possible point in time</p></div></blockquote></div>
+<div class="paragraph"><p>(A consequence of using pure functions.)</p></div>
+<div class="paragraph"><p>Benefits:</p></div>
+<div class="ulist"><ul><li><p>avoids unnecessary computations</p></li></ul></div></section><section id="parallelization"><h2>Parallelization</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>The runtime can parallelize computations to optimize resource usage</p></div></blockquote></div>
+<div class="paragraph"><p>(A consequence of using pure functions.)</p></div>
+<div class="paragraph"><p>Benefits:</p></div>
+<div class="ulist"><ul><li><p>optimal resource utilization</p></li><li><p>no self-rolled concurrency</p></li></ul></div></section></section>
+<section><section id="solutions_to_common_problems"><h2>Solutions to common problems</h2><table class="toc">
+	<tr><td>Common Problems in OOP</td></tr>
+	<tr><td>FP Essentials</td></tr>
+	<tr class="toc-current"><td>Solutions</td></tr>
+	<tr><td>Summary</td></tr>
+</table></section><section id="solutions_to_common_problems_2"><h2>Solutions to common problems</h2><div class="paragraph"><p>We discussed these common OOP problems:</p></div>
+<div class="ulist"><ul><li><p>unreliable state</p></li><li><p>exposed state</p></li><li><p>mixed concerns</p></li></ul></div>
+<div class="paragraph"><p>Let&#8217;s see how FP can address them.</p></div></section><section id="unreliable_state_5"><h2>Unreliable state</h2><div class="paragraph"><p>Mechanisms:</p></div>
+<div class="ulist"><ul><li><p>immutability</p></li><li><p>no side effects</p></li><li><p>pure functions</p></li></ul></div></section><section id="unreliable_state_6"><h2>Unreliable state</h2><div class="paragraph"><p>Solutions:</p></div>
+<div class="ulist"><ul><li><p>create object in working state</p></li><li><p>instead of changing state:</p><div class="ulist"><ul><li><p>when "configuring", return new type</p></li><li><p>when "updating", recreate</p></li></ul></div></li><li><p>pass input as parameters</p></li><li><p>encode all effects in return value</p></li></ul></div></section><section id="exposed_state_3"><h2>Exposed state</h2><div class="paragraph"><p>Mechanisms:</p></div>
+<div class="ulist"><ul><li><p>compose functions, not classes</p></li></ul></div>
+<div class="paragraph"><p>Solution:</p></div>
+<div class="ulist"><ul><li><p>keep state encapsulated</p></li><li><p>pass actions as lambdas</p></li></ul></div></section><section id="exposed_state_4"><h2>Exposed state</h2><div class="paragraph"><p>Example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// in `State`:
+public &lt;T&gt; T execute(Function&lt;String, T&gt; action) {
+	return action.apply(stringState);
+}
+
+// in `Action`
+Result result = state
+	.execute(string -&gt; action(string));</code></pre></div></div></section><section id="exposed_state_5"><h2>Exposed state</h2><div class="paragraph"><p>Next-level solution:</p></div>
+<div class="ulist"><ul><li><p>let <code>State</code> configure action</p></li></ul></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// in `State`:
+public &lt;T&gt; Supplier&lt;T&gt; configure(
+		Function&lt;String, T&gt; action) {
+	return () -&gt; action.apply(stringState);
+}
+
+// in `Action`
+Supplier&lt;Result&gt; deferredAction = state
+	.configure(string -&gt; action(string));
+// later...
+Result result = deferredAction.get();</code></pre></div></div></section><section id="mixed_concerns_3"><h2>Mixed concerns</h2><div class="paragraph"><p>Mechanisms:</p></div>
+<div class="ulist"><ul><li><p>compose functions, not classes</p></li></ul></div>
+<div class="paragraph"><p>Solution:</p></div>
+<div class="ulist"><ul><li><p>separate concerns</p></li><li><p>pass actions as lambdas</p></li></ul></div></section><section id="mixed_concerns_4"><h2>Mixed concerns</h2><div class="paragraph"><p>Example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">private final Lazy&lt;String&gt; name =
+	Lazy.of(() -&gt; createName()));
+
+// later
+String n = name.get();</code></pre></div></div></section></section>
+<section><section id="summary_15"><h2>Summary</h2><table class="toc">
+	<tr><td>Common Problems in OOP</td></tr>
+	<tr><td>FP Essentials</td></tr>
+	<tr><td>Solutions</td></tr>
+	<tr class="toc-current"><td>Summary</td></tr>
+</table></section><section id="summary_16"><h2>Summary</h2><div class="paragraph"><p>FP can ease some common problems of OOP:</p></div>
+<div class="ulist"><ul><li><p>make state more reliable with immutability</p></li><li><p>encapsulate state and separate concerns<br>
+by passing actions</p></li><li><p>improve concurrency with immutability<br>
+and pure functions</p></li></ul></div>
+<div class="paragraph"><p>These benefits are gradual.</p></div>
+<div class="paragraph"><p>Writing subsystems in a functional style<br>
+with OOP-style boundary makes sense!</p></div></section></section>
 <section><section id="default_methods"><h2>Default Methods</h2><table class="toc">
 	<tr><td>Lambda Expressions</td></tr>
 	<tr><td>Stream API</td></tr>
 	<tr><td>Optional API</td></tr>
+	<tr><td>FP Basics</td></tr>
 	<tr class="toc-current"><td>Default Methods</td></tr>
 </table></section><section id="mmh"><h2>Mmh&#8230;&#8203;</h2><div class="paragraph"><p>Where does <code>Collection::stream</code> come from?</p></div>
 <div class="ulist"><ul><li><p>new method on a public interface</p></li><li><p>breaks all third-party implementations</p></li></ul></div></section><section id="collectionstream"><h2>Collection::stream</h2><div class="paragraph"><p>Take a look at <code>Collection</code> interface:</p></div>
@@ -945,20 +1162,20 @@ any other possible implementation:</p></div>
 	Objects.requireNonNull(p);
 	return (T t) -&gt; test(t) &amp;&amp; p.test(t);
 }</code></pre></div></div></section></section>
-<section><section id="summary_15"><h2>Summary</h2><table class="toc">
+<section><section id="summary_17"><h2>Summary</h2><table class="toc">
 	<tr><td>Syntax &amp; Semantics</td></tr>
 	<tr><td>Existing Functionality</td></tr>
 	<tr><td>Kinds of Default Methods</td></tr>
 	<tr class="toc-current"><td>Summary</td></tr>
-</table></section><section id="summary_16"><h2>Summary</h2><div class="paragraph"><p>Syntax &amp; Semantics:</p></div>
+</table></section><section id="summary_18"><h2>Summary</h2><div class="paragraph"><p>Syntax &amp; Semantics:</p></div>
 <div class="ulist"><ul><li><p>interfaces can have instance methods:</p><div class="ulist"><ul><li><p>add <code>default</code> keyword</p></li><li><p>implement as usually</p></li></ul></div></li><li><p>method resolution:</p><div class="ulist"><ul><li><p>methods from classes are <em>always</em> preferred</p></li><li><p>default methods are "fall back"</p></li></ul></div></li><li><p>interface can have static and private<br>
-methods just like classes</p></li></ul></div></section><section id="summary_17"><h2>Summary</h2><div class="paragraph"><p>Many existing and new interfaces<br>
+methods just like classes</p></li></ul></div></section><section id="summary_19"><h2>Summary</h2><div class="paragraph"><p>Many existing and new interfaces<br>
 have default methods.</p></div>
 <div class="paragraph"><p>Specific use cases:</p></div>
 <div class="ulist"><ul><li><p>create fluent decorator APIs</p></li><li><p>evolve interfaces without breaking clients</p></li></ul></div></section></section>
-<section id="summary_18"><h2>Summary</h2><div class="ulist"><ul><li><p>use lambdas to "pass code as data"<br>
+<section id="summary_of_summaries"><h2>Summary of summaries</h2><div class="ulist"><ul><li><p>use lambdas to "pass code as data"<br>
 (stream API is excellent example)</p></li><li><p>use streams to make looping<br>
-more predictable and readable</p></li><li><p>use <code>Optional</code> to represent absence</p></li><li><p>be aware of default methods</p></li></ul></div></section>
+more predictable and readable</p></li><li><p>use <code>Optional</code> to represent absence</p></li><li><p>give immutability and functions a shot</p></li><li><p>be aware of default methods</p></li></ul></div></section>
 <section id="image_credits"><h2>Image Credits</h2><div class="ulist"><ul><li><p><a href="https://pixabay.com/en/number-digit-eight-8-background-1982275/">eight</a>:
 <a href="https://pixabay.com/en/users/PIRO4D-2707530/">PIRO4D</a>,
 <a href="https://wiki.creativecommons.org/wiki/CC0">CC0</a></p></li><li><p><a href="https://www.flickr.com/photos/21496790@N06/5065834411">question-mark</a>:
