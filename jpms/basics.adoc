@@ -394,11 +394,9 @@ modules can be compiled at once.
 * defines a folder structure
 * uses `*` as placeholder for module name
 
-Example use:
+Example:
 
 [source,bash]
 ----
-javac
-	--module-source-path "./*/src/main/java"
-	# ...
+--module-source-path "./*/src/main/java"
 ----

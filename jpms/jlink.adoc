@@ -29,7 +29,7 @@ Create with `jlink`:
 $ jlink
 #   define output folder for the image
     --output jdk-minimal
-#   where to find modules?
+#   where to find modules? (obsolete in ⑪)
     --module-path $JAVA_HOME/jmods
 #   which modules to add (includes dependencies!)
     --add-modules java.base
@@ -140,7 +140,7 @@ app-image/bin/calendar
 You can use `jlink` to:
 
 * create a runtime image +
-with just the right classes
+with just the right modules
 * create an application image +
 including your code
 

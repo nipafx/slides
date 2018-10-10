@@ -456,7 +456,7 @@ module advent {
 module factory.chocolate {
 	requires surprise;
 	provides surprise.SurpriseFactory
-		with factory.quote.ChocolateFactory;
+		with factory.chocolate.ChocolateFactory;
 }
 
 module factory.quote {
