@@ -1,0 +1,76 @@
+= Blogging 101
+:backend: revealjs
+:revealjs_theme: nipa-night
+:revealjsdir: ../_reveal.js
+:revealjs_controls: false
+:revealjs_progress: false
+:revealjs_slideNumber: false
+:revealjs_history: true
+:revealjs_center: true
+:revealjs_transition: slide
+:revealjs_backgroundTransition: fade
+:revealjs_parallaxBackgroundImage: images/typewriter.jpg
+:revealjs_parallaxBackgroundSize: 4846px 3593px
+
+:imagedir: images
+
+include::../_shared/highlight.js.adoc[]
+
+:host-name: Accenture
+:host-url: https://www.accenture.de
+:host-logo-url: images/logo-accenture.jpg
+// :host-logo-style: background-color: transparent; border-width: 0;
+:host-twitter-name: @AccentureDACH
+:host-twitter-url: https://twitter.com/AccentureDACH
+include::../_shared/event-on-title-and-footer.adoc[]
+
+
+// ####################### //
+// P R E S E N T A T I O N //
+// ####################### //
+
+// ⇝
+
+////
+TODO
+* start with why
+* remove mentions of Accenture
+////
+
+== Table of contents
+
+++++
+<table class="toc">
+	<tr><td>Setting Up A Blog</td></tr>
+	<tr><td>Creating Content</td></tr>
+	<tr><td>Traffic</td></tr>
+	<tr><td>Social Media</td></tr>
+</table>
+++++
+
+include::setup.adoc[]
+
+include::content.adoc[]
+
+include::traffic.adoc[]
+
+include::sharing.adoc[]
+
+== Summary
+
+* prefer a static site generator
+* write about anything that you didn't +
+  immediately find a good source for
+* keep a list of ideas
+* choose topics, format, length wisely
+* focus on quality
+* traffic and social media engagement +
+  takes time - be patient
+
+// ######### //
+// O U T R O //
+// ######### //
+
+include::../_shared/about-slide.adoc[]
+
+include::images/sources.adoc[]

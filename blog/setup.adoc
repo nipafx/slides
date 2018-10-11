@@ -1,0 +1,83 @@
+== Blogging 101
+
+++++
+<table class="toc">
+	<tr class="toc-current"><td>Setting Up A Blog</td></tr>
+	<tr><td>Creating Content</td></tr>
+	<tr><td>Traffic</td></tr>
+	<tr><td>Social Media</td></tr>
+</table>
+++++
+
+=== Setting up a blog
+
+There are two common ways +
+to set up a blog:
+
+* content management system +
+  (CMS, e.g. https://wordpress.org/[WordPress])
+* static site generator +
+  (e.g. https://jekyllrb.com/[Jekyll])
+
+=== Content Management Systems
+
+Properties:
+
+* dynamic, powerful, complex, slow
+* often cluttered
+* have on-board/plugin support for +
+  comments, user accounts, paywalls, etc.
+* editing happens in a dedicated web component
+* versioning and collaboration suck
+
+[state=empty,background-color=white]
+=== !
+image::images/wordpress.png[background, size=contain]
+
+=== Static Site Generators
+
+* can only serve static content
+* often very clean themes
+* user interaction (e.g. comments) +
+  must be provided by outside services
+* can be written offline in sensible format +
+  (usually https://en.wikipedia.org/wiki/Markdown[Markdown] or https://en.wikipedia.org/wiki/AsciiDoc[AsciiDoc])
+* use established tools for +
+  versions, collaboration, and deployment +
+  (GitHub, GitLab, Travis, etc.)
+
+[state=empty,background-color=white]
+=== !
+image::images/jekyll.png[background, size=contain]
+
+=== CMS vs Static
+
+Stand-off:
+
+* for a good reading/writing experience +
+  prefer static site generators
+* if there's a lot of dynamic content +
+  beyond comments, use a CMS
+
+=== URL structure
+
+Keep URLs simple:
+
+* no date
+* no category structure: +
+https://blog.codefx.org/java/java-11-migration-guide/ 🤔
+
+Makes them easier to read and share.
+
+=== Bells and whistles
+
+Start simple:
+
+* no comments
+* no dynamic content
+
+But:
+
+* minimal SEO
+* social media integration +
+  (buttons and HTML tags)
