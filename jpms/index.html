@@ -201,17 +201,15 @@ $ java --module-path mods --module advent</code></pre></div></div></section><sec
 <div class="paragraph"><p>With <em>multi-module compilation</em>, several<br>
 modules can be compiled at once.</p></div>
 <div class="ulist"><ul><li><p>used by <code>javac</code> to look up source files</p></li><li><p>defines a folder structure</p></li><li><p>uses <code>*</code> as placeholder for module name</p></li></ul></div>
-<div class="paragraph"><p>Example use:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">javac
-	--module-source-path "./*/src/main/java"
-	# ...</code></pre></div></div></section></section>
+<div class="paragraph"><p>Example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">--module-source-path "./*/src/main/java"</code></pre></div></div></section></section>
 <section><section id="creating_runtime_images_with_jlink"><h2>Creating Runtime Images With JLink</h2><h3>Custom-Made For Your Application</h3></section><section id="remember_this" data-background-color="white" data-background-image="images/platform-modules.png" data-background-size="contain"><h2>Remember This?</h2></section><section id="benefiting_from_jdk_modularization"><h2>Benefiting From JDK Modularization</h2><div class="paragraph"><p>Create a JDK install with just the code you need:</p></div>
 <div class="ulist"><ul><li><p>know which modules your app uses (⇝ <code>jdeps</code>)</p></li><li><p>create an image with those modules (⇝ <code>jlink</code>)</p></li></ul></div>
 <div class="paragraph"><p>This is about <code>jlink</code>.</p></div></section><section id="a_minimal_jdk_image"><h2>A Minimal JDK Image</h2><div class="paragraph"><p>Create with <code>jlink</code>:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">$ jlink
 #   define output folder for the image
     --output jdk-minimal
-#   where to find modules?
+#   where to find modules? (obsolete in ⑪)
     --module-path $JAVA_HOME/jmods
 #   which modules to add (includes dependencies!)
     --add-modules java.base</code></pre></div></div>
@@ -249,7 +247,7 @@ which creates module descriptors on the fly.</p></div></section><section id="lin
 (with <code>--bind-services</code>)</p></li><li><p>various optimizations<br>
 (size and launch performance)</p></li><li><p>plugin API (not yet public)</p></li><li><p>cross OS image generation</p></li></ul></div></section><section id="summary"><h2>Summary</h2><div class="paragraph"><p>You can use <code>jlink</code> to:</p></div>
 <div class="ulist"><ul><li><p>create a runtime image<br>
-with just the right classes</p></li><li><p>create an application image<br>
+with just the right modules</p></li><li><p>create an application image<br>
 including your code</p></li></ul></div>
 <div class="paragraph"><p>This should make certain kinds of deploys<br>
 smaller and easier.</p></div></section></section>
@@ -637,7 +635,7 @@ module B {
 module factory.chocolate {
 	requires surprise;
 	provides surprise.SurpriseFactory
-		with factory.quote.ChocolateFactory;
+		with factory.chocolate.ChocolateFactory;
 }
 
 module factory.quote {

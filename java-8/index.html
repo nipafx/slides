@@ -588,7 +588,7 @@ intermediate results</p></li></ul></div></section><section id="exercise_5_2"><h2
 (others are the same):</p></div>
 <div class="ulist"><ul><li><p>get one with static factory methods<br>
 or <code>Stream::mapToInt</code></p></li><li><p>conceptually the same as <code>Stream</code></p></li><li><p>uses primitive specializations of<br>
-functional intterfaces</p></li><li><p>has a few numeric special cases:<br>
+functional interfaces</p></li><li><p>has a few numeric special cases:<br>
 <code>average</code>, <code>max</code>, <code>min</code>, <code>sum</code></p></li></ul></div></section></section>
 <section><section id="stream_details"><h2>Stream Details</h2><table class="toc">
 	<tr><td>Stream API Basics</td></tr>
@@ -694,7 +694,7 @@ order-independent, thread-safe, performant</p></li></ul></div></section></sectio
 	<tr><td>Stream Details</td></tr>
 	<tr><td>Stream Pitfalls</td></tr>
 	<tr class="toc-current"><td>Summary</td></tr>
-</table></section><section id="summary_6"><h2>Summary</h2><div class="ulist"><ul><li><p>source, intermediate, and terminal operations</p></li><li><p>there are primitive specializations</p></li><li><p>streams are lazy and not reusable</p></li><li><p>streams are easy to parallelize</p></li><li><p>should minimize side effects</p></li><li><p>think carefully how to use on your APIs</p></li></ul></div></section><section id="summary_7"><h2>Summary</h2><div class="paragraph"><p>Sources:</p></div>
+</table></section><section id="summary_6"><h2>Summary</h2><div class="ulist"><ul><li><p>source, intermediate, and terminal operations</p></li><li><p>there are primitive specializations</p></li><li><p>streams are lazy and not reusable</p></li><li><p>streams are easy to parallelize</p></li><li><p>should minimize side effects</p></li><li><p>think carefully how to use in your APIs</p></li></ul></div></section><section id="summary_7"><h2>Summary</h2><div class="paragraph"><p>Sources:</p></div>
 <div class="ulist"><ul><li><p>primarily collections</p></li><li><p>many other APIs return streams</p></li><li><p>they define a stream&#8217;s initial characteristics</p></li></ul></div></section><section id="summary_8"><h2>Summary</h2><div class="paragraph"><p>Intermediate Operations:</p></div>
 <div class="ulist"><ul><li><p>can be stateless or stateful</p></li><li><p>can be short-circuiting</p></li><li><p>clear, preserve, or inject characteristics</p></li></ul></div></section><section id="summary_9"><h2>Summary</h2><div class="paragraph"><p>Terminal operations:</p></div>
 <div class="ulist"><ul><li><p>largely define how a stream is processed</p></li><li><p><code>reduce</code> and <code>collect</code> are powerful and important</p></li><li><p>can be short-circuiting</p></li><li><p>can be optimized based on characteristics</p></li></ul></div></section><section id="summary_10"><h2>Summary</h2><div class="paragraph"><p>Returning Streams:</p></div>
@@ -1075,7 +1075,7 @@ with OOP-style boundary makes sense!</p></div></section></section>
 	<tr><td>Summary</td></tr>
 </table></section><section id="intention"><h2>Intention</h2><div class="ulist"><ul><li><p>add methods to interfaces<br>
 without breaking implementations</p></li><li><p>extend existing interfaces<br>
-to improve usability</p></li><li><p>easy programing model</p></li></ul></div></section><section id="default_method_syntax"><h2>Default Method Syntax</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// in `List`
+to improve usability</p></li><li><p>easy programming model</p></li></ul></div></section><section id="default_method_syntax"><h2>Default Method Syntax</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// in `List`
 default void sort(Comparator&lt;? super E&gt; c) {
 	// do the sorting
 }</code></pre></div></div>
