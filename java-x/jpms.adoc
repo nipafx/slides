@@ -2,13 +2,14 @@ include::jpms-basics.adoc[]
 
 include::jpms-quick-services.adoc[]
 
-=== Other Features
+include::jpms-quick-jlink.adoc[]
+
+=== More JPMS Features
 
 * finer grained dependencies and exports
 * open packages and modules (for reflection)
 * unnamed and automatic modules (for migration)
 * layers (for containers)
-* `jlink` to create runtime images
 
 
 === More About JPMS
@@ -39,12 +40,12 @@ include::jpms-quick-services.adoc[]
 </div>
 ++++
 
-I'm writing a book! +
-EA available ⇝ https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb[tiny.cc/jms]
+*I've written a book!* +
+E-book available ⇝ https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb[tiny.cc/jms]
 
 * creating, building, +
 running modules
-* migration to Java 9
+* migration to Java 9+
 * modularization
 * services and +
 advanced features
