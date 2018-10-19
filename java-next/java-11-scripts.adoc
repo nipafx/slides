@@ -1,0 +1,71 @@
+=== Scripting Java
+==== Faster feedback with fewer tools
+
+=== Launching A Single Source File
+
+Compiling and running +
+simple Java programs is verbose.
+
+Not any more!
+
+```
+java HelloJava11.java
+```
+
+=== Background
+
+How it works:
+
+* compiles source into memory
+* runs from there
+
+Details:
+
+* requires module _jdk.compiler_
+* processes options like class/module path et al.
+* interprets `@files` for easier option management
+
+=== Use Cases
+
+Mostly similar to `jshell`:
+
+* easier demonstrations
+* more portable examples
+* experimentation with new language features +
+  (combine with `--enable-preview`)
+
+*But also: script files!*
+
+=== Scripts
+
+Steps towards easier scripting:
+
+* arbitrary file names
+* shebang support
+
+=== Arbitrary File Names
+
+Use `--source` if file doesn't end in `.java`:
+
+```
+java --source 11 hello-java-11
+```
+
+=== Shebang Support
+
+To create "proper scripts":
+
+* include shebang in source:
++
+```sh
+#!/opt/jdk-11/bin/java --source 11
+```
+* name script and make it executable
+* execute it as any other script:
++
+```sh
+# from current directory:
+./hello-java-11
+# from PATH:
+hello-java-11
+```

@@ -1,0 +1,109 @@
+=== Local-Variable Type Inference
+==== Less typing, but still strongly typed
+
+=== Type Duplication
+
+We're used to duplicating +
+type information:
+
+```java
+URL codefx = new URL("http://codefx.org");
+URLConnection connection = codefx.openConnection();
+Reader reader = new BufferedReader(
+	new InputStreamReader(
+		connection.getInputStream()));
+```
+
+Not so bad?
+
+=== Type Duplication
+
+What about this?
+
+```java
+No no = new No();
+AmountIncrease<BigDecimal> more =
+	new BigDecimalAmountIncrease();
+HorizontalConnection<LinePosition, LinePosition>
+	jumping =
+		new HorizontalLinePositionConnection();
+Variable variable = new Constant(5);
+List<String> names = List.of("Max", "Maria");
+```
+
+=== Type Deduplication
+
+Can't somebody else do that? +
+Compiler knows the types!
+
+Enter `var`:
+
+```java
+var codefx = new URL("http://codefx.org");
+var connection = codefx.openConnection();
+var reader = new BufferedReader(
+	new InputStreamReader(
+		connection.getInputStream()));
+```
+
+=== Rules of `var`
+
+`var` only works in limited scopes:
+
+[%step]
+* compiler infers type from right-hand side +
+  ⇝ rhs has to *exist* and *define a type*
+* only works for local variables, `for`, `try` +
+  ⇝ no `var` on fields or in method signatures
+* also on lambda parameters ⑪ +
+  ⇝ annotate inferred type on lambda parameters
+
+=== Rules of `var`
+
+Two more:
+
+* not a keyword, but a _reserved type name_ +
+  ⇝ variables/fields can be named `var`
+* compiler writes type into bytecode +
+  ⇝ no run-time component
+
+=== What About Readability?
+
+This *is* about readability!
+
+* less redundancy
+* more intermediate variables
+* more focus on variable names
+* aligned variable names
+
+=== Aligned Variable Names
+
+```java
+var no = new No();
+var more = new BigDecimalAmountIncrease();
+var jumping = new HorizontalLinePositionConnection();
+var variable = new Constant(5);
+var names = List.of("Max", "Maria");
+```
+
+=== What About Readability?
+
+Still think omitting types is always bad?
+
+Ever wrote a lambda without declaring types?
+
+```java
+rhetoricalQuestion.answer(yes -> "see my point?");
+```
+
+=== More on `var`
+
+* First Contact With `var` In Java 10 +
+💻 https://blog.codefx.org/java/java-10-var-type-inference/[tiny.cc/java-var] /
+▶ https://www.youtube.com/watch?v=Le1DbpRZdRQ&index=1&list=PL_-IO8LOLuNp2stY1qBUtXlfMdJW7wvfT[tiny.cc/java-var-yt]
+* https://snyk.io/blog/local-type-inference-java-cheat-sheet[cheat sheet] (*⇜ print when getting started!*)
+* http://openjdk.java.net/projects/amber/LVTIstyle.html[official style guidelines]
+* `var` and ...
+** https://blog.codefx.org/java/intersection-types-var/[intersection types]
+** https://blog.codefx.org/java/traits-var/[traits]
+** https://blog.codefx.org/java/tricks-var-anonymous-classes/[anonymous classes]
