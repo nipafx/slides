@@ -1,0 +1,32 @@
+=== JLink
+
+Create your own runtime images:
+
+* with the JDK modules your app needs
+* with all modules (JDK, app, deps)
+
+Let's look at the latter!
+
+=== Application Image
+
+[source,bash]
+----
+# create image
+$ jlink
+	--output awesome-app
+	--module-path $JAVA_HOME/jmods:mods
+	--add-modules com.awesome.app
+	--launcher awesome=com.awesome.app
+# [ship image]
+# use image
+awesome-app/bin/awesome
+----
+
+=== More JLink Features
+
+* automatic service binding +
+(with `--bind-services`)
+* various optimizations +
+(size and launch performance)
+* plugin API (not yet public)
+* cross OS image generation
