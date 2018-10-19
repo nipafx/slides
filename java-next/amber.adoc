@@ -78,6 +78,17 @@ int numLetters = switch (day) {
 * no more `break`!
 * compiler checks exhaustiveness
 
+=== Switch expressions
+image::images/amber.jpg[background, size=cover]
+
+http://openjdk.java.net/jeps/12[Preview] in http://jdk.java.net/12/[Java 12]!
+
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/1znHEf3oSNI" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+++++
+
+https://youtube.com/c/codefx[youtube.com/c/codefx]
+
 === Pattern matching
 image::images/amber.jpg[background, size=cover]
 
@@ -178,8 +189,8 @@ image::images/amber.jpg[background, size=cover]
 
 Makes Java more expressive:
 
-* type inference with `var`
-* raw string literals
-* switch expressions
+* type inference with `var` ⑩
+* raw string literals ⑫
+* switch expressions ⑫
 * pattern matching
 * records
