@@ -56,7 +56,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		document.body.appendChild(document.querySelector('footer'));
 	})
 </script></div></section>
-<section><section id="lets_get_started"><h2>Let&#8217;s get started!</h2><div class="ulist"><ul><li><p>this talk covers Java 9 to 11</p></li><li><p>it is a showcase, not a tutorial</p></li><li><p>slides at <a href="http://slides.codefx.org/java-x">slides.codefx.org/java-x</a></p></li></ul></div></section><section id="lots_to_talk_about"><h2>Lots to talk about!</h2><table class="toc">
+<section><section id="lets_get_started"><h2>Let&#8217;s get started!</h2><div class="ulist"><ul><li><p>this talk covers Java 9 to 11</p></li><li><p>it is a showcase, not a tutorial</p></li><li><p>tweet questions with <a href="https://twitter.com/search?q=%23jokerconf%20%23java11">#jokerconf #Java11</a></p></li><li><p>slides at <a href="http://slides.codefx.org/java-x">slides.codefx.org/java-x</a></p></li><li><p>live-translation at <a href="https://jokerconf.com/onlinefree">jokerconf.com/onlinefree</a></p></li></ul></div></section><section id="lots_to_talk_about"><h2>Lots to talk about!</h2><table class="toc">
 	<tr><td>Module System</td></tr>
 	<tr><td>Language Changes</td></tr>
 	<tr><td>New and Updated APIs</td></tr>
@@ -135,14 +135,25 @@ E-book available ⇝ <a href="https://www.manning.com/books/the-java-module-syst
 <div class="ulist"><ul><li><p>creating, building,<br>
 running modules</p></li><li><p>migration to Java 9+</p></li><li><p>modularization</p></li><li><p>services and<br>
 advanced features</p></li><li><p>reflection and layers</p></li><li><p>custom runtime images</p></li></ul></div></section></section>
-<section id="new_language_features"><h2>New Language Features</h2><table class="toc">
+<section><section id="new_language_features"><h2>New Language Features</h2><table class="toc">
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
 	<tr><td>Diamond Operator ⑨</td></tr>
 	<tr><td>SafeVarargs ⑨</td></tr>
 	<tr><td>Deprecation Warnings ⑨</td></tr>
-</table></section>
+</table></section><section id="sneak_preview"><h2>Sneak Preview</h2><div class="paragraph"><p>Java 12 <code>switch</code> expressions:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public void switchExpression() {
+	var bool = Bool.random();
+	boolean result = switch (bool) {
+		case TRUE -&gt; true;
+		case FALSE -&gt; false;
+		case FILE_NOT_FOUND -&gt;
+			throw new UncheckedIOException(
+				"This is ridiculous!",
+				new FileNotFoundException());
+	};
+}</code></pre></div></div></section></section>
 <section><section id="new_language_features_2"><h2>New Language Features</h2><table class="toc">
 	<tr class="toc-current"><td>Local-Variable Type Inference ⑩</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
