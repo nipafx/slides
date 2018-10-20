@@ -51,3 +51,12 @@ To know what's coming:
 * give feedback
 
 Tell your colleagues about it!
+
+////
+TODO: Draft JEPs
+
+* http://openjdk.java.net/jeps/8158765[isolated methods]: JVM learns about methods that are not related to a class, which improves performance and reduces memory footprint of method handle infrastructure (great for Java, but also for dynamic JVM languages)
+* http://openjdk.java.net/jeps/8193209[enhanced pseudo-random number generators]: provides new interface types for pseudorandom number generators (PRNGs) so that specific PRNGs can be plugged into `Random` et.al.
+* http://openjdk.java.net/jeps/8201271[vector API]: creates an API that allows the definition of Single Instruction Multiple Data (SIMD) instructions that reliably compile at runtime to optimal vector hardware instructions on supported CPU architectures and thus achieve superior performance than equivalent scalar computations
+* http://openjdk.java.net/jeps/8201462[better hash codes]: adds better hash functions (general, 64bit, well-mixing bits, faster for more fields, saltable) that can be used as alternative backends for `Object::hashCode` (opt-in). Will reduce excessive hash collisions, poor use of CPU cycles, excessive memory footprint in hashed structures
+////

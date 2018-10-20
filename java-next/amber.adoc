@@ -35,8 +35,8 @@ image::images/amber.jpg[background, size=cover]
 * switch expressions (http://openjdk.java.net/jeps/325[JEP 325])
 * pattern matching (http://openjdk.java.net/jeps/305[JEP 305])
 * records (http://cr.openjdk.java.net/~briangoetz/amber/datum.html[exploration])
-
-// TODO: add removal of serialization and concise method syntax (http://openjdk.java.net/jeps/8209434)
+* revamps serialization (nothing concrete yet)
+* concise method bodies (http://openjdk.java.net/jeps/8209434[JEP draft])
 
 === Raw string literals
 image::images/amber.jpg[background, size=cover]
@@ -102,7 +102,7 @@ String formatted = switch (value) {
 	case Double d  -> String.format("double %f", d);
 	case String s  -> String.format("String %s", s);
 	default        -> "unknown " + value.toString();
-}
+};
 ----
 
 *Yeah:*
@@ -184,6 +184,54 @@ public record Range(int low, int high) {
 }
 ----
 
+=== Death to serialization!
+
+Serialization is hell:
+
+* complicates every JDK feature
+* repeated security vulnerabilities
+* uses "invisible" mechanisms
+
+The JDK team wants to get rid of it!
+
+=== Serializing records
+
+Replacement may look as follows:
+
+* only works with records
+* deconstructs a record graph
+* passes data to serilization engine
+* one engine per format: +
+  XML, JSON, YAML, ...
+
+=== New serialization
+
+*Yeah:*
+
+* records are a great fit for serialization
+* new mechanism uses (de)constructors
+* superior maintainability
+
+=== Concise method bodies
+
+[source,java]
+----
+class ListWrapper<E> implements List<E> {
+
+    private List<E> list;
+
+    public int size() -> list.size();
+    public T get(int index) -> list.get(index);
+	public int indexOf(E el) = list::indexOf;
+
+}
+----
+
+*Yeah:*
+
+* simple methods get simple code
+* fewer (empty) lines
+
 === Project Amber
 image::images/amber.jpg[background, size=cover]
 
@@ -194,3 +242,5 @@ Makes Java more expressive:
 * switch expressions ⑫
 * pattern matching
 * records
+* revamps serialization
+* concise method bodies
