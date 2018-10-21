@@ -1,0 +1,39 @@
+== Migration Challenges
+
+++++
+<h3>Building on 8, Running on 9+</h3>
+++++
+
+=== Staying On 8
+
+Projects may decide to keep +
+Java 8 as baseline.
+
+Still:
+
+* run (nightly?) builds +
+  on Java 9+
+* find problems early
+* avoid dead ends
+
+=== Staying On 8
+
+Some problems may +
+prevent building on 9+:
+
+* outdated build tool
+* outdated build plugins
+
+Try testing on 9+!
+
+=== Testing On 9+
+
+Essentially:
+
+```sh
+# regular Java 8 build
+mvn clean install
+# on Java 9+:
+mvn surefire:test
+mvn failsafe:integration-test
+```

@@ -1,0 +1,166 @@
+== Java Roadmap
+
+* new release schedule
+* Oracle JDK ≠ OpenJDK
+* licensing
+* long-term support
+* Java on the desktop
+
+=== New Release Schedule
+
+New feature release every six months:
+
+* Sep 2017: Java 9
+* Mar 2018: Java 10
+* *Sep 2018: Java 11*
+* Mar 2019: Java 12
+
+=== Long-term support
+
+What if you (or your customers) +
+don't want to update every six months?
+
+=== Oracle JDK vs OpenJDK
+
+Sun/Oracle JDK used to...
+
+* contain more features
+* be perceived as more stable
+* be perceived as more performant
+
+As of Java 11, on a technical basis, +
+*Oracle JDK and OpenJDK are identical*.
+https://blogs.oracle.com/java-platform-group/oracle-jdk-releases-for-java-11-and-later[*]
+
+=== Oracle JDK vs OpenJDK
+
+Only difference is license and support model:
+
+* Oracle ships *OpenJDK* at http://jdk.java.net[jdk.java.net], +
+licensed under GPL+CE
+* *Oracle JDK* is fully commercial: +
+from 11 on, no free use in production
+
+*⇝ OpenJDK is the new normal!*
+
+=== Oracle support
+
+What does Oracle support?
+
+* free updates for current *OpenJDK* version +
+(i.e. six months)
+* commercial support for *Oracle JDK* +
+for 5+ years for Java 11, 17, 23, etc. +
+(called https://www.oracle.com/java/java-se-subscription.html[_Java SE Subscription_];
+https://www.oracle.com/technetwork/java/javaseproducts/javasesubscription-data-sheet-4891969.pdf[prices])
+
+⇝ No free LTS by Oracle.
+
+=== Oracle support
+
+How does *Oracle* handle bug/security/etc fixes?
+
+* usually developed on "master" (*OpenJDK*)
+* merged to current version's "branch" (*OpenJDK*)
+* merged to current LTS version (*Oracle JDK*)
+
+⇝ "LTS" means merging fixes +
+into old JDK versions.
+
+=== Commercial LTS
+
+* https://www.oracle.com/java/java-se-subscription.html[Oracle]
+* https://developer.ibm.com/javasdk/support/lifecycle/[IBM]
+* https://access.redhat.com/articles/1299013[RedHat]
+* https://www.azul.com/products/azul_support_roadmap/[Azul]
+* ...
+
+=== Free LTS
+
+Current http://mail.openjdk.java.net/pipermail/jdk-dev/2018-August/001823.html[discussions] give hope:
+
+* free LTS for *OpenJDK* 11, 17, 23, etc. +
+  by the community for 4+ years
+* built and shipped  by https://adoptopenjdk.net/[Adopt OpenJDK]
+
+=== Free LTS
+
+[quote, 'Andrew Haley, Red Hat (http://mail.openjdk.java.net/pipermail/jdk-dev/2018-August/001826.html[link])']
+____
+[L]et me assure you of one thing: whether by Oracle or Red Hat or someone else, JDK LTS releases will continue to be supported.
+We all have a lot invested in Java, and we won't let it fall.
+____
+
+=== Java on the desktop
+
+In March 2018, Oracle released a +
+_Java Client Roadmap Update_ (https://www.oracle.com/technetwork/java/javase/javaclientroadmapupdate2018mar-4414431.pdf[PDF]).
+
+Describes plans for:
+
+* Applets
+* Web Start
+* JavaFX
+* Swing/AWT
+
+=== Applets & Web Start
+
+* deprecated in Java SE 9
+* removed from Java SE 11
+* not in Oracle's JDK 11 builds
+
+=== JavaFX
+
+* was never part of Java SE
+* was never in Oracle's OpenJDK builds
+* not in Oracle's JDK 11 builds
+* now standalone project at https://openjfx.io/[openjfx.io]
+
+If your project uses JavaFX, +
+you *can't rely* on its presence +
+on your customers' machines!
+
+⇝ Bring it along as dependency.
+
+=== JavaFX
+
+Quote:
+
+++++
+<div class="quoteblock"><blockquote style="color: black;">
+Oracle is working with interested third parties to make it easier to build and maintain JavaFX as a separately distributable open-source module.
+</blockquote></div>
+++++
+
+Not a quote:
+
+++++
+<div class="quoteblock"><blockquote style="color: black;">
+Oracle wants to reduce/terminate investment in JavaFX.
+</blockquote></div>
+++++
+
+=== Swing/AWT
+
+Quote:
+
+++++
+<div class="quoteblock"><blockquote style="color: black;">
+Oracle will continue developing Swing and AWT in Java SE 8 and Java SE 11 (18.9 LTS).
+This means they will be supported by Oracle through at least 2026.
+</blockquote></div>
+++++
+
+What this doesn't say:
+
+* support is free
+* support goes beyond Java 11
+
+=== Swing/AWT
+
+*Hypothetically* Oracle could +
+remove Swing/AWT from Java SE 12 +
+and its statement still holds.
+
+⇝ More in my newsletter: +
+https://medium.com/codefx-weekly/java-desktop-quo-vadis-f0803166e36b[Java Desktop, Quo Vadis?]

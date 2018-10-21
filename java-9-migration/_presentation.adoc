@@ -41,9 +41,9 @@ include::../_shared/event-on-title-and-footer.adoc[]
 
 == Public Service Announcement
 
-* this is about running on Java 9, 10, and 11 +
-(not about creating modules)
-* we're only looking at the bad and the ugly
+* this is about bringing a Java 8 app +
+into the future
+* we're mostly looking at the bad and the ugly
 * slides at http://slides.codefx.org/[slides.codefx.org]
 * code on GitHub at +
 https://github.com/CodeFX-org/demo-java-9-migration[CodeFX-org/demo-java-9-migration]
@@ -58,9 +58,13 @@ include::../jpms/migration.adoc[]
 
 include::migrations-beyond-9.adoc[]
 
+include::java-8.adoc[]
+
 include::modularization.adoc[]
 
 include::reflection.adoc[]
+
+include::sportradar.adoc[]
 
 // ######### //
 // O U T R O //
