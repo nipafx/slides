@@ -2,14 +2,14 @@
 
 Show that it works on Java 8:
 
-```
+```sh
 mvn clean install
-java -cp 'monitor/target/libs/*':'monitor/target/main-1.0-SNAPSHOT.jar' monitor.Main
+java -cp 'app/*' monitor.Main
 ```
 
 In a different terminal:
 
-```
+```sh
 watch -n 1 curl http://localhost:4567/stats/xml
 ```
 
@@ -21,7 +21,7 @@ watch -n 1 curl http://localhost:4567/stats/xml
 .. show `mvn -v`
 .. set `JAVA_HOME` in `.mavenrc`
 +
-```
+```sh
 JAVA_HOME="/opt/jdk-9"
 ```
 .. show `mvn -v`
@@ -110,7 +110,7 @@ Base64.getEncoder().encodeToString(content.getBytes());
 . add _java.xml.ws.annotation_ to _monitor.rest_ to fix missing type `Generated`
 .. observe that error contains no hint of the containing module
 .. look up module in documentation
--. add comment `// from module java.xml.ws.annotation:` above `import Generated`
+.. add comment `// from module java.xml.ws.annotation:` above `import Generated`
 .. add _java.xml.ws.annotation_
 +
 ```xml
@@ -129,13 +129,13 @@ Base64.getEncoder().encodeToString(content.getBytes());
 
 Start running with Java 9:
 
-```
-java9 -cp 'monitor/target/libs/*':'monitor/target/main-1.0-SNAPSHOT.jar' monitor.Main
+```sh
+java9 -cp 'app/*' monitor.Main
 ```
 
 . fix cast to `URLClassLoader` by replacing code in `logClassPathContent` with
 +
-```
+```java
 String[] classPath = System.getProperty("java.class.path").split(":");
 String message = Arrays.stream(classPath)
 		.map(url -> "\t" + url)
@@ -145,8 +145,8 @@ System.out.println(message);
 
 . add module `java.xml.bind`
 +
-```
-java9 --add-modules java.xml.bind -cp 'monitor/target/libs/*':'monitor/target/main-1.0-SNAPSHOT.jar' monitor.Main
+```sh
+java9 --add-modules java.xml.bind -cp 'app/*' monitor.Main
 ```
 
 . note that `--add-exports`,  `--add-opens`, `--add-modules`, `--patch-module` usually carry from build to compile time
@@ -195,14 +195,15 @@ java9 --add-modules java.xml.bind -cp 'monitor/target/libs/*':'monitor/target/ma
 ```
 . run with
 +
-```
-java10 --add-modules java.xml.bind -cp 'monitor/target/libs/*':'monitor/target/main-1.0-SNAPSHOT.jar' monitor.Main
+```sh
+java10 --add-modules java.xml.bind -cp 'app/*' monitor.Main
 ```
 
 ### Using Java 11
 
 . edit `.mavenrc` to point to Java 11
 . show `mvn -v`
+. in parent POM update compiler plugin to 3.8.0
 . in parent POM copy paste profile to create one for 11
 +
 ```xml
@@ -244,8 +245,8 @@ java10 --add-modules java.xml.bind -cp 'monitor/target/libs/*':'monitor/target/m
 ```
 . run with
 +
-```
-java11 -cp 'monitor/target/libs/*':'monitor/target/main-1.0-SNAPSHOT.jar' monitor.Main
+```sh
+java11 -cp 'app/*' monitor.Main
 ```
 . observe that `xml` endpoint does not return anything, but `json` does
 . activate `java-11` profile, reimport, and launch from IntelliJ
@@ -263,42 +264,36 @@ java11 -cp 'monitor/target/libs/*':'monitor/target/main-1.0-SNAPSHOT.jar' monito
 +
 (Was not needed before because https://docs.oracle.com/javase/9/docs/api/java.xml.bind-summary.html[`java.xml.bind` requires it])
 
-////
 
 ## Modularization
-
-### Preparation
-
-* can't use Maven at the moment; see https://issues.apache.org/jira/browse/MCOMPILER-294[MCOMPILER-294]
-* switch to `migrated` and discuss layout
 
 ### Get an Overview
 
 . see artifact dependencies
 +
-```
-jdeps -s -R -cp 'monitor/target/libs/*' monitor/target/main-1.0-SNAPSHOT.jar
+```sh
+jdeps11 -s -R -cp 'app/*' app/main.jar
 ```
 
 . limiting to _Monitor_ classes
-
-```
-jdeps -include 'monitor.*' -s -R -cp 'monitor/target/libs/*' monitor/target/main-1.0-SNAPSHOT.jar
++
+```sh
+jdeps11 -include 'monitor.*' -s -R -cp 'app/*' app/main.jar
 ```
 
 . create a diagram
-
-```
-jdeps -include 'monitor.*' -s -R --dot-output . -cp 'monitor/target/libs/*' monitor/target/main-1.0-SNAPSHOT.jar
++
+```sh
+jdeps11 -include 'monitor.*' -s -R --dot-output . -cp 'monitor/target/libs/*' monitor/target/main.jar
 dot -Tpng -O summary.dot
 gwenview summary.dot.png
 ```
 
 . clean up graph
-
-```
++
+```sh
 sed -i '/java.base/d' summary.dot
-sed -i 's/-1.0-SNAPSHOT.jar//g' summary.dot
+sed -i 's/.jar//g' summary.dot
 dot -Tpng -O summary.dot
 gwenview summary.dot.png
 ```
@@ -308,27 +303,58 @@ gwenview summary.dot.png
 . start with _monitor.utils_
 .. modularize _monitor.utils_
 +
-```
+```java
 module monitor.utils {
 	exports monitor.utils;
 }
 ```
-.. observe that the module works on the class path
-.. to make it work on the module path:
-... copy it to module path after being built
-... use `--add-modules` when compiling _monitor.rest_ and _monitor_ as well as when running the application
-
+.. build with Maven
+.. observe that _monitor.utils_ is module:
++
+```sh
+jar11 --describe-module --file monitor/target/libs/utils.jar
+```
+.. observe that the module works on the class path:
++
+```sh
+java11 -cp 'app/*' monitor.Main
+```
+.. make it work on module path
+... add `mv mv app/utils.jar mods` to `move-modules.sh`
+... try to run
++
+```sh
+./move-modules.sh
+# fails
+java11 -cp 'app/*' --module-path mods monitor.Main
+# too noisy
+java11 -cp 'app/*' --module-path mods \
+	--show-module-resolution monitor.Main
+# no utils
+java11 -cp 'app/*' --module-path mods \
+	--show-module-resolution monitor.Main
+| grep utils
+# yes utils!
+java11 -cp 'app/*' --module-path mods \
+	--add-modules monitor.utils \
+	--show-module-resolution monitor.Main
+| grep utils
+# launch
+java11 -cp 'app/*' --module-path mods \
+	--add-modules monitor.utils \
+	monitor.Main
+```
 . continue with observers
 .. modularize _monitor.observer_:
 +
-```
+```java
 module monitor.observer {
 	exports monitor.observer;
 }
 ```
 .. modularize _monitor.observer.alpha_:
 +
-```
+```java
 module monitor.observer.alpha {
 	requires monitor.observer;
 	exports monitor.observer.alpha;
@@ -336,50 +362,90 @@ module monitor.observer.alpha {
 ```
 .. modularize _monitor.observer.beta_:
 +
-```
+```java
 module monitor.observer.beta {
 	requires monitor.observer;
 	exports monitor.observer.beta;
 }
 ```
-.. to make it work:
-... copy them to the module path after being built
-... use `--add-modules` when compiling _monitor.observer.alpha_, _monitor.observer.beta_, _monitor.statistics_, and _monitor_ as well as when running the application
+.. in _monitor.observer.alpha_, show with `mvn -X compiler` class/module path
+.. add `mv app/observer* mods` to `move-modules.sh`
+.. run
++
+```sh
+java11 -cp 'app/*' --module-path mods \
+	--add-modules monitor.utils,monitor.observer.alpha,monitor.observer.beta \
+	monitor.Main
+```
 
 . modularize statistics as preparation for _monitor.rest_
 .. modularize _monitor.statistics_
 +
-```
+```java
 module monitor.statistics {
 	requires monitor.observer;
 	exports monitor.statistics;
 }
 ```
-.. copy it to the module path after being built
-.. use `--add-modules` when compiling _monitor.persistence_, _monitor.rest_, and _monitor_ as well as when running the application
+.. add `mv app/statistics.jar mods` to `move-modules.sh`
+.. run
++
+```sh
+java11 -cp 'app/*' --module-path mods \
+	--add-modules monitor.utils,monitor.observer.alpha,monitor.observer.beta,monitor.statistics \
+	monitor.Main
+```
 
 . modularize _monitor.rest_ in face of unmodularized dependencies
-.. create module descriptor
+.. create initial module descriptor
 +
-```
+```java
 module monitor.rest {
 	requires java.xml.bind;
-	requires java.xml.ws.annotation;
 
 	requires monitor.utils;
 	requires monitor.statistics;
 
-	requires spark.core;
-	requires jackson.core;
-	requires jackson.databind;
-
 	exports monitor.rest;
 }
 ```
-.. move `spark-core*`, `jackson-core*`, and `jackson-databind*` to module path
-.. move to module path after being built
-.. remove all `--add-modules` from compiling _monitor.rest_
-
-. maybe: `--main-class monitor.Main`
-
-////
+.. use `jar11 --describe-module-file --file spark-core` etc to determine module names
+.. add `requires` for _spark.core_, _jackson.core_, _jackson.databind_ to module descriptor
+.. identify split package between _jsr305_ and _java.annotation_
+.. add `requires java.annotation`
+.. patch package split:
++
+```xml
+<build>
+	<plugins>
+		<plugin>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<configuration>
+				<compilerArgs>
+						<arg>--patch-module=java.annotation=${settings.localRepository}/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar</arg>
+				</compilerArgs>
+			</configuration>
+		</plugin>
+	</plugins>
+</build>
+```
+.. add to `move-modules.sh`:
++
+```sh
+mv app/jaxb-api.jar mods
+mv app/javax.activation.jar mods
+mv app/javax.annotation-api.jar mods
+mv app/spark-core.jar mods
+mv app/jackson-core.jar mods
+mv app/jackson-databind.jar mods
+```
+.. run
++
+```sh
+java11 -cp 'app/*' --module-path mods \
+	--add-modules monitor.rest,monitor.observer.alpha,monitor.observer.beta \
+	monitor.Main
+```
+.. mention that `--patch-module` is not needed because annotations are not evaluated at run time
+.. observe run-time error in `watch` tab
+.. add `opens monitor.rest to java.xml.bind;` to _monitor.rest_

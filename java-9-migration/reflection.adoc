@@ -1,0 +1,52 @@
+== Reflective Access
+
+Exporting a package makes it public API:
+
+* modules can compile code against it
+* clients expect it to be stable
+
+What if a type is only meant +
+to be accessed via reflection?
+
+(Think Spring, Hibernate, etc.)
+
+
+=== Open Packages
+
+[source,java]
+----
+module A {
+	opens some.pack;
+}
+----
+
+* at compile time: +
+types in `some.pack` are not accessible
+* at run time: +
+_all_ types and members in `some.pack` +
+are accessible
+
+
+=== Qualified Opens
+
+[source,java]
+----
+module A {
+	opens some.pack to B;
+}
+----
+
+* same as `opens`, but only _B_ can access
+
+
+=== Open Modules
+
+[source,java]
+----
+open module A {
+	// no more `opens` directives
+}
+----
+
+The same as open packages +
+but for all of them!
