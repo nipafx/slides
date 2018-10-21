@@ -33,10 +33,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://www.inovex.de"><img src="images/logo-inovex.png" class="logo" style="background-color: #111; border-color: #FFF;"></a>
+		<a href="https://www.sportradar.com/"><img src="images/logo-sportradar.png" class="logo" style="background-color: #FFF; border-color: #FFF;"></a>
 		<div class="name">
-			<p><a href="https://www.inovex.de">Inovex</a></p>
-			<p><a href="https://twitter.com/inovexgmbh">@inovexgmbh</a></p>
+			<p><a href="https://www.sportradar.com/">Sportradar</a></p>
+			<p><a href="https://twitter.com/sportradar">@Sportradar</a></p>
 		</div>
 	</div>
 </div>
@@ -51,9 +51,9 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://www.inovex.de"><img src="images/logo-inovex.png" class="logo" style="background-color: #111; border-color: #FFF;"></a>
+		<a href="https://www.sportradar.com/"><img src="images/logo-sportradar.png" class="logo" style="background-color: #FFF; border-color: #FFF;"></a>
 		<div class="name">
-			<p><a href="https://www.inovex.de">Inovex</a> / <a href="https://twitter.com/inovexgmbh">@inovexgmbh</a></p>
+			<p><a href="https://www.sportradar.com/">Sportradar</a> / <a href="https://twitter.com/sportradar">@Sportradar</a></p>
 		</div>
 	</div>
 </footer>
@@ -62,8 +62,8 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		document.body.appendChild(document.querySelector('footer'));
 	})
 </script></div></section>
-<section id="public_service_announcement"><h2>Public Service Announcement</h2><div class="ulist"><ul><li><p>this is about running on Java 9, 10, and 11<br>
-(not about creating modules)</p></li><li><p>we&#8217;re only looking at the bad and the ugly</p></li><li><p>slides at <a href="http://slides.codefx.org/">slides.codefx.org</a></p></li><li><p>code on GitHub at<br>
+<section id="public_service_announcement"><h2>Public Service Announcement</h2><div class="ulist"><ul><li><p>this is about bringing a Java 8 app<br>
+into the future</p></li><li><p>we&#8217;re mostly looking at the bad and the ugly</p></li><li><p>slides at <a href="http://slides.codefx.org/">slides.codefx.org</a></p></li><li><p>code on GitHub at<br>
 <a href="https://github.com/CodeFX-org/demo-java-9-migration">CodeFX-org/demo-java-9-migration</a></p></li></ul></div></section>
 <section><section id="java_platform_module_system"><h2>Java Platform Module System</h2><h3>Delaying Java since 2008!</h3></section><section id="jar_hell_is_bad_mkay"><h2>JAR Hell is bad, mkay?</h2><div class="paragraph"><p><strong>JARs have</strong>:</p></div>
 <div class="ulist"><ul><li><p>no name the JVM cares about</p></li><li><p>no explicit dependencies</p></li><li><p>no well-defined API</p></li><li><p>no concept of versions</p></li></ul></div>
@@ -104,7 +104,7 @@ contains <em>all</em> JARs on the class path<br>
 <aside class="notes"><div class="ulist"><ul><li><p>one unnamed module per class loader</p></li></ul></div></aside></section></section>
 <section><section id="migration_challenges"><h2>Migration Challenges</h2><h3>What to look out for<br>when running on JDK 9</h3></section><section id="break_stuff" data-background-image="images/broken-glass.jpg" data-background-size="cover"><h2>Break Stuff</h2>
 <div class="paragraph"><p>Some internal changes <a href="https://blog.codefx.org/java/java-9-migration-guide/">break existing code</a>!</p></div>
-<div class="paragraph"><p>Just by running on JDK 9<br>
+<div class="paragraph"><p>Just by running on JDK 11<br>
 (even without modularizing the application).</p></div></section><section id="internal_apis" data-background-image="images/internals.jpg" data-background-size="cover"><h2>Internal APIs</h2>
 <div class="ulist"><ul><li><p>internal APIs are:</p><div class="ulist"><ul><li><p>all in <code>sun.*</code></p></li><li><p>most in <code>com.sun.*</code><br>
 (unless marked <code>@jdk.Exported</code>)</p></li></ul></div></li><li><p>encapsulated at compile time</p></li><li><p>accessible at run time<br>
@@ -124,8 +124,8 @@ for some time</p></li><li><p>critical APIs may survive longer<br>
 <code>--add-exports</code>, <code>--add-opens</code>, or<br>
 <code>--illegal-access</code></p></li></ol></div></section><section id="java_ee_modules" data-background-image="images/java-ee.jpg" data-background-size="cover"><h2>Java EE Modules</h2>
 <div class="ulist"><ul><li><p><em>java.activation</em> (<code>javax.activation</code>)</p></li><li><p><em>java.corba</em> (CORBA packages)</p></li><li><p><em>java.transaction</em> (<code>javax.transaction</code>)</p></li><li><p><em>java.xml.bind</em> (<code>javax.xml.bind.*</code>)</p></li><li><p><em>java.xml.ws</em> (JAX-WS packages)</p></li><li><p><em>java.xml.ws.annotation</em> (<code>javax.annotation</code>)</p></li></ul></div>
-<div class="paragraph"><p>These are</p></div>
-<div class="ulist"><ul><li><p>deprecated for removal</p></li><li><p>not resolved by default</p></li></ul></div></section><section id="what_to_look_for_2"><h2>What to look for?</h2><div class="paragraph"><p>JDeps shows dependencies on platform modules:</p></div>
+<div class="paragraph"><p>These were</p></div>
+<div class="ulist"><ul><li><p>deprecated for removal in ⑨</p></li><li><p>removed in ⑪</p></li></ul></div></section><section id="what_to_look_for_2"><h2>What to look for?</h2><div class="paragraph"><p>JDeps shows dependencies on platform modules:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">$ jdeps -summary sh-2.6.3.jar
 
 &gt; sh-2.6.3.jar -&gt; java.base
@@ -134,8 +134,7 @@ for some time</p></li><li><p>critical APIs may survive longer<br>
 &gt; sh-2.6.3.jar -&gt; java.logging
 &gt; sh-2.6.3.jar -&gt; java.prefs
 &gt; sh-2.6.3.jar -&gt; java.sql
-&gt; sh-2.6.3.jar -&gt; java.xml</code></pre></div></div></section><section id="what_to_do_2"><h2>What to do?</h2><div class="ulist"><ul><li><p>pick <a href="https://stackoverflow.com/a/48204154/2525313">a third-party implementation</a></p></li><li><p>add Java EE platform modules<br>
-with <code>--add-modules</code></p></li></ul></div></section><section id="split_packages" data-background-image="images/cut.jpg" data-background-size="cover"><h2>Split Packages</h2>
+&gt; sh-2.6.3.jar -&gt; java.xml</code></pre></div></div></section><section id="what_to_do_2"><h2>What to do?</h2><div class="paragraph"><p>Pick <a href="https://stackoverflow.com/a/48204154/2525313">a third-party implementation</a>.</p></div></section><section id="split_packages" data-background-image="images/cut.jpg" data-background-size="cover"><h2>Split Packages</h2>
 <div class="ulist"><ul><li><p>packages should have a unique origin</p></li><li><p>no module must read the same package<br>
 from two modules</p></li></ul></div>
 <div class="paragraph"><p>The implementation is even stricter:</p></div>
@@ -164,13 +163,12 @@ in the JDK / JRE folder?</p></li><li><p>are URLs to JDK classes / resources hand
 <div class="paragraph"><p>Background:</p></div>
 <div class="ulist"><ul><li><p><a href="https://blog.codefx.org/java/planning-your-java-9-update/">Planning Your Java 9 Update</a></p></li><li><p><a href="https://blog.codefx.org/java/five-command-line-options-to-hack-the-java-9-module-system/">JPMS Command Line Options</a></p></li><li><p><a href="https://blog.codefx.org/tools/jdeps-tutorial-analyze-java-project-dependencies/">JDeps Tutorial</a></p></li></ul></div>
 <div class="paragraph"><p>And there are new version strings:</p></div>
-<div class="ulist"><ul><li><p>goodbye <code>1.9.0_31</code>, hello <code>9.1.4</code><br>
-(soon  <code>18.3</code>?)</p></li></ul></div></section><section id="general_advice_i" data-background-image="images/sign.jpg" data-background-size="cover"><h2>General Advice I</h2>
+<div class="ulist"><ul><li><p>goodbye <code>1.9.0_31</code>, hello <code>9.0.1</code><br></p></li></ul></div></section><section id="general_advice_i" data-background-image="images/sign.jpg" data-background-size="cover"><h2>General Advice I</h2>
 <div class="paragraph"><p>The most relevant for most applications:</p></div>
 <div class="ulist"><ul><li><p>internal APIs</p></li><li><p>split packages</p></li><li><p>Java EE modules</p></li></ul></div></section><section id="general_advice_ii" data-background-image="images/sign.jpg" data-background-size="cover"><h2>General Advice II</h2>
 <div class="ulist"><ul><li><p>get your code in shape<br>
 (and prevent relapses)</p></li><li><p>check your dependencies and tools</p></li><li><p>if any are suspicious<br>
-(automatically true for IDEs, build tools):</p><div class="ulist"><ul><li><p>make sure they&#8217;re alive</p></li><li><p><strong>get them up to date!</strong></p></li><li><p>or look for alternatives</p></li></ul></div></li><li><p>download Java 9 and <strong>try it!</strong></p></li></ul></div></section></section>
+(automatically true for IDEs, build tools):</p><div class="ulist"><ul><li><p>make sure they&#8217;re alive</p></li><li><p><strong>get them up to date!</strong></p></li><li><p>or look for alternatives</p></li></ul></div></li><li><p>download Java 11 and <strong>try it!</strong></p></li></ul></div></section></section>
 <section><section id="migration_challenges_2"><h2>Migration Challenges</h2><h3>What to look out for<br>when running on JDK 10</h3></section><section id="nothing_much"><h2>Nothing much&#8230;&#8203;</h2><div class="paragraph"><p>Java 10 contains few breaking changes:</p></div>
 <div class="ulist"><ul><li><p>mostly removal of deprecated methods<br>
 and command line options</p></li><li><p>bytecode level increases to <code>54.0</code></p></li></ul></div>
@@ -183,6 +181,104 @@ and command line options</p></li><li><p>removal of deprecated Java EE modules</p
 <div class="paragraph"><p>⇝ Pick <a href="https://stackoverflow.com/a/48204154/2525313">a third-party implementation</a></p></div></section></section>
 <section id="general_advice" data-background-image="images/sign.jpg" data-background-size="cover"><h2>General Advice</h2>
 <div class="ulist"><ul><li><p>only rely on standardized behavior</p></li><li><p>heed deprecation warnings (<code>jdeprscan</code>)</p></li><li><p>keep dependencies and tools up to date</p></li><li><p>build on each release (including EA)</p></li><li><p>report problems</p></li></ul></div></section>
+<section><section id="migration_challenges_4"><h2>Migration Challenges</h2><h3>Building on 8, Running on 9+</h3></section><section id="staying_on_8"><h2>Staying On 8</h2><div class="paragraph"><p>Projects may decide to keep<br>
+Java 8 as baseline.</p></div>
+<div class="paragraph"><p>Still:</p></div>
+<div class="ulist"><ul><li><p>run (nightly?) builds<br>
+on Java 9+</p></li><li><p>find problems early</p></li><li><p>avoid dead ends</p></li></ul></div></section><section id="staying_on_8_2"><h2>Staying On 8</h2><div class="paragraph"><p>Some problems may<br>
+prevent building on 9+:</p></div>
+<div class="ulist"><ul><li><p>outdated build tool</p></li><li><p>outdated build plugins</p></li></ul></div>
+<div class="paragraph"><p>Try testing on 9+!</p></div></section><section id="testing_on_9"><h2>Testing On 9+</h2><div class="paragraph"><p>Essentially:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="sh language-sh"># regular Java 8 build
+mvn clean install
+# on Java 9+:
+mvn surefire:test
+mvn failsafe:integration-test</code></pre></div></div></section></section>
+<section><section id="modularizing_your_project"><h2>Modularizing Your Project</h2><h3>Making Use Of The Module System</h3></section><section id="the_tale_of_two_paths"><h2>The Tale Of Two Paths</h2><div class="paragraph"><p>Class path is for regular JARs,<br>
+module path is for modular JARs?</p></div>
+<div class="paragraph"><p><strong>Wrong!</strong></p></div>
+<div class="paragraph"><p>Class path is for the unnamed module,<br>
+module path is for named modules!</p></div></section><section id="from_the_bottom_up"><h2>From The Bottom Up</h2><div class="paragraph"><p>You can put modular JARs in the class path<br>
+and everything works like before.</p></div>
+<div class="ulist"><ul><li><p>you can modularize projects,<br>
+without clients even realizing</p></li><li><p>start with the modularization<br>
+from the bottom up</p></li></ul></div></section><section id="from_the_top_down"><h2>From The Top Down</h2><div class="paragraph"><p>What if you want to modularize your code<br>
+but your dependencies aren&#8217;t yet?</p></div>
+<div class="ulist"><ul><li><p>proper modules can not depend on<br>
+"the chaos on the class path"</p></li><li><p>this is not possible:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">module monitor.rest {
+	// we need spark.core
+	requires unnamed;
+}</code></pre></div></div></li></ul></div></section><section id="automatic_modules"><h2>Automatic Modules</h2><div class="paragraph"><p>An <strong>Automatic Module</strong><br>
+is created <em>for each</em> "regular" JAR<br>
+on the module path.</p></div>
+<div class="ulist"><ul><li><p>name defined by manifest entry<br>
+<code>AUTOMATIC-MODULE-NAME</code> or<br>
+derived from JAR name</p></li><li><p>can read all modules<br>
+(including the Unnamed Module)</p></li><li><p>exports all packages</p></li></ul></div></section><section id="automatic_module_example"><h2>Automatic Module Example</h2><div class="ulist"><ul><li><p>put <code>spark-core-2.7.0.jar</code> on the module path</p></li><li><p>then this works:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">module monitor.rest {
+	requires spark.core;
+}</code></pre></div></div></li></ul></div></section><section id="what_goes_where"><h2>What Goes Where?</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:33.3333%"><col style="width:33.3333%"><col style="width:33.3334%"></colgroup><thead><tr><th class="tableblock halign-left valign-top"></th><th class="tableblock halign-left valign-top">Class Path</th><th class="tableblock halign-left valign-top">Module Path</th></tr><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Regular JAR</strong></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Unnamed Module</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Automatic Module</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Modular JAR</strong></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Unnamed Module</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Named Module</p></td></tr></table></section></section>
+<section><section id="reflective_access"><h2>Reflective Access</h2><div class="paragraph"><p>Exporting a package makes it public API:</p></div><div class="ulist"><ul><li><p>modules can compile code against it</p></li><li><p>clients expect it to be stable</p></li></ul></div><div class="paragraph"><p>What if a type is only meant<br>
+to be accessed via reflection?</p></div><div class="paragraph"><p>(Think Spring, Hibernate, etc.)</p></div></section><section id="open_packages"><h2>Open Packages</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">module A {
+	opens some.pack;
+}</code></pre></div></div>
+<div class="ulist"><ul><li><p>at compile time:<br>
+types in <code>some.pack</code> are not accessible</p></li><li><p>at run time:<br>
+<em>all</em> types and members in <code>some.pack</code><br>
+are accessible</p></li></ul></div></section><section id="qualified_opens"><h2>Qualified Opens</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">module A {
+	opens some.pack to B;
+}</code></pre></div></div>
+<div class="ulist"><ul><li><p>same as <code>opens</code>, but only <em>B</em> can access</p></li></ul></div></section><section id="open_modules"><h2>Open Modules</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">open module A {
+	// no more `opens` directives
+}</code></pre></div></div>
+<div class="paragraph"><p>The same as open packages<br>
+but for all of them!</p></div></section></section>
+<section><section id="java_roadmap"><h2>Java Roadmap</h2><div class="ulist"><ul><li><p>new release schedule</p></li><li><p>Oracle JDK ≠ OpenJDK</p></li><li><p>licensing</p></li><li><p>long-term support</p></li><li><p>Java on the desktop</p></li></ul></div></section><section id="new_release_schedule"><h2>New Release Schedule</h2><div class="paragraph"><p>New feature release every six months:</p></div>
+<div class="ulist"><ul><li><p>Sep 2017: Java 9</p></li><li><p>Mar 2018: Java 10</p></li><li><p><strong>Sep 2018: Java 11</strong></p></li><li><p>Mar 2019: Java 12</p></li></ul></div></section><section id="long_term_support"><h2>Long-term support</h2><div class="paragraph"><p>What if you (or your customers)<br>
+don&#8217;t want to update every six months?</p></div></section><section id="oracle_jdk_vs_openjdk"><h2>Oracle JDK vs OpenJDK</h2><div class="paragraph"><p>Sun/Oracle JDK used to&#8230;&#8203;</p></div>
+<div class="ulist"><ul><li><p>contain more features</p></li><li><p>be perceived as more stable</p></li><li><p>be perceived as more performant</p></li></ul></div>
+<div class="paragraph"><p>As of Java 11, on a technical basis,<br>
+<strong>Oracle JDK and OpenJDK are identical</strong>.
+<a href="https://blogs.oracle.com/java-platform-group/oracle-jdk-releases-for-java-11-and-later">*</a></p></div></section><section id="oracle_jdk_vs_openjdk_2"><h2>Oracle JDK vs OpenJDK</h2><div class="paragraph"><p>Only difference is license and support model:</p></div>
+<div class="ulist"><ul><li><p>Oracle ships <strong>OpenJDK</strong> at <a href="http://jdk.java.net">jdk.java.net</a>,<br>
+licensed under GPL+CE</p></li><li><p><strong>Oracle JDK</strong> is fully commercial:<br>
+from 11 on, no free use in production</p></li></ul></div>
+<div class="paragraph"><p><strong>⇝ OpenJDK is the new normal!</strong></p></div></section><section id="oracle_support"><h2>Oracle support</h2><div class="paragraph"><p>What does Oracle support?</p></div>
+<div class="ulist"><ul><li><p>free updates for current <strong>OpenJDK</strong> version<br>
+(i.e. six months)</p></li><li><p>commercial support for <strong>Oracle JDK</strong><br>
+for 5+ years for Java 11, 17, 23, etc.<br>
+(called <a href="https://www.oracle.com/java/java-se-subscription.html"><em>Java SE Subscription</em></a>;
+<a href="https://www.oracle.com/technetwork/java/javaseproducts/javasesubscription-data-sheet-4891969.pdf">prices</a>)</p></li></ul></div>
+<div class="paragraph"><p>⇝ No free LTS by Oracle.</p></div></section><section id="oracle_support_2"><h2>Oracle support</h2><div class="paragraph"><p>How does <strong>Oracle</strong> handle bug/security/etc fixes?</p></div>
+<div class="ulist"><ul><li><p>usually developed on "master" (<strong>OpenJDK</strong>)</p></li><li><p>merged to current version&#8217;s "branch" (<strong>OpenJDK</strong>)</p></li><li><p>merged to current LTS version (<strong>Oracle JDK</strong>)</p></li></ul></div>
+<div class="paragraph"><p>⇝ "LTS" means merging fixes<br>
+into old JDK versions.</p></div></section><section id="commercial_lts"><h2>Commercial LTS</h2><div class="ulist"><ul><li><p><a href="https://www.oracle.com/java/java-se-subscription.html">Oracle</a></p></li><li><p><a href="https://developer.ibm.com/javasdk/support/lifecycle/">IBM</a></p></li><li><p><a href="https://access.redhat.com/articles/1299013">RedHat</a></p></li><li><p><a href="https://www.azul.com/products/azul_support_roadmap/">Azul</a></p></li><li><p>&#8230;&#8203;</p></li></ul></div></section><section id="free_lts"><h2>Free LTS</h2><div class="paragraph"><p>Current <a href="http://mail.openjdk.java.net/pipermail/jdk-dev/2018-August/001823.html">discussions</a> give hope:</p></div>
+<div class="ulist"><ul><li><p>free LTS for <strong>OpenJDK</strong> 11, 17, 23, etc.<br>
+by the community for 4+ years</p></li><li><p>built and shipped  by <a href="https://adoptopenjdk.net/">Adopt OpenJDK</a></p></li></ul></div></section><section id="free_lts_2"><h2>Free LTS</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>[L]et me assure you of one thing: whether by Oracle or Red Hat or someone else, JDK LTS releases will continue to be supported.
+We all have a lot invested in Java, and we won&#8217;t let it fall.</p></div></blockquote><div class="attribution">&#8212; Andrew Haley, Red Hat (<a href="http://mail.openjdk.java.net/pipermail/jdk-dev/2018-August/001826.html">link</a>)</div></div></section><section id="java_on_the_desktop"><h2>Java on the desktop</h2><div class="paragraph"><p>In March 2018, Oracle released a<br>
+<em>Java Client Roadmap Update</em> (<a href="https://www.oracle.com/technetwork/java/javase/javaclientroadmapupdate2018mar-4414431.pdf">PDF</a>).</p></div>
+<div class="paragraph"><p>Describes plans for:</p></div>
+<div class="ulist"><ul><li><p>Applets</p></li><li><p>Web Start</p></li><li><p>JavaFX</p></li><li><p>Swing/AWT</p></li></ul></div></section><section id="applets_web_start"><h2>Applets &amp; Web Start</h2><div class="ulist"><ul><li><p>deprecated in Java SE 9</p></li><li><p>removed from Java SE 11</p></li><li><p>not in Oracle&#8217;s JDK 11 builds</p></li></ul></div></section><section id="javafx"><h2>JavaFX</h2><div class="ulist"><ul><li><p>was never part of Java SE</p></li><li><p>was never in Oracle&#8217;s OpenJDK builds</p></li><li><p>not in Oracle&#8217;s JDK 11 builds</p></li><li><p>now standalone project at <a href="https://openjfx.io/">openjfx.io</a></p></li></ul></div>
+<div class="paragraph"><p>If your project uses JavaFX,<br>
+you <strong>can&#8217;t rely</strong> on its presence<br>
+on your customers' machines!</p></div>
+<div class="paragraph"><p>⇝ Bring it along as dependency.</p></div></section><section id="javafx_2"><h2>JavaFX</h2><div class="paragraph"><p>Quote:</p></div>
+<div class="quoteblock"><blockquote style="color: black;">
+Oracle is working with interested third parties to make it easier to build and maintain JavaFX as a separately distributable open-source module.
+</blockquote></div>
+<div class="paragraph"><p>Not a quote:</p></div>
+<div class="quoteblock"><blockquote style="color: black;">
+Oracle wants to reduce/terminate investment in JavaFX.
+</blockquote></div></section><section id="swingawt"><h2>Swing/AWT</h2><div class="paragraph"><p>Quote:</p></div>
+<div class="quoteblock"><blockquote style="color: black;">
+Oracle will continue developing Swing and AWT in Java SE 8 and Java SE 11 (18.9 LTS).
+This means they will be supported by Oracle through at least 2026.
+</blockquote></div>
+<div class="paragraph"><p>What this doesn&#8217;t say:</p></div>
+<div class="ulist"><ul><li><p>support is free</p></li><li><p>support goes beyond Java 11</p></li></ul></div></section><section id="swingawt_2"><h2>Swing/AWT</h2><div class="paragraph"><p><strong>Hypothetically</strong> Oracle could<br>
+remove Swing/AWT from Java SE 12<br>
+and its statement still holds.</p></div>
+<div class="paragraph"><p>⇝ More in my newsletter:<br>
+<a href="https://medium.com/codefx-weekly/java-desktop-quo-vadis-f0803166e36b">Java Desktop, Quo Vadis?</a></p></div></section></section>
 <section id="about_nicolai_parlog" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>About Nicolai Parlog</h2>
 <div style="float: left; width: 45%; margin:0px;">
 	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="images/cover-jms.png" style="margin: 0;"></a>
