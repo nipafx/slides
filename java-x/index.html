@@ -27,10 +27,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://jokerconf.com/en/"><img src="images/logo-jokerconf.png" class="logo" style="filter: invert(100%); background-color: transparent; border-width: 0;"></a>
+		<a href="http://java.no/"><img src="images/logo-javabin.png" class="logo" style="background-color: transparent; border-color: white;"></a>
 		<div class="name">
-			<p><a href="https://jokerconf.com/en/">Joker</a></p>
-			<p><a href="https://twitter.com/jugru">@JUGru</a></p>
+			<p><a href="http://java.no/">javaBin</a></p>
+			<p><a href="https://twitter.com/javabin">@javaBin</a></p>
 		</div>
 	</div>
 </div>
@@ -45,9 +45,9 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://jokerconf.com/en/"><img src="images/logo-jokerconf.png" class="logo" style="filter: invert(100%); background-color: transparent; border-width: 0;"></a>
+		<a href="http://java.no/"><img src="images/logo-javabin.png" class="logo" style="background-color: transparent; border-color: white;"></a>
 		<div class="name">
-			<p><a href="https://jokerconf.com/en/">Joker</a> / <a href="https://twitter.com/jugru">@JUGru</a></p>
+			<p><a href="http://java.no/">javaBin</a> / <a href="https://twitter.com/javabin">@javaBin</a></p>
 		</div>
 	</div>
 </footer>
@@ -56,104 +56,22 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		document.body.appendChild(document.querySelector('footer'));
 	})
 </script></div></section>
-<section><section id="lets_get_started"><h2>Let&#8217;s get started!</h2><div class="ulist"><ul><li><p>this talk covers Java 9 to 11</p></li><li><p>it is a showcase, not a tutorial</p></li><li><p>tweet questions with <a href="https://twitter.com/search?q=%23jokerconf%20%23java11">#jokerconf #Java11</a></p></li><li><p>slides at <a href="http://slides.codefx.org/java-x">slides.codefx.org/java-x</a></p></li><li><p>live-translation at <a href="https://jokerconf.com/onlinefree">jokerconf.com/onlinefree</a></p></li></ul></div></section><section id="lots_to_talk_about"><h2>Lots to talk about!</h2><table class="toc">
-	<tr><td>Module System</td></tr>
+<section><section id="lets_get_started"><h2>Let&#8217;s get started!</h2><div class="ulist"><ul><li><p>this course covers Java 9 to 11 without JPMS</p></li><li><p>some features come with practical exercises,<br>
+others are just showcased</p></li><li><p>slides at <a href="http://slides.codefx.org/java-x">slides.codefx.org/java-x</a></p></li><li><p>exercises at<br>
+<a href="https://github.com/nicolaiparlog/course-java-x">github.com/nicolaiparlog/course-java-x</a></p></li></ul></div><div class="paragraph"><p>(Please share responsibly)</p></div></section><section id="lots_to_talk_about"><h2>Lots to talk about!</h2><table class="toc">
 	<tr><td>Language Changes</td></tr>
 	<tr><td>New and Updated APIs</td></tr>
 	<tr><td>New JVM Features</td></tr>
 	<tr><td>Performance Improvements</td></tr>
 </table></section></section>
-<section><section id="java_platform_module_system"><h2>Java Platform Module System</h2><h3>Delaying Java since 2008!</h3></section><section id="jar_hell_is_bad_mkay"><h2>JAR Hell is bad, mkay?</h2><div class="paragraph"><p><strong>JARs have</strong>:</p></div>
-<div class="ulist"><ul><li><p>no name the JVM cares about</p></li><li><p>no explicit dependencies</p></li><li><p>no well-defined API</p></li><li><p>no concept of versions</p></li></ul></div>
-<div class="paragraph"><p><strong>Some consequences</strong>:</p></div>
-<div class="ulist"><ul><li><p><code>NoClassDefFoundError</code></p></li><li><p>no encapsulation across JARs</p></li><li><p>version conflicts</p></li></ul></div></section><section id="modules"><h2>Modules</h2><div class="paragraph"><p><strong>Modules are like JARs but have</strong>:</p></div>
-<div class="ulist"><ul><li><p>proper names</p></li><li><p>explicit dependencies</p></li><li><p>a well-defined API</p></li><li><p>no concept of versions 😭</p></li></ul></div>
-<div class="paragraph"><p><strong>Important goals</strong>:</p></div>
-<div class="ulist"><ul><li><p>reliable configuration</p></li><li><p>strong encapsulation</p></li></ul></div></section><section id="module_declaration"><h2>Module Declaration</h2><div class="paragraph"><p>A file <code>module-info.java</code>:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> java.sql {
-	<span class="hljs-keyword">requires transitive</span> java.logging
-	<span class="hljs-keyword">requires transitive</span> java.xml
-	<span class="hljs-keyword">uses</span> java.sql.Driver
-	<span class="hljs-keyword">exports</span> java.sql
-	<span class="hljs-keyword">exports</span> javax.sql
-	<span class="hljs-keyword">exports</span> javax.transaction.xa
-}</code></pre></div></div></section><section id="reliable_configuration"><h2>Reliable Configuration</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> java.sql {
-	<span class="hljs-keyword">requires transitive</span> java.logging
-	<span class="hljs-keyword">requires transitive</span> java.xml
-}</code></pre></div></div>
-<div class="paragraph"><p>Module system enforces:</p></div>
-<div class="ulist"><ul><li><p>all required modules are present</p></li><li><p>no ambiguity</p></li><li><p>no static dependency cycles</p></li><li><p>no split packages</p></li></ul></div></section><section id="strong_encapsulation"><h2>Strong Encapsulation</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> java.sql {
-	<span class="hljs-keyword">exports</span> java.sql
-	<span class="hljs-keyword">exports</span> javax.sql
-	<span class="hljs-keyword">exports</span> javax.transaction.xa
-}</code></pre></div></div>
-<div class="paragraph"><p>Say you want to access <code>java.sql.ResultSet</code>.</p></div>
-<div class="paragraph"><p>Module system only grants access if:</p></div>
-<div class="ulist"><ul><li><p><code>ResultSet</code> is public</p></li><li><p><code>java.sql</code> is exported by <em>java.sql</em></p></li><li><p>your module reads <em>java.sql</em></p></li></ul></div></section><section data-background-color="white" data-background-image="images/platform-modules.png" data-background-size="contain" data-state="empty"></section><section id="services"><h2>Services</h2><div class="paragraph"><p>The module system as a service registry:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> java.sql {
-	<span class="hljs-keyword">uses</span> java.sql.Driver
-}
-
-<span class="hljs-keyword">module</span> mysql.driver {
-	<span class="hljs-keyword">provides</span> java.sql.Driver
-		<span class="hljs-keyword">with</span> com.mysql.MySQLDriver;
-}
-</code></pre></div></div></section><section id="loading_services"><h2>Loading Services</h2><div class="paragraph"><p>Code in <em>java.sql</em> can do this:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Driver&gt; drivers = new ArrayList&lt;&gt;();
-ServiceLoader
-	.load(Driver.class)
-	.forEach(drivers::add);</code></pre></div></div></section><section id="jlink"><h2>JLink</h2><div class="paragraph"><p>Create your own runtime images:</p></div>
-<div class="ulist"><ul><li><p>with the JDK modules your app needs</p></li><li><p>with all modules (JDK, app, deps)</p></li></ul></div>
-<div class="paragraph"><p>Let&#8217;s look at the latter!</p></div></section><section id="application_image"><h2>Application Image</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash"># create image
-$ jlink
-	--output awesome-app
-	--module-path $JAVA_HOME/jmods:mods
-	--add-modules com.awesome.app
-	--launcher awesome=com.awesome.app
-# [ship image]
-# use image
-awesome-app/bin/awesome</code></pre></div></div></section><section id="more_jlink_features"><h2>More JLink Features</h2><div class="ulist"><ul><li><p>automatic service binding<br>
-(with <code>--bind-services</code>)</p></li><li><p>various optimizations<br>
-(size and launch performance)</p></li><li><p>plugin API (not yet public)</p></li><li><p>cross OS image generation</p></li></ul></div></section><section id="more_jpms_features"><h2>More JPMS Features</h2><div class="ulist"><ul><li><p>finer grained dependencies and exports</p></li><li><p>open packages and modules (for reflection)</p></li><li><p>unnamed and automatic modules (for migration)</p></li><li><p>layers (for containers)</p></li></ul></div></section><section id="more_about_jpms"><h2>More About JPMS</h2><div class="ulist"><ul><li><p><a href="https://blog.codefx.org/java/java-module-system-tutorial/">Code First Java Module System Tutorial</a></p></li><li><p><a href="https://blog.codefx.org/java/java-9-migration-guide/">Java 9 Migration Guide</a></p></li><li><p><a href="https://blog.codefx.org/java/five-command-line-options-to-hack-the-java-9-module-system/">Command Line Options To Hack The JPMS</a></p></li><li><p><a href="https://blog.codefx.org/java/planning-your-java-9-update/">Planning Your Java 9 Update</a></p></li></ul></div></section><section id="even_more_about_jpms"><h2>Even More About JPMS</h2><div style="float: left; width: 45%; margin:0px;">
-	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="images/cover-jms.png" style="margin: 0;"></a>
-	<p style="
-		position: fixed;
-		margin: -160px 0 0 60px;
-		transform: rotate(-8deg);
-		font-size: 28pt;
-		color: #cc0000;
-		text-shadow: 2px 2px 3px #660000;
-		font-weight: bold;
-		border: 5px solid #cc0000;
-		border-radius: 12px;
-		background-color: rgba(255,255,255,0.5);
-		padding: 2px 8px 7px 4px;
-">37% off with<br>code <em>fccparlog</em></p>
-</div>
-<div class="paragraph"><p><strong>I&#8217;ve written a book!</strong><br>
-E-book available ⇝ <a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&amp;a_bid=869915cb">tiny.cc/jms</a></p></div>
-<div class="ulist"><ul><li><p>creating, building,<br>
-running modules</p></li><li><p>migration to Java 9+</p></li><li><p>modularization</p></li><li><p>services and<br>
-advanced features</p></li><li><p>reflection and layers</p></li><li><p>custom runtime images</p></li></ul></div></section></section>
-<section><section id="new_language_features"><h2>New Language Features</h2><table class="toc">
+<section id="new_language_features"><h2>New Language Features</h2><table class="toc">
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
 	<tr><td>Diamond Operator ⑨</td></tr>
 	<tr><td>SafeVarargs ⑨</td></tr>
 	<tr><td>Deprecation Warnings ⑨</td></tr>
-</table></section><section id="sneak_preview"><h2>Sneak Preview</h2><div class="paragraph"><p>Java 12 <code>switch</code> expressions:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public void switchExpression() {
-	var bool = Bool.random();
-	boolean result = switch (bool) {
-		case TRUE -&gt; true;
-		case FALSE -&gt; false;
-		case FILE_NOT_FOUND -&gt;
-			throw new UncheckedIOException(
-				"This is ridiculous!",
-				new FileNotFoundException());
-	};
-}</code></pre></div></div></section></section>
+</table></section>
 <section><section id="new_language_features_2"><h2>New Language Features</h2><table class="toc">
 	<tr class="toc-current"><td>Local-Variable Type Inference ⑩</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
