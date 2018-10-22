@@ -11,23 +11,23 @@
 </table>
 ++++
 
-=== Sneak Preview
-
-Java 12 `switch` expressions:
-
-```java
-public void switchExpression() {
-	var bool = Bool.random();
-	boolean result = switch (bool) {
-		case TRUE -> true;
-		case FALSE -> false;
-		case FILE_NOT_FOUND ->
-			throw new UncheckedIOException(
-				"This is ridiculous!",
-				new FileNotFoundException());
-	};
-}
-```
+// === Sneak Preview
+//
+// Java 12 `switch` expressions:
+//
+// ```java
+// public void switchExpression() {
+// 	var bool = Bool.random();
+// 	boolean result = switch (bool) {
+// 		case TRUE -> true;
+// 		case FALSE -> false;
+// 		case FILE_NOT_FOUND ->
+// 			throw new UncheckedIOException(
+// 				"This is ridiculous!",
+// 				new FileNotFoundException());
+// 	};
+// }
+// ```
 
 
 == New Language Features
