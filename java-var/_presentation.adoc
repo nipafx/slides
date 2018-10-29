@@ -1,0 +1,56 @@
+= Fun with `var`
+:backend: revealjs
+:revealjs_theme: nipa-night
+:revealjsdir: ../_reveal.js
+:revealjs_controls: false
+:revealjs_progress: false
+:revealjs_slideNumber: false
+:revealjs_history: true
+:revealjs_center: true
+:revealjs_transition: slide
+:revealjs_backgroundTransition: fade
+:revealjs_parallaxBackgroundImage: images/fireworks.jpg
+:revealjs_parallaxBackgroundSize: 4892px 3261px
+
+include::../_shared/highlight.js.adoc[]
+
+:host-name: J-Fall
+:host-url: https://jfall.nl/
+:host-logo-url: images/logo-j-fall.jpg
+// :host-logo-style: border-color: white;
+:host-twitter-name: #jfall
+:host-twitter-url: https://twitter.com/hashtag/jfall?src=hash
+include::../_shared/event-on-title-and-footer.adoc[]
+
+
+// ######### //
+// I N T R O //
+// ######### //
+
+// ⇝
+
+== Lots to tinker with!
+
+++++
+<table class="toc">
+	<tr><td>Rules of <code>var</code></td></tr>
+</table>
+++++
+
+Slides at http://slides.codefx.org/[slides.codefx.org]. +
+Code at https://github.com/CodeFX-org/demo-java-x[github.com/CodeFX-org/demo-java-x].
+
+
+// ####################### //
+// P R E S E N T A T I O N //
+// ####################### //
+
+include::basics.adoc[]
+
+// ######### //
+// O U T R O //
+// ######### //
+
+include::../_shared/about-slide.adoc[]
+
+include::images/sources.adoc[]
