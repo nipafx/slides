@@ -1,0 +1,157 @@
+== Fun with `var`
+
+++++
+<table class="toc">
+	<tr><td>Rules of <code>var</code></td></tr>
+	<tr class="toc-current"><td>Ad-hoc Fields And Methods</td></tr>
+	<tr><td>Intersection Types</td></tr>
+	<tr><td>Traits</td></tr>
+</table>
+++++
+
+=== Motivation
+
+Sometimes you need to extend a type +
+with a field or a method.
+
+But not enough to create a new subtype.
+
+Maybe with an anonymous class?
+
+=== Anonymous class
+
+```java
+new SimpleMegacorp(...) {
+	final BigDecimal SUCCESS_BOUNDARY =
+		new BigDecimal("1000000000000");
+
+	boolean isSuccessful() {
+		return earnings()
+			.compareTo(SUCCESS_BOUNDARY) > 0;
+	}
+};
+```
+
+=== Demo
+
+=== Ad-hoc fields & methods
+
+. create anonymous class with +
+additional fields and/or methods
+. assigned to `var`-ed variable
+
+
+```java
+var corp = new SimpleMegacorp(...) {
+	final BigDecimal SUCCESS_BOUNDARY =
+		new BigDecimal("1000000000000");
+
+	boolean isSuccessful() {
+		return earnings()
+			.compareTo(SUCCESS_BOUNDARY) > 0;
+	}
+};
+corp.isSuccessful();
+```
+
+=== Evaluation
+
+Downsides:
+
+* anonymous class is verbose (e.g. in stream)
+* combination of non-trivial Java features:
+** anonymous classes
+** type inference
+* impedes refactoring (*!*)
+
+*Prefer the alternatives!*
+
+=== Alternatives
+
+Alternatives for ad-hoc fields:
+
+* `Map.Entry`
+* tuples from http://www.vavr.io/[Vavr], https://github.com/aol/cyclops[Cyclops], etc.
+* records (next)
+
+Alternatives for ad-hoc methods:
+
+* extending base types
+* utility methods
+* traits (later)
+
+=== Records
+
+What are records? +
+Upcoming Java language feature!
+
+[source,java]
+----
+public record Range(int low, int high) {
+	// compiler generates:
+	//  * constructor, deconstructor
+	//  * equals/hashCode/toString
+	//  * accessors low(), high()
+}
+----
+
+* no boilerplate for plain "data carriers"
+* no room for error in `equals`/`hashCode`
+* makes Java more expressive
+
+=== Customized records
+
+[source,java]
+----
+public record Range(int low, int high) {
+
+	// compiler knows signature and assigns to fields
+	public Range {
+		if (low > high)
+			throw new IllegalArgumentException();
+	}
+
+	public void setLow(int low) {
+		if (low > this.high)
+			throw new IllegalArgumentException();
+		this.low = low;
+	}
+
+}
+----
+
+=== Record trade-offs
+
+> The API for a record models the state, the whole state, and nothing but the state.
+
+The deal:
+
+* give up encapsulation
+* couple API to internal state
+* get API for free
+
+=== More on records
+
+Developed under _Project Amber_:
+
+* led by Brian Goetz
+* launched March 2017
+* http://openjdk.java.net/projects/amber/[project] /
+https://wiki.openjdk.java.net/display/amber/Main[wiki] /
+http://mail.openjdk.java.net/mailman/listinfo/amber-dev[mailing list]
+
+More on records:
+
+* http://cr.openjdk.java.net/~briangoetz/amber/datum.html[exploration]
+* talks:
+https://www.youtube.com/watch?v=A-mxj2vhVAA&t=13m58s[0],
+https://www.youtube.com/watch?v=qul2B8iPC-o[1],
+https://www.youtube.com/watch?v=n3_8YcYKScw[2]
+
+No known ETA; my guess: +
+not in 2019, likely not in 2020.
+
+=== More on ad-hoc fields&nbsp;and&nbsp;methods
+
+I've written a blog post: +
+https://blog.codefx.org/java/tricks-var-anonymous-classes/[blog.codefx.org/java/tricks-var-anonymous-classes]

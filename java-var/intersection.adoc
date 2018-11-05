@@ -1,0 +1,81 @@
+== Fun with `var`
+
+++++
+<table class="toc">
+	<tr><td>Rules of <code>var</code></td></tr>
+	<tr><td>Ad-hoc Fields And Methods</td></tr>
+	<tr class="toc-current"><td>Intersection Types</td></tr>
+	<tr><td>Traits</td></tr>
+</table>
+++++
+
+=== Motivation
+
+Sometimes you need a type +
+that implements two interfaces +
+without creating a new interface.
+
+*For example:*
+
+You need something +
+that is `Closeable` and an `Iterator` +
+without creating `CloseableIterator`.
+
+=== Intersection types
+
+Given two types, the *intersection type* +
+is the set of variables that are of both types.
+
+An intersection type has the API of both types!
+
+*For example:*
+
+A variable of type `Closeable & Iterator<E>` +
+is both `Closeable` and an `Iterator<E>`.
+
+It has `close()` and `hashNext()`/`next()`
+
+[state="empty"]
+=== !
+image::images/intersection-venn.png[background, size=cover]
+
+=== Demo
+
+=== Intersection types
+
+. in method signatures, express with generics:
++
+```java
+public <T extends Closeable & Iterator<String>>
+	T createCloseableIterator(...) { ... }
+
+public <E, T extends Closeable & Iterator<E>>
+	E firstMatch(T elements, ...) { ... }
+```
+. for variables use `var`:
++
+```java
+var elements = createCloseableIterator(true);
+firstMatch(elements, ...);
+```
+
+=== Evaluation
+
+Downsides:
+
+* combination of non-trivial Java features:
+** generics with bounded wildcards
+** type inference
+* refactoring becomes harder
+
+But:
+
+* intersection types are known concept
+* can be really helpful in a bind
+
+*Add to tool box; use with care.*
+
+=== More on intersection&nbsp;types
+
+I've written a blog post: +
+https://blog.codefx.org/java/intersection-types-var/[blog.codefx.org/java/intersection-types-var]

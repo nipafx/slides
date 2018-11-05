@@ -34,6 +34,9 @@ include::../_shared/event-on-title-and-footer.adoc[]
 ++++
 <table class="toc">
 	<tr><td>Rules of <code>var</code></td></tr>
+	<tr><td>Ad-hoc Fields And Methods</td></tr>
+	<tr><td>Intersection Types</td></tr>
+	<tr><td>Traits</td></tr>
 </table>
 ++++
 
@@ -46,6 +49,23 @@ Code at https://github.com/CodeFX-org/demo-java-x[github.com/CodeFX-org/demo-jav
 // ####################### //
 
 include::basics.adoc[]
+
+include::anonymous.adoc[]
+
+include::intersection.adoc[]
+
+include::traits.adoc[]
+
+== Summary
+
+* use `var` to improve readability:
+** right-hand side should be informative
+** variable name should be well-chosen
+** add more intermediate variables
+* tricks with `var` are usually complex:
+** not worth it for ad-hoc fields and methods
+** break `equals`/`hashCode` for traits
+** may be worth it for intersection types
 
 // ######### //
 // O U T R O //

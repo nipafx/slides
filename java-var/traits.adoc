@@ -1,0 +1,81 @@
+== Fun with `var`
+
+++++
+<table class="toc">
+	<tr><td>Rules of <code>var</code></td></tr>
+	<tr><td>Ad-hoc Fields And Methods</td></tr>
+	<tr><td>Intersection Types</td></tr>
+	<tr class="toc-current"><td>Traits</td></tr>
+</table>
+++++
+
+=== Motivation
+
+Sometimes you need to attach +
+prepared functionality to an instance +
+without creating a new type.
+
+*For example:*
+
+You have a `Megacorp` instance and an +
+`IsSuccessful`-interface that you +
+want to attach to it.
+
+=== Traits
+
+A *trait* extends an interface +
+and implements additional behavior.
+
+The language needs to offer a simple way +
+to "attach" that trait to an instance at hand.
+
+=== Demo
+
+=== Traits
+
+. create a functional, delegating interface:
++
+```java
+@FunctionalInterface
+interface MegacorpDelegate extends Megacorp {
+	Megacorp delegate();
+	// implement `Megacorp` with default methods
+	// by forwarding calls to `delegate()`
+}
+```
+. create traits as interfaces:
++
+```java
+interface IsEvil extends Megacorp {
+	default boolean isEvil() { return true; }
+}
+```
+
+=== Traits
+
+[start=3]
+. cast lambda to desired intersection +
+and assign to `var`-ed variable:
+```java
+var corp = (MegacorpDelegate & IsEvil) () -> original;
+```
+
+=== Evaluation
+
+Downsides:
+
+* combination of non-trivial Java features:
+** lambda as poly expression
+** type inference
+** default methods
+* refactoring becomes harder +
+(see intersection types)
+* delegating interface is cumbersome
+* breaks in collections (*!*)
+
+*Never use in "real" code!*
+
+=== More on traits
+
+I've written a blog post: +
+https://blog.codefx.org/java/traits-var/[blog.codefx.org/java/traits-var]

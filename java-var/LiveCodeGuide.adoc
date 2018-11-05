@@ -1,0 +1,646 @@
+= Fun with `var`
+Nicolai Parlog <nipa@codefx.org>
+
+
+== Basics
+
+Start with:
+
+```java
+URL codefx = new URL("http://codefx.org");
+// connection needs to be closed but not in the demo
+URLConnection connection = codefx.openConnection();
+Reader reader = new BufferedReader(
+		new InputStreamReader(connection.getInputStream()));
+```
+
+Convert to `var`:
+
+```java
+var codefx = new URL("http://codefx.org");
+// connection needs to be closed but not in the demo
+var connection = codefx.openConnection();
+var reader = new BufferedReader(
+		new InputStreamReader(connection.getInputStream()));
+```
+
+* explain that compiler uses right-hand side
+* show bytecode
+
+=== Where it works
+
+Use it with `for`:
+
+```java
+var numbers = List.of("a", "b", "c");
+for (var nr : numbers)
+	System.out.print(nr + " ");
+for (var i = 0; i < numbers.size(); i++)
+	System.out.print(numbers.get(i) + " ");
+```
+
+Use it with `try`:
+
+```java
+try (var file = new FileInputStream(new File("no-such-file"))) {
+	new BufferedReader(new InputStreamReader(file))
+			.lines()
+			.forEach(System.out::println);
+} catch (IOException ex) {
+	// at least, we tried
+	System.out.println("There's actually no `no-such-file`. :)");
+}
+```
+
+Reserved type name, not keyword:
+
+```java
+var var = "var";
+```
+
+=== Where it doesn't work
+
+With lacking initializers:
+
+```java
+var s;
+var f;
+f = "Foo";
+```
+
+With poly expressions
+
+```java
+var intses = {0, 1, 2};
+var appendSpace = a -> a + " ";
+```
+
+At a distance:
+
+```java
+var id = 123;
+if (id < 100) {
+	//
+} else {
+	//
+}
+
+id = "124";
+```
+
+Programming to the interface:
+
+```java
+var strings = new ArrayList<String>();
+strings = new LinkedList<String>();
+```
+
+Be careful when refactoring!
+
+In method signatures or fields:
+
+```java
+private var getString() {
+	return "foo";
+}
+```
+
+=== Where it doesn't work well
+
+With generics:
+
+```java
+// replace with `var`, observe compile error
+Optional<String> opt = Optional.empty();
+String s = opt.orElse("");
+```
+
+With literals:
+
+```java
+// replace with `var`, observe compile error
+long l = 3;
+l = Long.MAX_VALUE;
+```
+
+
+== Anonymous Classes
+
+=== Adding Fields
+
+Start with:
+
+```java
+Megacorp megacorp = SAEDER_KRUPP;
+Map<Megacorp, Address> headquarters = HEADQUARTERS;
+
+Object corpWithHq = new Object() {
+	Megacorp _corp = megacorp;
+	Optional<Address> _hq =
+			ofNullable(headquarters.get(megacorp));
+};
+```
+
+Add:
+
+```java
+// does not compile
+System.out.println(
+		"Megacorp " + corpWithHq._corp + " has its headquarters in "
+				+ corpWithHq._hq.orElse(UNKNOWN) + ".");
+```
+
+Show that it works with `var`:
+
+```java
+var corpWithHq = ...;
+```
+
+Look into decompiled `class` file.
+
+=== Enriching Streams
+
+Start with:
+
+```java
+List<Megacorp> megacorps = MEGACORPS;
+Map<Megacorp, Address> headquarters = HEADQUARTERS;
+
+megacorps.stream()
+		// we stream megacorps, but need to add addresses ...
+		.map(megacorp -> new Object() {
+			Megacorp _corp = megacorp;
+			Optional<Address> _hq =
+					ofNullable(headquarters.get(megacorp));
+		})
+		// ... only for evaluation, though ...
+		.filter(o -> o._hq.isPresent())
+		.filter(o -> isKnown(o._hq.get()))
+		// ... in the end we can get rid of them again
+		.map(o -> o._corp)
+		.findAny()
+		.filter(corp -> corp.taxes().compareTo(BigDecimal.ZERO) > 0)
+		.ifPresent(System.out::println);
+```
+
+No `var`, works on Java 8!
+(Because `Stream<$Anonymous>` is never expressed in source code.)
+
+Show simple refactoring:
+
+```java
+Optional<Megacorp> corpWithKnownHq = megacorps.stream()
+		// we stream megacorps, but need to add addresses ...
+		.map(megacorp -> new Object() {
+			Megacorp _corp = megacorp;
+			Optional<Address> _hq =
+					ofNullable(headquarters.get(megacorp));
+		})
+		// ... only for evaluation, though ...
+		.filter(o -> o._hq.isPresent())
+		.filter(o -> isKnown(o._hq.get()))
+		// ... in the end we can get rid of them again
+		.map(o -> o._corp)
+		.findAny();
+
+corpWithKnownHq
+		.filter(corp -> corp.taxes().compareTo(BigDecimal.ZERO) > 0)
+		.ifPresent(System.out::println);
+```
+
+Revert refactoring and remove last `map`:
+
+```java
+		.filter(o -> o._hq.isPresent())
+		.filter(o -> isKnown(o._hq.get()))
+		.findAny()
+```
+
+Discuss why this works, then repeat extraction of `corpWithKnownHq`:
+
+```java
+Optional<Object> corpWithHq = megacorps.stream()
+		// we stream megacorps, but need to add addresses ...
+		.map(megacorp -> new Object() {
+			Megacorp _corp = megacorp;
+			Optional<Address> _hq =
+					ofNullable(headquarters.get(megacorp));
+		})
+		// ... only for evaluation, though ...
+		.filter(o -> o._hq.isPresent())
+		.filter(o -> isKnown(o._hq.get()))
+		.findAny();
+
+corpWithHq
+		.filter(corp -> corp._corp.taxes().compareTo(BigDecimal.ZERO) > 0)
+		.ifPresent(System.out::println);
+```
+
+Compile error!
+Fix with `var`:
+
+```java
+var corpWithHq = ...;
+```
+
+=== Evaluation
+
+Downsides:
+
+* anonymous class in stream is verbose
+* combination of non-trivial Java features:
+** anonymous classes
+** type inference
+* refactoring suffers
+
+To demonstrate refactoring, extract methods:
+
+```java
+Optional<Object> corpWithHq = determineCorp(megacorps, headquarters);
+processCorp(corpWithHq);
+```
+
+Signatures can't express anonymous subtype:
+
+* `determineCorp` return type
+* `processCorp` parameter type
+
+Leaving in a hurdle for refactoring is a bad idea!
+
+*Prefer alternatives.*
+
+=== Alternatives
+
+Show `Map.Entry`:
+
+```java
+megacorps.stream()
+		// we stream megacorps, but need to add addresses ...
+		.map(megacorp -> Map.entry(megacorp, ofNullable(headquarters.get(megacorp))))
+		// ... only for evaluation, though ...
+		.filter(o -> o.getValue().isPresent())
+		.filter(o -> isKnown(o.getValue().get()))
+		.findAny()
+		.filter(corp -> corp.getKey().taxes().compareTo(BigDecimal.ZERO) > 0)
+		.ifPresent(System.out::println);
+```
+
+Show refactoring:
+
+```java
+var corpWithKnownHq = determineCorp(megacorps, headquarters);
+processCorp(corpWithKnownHq);
+```
+
+More alternatives:
+
+* tuples as from Vavr et al
+* wait for Project Amber's records
+
+=== Adding Methods
+
+Start with:
+
+```java
+Megacorp corp = new SimpleMegacorp(SAEDER_KRUPP) {
+	final BigDecimal SUCCESS_BOUNDARY = new BigDecimal("1000000000000");
+
+	boolean isSuccessful() {
+		return earnings().compareTo(SUCCESS_BOUNDARY) > 0;
+	}
+
+	boolean isEvil() {
+		return true;
+	}
+};
+
+System.out.println(corp + " is successful: " + corp.isSuccessful());
+```
+
+Compile error!
+Fix with `var`.
+
+=== Evaluation
+
+Downsides:
+
+* combination of non-trivial Java features:
+** anonymous classes
+** type inference
+* refactoring suffers
+
+*Prefer alternatives.*
+
+=== Alternatives
+
+* add methods to type or extending type
+* write methods as utility methods / pure functions
+* use traits
+
+Added bonus: all are more reusable.
+
+
+== Intersection Types
+
+Start with:
+
+```java
+public static void main(String[] args) {
+	Scanner scanner = new Scanner(System.in);
+	firstMatch(scanner, not(String::isBlank))
+		.ifPresent(System.out::println);
+}
+
+static <E> Optional<E> firstMatch(
+		Iterable<E> elements,
+		Predicate<? super E> condition) {
+	return stream(elements)
+			.filter(condition)
+			.findAny();
+}
+
+private static <E> Stream<E> stream(Iterable<E> elements) {
+	return StreamSupport.stream(elements.spliterator(), false);
+}
+```
+
+=== New Interface
+
+*New use case*, `elements` needs to be closed:
+
+```java
+static <E> Optional<E> firstMatch(
+		Iterable<E> elements,
+		Predicate<? super E> condition) {
+	// compile error: `elements` not `AutoCloseable`
+	try (elements) {
+		return stream(elements)
+				.filter(condition)
+				.findAny();
+	} catch (IOException ex) {
+		throw new UncheckedIOException(ex);
+	}
+}
+```
+
+Create new interface:
+
+```java
+static <E> Optional<E> firstMatch(
+		CloseableIterator<E> elements,
+		Predicate<? super E> condition) {
+	// ...
+}
+
+interface CloseableIterator<E>
+	extends Closeable, Iterator<E> { }
+```
+
+Nobody knows about that interface, though... ~> compile error in `main`.
+
+=== Generics
+
+Remove interface and pull intersection into generic:
+
+```java
+static <E, T extends Closeable & Iterator<E>> Optional<E> firstMatch(
+		T elements,
+		Predicate<? super E> condition) {
+	try (elements) {
+		return stream(elements)
+				.filter(condition)
+				.findAny();
+	} catch (IOException ex) {
+		throw new UncheckedIOException(ex);
+	}
+}
+```
+
+*New use case*, can't operate on `Scanner`:
+
+```java
+public static void main(String[] args) {
+	firstMatch(
+			createCloseableIterator(true),
+			not(String::isBlank))
+		.ifPresent(System.out::println);
+}
+
+static <T extends Closeable & Iterator<String>>
+		T createCloseableIterator(boolean empty) {
+	if (empty)
+		return (T) new Empty();
+	else
+		return (T) new Scanner(System.in);
+}
+```
+
+=== Extract Variable
+
+*New use case*, extract variable `elements`:
+
+```java
+// illegal syntax
+Closeable & Iterator<String> elements = createCloseableIterator(empty);
+// legal syntax, but can not be passed to `firstMatch`
+Closeable elements = createCloseableIterator(empty);
+Iterator<String> elements = createCloseableIterator(empty);
+// compiles and can be passed, but can fail at run time
+// (depending on `empty`)
+Scanner elements = (Scanner) createCloseableIterator(empty);
+Empty elements = (Empty) createCloseableIterator(empty);
+```
+
+Works with more generic mumbo-jumbo:
+
+```java
+static <T extends Closeable & Iterator<String>>
+		void readAndPrint(boolean empty) {
+	T elements = createCloseableIterator(empty);
+	firstMatch(elements, not(String::isBlank))
+		.ifPresent(System.out::println);
+}
+```
+
+Exposes generic type that is used nowhere else in the signature - a bridge too far.
+
+Fix with `var`:
+
+```java
+public static void main(String[] args) {
+	var elements = createCloseableIterator(true);
+	firstMatch(elements, not(String::isBlank))
+		.ifPresent(System.out::println);
+}
+```
+
+=== Evaluation
+
+Downsides:
+
+* combination of non-trivial Java features:
+** generics with bounded wildcards
+** type inference
+
+But:
+
+* intersection types are known concept
+* can be really helpful in a bind
+
+*Add to tool box; use with care.*
+
+
+== Traits
+
+Start with "wouldn't it be great":
+
+```java
+public static void main(String[] args) {
+	Megacorp & IsSuccessful & IsEvil corp =
+			new (Megacorp & IsSuccessful & IsEvil)(/*...*/);
+	System.out.printf(
+			"Corporation %s is %s and %s.\n",
+			// relying on `corp` as `Megacorp`
+			corp.name(),
+			// relying on `corp` as `IsSuccessful`
+			corp.isSuccessful() ? "successful" : "a failure",
+			// relying on `corp` as `IsEvil`
+			corp.isEvil() ? "evil" : "a failure"
+	);
+}
+
+trait IsSuccessful {
+	final BigDecimal SUCCESS_BOUNDARY = new BigDecimal("1000000000000");
+
+	boolean isSuccessful() {
+		return earnings().compareTo(SUCCESS_BOUNDARY) > 0;
+	}
+}
+
+trait IsEvil {
+	boolean isEvil() { return true; }
+}
+```
+
+Aren't this intersection types?
+
+* yes, same syntax and semantic
+* we used intersection types as requirements for parameter/return types
+* traits allow us to actively intersect types
+
+Traits recipe:
+
+* functional interface
+* cast lambda (*poly expression!*) to intersection type
+* `var`-ed variable
+
+=== Functional interface
+
+The interface:
+
+* related to original interface
+* is technical requirement
+* needs to be functional (for lambdas)
+* needs to return delegate (to add trait to it)
+
+```java
+public static void main(String[] args) {
+//	Megacorp & IsSuccessful & IsEvil corp =
+//			new (Megacorp & IsSuccessful & IsEvil)(/*...*/);
+	Megacorp original = null;
+	Megacorp corp = (MegacorpDelegate) () -> original;
+	System.out.printf(
+			"Corporation %s is %s and %s.\n",
+			// relying on `corp` as `Megacorp`
+			corp.name(),
+			// relying on `corp` as `IsSuccessful`
+			corp.isSuccessful() ? "successful" : "a failure",
+			// relying on `corp` as `IsEvil`
+			corp.isEvil() ? "evil" : "a failure"
+	);
+}
+
+@FunctionalInterface
+interface MegacorpDelegate extends Megacorp {
+
+	Megacorp delegate();
+
+	default String name() {
+		return delegate().name();
+	}
+
+	default BigDecimal earnings() {
+		return delegate().earnings();
+	}
+
+	default BigDecimal taxes() {
+		return delegate().taxes();
+	}
+
+}
+```
+
+=== Creating traits
+
+Traits:
+
+* related to business use case
+* interfaces without abstract methods
+
+Update traits to match that logic:
+
+```java
+interface IsSuccessful extends Megacorp {
+	BigDecimal SUCCESS_BOUNDARY = new BigDecimal("500000000");
+
+	default boolean isSuccessful() {
+		return earnings().compareTo(SUCCESS_BOUNDARY) > 0;
+	}
+
+}
+
+interface IsEvil extends Megacorp {
+
+	default boolean isEvil() {
+		return true;
+	}
+
+}
+```
+
+=== Combining traits
+
+Change `main`:
+
+```java
+var corp = (MegacorpDelegate & IsSuccessful & IsEvil) () -> original;
+```
+
+=== Dark side
+
+Equals:
+
+```java
+// maybe
+original.equals(corp);
+// never
+corp.equals(original);
+```
+
+Default methods can't implement object methods!
+
+*Combined instance will misbehave in collections!*
+
+=== Evaluation
+
+Downsides:
+
+* combination of non-trivial Java features:
+** lambda as poly expression
+** type inference
+** default methods
+* refactoring becomes harder
+* cumbersome setup (delegating interface)
+* breaks in collections
+
+*Never use it in "real" code!*

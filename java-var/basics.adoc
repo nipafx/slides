@@ -1,0 +1,72 @@
+== Fun with `var`
+
+++++
+<table class="toc">
+	<tr class="toc-current"><td>Rules of <code>var</code></td></tr>
+	<tr><td>Ad-hoc Fields And Methods</td></tr>
+	<tr><td>Intersection Types</td></tr>
+	<tr><td>Traits</td></tr>
+</table>
+++++
+
+=== Demo
+
+=== What About Readability?
+
+This *is* about readability!
+
+* less redundancy
+* more intermediate variables
+* more focus on variable names
+* aligned variable names
+
+=== Aligned Variable Names
+
+++++
+<div style="height: 300px;">
+<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">No no = <span class="hljs-keyword">new</span> No();
+AmountIncrease&lt;BigDecimal&gt; more =
+    <span class="hljs-keyword">new</span> BigDecimalAmountIncrease();
+HorizontalConnection&lt;LinePosition, LinePosition&gt;
+    jumping =
+        <span class="hljs-keyword">new</span> HorizontalLinePositionConnection();
+Variable variable = <span class="hljs-keyword">new</span> Constant(<span class="hljs-number">5</span>);
+List&lt;String&gt; names = List.of(<span class="hljs-string">"Max"</span>, <span class="hljs-string">"Maria"</span>);</code></pre></div></div>
+<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">var</span> no = <span class="hljs-keyword">new</span> No();
+<span class="hljs-keyword">var</span> more = <span class="hljs-keyword">new</span> BigDecimalAmountIncrease();
+<span class="hljs-keyword">var</span> jumping = <span class="hljs-keyword">new</span> HorizontalLinePositionConnection();
+<span class="hljs-keyword">var</span> variable = <span class="hljs-keyword">new</span> Constant(<span class="hljs-number">5</span>);
+<span class="hljs-keyword">var</span> names = List.of(<span class="hljs-string">"Max"</span>, <span class="hljs-string">"Maria"</span>);</code></pre></div></div>
+++++
+
+=== Style Guidelines
+
+Principles from the
+http://openjdk.java.net/projects/amber/LVTIstyle.html[official style guidelines]:
+
+[%step]
+. Reading code is more important than writing it.
+. Code should be clear from local reasoning.
+. Code readability shouldn't depend on IDEs.
+. Explicit types are a tradeoff.
+
+=== Style Guidelines
+
+Guidelines:
+
+[%step]
+. Choose variable names that provide useful info.
+. Minimize the scope of local variables.
+. Consider `var` when the initializer provides sufficient information to the reader.
+. Use `var` to break up chained or nested expressions.
+. Don't worry too much about "programming to the interface".
+. Take care when using `var` with diamonds or generics.
+. Take care when using `var` with literals.
+
+=== More on `var` basics
+
+* First Contact With `var` In Java 10 +
+💻 https://blog.codefx.org/java/java-10-var-type-inference/[tiny.cc/java-var] /
+▶ https://www.youtube.com/watch?v=Le1DbpRZdRQ&index=1&list=PL_-IO8LOLuNp2stY1qBUtXlfMdJW7wvfT[tiny.cc/java-var-yt]
+* http://openjdk.java.net/projects/amber/LVTIstyle.html[official style guidelines]
+* https://snyk.io/blog/local-type-inference-java-cheat-sheet[cheat sheet] (*⇜ print when getting started!*)
