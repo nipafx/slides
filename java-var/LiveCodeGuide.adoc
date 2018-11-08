@@ -123,6 +123,315 @@ long l = 3;
 l = Long.MAX_VALUE;
 ```
 
+<<<
+
+== Intersection Types
+
+Start with:
+
+```java
+public static void main(String[] args) {
+	Scanner scanner = new Scanner(System.in);
+	firstMatch(scanner, not(String::isBlank))
+		.ifPresent(System.out::println);
+}
+
+static <E> Optional<E> firstMatch(
+		Iterable<E> elements,
+		Predicate<? super E> condition) {
+	return stream(elements)
+			.filter(condition)
+			.findAny();
+}
+
+private static <E> Stream<E> stream(Iterable<E> elements) {
+	return StreamSupport.stream(elements.spliterator(), false);
+}
+```
+
+=== New Interface
+
+*New use case*, `elements` needs to be closed:
+
+```java
+static <E> Optional<E> firstMatch(
+		Iterable<E> elements,
+		Predicate<? super E> condition) {
+	// compile error: `elements` not `AutoCloseable`
+	try (elements) {
+		return stream(elements)
+				.filter(condition)
+				.findAny();
+	} catch (IOException ex) {
+		throw new UncheckedIOException(ex);
+	}
+}
+```
+
+Create new interface:
+
+```java
+static <E> Optional<E> firstMatch(
+		CloseableIterator<E> elements,
+		Predicate<? super E> condition) {
+	// ...
+}
+
+interface CloseableIterator<E>
+	extends Closeable, Iterator<E> { }
+```
+
+Nobody knows about that interface, though... ~> compile error in `main`.
+
+=== Generics
+
+Remove interface and pull intersection into generic:
+
+```java
+static <E, T extends Closeable & Iterator<E>> Optional<E> firstMatch(
+		T elements,
+		Predicate<? super E> condition) {
+	try (elements) {
+		return stream(elements)
+				.filter(condition)
+				.findAny();
+	} catch (IOException ex) {
+		throw new UncheckedIOException(ex);
+	}
+}
+```
+
+*New use case*, can't operate on `Scanner`:
+
+```java
+public static void main(String[] args) {
+	firstMatch(
+			createCloseableIterator(true),
+			not(String::isBlank))
+		.ifPresent(System.out::println);
+}
+
+static <T extends Closeable & Iterator<String>>
+		T createCloseableIterator(boolean empty) {
+	if (empty)
+		return (T) new Empty();
+	else
+		return (T) new Scanner(System.in);
+}
+```
+
+=== Extract Variable
+
+*New use case*, extract variable `elements`:
+
+```java
+// illegal syntax
+Closeable & Iterator<String> elements = createCloseableIterator(empty);
+// legal syntax, but can not be passed to `firstMatch`
+Closeable elements = createCloseableIterator(empty);
+Iterator<String> elements = createCloseableIterator(empty);
+// compiles and can be passed, but can fail at run time
+// (depending on `empty`)
+Scanner elements = (Scanner) createCloseableIterator(empty);
+Empty elements = (Empty) createCloseableIterator(empty);
+```
+
+Works with more generic mumbo-jumbo:
+
+```java
+static <T extends Closeable & Iterator<String>>
+		void readAndPrint(boolean empty) {
+	T elements = createCloseableIterator(empty);
+	firstMatch(elements, not(String::isBlank))
+		.ifPresent(System.out::println);
+}
+```
+
+Exposes generic type that is used nowhere else in the signature - a bridge too far.
+
+Fix with `var`:
+
+```java
+public static void main(String[] args) {
+	var elements = createCloseableIterator(true);
+	firstMatch(elements, not(String::isBlank))
+		.ifPresent(System.out::println);
+}
+```
+
+=== Evaluation
+
+Downsides:
+
+* combination of non-trivial Java features:
+** generics with bounded wildcards
+** type inference
+
+But:
+
+* intersection types are known concept
+* can be really helpful in a bind
+
+*Add to tool box; use with care.*
+
+<<<
+
+== Traits
+
+Start with "wouldn't it be great":
+
+```java
+public static void main(String[] args) {
+	Megacorp & IsSuccessful & IsEvil corp =
+			new (Megacorp & IsSuccessful & IsEvil)(/*...*/);
+	System.out.printf(
+			"Corporation %s is %s and %s.\n",
+			// relying on `corp` as `Megacorp`
+			corp.name(),
+			// relying on `corp` as `IsSuccessful`
+			corp.isSuccessful() ? "successful" : "a failure",
+			// relying on `corp` as `IsEvil`
+			corp.isEvil() ? "evil" : "a failure"
+	);
+}
+
+trait IsSuccessful {
+	final BigDecimal SUCCESS_BOUNDARY = new BigDecimal("1000000000000");
+
+	boolean isSuccessful() {
+		return earnings().compareTo(SUCCESS_BOUNDARY) > 0;
+	}
+}
+
+trait IsEvil {
+	boolean isEvil() { return true; }
+}
+```
+
+Aren't this intersection types?
+
+* yes, same syntax and semantic
+* we used intersection types as requirements for parameter/return types
+* traits allow us to actively intersect types
+
+Traits recipe:
+
+* functional interface
+* cast lambda (*poly expression!*) to intersection type
+* `var`-ed variable
+
+=== Functional interface
+
+The interface:
+
+* related to original interface
+* is technical requirement
+* needs to be functional (for lambdas)
+* needs to return delegate (to add trait to it)
+
+```java
+public static void main(String[] args) {
+//	Megacorp & IsSuccessful & IsEvil corp =
+//			new (Megacorp & IsSuccessful & IsEvil)(/*...*/);
+	Megacorp original = null;
+	Megacorp corp = (MegacorpDelegate) () -> original;
+	System.out.printf(
+			"Corporation %s is %s and %s.\n",
+			// relying on `corp` as `Megacorp`
+			corp.name(),
+			// relying on `corp` as `IsSuccessful`
+			corp.isSuccessful() ? "successful" : "a failure",
+			// relying on `corp` as `IsEvil`
+			corp.isEvil() ? "evil" : "a failure"
+	);
+}
+
+@FunctionalInterface
+interface MegacorpDelegate extends Megacorp {
+
+	Megacorp delegate();
+
+	default String name() {
+		return delegate().name();
+	}
+
+	default BigDecimal earnings() {
+		return delegate().earnings();
+	}
+
+	default BigDecimal taxes() {
+		return delegate().taxes();
+	}
+
+}
+```
+
+=== Creating traits
+
+Traits:
+
+* related to business use case
+* interfaces without abstract methods
+
+Update traits to match that logic:
+
+```java
+interface IsSuccessful extends Megacorp {
+	BigDecimal SUCCESS_BOUNDARY = new BigDecimal("500000000");
+
+	default boolean isSuccessful() {
+		return earnings().compareTo(SUCCESS_BOUNDARY) > 0;
+	}
+
+}
+
+interface IsEvil extends Megacorp {
+
+	default boolean isEvil() {
+		return true;
+	}
+
+}
+```
+
+=== Combining traits
+
+Change `main`:
+
+```java
+var corp = (MegacorpDelegate & IsSuccessful & IsEvil) () -> original;
+```
+
+=== Dark side
+
+Equals:
+
+```java
+// maybe
+original.equals(corp);
+// never
+corp.equals(original);
+```
+
+Default methods can't implement object methods!
+
+*Combined instance will misbehave in collections!*
+
+=== Evaluation
+
+Downsides:
+
+* combination of non-trivial Java features:
+** lambda as poly expression
+** type inference
+** default methods
+* refactoring becomes harder
+* cumbersome setup (delegating interface)
+* breaks in collections
+
+*Never use it in "real" code!*
+
+<<<
 
 == Anonymous Classes
 
@@ -338,309 +647,3 @@ Downsides:
 * use traits
 
 Added bonus: all are more reusable.
-
-
-== Intersection Types
-
-Start with:
-
-```java
-public static void main(String[] args) {
-	Scanner scanner = new Scanner(System.in);
-	firstMatch(scanner, not(String::isBlank))
-		.ifPresent(System.out::println);
-}
-
-static <E> Optional<E> firstMatch(
-		Iterable<E> elements,
-		Predicate<? super E> condition) {
-	return stream(elements)
-			.filter(condition)
-			.findAny();
-}
-
-private static <E> Stream<E> stream(Iterable<E> elements) {
-	return StreamSupport.stream(elements.spliterator(), false);
-}
-```
-
-=== New Interface
-
-*New use case*, `elements` needs to be closed:
-
-```java
-static <E> Optional<E> firstMatch(
-		Iterable<E> elements,
-		Predicate<? super E> condition) {
-	// compile error: `elements` not `AutoCloseable`
-	try (elements) {
-		return stream(elements)
-				.filter(condition)
-				.findAny();
-	} catch (IOException ex) {
-		throw new UncheckedIOException(ex);
-	}
-}
-```
-
-Create new interface:
-
-```java
-static <E> Optional<E> firstMatch(
-		CloseableIterator<E> elements,
-		Predicate<? super E> condition) {
-	// ...
-}
-
-interface CloseableIterator<E>
-	extends Closeable, Iterator<E> { }
-```
-
-Nobody knows about that interface, though... ~> compile error in `main`.
-
-=== Generics
-
-Remove interface and pull intersection into generic:
-
-```java
-static <E, T extends Closeable & Iterator<E>> Optional<E> firstMatch(
-		T elements,
-		Predicate<? super E> condition) {
-	try (elements) {
-		return stream(elements)
-				.filter(condition)
-				.findAny();
-	} catch (IOException ex) {
-		throw new UncheckedIOException(ex);
-	}
-}
-```
-
-*New use case*, can't operate on `Scanner`:
-
-```java
-public static void main(String[] args) {
-	firstMatch(
-			createCloseableIterator(true),
-			not(String::isBlank))
-		.ifPresent(System.out::println);
-}
-
-static <T extends Closeable & Iterator<String>>
-		T createCloseableIterator(boolean empty) {
-	if (empty)
-		return (T) new Empty();
-	else
-		return (T) new Scanner(System.in);
-}
-```
-
-=== Extract Variable
-
-*New use case*, extract variable `elements`:
-
-```java
-// illegal syntax
-Closeable & Iterator<String> elements = createCloseableIterator(empty);
-// legal syntax, but can not be passed to `firstMatch`
-Closeable elements = createCloseableIterator(empty);
-Iterator<String> elements = createCloseableIterator(empty);
-// compiles and can be passed, but can fail at run time
-// (depending on `empty`)
-Scanner elements = (Scanner) createCloseableIterator(empty);
-Empty elements = (Empty) createCloseableIterator(empty);
-```
-
-Works with more generic mumbo-jumbo:
-
-```java
-static <T extends Closeable & Iterator<String>>
-		void readAndPrint(boolean empty) {
-	T elements = createCloseableIterator(empty);
-	firstMatch(elements, not(String::isBlank))
-		.ifPresent(System.out::println);
-}
-```
-
-Exposes generic type that is used nowhere else in the signature - a bridge too far.
-
-Fix with `var`:
-
-```java
-public static void main(String[] args) {
-	var elements = createCloseableIterator(true);
-	firstMatch(elements, not(String::isBlank))
-		.ifPresent(System.out::println);
-}
-```
-
-=== Evaluation
-
-Downsides:
-
-* combination of non-trivial Java features:
-** generics with bounded wildcards
-** type inference
-
-But:
-
-* intersection types are known concept
-* can be really helpful in a bind
-
-*Add to tool box; use with care.*
-
-
-== Traits
-
-Start with "wouldn't it be great":
-
-```java
-public static void main(String[] args) {
-	Megacorp & IsSuccessful & IsEvil corp =
-			new (Megacorp & IsSuccessful & IsEvil)(/*...*/);
-	System.out.printf(
-			"Corporation %s is %s and %s.\n",
-			// relying on `corp` as `Megacorp`
-			corp.name(),
-			// relying on `corp` as `IsSuccessful`
-			corp.isSuccessful() ? "successful" : "a failure",
-			// relying on `corp` as `IsEvil`
-			corp.isEvil() ? "evil" : "a failure"
-	);
-}
-
-trait IsSuccessful {
-	final BigDecimal SUCCESS_BOUNDARY = new BigDecimal("1000000000000");
-
-	boolean isSuccessful() {
-		return earnings().compareTo(SUCCESS_BOUNDARY) > 0;
-	}
-}
-
-trait IsEvil {
-	boolean isEvil() { return true; }
-}
-```
-
-Aren't this intersection types?
-
-* yes, same syntax and semantic
-* we used intersection types as requirements for parameter/return types
-* traits allow us to actively intersect types
-
-Traits recipe:
-
-* functional interface
-* cast lambda (*poly expression!*) to intersection type
-* `var`-ed variable
-
-=== Functional interface
-
-The interface:
-
-* related to original interface
-* is technical requirement
-* needs to be functional (for lambdas)
-* needs to return delegate (to add trait to it)
-
-```java
-public static void main(String[] args) {
-//	Megacorp & IsSuccessful & IsEvil corp =
-//			new (Megacorp & IsSuccessful & IsEvil)(/*...*/);
-	Megacorp original = null;
-	Megacorp corp = (MegacorpDelegate) () -> original;
-	System.out.printf(
-			"Corporation %s is %s and %s.\n",
-			// relying on `corp` as `Megacorp`
-			corp.name(),
-			// relying on `corp` as `IsSuccessful`
-			corp.isSuccessful() ? "successful" : "a failure",
-			// relying on `corp` as `IsEvil`
-			corp.isEvil() ? "evil" : "a failure"
-	);
-}
-
-@FunctionalInterface
-interface MegacorpDelegate extends Megacorp {
-
-	Megacorp delegate();
-
-	default String name() {
-		return delegate().name();
-	}
-
-	default BigDecimal earnings() {
-		return delegate().earnings();
-	}
-
-	default BigDecimal taxes() {
-		return delegate().taxes();
-	}
-
-}
-```
-
-=== Creating traits
-
-Traits:
-
-* related to business use case
-* interfaces without abstract methods
-
-Update traits to match that logic:
-
-```java
-interface IsSuccessful extends Megacorp {
-	BigDecimal SUCCESS_BOUNDARY = new BigDecimal("500000000");
-
-	default boolean isSuccessful() {
-		return earnings().compareTo(SUCCESS_BOUNDARY) > 0;
-	}
-
-}
-
-interface IsEvil extends Megacorp {
-
-	default boolean isEvil() {
-		return true;
-	}
-
-}
-```
-
-=== Combining traits
-
-Change `main`:
-
-```java
-var corp = (MegacorpDelegate & IsSuccessful & IsEvil) () -> original;
-```
-
-=== Dark side
-
-Equals:
-
-```java
-// maybe
-original.equals(corp);
-// never
-corp.equals(original);
-```
-
-Default methods can't implement object methods!
-
-*Combined instance will misbehave in collections!*
-
-=== Evaluation
-
-Downsides:
-
-* combination of non-trivial Java features:
-** lambda as poly expression
-** type inference
-** default methods
-* refactoring becomes harder
-* cumbersome setup (delegating interface)
-* breaks in collections
-
-*Never use it in "real" code!*
