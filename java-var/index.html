@@ -58,17 +58,17 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 </script></div></section>
 <section id="lots_to_tinker_with"><h2>Lots to tinker with!</h2><table class="toc">
 	<tr><td>Rules of <code>var</code></td></tr>
-	<tr><td>Ad-hoc Fields And Methods</td></tr>
 	<tr><td>Intersection Types</td></tr>
 	<tr><td>Traits</td></tr>
+	<tr><td>Ad-hoc Fields And Methods</td></tr>
 </table>
 <div class="paragraph"><p>Slides at <a href="http://slides.codefx.org/">slides.codefx.org</a>.<br>
 Code at <a href="https://github.com/CodeFX-org/demo-java-x">github.com/CodeFX-org/demo-java-x</a>.</p></div></section>
 <section><section id="fun_with_var"><h2>Fun with <code>var</code></h2><table class="toc">
 	<tr class="toc-current"><td>Rules of <code>var</code></td></tr>
-	<tr><td>Ad-hoc Fields And Methods</td></tr>
 	<tr><td>Intersection Types</td></tr>
 	<tr><td>Traits</td></tr>
+	<tr><td>Ad-hoc Fields And Methods</td></tr>
 </table></section><section id="demo"><h2>Demo</h2></section><section id="what_about_readability"><h2>What About Readability?</h2><div class="paragraph"><p>This <strong>is</strong> about readability!</p></div>
 <div class="ulist"><ul><li><p>less redundancy</p></li><li><p>more intermediate variables</p></li><li><p>more focus on variable names</p></li><li><p>aligned variable names</p></li></ul></div></section><section id="aligned_variable_names"><h2>Aligned Variable Names</h2><div style="height: 300px;">
 <div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">No no = <span class="hljs-keyword">new</span> No();
@@ -91,10 +91,66 @@ List&lt;String&gt; names = List.of(<span class="hljs-string">"Max"</span>, <span
 ▶ <a href="https://www.youtube.com/watch?v=Le1DbpRZdRQ&amp;index=1&amp;list=PL_-IO8LOLuNp2stY1qBUtXlfMdJW7wvfT">tiny.cc/java-var-yt</a></p></li><li><p><a href="http://openjdk.java.net/projects/amber/LVTIstyle.html">official style guidelines</a></p></li><li><p><a href="https://snyk.io/blog/local-type-inference-java-cheat-sheet">cheat sheet</a> (<strong>⇜ print when getting started!</strong>)</p></li></ul></div></section></section>
 <section><section id="fun_with_var_2"><h2>Fun with <code>var</code></h2><table class="toc">
 	<tr><td>Rules of <code>var</code></td></tr>
-	<tr class="toc-current"><td>Ad-hoc Fields And Methods</td></tr>
+	<tr class="toc-current"><td>Intersection Types</td></tr>
+	<tr><td>Traits</td></tr>
+	<tr><td>Ad-hoc Fields And Methods</td></tr>
+</table></section><section id="motivation"><h2>Motivation</h2><div class="paragraph"><p>Sometimes you need a type<br>
+that implements two interfaces<br>
+without creating a new interface.</p></div>
+<div class="paragraph"><p><strong>For example:</strong></p></div>
+<div class="paragraph"><p>You need something<br>
+that is <code>Closeable</code> and an <code>Iterator</code><br>
+without creating <code>CloseableIterator</code>.</p></div></section><section id="intersection_types"><h2>Intersection types</h2><div class="paragraph"><p>Given two types, the <strong>intersection type</strong><br>
+is the set of variables that are of both types.</p></div>
+<div class="paragraph"><p>An intersection type has the API of both types!</p></div>
+<div class="paragraph"><p><strong>For example:</strong></p></div>
+<div class="paragraph"><p>A variable of type <code>Closeable &amp; Iterator&lt;E&gt;</code><br>
+is both <code>Closeable</code> and an <code>Iterator&lt;E&gt;</code>.</p></div>
+<div class="paragraph"><p>It has <code>close()</code> and <code>hashNext()</code>/<code>next()</code></p></div></section><section data-background-image="images/intersection-venn.png" data-background-size="cover" data-state="empty"></section><section id="demo_2"><h2>Demo</h2></section><section id="intersection_types_2"><h2>Intersection types</h2><div class="olist arabic"><ol class="arabic"><li><p>in method signatures, express with generics:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public &lt;T extends Closeable &amp; Iterator&lt;String&gt;&gt;
+	T createCloseableIterator(...) { ... }
+
+public &lt;E, T extends Closeable &amp; Iterator&lt;E&gt;&gt;
+	E firstMatch(T elements, ...) { ... }</code></pre></div></div></li><li><p>for variables use <code>var</code>:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">var elements = createCloseableIterator(true);
+firstMatch(elements, ...);</code></pre></div></div></li></ol></div></section><section id="evaluation"><h2>Evaluation</h2><div class="paragraph"><p>Downsides:</p></div>
+<div class="ulist"><ul><li><p>combination of non-trivial Java features:</p><div class="ulist"><ul><li><p>generics with bounded wildcards</p></li><li><p>type inference</p></li></ul></div></li><li><p>refactoring becomes harder</p></li></ul></div>
+<div class="paragraph"><p>But:</p></div>
+<div class="ulist"><ul><li><p>intersection types are known concept</p></li><li><p>can be really helpful in a bind</p></li></ul></div>
+<div class="paragraph"><p><strong>Add to tool box; use with care.</strong></p></div></section><section id="more_on_intersectiontypes"><h2>More on intersection&nbsp;types</h2><div class="paragraph"><p>I&#8217;ve written a blog post:<br>
+<a href="https://blog.codefx.org/java/intersection-types-var/">blog.codefx.org/java/intersection-types-var</a></p></div></section></section>
+<section><section id="fun_with_var_3"><h2>Fun with <code>var</code></h2><table class="toc">
+	<tr><td>Rules of <code>var</code></td></tr>
+	<tr><td>Intersection Types</td></tr>
+	<tr class="toc-current"><td>Traits</td></tr>
+	<tr><td>Ad-hoc Fields And Methods</td></tr>
+</table></section><section id="motivation_2"><h2>Motivation</h2><div class="paragraph"><p>Sometimes you need to attach<br>
+prepared functionality to an instance<br>
+without creating a new type.</p></div>
+<div class="paragraph"><p><strong>For example:</strong></p></div>
+<div class="paragraph"><p>You have a <code>Megacorp</code> instance and an<br>
+<code>IsSuccessful</code>-interface that you<br>
+want to attach to it.</p></div></section><section id="traits"><h2>Traits</h2><div class="paragraph"><p>A <strong>trait</strong> extends an interface<br>
+and implements additional behavior.</p></div>
+<div class="paragraph"><p>The language needs to offer a simple way<br>
+to "attach" that trait to an instance at hand.</p></div></section><section id="demo_3"><h2>Demo</h2></section><section id="traits_2"><h2>Traits</h2><div class="olist arabic"><ol class="arabic"><li><p>create a functional, delegating interface:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@FunctionalInterface
+interface MegacorpDelegate extends Megacorp {
+	Megacorp delegate();
+	// implement `Megacorp` with default methods
+	// by forwarding calls to `delegate()`
+}</code></pre></div></div></li><li><p>create traits as interfaces:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">interface IsEvil extends Megacorp {
+	default boolean isEvil() { return true; }
+}</code></pre></div></div></li></ol></div></section><section id="traits_3"><h2>Traits</h2><div class="olist arabic"><ol class="arabic" start="3"><li><p>cast lambda to desired intersection<br>
+and assign to <code>var</code>-ed variable:</p></li></ol></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">var corp = (MegacorpDelegate &amp; IsEvil) () -&gt; original;</code></pre></div></div></section><section id="evaluation_2"><h2>Evaluation</h2><div class="paragraph"><p>Downsides:</p></div>
+<div class="ulist"><ul><li><p>combination of non-trivial Java features:</p><div class="ulist"><ul><li><p>lambda as poly expression</p></li><li><p>type inference</p></li><li><p>default methods</p></li></ul></div></li><li><p>refactoring becomes harder<br>
+(see intersection types)</p></li><li><p>delegating interface is cumbersome</p></li><li><p>breaks in collections (<strong>!</strong>)</p></li></ul></div>
+<div class="paragraph"><p><strong>Never use in "real" code!</strong></p></div></section><section id="more_on_traits"><h2>More on traits</h2><div class="paragraph"><p>I&#8217;ve written a blog post:<br>
+<a href="https://blog.codefx.org/java/traits-var/">blog.codefx.org/java/traits-var</a></p></div></section></section>
+<section><section id="fun_with_var_4"><h2>Fun with <code>var</code></h2><table class="toc">
+	<tr><td>Rules of <code>var</code></td></tr>
 	<tr><td>Intersection Types</td></tr>
 	<tr><td>Traits</td></tr>
-</table></section><section id="motivation"><h2>Motivation</h2><div class="paragraph"><p>Sometimes you need to extend a type<br>
+	<tr class="toc-current"><td>Ad-hoc Fields And Methods</td></tr>
+</table></section><section id="motivation_3"><h2>Motivation</h2><div class="paragraph"><p>Sometimes you need to extend a type<br>
 with a field or a method.</p></div>
 <div class="paragraph"><p>But not enough to create a new subtype.</p></div>
 <div class="paragraph"><p>Maybe with an anonymous class?</p></div></section><section id="anonymous_class"><h2>Anonymous class</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">new SimpleMegacorp(...) {
@@ -105,7 +161,7 @@ with a field or a method.</p></div>
 		return earnings()
 			.compareTo(SUCCESS_BOUNDARY) &gt; 0;
 	}
-};</code></pre></div></div></section><section id="demo_2"><h2>Demo</h2></section><section id="ad_hoc_fields_methods"><h2>Ad-hoc fields &amp; methods</h2><div class="olist arabic"><ol class="arabic"><li><p>create anonymous class with<br>
+};</code></pre></div></div></section><section id="demo_4"><h2>Demo</h2></section><section id="ad_hoc_fields_methods"><h2>Ad-hoc fields &amp; methods</h2><div class="olist arabic"><ol class="arabic"><li><p>create anonymous class with<br>
 additional fields and/or methods</p></li><li><p>assigned to <code>var</code>-ed variable</p></li></ol></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">var corp = new SimpleMegacorp(...) {
 	final BigDecimal SUCCESS_BOUNDARY =
@@ -116,7 +172,7 @@ additional fields and/or methods</p></li><li><p>assigned to <code>var</code>-ed 
 			.compareTo(SUCCESS_BOUNDARY) &gt; 0;
 	}
 };
-corp.isSuccessful();</code></pre></div></div></section><section id="evaluation"><h2>Evaluation</h2><div class="paragraph"><p>Downsides:</p></div>
+corp.isSuccessful();</code></pre></div></div></section><section id="evaluation_3"><h2>Evaluation</h2><div class="paragraph"><p>Downsides:</p></div>
 <div class="ulist"><ul><li><p>anonymous class is verbose (e.g. in stream)</p></li><li><p>combination of non-trivial Java features:</p><div class="ulist"><ul><li><p>anonymous classes</p></li><li><p>type inference</p></li></ul></div></li><li><p>impedes refactoring (<strong>!</strong>)</p></li></ul></div>
 <div class="paragraph"><p><strong>Prefer the alternatives!</strong></p></div></section><section id="alternatives"><h2>Alternatives</h2><div class="paragraph"><p>Alternatives for ad-hoc fields:</p></div>
 <div class="ulist"><ul><li><p><code>Map.Entry</code></p></li><li><p>tuples from <a href="http://www.vavr.io/">Vavr</a>, <a href="https://github.com/aol/cyclops">Cyclops</a>, etc.</p></li><li><p>records (next)</p></li></ul></div>
@@ -157,63 +213,7 @@ Upcoming Java language feature!</p></div>
 <div class="paragraph"><p>No known ETA; my guess:<br>
 not in 2019, likely not in 2020.</p></div></section><section id="more_on_ad_hoc_fieldsandmethods"><h2>More on ad-hoc fields&nbsp;and&nbsp;methods</h2><div class="paragraph"><p>I&#8217;ve written a blog post:<br>
 <a href="https://blog.codefx.org/java/tricks-var-anonymous-classes/">blog.codefx.org/java/tricks-var-anonymous-classes</a></p></div></section></section>
-<section><section id="fun_with_var_3"><h2>Fun with <code>var</code></h2><table class="toc">
-	<tr><td>Rules of <code>var</code></td></tr>
-	<tr><td>Ad-hoc Fields And Methods</td></tr>
-	<tr class="toc-current"><td>Intersection Types</td></tr>
-	<tr><td>Traits</td></tr>
-</table></section><section id="motivation_2"><h2>Motivation</h2><div class="paragraph"><p>Sometimes you need a type<br>
-that implements two interfaces<br>
-without creating a new interface.</p></div>
-<div class="paragraph"><p><strong>For example:</strong></p></div>
-<div class="paragraph"><p>You need something<br>
-that is <code>Closeable</code> and an <code>Iterator</code><br>
-without creating <code>CloseableIterator</code>.</p></div></section><section id="intersection_types"><h2>Intersection types</h2><div class="paragraph"><p>Given two types, the <strong>intersection type</strong><br>
-is the set of variables that are of both types.</p></div>
-<div class="paragraph"><p>An intersection type has the API of both types!</p></div>
-<div class="paragraph"><p><strong>For example:</strong></p></div>
-<div class="paragraph"><p>A variable of type <code>Closeable &amp; Iterator&lt;E&gt;</code><br>
-is both <code>Closeable</code> and an <code>Iterator&lt;E&gt;</code>.</p></div>
-<div class="paragraph"><p>It has <code>close()</code> and <code>hashNext()</code>/<code>next()</code></p></div></section><section data-background-image="images/intersection-venn.png" data-background-size="cover" data-state="empty"></section><section id="demo_3"><h2>Demo</h2></section><section id="intersection_types_2"><h2>Intersection types</h2><div class="olist arabic"><ol class="arabic"><li><p>in method signatures, express with generics:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public &lt;T extends Closeable &amp; Iterator&lt;String&gt;&gt;
-	T createCloseableIterator(...) { ... }
-
-public &lt;E, T extends Closeable &amp; Iterator&lt;E&gt;&gt;
-	E firstMatch(T elements, ...) { ... }</code></pre></div></div></li><li><p>for variables use <code>var</code>:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">var elements = createCloseableIterator(true);
-firstMatch(elements, ...);</code></pre></div></div></li></ol></div></section><section id="evaluation_2"><h2>Evaluation</h2><div class="paragraph"><p>Downsides:</p></div>
-<div class="ulist"><ul><li><p>combination of non-trivial Java features:</p><div class="ulist"><ul><li><p>generics with bounded wildcards</p></li><li><p>type inference</p></li></ul></div></li><li><p>refactoring becomes harder</p></li></ul></div>
-<div class="paragraph"><p>But:</p></div>
-<div class="ulist"><ul><li><p>intersection types are known concept</p></li><li><p>can be really helpful in a bind</p></li></ul></div>
-<div class="paragraph"><p><strong>Add to tool box; use with care.</strong></p></div></section><section id="more_on_intersectiontypes"><h2>More on intersection&nbsp;types</h2><div class="paragraph"><p>I&#8217;ve written a blog post:<br>
-<a href="https://blog.codefx.org/java/intersection-types-var/">blog.codefx.org/java/intersection-types-var</a></p></div></section></section>
-<section><section id="fun_with_var_4"><h2>Fun with <code>var</code></h2><table class="toc">
-	<tr><td>Rules of <code>var</code></td></tr>
-	<tr><td>Ad-hoc Fields And Methods</td></tr>
-	<tr><td>Intersection Types</td></tr>
-	<tr class="toc-current"><td>Traits</td></tr>
-</table></section><section id="motivation_3"><h2>Motivation</h2><div class="paragraph"><p>Sometimes you need to attach<br>
-prepared functionality to an instance<br>
-without creating a new type.</p></div>
-<div class="paragraph"><p><strong>For example:</strong></p></div>
-<div class="paragraph"><p>You have a <code>Megacorp</code> instance and an<br>
-<code>IsSuccessful</code>-interface that you<br>
-want to attach to it.</p></div></section><section id="traits"><h2>Traits</h2><div class="paragraph"><p>A <strong>trait</strong> extends an interface<br>
-and implements additional behavior.</p></div>
-<div class="paragraph"><p>The language needs to offer a simple way<br>
-to "attach" that trait to an instance at hand.</p></div></section><section id="demo_4"><h2>Demo</h2></section><section id="traits_2"><h2>Traits</h2><div class="olist arabic"><ol class="arabic"><li><p>create a functional, delegating interface:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@FunctionalInterface
-interface MegacorpDelegate extends Megacorp {
-	Megacorp delegate();
-	// implement `Megacorp` with default methods
-	// by forwarding calls to `delegate()`
-}</code></pre></div></div></li><li><p>create traits as interfaces:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">interface IsEvil extends Megacorp {
-	default boolean isEvil() { return true; }
-}</code></pre></div></div></li></ol></div></section><section id="traits_3"><h2>Traits</h2><div class="olist arabic"><ol class="arabic" start="3"><li><p>cast lambda to desired intersection<br>
-and assign to <code>var</code>-ed variable:</p></li></ol></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">var corp = (MegacorpDelegate &amp; IsEvil) () -&gt; original;</code></pre></div></div></section><section id="evaluation_3"><h2>Evaluation</h2><div class="paragraph"><p>Downsides:</p></div>
-<div class="ulist"><ul><li><p>combination of non-trivial Java features:</p><div class="ulist"><ul><li><p>lambda as poly expression</p></li><li><p>type inference</p></li><li><p>default methods</p></li></ul></div></li><li><p>refactoring becomes harder<br>
-(see intersection types)</p></li><li><p>delegating interface is cumbersome</p></li><li><p>breaks in collections (<strong>!</strong>)</p></li></ul></div>
-<div class="paragraph"><p><strong>Never use in "real" code!</strong></p></div></section><section id="more_on_traits"><h2>More on traits</h2><div class="paragraph"><p>I&#8217;ve written a blog post:<br>
-<a href="https://blog.codefx.org/java/traits-var/">blog.codefx.org/java/traits-var</a></p></div></section></section>
-<section id="summary"><h2>Summary</h2><div class="ulist"><ul><li><p>use <code>var</code> to improve readability:</p><div class="ulist"><ul><li><p>right-hand side should be informative</p></li><li><p>variable name should be well-chosen</p></li><li><p>add more intermediate variables</p></li></ul></div></li><li><p>tricks with <code>var</code> are usually complex:</p><div class="ulist"><ul><li><p>not worth it for ad-hoc fields and methods</p></li><li><p>break <code>equals</code>/<code>hashCode</code> for traits</p></li><li><p>may be worth it for intersection types</p></li></ul></div></li></ul></div></section>
+<section id="summary"><h2>Summary</h2><div class="ulist"><ul><li><p>use <code>var</code> to improve readability:</p><div class="ulist"><ul><li><p>right-hand side should be informative</p></li><li><p>variable name should be well-chosen</p></li><li><p>add more intermediate variables</p></li></ul></div></li><li><p>tricks with <code>var</code> are usually complex:</p><div class="ulist"><ul><li><p>may be worth it for intersection types</p></li><li><p>break <code>equals</code>/<code>hashCode</code> for traits</p></li><li><p>not worth it for ad-hoc fields and methods</p></li></ul></div></li></ul></div></section>
 <section id="about_nicolai_parlog" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>About Nicolai Parlog</h2>
 <div style="float: left; width: 45%; margin:0px;">
 	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="images/cover-jms.png" style="margin: 0;"></a>
