@@ -11,7 +11,8 @@ URL codefx = new URL("http://codefx.org");
 // connection needs to be closed but not in the demo
 URLConnection connection = codefx.openConnection();
 Reader reader = new BufferedReader(
-		new InputStreamReader(connection.getInputStream()));
+		new InputStreamReader(
+				connection.getInputStream()));
 ```
 
 Convert to `var`:
@@ -21,7 +22,8 @@ var codefx = new URL("http://codefx.org");
 // connection needs to be closed but not in the demo
 var connection = codefx.openConnection();
 var reader = new BufferedReader(
-		new InputStreamReader(connection.getInputStream()));
+		new InputStreamReader(
+				connection.getInputStream()));
 ```
 
 * explain that compiler uses right-hand side
@@ -42,7 +44,9 @@ for (var i = 0; i < numbers.size(); i++)
 Use it with `try`:
 
 ```java
-try (var file = new FileInputStream(new File("no-such-file"))) {
+try (var file =
+		new FileInputStream(
+				new File("no-such-file"))) {
 	new BufferedReader(new InputStreamReader(file))
 			.lines()
 			.forEach(System.out::println);
@@ -137,14 +141,14 @@ public static void main(String[] args) {
 }
 
 static <E> Optional<E> firstMatch(
-		Iterable<E> elements,
+		Iterator<E> elements,
 		Predicate<? super E> condition) {
 	return stream(elements)
 			.filter(condition)
 			.findAny();
 }
 
-private static <E> Stream<E> stream(Iterable<E> elements) {
+private static <E> Stream<E> stream(Iterator<E> elements) {
 	return StreamSupport.stream(elements.spliterator(), false);
 }
 ```
@@ -155,7 +159,7 @@ private static <E> Stream<E> stream(Iterable<E> elements) {
 
 ```java
 static <E> Optional<E> firstMatch(
-		Iterable<E> elements,
+		Iterator<E> elements,
 		Predicate<? super E> condition) {
 	// compile error: `elements` not `AutoCloseable`
 	try (elements) {

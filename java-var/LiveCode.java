@@ -1,15 +1,65 @@
+import java.io.BufferedReader;
 import java.io.Closeable;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.UncheckedIOException;
 import java.math.BigDecimal;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Scanner;
 import java.util.Spliterator;
 import java.util.Spliterators;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
+import static java.util.Optional.ofNullable;
+import static java.util.function.Predicate.not;
+
 public class LiveCode {
+
+	/*
+	 * VAR
+	 *  - URL example (var_url)
+	 *  - for loop (var_for)
+	 *  - try (var_try)
+	 *  - lacking initializer
+	 *  - poly expression (array, lambda)
+	 *  - at a distance
+	 *  - interface
+	 *  - method signatures
+	 *  - generics
+	 *  - primitive literals
+	 */
+
+	/*
+	 * INTERSECTON TYPES
+	 *  - start with var_intersection
+	 *  - add `Closeable` (var_firstMatch)
+	 *  - new interface
+	 *  - pull into generics of `firstMatch`
+	 *  - write `createCloseableIterator`
+	 *  - extract variable (~> var)
+	 */
+
+	/*
+	 * TRAITS
+	 *  - start with var_traits
+	 *  - create delegating interface
+	 *  - create traits
+	 *  - write lambda to combine
+	 */
 
 	private static final Megacorp SAEDER_KRUPP = new SimpleMegacorp(
 			"Saeder-Krupp",
