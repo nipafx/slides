@@ -69,7 +69,7 @@ Code at <a href="https://github.com/CodeFX-org/demo-java-x">github.com/CodeFX-or
 	<tr><td>Intersection Types</td></tr>
 	<tr><td>Traits</td></tr>
 	<tr><td>Ad-hoc Fields And Methods</td></tr>
-</table></section><section id="demo"><h2>Demo</h2></section><section id="what_about_readability"><h2>What About Readability?</h2><div class="paragraph"><p>This <strong>is</strong> about readability!</p></div>
+</table></section><section id="code"><h2>Code</h2></section><section id="what_about_readability"><h2>What About Readability?</h2><div class="paragraph"><p>This <strong>is</strong> about readability!</p></div>
 <div class="ulist"><ul><li><p>less redundancy</p></li><li><p>more intermediate variables</p></li><li><p>more focus on variable names</p></li><li><p>aligned variable names</p></li></ul></div></section><section id="aligned_variable_names"><h2>Aligned Variable Names</h2><div style="height: 300px;">
 <div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">No no = <span class="hljs-keyword">new</span> No();
 AmountIncrease&lt;BigDecimal&gt; more =
@@ -106,7 +106,7 @@ is the set of variables that are of both types.</p></div>
 <div class="paragraph"><p><strong>For example:</strong></p></div>
 <div class="paragraph"><p>A variable of type <code>Closeable &amp; Iterator&lt;E&gt;</code><br>
 is both <code>Closeable</code> and an <code>Iterator&lt;E&gt;</code>.</p></div>
-<div class="paragraph"><p>It has <code>close()</code> and <code>hashNext()</code>/<code>next()</code></p></div></section><section data-background-image="images/intersection-venn.png" data-background-size="cover" data-state="empty"></section><section id="demo_2"><h2>Demo</h2></section><section id="intersection_types_2"><h2>Intersection types</h2><div class="olist arabic"><ol class="arabic"><li><p>in method signatures, express with generics:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public &lt;T extends Closeable &amp; Iterator&lt;String&gt;&gt;
+<div class="paragraph"><p>It has <code>close()</code> and <code>hashNext()</code>/<code>next()</code></p></div></section><section data-background-image="images/intersection-venn.png" data-background-size="cover" data-state="empty"></section><section id="code_2"><h2>Code</h2></section><section id="intersection_types_2"><h2>Intersection types</h2><div class="olist arabic"><ol class="arabic"><li><p>in method signatures, express with generics:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public &lt;T extends Closeable &amp; Iterator&lt;String&gt;&gt;
 	T createCloseableIterator(...) { ... }
 
 public &lt;E, T extends Closeable &amp; Iterator&lt;E&gt;&gt;
@@ -131,7 +131,7 @@ without creating a new type.</p></div>
 want to attach to it.</p></div></section><section id="traits"><h2>Traits</h2><div class="paragraph"><p>A <strong>trait</strong> extends an interface<br>
 and implements additional behavior.</p></div>
 <div class="paragraph"><p>The language needs to offer a simple way<br>
-to "attach" that trait to an instance at hand.</p></div></section><section id="demo_3"><h2>Demo</h2></section><section id="traits_2"><h2>Traits</h2><div class="olist arabic"><ol class="arabic"><li><p>create a functional, delegating interface:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@FunctionalInterface
+to "attach" that trait to an instance at hand.</p></div></section><section id="code_3"><h2>Code</h2></section><section id="traits_2"><h2>Traits</h2><div class="olist arabic"><ol class="arabic"><li><p>create a functional, delegating interface:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@FunctionalInterface
 interface MegacorpDelegate extends Megacorp {
 	Megacorp delegate();
 	// implement `Megacorp` with default methods
@@ -161,7 +161,7 @@ with a field or a method.</p></div>
 		return earnings()
 			.compareTo(SUCCESS_BOUNDARY) &gt; 0;
 	}
-};</code></pre></div></div></section><section id="demo_4"><h2>Demo</h2></section><section id="ad_hoc_fields_methods"><h2>Ad-hoc fields &amp; methods</h2><div class="olist arabic"><ol class="arabic"><li><p>create anonymous class with<br>
+};</code></pre></div></div></section><section id="code_4"><h2>Code</h2></section><section id="ad_hoc_fields_methods"><h2>Ad-hoc fields &amp; methods</h2><div class="olist arabic"><ol class="arabic"><li><p>create anonymous class with<br>
 additional fields and/or methods</p></li><li><p>assigned to <code>var</code>-ed variable</p></li></ol></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">var corp = new SimpleMegacorp(...) {
 	final BigDecimal SUCCESS_BOUNDARY =
