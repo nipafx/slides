@@ -218,13 +218,15 @@ $ jar --create --file jars/advent.jar
 $ java -jar jars/advent.jar
 ----
 
+To look up `javac`, `jar`, `java` basics: +
+https://blog.codefx.org/cheat-sheet-build-run-modules-jars.html[tiny.cc/cheat-modules]
+
 [NOTE.speaker]
 --
 * explain manifest
 * add dependencies to the class path
 * works on JDK 9 as is
 --
-
 
 
 === A single module
