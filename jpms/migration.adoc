@@ -15,6 +15,41 @@ Just by running on JDK 11 +
 
 // http://openjdk.java.net/jeps/261[JEP 261] contains a list of risks.
 
+=== Of Modules And JARs
+
+Modularized JDK and legacy JARs have to cooperate.
+
+Two requirements:
+
+* for the module system to work, +
+everything needs to be a module
+* for compatibility, the class path +
+and regular JARs have to keep working
+
+=== The Unnamed Module
+
+The *Unnamed Module* +
+contains _all_ JARs on the class path +
+(including modular JARs).
+
+* has no name (surprise!)
+* can read all modules
+* exports all packages
+
+Inside the unnamed module +
+"the chaos of the class path" lives on.
+
+[NOTE.speaker]
+--
+* one unnamed module per class loader
+--
+
+=== Challenges
+
+* internal APIs
+* Java EE modules
+* split packages
+* runtime images
 
 === Internal APIs
 image::images/internals.jpg[background, size=cover]

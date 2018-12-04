@@ -209,7 +209,7 @@ on the class path as before
 [source,bash]
 ----
 # compile
-$ javac -d classes/advent ${*.java}
+$ javac -d classes ${*.java}
 # package with manifest
 $ jar --create --file jars/advent.jar
     --manifest ${manifest}
@@ -267,7 +267,7 @@ module advent {
 [source,bash]
 ----
 # compile with module-info.java
-$ javac -d classes/advent ${*.java}
+$ javac -d classes ${*.java}
 # package with module-info.class
 # and specify main class
 $ jar --create
