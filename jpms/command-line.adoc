@@ -86,7 +86,8 @@ $ java --module-path mods
     --module advent
 ----
 
-Use target `ALL-UNNAMED` to export to all modules.
+Use target `ALL-UNNAMED` to export +
+to code on the class path.
 
 
 === Open Packages
@@ -106,7 +107,8 @@ $ java --module-path mods
     --module advent
 ----
 
-Use target `ALL-UNNAMED` to open to all modules.
+Use target `ALL-UNNAMED` to open +
+to code on the class path.
 
 (It is not possible to open an entire module.)
 
@@ -149,9 +151,9 @@ Edit module graph with:
 
 * `--add-modules` to add modules
 * `--add-reads` to add readability edges
+* `--patch-module` to add classes to module
 * `--add-exports` to export packages to modules
 * `--add-opens` to open packages to modules
-* `--patch-module` to add classes to module
 
 The latter two accept `ALL-UNNAMED` as target.
 

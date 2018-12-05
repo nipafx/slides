@@ -73,8 +73,8 @@ Create a list of classes
 ```sh
 $ java
 	-XX:DumpLoadedClassList=classes.lst
-	# [... class path for dependencies ...]
-	-jar app.jar
+	# [... class path for app and deps ...]
+	org.example.Main
 ```
 
 Then, `classes.lst` contains +
@@ -89,7 +89,7 @@ $ java
 	-Xshare:dump
 	-XX:SharedClassListFile=classes.lst
 	-XX:SharedArchiveFile=app-cds.jsa
-	--class-path app.jar # plus dependencies
+	# [... class path for app and deps ...]
 ```
 
 Creates archive `app-cds.jsa`.
@@ -102,8 +102,8 @@ Use the archive:
 $ java
 	-Xshare:on
 	-XX:SharedArchiveFile=app-cds.jsa
-	# class path for dependencies
-	-jar app.jar
+	# [... class path for app and deps ...]
+	org.example.Main
 ```
 
 === Heed The Class Path
