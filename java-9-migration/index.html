@@ -103,10 +103,20 @@ contains <em>all</em> JARs on the class path<br>
 <div class="paragraph"><p>Inside the unnamed module<br>
 "the chaos of the class path" lives on.</p></div>
 <aside class="notes"><div class="ulist"><ul><li><p>one unnamed module per class loader</p></li></ul></div></aside></section></section>
-<section><section id="migration_challenges"><h2>Migration Challenges</h2><h3>What to look out for<br>when running on JDK 9</h3></section><section id="break_stuff" data-background-image="images/broken-glass.jpg" data-background-size="cover"><h2>Break Stuff</h2>
+<section><section id="migration_challenges"><h2>Migration Challenges</h2><h3>What to look out for<br>when running on JDK 11</h3></section><section id="break_stuff" data-background-image="images/broken-glass.jpg" data-background-size="cover"><h2>Break Stuff</h2>
 <div class="paragraph"><p>Some internal changes <a href="https://blog.codefx.org/java/java-9-migration-guide/">break existing code</a>!</p></div>
-<div class="paragraph"><p>Just by running on JDK 9+<br>
-(even without modularizing the application).</p></div></section><section id="internal_apis" data-background-image="images/internals.jpg" data-background-size="cover"><h2>Internal APIs</h2>
+<div class="paragraph"><p>Just by running on JDK 11<br>
+(even without modularizing the application).</p></div></section><section id="of_modules_and_jars_2"><h2>Of Modules And JARs</h2><div class="paragraph"><p>Modularized JDK and legacy JARs have to cooperate.</p></div>
+<div class="paragraph"><p>Two requirements:</p></div>
+<div class="ulist"><ul><li><p>for the module system to work,<br>
+everything needs to be a module</p></li><li><p>for compatibility, the class path<br>
+and regular JARs have to keep working</p></li></ul></div></section><section id="the_unnamed_module_2"><h2>The Unnamed Module</h2><div class="paragraph"><p>The <strong>Unnamed Module</strong><br>
+contains <em>all</em> JARs on the class path<br>
+(including modular JARs).</p></div>
+<div class="ulist"><ul><li><p>has no name (surprise!)</p></li><li><p>can read all modules</p></li><li><p>exports all packages</p></li></ul></div>
+<div class="paragraph"><p>Inside the unnamed module<br>
+"the chaos of the class path" lives on.</p></div>
+<aside class="notes"><div class="ulist"><ul><li><p>one unnamed module per class loader</p></li></ul></div></aside></section><section id="challenges"><h2>Challenges</h2><div class="ulist"><ul><li><p>internal APIs</p></li><li><p>Java EE modules</p></li><li><p>split packages</p></li><li><p>runtime images</p></li></ul></div></section><section id="internal_apis" data-background-image="images/internals.jpg" data-background-size="cover"><h2>Internal APIs</h2>
 <div class="ulist"><ul><li><p>internal APIs are:</p><div class="ulist"><ul><li><p>all in <code>sun.*</code></p></li><li><p>most in <code>com.sun.*</code><br>
 (unless marked <code>@jdk.Exported</code>)</p></li></ul></div></li><li><p>encapsulated at compile time</p></li><li><p>accessible at run time<br>
 for some time</p></li><li><p>critical APIs may survive longer<br>
