@@ -169,6 +169,7 @@ Essentials:
 Tools:
 
 * _composition_
+* _contextual composition_
 * _currying_
 * _partial application_
 
@@ -298,6 +299,7 @@ That were some basics:
 Now let's discuss tools:
 
 * _composition_
+* _contextual composition_
 * _currying_
 * _partial application_
 
@@ -345,6 +347,102 @@ Function<Integer, String> toString = Integer::toString;
 Function<String, String> lengthToString =
 	length.andThen(toString);
 ```
+
+=== Contextual composition
+
+> Compose functions within a specific context while upholding its invariants
+
+(*Note*: _contextual composition_ is not a common term.)
+
+=== Context
+
+What do I mean by _context_?
+
+* "a value's presence is unknown" ⇝ `Optional`
+* "a collection's multitude is arbitrary" ⇝ `Stream`
+
+The context defines an API's central abstractions.
+
+=== Invariants
+
+What do I mean by _invariants_?
+
+E.g. `Optional` manages presence/absence:
+
+* no `NullPointerException`
+* never passes `null`
+
+An API safeguards its invariants +
+while you focus on domain logic.
+
+=== Composition
+
+What do I mean by _composition_?
+
+* functions can be "attached" to the context
+* context determines whether/how they get composed
+
+E.g. repeatedly calling `Optional.map(Function)`:
+
+* effectively composes the passed functions
+* `Optional` interjects its own logic
+
+=== Contextual comp. in Java
+
+> Compose functions within a specific context while upholding its invariants
+
+For `Optional` that means:
+
+> Use `map`, `flatMap`, etc. to compose operations on a present/absent value while being spared `null` and `NullPointerException`
+
+=== Contextual comp. in Java
+
+For example:
+
+```java
+// defines the context "presence/absence"
+Optional<User> buyer = /*...*/;
+// compose functions "User ~> Address" and
+// "Address ~> String" without worrying
+// about `null`
+Optional<String> address = buyer
+	.flatMap(this::findAddress)
+	.map(Address::toString);
+```
+
+=== Contextual comp. in Java
+
+Java 8 has three such constructs:
+
+* `Stream`
+* `Optional`
+* `CompletableFuture` (later)
+
+We will later build our own. 🤠
+
+=== Contextual composition
+
+Such contextual APIs often share basic functionality:
+
+* `of` to "lift" plain values into the context
+* `map` to apply a "value to value"-function
+* `flatMap` to apply a "value to context"-function
+* method to take value out of context +
+  (`Optional::get`, `Stream::iterator`)
+
+=== Monads
+
+If `of`, `map`, `flatMap` fulfill certain requirements, +
+the underlying type is a _monad_.
+
+Monads:
+
+* are a particularly well-behaving form +
+  of contextual composition
+* allow safe refactoring
+* allow reuse of mental models
+
+More on that later.
 
 === Currying
 
@@ -418,6 +516,7 @@ Benefits:
 That were some tools:
 
 * _composition_
+* _contextual composition_
 * _currying_
 * _partial application_
 
@@ -433,6 +532,8 @@ Now let's discuss effects:
 === Declarative
 
 > Solve problems without specifying an exact procedure to be followed
+
+(Often achieved by contextual composition.)
 
 === Declarative Java
 
@@ -606,6 +707,7 @@ Result result = deferredAction.get();
 Mechanisms:
 
 * compose functions, not classes
+* look for contextual composition
 
 Solution:
 
@@ -641,7 +743,7 @@ FP can ease some common problems of OOP:
 
 * make state more reliable with immutability
 * encapsulate state and separate concerns +
-  by passing actions
+  by creating monads and passing actions
 * improve concurrency with immutability +
   and pure functions
 
