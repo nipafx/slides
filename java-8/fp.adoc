@@ -107,7 +107,7 @@ This makes them hard to evolve.
 
 === Mixed concerns
 
-Business logic is often mixed +
+Domain logic is often mixed +
 with code that handles:
 
 * looping
@@ -128,7 +128,7 @@ Downsides:
 
 === Common problems
 
-Caused by moving parts.
+Caused by moving parts:
 
 * unreliable state
 * exposed state
@@ -155,7 +155,7 @@ ____
 </table>
 ++++
 
-=== Functional Programming!
+=== Functional Programming
 
 Essentials:
 
@@ -164,7 +164,7 @@ Essentials:
 * avoid _side effects_
 * prefer _pure functions_
 
-=== Functional programming!
+=== Functional programming
 
 Tools:
 
@@ -172,7 +172,7 @@ Tools:
 * _currying_
 * _partial application_
 
-=== Functional programming!
+=== Functional programming
 
 Enjoy:
 
@@ -181,7 +181,7 @@ Enjoy:
 * _laziness_
 * _thread-safety_
 
-=== Functional programming!
+=== Functional programming
 
 Let's discuss basics:
 
@@ -194,10 +194,10 @@ Let's discuss basics:
 
 [cols="h,2*",options="header"]
 |===
-| | OOP | FP
-| centers around | nouns | verbs
-| composition of | instances | actions
-| passing | messages | results
+|                | OOP            | FP
+| centers around | nouns          | verbs
+| composition of | instances      | actions
+| passing        | messages       | results
 | computation by | changing state | evaluation
 |===
 
@@ -284,9 +284,18 @@ Benefits of pure functions:
 * even easier to test
 * results in _referential transparency_
 
-=== Functional programming!
+=== Functional programming
 
-Let's discuss tools:
+That were some basics:
+
+* _functions_ vs _classes_
+* _immutability_
+* _side effects_
+* _pure functions_
+
+=== Functional programming
+
+Now let's discuss tools:
 
 * _composition_
 * _currying_
@@ -404,9 +413,17 @@ Benefits:
 * eliminates entire patterns +
   (factory, builder)
 
-=== Functional programming!
+=== Functional programming
 
-Let's discuss effects:
+That were some tools:
+
+* _composition_
+* _currying_
+* _partial application_
+
+=== Functional programming
+
+Now let's discuss effects:
 
 * _declarative_ instead of _imperative_
 * _referential transparency_
@@ -446,7 +463,7 @@ descs = descs.substring(0, descs.length() - 2);
 Declarative programming style:
 
 * makes code more readable
-* separates business logic from +
+* separates domain logic from +
   implementation details
 * enables improvements across code base +
   (correctness, performance, ...)
@@ -487,6 +504,15 @@ Benefits:
 
 * optimal resource utilization
 * no self-rolled concurrency
+
+=== Functional programming
+
+That were some effects:
+
+* _declarative_ instead of _imperative_
+* _referential transparency_
+* _laziness_
+* _thread-safety_
 
 
 == Solutions to common problems
