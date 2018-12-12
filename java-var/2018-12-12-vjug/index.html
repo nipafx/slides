@@ -1,0 +1,337 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Fun with var</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="_reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="_reveal.js/css/theme/nipa-night.css" id="theme"><link href="_reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>var link = document.createElement( 'link' );
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = window.location.search.match( /print-pdf/gi ) ? "_reveal.js/css/print/pdf.css" : "_reveal.js/css/print/paper.css";
+document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="_reveal.js/lib/js/html5shiv.js"></script><![endif]--></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>Fun with <code>var</code></h1><div class="preamble"><link rel="stylesheet" href="_highlight.js/styles/monokai-sublime.css">
+<script src="_highlight.js/highlight.pack.js"></script>
+<script>
+	window.onload = function() {
+		hljs.configure({
+			tabReplace: '    ',
+			languages: [ 'java' ]
+		})
+		var codes = document.getElementsByTagName('code');
+		for(var i = 0; i < codes.length; i++) {
+			hljs.highlightBlock(codes.item(i));
+		}
+		hljs.initHighlightingOnLoad();
+	}
+</script>
+<div class="event">
+	<div class="participant">
+		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
+		<div class="name">
+			<p><a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a></p>
+			<p><a href="http://codefx.org">codefx.org</a>
+				/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a></p>
+		</div>
+	</div>
+	<div class="participant">
+		<a href="http://virtualjug.com/"><img src="images/logo-vjug.jpg" class="logo" style="{host-logo-style}"></a>
+		<div class="name">
+			<p><a href="http://virtualjug.com/">vJUG</a></p>
+			<p><a href="https://twitter.com/virtualJUG">@VirtualJUG</a></p>
+		</div>
+	</div>
+</div>
+<!-- Just adding a footer does not work because reveal.js puts it into the slides and we couldn't get it out via CSS. So we move it via JavaScript. -->
+<footer>
+	<div class="participant">
+		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
+		<div class="name"><p>
+			<a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a>
+			/ <a href="http://codefx.org">codefx.org</a>
+			/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a>
+		</p></div>
+	</div>
+	<div class="participant">
+		<a href="http://virtualjug.com/"><img src="images/logo-vjug.jpg" class="logo" style="{host-logo-style}"></a>
+		<div class="name">
+			<p><a href="http://virtualjug.com/">vJUG</a> / <a href="https://twitter.com/virtualJUG">@VirtualJUG</a></p>
+		</div>
+	</div>
+</footer>
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		document.body.appendChild(document.querySelector('footer'));
+	})
+</script></div></section>
+<section id="lots_to_tinker_with"><h2>Lots to tinker with!</h2><table class="toc">
+	<tr><td>Rules of <code>var</code></td></tr>
+	<tr><td>Intersection Types</td></tr>
+	<tr><td>Traits</td></tr>
+	<tr><td>Ad-hoc Fields And Methods</td></tr>
+</table>
+<div class="paragraph"><p>Slides at <a href="http://slides.codefx.org/">slides.codefx.org</a>.<br>
+Code at <a href="https://github.com/CodeFX-org/demo-java-x">github.com/CodeFX-org/demo-java-x</a>.</p></div></section>
+<section><section id="fun_with_var"><h2>Fun with <code>var</code></h2><table class="toc">
+	<tr class="toc-current"><td>Rules of <code>var</code></td></tr>
+	<tr><td>Intersection Types</td></tr>
+	<tr><td>Traits</td></tr>
+	<tr><td>Ad-hoc Fields And Methods</td></tr>
+</table></section><section id="code"><h2>Code</h2></section><section id="what_about_readability"><h2>What About Readability?</h2><div class="paragraph"><p>This <strong>is</strong> about readability!</p></div>
+<div class="ulist"><ul><li><p>less redundancy</p></li><li><p>more intermediate variables</p></li><li><p>more focus on variable names</p></li><li><p>aligned variable names</p></li></ul></div></section><section id="aligned_variable_names"><h2>Aligned Variable Names</h2><div style="height: 300px;">
+<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">No no = <span class="hljs-keyword">new</span> No();
+AmountIncrease&lt;BigDecimal&gt; more =
+    <span class="hljs-keyword">new</span> BigDecimalAmountIncrease();
+HorizontalConnection&lt;LinePosition, LinePosition&gt;
+    jumping =
+        <span class="hljs-keyword">new</span> HorizontalLinePositionConnection();
+Variable variable = <span class="hljs-keyword">new</span> Constant(<span class="hljs-number">5</span>);
+List&lt;String&gt; names = List.of(<span class="hljs-string">"Max"</span>, <span class="hljs-string">"Maria"</span>);</code></pre></div></div>
+<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">var</span> no = <span class="hljs-keyword">new</span> No();
+<span class="hljs-keyword">var</span> more = <span class="hljs-keyword">new</span> BigDecimalAmountIncrease();
+<span class="hljs-keyword">var</span> jumping = <span class="hljs-keyword">new</span> HorizontalLinePositionConnection();
+<span class="hljs-keyword">var</span> variable = <span class="hljs-keyword">new</span> Constant(<span class="hljs-number">5</span>);
+<span class="hljs-keyword">var</span> names = List.of(<span class="hljs-string">"Max"</span>, <span class="hljs-string">"Maria"</span>);</code></pre></div></div></section><section id="style_guidelines"><h2>Style Guidelines</h2><div class="paragraph"><p>Principles from the
+<a href="http://openjdk.java.net/projects/amber/LVTIstyle.html">official style guidelines</a>:</p></div>
+<div class="olist arabic"><ol class="arabic"><li class="fragment"><p>Reading code is more important than writing it.</p></li><li class="fragment"><p>Code should be clear from local reasoning.</p></li><li class="fragment"><p>Code readability shouldn&#8217;t depend on IDEs.</p></li><li class="fragment"><p>Explicit types are a tradeoff.</p></li></ol></div></section><section id="style_guidelines_2"><h2>Style Guidelines</h2><div class="paragraph"><p>Guidelines:</p></div>
+<div class="olist arabic"><ol class="arabic"><li class="fragment"><p>Choose variable names that provide useful info.</p></li><li class="fragment"><p>Minimize the scope of local variables.</p></li><li class="fragment"><p>Consider <code>var</code> when the initializer provides sufficient information to the reader.</p></li><li class="fragment"><p>Use <code>var</code> to break up chained or nested expressions.</p></li><li class="fragment"><p>Don&#8217;t worry too much about "programming to the interface".</p></li><li class="fragment"><p>Take care when using <code>var</code> with diamonds or generics.</p></li><li class="fragment"><p>Take care when using <code>var</code> with literals.</p></li></ol></div></section><section id="more_on_var_basics"><h2>More on <code>var</code> basics</h2><div class="ulist"><ul><li><p>First Contact With <code>var</code> In Java 10<br>
+💻 <a href="https://blog.codefx.org/java/java-10-var-type-inference/">tiny.cc/java-var</a> /
+▶ <a href="https://www.youtube.com/watch?v=Le1DbpRZdRQ&amp;index=1&amp;list=PL_-IO8LOLuNp2stY1qBUtXlfMdJW7wvfT">tiny.cc/java-var-yt</a></p></li><li><p><a href="http://openjdk.java.net/projects/amber/LVTIstyle.html">official style guidelines</a></p></li><li><p><a href="https://snyk.io/blog/local-type-inference-java-cheat-sheet">cheat sheet</a> (<strong>⇜ print when getting started!</strong>)</p></li></ul></div></section></section>
+<section><section id="fun_with_var_2"><h2>Fun with <code>var</code></h2><table class="toc">
+	<tr><td>Rules of <code>var</code></td></tr>
+	<tr class="toc-current"><td>Intersection Types</td></tr>
+	<tr><td>Traits</td></tr>
+	<tr><td>Ad-hoc Fields And Methods</td></tr>
+</table></section><section id="motivation"><h2>Motivation</h2><div class="paragraph"><p>Sometimes you need a type<br>
+that implements two interfaces<br>
+without creating a new interface.</p></div>
+<div class="paragraph"><p><strong>For example:</strong></p></div>
+<div class="paragraph"><p>You need something<br>
+that is <code>Closeable</code> and an <code>Iterator</code><br>
+without creating <code>CloseableIterator</code>.</p></div></section><section data-background-image="images/intersection-venn.png" data-background-size="cover" data-state="empty"></section><section id="intersection_types"><h2>Intersection types</h2><div class="paragraph"><p>Given two types, the <strong>intersection type</strong><br>
+is the set of variables that are of both types.</p></div>
+<div class="paragraph"><p>An intersection type has the API of both types!</p></div>
+<div class="paragraph"><p><strong>For example:</strong></p></div>
+<div class="paragraph"><p>A variable of type <code>Closeable &amp; Iterator&lt;E&gt;</code><br>
+is both <code>Closeable</code> and an <code>Iterator&lt;E&gt;</code>.</p></div>
+<div class="paragraph"><p>It has <code>close()</code> and <code>hashNext()</code>/<code>next()</code></p></div></section><section id="code_2"><h2>Code</h2></section><section id="intersection_types_2"><h2>Intersection types</h2><div class="olist arabic"><ol class="arabic"><li><p>in method signatures, express with generics:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public &lt;T extends Closeable &amp; Iterator&lt;String&gt;&gt;
+	T createCloseableIterator(...) { ... }
+
+public &lt;E, T extends Closeable &amp; Iterator&lt;E&gt;&gt;
+	E firstMatch(T elements, ...) { ... }</code></pre></div></div></li><li><p>for variables use <code>var</code>:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">var elements = createCloseableIterator(true);
+firstMatch(elements, ...);</code></pre></div></div></li></ol></div></section><section id="evaluation"><h2>Evaluation</h2><div class="paragraph"><p>Downsides:</p></div>
+<div class="ulist"><ul><li><p>combination of non-trivial Java features:</p><div class="ulist"><ul><li><p>generics with bounded wildcards</p></li><li><p>type inference</p></li></ul></div></li><li><p>refactoring becomes harder</p></li></ul></div>
+<div class="paragraph"><p>But:</p></div>
+<div class="ulist"><ul><li><p>intersection types are known concept</p></li><li><p>can be really helpful in a bind</p></li></ul></div>
+<div class="paragraph"><p><strong>Add to tool box; use with care.</strong></p></div></section><section id="more_on_intersectiontypes"><h2>More on intersection&nbsp;types</h2><div class="paragraph"><p>I&#8217;ve written a blog post:<br>
+<a href="https://blog.codefx.org/java/intersection-types-var/">blog.codefx.org/java/intersection-types-var</a></p></div></section></section>
+<section><section id="fun_with_var_3"><h2>Fun with <code>var</code></h2><table class="toc">
+	<tr><td>Rules of <code>var</code></td></tr>
+	<tr><td>Intersection Types</td></tr>
+	<tr class="toc-current"><td>Traits</td></tr>
+	<tr><td>Ad-hoc Fields And Methods</td></tr>
+</table></section><section id="motivation_2"><h2>Motivation</h2><div class="paragraph"><p>Sometimes you need to attach<br>
+prepared functionality to an instance<br>
+without creating a new type.</p></div>
+<div class="paragraph"><p><strong>For example:</strong></p></div>
+<div class="paragraph"><p>You have a <code>Megacorp</code> instance and an<br>
+<code>IsSuccessful</code>-interface that you<br>
+want to attach to it.</p></div></section><section id="traits"><h2>Traits</h2><div class="paragraph"><p>A <strong>trait</strong> extends an interface<br>
+and implements additional behavior.</p></div>
+<div class="paragraph"><p>The language needs to offer a simple way<br>
+to "attach" that trait to an instance at hand.</p></div></section><section id="code_3"><h2>Code</h2></section><section id="traits_2"><h2>Traits</h2><div class="olist arabic"><ol class="arabic"><li><p>create a functional, delegating interface:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@FunctionalInterface
+interface MegacorpDelegate extends Megacorp {
+	Megacorp delegate();
+	// implement `Megacorp` with default methods
+	// by forwarding calls to `delegate()`
+}</code></pre></div></div></li><li><p>create traits as interfaces:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">interface IsEvil extends Megacorp {
+	default boolean isEvil() { return true; }
+}</code></pre></div></div></li></ol></div></section><section id="traits_3"><h2>Traits</h2><div class="olist arabic"><ol class="arabic" start="3"><li><p>cast lambda to desired intersection<br>
+and assign to <code>var</code>-ed variable:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">var corp = (MegacorpDelegate &amp; IsEvil) () -&gt; original;</code></pre></div></div></li></ol></div></section><section id="evaluation_2"><h2>Evaluation</h2><div class="paragraph"><p>Downsides:</p></div>
+<div class="ulist"><ul><li><p>combination of non-trivial Java features:</p><div class="ulist"><ul><li><p>lambda as poly expression</p></li><li><p>type inference</p></li><li><p>default methods</p></li></ul></div></li><li><p>refactoring becomes harder<br>
+(see intersection types)</p></li><li><p>delegating interface is cumbersome</p></li><li><p>breaks in collections (<strong>!</strong>)</p></li></ul></div>
+<div class="paragraph"><p><strong>Never use in "real" code!</strong></p></div></section><section id="more_on_traits"><h2>More on traits</h2><div class="paragraph"><p>I&#8217;ve written a blog post:<br>
+<a href="https://blog.codefx.org/java/traits-var/">blog.codefx.org/java/traits-var</a></p></div></section></section>
+<section><section id="fun_with_var_4"><h2>Fun with <code>var</code></h2><table class="toc">
+	<tr><td>Rules of <code>var</code></td></tr>
+	<tr><td>Intersection Types</td></tr>
+	<tr><td>Traits</td></tr>
+	<tr class="toc-current"><td>Ad-hoc Fields And Methods</td></tr>
+</table></section><section id="motivation_3"><h2>Motivation</h2><div class="paragraph"><p>Sometimes you need to extend a type<br>
+with a field or a method.</p></div>
+<div class="paragraph"><p>But not enough to create a new subtype.</p></div>
+<div class="paragraph"><p>Maybe with an anonymous class?</p></div></section><section id="anonymous_class"><h2>Anonymous class</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">new SimpleMegacorp(...) {
+	final BigDecimal SUCCESS_BOUNDARY =
+		new BigDecimal("1000000000000");
+
+	boolean isSuccessful() {
+		return earnings()
+			.compareTo(SUCCESS_BOUNDARY) &gt; 0;
+	}
+};</code></pre></div></div></section><section id="code_4"><h2>Code</h2></section><section id="ad_hoc_fields_methods"><h2>Ad-hoc fields &amp; methods</h2><div class="olist arabic"><ol class="arabic"><li><p>create anonymous class with<br>
+additional fields and/or methods</p></li><li><p>assigned to <code>var</code>-ed variable</p></li></ol></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">var corp = new SimpleMegacorp(...) {
+	final BigDecimal SUCCESS_BOUNDARY =
+		new BigDecimal("1000000000000");
+
+	boolean isSuccessful() {
+		return earnings()
+			.compareTo(SUCCESS_BOUNDARY) &gt; 0;
+	}
+};
+corp.isSuccessful();</code></pre></div></div></section><section id="evaluation_3"><h2>Evaluation</h2><div class="paragraph"><p>Downsides:</p></div>
+<div class="ulist"><ul><li><p>anonymous class is verbose (e.g. in stream)</p></li><li><p>combination of non-trivial Java features:</p><div class="ulist"><ul><li><p>anonymous classes</p></li><li><p>type inference</p></li></ul></div></li><li><p>impedes refactoring (<strong>!</strong>)</p></li></ul></div>
+<div class="paragraph"><p><strong>Prefer the alternatives!</strong></p></div></section><section id="alternatives"><h2>Alternatives</h2><div class="paragraph"><p>Alternatives for ad-hoc fields:</p></div>
+<div class="ulist"><ul><li><p><code>Map.Entry</code></p></li><li><p>tuples from <a href="http://www.vavr.io/">Vavr</a>, <a href="https://github.com/aol/cyclops">Cyclops</a>, etc.</p></li><li><p>records (next)</p></li></ul></div>
+<div class="paragraph"><p>Alternatives for ad-hoc methods:</p></div>
+<div class="ulist"><ul><li><p>extending base types</p></li><li><p>utility methods</p></li><li><p>traits</p></li></ul></div></section><section id="records"><h2>Records</h2><div class="paragraph"><p>What are records?<br>
+Upcoming Java language feature!</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public record Range(int low, int high) {
+	// compiler generates:
+	//  * constructor, deconstructor
+	//  * equals/hashCode/toString
+	//  * accessors low(), high()
+}</code></pre></div></div>
+<div class="ulist"><ul><li><p>no boilerplate for plain "data carriers"</p></li><li><p>no room for error in <code>equals</code>/<code>hashCode</code></p></li><li><p>makes Java more expressive</p></li></ul></div></section><section id="customized_records"><h2>Customized records</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public record Range(int low, int high) {
+
+	// compiler knows signature and assigns to fields
+	public Range {
+		if (low &gt; high)
+			throw new IllegalArgumentException();
+	}
+
+	public void setLow(int low) {
+		if (low &gt; this.high)
+			throw new IllegalArgumentException();
+		this.low = low;
+	}
+
+}</code></pre></div></div></section><section id="record_trade_offs"><h2>Record trade-offs</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>The API for a record models the state, the whole state, and nothing but the state.</p></div></blockquote></div>
+<div class="paragraph"><p>The deal:</p></div>
+<div class="ulist"><ul><li><p>give up encapsulation</p></li><li><p>couple API to internal state</p></li><li><p>get API for free</p></li></ul></div></section><section id="more_on_records"><h2>More on records</h2><div class="paragraph"><p>Developed under <em>Project Amber</em>:</p></div>
+<div class="ulist"><ul><li><p>led by Brian Goetz</p></li><li><p>launched March 2017</p></li><li><p><a href="http://openjdk.java.net/projects/amber/">project</a> /
+<a href="https://wiki.openjdk.java.net/display/amber/Main">wiki</a> /
+<a href="http://mail.openjdk.java.net/mailman/listinfo/amber-dev">mailing list</a></p></li></ul></div>
+<div class="paragraph"><p>More on records:</p></div>
+<div class="ulist"><ul><li><p><a href="http://cr.openjdk.java.net/~briangoetz/amber/datum.html">exploration</a></p></li><li><p>talks:
+<a href="https://www.youtube.com/watch?v=A-mxj2vhVAA&amp;t=13m58s">0</a>,
+<a href="https://www.youtube.com/watch?v=qul2B8iPC-o">1</a>,
+<a href="https://www.youtube.com/watch?v=n3_8YcYKScw">2</a></p></li></ul></div>
+<div class="paragraph"><p>No known ETA; my guess:<br>
+not in 2019, likely not in 2020.</p></div></section><section id="more_on_ad_hoc_fieldsandmethods"><h2>More on ad-hoc fields&nbsp;and&nbsp;methods</h2><div class="paragraph"><p>I&#8217;ve written a blog post:<br>
+<a href="https://blog.codefx.org/java/tricks-var-anonymous-classes/">blog.codefx.org/java/tricks-var-anonymous-classes</a></p></div></section></section>
+<section id="summary"><h2>Summary</h2><div class="ulist"><ul><li><p>use <code>var</code> to improve readability:</p><div class="ulist"><ul><li><p>right-hand side should be informative</p></li><li><p>variable name should be well-chosen</p></li><li><p>add more intermediate variables</p></li></ul></div></li><li><p>tricks with <code>var</code> are usually complex:</p><div class="ulist"><ul><li><p>may be worth it for intersection types</p></li><li><p>break <code>equals</code>/<code>hashCode</code> for traits</p></li><li><p>not worth it for ad-hoc fields and methods</p></li></ul></div></li></ul></div></section>
+<section id="about_nicolai_parlog" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>About Nicolai Parlog</h2>
+<div style="float: left; width: 45%; margin:0px;">
+	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="images/cover-jms.png" style="margin: 0;"></a>
+	<p style="
+		position: fixed;
+		margin: -160px 0 0 60px;
+		transform: rotate(-8deg);
+		font-size: 28pt;
+		color: #cc0000;
+		text-shadow: 2px 2px 3px #660000;
+		font-weight: bold;
+		border: 5px solid #cc0000;
+		border-radius: 12px;
+		background-color: rgba(255,255,255,0.5);
+		padding: 2px 8px 7px 4px;
+">37% off with<br>code <em>fccparlog</em></p>
+	<p><a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb">tiny.cc/jms</a></p>
+</div>
+<h3>Follow</h3>
+<div class="paragraph"><p>💻 <a href="http://codefx.org">codefx.org</a><br>
+▶ <a href="https://www.youtube.com/c/codefx">youtube.com/c/codefx</a><br>
+🐦 <a href="https://twitter.com/nipafx">@nipafx</a></p></div>
+<h3>Want More?</h3>
+<div class="paragraph"><p>⇜ Get <a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&amp;a_bid=869915cb">my book</a>!</p></div>
+<div class="paragraph"><p>You can <a href="http://blog.codefx.org/hire-nicolai-parlog/">hire me</a>:</p></div>
+<div class="ulist"><ul><li><p>training (Java 8-11, JUnit 5)</p></li><li><p>consulting (Java 8-11)</p></li></ul></div></section>
+<section id="image_credits"><h2>Image Credits</h2><div class="ulist"><ul><li><p><a href="https://pixabay.com/en/new-year-s-eve-fireworks-beacon-1953253/">fireworks</a>:
+<a href="https://pixabay.com/en/users/nickgesell-3554748/">nickgesell</a>,
+<a href="https://wiki.creativecommons.org/wiki/CC0">CC0</a></p></li><li><p><a href="https://www.flickr.com/photos/21496790@N06/5065834411">question-mark</a>:
+<a href="http://milosevicmilos.com/">Milos Milosevic</a>,
+<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a></p></li></ul></div></section></div></div><script src="_reveal.js/lib/js/head.min.js"></script><script src="_reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+Reveal.initialize({
+  // Display controls in the bottom right corner
+  controls: false,
+  // Display a presentation progress bar
+  progress: false,
+  // Set a per-slide timing for speaker notes, null means none
+  defaultTiming: null,
+  // Display the page number of the current slide
+  slideNumber: false,
+  // Push each slide change to the browser history
+  history: true,
+  // Enable keyboard shortcuts for navigation
+  keyboard: true,
+  // Enable the slide overview mode
+  overview: true,
+  // Vertical centering of slides
+  center: true,
+  // Enables touch navigation on devices with touch input
+  touch: true,
+  // Loop the presentation
+  loop: false,
+  // Change the presentation direction to be RTL
+  rtl: false,
+  // Randomizes the order of slides each time the presentation loads
+  shuffle: false,
+  // Turns fragments on and off globally
+  fragments: true,
+  // Flags if the presentation is running in an embedded mode,
+  // i.e. contained within a limited portion of the screen
+  embedded: false,
+  // Flags if we should show a help overlay when the questionmark
+  // key is pressed
+  help: true,
+  // Flags if speaker notes should be visible to all viewers
+  showNotes: false,
+  // Global override for autolaying embedded media (video/audio/iframe)
+  // - null: Media will only autoplay if data-autoplay is present
+  // - true: All media will autoplay, regardless of individual setting
+  // - false: No media will autoplay, regardless of individual setting
+  autoPlayMedia: null,
+  // Number of milliseconds between automatically proceeding to the
+  // next slide, disabled when set to 0, this value can be overwritten
+  // by using a data-autoslide attribute on your slides
+  autoSlide: 0,
+  // Stop auto-sliding after user input
+  autoSlideStoppable: true,
+  // Enable slide navigation via mouse wheel
+  mouseWheel: false,
+  // Hides the address bar on mobile devices
+  hideAddressBar: true,
+  // Opens links in an iframe preview overlay
+  previewLinks: false,
+  // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
+  // NOTE setting the theme in the config no longer works in reveal.js 3.x
+  //theme: Reveal.getQueryHash().theme || 'nipa-night',
+  // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+  transition: Reveal.getQueryHash().transition || 'slide',
+  // Transition speed (e.g., default, fast, slow)
+  transitionSpeed: 'default',
+  // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+  backgroundTransition: 'fade',
+  // Number of slides away from the current that are visible
+  viewDistance: 3,
+  // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+  parallaxBackgroundImage: 'images/fireworks.jpg',
+  // Parallax background size in CSS syntax (e.g., "2100px 900px")
+  parallaxBackgroundSize: '4892px 3261px',
+
+  // The "normal" size of the presentation, aspect ratio will be preserved
+  // when the presentation is scaled to fit different resolutions. Can be
+  // specified using percentage units.
+  width: 960,
+  height: 700,
+
+  // Factor of the display size that should remain empty around the content
+  margin: 0.1,
+
+  // Bounds for smallest/largest possible scale to apply to content
+  minScale: 0.2,
+  maxScale: 1.5,
+
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+      { src: '_reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: '_reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '_reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      
+      { src: '_reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: '_reveal.js/plugin/notes/notes.js', async: true }
+  ]
+});</script></body></html>
