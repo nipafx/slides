@@ -21,6 +21,10 @@ You need something +
 that is `Closeable` and an `Iterator` +
 without creating `CloseableIterator`.
 
+[state="empty"]
+=== !
+image::images/intersection-venn.png[background, size=cover]
+
 === Intersection types
 
 Given two types, the *intersection type* +
@@ -34,10 +38,6 @@ A variable of type `Closeable & Iterator<E>` +
 is both `Closeable` and an `Iterator<E>`.
 
 It has `close()` and `hashNext()`/`next()`
-
-[state="empty"]
-=== !
-image::images/intersection-venn.png[background, size=cover]
 
 === Code
 

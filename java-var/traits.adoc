@@ -56,6 +56,7 @@ interface IsEvil extends Megacorp {
 [start=3]
 . cast lambda to desired intersection +
 and assign to `var`-ed variable:
++
 ```java
 var corp = (MegacorpDelegate & IsEvil) () -> original;
 ```
