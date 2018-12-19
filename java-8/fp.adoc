@@ -27,6 +27,7 @@ TODO
 	<tr class="toc-current"><td>Common Problems in OOP</td></tr>
 	<tr><td>FP Essentials</td></tr>
 	<tr><td>Solutions</td></tr>
+	<tr><td>Monads</td></tr>
 	<tr><td>Summary</td></tr>
 </table>
 ++++
@@ -151,6 +152,7 @@ ____
 	<tr><td>Common Problems in OOP</td></tr>
 	<tr class="toc-current"><td>FP Essentials</td></tr>
 	<tr><td>Solutions</td></tr>
+	<tr><td>Monads</td></tr>
 	<tr><td>Summary</td></tr>
 </table>
 ++++
@@ -412,13 +414,13 @@ Optional<String> address = buyer
 
 === Contextual comp. in Java
 
-Java 8 has three such constructs:
+So far, we know two such constructs:
 
 * `Stream`
 * `Optional`
-* `CompletableFuture` (later)
 
-We will later build our own. 🤠
+We will get to know more +
+_and_ build our own. 🤠
 
 === Contextual composition
 
@@ -623,6 +625,7 @@ That were some effects:
 	<tr><td>Common Problems in OOP</td></tr>
 	<tr><td>FP Essentials</td></tr>
 	<tr class="toc-current"><td>Solutions</td></tr>
+	<tr><td>Monads</td></tr>
 	<tr><td>Summary</td></tr>
 </table>
 ++++
@@ -726,6 +729,521 @@ private final Lazy<String> name =
 String n = name.get();
 ```
 
+What's `Lazy`? +
+That's the monad you're gonna build.
+
+
+== Monads
+
+++++
+<table class="toc">
+	<tr><td>Common Problems in OOP</td></tr>
+	<tr><td>FP Essentials</td></tr>
+	<tr><td>Solutions</td></tr>
+	<tr class="toc-current"><td>Monads</td></tr>
+	<tr><td>Summary</td></tr>
+</table>
+++++
+
+=== Why monads?
+
+Why learn about monads?
+
+* common term in FP
+* hard to find a simple explanation
+* useful structure to understand +
+  (in FP and OOP!)
+
+=== What is a monad?
+
+[quote,Saunders Mac Lane, Categories for the Working Mathematician]
+____
+[A] monad in X is just a monoid in the category of endofunctors of X, with product × replaced by composition of endofunctors and unit set by the identity endofunctor.
+____
+
+All clear? 😆
+
+=== What is a monad?
+
+More pragmatic:
+
+* a structure for computational composition
+* its methods follow certain rules
+
+Thanks to abiding by those rules:
+
+* refactoring is safe
+* usage patterns transfer easily
+
+=== Example monad
+image::images/kitchen.jpg[background, size=cover]
+
+=== The kitchen
+image::images/kitchen.jpg[background, size=cover]
+
+The kitchen:
+
+* groceries are in the right place
+* cutlery and dishes are clean
+* appliances are ready to be used
+
+The kitchen puts food into a "cooking context".
+
+=== The kitchen
+image::images/kitchen.jpg[background, size=cover]
+
+The kitchen has two features:
+
+. bring food into the kitchen
+. with a recipe for "_food_ to _other food_", it turns +
+  a _kitchen + food_ into a _kitchen + other food_
+
+```java
+// methods on type `Kitchen<Food>`
+static Kitchen<Food> bring(Food v)
+Kitchen<Food> prepare(Function<Food, Food> f)
+```
+
+=== Three kitchen laws
+image::images/kitchen.jpg[background, size=cover]
+
+"Don't play with food"::
+If a recipe says "do nothing", _do nothing_.
+
+```java
+// given
+Kitchen<Food> before = /*...*/;
+Function<Food, Food> f = v -> v;
+// when
+Kitchen<Food> after = before.prepare(f);
+// then
+before === after;
+```
+
+=== Three kitchen laws
+image::images/kitchen.jpg[background, size=cover]
+
+"The recipe is holy"::
+It doesn't matter whether the food is prepared +
+inside the kitchen or brought in afterwards.
+
+```java
+// given
+Food v = /*...*/;
+Function<Food, Food> f = /*...*/;
+// when
+Kitchen<Food> outside = Kitchen.bring(f.apply(v));
+Kitchen<Food> inside = Kitchen.bring(v).prepare(f);
+// then
+inside === outside;
+```
+
+=== Three kitchen laws
+image::images/kitchen.jpg[background, size=cover]
+
+"Artistic freedom"::
+With two recipes, it doesn't matter whether we +
+treat them as two separate or one long recipe.
+
+```java
+// given
+Kitchen<Food> kitchen = /*...*/;
+Function<Food, Food> f = /*...*/;
+Function<Food, Food> g = /*...*/;
+Function<Food, Food> fandg =
+	v -> g.apply(f.apply(v));
+// when
+Kitchen<Food> twoSteps =
+	kitchen.prepare(f).prepare(g);
+Kitchen<Food> oneStep = kitchen.prepare(fandg);
+// then
+oneStep === twoSteps;
+```
+
+=== Kitchen extra feature
+image::images/kitchen.jpg[background, size=cover]
+
+[start=3]
+. with a recipe for "_food_ to _kitchen + other food_", it +
+  turns a _kitchen + food_ into a _kitchen + other food_ +
+  (the two nested kitchens get "flattened" into one)
+
+In code:
+
+```java
+// compare to `prepare`:
+// Kitchen<Food> prepare(Function<Food, Food> f)
+Kitchen<Food> flatPrepare(Function<Food, Kitchen<Food>> f)
+```
+
+The three laws can be formulated accordingly.
+
+////
+=== Three kitchen laws
+
+"Don't play with food" (flatPrepare)::
+If a recipe says "do nothing", _do nothing_.
+
+```java
+// given
+Kitchen<Food> before = /*...*/;
+Function<Food, Kitchen<Food>> f =
+	v -> bring(v);
+// when
+Kitchen<Food> after = before.flatPrepare(f);
+// then
+before === after;
+```
+
+=== Three kitchen laws
+
+"The recipe is holy" (flatPrepare)::
+It doesn't matter whether the food is prepared +
+inside the kitchen or brought in while cooking.
+
+```java
+// given
+Food v = /*...*/;
+Function<Food, Kitchen<Food>> f = /*...*/;
+// when
+Kitchen<Food> outside = f.apply(v);
+Kitchen<Food> inside =
+	Kitchen.bring(v).flatPrepare(f);
+// then
+inside === outside;
+```
+
+=== Three kitchen laws
+
+"Artistic freedom" (flatPrepare)::
+With two recipes, it doesn't matter whether we +
+treat them as two separate or one long recipe.
+
+```java
+// given
+Kitchen<Food> kitchen = /*...*/;
+Function<Food, Kitchen<Food>> f = /*...*/;
+Function<Food, Kitchen<Food>> g = /*...*/;
+Function<Food, Kitchen<Food>> fandg =
+	v -> f.apply(v).flatPrepare(g);
+// when
+Kitchen<Food> twoSteps =
+	kitchen.flatPrepare(f).flatPrepare(g);
+Kitchen<Food> oneStep = kitchen.flatPrepare(fandg);
+// then
+oneStep === twoSteps;
+```
+////
+
+=== Kitchen law benefits
+image::images/kitchen.jpg[background, size=cover]
+
+```java
+private Food cut(Food v) { /*...*/ }
+private Food cook(Food v) { /*...*/ }
+private Food admire(Food v) { return v; }
+
+Kitchen.bring(ingredients)
+	.prepare(this::cut)
+	.prepare(this::cook);
+
+Kitchen.bring(ingredients)
+//          "artistic freedom"
+	.prepare(v -> cook(cut(v)));
+
+//           "the recipe is holy"
+Kitchen.bring(cut(ingredients))
+//          "don't play with food"
+	.prepare(this::admire)
+	.prepare(this::cook);
+```
+
+=== Monad parts
+
+A monad consists of three parts:
+
+* a type over values +
+  (`Kitchen`; generally `M<V>`)
+* a way to lift values into the type +
+  (`bring`; generally `of`)
+* a way to apply a function to the contained values +
+  (`prepare`/`flatPrepare`, generally `map`/`flatMap`)
+
+=== Monad laws
+
+Right identity aka "don't play with food"::
++
+```java
+// for `M<V> m` and `f = v -> v`
+m === m.map(f)
+```
+
+Left identity aka "the recipe is holy"::
++
+```java
+// for `V v` and `Function<V, V> f`
+M.of(f.apply(v)) === M.of(v).map(f)
+```
+
+Associativity aka "artistic freedom"::
++
+```java
+// for `M<V> m` and `Function<V, V> f, g`
+m.map(f).map(g) ===
+	m.map(v -> g.apply(f.apply(v)))
+```
+
+////
+=== Monad laws
+
+Right identity aka "don't play with food"::
++
+```java
+// for `M<V> m` and `f = v -> M(v)`
+m === m.flatMap(f)
+```
+
+Left identity aka "the recipe is holy"::
++
+```java
+// for `V v` and `Function<V, M<V>> f`
+f.apply(v) === of(v).flatMap(f)
+```
+
+Associativity aka "artistic freedom"::
++
+```java
+// for `M<V> m` and `Function<V, M<V>> f, g`
+m.flatMap(f).flatMap(g) ===
+	m.flatMap(v -> f.apply(v).flatMap(g))
+```
+////
+
+=== Your first (?) monad
+
+Lazy initialization:
+
+```java
+private ComplexResource resource;
+
+public ComplexResource getResource() {
+	if (resource == null)
+		resource = new ComplexResource();
+	return resource;
+}
+```
+
+Could this be a monad?
+
+* what's the "computational context"?
+* how to create one?
+* how to interact with one?
+
+=== The `Lazy` monad
+
+Concept:
+
+* computational context: "delayed resource initialization"
+* create with recipe for initialization
+* apply functions without executing them immediately
+* accessing the resource...
++
+====
+** ...the first time, leads to initialization/application
+** ...repeatedly, reuses existing result
+====
++
+(i.e. initializer and functions are executed at most once)
+
+
+=== Exercises 1 - 3
+
+Create a `Lazy` monad.
+
+=== The `Lazy` monad
+
+Public API (sans generic wildcards):
+
+```java
+public class Lazy<T> {
+
+	public static <T> Lazy<T> of(Supplier<T> generator);
+	public T get();
+	public <U> Lazy<U> map(Function<T, U> function);
+	public <U> Lazy<U> flatMap(Function<T, Lazy<U>> function);
+
+}
+```
+
+=== The `Lazy` monad
+
+Creation:
+
+```java
+private final Supplier<T> generator;
+private T element;
+
+private Lazy(Supplier<T> generator) {
+	this.generator = requireNonNull(generator);
+	this.element = null;
+}
+
+public static <T> Lazy<T> of(Supplier<T> generator) {
+	return new Lazy<>(generator);
+}
+```
+
+=== The `Lazy` monad
+
+Mapping:
+
+```java
+public static <T> Lazy<T> of(Supplier<T> generator) {
+	return new Lazy<>(generator);
+}
+
+public <U> Lazy<U> map(Function<T, U> function) {
+	return Lazy.of(() -> function.apply(this.get()));
+}
+
+public <U> Lazy<U> flatMap(Function<T, Lazy<U>> function) {
+	return Lazy.of(() -> function.apply(this.get()).get());
+}
+```
+
+=== The `Lazy` monad
+
+At-most-once initialization:
+
+```java
+private final Supplier<T> generator;
+private T element;
+
+public T get() {
+	// TODO: guarantee "at most once"
+	//       under multi-threading
+	if (element == null)
+		element = generator.get();
+	return element;
+}
+```
+
+=== The `Lazy` monad
+
+Application:
+
+```java
+private final Lazy<Orders> orders;
+
+// in constructor
+orders = Lazy
+	.of(() -> loadUserWithId(userId))
+	.map(this::loadOrdersForUser);
+```
+
+* reuses code and understanding of monads
+* reduces (observable) mutability
+
+=== Monads
+
+That adds a third monad:
+
+* `Stream`
+* `Optional`
+* `Lazy`
+
+=== `Optional` is no monad!
+
+😰
+
+=== Exercise 4
+
+"Breaking the (monad) law"
+
+=== Right identity
+
+Right identity aka "don't play with food"::
++
+```java
+opt === opt.map(v -> v)
+```
+
+✔
+
+=== Left identity
+
+Left identity aka "the recipe is holy"::
++
+```java
+// for `V v` and `Function<V, V> f`
+M.of(f.apply(v)) === M.of(v).map(f)
+```
+
+```java
+String v = null;
+Function f = s -> "mango";
+// Optional["mango"]
+Optional applied = ofNullable(f.apply(v));
+// Optional[]
+Optional mapped = ofNullable(v).map(f);
+```
+
+=== Associativity
+
+Associativity aka "artistic freedom"::
++
+```java
+// for `M<V> m` and `Function<V, V> f, g`
+m.map(f).map(g) ===
+	m.map(v -> g.apply(f.apply(v)))
+```
+
+```java
+String v = "kiwi";
+Function f = s -> null;
+Function g = s -> "mango";
+// Optional[]
+Optional mapped = of(v).map(f).map(g);
+// Optional["mango"]
+Optional composed = of(v).map(f.andThen(g));
+```
+
+=== Root cause analysis
+
+* `Optional` maps `null` to `empty()`
+* `flatMap` and `map` are not executed +
+on empty optionals
+* the first occurrence of `null`/empty +
+stops the chain of executions
+
+=== So What?
+
+* refactoring can change +
+which code gets executed
+* functions that can "recover" from `null` +
+might not get executed
+* particularly error-prone when +
+functions have side effects
+
+=== Consequences
+
+Be aware:
+
+* `Optional` is no well-behaved monad +
+  if `null` is involved
+* refactoring can cause problems +
+  if `null` was special cased
+
+See `Optional` as a way to avoid handling `null` +
+(at the expense of breaking monad laws).
+
+=== More
+
+https://developer.atlassian.com/blog/2015/08/optional-broken/[More on Optional Being Broken] (atlassian.com)
+
+https://www.sitepoint.com/how-optional-breaks-the-monad-laws-and-why-it-matters/[... and Why It Matters] (sitepoint.com)
+
+
 == Summary
 
 ++++
@@ -733,6 +1251,7 @@ String n = name.get();
 	<tr><td>Common Problems in OOP</td></tr>
 	<tr><td>FP Essentials</td></tr>
 	<tr><td>Solutions</td></tr>
+	<tr><td>Monads</td></tr>
 	<tr class="toc-current"><td>Summary</td></tr>
 </table>
 ++++
