@@ -1,12 +1,13 @@
-== Streams
+== Java 8
 
 ++++
 <table class="toc">
 	<tr><td>Lambda Expressions</td></tr>
 	<tr class="toc-current"><td>Stream API</td></tr>
 	<tr><td>Optional API</td></tr>
-	<tr><td>FP Basics</td></tr>
+	<tr><td>Functional Programming Basics</td></tr>
 	<tr><td>Default Methods</td></tr>
+	<tr><td>Summary</td></tr>
 </table>
 ++++
 
@@ -55,7 +56,7 @@ Google's MapReduce has the same logic:
 * reduce data across nodes (more _reduce_)
 
 
-== Stream API Basics
+== Stream API
 
 ++++
 <table class="toc">
@@ -123,7 +124,7 @@ notably `collect` and `reduce`
 Refactor use of self-made API to stream API
 
 
-== Stream Operations
+== Stream API
 
 ++++
 <table class="toc">
@@ -612,7 +613,7 @@ Terminal operations:
 Solve problems with streams
 
 
-== More Stream APIs
+== Stream API
 
 ++++
 <table class="toc">
@@ -832,7 +833,7 @@ On the example of `IntStream` +
   `average`, `max`, `min`, `sum`
 
 
-== Stream Details
+== Stream API
 
 ++++
 <table class="toc">
@@ -975,7 +976,7 @@ Operations can benefit from them:
 * parallelization is easier if not _ordered_
 
 
-== Possible Stream Pitfalls
+== Stream API
 
 ++++
 <table class="toc">
@@ -1111,7 +1112,7 @@ Otherwise:
 order-independent, thread-safe, performant
 
 
-== Summary
+== Stream API
 
 ++++
 <table class="toc">

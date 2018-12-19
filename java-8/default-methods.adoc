@@ -1,12 +1,13 @@
-== Default Methods
+== Java 8
 
 ++++
 <table class="toc">
 	<tr><td>Lambda Expressions</td></tr>
 	<tr><td>Stream API</td></tr>
 	<tr><td>Optional API</td></tr>
-	<tr><td>FP Basics</td></tr>
+	<tr><td>Functional Programming Basics</td></tr>
 	<tr class="toc-current"><td>Default Methods</td></tr>
+	<tr><td>Summary</td></tr>
 </table>
 ++++
 
@@ -181,7 +182,7 @@ Use case:
 Reusing code in default methods.
 
 
-== Existing Functionality
+== Default Methods
 
 ++++
 <table class="toc">
@@ -230,7 +231,7 @@ comparator = Comparator.nullsLast(comparator);
 * `Predicate.negate()`
 
 
-== Kinds of Default Methods
+== Default Methods
 
 ++++
 <table class="toc">
@@ -292,7 +293,7 @@ default Predicate<T> and(Predicate<? super T> p) {
 ```
 
 
-== Summary
+== Default Methods
 
 ++++
 <table class="toc">

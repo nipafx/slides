@@ -19,11 +19,18 @@ Main topics:
 * code quality (clean code and comments)
 * processes (code reviews, knowledge sharing)
 
+=== About You
+
+* what's your name?
+* when did you write the last `for` loop?
+* did you ever write a lambda expression?
+
 === Code of Conduct
 
 * ask any question you have +
 as soon as you have it
-* ask your colleagues first
+* during exercises, +
+ask your colleagues first
 * there are no stupid questions!
 * work in pairs or triples +
 (+1 for mixing skill levels)
@@ -42,7 +49,7 @@ as soon as you have it
 
 * repository is at +
 https://github.com/nicolaiparlog/course-java-8[github.com/nicolaiparlog/course-java-8]
-* clone it now (please do not fork on GH)
+* clone it now (please do not fork on GitHub)
 * will be unavailable by end of the week
 
 (Please share responsibly)
@@ -67,7 +74,7 @@ Lambdas make it easy to treat code as data.
 
 * passing "functions" was always easy in Java: +
 ** use interface with single abstract method +
-   (e.g. `Runnable`)
+   (e.g. `Runnable` or `Callable`)
 ** pass instance of it
 * creating "functions" becomes really easy now:
 +
@@ -89,10 +96,8 @@ Makes it easier to parameterize behavior:
 	<tr><td>Lambda Expressions</td></tr>
 	<tr><td>Stream API</td></tr>
 	<tr><td>Optional API</td></tr>
-	<tr><td>FP Basics</td></tr>
+	<tr><td>Functional Programming Basics</td></tr>
 	<tr><td>Default Methods</td></tr>
+	<tr><td>Summary</td></tr>
 </table>
 ++++
-
-There are many other additions in Java 8, +
-but we don't have time for them.

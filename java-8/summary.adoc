@@ -1,9 +1,31 @@
-== Summary of summaries
+== Java 8
+
+++++
+<table class="toc">
+	<tr><td>Lambda Expressions</td></tr>
+	<tr><td>Stream API</td></tr>
+	<tr><td>Optional API</td></tr>
+	<tr><td>Functional Programming Basics</td></tr>
+	<tr><td>Default Methods</td></tr>
+	<tr class="toc-current"><td>Summary</td></tr>
+</table>
+++++
+
+=== Summary of summaries
 
 * use lambdas to "pass code as data" +
-(stream API is excellent example)
-* use streams to make looping +
-more predictable and readable
-* use `Optional` to represent absence
-* give immutability and functions a shot
+  (stream API is excellent example)
+* give functions and immutability a shot
 * be aware of default methods
+* use monads to lift code to +
+  a higher level of abstraction
+
+=== Summary of summaries
+
+Use monads:
+
+* use streams to make looping +
+  more predictable and readable
+* use `Optional` to represent _absence_
+* use `Lazy` to represent _late_ and +
+  _exactly-once_ initialization

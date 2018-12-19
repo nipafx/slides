@@ -1,12 +1,13 @@
-== Optional
+== Java 8
 
 ++++
 <table class="toc">
 	<tr><td>Lambda Expressions</td></tr>
 	<tr><td>Stream API</td></tr>
 	<tr class="toc-current"><td>Optional API</td></tr>
-	<tr><td>FP Basics</td></tr>
+	<tr><td>Functional Programming Basics</td></tr>
 	<tr><td>Default Methods</td></tr>
+	<tr><td>Summary</td></tr>
 </table>
 ++++
 
@@ -41,7 +42,7 @@ but never `null`.
 Same logic applies to your code!
 
 
-== Optional Basics
+== Optional API
 
 ++++
 <table class="toc">
@@ -91,7 +92,7 @@ The functional way:
 * keeps `Optional` around as long as possible
 
 
-== The Imperative Way
+== Optional API
 
 ++++
 <table class="toc">
@@ -158,7 +159,7 @@ name = nameOpt.orElseThrow(() ->
 Imperative use of `Optional`.
 
 
-== The Functional Way
+== Optional API
 
 ++++
 <table class="toc">
@@ -251,7 +252,7 @@ public class Search {
 Functional use of `Optional`.
 
 
-== Optionals In Streams
+== Optional API
 
 ++++
 <table class="toc">
@@ -325,7 +326,7 @@ Stream<Customer> findCustomers(List<String> ids) {
 ```
 
 
-== Summary
+== Optional API
 
 ++++
 <table class="toc">
