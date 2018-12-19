@@ -60,36 +60,38 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 <section><section id="hello_java_8"><h2>Hello, Java 8</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">() -&gt; System.out.println("Hello, Java 8!")</code></pre></div></div></section><section id="about_me"><h2>About Me</h2><div class="paragraph"><p>My name is <strong>Nicolai</strong> (Parlog)</p></div>
 <div class="ulist"><ul><li><p>Java since 2005, professionally since 2011</p></li><li><p>blogger since 2014</p></li><li><p>freelancing developer, speaker, trainer since 2016</p></li><li><p>published author "since" 2019</p></li></ul></div>
 <div class="paragraph"><p>Main topics:</p></div>
-<div class="ulist"><ul><li><p>JDK features (language, APIs, JVM)</p></li><li><p>code quality (clean code and comments)</p></li><li><p>processes (code reviews, knowledge sharing)</p></li></ul></div></section><section id="code_of_conduct"><h2>Code of Conduct</h2><div class="ulist"><ul><li><p>ask any question you have<br>
-as soon as you have it</p></li><li><p>ask your colleagues first</p></li><li><p>there are no stupid questions!</p></li><li><p>work in pairs or triples<br>
+<div class="ulist"><ul><li><p>JDK features (language, APIs, JVM)</p></li><li><p>code quality (clean code and comments)</p></li><li><p>processes (code reviews, knowledge sharing)</p></li></ul></div></section><section id="about_you"><h2>About You</h2><div class="ulist"><ul><li><p>what&#8217;s your name?</p></li><li><p>when did you write the last <code>for</code> loop?</p></li><li><p>did you ever write a lambda expression?</p></li></ul></div></section><section id="code_of_conduct"><h2>Code of Conduct</h2><div class="ulist"><ul><li><p>ask any question you have<br>
+as soon as you have it</p></li><li><p>during exercises,<br>
+ask your colleagues first</p></li><li><p>there are no stupid questions!</p></li><li><p>work in pairs or triples<br>
 (+1 for mixing skill levels)</p></li><li><p>consider taking notes</p></li></ul></div></section><section id="slides"><h2>Slides</h2><div class="ulist"><ul><li><p>online at <a href="http://slides.codefx.org/java-8">slides.codefx.org/java-8</a></p></li><li><p>press "?" to learn how to navigate</p></li><li><p>there will be a permalink when the course is over</p></li><li><p>version-specific content is marked with ⑨, ⑩, ⑪</p></li></ul></div>
 <div class="paragraph"><p>(Please share responsibly)</p></div></section><section id="exercises"><h2>Exercises</h2><div class="ulist"><ul><li><p>repository is at<br>
-<a href="https://github.com/nicolaiparlog/course-java-8">github.com/nicolaiparlog/course-java-8</a></p></li><li><p>clone it now (please do not fork on GH)</p></li><li><p>will be unavailable by end of the week</p></li></ul></div>
+<a href="https://github.com/nicolaiparlog/course-java-8">github.com/nicolaiparlog/course-java-8</a></p></li><li><p>clone it now (please do not fork on GitHub)</p></li><li><p>will be unavailable by end of the week</p></li></ul></div>
 <div class="paragraph"><p>(Please share responsibly)</p></div></section><section id="a_very_short_history"><h2>A Very Short History</h2><div class="paragraph"><p>Project Lambda started in 2010:</p></div>
 <div class="ulist"><ul><li><p>language features:</p><div class="ulist"><ul><li><p>lambda expressions</p></li><li><p>default methods</p></li></ul></div></li><li><p>library changes:</p><div class="ulist"><ul><li><p>stream API</p></li><li><p><code>Optional</code></p></li><li><p>various smaller changes</p></li></ul></div></li></ul></div>
 <div class="paragraph"><p>Java 8 shipped in March 2014.</p></div></section><section id="paradigm_shift"><h2>Paradigm Shift</h2><div class="paragraph"><p>Lambdas make it easy to treat code as data.</p></div>
 <div class="ulist"><ul><li><p>passing "functions" was always easy in Java:<br></p><div class="ulist"><ul><li><p>use interface with single abstract method<br>
-(e.g. <code>Runnable</code>)</p></li><li><p>pass instance of it</p></li></ul></div></li><li><p>creating "functions" becomes really easy now:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Runnable r = () -&gt; System.out.println("Hello");</code></pre></div></div></li></ul></div></section><section id="paradigm_shift_2"><h2>Paradigm Shift</h2><div class="paragraph"><p>Makes it easier to parameterize behavior:</p></div>
+(e.g. <code>Runnable</code> or <code>Callable</code>)</p></li><li><p>pass instance of it</p></li></ul></div></li><li><p>creating "functions" becomes really easy now:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Runnable r = () -&gt; System.out.println("Hello");</code></pre></div></div></li></ul></div></section><section id="paradigm_shift_2"><h2>Paradigm Shift</h2><div class="paragraph"><p>Makes it easier to parameterize behavior:</p></div>
 <div class="ulist"><ul><li><p>by <em>passing</em> an action</p></li><li><p>instead of <em>configuring</em> it</p></li></ul></div></section><section id="table_of_contents"><h2>Table of Contents</h2><table class="toc">
 	<tr><td>Lambda Expressions</td></tr>
 	<tr><td>Stream API</td></tr>
 	<tr><td>Optional API</td></tr>
-	<tr><td>FP Basics</td></tr>
+	<tr><td>Functional Programming Basics</td></tr>
+	<tr><td>CompletableFuture API</td></tr>
 	<tr><td>Default Methods</td></tr>
-</table>
-<div class="paragraph"><p>There are many other additions in Java 8,<br>
-but we don&#8217;t have time for them.</p></div></section></section>
-<section><section id="lambda_expressions"><h2>Lambda Expressions</h2><table class="toc">
+	<tr><td>Summary</td></tr>
+</table></section></section>
+<section><section id="java_8"><h2>Java 8</h2><table class="toc">
 	<tr class="toc-current"><td>Lambda Expressions</td></tr>
 	<tr><td>Stream API</td></tr>
 	<tr><td>Optional API</td></tr>
-	<tr><td>FP Basics</td></tr>
+	<tr><td>Functional Programming Basics</td></tr>
+	<tr><td>CompletableFuture API</td></tr>
 	<tr><td>Default Methods</td></tr>
 	<tr><td>Summary</td></tr>
-</table></section><section id="lambda_expressions_2"><h2>Lambda Expressions</h2><div class="paragraph"><p>Make it easy to pass code as data,<br>
+</table></section><section id="lambda_expressions"><h2>Lambda Expressions</h2><div class="paragraph"><p>Make it easy to pass code as data,<br>
 by making it easy to create functions:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code>Runnable r = () -&gt; System.out.println("Hello");</code></pre></div></div></section><section id="exercise_1"><h2>Exercise 1</h2><div class="paragraph"><p>Pass code as data</p></div></section></section>
-<section><section id="lambda_expressions_3"><h2>Lambda Expressions</h2><table class="toc">
+<section><section id="lambda_expressions_2"><h2>Lambda Expressions</h2><table class="toc">
 	<tr class="toc-current"><td>Lambda Expression Syntax</td></tr>
 	<tr><td>Lambdas vs Closures</td></tr>
 	<tr><td>Functional Interfaces</td></tr>
@@ -196,15 +198,15 @@ filter = todo // (3)
 	-&gt; todo.importance() == importance;</code></pre></div></div>
 <div class="paragraph"><p>My preference: break after <code>-&gt;</code><br>
 i.e. <code>// (2)</code></p></div></section><section id="exercise_3"><h2>Exercise 3</h2><div class="paragraph"><p>Create lambda expressions from scratch</p></div></section></section>
-<section><section id="lambdas_vs_closures"><h2>Lambdas vs. Closures</h2><table class="toc">
+<section><section id="lambda_expressions_3"><h2>Lambda Expressions</h2><table class="toc">
 	<tr><td>Lambda Expression Syntax</td></tr>
 	<tr class="toc-current"><td>Lambdas vs Closures</td></tr>
 	<tr><td>Functional Interfaces</td></tr>
 	<tr><td>Method References</td></tr>
 	<tr><td>Summary</td></tr>
-</table></section><section id="lambdas_vs_closures_2"><h2>Lambdas vs. Closures</h2><div class="paragraph"><p>Two kinds of lambdas:</p></div>
+</table></section><section id="lambdas_vs_closures"><h2>Lambdas vs. Closures</h2><div class="paragraph"><p>Two kinds of lambdas:</p></div>
 <div class="dlist"><dl><dt class="hdlist1">non-capturing lambdas</dt><dd><p>use only the lambda&#8217;s parameter(s)</p></dd><dt class="hdlist1">capturing lambdas / closures</dt><dd><p>use / capture / close over<br>
-fields, method parameters, local variables</p></dd></dl></div></section><section id="lambdas_vs_closures_3"><h2>Lambdas vs. Closures</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">private String field = "field";
+fields, method parameters, local variables</p></dd></dl></div></section><section id="lambdas_vs_closures_2"><h2>Lambdas vs. Closures</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">private String field = "field";
 
 public StringToInt toInt(String parameter) {
 	String local = "local";
@@ -231,13 +233,13 @@ can be reassigned:</p></div>
 <div class="ulist"><ul><li><p>which value will a lambda observe?</p></li><li><p>what happens under threading?</p></li></ul></div>
 <div class="paragraph"><p>This keeps programming model simpler!</p></div></section><section id="effectively_final_2"><h2>Effectively Final</h2><div class="paragraph"><p>Implications for lambda body:</p></div>
 <div class="ulist"><ul><li><p>method parameters can not be reassigned</p></li><li><p>local variables can not be reassigned</p></li><li><p>fields <em>can</em> be reassigned</p></li></ul></div></section><section id="exercise_4"><h2>Exercise 4</h2><div class="paragraph"><p>Experiment with (non-) capturing lambda expressions</p></div></section></section>
-<section><section id="functional_interfaces"><h2>Functional Interfaces</h2><table class="toc">
+<section><section id="lambda_expressions_4"><h2>Lambda Expressions</h2><table class="toc">
 	<tr><td>Lambda Expression Syntax</td></tr>
 	<tr><td>Lambdas vs Closures</td></tr>
 	<tr class="toc-current"><td>Functional Interfaces</td></tr>
 	<tr><td>Method References</td></tr>
 	<tr><td>Summary</td></tr>
-</table></section><section id="functional_interfaces_2"><h2>Functional Interfaces</h2><div class="paragraph"><p>To assign a lambda to an interface<br>
+</table></section><section id="functional_interfaces"><h2>Functional Interfaces</h2><div class="paragraph"><p>To assign a lambda to an interface<br>
 it must have exactly one abstract method.</p></div>
 <div class="paragraph"><p><strong>They are called <em>functional interfaces</em>!</strong></p></div>
 <div class="paragraph"><p>Can be marked with <code>@FunctionalInterface</code>,<br>
@@ -246,19 +248,19 @@ which leads to compile error when not functional.</p></div></section><section id
 <div class="ulist"><ul><li><p><code>Supplier</code> returns something without input</p></li><li><p><code>Consumer</code> uses something without return</p></li><li><p><code>Function</code> transforms input into return</p></li><li><p><code>Operator</code> works as <code>Function</code> but on the same type</p></li><li><p><code>Predicate</code> tests something re <code>true</code>/<code>false</code></p></li></ul></div></section><section id="two_parameters"><h2>Two Parameters</h2><div class="ulist"><ul><li><p>no <code>BiSupplier&lt;T&gt;</code></p></li><li><p><code>BiConsumer&lt;T, U&gt;</code>: <code>void accept(T, U)</code></p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">BiConsumer&lt;String, Integer&gt; c =
 	(s, i) -&gt; System.out.println(s + ": " + i);</code></pre></div></div></li><li><p><code>BiFunction&lt;T, U, R&gt;</code>: <code>R apply(T, U)</code></p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Function&lt;String, Boolean, Integer&gt; f =
 	(s, b) -&gt; b ? s.length() : 0;</code></pre></div></div></li><li><p><code>BinaryOperator&lt;T&gt;</code>: <code>T apply(T, T)</code></p></li><li><p><code>BiPredicate&lt;T, U&gt;</code>: <code>boolean test(T, U)</code></p></li></ul></div></section><section id="primitive_specializations"><h2>Primitive Specializations</h2><div class="paragraph"><p>For <code>int</code>, <code>long</code>, <code>double</code> exist specializations:</p></div>
-<div class="ulist"><ul><li><p><code>IntSupplier</code>: <code>int getAsInt()</code></p></li><li><p><code>IntConsumer</code>: <code>void accept(int)</code></p></li><li><p><code>IntFunction&lt;R&gt;</code>: <code>R apply(int)</code></p></li><li><p><code>ToIntFunction&lt;T&gt;</code>: <code>int applyAsInt(T)</code></p></li><li><p><code>IntUnaryOperator</code>: <code>int applyAsInt(int)</code></p></li><li><p><code>IntBinaryOperator</code>: <code>int applyAsInt(int, int)</code></p></li><li><p><code>IntPredicate</code>: <code>boolean test(int)</code></p></li></ul></div></section><section id="functional_interfaces_3"><h2>Functional Interfaces</h2><div class="paragraph"><p>All of these can be found<br>
+<div class="ulist"><ul><li><p><code>IntSupplier</code>: <code>int getAsInt()</code></p></li><li><p><code>IntConsumer</code>: <code>void accept(int)</code></p></li><li><p><code>IntFunction&lt;R&gt;</code>: <code>R apply(int)</code></p></li><li><p><code>ToIntFunction&lt;T&gt;</code>: <code>int applyAsInt(T)</code></p></li><li><p><code>IntUnaryOperator</code>: <code>int applyAsInt(int)</code></p></li><li><p><code>IntBinaryOperator</code>: <code>int applyAsInt(int, int)</code></p></li><li><p><code>IntPredicate</code>: <code>boolean test(int)</code></p></li></ul></div></section><section id="functional_interfaces_2"><h2>Functional Interfaces</h2><div class="paragraph"><p>All of these can be found<br>
 in <code>java.util.function</code>:</p></div>
 <div class="paragraph"><p><a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/package-summary.html">Java 8 Documentation</a></p></div>
 <div class="paragraph"><p><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/function/package-summary.html">Java 11 Documentation</a></p></div></section><section id="exercise_5"><h2>Exercise 5</h2><div class="paragraph"><p>Get to know functional interfaces</p></div>
 <div class="paragraph"><p>(Take some notes to make sure<br>
 you can look up these interfaces!)</p></div></section></section>
-<section><section id="method_references"><h2>Method References</h2><table class="toc">
+<section><section id="lambda_expressions_5"><h2>Lambda Expressions</h2><table class="toc">
 	<tr><td>Lambda Expression Syntax</td></tr>
 	<tr><td>Lambdas vs Closures</td></tr>
 	<tr><td>Functional Interfaces</td></tr>
 	<tr class="toc-current"><td>Method References</td></tr>
 	<tr><td>Summary</td></tr>
-</table></section><section id="method_references_2"><h2>Method References</h2><div class="paragraph"><p>We&#8217;ve seen a lot of lambdas, where<br>
+</table></section><section id="method_references"><h2>Method References</h2><div class="paragraph"><p>We&#8217;ve seen a lot of lambdas, where<br>
 lambda parameters and method parameters coincide:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Consumer&lt;String&gt; printString = s -&gt; print(s);</code></pre></div></div>
 <div class="paragraph"><p>Then use a method reference:</p></div>
@@ -285,24 +287,26 @@ of the first parameter:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Function&lt;Type, String&gt; getFieldFromType =
 //  typeInstance -&gt; typeInstance.getField();
 	Type::getField;</code></pre></div></div></section><section id="reference_types"><h2>Reference Types</h2><div class="ulist"><ul><li><p>static method: <code>$TYPE::$METHOD</code></p></li><li><p>constructor: <code>$TYPE::new</code></p></li><li><p>instance method:</p><div class="ulist"><ul><li><p><code>$INSTANCE::$METHOD</code></p></li><li><p><code>this::$METHOD</code></p></li></ul></div></li><li><p>method on first parameter: <code>$TYPE::$METHOD</code></p></li></ul></div></section><section id="exercise_7"><h2>Exercise 7</h2><div class="paragraph"><p>Create various kinds of method references</p></div></section></section>
-<section><section id="summary"><h2>Summary</h2><table class="toc">
+<section><section id="lambda_expressions_6"><h2>Lambda Expressions</h2><table class="toc">
 	<tr><td>Lambda Expression Syntax</td></tr>
 	<tr><td>Lambdas vs Closures</td></tr>
 	<tr><td>Functional Interfaces</td></tr>
 	<tr><td>Method References</td></tr>
 	<tr class="toc-current"><td>Summary</td></tr>
-</table></section><section id="summary_2"><h2>Summary</h2><div class="ulist"><ul><li><p>functional interfaces are those with<br>
+</table></section><section id="summary"><h2>Summary</h2><div class="ulist"><ul><li><p>functional interfaces are those with<br>
 <strong>exactly one abstract method</strong></p></li><li><p>basic functional interfaces: <code>Supplier</code>,<br>
-<code>Consumer</code>, <code>Function</code>, <code>Operator</code>, <code>Predicate</code></p></li><li><p>basic lambda expression:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">$Interface variable = ($parameters) -&gt; { $body };</code></pre></div></div></li></ul></div></section><section id="summary_3"><h2>Summary</h2><div class="paragraph"><p>For lambda expression:</p></div>
-<div class="ulist"><ul><li><p>interface must be functional</p></li><li><p>parameters:</p><div class="ulist"><ul><li><p>can have types</p></li><li><p>must have parenthesis if more than one</p></li></ul></div></li><li><p>body:</p><div class="ulist"><ul><li><p>can be block in curly braces</p></li><li><p>can be expression of single line</p></li></ul></div></li></ul></div></section><section id="summary_4"><h2>Summary</h2><div class="ulist"><ul><li><p>variables used in body must be effectively final</p></li><li><p>capturing lambdas use fields or non-lambda parameters</p></li></ul></div>
+<code>Consumer</code>, <code>Function</code>, <code>Operator</code>, <code>Predicate</code></p></li><li><p>basic lambda expression:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">$Interface variable = ($parameters) -&gt; { $body };</code></pre></div></div></li></ul></div></section><section id="summary_2"><h2>Summary</h2><div class="paragraph"><p>For lambda expression:</p></div>
+<div class="ulist"><ul><li><p>interface must be functional</p></li><li><p>parameters:</p><div class="ulist"><ul><li><p>can have types</p></li><li><p>must have parenthesis if more than one</p></li></ul></div></li><li><p>body:</p><div class="ulist"><ul><li><p>can be block in curly braces</p></li><li><p>can be expression of single line</p></li></ul></div></li></ul></div></section><section id="summary_3"><h2>Summary</h2><div class="ulist"><ul><li><p>variables used in body must be effectively final</p></li><li><p>capturing lambdas use fields or non-lambda parameters</p></li></ul></div>
 <div class="paragraph"><p>Method reference:</p></div>
 <div class="ulist"><ul><li><p>static method: <code>$TYPE::$METHOD</code></p></li><li><p>constructor: <code>$TYPE::new</code></p></li><li><p>instance method: <code>$INSTANCE::$METHOD</code></p></li><li><p>method on first parameter: <code>$TYPE::$METHOD</code></p></li></ul></div></section></section>
-<section><section id="streams"><h2>Streams</h2><table class="toc">
+<section><section id="java_8_2"><h2>Java 8</h2><table class="toc">
 	<tr><td>Lambda Expressions</td></tr>
 	<tr class="toc-current"><td>Stream API</td></tr>
 	<tr><td>Optional API</td></tr>
-	<tr><td>FP Basics</td></tr>
+	<tr><td>Functional Programming Basics</td></tr>
+	<tr><td>CompletableFuture API</td></tr>
 	<tr><td>Default Methods</td></tr>
+	<tr><td>Summary</td></tr>
 </table></section><section id="demo"><h2>Demo</h2></section><section id="building_blocks"><h2>Building Blocks</h2><div class="paragraph"><p>Typical collection operations:</p></div>
 <div class="ulist"><ul><li><p>start with a collection (<em>source</em>)</p></li><li><p>perform operation on each element<br>
 (<em>filter</em>, <em>map</em>)</p></li><li><p>gather results (<em>reduce</em>, <em>collect</em>)</p></li></ul></div>
@@ -311,7 +315,7 @@ of the first parameter:</p></div>
 <div class="paragraph"><p>Loop downsides:</p></div>
 <div class="ulist"><ul><li><p>mix looping with domain logic</p></li><li><p>make optimization/parallelization harder</p></li><li><p>make side effects easier / more likely</p></li></ul></div></section><section id="a_word_on_mapreduce"><h2>A Word On MapReduce</h2><div class="paragraph"><p>Google&#8217;s MapReduce has the same logic:</p></div>
 <div class="ulist"><ul><li><p>split input across nodes</p></li><li><p>apply given function in parallel (<em>map</em>)</p></li><li><p>reduce resulting data in parallel (<em>reduce</em>)</p></li><li><p>reduce data across nodes (more <em>reduce</em>)</p></li></ul></div></section></section>
-<section><section id="stream_api_basics"><h2>Stream API Basics</h2><table class="toc">
+<section><section id="stream_api"><h2>Stream API</h2><table class="toc">
 	<tr class="toc-current"><td>Stream API Basics</td></tr>
 	<tr><td>Stream Operations</td></tr>
 	<tr><td>More Stream APIs</td></tr>
@@ -336,7 +340,7 @@ with all important operations</p></li></ul></div></section><section id="stream_t
 with <code>Collection::stream</code></p></dd><dt class="hdlist1">Intermediate Operations (zero or more)</dt><dd><p>All methods on <code>Stream</code> that return a <code>Stream</code>,<br>
 notably <code>map</code> and <code>filter</code></p></dd><dt class="hdlist1">Terminal Operation (one)</dt><dd><p>All methods on <code>Stream</code> that don&#8217;t return a <code>Stream</code>,<br>
 notably <code>collect</code> and <code>reduce</code></p></dd></dl></div></section><section id="exercise_2_2"><h2>Exercise 2</h2><div class="paragraph"><p>Refactor use of self-made API to stream API</p></div></section></section>
-<section><section id="stream_operations"><h2>Stream Operations</h2><table class="toc">
+<section><section id="stream_api_2"><h2>Stream API</h2><table class="toc">
 	<tr><td>Stream API Basics</td></tr>
 	<tr class="toc-current"><td>Stream Operations</td></tr>
 	<tr><td>More Stream APIs</td></tr>
@@ -515,14 +519,14 @@ long lowDrugsCount = drugs.stream()
 		drug.inventory().isStockpileLow())
 	.count();</code></pre></div></div></section><section id="reducing_3"><h2>Reducing</h2><div class="paragraph"><p>Terminal operations:</p></div>
 <div class="ulist"><ul><li><p><code>reduce(BinaryOperator&lt;T&gt;)</code></p></li><li><p><code>reduce(T, BinaryOperator&lt;T&gt;)</code></p></li><li><p><code>count()</code></p></li></ul></div></section><section id="exercise_3_2"><h2>Exercise 3</h2><div class="paragraph"><p>Solve problems with streams</p></div></section></section>
-<section><section id="more_stream_apis"><h2>More Stream APIs</h2><table class="toc">
+<section><section id="stream_api_3"><h2>Stream API</h2><table class="toc">
 	<tr><td>Stream API Basics</td></tr>
 	<tr><td>Stream Operations</td></tr>
 	<tr class="toc-current"><td>More Stream APIs</td></tr>
 	<tr><td>Stream Details</td></tr>
 	<tr><td>Stream Pitfalls</td></tr>
 	<tr><td>Summary</td></tr>
-</table></section><section id="more_stream_apis_2"><h2>More Stream APIs</h2><div class="ulist"><ul><li><p>various sources</p></li><li><p>reductions in general</p></li><li><p>collectors in detail</p></li><li><p>primitive specializations</p></li></ul></div></section><section id="stream_sources"><h2>Stream Sources</h2><div class="paragraph"><p>Besides <code>Collection::stream</code>:</p></div>
+</table></section><section id="more_stream_apis"><h2>More Stream APIs</h2><div class="ulist"><ul><li><p>various sources</p></li><li><p>reductions in general</p></li><li><p>collectors in detail</p></li><li><p>primitive specializations</p></li></ul></div></section><section id="stream_sources"><h2>Stream Sources</h2><div class="paragraph"><p>Besides <code>Collection::stream</code>:</p></div>
 <div class="ulist"><ul><li><p><code>Stream.of(T&#8230;&#8203;)</code></p></li><li><p><code>Stream.ofNullable(T)</code> ⑨</p></li><li><p><code>Stream.iterate(T, UnaryOperator&lt;T&gt;)</code></p></li><li><p><code>Stream.iterate(</code><br>
 <code>T, Predicate&lt;T&gt;, UnaryOperator&lt;T&gt;)</code> ⑨</p></li></ul></div></section><section id="streamiterate"><h2>Stream::iterate</h2><div class="paragraph"><p>Creates an infinite stream:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream.iterate(T seed,
@@ -590,14 +594,14 @@ intermediate results</p></li></ul></div></section><section id="exercise_5_2"><h2
 or <code>Stream::mapToInt</code></p></li><li><p>conceptually the same as <code>Stream</code></p></li><li><p>uses primitive specializations of<br>
 functional interfaces</p></li><li><p>has a few numeric special cases:<br>
 <code>average</code>, <code>max</code>, <code>min</code>, <code>sum</code></p></li></ul></div></section></section>
-<section><section id="stream_details"><h2>Stream Details</h2><table class="toc">
+<section><section id="stream_api_4"><h2>Stream API</h2><table class="toc">
 	<tr><td>Stream API Basics</td></tr>
 	<tr><td>Stream Operations</td></tr>
 	<tr><td>More Stream APIs</td></tr>
 	<tr class="toc-current"><td>Stream Details</td></tr>
 	<tr><td>Stream Pitfalls</td></tr>
 	<tr><td>Summary</td></tr>
-</table></section><section id="stream_details_2"><h2>Stream Details</h2><div class="ulist"><ul><li><p>lazy</p></li><li><p>easy to parallelize</p></li><li><p>stateless vs stateful</p></li><li><p>short-circuiting</p></li><li><p>characteristics<br>
+</table></section><section id="stream_details"><h2>Stream Details</h2><div class="ulist"><ul><li><p>lazy</p></li><li><p>easy to parallelize</p></li><li><p>stateless vs stateful</p></li><li><p>short-circuiting</p></li><li><p>characteristics<br>
 and optimizations</p></li></ul></div></section><section id="streams_are_lazy"><h2>Streams Are Lazy</h2><div class="paragraph"><p>All intermediate operations are lazy!</p></div>
 <div class="ulist"><ul><li><p>calling <code>map</code>, <code>filter</code>, etc. is "free"<br>
 even for large or infinite streams</p></li><li><p>only when terminal operation is called,<br>
@@ -633,14 +637,14 @@ as soon as result is determined</p></li><li><p><code>limit</code>, <code>takeWhi
 these characteristics.</p></div>
 <div class="paragraph"><p>Operations can benefit from them:</p></div>
 <div class="ulist"><ul><li><p><code>count</code> may return immediately if <em>sized</em></p></li><li><p><code>distinct</code> may be no-op if <em>distinct</em></p></li><li><p><code>sorted</code>, <code>min</code>, <code>max</code> may be no-op if <em>sorted</em></p></li><li><p><code>findFirst</code> is like <code>findAny</code> if not <em>ordered</em></p></li><li><p>parallelization is easier if not <em>ordered</em></p></li></ul></div></section></section>
-<section><section id="possible_stream_pitfalls"><h2>Possible Stream Pitfalls</h2><table class="toc">
+<section><section id="stream_api_5"><h2>Stream API</h2><table class="toc">
 	<tr><td>Stream API Basics</td></tr>
 	<tr><td>Stream Operations</td></tr>
 	<tr><td>More Stream APIs</td></tr>
 	<tr><td>Stream Details</td></tr>
 	<tr class="toc-current"><td>Stream Pitfalls</td></tr>
 	<tr><td>Summary</td></tr>
-</table></section><section id="possible_stream_pitfalls_2"><h2>Possible Stream Pitfalls</h2><div class="ulist"><ul><li><p>no mutations</p></li><li><p>no storage</p></li><li><p>no reuse</p></li><li><p>minimize side effects</p></li></ul></div></section><section id="streams_do_not_mutate"><h2>Streams Do Not Mutate</h2><div class="paragraph"><p>A stream pipeline<br>
+</table></section><section id="possible_stream_pitfalls"><h2>Possible Stream Pitfalls</h2><div class="ulist"><ul><li><p>no mutations</p></li><li><p>no storage</p></li><li><p>no reuse</p></li><li><p>minimize side effects</p></li></ul></div></section><section id="streams_do_not_mutate"><h2>Streams Do Not Mutate</h2><div class="paragraph"><p>A stream pipeline<br>
 <strong>never mutates the underlying collection</strong>!</p></div>
 <div class="paragraph"><p>All data is collected in terminal operation.</p></div>
 <div class="paragraph"><p>If you need to mutate in place,<br>
@@ -687,29 +691,31 @@ but even then it makes code complex.)</p></div></section><section id="beware_of_
 <div class="paragraph"><p>Otherwise:</p></div>
 <div class="ulist"><ul><li><p>try to rely on the terminal operation</p></li><li><p>make sure side-effects are not critical</p></li><li><p>make sure methods called in side-effects are<br>
 order-independent, thread-safe, performant</p></li></ul></div></section></section>
-<section><section id="summary_5"><h2>Summary</h2><table class="toc">
+<section><section id="stream_api_6"><h2>Stream API</h2><table class="toc">
 	<tr><td>Stream API Basics</td></tr>
 	<tr><td>Stream Operations</td></tr>
 	<tr><td>More Stream APIs</td></tr>
 	<tr><td>Stream Details</td></tr>
 	<tr><td>Stream Pitfalls</td></tr>
 	<tr class="toc-current"><td>Summary</td></tr>
-</table></section><section id="summary_6"><h2>Summary</h2><div class="ulist"><ul><li><p>source, intermediate, and terminal operations</p></li><li><p>there are primitive specializations</p></li><li><p>streams are lazy and not reusable</p></li><li><p>streams are easy to parallelize</p></li><li><p>should minimize side effects</p></li><li><p>think carefully how to use in your APIs</p></li></ul></div></section><section id="summary_7"><h2>Summary</h2><div class="paragraph"><p>Sources:</p></div>
-<div class="ulist"><ul><li><p>primarily collections</p></li><li><p>many other APIs return streams</p></li><li><p>they define a stream&#8217;s initial characteristics</p></li></ul></div></section><section id="summary_8"><h2>Summary</h2><div class="paragraph"><p>Intermediate Operations:</p></div>
-<div class="ulist"><ul><li><p>can be stateless or stateful</p></li><li><p>can be short-circuiting</p></li><li><p>clear, preserve, or inject characteristics</p></li></ul></div></section><section id="summary_9"><h2>Summary</h2><div class="paragraph"><p>Terminal operations:</p></div>
-<div class="ulist"><ul><li><p>largely define how a stream is processed</p></li><li><p><code>reduce</code> and <code>collect</code> are powerful and important</p></li><li><p>can be short-circuiting</p></li><li><p>can be optimized based on characteristics</p></li></ul></div></section><section id="summary_10"><h2>Summary</h2><div class="paragraph"><p>Returning Streams:</p></div>
+</table></section><section id="summary_4"><h2>Summary</h2><div class="ulist"><ul><li><p>source, intermediate, and terminal operations</p></li><li><p>there are primitive specializations</p></li><li><p>streams are lazy and not reusable</p></li><li><p>streams are easy to parallelize</p></li><li><p>should minimize side effects</p></li><li><p>think carefully how to use in your APIs</p></li></ul></div></section><section id="summary_5"><h2>Summary</h2><div class="paragraph"><p>Sources:</p></div>
+<div class="ulist"><ul><li><p>primarily collections</p></li><li><p>many other APIs return streams</p></li><li><p>they define a stream&#8217;s initial characteristics</p></li></ul></div></section><section id="summary_6"><h2>Summary</h2><div class="paragraph"><p>Intermediate Operations:</p></div>
+<div class="ulist"><ul><li><p>can be stateless or stateful</p></li><li><p>can be short-circuiting</p></li><li><p>clear, preserve, or inject characteristics</p></li></ul></div></section><section id="summary_7"><h2>Summary</h2><div class="paragraph"><p>Terminal operations:</p></div>
+<div class="ulist"><ul><li><p>largely define how a stream is processed</p></li><li><p><code>reduce</code> and <code>collect</code> are powerful and important</p></li><li><p>can be short-circuiting</p></li><li><p>can be optimized based on characteristics</p></li></ul></div></section><section id="summary_8"><h2>Summary</h2><div class="paragraph"><p>Returning Streams:</p></div>
 <div class="ulist"><ul><li><p>returning streams is great<br>
-(unmodifiable but transformable)</p></li><li><p>preferably if streams can be recreated</p></li><li><p>can be used to gradually enrich data</p></li></ul></div></section><section id="summary_11"><h2>Summary</h2><div class="paragraph"><p>Passing Streams:</p></div>
+(unmodifiable but transformable)</p></li><li><p>preferably if streams can be recreated</p></li><li><p>can be used to gradually enrich data</p></li></ul></div></section><section id="summary_9"><h2>Summary</h2><div class="paragraph"><p>Passing Streams:</p></div>
 <div class="ulist"><ul><li><p>caller must assume stream is traversed</p></li><li><p>works for obvious consumers</p></li><li><p>transformations can be hard to track</p></li><li><p>never return a traversed stream<br>
-(obvious, right?!)</p></li></ul></div></section><section id="summary_12"><h2>Summary</h2><div class="paragraph"><p>But Look Out:</p></div>
+(obvious, right?!)</p></li></ul></div></section><section id="summary_10"><h2>Summary</h2><div class="paragraph"><p>But Look Out:</p></div>
 <div class="ulist"><ul><li><p>streams can only be traversed once</p></li><li><p>no mutation during traversal</p></li><li><p>don&#8217;t make chains too long or<br>
 debuggability suffers</p></li></ul></div></section></section>
-<section><section id="optional"><h2>Optional</h2><table class="toc">
+<section><section id="java_8_3"><h2>Java 8</h2><table class="toc">
 	<tr><td>Lambda Expressions</td></tr>
 	<tr><td>Stream API</td></tr>
 	<tr class="toc-current"><td>Optional API</td></tr>
-	<tr><td>FP Basics</td></tr>
+	<tr><td>Functional Programming Basics</td></tr>
+	<tr><td>CompletableFuture API</td></tr>
 	<tr><td>Default Methods</td></tr>
+	<tr><td>Summary</td></tr>
 </table></section><section id="motivation"><h2>Motivation</h2><div class="paragraph"><p>Some terminal stream operations<br>
 may not have a result:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Todo&gt; todos = // ...
@@ -723,7 +729,7 @@ todos.stream()
 but never <code>null</code>.</p></div>
 <div class="paragraph"><p>⇝ <code>Optional</code>!</p></div>
 <div class="paragraph"><p>Same logic applies to your code!</p></div></section></section>
-<section><section id="optional_basics"><h2>Optional Basics</h2><table class="toc">
+<section><section id="optional_api"><h2>Optional API</h2><table class="toc">
 	<tr class="toc-current"><td>Optional Basics</td></tr>
 	<tr><td>The Imperative Way</td></tr>
 	<tr><td>The Functional Way</td></tr>
@@ -739,7 +745,7 @@ and to fail early.</p></div></section><section id="working_with_optional"><h2>Wo
 <div class="ulist"><ul><li><p>checks presence</p></li><li><p>gets value out</p></li><li><p>processes it further</p></li></ul></div>
 <div class="paragraph"><p>The functional way:</p></div>
 <div class="ulist"><ul><li><p>uses Stream-like methods (<code>filter</code>, <code>map</code>, etc.)</p></li><li><p>keeps <code>Optional</code> around as long as possible</p></li></ul></div></section></section>
-<section><section id="the_imperative_way"><h2>The Imperative Way</h2><table class="toc">
+<section><section id="optional_api_2"><h2>Optional API</h2><table class="toc">
 	<tr><td>Optional Basics</td></tr>
 	<tr class="toc-current"><td>The Imperative Way</td></tr>
 	<tr><td>The Functional Way</td></tr>
@@ -767,28 +773,28 @@ name = nameOpt.orElse("John Doe");
 name = nameOpt.orElseGet(this::computeDefaultName);
 name = nameOpt.orElseThrow(() -&gt;
 	new IllegalStateException("Name should be given."));</code></pre></div></div></section><section id="exercise_1_3"><h2>Exercise 1</h2><div class="paragraph"><p>Imperative use of <code>Optional</code>.</p></div></section></section>
-<section><section id="the_functional_way"><h2>The Functional Way</h2><table class="toc">
+<section><section id="optional_api_3"><h2>Optional API</h2><table class="toc">
 	<tr><td>Optional Basics</td></tr>
 	<tr><td>The Imperative Way</td></tr>
 	<tr class="toc-current"><td>The Functional Way</td></tr>
 	<tr><td>Optionals In Streams</td></tr>
 	<tr><td>Summary</td></tr>
-</table></section><section id="the_functional_way_2"><h2>The Functional Way</h2><div class="paragraph"><p>Keep <code>Optional</code> around as long as possible<br>
+</table></section><section id="the_functional_way"><h2>The Functional Way</h2><div class="paragraph"><p>Keep <code>Optional</code> around as long as possible<br>
 and use it to process present value.</p></div>
 <div class="paragraph"><p>Like on <code>Stream</code>, but eager:</p></div>
 <div class="ulist"><ul><li><p><code>filter(Predicate&lt;T&gt;)</code>
-(can make <code>Optional</code> empty)</p></li><li><p><code>map(Function&lt;T, R&gt;)</code></p></li><li><p><code>flatMap(Function&lt;T, Optional&lt;R&gt;&gt;)</code></p></li><li><p><code>ifPresent(Consumer&lt;T&gt;)</code> (like <code>Stream::forEach</code>)</p></li><li><p><code>ifPresentOrElse​(Consumer&lt;T&gt;, Runnable)</code> ⑨</p></li></ul></div></section><section id="the_functional_way_3"><h2>The Functional Way</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">User user = /* ... */;
+(can make <code>Optional</code> empty)</p></li><li><p><code>map(Function&lt;T, R&gt;)</code></p></li><li><p><code>flatMap(Function&lt;T, Optional&lt;R&gt;&gt;)</code></p></li><li><p><code>ifPresent(Consumer&lt;T&gt;)</code> (like <code>Stream::forEach</code>)</p></li><li><p><code>ifPresentOrElse​(Consumer&lt;T&gt;, Runnable)</code> ⑨</p></li></ul></div></section><section id="the_functional_way_2"><h2>The Functional Way</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">User user = /* ... */;
 Optional&lt;String&gt; name = /* stream pipeline */;
 name
 	.filter(this::hasNameDay)
 	.map(this::determineNameDay)
-	.ifPresent(nameDay -&gt; register(user, nameDay));</code></pre></div></div></section><section id="the_functional_way_4"><h2>The Functional Way</h2><div class="paragraph"><p>Or simply continue stream pipeline:</p></div>
+	.ifPresent(nameDay -&gt; register(user, nameDay));</code></pre></div></div></section><section id="the_functional_way_3"><h2>The Functional Way</h2><div class="paragraph"><p>Or simply continue stream pipeline:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">User user = /* ... */;
 /* stream pipeline */
 	.findAny() // terminal stream operation
 	.filter(this::hasNameDay) // on Optional
 	.map(this::determineNameDay)
-	.ifPresent(nameDay -&gt; register(user, nameDay));</code></pre></div></div></section><section id="the_functional_way_5"><h2>The Functional Way</h2><div class="paragraph"><p>Like with streams,<br>
+	.ifPresent(nameDay -&gt; register(user, nameDay));</code></pre></div></div></section><section id="the_functional_way_4"><h2>The Functional Way</h2><div class="paragraph"><p>Like with streams,<br>
 this doesn&#8217;t work well<br>
 with checked exceptions.</p></div>
 <div class="ulist"><ul><li><p>use <code>if</code>-<code>isPresent()</code>-<code>orElseThrow()</code><br>
@@ -807,13 +813,13 @@ to get back to imperative code</p></li><li><p>do it as late as possible</p></li>
 	}
 
 }</code></pre></div></div></section><section id="exercise_2_3"><h2>Exercise 2</h2><div class="paragraph"><p>Functional use of <code>Optional</code>.</p></div></section></section>
-<section><section id="optionals_in_streams"><h2>Optionals In Streams</h2><table class="toc">
+<section><section id="optional_api_4"><h2>Optional API</h2><table class="toc">
 	<tr><td>Optional Basics</td></tr>
 	<tr><td>The Imperative Way</td></tr>
 	<tr><td>The Functional Way</td></tr>
 	<tr class="toc-current"><td>Optionals In Streams</td></tr>
 	<tr><td>Summary</td></tr>
-</table></section><section id="optionals_in_streams_2"><h2>Optionals In Streams</h2><div class="paragraph"><p>What happens if <code>Optional</code>-returning method<br>
+</table></section><section id="optionals_in_streams"><h2>Optionals In Streams</h2><div class="paragraph"><p>What happens if <code>Optional</code>-returning method<br>
 is called in a stream pipeline?</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">private Optional&lt;Customer&gt; findCustomer(String id) {
 	// ...
@@ -844,27 +850,29 @@ of zero or one element(s):</p></div>
 	return ids.stream()
 		.flatMap(id -&gt; findCustomer(id).stream());
 }</code></pre></div></div></section></section>
-<section><section id="summary_13"><h2>Summary</h2><table class="toc">
+<section><section id="optional_api_5"><h2>Optional API</h2><table class="toc">
 	<tr><td>Optional Basics</td></tr>
 	<tr><td>The Imperative Way</td></tr>
 	<tr><td>The Functional Way</td></tr>
 	<tr><td>Optionals In Streams</td></tr>
 	<tr class="toc-current"><td>Summary</td></tr>
-</table></section><section id="summary_14"><h2>Summary</h2><div class="ulist"><ul><li><p>get <code>Optional</code> from streams, other APIs<br>
+</table></section><section id="summary_11"><h2>Summary</h2><div class="ulist"><ul><li><p>get <code>Optional</code> from streams, other APIs<br>
 or create with <code>of</code>, <code>empty</code>, <code>ofNullable</code></p></li><li><p>use like streams with <code>map</code>, <code>flatMap</code>, <code>filter</code></p></li><li><p>process value with <code>ifPresent</code></p></li><li><p>get value out with <code>get</code>, <code>orElse&#8230;&#8203;</code></p></li></ul></div></section></section>
-<section id="functional_programming"><h2>Functional Programming</h2><table class="toc">
+<section id="java_8_4"><h2>Java 8</h2><table class="toc">
 	<tr><td>Lambda Expressions</td></tr>
 	<tr><td>Stream API</td></tr>
 	<tr><td>Optional API</td></tr>
-	<tr class="toc-current"><td>FP Basics</td></tr>
+	<tr class="toc-current"><td>Functional Programming Basics</td></tr>
+	<tr><td>CompletableFuture API</td></tr>
 	<tr><td>Default Methods</td></tr>
 	<tr><td>Summary</td></tr>
 </table>
 <div class="paragraph"><p>A noob&#8217;s guide.</p></div></section>
-<section><section id="common_problems"><h2>Common problems</h2><table class="toc">
+<section><section id="fp_basics"><h2>FP Basics</h2><table class="toc">
 	<tr class="toc-current"><td>Common Problems in OOP</td></tr>
 	<tr><td>FP Essentials</td></tr>
 	<tr><td>Solutions</td></tr>
+	<tr><td>Monads</td></tr>
 	<tr><td>Summary</td></tr>
 </table></section><section id="unreliable_state"><h2>Unreliable state</h2><div class="paragraph"><p>Ever had this problem?</p></div>
 <div class="ulist"><ul><li><p>created or received an object</p></li><li><p>called desired method on it</p></li><li><p>watched it fail</p></li></ul></div>
@@ -889,22 +897,23 @@ to perform an action</p></li></ul></div>
 <div class="paragraph"><p>Common solution:</p></div>
 <div class="ulist"><ul><li><p><code>State</code> exposes all fields with getters</p></li><li><p><code>Action</code> "gets" needed content</p></li></ul></div></section><section id="exposed_state_2"><h2>Exposed state</h2><div class="paragraph"><p>Downsides:</p></div>
 <div class="ulist"><ul><li><p><code>State</code> has weak encapsulation</p></li><li><p><code>Action</code> is tightly coupled to <code>State</code></p></li></ul></div>
-<div class="paragraph"><p>This makes them hard to evolve.</p></div></section><section id="mixed_concerns"><h2>Mixed concerns</h2><div class="paragraph"><p>Business logic is often mixed<br>
+<div class="paragraph"><p>This makes them hard to evolve.</p></div></section><section id="mixed_concerns"><h2>Mixed concerns</h2><div class="paragraph"><p>Domain logic is often mixed<br>
 with code that handles:</p></div>
 <div class="ulist"><ul><li><p>looping</p></li><li><p>lazy initialization</p></li><li><p>concurrency</p></li><li><p>&#8230;&#8203;</p></li></ul></div>
 <div class="paragraph"><p>Such code has several responsibilities!</p></div></section><section id="mixed_concerns_2"><h2>Mixed concerns</h2><div class="paragraph"><p>Downsides:</p></div>
-<div class="ulist"><ul><li><p>easier to get wrong</p></li><li><p>duplication</p></li><li><p>longer and more complex code</p></li><li><p>code has more reasons to change</p></li></ul></div></section><section id="common_problems_2"><h2>Common problems</h2><div class="paragraph"><p>Caused by moving parts.</p></div>
+<div class="ulist"><ul><li><p>easier to get wrong</p></li><li><p>duplication</p></li><li><p>longer and more complex code</p></li><li><p>code has more reasons to change</p></li></ul></div></section><section id="common_problems"><h2>Common problems</h2><div class="paragraph"><p>Caused by moving parts:</p></div>
 <div class="ulist"><ul><li><p>unreliable state</p></li><li><p>exposed state</p></li><li><p>mixed concerns</p></li></ul></div></section><section id="moving_parts"><h2>Moving parts</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>OO makes code understandable by encapsulating moving parts.
 FP makes code understandable by minimizing moving parts.</p></div></blockquote><div class="attribution">&#8212; <a href="https://twitter.com/mfeathers/status/29581296216">Michael Feathers</a></div></div></section></section>
-<section><section id="fp_essentials"><h2>FP Essentials</h2><table class="toc">
+<section><section id="fp_basics_2"><h2>FP Basics</h2><table class="toc">
 	<tr><td>Common Problems in OOP</td></tr>
 	<tr class="toc-current"><td>FP Essentials</td></tr>
 	<tr><td>Solutions</td></tr>
+	<tr><td>Monads</td></tr>
 	<tr><td>Summary</td></tr>
-</table></section><section id="functional_programming_2"><h2>Functional Programming!</h2><div class="paragraph"><p>Essentials:</p></div>
-<div class="ulist"><ul><li><p>compose <em>functions</em>, not <em>classes</em></p></li><li><p>prefer <em>immutable</em> classes</p></li><li><p>avoid <em>side effects</em></p></li><li><p>prefer <em>pure functions</em></p></li></ul></div></section><section id="functional_programming_3"><h2>Functional programming!</h2><div class="paragraph"><p>Tools:</p></div>
-<div class="ulist"><ul><li><p><em>composition</em></p></li><li><p><em>currying</em></p></li><li><p><em>partial application</em></p></li></ul></div></section><section id="functional_programming_4"><h2>Functional programming!</h2><div class="paragraph"><p>Enjoy:</p></div>
-<div class="ulist"><ul><li><p><em>declarative</em> instead of <em>imperative</em></p></li><li><p><em>referential transparency</em></p></li><li><p><em>laziness</em></p></li><li><p><em>thread-safety</em></p></li></ul></div></section><section id="functional_programming_5"><h2>Functional programming!</h2><div class="paragraph"><p>Let&#8217;s discuss basics:</p></div>
+</table></section><section id="functional_programming"><h2>Functional Programming</h2><div class="paragraph"><p>Essentials:</p></div>
+<div class="ulist"><ul><li><p>compose <em>functions</em>, not <em>classes</em></p></li><li><p>prefer <em>immutable</em> classes</p></li><li><p>avoid <em>side effects</em></p></li><li><p>prefer <em>pure functions</em></p></li></ul></div></section><section id="functional_programming_2"><h2>Functional programming</h2><div class="paragraph"><p>Tools:</p></div>
+<div class="ulist"><ul><li><p><em>composition</em></p></li><li><p><em>contextual composition</em></p></li><li><p><em>currying</em></p></li><li><p><em>partial application</em></p></li></ul></div></section><section id="functional_programming_3"><h2>Functional programming</h2><div class="paragraph"><p>Enjoy:</p></div>
+<div class="ulist"><ul><li><p><em>declarative</em> instead of <em>imperative</em></p></li><li><p><em>referential transparency</em></p></li><li><p><em>laziness</em></p></li><li><p><em>thread-safety</em></p></li></ul></div></section><section id="functional_programming_4"><h2>Functional programming</h2><div class="paragraph"><p>Let&#8217;s discuss basics:</p></div>
 <div class="ulist"><ul><li><p><em>functions</em> vs <em>classes</em></p></li><li><p><em>immutability</em></p></li><li><p><em>side effects</em></p></li><li><p><em>pure functions</em></p></li></ul></div></section><section id="functions_over_classes"><h2>Functions over classes</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:33.3333%"><col style="width:33.3333%"><col style="width:33.3334%"></colgroup><thead><tr><th class="tableblock halign-left valign-top"></th><th class="tableblock halign-left valign-top">OOP</th><th class="tableblock halign-left valign-top">FP</th></tr><tbody><tr><th class="tableblock halign-left valign-top"><p class="tableblock header">centers around</p></th><td class="tableblock halign-left valign-top"><p class="tableblock">nouns</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">verbs</p></td></tr><tr><th class="tableblock halign-left valign-top"><p class="tableblock header">composition of</p></th><td class="tableblock halign-left valign-top"><p class="tableblock">instances</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">actions</p></td></tr><tr><th class="tableblock halign-left valign-top"><p class="tableblock header">passing</p></th><td class="tableblock halign-left valign-top"><p class="tableblock">messages</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">results</p></td></tr><tr><th class="tableblock halign-left valign-top"><p class="tableblock header">computation by</p></th><td class="tableblock halign-left valign-top"><p class="tableblock">changing state</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">evaluation</p></td></tr></table></section><section id="functions_in_java"><h2>Functions in Java</h2><div class="paragraph"><p>Common terminology:</p></div>
 <div class="ulist"><ul><li><p>a <em>method</em> belongs to an object</p></li><li><p>a <em>function</em> stands alone</p></li></ul></div>
 <div class="paragraph"><p>In that sense, Java has no functions.</p></div>
@@ -922,8 +931,9 @@ to identify functions without side effects.</p></div></section><section id="side
 <div class="ulist"><ul><li><p>no access of non-constant fields</p></li><li><p>no mutating method calls on arguments</p></li></ul></div>
 <div class="paragraph"><p>In Java, there is no good way<br>
 to identify pure functions.</p></div></section><section id="pure_functions_2"><h2>Pure functions</h2><div class="paragraph"><p>Benefits of pure functions:</p></div>
-<div class="ulist"><ul><li><p>even more predictable (meaningful signature)</p></li><li><p>even easier to refactor and compose</p></li><li><p>even easier to test</p></li><li><p>results in <em>referential transparency</em></p></li></ul></div></section><section id="functional_programming_6"><h2>Functional programming!</h2><div class="paragraph"><p>Let&#8217;s discuss tools:</p></div>
-<div class="ulist"><ul><li><p><em>composition</em></p></li><li><p><em>currying</em></p></li><li><p><em>partial application</em></p></li></ul></div></section><section id="composition"><h2>Composition</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>Combine (simple) functions to build more powerful ones</p></div></blockquote></div>
+<div class="ulist"><ul><li><p>even more predictable (meaningful signature)</p></li><li><p>even easier to refactor and compose</p></li><li><p>even easier to test</p></li><li><p>results in <em>referential transparency</em></p></li></ul></div></section><section id="functional_programming_5"><h2>Functional programming</h2><div class="paragraph"><p>That were some basics:</p></div>
+<div class="ulist"><ul><li><p><em>functions</em> vs <em>classes</em></p></li><li><p><em>immutability</em></p></li><li><p><em>side effects</em></p></li><li><p><em>pure functions</em></p></li></ul></div></section><section id="functional_programming_6"><h2>Functional programming</h2><div class="paragraph"><p>Now let&#8217;s discuss tools:</p></div>
+<div class="ulist"><ul><li><p><em>composition</em></p></li><li><p><em>contextual composition</em></p></li><li><p><em>currying</em></p></li><li><p><em>partial application</em></p></li></ul></div></section><section id="composition"><h2>Composition</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>Combine (simple) functions to build more powerful ones</p></div></blockquote></div>
 <div class="paragraph"><p>How-to:</p></div>
 <div class="ulist"><ul><li><p>composed function has input of the first function</p></li><li><p>passes result of a function as input to next function</p></li><li><p>composed function has result of the last function</p></li></ul></div></section><section id="composition_in_java"><h2>Composition in Java</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// hand-rolled
 static &lt;T, R, V&gt; Function&lt;T, V&gt; compose(
@@ -948,7 +958,37 @@ default &lt;V&gt; Function&lt;T, V&gt; andThen(Function&lt;R, V&gt; after) {
 Function&lt;String, Integer&gt; length = String::length;
 Function&lt;Integer, String&gt; toString = Integer::toString;
 Function&lt;String, String&gt; lengthToString =
-	length.andThen(toString);</code></pre></div></div></section><section id="currying"><h2>Currying</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>Transforming a function with multiple arguments into a sequence of functions, each with a single argument</p></div></blockquote></div></section><section id="currying_in_java"><h2>Currying in Java</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public &lt;T, U , R&gt; Function&lt;T, Function&lt;U, R&gt;&gt; curry(
+	length.andThen(toString);</code></pre></div></div></section><section id="contextual_composition"><h2>Contextual composition</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>Compose functions within a specific context while upholding its invariants</p></div></blockquote></div>
+<div class="paragraph"><p>(<strong>Note</strong>: <em>contextual composition</em> is not a common term.)</p></div></section><section id="context"><h2>Context</h2><div class="paragraph"><p>What do I mean by <em>context</em>?</p></div>
+<div class="ulist"><ul><li><p>"a value&#8217;s presence is unknown" ⇝ <code>Optional</code></p></li><li><p>"a collection&#8217;s multitude is arbitrary" ⇝ <code>Stream</code></p></li></ul></div>
+<div class="paragraph"><p>The context defines an API&#8217;s central abstractions.</p></div></section><section id="invariants"><h2>Invariants</h2><div class="paragraph"><p>What do I mean by <em>invariants</em>?</p></div>
+<div class="paragraph"><p>E.g. <code>Optional</code> manages presence/absence:</p></div>
+<div class="ulist"><ul><li><p>no <code>NullPointerException</code></p></li><li><p>never passes <code>null</code></p></li></ul></div>
+<div class="paragraph"><p>An API safeguards its invariants<br>
+while you focus on domain logic.</p></div></section><section id="composition_2"><h2>Composition</h2><div class="paragraph"><p>What do I mean by <em>composition</em>?</p></div>
+<div class="ulist"><ul><li><p>functions can be "attached" to the context</p></li><li><p>context determines whether/how they get composed</p></li></ul></div>
+<div class="paragraph"><p>E.g. repeatedly calling <code>Optional.map(Function)</code>:</p></div>
+<div class="ulist"><ul><li><p>effectively composes the passed functions</p></li><li><p><code>Optional</code> interjects its own logic</p></li></ul></div></section><section id="contextual_comp_in_java"><h2>Contextual comp. in Java</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>Compose functions within a specific context while upholding its invariants</p></div></blockquote></div>
+<div class="paragraph"><p>For <code>Optional</code> that means:</p></div>
+<div class="quoteblock"><blockquote><div class="paragraph"><p>Use <code>map</code>, <code>flatMap</code>, etc. to compose operations on a present/absent value while being spared <code>null</code> and <code>NullPointerException</code></p></div></blockquote></div></section><section id="contextual_comp_in_java_2"><h2>Contextual comp. in Java</h2><div class="paragraph"><p>For example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// defines the context "presence/absence"
+Optional&lt;User&gt; buyer = /*...*/;
+// compose functions "User ~&gt; Address" and
+// "Address ~&gt; String" without worrying
+// about `null`
+Optional&lt;String&gt; address = buyer
+	.flatMap(this::findAddress)
+	.map(Address::toString);</code></pre></div></div></section><section id="contextual_comp_in_java_3"><h2>Contextual comp. in Java</h2><div class="paragraph"><p>So far, we know two such constructs:</p></div>
+<div class="ulist"><ul><li><p><code>Stream</code></p></li><li><p><code>Optional</code></p></li></ul></div>
+<div class="paragraph"><p>We will get to know more<br>
+<em>and</em> build our own. 🤠</p></div></section><section id="contextual_composition_2"><h2>Contextual composition</h2><div class="paragraph"><p>Such contextual APIs often share basic functionality:</p></div>
+<div class="ulist"><ul><li><p><code>of</code> to "lift" plain values into the context</p></li><li><p><code>map</code> to apply a "value to value"-function</p></li><li><p><code>flatMap</code> to apply a "value to context"-function</p></li><li><p>method to take value out of context<br>
+(<code>Optional::get</code>, <code>Stream::iterator</code>)</p></li></ul></div></section><section id="monads"><h2>Monads</h2><div class="paragraph"><p>If <code>of</code>, <code>map</code>, <code>flatMap</code> fulfill certain requirements,<br>
+the underlying type is a <em>monad</em>.</p></div>
+<div class="paragraph"><p>Monads:</p></div>
+<div class="ulist"><ul><li><p>are a particularly well-behaving form<br>
+of contextual composition</p></li><li><p>allow safe refactoring</p></li><li><p>allow reuse of mental models</p></li></ul></div>
+<div class="paragraph"><p>More on that later.</p></div></section><section id="currying"><h2>Currying</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>Transforming a function with multiple arguments into a sequence of functions, each with a single argument</p></div></blockquote></div></section><section id="currying_in_java"><h2>Currying in Java</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public &lt;T, U , R&gt; Function&lt;T, Function&lt;U, R&gt;&gt; curry(
 		BiFunction&lt;T, U, R&gt; f) {
 //	return t -&gt; (u -&gt; f.apply(t, u));
 	return t -&gt; u -&gt; f.apply(t, u);
@@ -977,8 +1017,10 @@ Function&lt;String, Logger&gt; newLoggerWithLevel =
 Supplier&lt;Logger&gt; newLoggerWithLevelAndSubsystem =
 	partial(newLoggerWithLevel, "Authentication");</code></pre></div></div></section><section id="partial_application_2"><h2>Partial application</h2><div class="paragraph"><p>Benefits:</p></div>
 <div class="ulist"><ul><li><p>elegant approach to configuration</p></li><li><p>eliminates entire patterns<br>
-(factory, builder)</p></li></ul></div></section><section id="functional_programming_7"><h2>Functional programming!</h2><div class="paragraph"><p>Let&#8217;s discuss effects:</p></div>
-<div class="ulist"><ul><li><p><em>declarative</em> instead of <em>imperative</em></p></li><li><p><em>referential transparency</em></p></li><li><p><em>laziness</em></p></li><li><p><em>thread-safety</em></p></li></ul></div></section><section id="declarative"><h2>Declarative</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>Solve problems without specifying an exact procedure to be followed</p></div></blockquote></div></section><section id="declarative_java"><h2>Declarative Java</h2><div class="paragraph"><p>Code expresses <em>what</em> needs to happen&#8230;&#8203;</p></div>
+(factory, builder)</p></li></ul></div></section><section id="functional_programming_7"><h2>Functional programming</h2><div class="paragraph"><p>That were some tools:</p></div>
+<div class="ulist"><ul><li><p><em>composition</em></p></li><li><p><em>contextual composition</em></p></li><li><p><em>currying</em></p></li><li><p><em>partial application</em></p></li></ul></div></section><section id="functional_programming_8"><h2>Functional programming</h2><div class="paragraph"><p>Now let&#8217;s discuss effects:</p></div>
+<div class="ulist"><ul><li><p><em>declarative</em> instead of <em>imperative</em></p></li><li><p><em>referential transparency</em></p></li><li><p><em>laziness</em></p></li><li><p><em>thread-safety</em></p></li></ul></div></section><section id="declarative"><h2>Declarative</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>Solve problems without specifying an exact procedure to be followed</p></div></blockquote></div>
+<div class="paragraph"><p>(Often achieved by contextual composition.)</p></div></section><section id="declarative_java"><h2>Declarative Java</h2><div class="paragraph"><p>Code expresses <em>what</em> needs to happen&#8230;&#8203;</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">todos.stream()
 	.filter(todo -&gt; todo.importance().isAtLeast(VERY))
 	.map(Todo::description)
@@ -992,7 +1034,7 @@ for (Todo todo : todos) {
 	}
 }
 descs = descs.substring(0, descs.length() - 2);</code></pre></div></div></section><section id="declarative_2"><h2>Declarative</h2><div class="paragraph"><p>Declarative programming style:</p></div>
-<div class="ulist"><ul><li><p>makes code more readable</p></li><li><p>separates business logic from<br>
+<div class="ulist"><ul><li><p>makes code more readable</p></li><li><p>separates domain logic from<br>
 implementation details</p></li><li><p>enables improvements across code base<br>
 (correctness, performance, &#8230;&#8203;)</p></li></ul></div></section><section id="referential_transparency"><h2>Referential transparency</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>An expression always evaluates to the same result in any context</p></div></blockquote></div>
 <div class="paragraph"><p>(A consequence of using pure functions.)</p></div></section><section id="referential_transparency_2"><h2>Referential transparency</h2><div class="paragraph"><p>Benefits:</p></div>
@@ -1002,13 +1044,15 @@ implementation details</p></li><li><p>enables improvements across code base<br>
 <div class="ulist"><ul><li><p>avoids unnecessary computations</p></li></ul></div></section><section id="parallelization"><h2>Parallelization</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>The runtime can parallelize computations to optimize resource usage</p></div></blockquote></div>
 <div class="paragraph"><p>(A consequence of using pure functions.)</p></div>
 <div class="paragraph"><p>Benefits:</p></div>
-<div class="ulist"><ul><li><p>optimal resource utilization</p></li><li><p>no self-rolled concurrency</p></li></ul></div></section></section>
-<section><section id="solutions_to_common_problems"><h2>Solutions to common problems</h2><table class="toc">
+<div class="ulist"><ul><li><p>optimal resource utilization</p></li><li><p>no self-rolled concurrency</p></li></ul></div></section><section id="functional_programming_9"><h2>Functional programming</h2><div class="paragraph"><p>That were some effects:</p></div>
+<div class="ulist"><ul><li><p><em>declarative</em> instead of <em>imperative</em></p></li><li><p><em>referential transparency</em></p></li><li><p><em>laziness</em></p></li><li><p><em>thread-safety</em></p></li></ul></div></section></section>
+<section><section id="fp_basics_3"><h2>FP Basics</h2><table class="toc">
 	<tr><td>Common Problems in OOP</td></tr>
 	<tr><td>FP Essentials</td></tr>
 	<tr class="toc-current"><td>Solutions</td></tr>
+	<tr><td>Monads</td></tr>
 	<tr><td>Summary</td></tr>
-</table></section><section id="solutions_to_common_problems_2"><h2>Solutions to common problems</h2><div class="paragraph"><p>We discussed these common OOP problems:</p></div>
+</table></section><section id="solutions_to_common_problems"><h2>Solutions to common problems</h2><div class="paragraph"><p>We discussed these common OOP problems:</p></div>
 <div class="ulist"><ul><li><p>unreliable state</p></li><li><p>exposed state</p></li><li><p>mixed concerns</p></li></ul></div>
 <div class="paragraph"><p>Let&#8217;s see how FP can address them.</p></div></section><section id="unreliable_state_5"><h2>Unreliable state</h2><div class="paragraph"><p>Mechanisms:</p></div>
 <div class="ulist"><ul><li><p>immutability</p></li><li><p>no side effects</p></li><li><p>pure functions</p></li></ul></div></section><section id="unreliable_state_6"><h2>Unreliable state</h2><div class="paragraph"><p>Solutions:</p></div>
@@ -1036,39 +1080,227 @@ Supplier&lt;Result&gt; deferredAction = state
 	.configure(string -&gt; action(string));
 // later...
 Result result = deferredAction.get();</code></pre></div></div></section><section id="mixed_concerns_3"><h2>Mixed concerns</h2><div class="paragraph"><p>Mechanisms:</p></div>
-<div class="ulist"><ul><li><p>compose functions, not classes</p></li></ul></div>
+<div class="ulist"><ul><li><p>compose functions, not classes</p></li><li><p>look for contextual composition</p></li></ul></div>
 <div class="paragraph"><p>Solution:</p></div>
 <div class="ulist"><ul><li><p>separate concerns</p></li><li><p>pass actions as lambdas</p></li></ul></div></section><section id="mixed_concerns_4"><h2>Mixed concerns</h2><div class="paragraph"><p>Example:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">private final Lazy&lt;String&gt; name =
 	Lazy.of(() -&gt; createName()));
 
 // later
-String n = name.get();</code></pre></div></div></section></section>
-<section><section id="summary_15"><h2>Summary</h2><table class="toc">
+String n = name.get();</code></pre></div></div>
+<div class="paragraph"><p>What&#8217;s <code>Lazy</code>?<br>
+That&#8217;s the monad you&#8217;re gonna build.</p></div></section></section>
+<section><section id="fp_basics_4"><h2>FP Basics</h2><table class="toc">
 	<tr><td>Common Problems in OOP</td></tr>
 	<tr><td>FP Essentials</td></tr>
 	<tr><td>Solutions</td></tr>
+	<tr class="toc-current"><td>Monads</td></tr>
+	<tr><td>Summary</td></tr>
+</table></section><section id="why_monads"><h2>Why monads?</h2><div class="paragraph"><p>Why learn about monads?</p></div>
+<div class="ulist"><ul><li><p>common term in FP</p></li><li><p>hard to find a simple explanation</p></li><li><p>useful structure to understand<br>
+(in FP and OOP!)</p></li></ul></div></section><section id="what_is_a_monad"><h2>What is a monad?</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>[A] monad in X is just a monoid in the category of endofunctors of X, with product × replaced by composition of endofunctors and unit set by the identity endofunctor.</p></div></blockquote><div class="attribution"><cite>Categories for the Working Mathematician</cite><br>&#8212; Saunders Mac Lane</div></div>
+<div class="paragraph"><p>All clear? 😆</p></div></section><section id="what_is_a_monad_2"><h2>What is a monad?</h2><div class="paragraph"><p>More pragmatic:</p></div>
+<div class="ulist"><ul><li><p>a structure for computational composition</p></li><li><p>its methods follow certain rules</p></li></ul></div>
+<div class="paragraph"><p>Thanks to abiding by those rules:</p></div>
+<div class="ulist"><ul><li><p>refactoring is safe</p></li><li><p>usage patterns transfer easily</p></li></ul></div></section><section id="example_monad" data-background-image="images/kitchen.jpg" data-background-size="cover"><h2>Example monad</h2></section><section id="the_kitchen" data-background-image="images/kitchen.jpg" data-background-size="cover"><h2>The kitchen</h2>
+<div class="paragraph"><p>The kitchen:</p></div>
+<div class="ulist"><ul><li><p>groceries are in the right place</p></li><li><p>cutlery and dishes are clean</p></li><li><p>appliances are ready to be used</p></li></ul></div>
+<div class="paragraph"><p>The kitchen puts food into a "cooking context".</p></div></section><section id="the_kitchen_2" data-background-image="images/kitchen.jpg" data-background-size="cover"><h2>The kitchen</h2>
+<div class="paragraph"><p>The kitchen has two features:</p></div>
+<div class="olist arabic"><ol class="arabic"><li><p>bring food into the kitchen</p></li><li><p>with a recipe for "<em>food</em> to <em>other food</em>", it turns<br>
+a <em>kitchen + food</em> into a <em>kitchen + other food</em></p></li></ol></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// methods on type `Kitchen&lt;Food&gt;`
+static Kitchen&lt;Food&gt; bring(Food v)
+Kitchen&lt;Food&gt; prepare(Function&lt;Food, Food&gt; f)</code></pre></div></div></section><section id="three_kitchen_laws" data-background-image="images/kitchen.jpg" data-background-size="cover"><h2>Three kitchen laws</h2>
+<div class="dlist"><dl><dt class="hdlist1">"Don&#8217;t play with food"</dt><dd><p>If a recipe says "do nothing", <em>do nothing</em>.</p></dd></dl></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// given
+Kitchen&lt;Food&gt; before = /*...*/;
+Function&lt;Food, Food&gt; f = v -&gt; v;
+// when
+Kitchen&lt;Food&gt; after = before.prepare(f);
+// then
+before === after;</code></pre></div></div></section><section id="three_kitchen_laws_2" data-background-image="images/kitchen.jpg" data-background-size="cover"><h2>Three kitchen laws</h2>
+<div class="dlist"><dl><dt class="hdlist1">"The recipe is holy"</dt><dd><p>It doesn&#8217;t matter whether the food is prepared<br>
+inside the kitchen or brought in afterwards.</p></dd></dl></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// given
+Food v = /*...*/;
+Function&lt;Food, Food&gt; f = /*...*/;
+// when
+Kitchen&lt;Food&gt; outside = Kitchen.bring(f.apply(v));
+Kitchen&lt;Food&gt; inside = Kitchen.bring(v).prepare(f);
+// then
+inside === outside;</code></pre></div></div></section><section id="three_kitchen_laws_3" data-background-image="images/kitchen.jpg" data-background-size="cover"><h2>Three kitchen laws</h2>
+<div class="dlist"><dl><dt class="hdlist1">"Artistic freedom"</dt><dd><p>With two recipes, it doesn&#8217;t matter whether we<br>
+treat them as two separate or one long recipe.</p></dd></dl></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// given
+Kitchen&lt;Food&gt; kitchen = /*...*/;
+Function&lt;Food, Food&gt; f = /*...*/;
+Function&lt;Food, Food&gt; g = /*...*/;
+Function&lt;Food, Food&gt; fandg =
+	v -&gt; g.apply(f.apply(v));
+// when
+Kitchen&lt;Food&gt; twoSteps =
+	kitchen.prepare(f).prepare(g);
+Kitchen&lt;Food&gt; oneStep = kitchen.prepare(fandg);
+// then
+oneStep === twoSteps;</code></pre></div></div></section><section id="kitchen_extra_feature" data-background-image="images/kitchen.jpg" data-background-size="cover"><h2>Kitchen extra feature</h2>
+<div class="olist arabic"><ol class="arabic" start="3"><li><p>with a recipe for "<em>food</em> to <em>kitchen + other food</em>", it<br>
+turns a <em>kitchen + food</em> into a <em>kitchen + other food</em><br>
+(the two nested kitchens get "flattened" into one)</p></li></ol></div>
+<div class="paragraph"><p>In code:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// compare to `prepare`:
+// Kitchen&lt;Food&gt; prepare(Function&lt;Food, Food&gt; f)
+Kitchen&lt;Food&gt; flatPrepare(Function&lt;Food, Kitchen&lt;Food&gt;&gt; f)</code></pre></div></div>
+<div class="paragraph"><p>The three laws can be formulated accordingly.</p></div></section><section id="kitchen_law_benefits" data-background-image="images/kitchen.jpg" data-background-size="cover"><h2>Kitchen law benefits</h2>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">private Food cut(Food v) { /*...*/ }
+private Food cook(Food v) { /*...*/ }
+private Food admire(Food v) { return v; }
+
+Kitchen.bring(ingredients)
+	.prepare(this::cut)
+	.prepare(this::cook);
+
+Kitchen.bring(ingredients)
+//          "artistic freedom"
+	.prepare(v -&gt; cook(cut(v)));
+
+//           "the recipe is holy"
+Kitchen.bring(cut(ingredients))
+//          "don't play with food"
+	.prepare(this::admire)
+	.prepare(this::cook);</code></pre></div></div></section><section id="monad_parts"><h2>Monad parts</h2><div class="paragraph"><p>A monad consists of three parts:</p></div>
+<div class="ulist"><ul><li><p>a type over values<br>
+(<code>Kitchen</code>; generally <code>M&lt;V&gt;</code>)</p></li><li><p>a way to lift values into the type<br>
+(<code>bring</code>; generally <code>of</code>)</p></li><li><p>a way to apply a function to the contained values<br>
+(<code>prepare</code>/<code>flatPrepare</code>, generally <code>map</code>/<code>flatMap</code>)</p></li></ul></div></section><section id="monad_laws"><h2>Monad laws</h2><div class="dlist"><dl><dt class="hdlist1">Right identity aka "don&#8217;t play with food"</dt><dd><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// for `M&lt;V&gt; m` and `f = v -&gt; v`
+m === m.map(f)</code></pre></div></div></dd><dt class="hdlist1">Left identity aka "the recipe is holy"</dt><dd><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// for `V v` and `Function&lt;V, V&gt; f`
+M.of(f.apply(v)) === M.of(v).map(f)</code></pre></div></div></dd><dt class="hdlist1">Associativity aka "artistic freedom"</dt><dd><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// for `M&lt;V&gt; m` and `Function&lt;V, V&gt; f, g`
+m.map(f).map(g) ===
+	m.map(v -&gt; g.apply(f.apply(v)))</code></pre></div></div></dd></dl></div></section><section id="your_first_monad"><h2>Your first (?) monad</h2><div class="paragraph"><p>Lazy initialization:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">private ComplexResource resource;
+
+public ComplexResource getResource() {
+	if (resource == null)
+		resource = new ComplexResource();
+	return resource;
+}</code></pre></div></div>
+<div class="paragraph"><p>Could this be a monad?</p></div>
+<div class="ulist"><ul><li><p>what&#8217;s the "computational context"?</p></li><li><p>how to create one?</p></li><li><p>how to interact with one?</p></li></ul></div></section><section id="the_lazy_monad"><h2>The <code>Lazy</code> monad</h2><div class="paragraph"><p>Concept:</p></div>
+<div class="ulist"><ul><li><p>computational context: "delayed resource initialization"</p></li><li><p>create with recipe for initialization</p></li><li><p>apply functions without executing them immediately</p></li><li><p>accessing the resource&#8230;&#8203;</p><div class="exampleblock"><div class="content"><div class="ulist"><ul><li><p>&#8230;&#8203;the first time, leads to initialization/application</p></li><li><p>&#8230;&#8203;repeatedly, reuses existing result</p></li></ul></div></div></div>
+<div class="paragraph"><p>(i.e. initializer and functions are executed at most once)</p></div></li></ul></div></section><section id="exercises_1_3"><h2>Exercises 1 - 3</h2><div class="paragraph"><p>Create a <code>Lazy</code> monad.</p></div></section><section id="the_lazy_monad_2"><h2>The <code>Lazy</code> monad</h2><div class="paragraph"><p>Public API (sans generic wildcards):</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class Lazy&lt;T&gt; {
+
+	public static &lt;T&gt; Lazy&lt;T&gt; of(Supplier&lt;T&gt; generator);
+	public T get();
+	public &lt;U&gt; Lazy&lt;U&gt; map(Function&lt;T, U&gt; function);
+	public &lt;U&gt; Lazy&lt;U&gt; flatMap(Function&lt;T, Lazy&lt;U&gt;&gt; function);
+
+}</code></pre></div></div></section><section id="the_lazy_monad_3"><h2>The <code>Lazy</code> monad</h2><div class="paragraph"><p>Creation:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">private final Supplier&lt;T&gt; generator;
+private T element;
+
+private Lazy(Supplier&lt;T&gt; generator) {
+	this.generator = requireNonNull(generator);
+	this.element = null;
+}
+
+public static &lt;T&gt; Lazy&lt;T&gt; of(Supplier&lt;T&gt; generator) {
+	return new Lazy&lt;&gt;(generator);
+}</code></pre></div></div></section><section id="the_lazy_monad_4"><h2>The <code>Lazy</code> monad</h2><div class="paragraph"><p>Mapping:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public static &lt;T&gt; Lazy&lt;T&gt; of(Supplier&lt;T&gt; generator) {
+	return new Lazy&lt;&gt;(generator);
+}
+
+public &lt;U&gt; Lazy&lt;U&gt; map(Function&lt;T, U&gt; function) {
+	return Lazy.of(() -&gt; function.apply(this.get()));
+}
+
+public &lt;U&gt; Lazy&lt;U&gt; flatMap(Function&lt;T, Lazy&lt;U&gt;&gt; function) {
+	return Lazy.of(() -&gt; function.apply(this.get()).get());
+}</code></pre></div></div></section><section id="the_lazy_monad_5"><h2>The <code>Lazy</code> monad</h2><div class="paragraph"><p>At-most-once initialization:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">private final Supplier&lt;T&gt; generator;
+private T element;
+
+public T get() {
+	// TODO: guarantee "at most once"
+	//       under multi-threading
+	if (element == null)
+		element = generator.get();
+	return element;
+}</code></pre></div></div></section><section id="the_lazy_monad_6"><h2>The <code>Lazy</code> monad</h2><div class="paragraph"><p>Application:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">private final Lazy&lt;Orders&gt; orders;
+
+// in constructor
+orders = Lazy
+	.of(() -&gt; loadUserWithId(userId))
+	.map(this::loadOrdersForUser);</code></pre></div></div>
+<div class="ulist"><ul><li><p>reuses code and understanding of monads</p></li><li><p>reduces (observable) mutability</p></li></ul></div></section><section id="monads_2"><h2>Monads</h2><div class="paragraph"><p>That adds a third monad:</p></div>
+<div class="ulist"><ul><li><p><code>Stream</code></p></li><li><p><code>Optional</code></p></li><li><p><code>Lazy</code></p></li></ul></div></section><section id="optional_is_no_monad"><h2><code>Optional</code> is no monad!</h2><div class="paragraph"><p>😰</p></div></section><section id="exercise_4_3"><h2>Exercise 4</h2><div class="paragraph"><p>"Breaking the (monad) law"</p></div></section><section id="right_identity"><h2>Right identity</h2><div class="dlist"><dl><dt class="hdlist1">Right identity aka "don&#8217;t play with food"</dt><dd><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">opt === opt.map(v -&gt; v)</code></pre></div></div></dd></dl></div>
+<div class="paragraph"><p>✔</p></div></section><section id="left_identity"><h2>Left identity</h2><div class="dlist"><dl><dt class="hdlist1">Left identity aka "the recipe is holy"</dt><dd><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// for `V v` and `Function&lt;V, V&gt; f`
+M.of(f.apply(v)) === M.of(v).map(f)</code></pre></div></div></dd></dl></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">String v = null;
+Function f = s -&gt; "mango";
+// Optional["mango"]
+Optional applied = ofNullable(f.apply(v));
+// Optional[]
+Optional mapped = ofNullable(v).map(f);</code></pre></div></div></section><section id="associativity"><h2>Associativity</h2><div class="dlist"><dl><dt class="hdlist1">Associativity aka "artistic freedom"</dt><dd><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// for `M&lt;V&gt; m` and `Function&lt;V, V&gt; f, g`
+m.map(f).map(g) ===
+	m.map(v -&gt; g.apply(f.apply(v)))</code></pre></div></div></dd></dl></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">String v = "kiwi";
+Function f = s -&gt; null;
+Function g = s -&gt; "mango";
+// Optional[]
+Optional mapped = of(v).map(f).map(g);
+// Optional["mango"]
+Optional composed = of(v).map(f.andThen(g));</code></pre></div></div></section><section id="root_cause_analysis"><h2>Root cause analysis</h2><div class="ulist"><ul><li><p><code>Optional</code> maps <code>null</code> to <code>empty()</code></p></li><li><p><code>flatMap</code> and <code>map</code> are not executed<br>
+on empty optionals</p></li><li><p>the first occurrence of <code>null</code>/empty<br>
+stops the chain of executions</p></li></ul></div></section><section id="so_what"><h2>So What?</h2><div class="ulist"><ul><li><p>refactoring can change<br>
+which code gets executed</p></li><li><p>functions that can "recover" from <code>null</code><br>
+might not get executed</p></li><li><p>particularly error-prone when<br>
+functions have side effects</p></li></ul></div></section><section id="consequences"><h2>Consequences</h2><div class="paragraph"><p>Be aware:</p></div>
+<div class="ulist"><ul><li><p><code>Optional</code> is no well-behaved monad<br>
+if <code>null</code> is involved</p></li><li><p>refactoring can cause problems<br>
+if <code>null</code> was special cased</p></li></ul></div>
+<div class="paragraph"><p>See <code>Optional</code> as a way to avoid handling <code>null</code><br>
+(at the expense of breaking monad laws).</p></div></section><section id="more"><h2>More</h2><div class="paragraph"><p><a href="https://developer.atlassian.com/blog/2015/08/optional-broken/">More on Optional Being Broken</a> (atlassian.com)</p></div>
+<div class="paragraph"><p><a href="https://www.sitepoint.com/how-optional-breaks-the-monad-laws-and-why-it-matters/">&#8230;&#8203; and Why It Matters</a> (sitepoint.com)</p></div></section></section>
+<section><section id="fp_basics_5"><h2>FP Basics</h2><table class="toc">
+	<tr><td>Common Problems in OOP</td></tr>
+	<tr><td>FP Essentials</td></tr>
+	<tr><td>Solutions</td></tr>
+	<tr><td>Monads</td></tr>
 	<tr class="toc-current"><td>Summary</td></tr>
-</table></section><section id="summary_16"><h2>Summary</h2><div class="paragraph"><p>FP can ease some common problems of OOP:</p></div>
+</table></section><section id="summary_12"><h2>Summary</h2><div class="paragraph"><p>FP can ease some common problems of OOP:</p></div>
 <div class="ulist"><ul><li><p>make state more reliable with immutability</p></li><li><p>encapsulate state and separate concerns<br>
-by passing actions</p></li><li><p>improve concurrency with immutability<br>
+by creating monads and passing actions</p></li><li><p>improve concurrency with immutability<br>
 and pure functions</p></li></ul></div>
 <div class="paragraph"><p>These benefits are gradual.</p></div>
 <div class="paragraph"><p>Writing subsystems in a functional style<br>
 with OOP-style boundary makes sense!</p></div></section></section>
-<section><section id="default_methods"><h2>Default Methods</h2><table class="toc">
+<section id="java_8_5"><h2>Java 8</h2><table class="toc">
 	<tr><td>Lambda Expressions</td></tr>
 	<tr><td>Stream API</td></tr>
 	<tr><td>Optional API</td></tr>
-	<tr><td>FP Basics</td></tr>
+	<tr><td>Functional Programming Basics</td></tr>
+	<tr class="toc-current"><td>CompletableFuture API</td></tr>
+	<tr><td>Default Methods</td></tr>
+	<tr><td>Summary</td></tr>
+</table></section>
+<section><section id="java_8_6"><h2>Java 8</h2><table class="toc">
+	<tr><td>Lambda Expressions</td></tr>
+	<tr><td>Stream API</td></tr>
+	<tr><td>Optional API</td></tr>
+	<tr><td>Functional Programming Basics</td></tr>
+	<tr><td>CompletableFuture API</td></tr>
 	<tr class="toc-current"><td>Default Methods</td></tr>
+	<tr><td>Summary</td></tr>
 </table></section><section id="mmh"><h2>Mmh&#8230;&#8203;</h2><div class="paragraph"><p>Where does <code>Collection::stream</code> come from?</p></div>
 <div class="ulist"><ul><li><p>new method on a public interface</p></li><li><p>breaks all third-party implementations</p></li></ul></div></section><section id="collectionstream"><h2>Collection::stream</h2><div class="paragraph"><p>Take a look at <code>Collection</code> interface:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">default Stream&lt;E&gt; stream() {
 	return StreamSupport.stream(spliterator(), false);
 }</code></pre></div></div>
 <div class="ulist"><ul><li><p>what&#8217;s <code>default</code>?</p></li><li><p>why is there a method body?</p></li></ul></div></section></section>
-<section><section id="default_methods_2"><h2>Default Methods</h2><table class="toc">
+<section><section id="default_methods"><h2>Default Methods</h2><table class="toc">
 	<tr class="toc-current"><td>Syntax &amp; Semantics</td></tr>
 	<tr><td>Existing Functionality</td></tr>
 	<tr><td>Kinds of Default Methods</td></tr>
@@ -1125,20 +1357,20 @@ observing resolution strategy.</p></div></section><section id="static_interface_
 	// ...
 }</code></pre></div></div></section><section id="private_interface_methods_2"><h2>Private Interface Methods</h2><div class="paragraph"><p>Use case:</p></div>
 <div class="paragraph"><p>Reusing code in default methods.</p></div></section></section>
-<section><section id="existing_functionality"><h2>Existing Functionality</h2><table class="toc">
+<section><section id="default_methods_2"><h2>Default Methods</h2><table class="toc">
 	<tr><td>Syntax &amp; Semantics</td></tr>
 	<tr class="toc-current"><td>Existing Functionality</td></tr>
 	<tr><td>Kinds of Default Methods</td></tr>
 	<tr><td>Summary</td></tr>
-</table></section><section id="existing_functionality_2"><h2>Existing Functionality</h2><div class="paragraph"><p>Many functional interfaces have<br>
+</table></section><section id="existing_functionality"><h2>Existing Functionality</h2><div class="paragraph"><p>Many functional interfaces have<br>
 usability default methods:</p></div>
 <div class="ulist"><ul><li><p>Collections</p></li><li><p><code>Comparator</code></p></li><li><p>functional interfaces</p></li></ul></div></section><section id="collections"><h2>Collections</h2><div class="ulist"><ul><li><p><code>Iterable.forEach(Consumer&lt;T&gt;)</code></p></li><li><p><code>Collection.removeIf(Predicate&lt;E&gt;)</code></p></li><li><p><code>Collection.stream()</code></p></li><li><p><code>List.replaceAll(UnaryOperator&lt;E&gt;)</code></p></li><li><p><code>List.sort(Comparator&lt;E&gt;)</code></p></li></ul></div>
 <div class="paragraph"><p>Many more on various collections.</p></div></section><section id="comparator"><h2>Comparator</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Comparator&lt;Todo&gt; comparator = Comparator
 	.comparing(todo -&gt; todo.due());
 comparator = comparator.reversed();
 comparator = Comparator.nullsLast(comparator);</code></pre></div></div>
-<div class="paragraph"><p>(Many more.)</p></div></section><section id="functional_interfaces_4"><h2>Functional Interfaces</h2><div class="ulist"><ul><li><p><code>Function.andThen(Function&lt;R, V&gt;)</code></p></li><li><p><code>Function.identity()</code></p></li><li><p><code>Predicate.and(Predicate&lt;T&gt;)</code></p></li><li><p><code>Predicate.negate()</code></p></li></ul></div></section></section>
-<section><section id="kinds_of_default_methods"><h2>Kinds of Default Methods</h2><table class="toc">
+<div class="paragraph"><p>(Many more.)</p></div></section><section id="functional_interfaces_3"><h2>Functional Interfaces</h2><div class="ulist"><ul><li><p><code>Function.andThen(Function&lt;R, V&gt;)</code></p></li><li><p><code>Function.identity()</code></p></li><li><p><code>Predicate.and(Predicate&lt;T&gt;)</code></p></li><li><p><code>Predicate.negate()</code></p></li></ul></div></section></section>
+<section><section id="default_methods_3"><h2>Default Methods</h2><table class="toc">
 	<tr><td>Syntax &amp; Semantics</td></tr>
 	<tr><td>Existing Functionality</td></tr>
 	<tr class="toc-current"><td>Kinds of Default Methods</td></tr>
@@ -1162,25 +1394,39 @@ any other possible implementation:</p></div>
 	Objects.requireNonNull(p);
 	return (T t) -&gt; test(t) &amp;&amp; p.test(t);
 }</code></pre></div></div></section></section>
-<section><section id="summary_17"><h2>Summary</h2><table class="toc">
+<section><section id="default_methods_4"><h2>Default Methods</h2><table class="toc">
 	<tr><td>Syntax &amp; Semantics</td></tr>
 	<tr><td>Existing Functionality</td></tr>
 	<tr><td>Kinds of Default Methods</td></tr>
 	<tr class="toc-current"><td>Summary</td></tr>
-</table></section><section id="summary_18"><h2>Summary</h2><div class="paragraph"><p>Syntax &amp; Semantics:</p></div>
+</table></section><section id="summary_13"><h2>Summary</h2><div class="paragraph"><p>Syntax &amp; Semantics:</p></div>
 <div class="ulist"><ul><li><p>interfaces can have instance methods:</p><div class="ulist"><ul><li><p>add <code>default</code> keyword</p></li><li><p>implement as usually</p></li></ul></div></li><li><p>method resolution:</p><div class="ulist"><ul><li><p>methods from classes are <em>always</em> preferred</p></li><li><p>default methods are "fall back"</p></li></ul></div></li><li><p>interface can have static and private<br>
-methods just like classes</p></li></ul></div></section><section id="summary_19"><h2>Summary</h2><div class="paragraph"><p>Many existing and new interfaces<br>
+methods just like classes</p></li></ul></div></section><section id="summary_14"><h2>Summary</h2><div class="paragraph"><p>Many existing and new interfaces<br>
 have default methods.</p></div>
 <div class="paragraph"><p>Specific use cases:</p></div>
 <div class="ulist"><ul><li><p>create fluent decorator APIs</p></li><li><p>evolve interfaces without breaking clients</p></li></ul></div></section></section>
-<section id="summary_of_summaries"><h2>Summary of summaries</h2><div class="ulist"><ul><li><p>use lambdas to "pass code as data"<br>
-(stream API is excellent example)</p></li><li><p>use streams to make looping<br>
-more predictable and readable</p></li><li><p>use <code>Optional</code> to represent absence</p></li><li><p>give immutability and functions a shot</p></li><li><p>be aware of default methods</p></li></ul></div></section>
+<section><section id="java_8_7"><h2>Java 8</h2><table class="toc">
+	<tr><td>Lambda Expressions</td></tr>
+	<tr><td>Stream API</td></tr>
+	<tr><td>Optional API</td></tr>
+	<tr><td>Functional Programming Basics</td></tr>
+	<tr><td>Default Methods</td></tr>
+	<tr><td>CompletableFuture API</td></tr>
+	<tr class="toc-current"><td>Summary</td></tr>
+</table></section><section id="summary_of_summaries"><h2>Summary of summaries</h2><div class="ulist"><ul><li><p>use lambdas to "pass code as data"<br>
+(stream API is excellent example)</p></li><li><p>give functions and immutability a shot</p></li><li><p>be aware of default methods</p></li><li><p>use monads to lift code to<br>
+a higher level of abstraction</p></li></ul></div></section><section id="summary_of_summaries_2"><h2>Summary of summaries</h2><div class="paragraph"><p>Use monads:</p></div>
+<div class="ulist"><ul><li><p>use streams to make looping<br>
+more predictable and readable</p></li><li><p>use <code>Optional</code> to represent <em>absence</em></p></li><li><p>use <code>Lazy</code> to represent <em>late</em> and<br>
+<em>exactly-once</em> initialization</p></li><li><p>use <code>CompletableFuture</code> to represent<br>
+<em>asynchronous</em> computations</p></li></ul></div></section></section>
 <section id="image_credits"><h2>Image Credits</h2><div class="ulist"><ul><li><p><a href="https://pixabay.com/en/number-digit-eight-8-background-1982275/">eight</a>:
 <a href="https://pixabay.com/en/users/PIRO4D-2707530/">PIRO4D</a>,
 <a href="https://wiki.creativecommons.org/wiki/CC0">CC0</a></p></li><li><p><a href="https://www.flickr.com/photos/21496790@N06/5065834411">question-mark</a>:
 <a href="http://milosevicmilos.com/">Milos Milosevic</a>,
-<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a></p></li></ul></div></section></div></div><script src="../_reveal.js/lib/js/head.min.js"></script><script src="../_reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a></p></li><li><p><a href="https://unsplash.com/photos/MP0bgaS_d1c">kitchen</a>:
+<a href="https://unsplash.com/@naomish">Naomi Hébert</a>,
+<a href="https://unsplash.com/license">Unsplash license</a></p></li></ul></div></section></div></div><script src="../_reveal.js/lib/js/head.min.js"></script><script src="../_reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
 Reveal.initialize({
   // Display controls in the bottom right corner
   controls: false,
