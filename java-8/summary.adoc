@@ -7,6 +7,7 @@
 	<tr><td>Optional API</td></tr>
 	<tr><td>Functional Programming Basics</td></tr>
 	<tr><td>Default Methods</td></tr>
+	<tr><td>CompletableFuture API</td></tr>
 	<tr class="toc-current"><td>Summary</td></tr>
 </table>
 ++++
@@ -29,3 +30,5 @@ Use monads:
 * use `Optional` to represent _absence_
 * use `Lazy` to represent _late_ and +
   _exactly-once_ initialization
+* use `CompletableFuture` to represent +
+  _asynchronous_ computations
