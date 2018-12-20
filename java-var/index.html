@@ -27,10 +27,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://jfall.nl/"><img src="images/logo-j-fall.jpg" class="logo" style="{host-logo-style}"></a>
+		<a href="http://virtualjug.com/"><img src="images/logo-vjug.jpg" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://jfall.nl/">J-Fall</a></p>
-			<p><a href="https://twitter.com/hashtag/jfall?src=hash">#jfall</a></p>
+			<p><a href="http://virtualjug.com/">vJUG</a></p>
+			<p><a href="https://twitter.com/virtualJUG">@VirtualJUG</a></p>
 		</div>
 	</div>
 </div>
@@ -45,9 +45,9 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://jfall.nl/"><img src="images/logo-j-fall.jpg" class="logo" style="{host-logo-style}"></a>
+		<a href="http://virtualjug.com/"><img src="images/logo-vjug.jpg" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://jfall.nl/">J-Fall</a> / <a href="https://twitter.com/hashtag/jfall?src=hash">#jfall</a></p>
+			<p><a href="http://virtualjug.com/">vJUG</a> / <a href="https://twitter.com/virtualJUG">@VirtualJUG</a></p>
 		</div>
 	</div>
 </footer>
@@ -100,13 +100,13 @@ without creating a new interface.</p></div>
 <div class="paragraph"><p><strong>For example:</strong></p></div>
 <div class="paragraph"><p>You need something<br>
 that is <code>Closeable</code> and an <code>Iterator</code><br>
-without creating <code>CloseableIterator</code>.</p></div></section><section id="intersection_types"><h2>Intersection types</h2><div class="paragraph"><p>Given two types, the <strong>intersection type</strong><br>
+without creating <code>CloseableIterator</code>.</p></div></section><section data-background-image="images/intersection-venn.png" data-background-size="cover" data-state="empty"></section><section id="intersection_types"><h2>Intersection types</h2><div class="paragraph"><p>Given two types, the <strong>intersection type</strong><br>
 is the set of variables that are of both types.</p></div>
 <div class="paragraph"><p>An intersection type has the API of both types!</p></div>
 <div class="paragraph"><p><strong>For example:</strong></p></div>
 <div class="paragraph"><p>A variable of type <code>Closeable &amp; Iterator&lt;E&gt;</code><br>
 is both <code>Closeable</code> and an <code>Iterator&lt;E&gt;</code>.</p></div>
-<div class="paragraph"><p>It has <code>close()</code> and <code>hashNext()</code>/<code>next()</code></p></div></section><section data-background-image="images/intersection-venn.png" data-background-size="cover" data-state="empty"></section><section id="code_2"><h2>Code</h2></section><section id="intersection_types_2"><h2>Intersection types</h2><div class="olist arabic"><ol class="arabic"><li><p>in method signatures, express with generics:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public &lt;T extends Closeable &amp; Iterator&lt;String&gt;&gt;
+<div class="paragraph"><p>It has <code>close()</code> and <code>hashNext()</code>/<code>next()</code></p></div></section><section id="code_2"><h2>Code</h2></section><section id="intersection_types_2"><h2>Intersection types</h2><div class="olist arabic"><ol class="arabic"><li><p>in method signatures, express with generics:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public &lt;T extends Closeable &amp; Iterator&lt;String&gt;&gt;
 	T createCloseableIterator(...) { ... }
 
 public &lt;E, T extends Closeable &amp; Iterator&lt;E&gt;&gt;
@@ -139,8 +139,7 @@ interface MegacorpDelegate extends Megacorp {
 }</code></pre></div></div></li><li><p>create traits as interfaces:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">interface IsEvil extends Megacorp {
 	default boolean isEvil() { return true; }
 }</code></pre></div></div></li></ol></div></section><section id="traits_3"><h2>Traits</h2><div class="olist arabic"><ol class="arabic" start="3"><li><p>cast lambda to desired intersection<br>
-and assign to <code>var</code>-ed variable:</p></li></ol></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">var corp = (MegacorpDelegate &amp; IsEvil) () -&gt; original;</code></pre></div></div></section><section id="evaluation_2"><h2>Evaluation</h2><div class="paragraph"><p>Downsides:</p></div>
+and assign to <code>var</code>-ed variable:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">var corp = (MegacorpDelegate &amp; IsEvil) () -&gt; original;</code></pre></div></div></li></ol></div></section><section id="evaluation_2"><h2>Evaluation</h2><div class="paragraph"><p>Downsides:</p></div>
 <div class="ulist"><ul><li><p>combination of non-trivial Java features:</p><div class="ulist"><ul><li><p>lambda as poly expression</p></li><li><p>type inference</p></li><li><p>default methods</p></li></ul></div></li><li><p>refactoring becomes harder<br>
 (see intersection types)</p></li><li><p>delegating interface is cumbersome</p></li><li><p>breaks in collections (<strong>!</strong>)</p></li></ul></div>
 <div class="paragraph"><p><strong>Never use in "real" code!</strong></p></div></section><section id="more_on_traits"><h2>More on traits</h2><div class="paragraph"><p>I&#8217;ve written a blog post:<br>
@@ -177,7 +176,7 @@ corp.isSuccessful();</code></pre></div></div></section><section id="evaluation_3
 <div class="paragraph"><p><strong>Prefer the alternatives!</strong></p></div></section><section id="alternatives"><h2>Alternatives</h2><div class="paragraph"><p>Alternatives for ad-hoc fields:</p></div>
 <div class="ulist"><ul><li><p><code>Map.Entry</code></p></li><li><p>tuples from <a href="http://www.vavr.io/">Vavr</a>, <a href="https://github.com/aol/cyclops">Cyclops</a>, etc.</p></li><li><p>records (next)</p></li></ul></div>
 <div class="paragraph"><p>Alternatives for ad-hoc methods:</p></div>
-<div class="ulist"><ul><li><p>extending base types</p></li><li><p>utility methods</p></li><li><p>traits (later)</p></li></ul></div></section><section id="records"><h2>Records</h2><div class="paragraph"><p>What are records?<br>
+<div class="ulist"><ul><li><p>extending base types</p></li><li><p>utility methods</p></li><li><p>traits</p></li></ul></div></section><section id="records"><h2>Records</h2><div class="paragraph"><p>What are records?<br>
 Upcoming Java language feature!</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public record Range(int low, int high) {
 	// compiler generates:

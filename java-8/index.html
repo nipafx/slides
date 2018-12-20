@@ -316,7 +316,7 @@ of the first parameter:</p></div>
 <div class="ulist"><ul><li><p>mix looping with domain logic</p></li><li><p>make optimization/parallelization harder</p></li><li><p>make side effects easier / more likely</p></li></ul></div></section><section id="a_word_on_mapreduce"><h2>A Word On MapReduce</h2><div class="paragraph"><p>Google&#8217;s MapReduce has the same logic:</p></div>
 <div class="ulist"><ul><li><p>split input across nodes</p></li><li><p>apply given function in parallel (<em>map</em>)</p></li><li><p>reduce resulting data in parallel (<em>reduce</em>)</p></li><li><p>reduce data across nodes (more <em>reduce</em>)</p></li></ul></div></section></section>
 <section><section id="stream_api"><h2>Stream API</h2><table class="toc">
-	<tr class="toc-current"><td>Stream API Basics</td></tr>
+	<tr class="toc-current"><td>Stream Basics</td></tr>
 	<tr><td>Stream Operations</td></tr>
 	<tr><td>More Stream APIs</td></tr>
 	<tr><td>Stream Details</td></tr>
@@ -341,7 +341,7 @@ with <code>Collection::stream</code></p></dd><dt class="hdlist1">Intermediate Op
 notably <code>map</code> and <code>filter</code></p></dd><dt class="hdlist1">Terminal Operation (one)</dt><dd><p>All methods on <code>Stream</code> that don&#8217;t return a <code>Stream</code>,<br>
 notably <code>collect</code> and <code>reduce</code></p></dd></dl></div></section><section id="exercise_2_2"><h2>Exercise 2</h2><div class="paragraph"><p>Refactor use of self-made API to stream API</p></div></section></section>
 <section><section id="stream_api_2"><h2>Stream API</h2><table class="toc">
-	<tr><td>Stream API Basics</td></tr>
+	<tr><td>Stream Basics</td></tr>
 	<tr class="toc-current"><td>Stream Operations</td></tr>
 	<tr><td>More Stream APIs</td></tr>
 	<tr><td>Stream Details</td></tr>
@@ -460,14 +460,14 @@ Comparator&lt;Todo&gt; byDueDate = // ...
 Optional&lt;Todo&gt; max = todos.stream()
 	.max(byDueDate);</code></pre></div></div></section><section id="sorting_minima_maxima_6"><h2>Sorting, Minima, Maxima</h2><div class="paragraph"><p><em>"I have elements and need to deduplicate them"</em></p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Element&gt; elements = // ...
-List&lt;element&gt; distinctElements = elements.stream()
+List&lt;Element&gt; distinctElements = elements.stream()
 	.distinct()
 	.collect(toList());</code></pre></div></div>
 <div class="paragraph"><p>Uses <code>Element::equals</code>.</p></div></section><section id="sorting_minima_maxima_7"><h2>Sorting, Minima, Maxima</h2><div class="paragraph"><p><em>"I have elements and need to deduplicate them,<br>
 but their <code>equals</code> doesn&#8217;t fit"</em></p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Element&gt; elements = // ...
-List&lt;element&gt; distinctElements = elements.stream()
-	.map(WithMyEquals::neω)
+List&lt;Element&gt; distinctElements = elements.stream()
+	.map(WithMyEquals::new)
 	.distinct()
 	.map(WithMyEquals::element)
 	.collect(toList());</code></pre></div></div>
@@ -520,7 +520,7 @@ long lowDrugsCount = drugs.stream()
 	.count();</code></pre></div></div></section><section id="reducing_3"><h2>Reducing</h2><div class="paragraph"><p>Terminal operations:</p></div>
 <div class="ulist"><ul><li><p><code>reduce(BinaryOperator&lt;T&gt;)</code></p></li><li><p><code>reduce(T, BinaryOperator&lt;T&gt;)</code></p></li><li><p><code>count()</code></p></li></ul></div></section><section id="exercise_3_2"><h2>Exercise 3</h2><div class="paragraph"><p>Solve problems with streams</p></div></section></section>
 <section><section id="stream_api_3"><h2>Stream API</h2><table class="toc">
-	<tr><td>Stream API Basics</td></tr>
+	<tr><td>Stream Basics</td></tr>
 	<tr><td>Stream Operations</td></tr>
 	<tr class="toc-current"><td>More Stream APIs</td></tr>
 	<tr><td>Stream Details</td></tr>
@@ -595,7 +595,7 @@ or <code>Stream::mapToInt</code></p></li><li><p>conceptually the same as <code>S
 functional interfaces</p></li><li><p>has a few numeric special cases:<br>
 <code>average</code>, <code>max</code>, <code>min</code>, <code>sum</code></p></li></ul></div></section></section>
 <section><section id="stream_api_4"><h2>Stream API</h2><table class="toc">
-	<tr><td>Stream API Basics</td></tr>
+	<tr><td>Stream Basics</td></tr>
 	<tr><td>Stream Operations</td></tr>
 	<tr><td>More Stream APIs</td></tr>
 	<tr class="toc-current"><td>Stream Details</td></tr>
@@ -638,7 +638,7 @@ these characteristics.</p></div>
 <div class="paragraph"><p>Operations can benefit from them:</p></div>
 <div class="ulist"><ul><li><p><code>count</code> may return immediately if <em>sized</em></p></li><li><p><code>distinct</code> may be no-op if <em>distinct</em></p></li><li><p><code>sorted</code>, <code>min</code>, <code>max</code> may be no-op if <em>sorted</em></p></li><li><p><code>findFirst</code> is like <code>findAny</code> if not <em>ordered</em></p></li><li><p>parallelization is easier if not <em>ordered</em></p></li></ul></div></section></section>
 <section><section id="stream_api_5"><h2>Stream API</h2><table class="toc">
-	<tr><td>Stream API Basics</td></tr>
+	<tr><td>Stream Basics</td></tr>
 	<tr><td>Stream Operations</td></tr>
 	<tr><td>More Stream APIs</td></tr>
 	<tr><td>Stream Details</td></tr>
@@ -692,7 +692,7 @@ but even then it makes code complex.)</p></div></section><section id="beware_of_
 <div class="ulist"><ul><li><p>try to rely on the terminal operation</p></li><li><p>make sure side-effects are not critical</p></li><li><p>make sure methods called in side-effects are<br>
 order-independent, thread-safe, performant</p></li></ul></div></section></section>
 <section><section id="stream_api_6"><h2>Stream API</h2><table class="toc">
-	<tr><td>Stream API Basics</td></tr>
+	<tr><td>Stream Basics</td></tr>
 	<tr><td>Stream Operations</td></tr>
 	<tr><td>More Stream APIs</td></tr>
 	<tr><td>Stream Details</td></tr>
@@ -707,7 +707,9 @@ order-independent, thread-safe, performant</p></li></ul></div></section></sectio
 <div class="ulist"><ul><li><p>caller must assume stream is traversed</p></li><li><p>works for obvious consumers</p></li><li><p>transformations can be hard to track</p></li><li><p>never return a traversed stream<br>
 (obvious, right?!)</p></li></ul></div></section><section id="summary_10"><h2>Summary</h2><div class="paragraph"><p>But Look Out:</p></div>
 <div class="ulist"><ul><li><p>streams can only be traversed once</p></li><li><p>no mutation during traversal</p></li><li><p>don&#8217;t make chains too long or<br>
-debuggability suffers</p></li></ul></div></section></section>
+debuggability suffers</p></li></ul></div></section><section id="cheat_sheets"><h2>Cheat Sheets</h2><div class="paragraph"><p>Have a look at these cheat sheets<br>
+when you get started:</p></div>
+<div class="ulist"><ul><li><p><a href="http://www.java8.org/">java8.org</a></p></li><li><p><a href="https://zeroturnaround.com/rebellabs/java-8-streams-cheat-sheet/">zeroturnaround.com/rebellabs/java-8-streams-cheat-sheet</a></p></li><li><p><a href="https://github.com/BafS/Java8-CheatSheet">github.com/BafS/Java8-CheatSheet</a></p></li></ul></div></section></section>
 <section><section id="java_8_3"><h2>Java 8</h2><table class="toc">
 	<tr><td>Lambda Expressions</td></tr>
 	<tr><td>Stream API</td></tr>
@@ -1277,7 +1279,7 @@ and pure functions</p></li></ul></div>
 <div class="paragraph"><p>These benefits are gradual.</p></div>
 <div class="paragraph"><p>Writing subsystems in a functional style<br>
 with OOP-style boundary makes sense!</p></div></section></section>
-<section id="java_8_5"><h2>Java 8</h2><table class="toc">
+<section><section id="java_8_5"><h2>Java 8</h2><table class="toc">
 	<tr><td>Lambda Expressions</td></tr>
 	<tr><td>Stream API</td></tr>
 	<tr><td>Optional API</td></tr>
@@ -1285,7 +1287,305 @@ with OOP-style boundary makes sense!</p></div></section></section>
 	<tr class="toc-current"><td>CompletableFuture API</td></tr>
 	<tr><td>Default Methods</td></tr>
 	<tr><td>Summary</td></tr>
-</table></section>
+</table></section><section id="sync_programming"><h2>Sync Programming</h2><div class="paragraph"><p>Fictitious REST request handling:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">verifyUserAuthorization(request);
+Forecast one = weatherService("one", request);
+Forecast two = weatherService("two", request);
+sendResponse(one, two);</code></pre></div></div>
+<div class="paragraph"><p>What if <em>one</em> and <em>two</em> take a long time?</p></div></section><section id="async_programming"><h2>Async Programming</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">verifyUserAuthorization(request);
+// make each call in a background thread;
+// initiate both calls at "the same time"
+Later&lt;Forecast&gt; one = weatherService("one", request);
+Later&lt;Forecast&gt; two = weatherService("two", request);
+// wait for both threads to come back with results
+waitFor(one, two);
+sendResponse(one, two);</code></pre></div></div>
+<div class="paragraph"><p>What if I only need one forecast?</p></div></section><section id="with_selection"><h2>With Selection</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">verifyUserAuthorization(request);
+Later&lt;Forecast&gt; one = weatherService("one", request);
+Later&lt;Forecast&gt; two = weatherService("two", request);
+// wait for the first thread to come back with a result
+Forecast first = waitForFirst(one, two);
+sendResponse(first);</code></pre></div></div>
+<div class="paragraph"><p>What if I want to cancel long-running calls?</p></div></section><section id="with_timeouts"><h2>With Timeouts</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">verifyUserAuthorization(request);
+Later&lt;Forecast&gt; one = weatherService("one", request)
+	// time out after 10 seconds
+	.timeout(10);
+Later&lt;Forecast&gt; two = /*...*/;
+sendResponse(waitForFirst(one, two));</code></pre></div></div>
+<div class="paragraph"><p>What if there are additional operations on the results?</p></div></section><section id="with_dependent_operations"><h2>With Dependent Operations</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">verifyUserAuthorization(request);
+Later&lt;Forecast&gt; one = weatherService("one", request)
+	.timeout(10)
+	// charge user once the forecast was received
+	.later(forecast -&gt; chargeUser(forecast));
+Later&lt;Forecast&gt; two = /*...*/;
+sendResponse(waitForFirst(one, two));</code></pre></div></div>
+<div class="paragraph"><p>What if there are errors?</p></div></section><section id="with_error_handling"><h2>With Error Handling</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">verifyUserAuthorization(request);
+Later&lt;Forecast&gt; one = weatherService("one", request)
+	.timeout(10)
+	.later(forecast -&gt; chargeUser(forecast))
+	// in error case, create a dummy forecast
+	.onError(error -&gt; createDummyForecast());
+Later&lt;Forecast&gt; two = /*...*/;
+sendResponse(waitForFirst(one, two));</code></pre></div></div></section><section id="async_programming_2"><h2>Async Programming</h2><div class="paragraph"><p>Requirements</p></div>
+<div class="ulist"><ul><li><p>offload tasks to (background) threads</p></li><li><p>wait for their completion (all or some)</p></li><li><p>attach additional operations</p></li><li><p>error handling</p></li><li><p>time outs</p></li></ul></div></section><section id="async_java_8"><h2>Async Java 8</h2><div class="paragraph"><p>Java 8 introduces <code>CompletableFuture</code>:</p></div>
+<div class="ulist"><ul><li><p>extends <code>Future</code> (since Java 5)</p></li><li><p>creates computational context<br>
+<em>"value is computed asynchronously"</em></p></li><li><p>offers operations in this context</p></li></ul></div>
+<div class="paragraph"><p>Yes, it&#8217;s a monad!</p></div></section><section id="monad_count"><h2>Monad Count</h2><div class="ulist"><ul><li><p><code>Stream</code>: <em>"iteration over many objects"</em></p></li><li><p><code>Optional</code> (almost): <em>"value may be absent"</em></p></li><li><p><code>Lazy</code> (self-made): <em>"computed lazily; at most once"</em></p></li><li><p><code>CompletableFuture</code>: <em>"asynchronous computation"</em></p></li></ul></div></section></section>
+<section><section id="completable_future"><h2>Completable Future</h2><table class="toc">
+	<tr class="toc-current"><td>API Basics</td></tr>
+	<tr><td>As A Monad</td></tr>
+	<tr><td>Terminology</td></tr>
+	<tr><td>API Details</td></tr>
+	<tr><td>Threading</td></tr>
+	<tr><td>Summary</td></tr>
+</table></section><section id="essential_methods"><h2>Essential Methods</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// start an asynchronous computation
+public static CompletableFuture&lt;T&gt; supplyAsync(Supplier&lt;T&gt;);
+
+// attach further steps
+public CompletableFuture&lt;U&gt; thenApply(Function&lt;T, U&gt;);
+public CompletableFuture&lt;U&gt; thenCompose(
+	Function&lt;T, CompletableFuture&lt;U&gt;);
+public CompletableFuture&lt;Void&gt; thenAccept(Consumer&lt;T&gt;);
+
+// wait for the computation to finish and get result
+public T join();</code></pre></div></div></section><section id="first_example"><h2>First Example</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public void loadWebPage() {
+	String url = "http://codefx.org";
+	CompletableFuture&lt;WebPage&gt; future = CompletableFuture
+			.supplyAsync(() -&gt; webRequest(url))
+			.thenApply(html -&gt; new WebPage(url, html));
+	// ... do other stuff
+	future.join();
+}
+
+private String webRequest(String url) {
+	// make request to URL and return HTML
+	// (this can take a while)
+}</code></pre></div></div></section><section id="second_example"><h2>Second Example</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public CompletableFuture&lt;ZDT&gt; recentOrderDate(long id) {
+	return user(id)
+		.thenApply(User::orderIds)
+		.thenCompose(this::recentOrder)
+		.thenApply(Order::date);
+}
+
+private CompletableFuture&lt;User&gt; user(long id) {
+	return CompletableFuture
+		.supplyAsync(() -&gt; loadUser(userId));
+}
+
+private CompletableFuture&lt;Order&gt; recentOrder(List&lt;Long&gt; ids) {
+	return CompletableFuture
+		.supplyAsync(() -&gt; loadRecentOrder(ids));
+}</code></pre></div></div></section><section id="third_example"><h2>Third Example</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public void processRecentOrder(long id) {
+	CompletableFuture&lt;Order&gt; order = user(id)
+		.thenApply(User::orderIds)
+		.thenCompose(this::recentOrder);
+	// a step can be reused for multiple operations
+	order
+		.thenAccept(this::processOrder);
+	order
+		.thenApply(Order::date)
+		.thenAccept(this::logRecentOrderDate)
+}</code></pre></div></div></section><section id="simple_use"><h2>Simple Use</h2><div class="paragraph"><p>For simple uses cases:</p></div>
+<div class="ulist"><ul><li><p>use <code>supplyAsync</code> to start an asynchronous computation</p></li><li><p>use <code>thenApply</code>, <code>thenCompose</code>, <code>thenAccept</code> to attach<br>
+additional operations and create an async pipeline</p></li><li><p>use <code>join</code> to wait for the result</p></li></ul></div></section></section>
+<section><section id="completable_future_2"><h2>Completable Future</h2><table class="toc">
+	<tr><td>API Basics</td></tr>
+	<tr class="toc-current"><td>As A Monad</td></tr>
+	<tr><td>Terminology</td></tr>
+	<tr><td>API Details</td></tr>
+	<tr><td>Threading</td></tr>
+	<tr><td>Summary</td></tr>
+</table></section><section id="why_is_this_important"><h2>Why Is This Important?</h2><div class="paragraph"><p><code>CompletableFuture</code> has the same structure<br>
+as <code>Stream</code>, <code>Optional</code>, and <code>Lazy</code>.</p></div>
+<div class="ulist"><ul><li><p>you can apply that knowledge here</p></li><li><p>you can improve your understanding of these APIs</p></li></ul></div></section><section id="monadic_functionality"><h2>Monadic Functionality</h2><div class="paragraph"><p>Functionality we&#8217;ve seen repeatedly,<br>
+e.g. on <code>Stream</code> / <code>Optional</code>:</p></div>
+<div class="ulist"><ul><li><p>lift value(s): <code>of</code></p></li><li><p>apply function: <code>map</code> and <code>flatMap</code></p></li><li><p>execute action: <code>forEach</code> / <code>ifPresent</code></p></li><li><p>get value(s) out: <code>collect</code> / <code>get</code></p></li></ul></div></section><section id="monadic_functionality_2"><h2>Monadic Functionality</h2><div class="paragraph"><p><code>CompletableFuture</code> has these as well:</p></div>
+<div class="ulist"><ul><li><p>lift value: <code>supplyAsync</code></p></li><li><p>apply function: <code>thenApply</code> and <code>thenCompose</code></p></li><li><p>execute action: <code>thenAccept</code> and <code>thenRun</code></p></li><li><p>get value out: <code>join</code> and <code>get</code></p></li></ul></div></section><section id="monadic_functionality_3"><h2>Monadic Functionality</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:25%"><col style="width:25%"><col style="width:25%"><col style="width:25%"></colgroup><thead><tr><th class="tableblock halign-left valign-top">Functionality</th><th class="tableblock halign-left valign-top"><code>Stream</code></th><th class="tableblock halign-left valign-top"><code>Optional</code></th><th class="tableblock halign-left valign-top"><code>CompletableF.</code></th></tr><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">lift value(s)</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>of</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>of</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>supplyAsync</code></p></td></tr><tr><td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">apply function</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>map</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>map</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>thenApply</code></p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>flatMap</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>flatMap</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>thenCompose</code></p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">execute action</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>forEach</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>ifPresent</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>thenAccept</code> &amp; <code>thenRun</code></p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">get value(s)</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>collect</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>get</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>join</code> &amp; <code>get</code></p></td></tr></table></section><section id="monadic_functionality_4"><h2>Monadic Functionality</h2><div class="paragraph"><p><code>Optional</code> vs <code>CompletableFuture</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">ZonedDateTime date = user(id) // ~&gt; Optional&lt;User&gt;
+	.map(User::orderIds)        // ...&lt;List&lt;Long&gt;&gt;
+	// Optional&lt;Order&gt; recentOrder(List&lt;Long&gt;)
+	.flatMap(this::recentOrder) // ...&lt;Order&gt;
+	.map(Order::date)           // ...&lt;ZonedDateTime&gt;
+	.get();
+
+ZonedDateTime date = user(id) // ~&gt; CompletableFuture&lt;User&gt;
+	.thenApply(User::orderIds)      // ...&lt;List&lt;Long&gt;&gt;
+	// CompletableFuture&lt;Order&gt; recentOrder(List&lt;Long&gt;)
+	.thenCompose(this::recentOrder) // ...&lt;Order&gt;
+	.thenApply(Order::date)         // ...&lt;ZonedDateTime&gt;
+	.join();</code></pre></div></div></section><section id="monadic_functionality_5"><h2>Monadic Functionality</h2><div class="paragraph"><p><code>Stream</code> vs <code>CompletableFuture</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;ZonedDateTime&gt; dates = users() // ~&gt; Stream&lt;User&gt;
+	.map(User::orderIds)        // ...&lt;List&lt;Long&gt;&gt;
+	// Stream&lt;Order&gt; recentOrder(List&lt;Long&gt;)
+	.flatMap(this::recentOrder) // ...&lt;Order&gt;
+	.map(Order::date)           // ...&lt;ZonedDateTime&gt;
+	.collect(toList());
+
+ZonedDateTime date = user(id) // ~&gt; CompletableFuture&lt;User&gt;
+	.thenApply(User::orderIds)      // ...&lt;List&lt;Long&gt;&gt;
+	// CompletableFuture&lt;Order&gt; recentOrder(List&lt;Long&gt;)
+	.thenCompose(this::recentOrder) // ...&lt;Order&gt;
+	.thenApply(Order::date)         // ...&lt;ZonedDateTime&gt;
+	.join();</code></pre></div></div></section><section id="monadic_use"><h2>Monadic Use</h2><div class="paragraph"><p>Simple use cases, reworded:</p></div>
+<div class="ulist"><ul><li><p>use <code>supplyAsync</code> to lift a value into<br>
+the "asynchronous computation" context</p></li><li><p>use <code>thenApply</code>, <code>thenCompose</code>, <code>thenAccept</code><br>
+to apply functions within that context</p></li><li><p>use <code>join</code> to extract a value from the context</p></li></ul></div></section></section>
+<section><section id="completable_future_3"><h2>Completable Future</h2><table class="toc">
+	<tr><td>API Basics</td></tr>
+	<tr><td>As A Monad</td></tr>
+	<tr class="toc-current"><td>Terminology</td></tr>
+	<tr><td>API Details</td></tr>
+	<tr><td>Threading</td></tr>
+	<tr><td>Summary</td></tr>
+</table></section><section id="stage"><h2>Stage</h2><div class="paragraph"><p>A <em>stage</em> is a (possibly asynchronous) computational step in a <code>CompletableFuture</code> pipeline.</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">ZonedDateTime date = user(id)       // initial stage
+	.thenApply(User::orderIds)      // stage
+	.thenCompose(this::recentOrder) // also a stage
+	.thenApply(Order::date);        // you guessed it...</code></pre></div></div></section><section id="dependent_stage"><h2>Dependent Stage</h2><div class="paragraph"><p>When considering a stage, its <em>dependent stages</em> are the ones that directly depend on its completion.</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// consider the stage `order` ...
+CompletableFuture&lt;Order&gt; order = user(id)
+	.thenApply(User::orderIds)
+	.thenCompose(this::recentOrder);
+order
+	// this is a "dependent stage" of `order`
+	.thenAccept(this::processOrder);
+order
+	// this is also a "dependent stage" of `order`
+	.thenApply(Order::date)
+	.thenAccept(this::logRecentOrderDate)</code></pre></div></div></section><section id="completing"><h2>Completing</h2><div class="paragraph"><p>A pipeline or stage <em>completes</em> when<br>
+the underlying computation terminates.</p></div>
+<div class="ulist"><ul><li><p>it <em>completes normally</em> if<br>
+the computation yields a result</p></li><li><p>it <em>completes exceptionally</em> if<br>
+the computation results in an exception</p></li></ul></div></section></section>
+<section><section id="completable_future_4"><h2>Completable Future</h2><table class="toc">
+	<tr><td>API Basics</td></tr>
+	<tr><td>As A Monad</td></tr>
+	<tr><td>Terminology</td></tr>
+	<tr class="toc-current"><td>API Details</td></tr>
+	<tr><td>Threading</td></tr>
+	<tr><td>Summary</td></tr>
+</table></section><section id="api_details"><h2>API Details</h2><div class="ulist"><ul><li><p>extracting results</p></li><li><p>error handling</p></li><li><p>timing out</p></li><li><p>forking and joining computations</p></li></ul></div></section><section id="extracting_results"><h2>Extracting Results</h2><div class="paragraph"><p>There are several ways to extract a result:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// these three methods block
+T get() throws InterruptedException, ExecutionException;
+T get(long, TimeUnit) throws TimeoutException,
+	InterruptedException, ExecutionException;
+T join() throws CompletionException;
+// this method returns immediately
+T getNow(T) throws CompletionException;</code></pre></div></div></section><section id="extracting_results_2"><h2>Extracting Results</h2><div class="paragraph"><p><strong>Note:</strong></p></div>
+<div class="paragraph"><p>It is not <em>necessary</em> to <code>get</code>/<code>join</code> a result!</p></div>
+<div class="paragraph"><p>It&#8217;s perfectly fine to finish with an action<br>
+(e.g. sending a response or writing to DB).</p></div></section><section id="error_handling"><h2>Error Handling</h2><div class="paragraph"><p><strong>Every stage can potentially produce an error!</strong></p></div>
+<div class="paragraph"><p>If that happens:</p></div>
+<div class="ulist"><ul><li><p>(most) dependent stages are skipped</p></li><li><p><code>join</code> and <code>get</code> throw an exception<br>
+(that wraps the original exception)</p></li></ul></div>
+<div class="paragraph"><p>But you can recover!</p></div></section><section id="error_handling_2"><h2>Error Handling</h2><div class="paragraph"><p>Three methods to handle errors:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// turn the error into a result
+CompletableFuture&lt;T&gt; exceptionally(Function&lt;Throwable, T&gt;);
+// turn the result or error into a new result
+CompletableFuture&lt;U&gt; handle(BiFunction&lt;T, Throwable, U&gt;);
+// process the result or error without changing the future
+CompletableFuture&lt;T&gt; whenComplete(BiConsumer&lt; T, Throwable&gt;);</code></pre></div></div>
+<div class="paragraph"><p>The first two turn<br>
+<em>exceptional completion</em> of the previous stage into<br>
+<em>normal completion</em> of the new stage.</p></div></section><section id="error_handling_3"><h2>Error Handling</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">loadUser(id)
+	.thenCompose(this::loadUserHistory)
+	.thenCompose(this::createRecommendations)
+	.exceptionally(ex -&gt; {
+		log.warn("Recommendation error", ex)
+		return createDefaultRecommendations();
+	})
+	.thenAccept(this::respondWithRecommendations);</code></pre></div></div></section><section id="timing_out"><h2>Timing Out ⑨</h2><div class="paragraph"><p>Limit a future&#8217;s computation time:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// completes exceptionally when time is up
+CompletableFuture&lt;T&gt; orTimeout​(long, TimeUnit)
+// completes normally with the specified result
+// when time is up
+CompletableFuture&lt;T&gt; completeOnTimeout​(T, long, TimeUnit);</code></pre></div></div></section><section id="forking_computations"><h2>Forking Computations</h2><div class="paragraph"><p>As shown early, "forking" is easy:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public void processRecentOrder(long id) {
+	CompletableFuture&lt;Order&gt; order = user(id)
+		.thenApply(User::orderIds)
+		.thenCompose(this::recentOrder);
+	order
+		.thenAccept(this::processOrder);
+	order
+		.thenApply(Order::date)
+		.thenAccept(this::logRecentOrderDate)
+}</code></pre></div></div>
+<div class="paragraph"><p>How can computations be combined?</p></div></section><section id="joining_computations"><h2>Joining Computations</h2><div class="paragraph"><p>There are several methods to join computations:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// combine two results into a new future
+CompletableFuture&lt;V&gt; thenCombine(/*....*/)
+// process two results
+CompletableFuture&lt;Void&gt;	thenAcceptBoth(/*....*/)
+// execute after both are completed
+CompletableFuture&lt;Void&gt; runAfterBoth(/*....*/)
+// completes when all specified futures complete
+CompletableFuture&lt;Void&gt;	allOf(/*....*/)</code></pre></div></div>
+<div class="paragraph"><p>Calling <code>join</code> on <code>CompletableFuture&lt;Void&gt;</code><br>
+yields no result, but waits for completion.</p></div></section><section id="joining_computations_2"><h2>Joining Computations</h2><div class="paragraph"><p>It is also possible to wait<br>
+for the first of two computations:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// apply the function to the first result
+CompletableFuture&lt;U&gt; applyToEither(/*....*/)
+// process the first result
+CompletableFuture&lt;Void&gt;	acceptEither(/*....*/)
+// execute after first completes
+CompletableFuture&lt;Void&gt; runAfterEither(/*....*/)
+// completes when one of the futures completes
+CompletableFuture&lt;Object&gt; anyOf(/*....*/)</code></pre></div></div></section><section id="joining_computations_3"><h2>Joining Computations</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:25%"><col style="width:25%"><col style="width:25%"><col style="width:25%"></colgroup><thead><tr><th class="tableblock halign-left valign-top"><code>Stream</code></th><th class="tableblock halign-left valign-top"></th><th class="tableblock halign-left valign-top"><code>CompletableF.</code></th><th class="tableblock halign-left valign-top"></th></tr><tbody><tr><td class="tableblock halign-left valign-top"></td><td class="tableblock halign-left valign-top"><p class="tableblock"><em>single</em></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><em>either of two</em></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><em>both of two</em></p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>map</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>thenApply</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>applyToEither</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>thenCombine</code></p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>flatMap</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>thenCompose</code></p></td><td class="tableblock halign-left valign-top"></td><td class="tableblock halign-left valign-top"></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>ifPresent</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>thenAccept</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>acceptEither</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>thenAcceptBoth</code></p></td></tr><tr><td class="tableblock halign-left valign-top"></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>thenRun</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>runAfterEither</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>runAfterBoth</code></p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>peek</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>whenComplete</code></p></td><td class="tableblock halign-left valign-top"></td><td class="tableblock halign-left valign-top"></td></tr></table></section></section>
+<section><section id="completable_future_5"><h2>Completable Future</h2><table class="toc">
+	<tr><td>API Basics</td></tr>
+	<tr><td>As A Monad</td></tr>
+	<tr><td>Terminology</td></tr>
+	<tr><td>API Details</td></tr>
+	<tr class="toc-current"><td>Threading</td></tr>
+	<tr><td>Summary</td></tr>
+</table></section><section id="who_does_the_work"><h2>Who Does The Work?</h2><div class="paragraph"><p>Which threads actually compute the stages?</p></div>
+<div class="ulist"><ul><li><p><code>supplyAsync(Supplier&lt;T&gt;)</code> is executed<br>
+in the <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ForkJoinPool.html#commonPool--">common fork/join pool</a></p></li><li><p>for other stages it&#8217;s undefined:</p><div class="ulist"><ul><li><p>could be the same thread as the previous stage</p></li><li><p>could be another thread in the pool</p></li><li><p>could be the thread calling <code>thenAccept</code> et al.</p></li></ul></div></li></ul></div>
+<div class="paragraph"><p>No problem if stages are cheap.</p></div>
+<div class="paragraph"><p><strong>But what if they aren&#8217;t?</strong></p></div></section><section id="forcing_asynchronicity"><h2>Forcing Asynchronicity</h2><div class="paragraph"><p>All "composing" methods<br>
+have an <code>&#8230;&#8203;Async</code> companion, e.g.:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">thenApplyAsync(Function&lt;T, U&gt;);
+thenAcceptAsync(Consumer&lt;T&gt;)</code></pre></div></div>
+<div class="paragraph"><p>They submit each stage as a separate task<br>
+to the common fork/join pool.</p></div></section><section id="thread_contention"><h2>Thread Contention</h2><div class="paragraph"><p>Using the same pool for all operations<br>
+can lead to low-priority tasks<br>
+starving high-priority tasks.</p></div>
+<div class="paragraph"><p><strong>⇝ Consider dedicated thread pools<br>
+for important tasks!</strong></p></div></section><section id="specifying_thread_pools"><h2>Specifying Thread Pools</h2><div class="paragraph"><p>You can pass a thread pool<br>
+to all asynchronous methods, e.g.:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">supplyAsync(Supplier&lt;U&gt;, Executor);
+thenApplyAsync(Function&lt;T, U&gt;, Executor);
+thenAcceptAsync(Consumer&lt;T&gt;, Executor);</code></pre></div></div></section><section id="executor"><h2>Executor?</h2><div class="paragraph"><p><code>Executor</code> is an interface<br>
+(the better known <code>ExecutorService</code> extends it).</p></div>
+<div class="paragraph"><p>Implementations in the JDK:</p></div>
+<div class="ulist"><ul><li><p><code>ForkJoinPool</code></p></li><li><p><code>ScheduledThreadPoolExecutor</code></p></li><li><p><code>ThreadPoolExecutor</code></p></li></ul></div></section><section id="deliberate_threading"><h2>Deliberate Threading</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Executor midPrio = /*...*/;
+Executor lowPrio = /*...*/;
+
+CompletableFuture&lt;Order&gt; order = CompletableFuture
+	.supplyAsync(() -&gt; user(id), midPrio)
+	.thenApply(User::orderIds)
+	.thenComposeAsync(this::recentOrder, midPrio);
+order.thenAcceptAsync(this::processOrder, midPrio);
+order.thenAcceptAsync(this::logRecentOrder, lowPrio)</code></pre></div></div></section><section id="deliberate_threading_2"><h2>Deliberate Threading</h2><div class="paragraph"><p>If significant amount of computation<br>
+is done by <code>CompletableFuture</code>:</p></div>
+<div class="ulist"><ul><li><p>analyze whether all tasks<br>
+are equally important</p></li><li><p>create and use thread pools<br>
+according to task priorities</p></li></ul></div>
+<div class="paragraph"><p>That means:</p></div>
+<div class="ulist"><ul><li><p>prefer <code>&#8230;&#8203;Async</code> methods</p></li><li><p>specify a thread pool</p></li></ul></div></section></section>
+<section><section id="completablefuture"><h2>CompletableFuture</h2><table class="toc">
+	<tr><td>API Basics</td></tr>
+	<tr><td>As A Monad</td></tr>
+	<tr><td>Terminology</td></tr>
+	<tr><td>API Details</td></tr>
+	<tr><td>Threading</td></tr>
+	<tr class="toc-current"><td>Summary</td></tr>
+</table></section><section id="summary_13"><h2>Summary</h2><div class="ulist"><ul><li><p>use static <code>CompletableFuture::supplyAsync</code><br>
+to start an asynchronous computation</p></li><li><p>attach functions and actions</p></li><li><p>possibly extract results with <code>get</code> or <code>join</code></p></li><li><p>view these operations as monadic</p></li></ul></div></section><section id="summary_14"><h2>Summary</h2><div class="ulist"><ul><li><p>call <code>exceptionally</code> and <code>handle</code><br>
+to recover from errors</p></li><li><p>call <code>orTimeout​</code> or <code>completeOnTimeout​</code><br>
+to abort long-running computations</p></li><li><p>reuse a stage and create several<br>
+dependent stages to fork computation</p></li><li><p>there are various ways to join computations</p></li></ul></div></section><section id="summary_15"><h2>Summary</h2><div class="ulist"><ul><li><p>to make sure expensive operations are
+executed async, use <code>&#8230;&#8203;Async</code> methods</p></li><li><p>when using <code>CompletableFuture</code> a lot,<br>
+consider managing thread pools</p></li></ul></div></section></section>
 <section><section id="java_8_6"><h2>Java 8</h2><table class="toc">
 	<tr><td>Lambda Expressions</td></tr>
 	<tr><td>Stream API</td></tr>
@@ -1399,9 +1699,9 @@ any other possible implementation:</p></div>
 	<tr><td>Existing Functionality</td></tr>
 	<tr><td>Kinds of Default Methods</td></tr>
 	<tr class="toc-current"><td>Summary</td></tr>
-</table></section><section id="summary_13"><h2>Summary</h2><div class="paragraph"><p>Syntax &amp; Semantics:</p></div>
+</table></section><section id="summary_16"><h2>Summary</h2><div class="paragraph"><p>Syntax &amp; Semantics:</p></div>
 <div class="ulist"><ul><li><p>interfaces can have instance methods:</p><div class="ulist"><ul><li><p>add <code>default</code> keyword</p></li><li><p>implement as usually</p></li></ul></div></li><li><p>method resolution:</p><div class="ulist"><ul><li><p>methods from classes are <em>always</em> preferred</p></li><li><p>default methods are "fall back"</p></li></ul></div></li><li><p>interface can have static and private<br>
-methods just like classes</p></li></ul></div></section><section id="summary_14"><h2>Summary</h2><div class="paragraph"><p>Many existing and new interfaces<br>
+methods just like classes</p></li></ul></div></section><section id="summary_17"><h2>Summary</h2><div class="paragraph"><p>Many existing and new interfaces<br>
 have default methods.</p></div>
 <div class="paragraph"><p>Specific use cases:</p></div>
 <div class="ulist"><ul><li><p>create fluent decorator APIs</p></li><li><p>evolve interfaces without breaking clients</p></li></ul></div></section></section>
