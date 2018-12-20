@@ -11,3 +11,700 @@
 	<tr><td>Summary</td></tr>
 </table>
 ++++
+
+=== Sync Programming
+
+Fictitious REST request handling:
+
+```java
+verifyUserAuthorization(request);
+Forecast one = weatherService("one", request);
+Forecast two = weatherService("two", request);
+sendResponse(one, two);
+```
+
+What if _one_ and _two_ take a long time?
+
+=== Async Programming
+
+```java
+verifyUserAuthorization(request);
+// make each call in a background thread;
+// initiate both calls at "the same time"
+Later<Forecast> one = weatherService("one", request);
+Later<Forecast> two = weatherService("two", request);
+// wait for both threads to come back with results
+waitFor(one, two);
+sendResponse(one, two);
+```
+
+What if I only need one forecast?
+
+=== With Selection
+
+```java
+verifyUserAuthorization(request);
+Later<Forecast> one = weatherService("one", request);
+Later<Forecast> two = weatherService("two", request);
+// wait for the first thread to come back with a result
+Forecast first = waitForFirst(one, two);
+sendResponse(first);
+```
+
+What if I want to cancel long-running calls?
+
+=== With Timeouts
+
+```java
+verifyUserAuthorization(request);
+Later<Forecast> one = weatherService("one", request)
+	// time out after 10 seconds
+	.timeout(10);
+Later<Forecast> two = /*...*/;
+sendResponse(waitForFirst(one, two));
+```
+
+What if there are additional operations on the results?
+
+=== With Dependent Operations
+
+```java
+verifyUserAuthorization(request);
+Later<Forecast> one = weatherService("one", request)
+	.timeout(10)
+	// charge user once the forecast was received
+	.later(forecast -> chargeUser(forecast));
+Later<Forecast> two = /*...*/;
+sendResponse(waitForFirst(one, two));
+```
+
+What if there are errors?
+
+=== With Error Handling
+
+```java
+verifyUserAuthorization(request);
+Later<Forecast> one = weatherService("one", request)
+	.timeout(10)
+	.later(forecast -> chargeUser(forecast))
+	// in error case, create a dummy forecast
+	.onError(error -> createDummyForecast());
+Later<Forecast> two = /*...*/;
+sendResponse(waitForFirst(one, two));
+```
+
+=== Async Programming
+
+Requirements
+
+* offload tasks to (background) threads
+* wait for their completion (all or some)
+* attach additional operations
+* error handling
+* time outs
+
+=== Async Java 8
+
+Java 8 introduces `CompletableFuture`:
+
+* extends `Future` (since Java 5)
+* creates computational context +
+  _"value is computed asynchronously"_
+* offers operations in this context
+
+Yes, it's a monad!
+
+=== Monad Count
+
+* `Stream`: _"iteration over many objects"_
+* `Optional` (almost): _"value may be absent"_
+* `Lazy` (self-made): _"computed lazily; at most once"_
+* `CompletableFuture`: _"asynchronous computation"_
+
+
+== Completable Future
+
+++++
+<table class="toc">
+	<tr class="toc-current"><td>API Basics</td></tr>
+	<tr><td>As A Monad</td></tr>
+	<tr><td>Terminology</td></tr>
+	<tr><td>API Details</td></tr>
+	<tr><td>Threading</td></tr>
+	<tr><td>Summary</td></tr>
+</table>
+++++
+
+=== Essential Methods
+
+```java
+// start an asynchronous computation
+public static CompletableFuture<T> supplyAsync(Supplier<T>);
+
+// attach further steps
+public CompletableFuture<U> thenApply(Function<T, U>);
+public CompletableFuture<U> thenCompose(
+	Function<T, CompletableFuture<U>);
+public CompletableFuture<Void> thenAccept(Consumer<T>);
+
+// wait for the computation to finish and get result
+public T join();
+```
+
+=== First Example
+
+```java
+public void loadWebPage() {
+	String url = "http://codefx.org";
+	CompletableFuture<WebPage> future = CompletableFuture
+			.supplyAsync(() -> webRequest(url))
+			.thenApply(html -> new WebPage(url, html));
+	// ... do other stuff
+	future.join();
+}
+
+private String webRequest(String url) {
+	// make request to URL and return HTML
+	// (this can take a while)
+}
+```
+
+=== Second Example
+
+```java
+public CompletableFuture<ZDT> recentOrderDate(long id) {
+	return user(id)
+		.thenApply(User::orderIds)
+		.thenCompose(this::recentOrder)
+		.thenApply(Order::date);
+}
+
+private CompletableFuture<User> user(long id) {
+	return CompletableFuture
+		.supplyAsync(() -> loadUser(userId));
+}
+
+private CompletableFuture<Order> recentOrder(List<Long> ids) {
+	return CompletableFuture
+		.supplyAsync(() -> loadRecentOrder(ids));
+}
+```
+
+=== Third Example
+
+```java
+public void processRecentOrder(long id) {
+	CompletableFuture<Order> order = user(id)
+		.thenApply(User::orderIds)
+		.thenCompose(this::recentOrder);
+	// a step can be reused for multiple operations
+	order
+		.thenAccept(this::processOrder);
+	order
+		.thenApply(Order::date)
+		.thenAccept(this::logRecentOrderDate)
+}
+```
+
+=== Simple Use
+
+For simple uses cases:
+
+* use `supplyAsync` to start an asynchronous computation
+* use `thenApply`, `thenCompose`, `thenAccept` to attach +
+  additional operations and create an async pipeline
+* use `join` to wait for the result
+
+
+== Completable Future
+
+++++
+<table class="toc">
+	<tr><td>API Basics</td></tr>
+	<tr class="toc-current"><td>As A Monad</td></tr>
+	<tr><td>Terminology</td></tr>
+	<tr><td>API Details</td></tr>
+	<tr><td>Threading</td></tr>
+	<tr><td>Summary</td></tr>
+</table>
+++++
+
+=== Why Is This Important?
+
+`CompletableFuture` has the same structure +
+as `Stream`, `Optional`, and `Lazy`.
+
+* you can apply that knowledge here
+* you can improve your understanding of these APIs
+
+=== Monadic Functionality
+
+Functionality we've seen repeatedly, +
+e.g. on `Stream` / `Optional`:
+
+* lift value(s): `of`
+* apply function: `map` and `flatMap`
+* execute action: `forEach` / `ifPresent`
+* get value(s) out: `collect` / `get`
+
+=== Monadic Functionality
+
+`CompletableFuture` has these as well:
+
+* lift value: `supplyAsync`
+* apply function: `thenApply` and `thenCompose`
+* execute action: `thenAccept` and `thenRun`
+* get value out: `join` and `get`
+
+=== Monadic Functionality
+
+[cols=4*,options="header"]
+|===
+   | Functionality  | `Stream`  | `Optional`  | `CompletableF.`
+   | lift value(s)  | `of`      | `of`        | `supplyAsync`
+.2+| apply function | `map`     | `map`       | `thenApply`
+                    | `flatMap` | `flatMap`   | `thenCompose`
+   | execute action | `forEach` | `ifPresent` | `thenAccept` & `thenRun`
+   | get value(s)   | `collect` | `get`       | `join` & `get`
+|===
+
+=== Monadic Functionality
+
+`Optional` vs `CompletableFuture`:
+
+```java
+ZonedDateTime date = user(id) // ~> Optional<User>
+	.map(User::orderIds)        // ...<List<Long>>
+	// Optional<Order> recentOrder(List<Long>)
+	.flatMap(this::recentOrder) // ...<Order>
+	.map(Order::date)           // ...<ZonedDateTime>
+	.get();
+
+ZonedDateTime date = user(id) // ~> CompletableFuture<User>
+	.thenApply(User::orderIds)      // ...<List<Long>>
+	// CompletableFuture<Order> recentOrder(List<Long>)
+	.thenCompose(this::recentOrder) // ...<Order>
+	.thenApply(Order::date)         // ...<ZonedDateTime>
+	.join();
+```
+
+=== Monadic Functionality
+
+`Stream` vs `CompletableFuture`:
+
+```java
+List<ZonedDateTime> dates = users() // ~> Stream<User>
+	.map(User::orderIds)        // ...<List<Long>>
+	// Stream<Order> recentOrder(List<Long>)
+	.flatMap(this::recentOrder) // ...<Order>
+	.map(Order::date)           // ...<ZonedDateTime>
+	.collect(toList());
+
+ZonedDateTime date = user(id) // ~> CompletableFuture<User>
+	.thenApply(User::orderIds)      // ...<List<Long>>
+	// CompletableFuture<Order> recentOrder(List<Long>)
+	.thenCompose(this::recentOrder) // ...<Order>
+	.thenApply(Order::date)         // ...<ZonedDateTime>
+	.join();
+```
+
+=== Monadic Use
+
+Simple use cases, reworded:
+
+* use `supplyAsync` to lift a value into +
+  the "asynchronous computation" context
+* use `thenApply`, `thenCompose`, `thenAccept` +
+  to apply functions within that context
+* use `join` to extract a value from the context
+
+
+== Completable Future
+
+++++
+<table class="toc">
+	<tr><td>API Basics</td></tr>
+	<tr><td>As A Monad</td></tr>
+	<tr class="toc-current"><td>Terminology</td></tr>
+	<tr><td>API Details</td></tr>
+	<tr><td>Threading</td></tr>
+	<tr><td>Summary</td></tr>
+</table>
+++++
+
+=== Stage
+
+A _stage_ is a (possibly asynchronous) computational step in a `CompletableFuture` pipeline.
+
+``` java
+ZonedDateTime date = user(id)       // initial stage
+	.thenApply(User::orderIds)      // stage
+	.thenCompose(this::recentOrder) // also a stage
+	.thenApply(Order::date);        // you guessed it...
+```
+
+=== Dependent Stage
+
+When considering a stage, its _dependent stages_ are the ones that directly depend on its completion.
+
+``` java
+// consider the stage `order` ...
+CompletableFuture<Order> order = user(id)
+	.thenApply(User::orderIds)
+	.thenCompose(this::recentOrder);
+order
+	// this is a "dependent stage" of `order`
+	.thenAccept(this::processOrder);
+order
+	// this is also a "dependent stage" of `order`
+	.thenApply(Order::date)
+	.thenAccept(this::logRecentOrderDate)
+```
+
+=== Completing
+
+A pipeline or stage _completes_ when +
+the underlying computation terminates.
+
+* it _completes normally_ if +
+  the computation yields a result
+* it _completes exceptionally_ if +
+  the computation results in an exception
+
+
+== Completable Future
+
+++++
+<table class="toc">
+	<tr><td>API Basics</td></tr>
+	<tr><td>As A Monad</td></tr>
+	<tr><td>Terminology</td></tr>
+	<tr class="toc-current"><td>API Details</td></tr>
+	<tr><td>Threading</td></tr>
+	<tr><td>Summary</td></tr>
+</table>
+++++
+
+=== API Details
+
+* extracting results
+* error handling
+* timing out
+* forking and joining computations
+
+=== Extracting Results
+
+There are several ways to extract a result:
+
+```java
+// these three methods block
+T get() throws InterruptedException, ExecutionException;
+T get(long, TimeUnit) throws TimeoutException,
+	InterruptedException, ExecutionException;
+T join() throws CompletionException;
+// this method returns immediately
+T getNow(T) throws CompletionException;
+```
+
+=== Extracting Results
+
+*Note:*
+
+It is not _necessary_ to `get`/`join` a result!
+
+It's perfectly fine to finish with an action +
+(e.g. sending a response or writing to DB).
+
+=== Error Handling
+
+*Every stage can potentially produce an error!*
+
+If that happens:
+
+* (most) dependent stages are skipped
+* `join` and `get` throw an exception +
+  (that wraps the original exception)
+
+But you can recover!
+
+=== Error Handling
+
+Three methods to handle errors:
+
+```java
+// turn the error into a result
+CompletableFuture<T> exceptionally(Function<Throwable, T>);
+// turn the result or error into a new result
+CompletableFuture<U> handle(BiFunction<T, Throwable, U>);
+// process the result or error without changing the future
+CompletableFuture<T> whenComplete(BiConsumer< T, Throwable>);
+```
+
+The first two turn +
+_exceptional completion_ of the previous stage into +
+_normal completion_ of the new stage.
+
+=== Error Handling
+
+```java
+loadUser(id)
+	.thenCompose(this::loadUserHistory)
+	.thenCompose(this::createRecommendations)
+	.exceptionally(ex -> {
+		log.warn("Recommendation error", ex)
+		return createDefaultRecommendations();
+	})
+	.thenAccept(this::respondWithRecommendations);
+```
+
+=== Timing Out ⑨
+
+Limit a future's computation time:
+
+```java
+// completes exceptionally when time is up
+CompletableFuture<T> orTimeout​(long, TimeUnit)
+// completes normally with the specified result
+// when time is up
+CompletableFuture<T> completeOnTimeout​(T, long, TimeUnit);
+```
+
+=== Forking Computations
+
+As shown early, "forking" is easy:
+
+```java
+public void processRecentOrder(long id) {
+	CompletableFuture<Order> order = user(id)
+		.thenApply(User::orderIds)
+		.thenCompose(this::recentOrder);
+	order
+		.thenAccept(this::processOrder);
+	order
+		.thenApply(Order::date)
+		.thenAccept(this::logRecentOrderDate)
+}
+```
+
+How can computations be combined?
+
+=== Joining Computations
+
+There are several methods to join computations:
+
+```java
+// combine two results into a new future
+CompletableFuture<V> thenCombine(/*....*/)
+// process two results
+CompletableFuture<Void>	thenAcceptBoth(/*....*/)
+// execute after both are completed
+CompletableFuture<Void> runAfterBoth(/*....*/)
+// completes when all specified futures complete
+CompletableFuture<Void>	allOf(/*....*/)
+```
+
+Calling `join` on `CompletableFuture<Void>` +
+yields no result, but waits for completion.
+
+=== Joining Computations
+
+It is also possible to wait +
+for the first of two computations:
+
+```java
+// apply the function to the first result
+CompletableFuture<U> applyToEither(/*....*/)
+// process the first result
+CompletableFuture<Void>	acceptEither(/*....*/)
+// execute after first completes
+CompletableFuture<Void> runAfterEither(/*....*/)
+// completes when one of the futures completes
+CompletableFuture<Object> anyOf(/*....*/)
+```
+
+=== Joining Computations
+
+[cols=4*,options="header"]
+|===
+| `Stream`    |                 |`CompletableF.`   |
+|             | _single_        | _either of two_  | _both of two_
+| `map`       | `thenApply`     | `applyToEither`  | `thenCombine`
+| `flatMap`   | `thenCompose`   |                  |
+| `ifPresent` | `thenAccept`    | `acceptEither`   | `thenAcceptBoth`
+|             | `thenRun`       | `runAfterEither` | `runAfterBoth`
+| `peek`      | `whenComplete`  |                  |
+|===
+
+
+== Completable Future
+
+++++
+<table class="toc">
+	<tr><td>API Basics</td></tr>
+	<tr><td>As A Monad</td></tr>
+	<tr><td>Terminology</td></tr>
+	<tr><td>API Details</td></tr>
+	<tr class="toc-current"><td>Threading</td></tr>
+	<tr><td>Summary</td></tr>
+</table>
+++++
+
+=== Who Does The Work?
+
+Which threads actually compute the stages?
+
+* `supplyAsync(Supplier<T>)` is executed +
+  in the https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ForkJoinPool.html#commonPool--[common fork/join pool]
+* for other stages it's undefined:
+** could be the same thread as the previous stage
+** could be another thread in the pool
+** could be the thread calling `thenAccept` et al.
+
+No problem if stages are cheap.
+
+*But what if they aren't?*
+
+=== Forcing Asynchronicity
+
+All "composing" methods +
+have an `...Async` companion, e.g.:
+
+```java
+thenApplyAsync(Function<T, U>);
+thenAcceptAsync(Consumer<T>)
+```
+
+They submit each stage as a separate task +
+to the common fork/join pool.
+
+=== Thread Contention
+
+Using the same pool for all operations +
+can lead to low-priority tasks +
+starving high-priority tasks.
+
+*⇝ Consider dedicated thread pools +
+for important tasks!*
+
+=== Specifying Thread Pools
+
+You can pass a thread pool +
+to all asynchronous methods, e.g.:
+
+```java
+supplyAsync(Supplier<U>, Executor);
+thenApplyAsync(Function<T, U>, Executor);
+thenAcceptAsync(Consumer<T>, Executor);
+```
+
+=== Executor?
+
+`Executor` is an interface +
+(the better known `ExecutorService` extends it).
+
+Implementations in the JDK:
+
+* `ForkJoinPool`
+* `ScheduledThreadPoolExecutor`
+* `ThreadPoolExecutor`
+
+
+=== Deliberate Threading
+
+```java
+Executor midPrio = /*...*/;
+Executor lowPrio = /*...*/;
+
+CompletableFuture<Order> order = CompletableFuture
+	.supplyAsync(() -> user(id), midPrio)
+	.thenApply(User::orderIds)
+	.thenComposeAsync(this::recentOrder, midPrio);
+order.thenAcceptAsync(this::processOrder, midPrio);
+order.thenAcceptAsync(this::logRecentOrder, lowPrio)
+```
+
+=== Deliberate Threading
+
+If significant amount of computation +
+is done by `CompletableFuture`:
+
+* analyze whether all tasks +
+  are equally important
+* create and use thread pools +
+  according to task priorities
+
+That means:
+
+* prefer `...Async` methods
+* specify a thread pool
+
+
+== CompletableFuture
+
+++++
+<table class="toc">
+	<tr><td>API Basics</td></tr>
+	<tr><td>As A Monad</td></tr>
+	<tr><td>Terminology</td></tr>
+	<tr><td>API Details</td></tr>
+	<tr><td>Threading</td></tr>
+	<tr class="toc-current"><td>Summary</td></tr>
+</table>
+++++
+
+=== Summary
+
+* use static `CompletableFuture::supplyAsync` +
+  to start an asynchronous computation
+* attach functions and actions
+* possibly extract results with `get` or `join`
+* view these operations as monadic
+
+=== Summary
+
+* call `exceptionally` and `handle` +
+  to recover from errors
+* call `orTimeout​` or `completeOnTimeout​` +
+  to abort long-running computations
+* reuse a stage and create several +
+  dependent stages to fork computation
+* there are various ways to join computations
+
+=== Summary
+
+* to make sure expensive operations are
+  executed async, use `...Async` methods
+* when using `CompletableFuture` a lot, +
+  consider managing thread pools
+
+////
+TODO - possible additions:
+
+** use `runAsync` for `Runnable` without return value
+** use `thenRun` with `Runnable` if result doesn't matter
+** `CompletableFuture::delayedExecutor` (9)
+
+* no cancellation because future has no control over task
+** `cancel` is same as `completeExceptionally(new CancellationException())`
+
+* as library developer
+** use constructor to create incomplete future
+** `complete` and `completeExceptionally` allow completion
+** (9): `completeAsync`
+** `obtrudeValue`, `obtrudeExceptionally`
+** use static `completedFuture` to create a future with the specified result
+** use static `failedFuture` to create a future with the specified exception
+** use static `completedStage` to create a stage with the specified result (9)
+** use static `failedStage` to create a stage with the specified exception (9)
+
+* misc
+** `getNumberOfDependents` estimated futures waiting for this one
+** `isCancelled`, `isCompletedExceptionally`, `isDone`
+
+* advanced:
+** `static <T> CompletableFuture<List<T>> sequence(List<CompletableFuture<T>> futures)`
+** everybody can use `Future`-'s API ~> return `CompletionStage` instead
+** everybody can resolve `CompletableFuture` ~> return result of `minimalCompletionStage` (9)
+	to prevent calls to `toCompletableFuture` override that method
+** everybody can cast to `CompletableFuture` ~> return individual subtype that overrides `Future`-'s API
+////
