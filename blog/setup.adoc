@@ -24,7 +24,7 @@ to set up a blog:
 
 Properties:
 
-* dynamic, powerful, complex, slow
+* dynamic, powerful, complex, slow (1-2s)
 * often cluttered
 * have on-board/plugin support for +
   comments, user accounts, paywalls, etc.
@@ -37,7 +37,7 @@ image::images/wordpress.png[background, size=contain]
 
 === Static Site Generators
 
-* can only serve static content
+* can only serve static content, fast (0.1-0.2s)
 * often very clean themes
 * user interaction (e.g. comments) +
   must be provided by outside services
@@ -66,7 +66,8 @@ Keep URLs simple:
 
 * no date
 * no category structure: +
-https://blog.codefx.org/java/java-11-migration-guide/ 🤔
+https://blog.codefx.org/java/java-11-migration-guide/[blog.codefx.org/java/java-11-migration-guide]
+// 🤔
 
 Makes them easier to read and share.
 
