@@ -1,4 +1,4 @@
-= Migrating to Java&nbsp;11
+= The Java Module System
 :backend: revealjs
 :revealjs_theme: nipa-night
 :revealjsdir: ../_reveal.js
@@ -27,12 +27,12 @@
 
 include::../_shared/highlight.js.adoc[]
 
-:host-name: ABN AMRO Innovation
-:host-url: https://abnamro.nl
-:host-logo-url: images/logo-abn-amro.jpg
+:host-name: Magnolia CMS
+:host-url: https://www.magnolia-cms.com/
+:host-logo-url: images/logo-magnolia.jpg
 // :host-logo-style: background-color: transparent; border-width: 0;
-:host-twitter-name: @AA_Innovation
-:host-twitter-url: https://twitter.com/ABNAMRO
+:host-twitter-name:  @magnolia_cms
+:host-twitter-url: https://twitter.com/magnolia_cms
 include::../_shared/event-on-title-and-footer.adoc[]
 
 
@@ -61,6 +61,7 @@ https://github.com/nicolaiparlog/course-jpms[github.com/nicolaiparlog/course-jpm
 	<tr><td>Impedance Mismatch</td></tr>
 	<tr><td>Project Jigsaw</td></tr>
 	<tr><td>Java Module System Basics</td></tr>
+	<tr><td>Beyond The Basics</td></tr>
 	<tr><td>Command Line Options</td></tr>
 	<tr><td>Migration Challenges</td></tr>
 	<tr><td>Incremental Modularization</td></tr>
@@ -74,6 +75,8 @@ include::project-jigsaw.adoc[]
 
 include::basics.adoc[]
 
+include::advanced.adoc[]
+
 include::command-line.adoc[]
 
 include::migration.adoc[]
@@ -83,8 +86,6 @@ include::modularization.adoc[]
 // include::quick-intro.adoc[]
 
 // include::../_shared/roadmap.adoc[]
-
-// include::advanced.adoc[]
 
 // include::jlink.adoc[]
 
