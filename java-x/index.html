@@ -1,8 +1,8 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Java 11 Is Here</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="../_reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="../_reveal.js/css/theme/nipa-night.css" id="theme"><link href="../_reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>var link = document.createElement( 'link' );
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Java 9 To 12</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="../_reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="../_reveal.js/css/theme/nipa-night.css" id="theme"><link href="../_reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>var link = document.createElement( 'link' );
 link.rel = 'stylesheet';
 link.type = 'text/css';
 link.href = window.location.search.match( /print-pdf/gi ) ? "../_reveal.js/css/print/pdf.css" : "../_reveal.js/css/print/paper.css";
-document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="../_reveal.js/lib/js/html5shiv.js"></script><![endif]--></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>Java 11 Is Here</h1><div class="preamble"><link rel="stylesheet" href="../_highlight.js/styles/monokai-sublime.css">
+document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="../_reveal.js/lib/js/html5shiv.js"></script><![endif]--></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>Java 9 To 12</h1><div class="preamble"><link rel="stylesheet" href="../_highlight.js/styles/monokai-sublime.css">
 <script src="../_highlight.js/highlight.pack.js"></script>
 <script>
 	window.onload = function() {
@@ -27,10 +27,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://abnamro.nl"><img src="images/logo-abn-amro.jpg" class="logo" style="{host-logo-style}"></a>
+		<a href="https://www.magnolia-cms.com/"><img src="images/logo-magnolia.jpg" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://abnamro.nl">ABN AMRO Innovation</a></p>
-			<p><a href="https://twitter.com/ABNAMRO">@AA_Innovation</a></p>
+			<p><a href="https://www.magnolia-cms.com/">Magnolia CMS</a></p>
+			<p><a href="https://twitter.com/magnolia_cms">@magnolia_cms</a></p>
 		</div>
 	</div>
 </div>
@@ -45,9 +45,9 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://abnamro.nl"><img src="images/logo-abn-amro.jpg" class="logo" style="{host-logo-style}"></a>
+		<a href="https://www.magnolia-cms.com/"><img src="images/logo-magnolia.jpg" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://abnamro.nl">ABN AMRO Innovation</a> / <a href="https://twitter.com/ABNAMRO">@AA_Innovation</a></p>
+			<p><a href="https://www.magnolia-cms.com/">Magnolia CMS</a> / <a href="https://twitter.com/magnolia_cms">@magnolia_cms</a></p>
 		</div>
 	</div>
 </footer>
@@ -56,20 +56,33 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		document.body.appendChild(document.querySelector('footer'));
 	})
 </script></div></section>
-<section><section id="lets_get_started"><h2>Let&#8217;s get started!</h2><div class="ulist"><ul><li><p>this talk covers Java 9 to 11 without JPMS</p></li><li><p>this is a showcase, not a tutorial</p></li><li><p>slides at <a href="http://slides.codefx.org/java-x">slides.codefx.org/java-x</a></p></li></ul></div></section><section id="lots_to_talk_about"><h2>Lots to talk about!</h2><table class="toc">
+<section><section id="lets_get_started"><h2>Let&#8217;s get started!</h2><div class="ulist"><ul><li><p>slides at <a href="http://slides.codefx.org/java-x">slides.codefx.org/java-x</a></p></li><li><p>exercises at<br>
+<a href="https://github.com/nicolaiparlog/course-java-x">github.com/nicolaiparlog/course-java-x</a></p></li><li><p>they cover Java 9 to 12 without JPMS;<br>
+we&#8217;ll focus on Java 9 today</p></li></ul></div></section><section id="lots_to_talk_about"><h2>Lots to talk about!</h2><table class="toc">
 	<tr><td>Language Changes</td></tr>
 	<tr><td>New and Updated APIs</td></tr>
 	<tr><td>New JVM Features</td></tr>
 	<tr><td>Performance Improvements</td></tr>
 </table></section></section>
-<section><section id="new_language_features"><h2>New Language Features</h2><table class="toc">
+<section id="new_language_features"><h2>New Language Features</h2><table class="toc">
+	<tr><td>Switch Expressions ⑫</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
 	<tr><td>Diamond Operator ⑨</td></tr>
 	<tr><td>SafeVarargs ⑨</td></tr>
 	<tr><td>Deprecation Warnings ⑨</td></tr>
-</table></section><section id="sneak_preview"><h2>Sneak Preview</h2><div class="paragraph"><p>Java 12 <code>switch</code> expressions:</p></div>
+</table></section>
+<section><section id="new_language_features_2"><h2>New Language Features</h2><table class="toc">
+	<tr class="toc-current"><td>Switch Expressions ⑫</td></tr>
+	<tr><td>Local-Variable Type Inference ⑩</td></tr>
+	<tr><td>Private Interface Methods ⑨</td></tr>
+	<tr><td>Try-With-Resources ⑨</td></tr>
+	<tr><td>Diamond Operator ⑨</td></tr>
+	<tr><td>SafeVarargs ⑨</td></tr>
+	<tr><td>Deprecation Warnings ⑨</td></tr>
+</table><div class="paragraph"><p>More powerful <code>switch</code> and<br>
+beginnings of pattern matching.</p></div></section><section id="switch_expression"><h2>Switch Expression</h2><div class="paragraph"><p>Java 12 <code>switch</code> expressions:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public void switchExpression() {
 	var bool = Bool.random();
 	boolean result = switch (bool) {
@@ -81,7 +94,8 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 				new FileNotFoundException());
 	};
 }</code></pre></div></div></section></section>
-<section><section id="new_language_features_2"><h2>New Language Features</h2><table class="toc">
+<section><section id="new_language_features_3"><h2>New Language Features</h2><table class="toc">
+	<tr><td>Switch Expressions ⑫</td></tr>
 	<tr class="toc-current"><td>Local-Variable Type Inference ⑩</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
@@ -147,7 +161,8 @@ var names = List.of("Max", "Maria");</code></pre></div></div></section><section 
 <div class="olist arabic"><ol class="arabic"><li class="fragment"><p>Choose variable names that provide useful info.</p></li><li class="fragment"><p>Minimize the scope of local variables.</p></li><li class="fragment"><p>Consider <code>var</code> when the initializer provides sufficient information to the reader.</p></li><li class="fragment"><p>Use <code>var</code> to break up chained or nested expressions.</p></li><li class="fragment"><p>Don&#8217;t worry too much about "programming to the interface".</p></li><li class="fragment"><p>Take care when using <code>var</code> with diamonds or generics.</p></li><li class="fragment"><p>Take care when using <code>var</code> with literals.</p></li></ol></div></section><section id="more_on_var"><h2>More on <code>var</code></h2><div class="ulist"><ul><li><p>First Contact With <code>var</code> In Java 10<br>
 💻 <a href="https://blog.codefx.org/java/java-10-var-type-inference/">tiny.cc/java-var</a> /
 ▶ <a href="https://www.youtube.com/watch?v=Le1DbpRZdRQ&amp;index=1&amp;list=PL_-IO8LOLuNp2stY1qBUtXlfMdJW7wvfT">tiny.cc/java-var-yt</a></p></li><li><p><a href="https://snyk.io/blog/local-type-inference-java-cheat-sheet">cheat sheet</a> (<strong>⇜ print when getting started!</strong>)</p></li><li><p><a href="http://openjdk.java.net/projects/amber/LVTIstyle.html">official style guidelines</a></p></li><li><p><code>var</code> and &#8230;&#8203;</p><div class="ulist"><ul><li><p><a href="https://blog.codefx.org/java/intersection-types-var/">intersection types</a></p></li><li><p><a href="https://blog.codefx.org/java/traits-var/">traits</a></p></li><li><p><a href="https://blog.codefx.org/java/tricks-var-anonymous-classes/">anonymous classes</a></p></li></ul></div></li></ul></div></section></section>
-<section><section id="new_language_features_3"><h2>New Language Features</h2><table class="toc">
+<section><section id="new_language_features_4"><h2>New Language Features</h2><table class="toc">
+	<tr><td>Switch Expressions ⑫</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
 	<tr class="toc-current"><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
@@ -177,7 +192,8 @@ var names = List.of("Max", "Maria");</code></pre></div></div></section><section 
 }</code></pre></div></div>
 <div class="paragraph"><p>Just like private methods in abstract classes:</p></div>
 <div class="ulist"><ul><li><p>must be implemented</p></li><li><p>can not be overriden</p></li><li><p>can only be called in same source file</p></li></ul></div></section></section>
-<section><section id="new_language_features_4"><h2>New Language Features</h2><table class="toc">
+<section><section id="new_language_features_5"><h2>New Language Features</h2><table class="toc">
+	<tr><td>Switch Expressions ⑫</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr class="toc-current"><td>Try-With-Resources ⑨</td></tr>
@@ -203,7 +219,8 @@ and can be made implicitly final</p></li></ul></div>
 }</code></pre></div></div>
 <div class="ulist"><ul><li><p>compiler knows that <code>connection</code> is not reassigned</p></li><li><p>developers know what <em>effectively final</em> means</p></li></ul></div>
 <aside class="notes"><div class="paragraph"><p>Q: Can instance be created but not assigned? No.</p></div></aside></section></section>
-<section><section id="new_language_features_5"><h2>New Language Features</h2><table class="toc">
+<section><section id="new_language_features_6"><h2>New Language Features</h2><table class="toc">
+	<tr><td>Switch Expressions ⑫</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
@@ -229,7 +246,8 @@ for anonymous classes</p></li><li><p>can not be expressed by JVM</p></li></ul></
 	// compile error
 	return new Box&lt;&gt;(innerList) { };
 }</code></pre></div></div></section></section>
-<section><section id="new_language_features_6"><h2>New Language Features</h2><table class="toc">
+<section><section id="new_language_features_7"><h2>New Language Features</h2><table class="toc">
+	<tr><td>Switch Expressions ⑫</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
@@ -271,7 +289,8 @@ that can not be overriden</p></li></ul></div>
 ⇝ Damn! 😭</p></div></section><section id="safevarargs_on_privatemethods"><h2>@SafeVarargs on Private&nbsp;Methods</h2><div class="paragraph"><p>Looong story, here&#8217;s the point:</p></div>
 <div class="paragraph"><p>In Java 9 <code>@SafeVarargs</code><br>
 can be applied to private methods.</p></div></section></section>
-<section><section id="new_language_features_7"><h2>New Language Features</h2><table class="toc">
+<section><section id="new_language_features_8"><h2>New Language Features</h2><table class="toc">
+	<tr><td>Switch Expressions ⑫</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
