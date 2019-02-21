@@ -218,6 +218,133 @@ Guidelines:
 . Take care when using `var` with diamonds or generics.
 . Take care when using `var` with literals.
 
+=== Style Guidelines
+
+1. Choose variable names that provide useful info.
+
+```java
+/* ✘ */ var u = UserRepository.findUser(id);
+/* ✔ */ var user = UserRepository.findUser(id);
+/* 👍*/ var userToLogIn = UserRepository.findUser(id);
+```
+
+=== Style Guidelines
+
+[start=2]
+2. Minimize the scope of local variables.
+
+```java
+// ✘
+var id = 123;
+if (id < 100) {
+	// very long branch
+} else {
+	// oh boy, much more code...
+}
+LOGGER.info("... " + id);
+
+// ✔ replace branches with method calls
+```
+
+=== Style Guidelines
+
+[start=3]
+. Consider `var` when the initializer provides +
+  sufficient information to the reader.
+
+```java
+/* ✘ */ var user = Repository.find(id);
+/* ✔ */ var user = UserRepository.findUser(id);
+/* 👍*/ var user = new User(id);
+```
+
+=== Style Guidelines
+
+[start=4]
+. Use `var` to break up chained or nested expressions.
+
+```java
+// ✘
+return Canvas
+	.activeCanvas()
+	.drawings()
+	.filter(Drawing::isLine)
+	.map(drawing -> (HorizontalConnection) drawing)
+		// now we have lines
+	.filter(line -> length(line) == 7)
+	.map(this::generateSquare)
+		// now we have squares
+	.map(this::createRandomColoredSquare)
+	.map(this::createRandomBorderedSquare)
+	.collect(toList());
+```
+
+=== Style Guidelines
+
+[start=4]
+. Use `var` to break up chained or nested expressions.
+
+```java
+// ✔
+var lines = Canvas
+	.activeCanvas()
+	.drawings()
+	.filter(Drawing::isLine)
+	.map(drawing -> (HorizontalConnection) drawing)
+var squares = lines
+	.filter(line -> length(line) == 7)
+	.map(this::generateSquare);
+return squares
+	.map(this::createRandomColoredSquare)
+	.map(this::createRandomBorderedSquare)
+	.collect(toList());
+```
+
+=== Style Guidelines
+
+[start=5]
+. Don't worry too much about +
+  "programming to the interface".
+
+```java
+// inferred as `ArrayList` (not `List`),
+// but that's ok
+var users = new ArrayList<User>();
+```
+
+Careful when refactoring:
+
+* extracting methods that use `var`-ed variables +
+  puts concrete types into method signatures
+* look out and replace with most general type
+
+=== Style Guidelines
+
+[start=6]
+. Take care when using `var` with diamonds or generics.
+
+```java
+// ✘ infers `ArrayList<Object>`
+var users = new ArrayList<>();
+
+// ✔ infers `ArrayList<User>`
+var users = new ArrayList<User>();
+```
+
+=== Style Guidelines
+
+[start=7]
+. Take care when using `var` with literals.
+
+```java
+// ✘ when used with `var`, these
+//   variables become `int`
+byte b = 42;
+short s = 42;
+long l = 42
+```
+
+
 === More on `var`
 
 * First Contact With `var` In Java 10 +
