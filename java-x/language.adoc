@@ -13,6 +13,7 @@
 ++++
 
 
+
 == New Language Features
 
 ++++
@@ -30,23 +31,376 @@
 More powerful `switch` and +
 beginnings of pattern matching.
 
-=== Switch Expression
+=== Switching
 
-Java 12 `switch` expressions:
+Say you're facing https://thedailywtf.com/articles/What_Is_Truth_0x3f_[the dreaded ternary Boolean] ...
 
 ```java
-public void switchExpression() {
-	var bool = Bool.random();
-	boolean result = switch (bool) {
-		case TRUE -> true;
-		case FALSE -> false;
-		case FILE_NOT_FOUND ->
+public enum TernaryBoolean {
+	TRUE,
+	FALSE,
+	FILE_NOT_FOUND
+}
+```
+
+\... and want to convert it to a regular `Boolean`.
+
+=== Switch Statement
+
+Before Java 12, you might do this:
+
+```java
+boolean result;
+switch (ternaryBool) {
+	case TRUE:
+		result = true; break;
+	case FALSE:
+		result = false; break;
+	case FILE_NOT_FOUND:
+		var ex = new UncheckedIOException(
+			"This is ridiculous!",
+			new FileNotFoundException());
+		throw ex;
+	default:
+		var ex2 = new IllegalArgumentException(
+			"Seriously?! 😠");
+		throw ex2;
+}
+```
+
+=== Switch Statement
+
+Lots of room for improvements:
+
+* default fall-through is annoying
+* `result` handling is roundabout
+* lacking compiler support is error-prone
+
+=== Switch Statement
+
+This is better:
+
+```java
+public boolean convert(TernaryBoolean ternaryBool) {
+	switch (ternaryBool) {
+		case TRUE:
+			return true;
+		case FALSE:
+			return false;
+		case FILE_NOT_FOUND:
 			throw new UncheckedIOException(
 				"This is ridiculous!",
 				new FileNotFoundException());
-	};
+		default:
+			throw new IllegalArgumentException(
+				"Seriously?! 😠");
+	}
 }
 ```
+
+=== Switch Statement
+
+Better:
+
+* `return` prevents fall-through
+* results are created on the spot
+* compiler complains on missing branches
+
+But:
+
+* `default` is not really necessary
+* creating a method is not always +
+  possible or convenient
+
+=== Switch Expression
+
+Enter Java 12 `switch` expressions:
+
+```java
+boolean result = switch(ternaryBool) {
+    case TRUE -> true;
+    case FALSE -> false;
+    case FILE_NOT_FOUND ->
+		throw new UncheckedIOException(
+			"This is ridiculous!",
+			new FileNotFoundException());
+};
+```
+
+Two things to note:
+
+* `switch` "has a result" +
+  ⇝ it's an _expression_, not a _statement_
+* lambda-style arrow syntax
+
+=== Expression vs Statement
+
+Statement:
+
+```java
+if (condition)
+    result = doThis();
+else
+    result = doThat();
+```
+
+Expression:
+
+```java
+result = condition
+	? doThis()
+	: doThat();
+```
+
+=== Expression vs Statement
+
+Statement:
+
+* imperative construct
+* guides computation, but has no result
+
+Expression:
+
+* is computed to a result
+
+=== Expression vs Statement
+
+For `switch`:
+
+* if used with an assignment, +
+  `switch` becomes an expression
+* if used "stand-alone", it's +
+  treated as a statement
+
+This results in different behavior +
+(more on that later).
+
+=== Arrow vs Colon
+
+You can use `:` and `\->` with +
+expressions and statements, e.g.:
+
+```java
+boolean result = switch(ternaryBool) {
+    case TRUE: break true;
+    case FALSE: break false;
+    case FILE_NOT_FOUND:
+		throw new UncheckedIOException(
+			"This is ridiculous!",
+			new FileNotFoundException());
+};
+```
+
+* `switch` is used as an expression
+* `break result` returns `result`
+
+=== Arrow vs Colon
+
+Whether you use arrow or colon +
+results in different behavior +
+(more on that later).
+
+=== Switch Evolution
+
+* general improvements
+** multiple case labels
+* specifics of arrow form
+** no fall-through
+** statement blocks
+* specifics of expressions
+** poly expression
+** returning early
+** exhaustiveness
+
+=== Multiple Case Labels
+
+Statements and expressions, +
+in colon and arrow form +
+can use multiple case labels:
+
+```java
+String result = switch (ternaryBool) {
+	case TRUE, FALSE -> "sane";
+	// `default, case FILE_NOT_FOUND -> ...`
+	// does not work (neither does other way
+	// around), but that makes sense because
+	// using only `default` suffices
+	default -> "insane";
+};
+```
+
+
+=== No Fall-Through
+
+Whether used as statement or expression, +
+the arrow form has no fall-through:
+
+```java
+switch (ternaryBool) {
+	case TRUE, FALSE ->
+		System.out.println("Bool was sane");
+	// in colon-form, if `ternaryBool` is `TRUE`
+	// or `FALSE`, we would see both messages;
+	// in arrow-form, only one branch is executed
+	default ->
+		System.out.println("Bool was insane");
+}
+```
+
+=== Statement Blocks
+
+Whether used as statement or expression, +
+the arrow form can use statement blocks:
+
+```java
+boolean result = switch (Bool.random()) {
+    case TRUE -> {
+        System.out.println("Bool true");
+        break true;
+    }
+    case FALSE -> {
+        System.out.println("Bool false");
+        break false;
+    }
+	// cases `FILE_NOT_FOUND` and `default`
+};
+```
+
+=== Statement Blocks
+
+Natural way to create scope:
+
+```java
+boolean result = switch (Bool.random()) {
+	// cases `TRUE` and `FALSE`
+    case FILE_NOT_FOUND -> {
+        var ex = new UncheckedIOException(
+            "This is ridiculous!",
+            new FileNotFoundException());
+        throw ex;
+    }
+    default -> {
+        var ex = new IllegalArgumentException(
+            "Seriously?! 🤬");
+        throw ex;
+    }
+};
+```
+
+=== Poly Expression
+
+A _poly expression_
+
+* has no definitive type
+* can be one of several types
+
+Lambdas are poly expressions:
+
+```java
+Function<String, String> fun = s -> s + " ";
+UnaryOperator<String> op = s -> s + " ";
+```
+
+=== Poly Expression
+
+Whether in colon or arrow form, +
+a `switch` expression is a poly expression.
+
+How it's type is determined, +
+depends on the target type:
+
+```java
+// target type known: String
+String result = switch (ternaryBool) { ... }
+// target type unknown
+var result = switch (ternaryBool) { ... }
+```
+
+=== Poly Expression
+
+If target type is known, all branches must conform to it:
+
+```java
+String result = switch (ternaryBool) {
+    case TRUE, FALSE -> "sane";
+    default -> "insane";
+};
+```
+
+If target type is unknown, the compiler infers a type:
+
+```java
+// compiler infers super type of `String` and
+// `IllegalArgumentException` ~> `Serializable`
+var serializableMessage = switch (bool) {
+    case TRUE, FALSE -> "sane";
+    default -> new IllegalArgumentException("insane");
+};
+```
+
+=== Returning Early
+
+Whether in colon or arrow form, +
+you can't return early from a `switch` expression:
+
+```java
+public String sanity(Bool ternaryBool) {
+    String result = switch (ternaryBool) {
+        // compile error:
+		//     "return outside
+		//      of enclosing switch expression"
+        case TRUE, FALSE -> { return "sane"; }
+        default -> { return "This is ridiculous!"; }
+    };
+}
+```
+
+=== Exhaustiveness
+
+Whether in colon or arrow form, +
+a `switch` expression checks exhaustiveness:
+
+```java
+// compile error:
+//     "the switch expression does not cover
+//      all possible input values"
+boolean result = switch (ternaryBool) {
+    case TRUE -> true;
+    // no case for `FALSE`
+    case FILE_NOT_FOUND ->
+		throw new UncheckedIOException(
+			"This is ridiculous!",
+			new FileNotFoundException());
+};
+```
+
+=== Exhaustiveness
+
+No compile error for missing `default`:
+
+```java
+// compiles without `default` branch because
+// all cases for `ternaryBool` are covered
+boolean result = switch (ternaryBool) {
+    case TRUE -> true;
+    case FALSE -> false;
+    case FILE_NOT_FOUND ->
+		throw new UncheckedIOException(
+			"This is ridiculous!",
+			new FileNotFoundException());
+};
+```
+
+Compiler adds in `default` branch.
+
+=== More on `switch`
+
+
+Definitive Guide To Switch Expressions In Java 12
+
+* 💻 https://blog.codefx.org/java/switch-expressions/[tiny.cc/java-12-switch]
+* ▶ https://www.youtube.com/watch?v=1znHEf3oSNI&list=PL_-IO8LOLuNp2stY1qBUtXlfMdJW7wvfT[tiny.cc/java-12-switch-yt]
+
 
 
 == New Language Features
@@ -344,7 +698,6 @@ short s = 42;
 long l = 42
 ```
 
-
 === More on `var`
 
 * First Contact With `var` In Java 10 +
@@ -479,6 +832,7 @@ void doSomethingWith(Connection connection)
 --
 Q: Can instance be created but not assigned? No.
 --
+
 
 
 == New Language Features
