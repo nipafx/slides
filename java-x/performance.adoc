@@ -2,7 +2,7 @@
 
 ++++
 <table class="toc">
-	<tr><td>Application Class-Data Sharing ⑩</td></tr>
+	<tr><td>Application Class-Data Sharing ⑩⑫</td></tr>
 	<tr><td>Compact Strings ⑨</td></tr>
 	<tr><td>Indified String Concatenation ⑨</td></tr>
 </table>
@@ -14,7 +14,7 @@
 
 ++++
 <table class="toc">
-	<tr class="toc-current"><td>Application Class-Data Sharing ⑩</td></tr>
+	<tr class="toc-current"><td>Application Class-Data Sharing ⑩⑫</td></tr>
 	<tr><td>Compact Strings ⑨</td></tr>
 	<tr><td>Indified String Concatenation ⑨</td></tr>
 </table>
@@ -60,11 +60,17 @@ My experiments with a large desktop app +
 
 Two variants:
 
-CDS:: Just for JDK classes +
-(⑫ includes archive -- http://openjdk.java.net/jeps/341[JEP 341])
+CDS:: just for JDK classes
 AppCDS:: JDK + application classes
 
-We will focus on AppCDS.
+Quick look into CDS, then focus on AppCDS.
+
+=== CDS
+
+Java 12+ downloads include +
+CDS archive for JDK classes.
+
+More in http://openjdk.java.net/jeps/341[JEP 341].
 
 === AppCDS - Step #1
 
@@ -165,7 +171,7 @@ Observe sharing with +
 
 ++++
 <table class="toc">
-	<tr><td>Application Class-Data Sharing ⑩</td></tr>
+	<tr><td>Application Class-Data Sharing ⑩⑫</td></tr>
 	<tr class="toc-current"><td>Compact Strings ⑨</td></tr>
 	<tr><td>Indified String Concatenation ⑨</td></tr>
 </table>
@@ -217,7 +223,7 @@ Depending on circumstances:
 
 ++++
 <table class="toc">
-	<tr><td>Application Class-Data Sharing ⑩</td></tr>
+	<tr><td>Application Class-Data Sharing ⑩⑫</td></tr>
 	<tr><td>Compact Strings ⑨</td></tr>
 	<tr class="toc-current"><td>Indified String Concatenation ⑨</td></tr>
 </table>
@@ -320,6 +326,15 @@ Depending on circumstances:
 * Epsilon GC (http://openjdk.java.net/jeps/318[JEP 318])
 * ZGC (experimental, http://openjdk.java.net/jeps/333[JEP 333])
 * low-overhead heap profiling (http://openjdk.java.net/jeps/331[JEP 331])
+
+=== A Mixed Bag Of Performance
+
+*In Java 12:*
+
+* Shenandoah (http://openjdk.java.net/jeps/189[JEP 189])
+* G1 improvements:
+** abortable mixed collections (http://openjdk.java.net/jeps/344[JEP 344])
+** promptly return unused memory (http://openjdk.java.net/jeps/346[JEP 346])
 
 ////
 TODO expand:
