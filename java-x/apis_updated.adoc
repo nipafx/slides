@@ -275,57 +275,6 @@ Statistics stats = Stream
 
 Small improvements to Java 8 `Optional`.
 
-=== Is Empty ⑪
-
-No more `!foo.isPresent()`:
-
-```java
-boolean isEmpty()
-```
-
-Does exactly what +
-you think it does.
-
-=== Or Else Throw ⑩
-
-`Optional::get` invites misuse +
-by calling it reflexively.
-
-Maybe `get` wasn't the best name? +
-New:
-
-```java
-T orElseThrow()
-```
-
-Works exactly as `get`, +
-but more self-documenting.
-
-=== Aligned Names
-
-Name in line with other accessors:
-
-```java
-T orElse(T other)
-T orElseGet(Supplier<T> supplier)
-T orElseThrow()
-	throws NoSuchElementException
-T orElseThrow(
-	Supplier<X> exceptionSupplier)
-	throws X
-```
-
-=== Get Considered Harmful
-
-https://bugs.openjdk.java.net/browse/JDK-8160606[JDK-8160606]
-will deprecate +
-`Optional::get`.
-
-* when?
-* for removal?
-
-We'll see...
-
 === Or ⑨
 
 Choose a non-empty `Optional`:
@@ -432,6 +381,57 @@ Stream<Order> findOrdersForCustomer(String id) {
 		.flatMap(List::stream);
 }
 ```
+
+=== Or Else Throw ⑩
+
+`Optional::get` invites misuse +
+by calling it reflexively.
+
+Maybe `get` wasn't the best name? +
+New:
+
+```java
+T orElseThrow()
+```
+
+Works exactly as `get`, +
+but more self-documenting.
+
+=== Aligned Names
+
+Name in line with other accessors:
+
+```java
+T orElse(T other)
+T orElseGet(Supplier<T> supplier)
+T orElseThrow()
+	throws NoSuchElementException
+T orElseThrow(
+	Supplier<X> exceptionSupplier)
+	throws X
+```
+
+=== Get Considered Harmful
+
+https://bugs.openjdk.java.net/browse/JDK-8160606[JDK-8160606]
+will deprecate +
+`Optional::get`.
+
+* when?
+* for removal?
+
+We'll see...
+
+=== Is Empty ⑪
+
+No more `!foo.isPresent()`:
+
+```java
+boolean isEmpty()
+```
+
+Does exactly what +
+you think it does.
 
 
 
