@@ -6,6 +6,7 @@
 	<tr><td>Stream ⑨⑩</td></tr>
 	<tr><td>Optional ⑨⑩⑪</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
+	<tr><td>Completable Future ⑫</td></tr>
 </table>
 ++++
 
@@ -25,6 +26,7 @@ TODO
 	<tr><td>Stream ⑨⑩</td></tr>
 	<tr><td>Optional ⑨⑩⑪</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
+	<tr><td>Completable Future ⑫</td></tr>
 </table>
 ++++
 
@@ -118,6 +120,7 @@ Stream<String> lines();
 	<tr class="toc-current"><td>Stream ⑨⑩</td></tr>
 	<tr><td>Optional ⑨⑩⑪</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
+	<tr><td>Completable Future ⑫</td></tr>
 </table>
 ++++
 
@@ -232,6 +235,7 @@ Collector<T, ?, Map<K,U>> toUnmodifiableMap(
 	<tr><td>Stream ⑨⑩</td></tr>
 	<tr class="toc-current"><td>Optional ⑨⑩⑪</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
+	<tr><td>Completable Future ⑫</td></tr>
 </table>
 ++++
 
@@ -405,6 +409,7 @@ Stream<Order> findOrdersForCustomer(String id) {
 	<tr><td>Stream ⑨⑩</td></tr>
 	<tr><td>Optional ⑨⑩⑪</td></tr>
 	<tr class="toc-current"><td>OS Processes ⑨</td></tr>
+	<tr><td>Completable Future ⑫</td></tr>
 </table>
 ++++
 
@@ -456,6 +461,147 @@ Interesting `static` methods:
 * command, arguments
 * start time
 * CPU time
+
+
+
+== Updated APIs
+
+++++
+<table class="toc">
+	<tr><td>String ⑪</td></tr>
+	<tr><td>Stream ⑨⑩</td></tr>
+	<tr><td>Optional ⑨⑩⑪</td></tr>
+	<tr><td>OS Processes ⑨</td></tr>
+	<tr class="toc-current"><td>Completable Future ⑫</td></tr>
+</table>
+++++
+
+Asynchronous error recovery.
+
+=== Recap on API Basics
+
+```java
+// start an asynchronous computation
+public static CompletableFuture<T> supplyAsync(
+	Supplier<T>);
+
+// attach further steps
+public CompletableFuture<U> thenApply(Function<T, U>);
+public CompletableFuture<U> thenCompose(
+	Function<T, CompletableFuture<U>);
+public CompletableFuture<Void> thenAccept(Consumer<T>);
+
+// wait for the computation to finish and get result
+public T join();
+```
+
+=== Recap on API Basics
+
+Example:
+
+```java
+public void loadWebPage() {
+	String url = "http://codefx.org";
+	CompletableFuture<WebPage> future = CompletableFuture
+			.supplyAsync(() -> webRequest(url))
+			.thenApply(html -> new WebPage(url, html));
+	// ... do other stuff
+	future.join();
+}
+
+private String webRequest(String url) {
+	// make request to URL and return HTML
+	// (this can take a while)
+}
+```
+
+=== Recap on Completion
+
+A pipeline or stage _completes_ when +
+the underlying computation terminates.
+
+* it _completes normally_ if +
+  the computation yields a result
+* it _completes exceptionally_ if +
+  the computation results in an exception
+
+=== Recap on Error Recovery
+
+Two methods to recover errors:
+
+```java
+// turn the error into a result
+CompletableFuture<T> exceptionally(Function<Throwable, T>);
+// turn the result or error into a new result
+CompletableFuture<U> handle(BiFunction<T, Throwable, U>);
+```
+
+They turn _exceptional completion_ of the previous stage +
+into _normal completion_ of the new stage.
+
+=== Recap on Error Recovery
+
+Example:
+
+```java
+loadUser(id)
+	.thenCompose(this::loadUserHistory)
+	.thenCompose(this::createRecommendations)
+	.exceptionally(ex -> {
+		log.warn("Recommendation error", ex)
+		return createDefaultRecommendations();
+	})
+	.thenAccept(this::respondWithRecommendations);
+```
+
+=== Composeable Error Recovery ⑫
+
+Error recovery accepts functions +
+that produce `CompletableFuture`:
+
+```java
+exceptionallyCompose(
+	Function<Throwable, CompletionStage<T>>)
+```
+
+=== Recap on (A)Synchronicity
+
+Which threads actually compute the stages?
+
+* `supplyAsync(Supplier<T>)` is executed +
+  in the https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ForkJoinPool.html#commonPool--[common fork/join pool]
+* for other stages it's undefined:
+** could be the same thread as the previous stage
+** could be another thread in the pool
+** could be the thread calling `thenAccept` et al.
+
+How to force async computation?
+
+=== Recap on (A)Synchronicity
+
+All "composing" methods +
+have an `...Async` companion, e.g.:
+
+```java
+thenApplyAsync(Function<T, U>);
+thenAcceptAsync(Consumer<T>)
+```
+
+They submit each stage as a separate task +
+to the common fork/join pool.
+
+=== Async Error Recovery ⑫
+
+Error recovery can be asynchronous:
+
+```java
+CompletableFuture<T> exceptionallyAsync(
+	Function<Throwable, T>)
+CompletableFuture<T> exceptionallyComposeAsync(
+	Function<Throwable, CompletableFuture<T>>)
+```
+
+There are overloads that accept `Executor`.
 
 
 
