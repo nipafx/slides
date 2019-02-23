@@ -3,7 +3,7 @@
 ++++
 <table class="toc">
 	<tr><td>String ⑪</td></tr>
-	<tr><td>Stream ⑨⑩</td></tr>
+	<tr><td>Stream ⑨⑩⑫</td></tr>
 	<tr><td>Optional ⑨⑩⑪</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
 	<tr><td>Completable Future ⑫</td></tr>
@@ -12,10 +12,17 @@
 
 Existing APIs are continuously improved.
 
-
 ////
-TODO
+TODO:
+
 * additions to `CompletableFuture`, e.g. `orTimeout` and `completeOnTimeout`
+* `CompactNumberFormat` (12)
+* `String` (12):
+	* `indent` to add/remove indentation
+		* having to provide _change in indentation_ (instead of _target indentation_) makes it hard to use and fragile
+	* `transform` to apply a function to the string
+		* used at the end of literals
+		* maybe wait with release until multi-line String literals are released?
 ////
 
 == Updated APIs
@@ -23,7 +30,7 @@ TODO
 ++++
 <table class="toc">
 	<tr class="toc-current"><td>String ⑪</td></tr>
-	<tr><td>Stream ⑨⑩</td></tr>
+	<tr><td>Stream ⑨⑩⑫</td></tr>
 	<tr><td>Optional ⑨⑩⑪</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
 	<tr><td>Completable Future ⑫</td></tr>
@@ -32,7 +39,7 @@ TODO
 
 Small improvements to `String`.
 
-=== Strip White Space
+=== Strip White Space ⑪
 
 Getting rid of white space:
 
@@ -62,7 +69,7 @@ ____
 * `strip()` relies on `Character::isWhitespace`, +
   which covers many more cases
 
-=== Is Blank?
+=== Is Blank? ⑪
 
 Is a string only white space?
 
@@ -91,13 +98,13 @@ image::images/so-repeat-string-a-old.png[role="diagram"]
 
 😍
 
-=== Life Hack
+=== Life Hack ⑪
 
 Ta-da!
 
 image::images/so-repeat-string-a.png[role="diagram"]
 
-=== Streaming Lines
+=== Streaming Lines ⑪
 
 Processing a string's lines:
 
@@ -117,7 +124,7 @@ Stream<String> lines();
 ++++
 <table class="toc">
 	<tr><td>String ⑪</td></tr>
-	<tr class="toc-current"><td>Stream ⑨⑩</td></tr>
+	<tr class="toc-current"><td>Stream ⑨⑩⑫</td></tr>
 	<tr><td>Optional ⑨⑩⑪</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
 	<tr><td>Completable Future ⑫</td></tr>
@@ -225,6 +232,33 @@ Collector<T, ?, Map<K,U>> toUnmodifiableMap(
 // plus overload with merge function
 ```
 
+=== Teeing Collector ⑫
+
+Collect stream elements in two collectors +
+and combine their results:
+
+```java
+// on Collectors
+Collector<T, ?, R> teeing(
+	Collector<T, ?, R1> downstream1,
+	Collector<T, ?, R2> downstream2,
+	BiFunction<R1, R2, R> merger);
+```
+
+=== Teeing Collector ⑫
+
+Example:
+
+```java
+Statistics stats = Stream
+	.of(1, 2, 4, 5)
+	.collect(teeing(
+		summingInt(i -> i),
+		averagingInt(i -> i),
+		Statistics::of));
+// stats = Statistics {sum=12, average=3.0}
+```
+
 
 
 == Updated APIs
@@ -232,7 +266,7 @@ Collector<T, ?, Map<K,U>> toUnmodifiableMap(
 ++++
 <table class="toc">
 	<tr><td>String ⑪</td></tr>
-	<tr><td>Stream ⑨⑩</td></tr>
+	<tr><td>Stream ⑨⑩⑫</td></tr>
 	<tr class="toc-current"><td>Optional ⑨⑩⑪</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
 	<tr><td>Completable Future ⑫</td></tr>
@@ -406,7 +440,7 @@ Stream<Order> findOrdersForCustomer(String id) {
 ++++
 <table class="toc">
 	<tr><td>String ⑪</td></tr>
-	<tr><td>Stream ⑨⑩</td></tr>
+	<tr><td>Stream ⑨⑩⑫</td></tr>
 	<tr><td>Optional ⑨⑩⑪</td></tr>
 	<tr class="toc-current"><td>OS Processes ⑨</td></tr>
 	<tr><td>Completable Future ⑫</td></tr>
@@ -469,7 +503,7 @@ Interesting `static` methods:
 ++++
 <table class="toc">
 	<tr><td>String ⑪</td></tr>
-	<tr><td>Stream ⑨⑩</td></tr>
+	<tr><td>Stream ⑨⑩⑫</td></tr>
 	<tr><td>Optional ⑨⑩⑪</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
 	<tr class="toc-current"><td>Completable Future ⑫</td></tr>
@@ -626,11 +660,12 @@ TODO
 
 === A Mixed Bag Of New&nbsp;I/O&nbsp;Methods
 
-*In Java 10 & 11:*
+*In Java 10, 11, 12:*
 
 ```java
 Path.of(String); // ~ Paths.get(String)
 
+Files.mismatch(Path, Path);
 Files.readString(Path);
 Files.writeString(Path, CharSequence, ...);
 
@@ -642,8 +677,6 @@ Writer.nullWriter();
 InputStream.nullInputStream();
 OutputStream.nullOutputStream();
 ```
-
-// TODO expand I/O additions
 
 === A Mixed Bag Of New&nbsp;Methods
 
