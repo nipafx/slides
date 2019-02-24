@@ -82,18 +82,195 @@ we&#8217;ll focus on Java 9 today</p></li></ul></div></section><section id="lots
 	<tr><td>SafeVarargs ⑨</td></tr>
 	<tr><td>Deprecation Warnings ⑨</td></tr>
 </table><div class="paragraph"><p>More powerful <code>switch</code> and<br>
-beginnings of pattern matching.</p></div></section><section id="switch_expression"><h2>Switch Expression</h2><div class="paragraph"><p>Java 12 <code>switch</code> expressions:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public void switchExpression() {
-	var bool = Bool.random();
-	boolean result = switch (bool) {
-		case TRUE -&gt; true;
-		case FALSE -&gt; false;
-		case FILE_NOT_FOUND -&gt;
+beginnings of pattern matching.</p></div></section><section id="switching"><h2>Switching</h2><div class="paragraph"><p>Say you&#8217;re facing <a href="https://thedailywtf.com/articles/What_Is_Truth_0x3f_">the dreaded ternary Boolean</a> &#8230;&#8203;</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public enum TernaryBoolean {
+	TRUE,
+	FALSE,
+	FILE_NOT_FOUND
+}</code></pre></div></div>
+<div class="paragraph"><p>... and want to convert it to a regular <code>Boolean</code>.</p></div></section><section id="switch_statement"><h2>Switch Statement</h2><div class="paragraph"><p>Before Java 12, you might have done this:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">boolean result;
+switch (ternaryBool) {
+	case TRUE:
+		result = true; break;
+	case FALSE:
+		result = false; break;
+	case FILE_NOT_FOUND:
+		var ex = new UncheckedIOException(
+			"This is ridiculous!",
+			new FileNotFoundException());
+		throw ex;
+	default:
+		var ex2 = new IllegalArgumentException(
+			"Seriously?! 😠");
+		throw ex2;
+}</code></pre></div></div></section><section id="switch_statement_2"><h2>Switch Statement</h2><div class="paragraph"><p>Lots of room for improvements:</p></div>
+<div class="ulist"><ul><li><p>default fall-through is annoying</p></li><li><p><code>result</code> handling is roundabout</p></li><li><p>lacking compiler support is error-prone</p></li></ul></div></section><section id="switch_statement_3"><h2>Switch Statement</h2><div class="paragraph"><p>This is better:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public boolean convert(TernaryBoolean ternaryBool) {
+	switch (ternaryBool) {
+		case TRUE:
+			return true;
+		case FALSE:
+			return false;
+		case FILE_NOT_FOUND:
 			throw new UncheckedIOException(
 				"This is ridiculous!",
 				new FileNotFoundException());
-	};
-}</code></pre></div></div></section></section>
+		default:
+			throw new IllegalArgumentException(
+				"Seriously?! 😠");
+	}
+}</code></pre></div></div></section><section id="switch_statement_4"><h2>Switch Statement</h2><div class="paragraph"><p>Better:</p></div>
+<div class="ulist"><ul><li><p><code>return</code> prevents fall-through</p></li><li><p>results are created on the spot</p></li><li><p>compiler complains on missing branches</p></li></ul></div>
+<div class="paragraph"><p>But:</p></div>
+<div class="ulist"><ul><li><p><code>default</code> is not really necessary</p></li><li><p>creating a method is not always<br>
+possible or convenient</p></li></ul></div></section><section id="switch_expression"><h2>Switch Expression</h2><div class="paragraph"><p>Enter Java 12 <code>switch</code> expressions:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">boolean result = switch(ternaryBool) {
+    case TRUE -&gt; true;
+    case FALSE -&gt; false;
+    case FILE_NOT_FOUND -&gt;
+		throw new UncheckedIOException(
+			"This is ridiculous!",
+			new FileNotFoundException());
+};</code></pre></div></div>
+<div class="paragraph"><p>Two things to note:</p></div>
+<div class="ulist"><ul><li><p><code>switch</code> "has a result"<br>
+⇝ it&#8217;s an <em>expression</em>, not a <em>statement</em></p></li><li><p>lambda-style arrow syntax</p></li></ul></div></section><section id="preview_feature"><h2>Preview Feature</h2><div class="paragraph"><p><strong>Note</strong>:</p></div>
+<div class="paragraph"><p>In Java 12, switch expressions are<br>
+a <a href="http://openjdk.java.net/jeps/12">preview language feature</a>!</p></div>
+<div class="ulist"><ul><li><p>must be enabled with <code>--enable-preview</code><br>
+(on <code>javac</code> and <code>java</code>).</p></li><li><p>in IntelliJ, make sure the module&#8217;s<br>
+language level is set to <em>12 (Preview) &#8230;&#8203;</em></p></li></ul></div></section><section id="expression_vs_statement"><h2>Expression vs Statement</h2><div class="paragraph"><p>Statement:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">if (condition)
+    result = doThis();
+else
+    result = doThat();</code></pre></div></div>
+<div class="paragraph"><p>Expression:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">result = condition
+	? doThis()
+	: doThat();</code></pre></div></div></section><section id="expression_vs_statement_2"><h2>Expression vs Statement</h2><div class="paragraph"><p>Statement:</p></div>
+<div class="ulist"><ul><li><p>imperative construct</p></li><li><p>guides computation, but has no result</p></li></ul></div>
+<div class="paragraph"><p>Expression:</p></div>
+<div class="ulist"><ul><li><p>is computed to a result</p></li></ul></div></section><section id="expression_vs_statement_3"><h2>Expression vs Statement</h2><div class="paragraph"><p>For <code>switch</code>:</p></div>
+<div class="ulist"><ul><li><p>if used with an assignment,<br>
+<code>switch</code> becomes an expression</p></li><li><p>if used "stand-alone", it&#8217;s<br>
+treated as a statement</p></li></ul></div>
+<div class="paragraph"><p>This results in different behavior<br>
+(more on that later).</p></div></section><section id="arrow_vs_colon"><h2>Arrow vs Colon</h2><div class="paragraph"><p>You can use <code>:</code> and <code>-&gt;</code> with<br>
+expressions and statements, e.g.:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">boolean result = switch(ternaryBool) {
+    case TRUE: break true;
+    case FALSE: break false;
+    case FILE_NOT_FOUND:
+		throw new UncheckedIOException(
+			"This is ridiculous!",
+			new FileNotFoundException());
+};</code></pre></div></div>
+<div class="ulist"><ul><li><p><code>switch</code> is used as an expression</p></li><li><p><code>break result</code> returns <code>result</code></p></li></ul></div></section><section id="arrow_vs_colon_2"><h2>Arrow vs Colon</h2><div class="paragraph"><p>Whether you use arrow or colon<br>
+results in different behavior<br>
+(more on that later).</p></div></section><section id="switch_evolution"><h2>Switch Evolution</h2><div class="ulist"><ul><li><p>general improvements</p><div class="ulist"><ul><li><p>multiple case labels</p></li></ul></div></li><li><p>specifics of arrow form</p><div class="ulist"><ul><li><p>no fall-through</p></li><li><p>statement blocks</p></li></ul></div></li><li><p>specifics of expressions</p><div class="ulist"><ul><li><p>poly expression</p></li><li><p>returning early</p></li><li><p>exhaustiveness</p></li></ul></div></li></ul></div></section><section id="multiple_case_labels"><h2>Multiple Case Labels</h2><div class="paragraph"><p>Statements and expressions,<br>
+in colon and arrow form<br>
+can use multiple case labels:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">String result = switch (ternaryBool) {
+	case TRUE, FALSE -&gt; "sane";
+	// `default, case FILE_NOT_FOUND -&gt; ...`
+	// does not work (neither does other way
+	// around), but that makes sense because
+	// using only `default` suffices
+	default -&gt; "insane";
+};</code></pre></div></div></section><section id="no_fall_through"><h2>No Fall-Through</h2><div class="paragraph"><p>Whether used as statement or expression,<br>
+the arrow form has no fall-through:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">switch (ternaryBool) {
+	case TRUE, FALSE -&gt;
+		System.out.println("Bool was sane");
+	// in colon-form, if `ternaryBool` is `TRUE`
+	// or `FALSE`, we would see both messages;
+	// in arrow-form, only one branch is executed
+	default -&gt;
+		System.out.println("Bool was insane");
+}</code></pre></div></div></section><section id="statement_blocks"><h2>Statement Blocks</h2><div class="paragraph"><p>Whether used as statement or expression,<br>
+the arrow form can use statement blocks:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">boolean result = switch (Bool.random()) {
+    case TRUE -&gt; {
+        System.out.println("Bool true");
+        break true;
+    }
+    case FALSE -&gt; {
+        System.out.println("Bool false");
+        break false;
+    }
+	// cases `FILE_NOT_FOUND` and `default`
+};</code></pre></div></div></section><section id="statement_blocks_2"><h2>Statement Blocks</h2><div class="paragraph"><p>Natural way to create scope:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">boolean result = switch (Bool.random()) {
+	// cases `TRUE` and `FALSE`
+    case FILE_NOT_FOUND -&gt; {
+        var ex = new UncheckedIOException(
+            "This is ridiculous!",
+            new FileNotFoundException());
+        throw ex;
+    }
+    default -&gt; {
+        var ex = new IllegalArgumentException(
+            "Seriously?! 🤬");
+        throw ex;
+    }
+};</code></pre></div></div></section><section id="poly_expression"><h2>Poly Expression</h2><div class="paragraph"><p>A <em>poly expression</em></p></div>
+<div class="ulist"><ul><li><p>has no definitive type</p></li><li><p>can be one of several types</p></li></ul></div>
+<div class="paragraph"><p>Lambdas are poly expressions:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Function&lt;String, String&gt; fun = s -&gt; s + " ";
+UnaryOperator&lt;String&gt; op = s -&gt; s + " ";</code></pre></div></div></section><section id="poly_expression_2"><h2>Poly Expression</h2><div class="paragraph"><p>Whether in colon or arrow form,<br>
+a <code>switch</code> expression is a poly expression.</p></div>
+<div class="paragraph"><p>How it&#8217;s type is determined,<br>
+depends on the target type:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// target type known: String
+String result = switch (ternaryBool) { ... }
+// target type unknown
+var result = switch (ternaryBool) { ... }</code></pre></div></div></section><section id="poly_expression_3"><h2>Poly Expression</h2><div class="paragraph"><p>If target type is known, all branches must conform to it:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">String result = switch (ternaryBool) {
+    case TRUE, FALSE -&gt; "sane";
+    default -&gt; "insane";
+};</code></pre></div></div>
+<div class="paragraph"><p>If target type is unknown, the compiler infers a type:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// compiler infers super type of `String` and
+// `IllegalArgumentException` ~&gt; `Serializable`
+var serializableMessage = switch (bool) {
+    case TRUE, FALSE -&gt; "sane";
+    default -&gt; new IllegalArgumentException("insane");
+};</code></pre></div></div></section><section id="returning_early"><h2>Returning Early</h2><div class="paragraph"><p>Whether in colon or arrow form,<br>
+you can&#8217;t return early from a <code>switch</code> expression:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public String sanity(Bool ternaryBool) {
+    String result = switch (ternaryBool) {
+        // compile error:
+		//     "return outside
+		//      of enclosing switch expression"
+        case TRUE, FALSE -&gt; { return "sane"; }
+        default -&gt; { return "This is ridiculous!"; }
+    };
+}</code></pre></div></div></section><section id="exhaustiveness"><h2>Exhaustiveness</h2><div class="paragraph"><p>Whether in colon or arrow form,<br>
+a <code>switch</code> expression checks exhaustiveness:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// compile error:
+//     "the switch expression does not cover
+//      all possible input values"
+boolean result = switch (ternaryBool) {
+    case TRUE -&gt; true;
+    // no case for `FALSE`
+    case FILE_NOT_FOUND -&gt;
+		throw new UncheckedIOException(
+			"This is ridiculous!",
+			new FileNotFoundException());
+};</code></pre></div></div></section><section id="exhaustiveness_2"><h2>Exhaustiveness</h2><div class="paragraph"><p>No compile error for missing <code>default</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// compiles without `default` branch because
+// all cases for `ternaryBool` are covered
+boolean result = switch (ternaryBool) {
+    case TRUE -&gt; true;
+    case FALSE -&gt; false;
+    case FILE_NOT_FOUND -&gt;
+		throw new UncheckedIOException(
+			"This is ridiculous!",
+			new FileNotFoundException());
+};</code></pre></div></div>
+<div class="paragraph"><p>Compiler adds in <code>default</code> branch.</p></div></section><section id="more_on_switch"><h2>More on <code>switch</code></h2><div class="paragraph"><p>Definitive Guide To Switch Expressions In Java 12</p></div>
+<div class="ulist"><ul><li><p>💻 <a href="https://blog.codefx.org/java/switch-expressions/">tiny.cc/java-12-switch</a></p></li><li><p>▶ <a href="https://www.youtube.com/watch?v=1znHEf3oSNI&amp;list=PL_-IO8LOLuNp2stY1qBUtXlfMdJW7wvfT">tiny.cc/java-12-switch-yt</a></p></li></ul></div></section></section>
 <section><section id="new_language_features_3"><h2>New Language Features</h2><table class="toc">
 	<tr><td>Switch Expressions ⑫</td></tr>
 	<tr class="toc-current"><td>Local-Variable Type Inference ⑩</td></tr>
@@ -158,7 +335,67 @@ var names = List.of("Max", "Maria");</code></pre></div></div></section><section 
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">rhetoricalQuestion.answer(yes -&gt; "see my point?");</code></pre></div></div></section><section id="style_guidelines"><h2>Style Guidelines</h2><div class="paragraph"><p>Principles from the
 <a href="http://openjdk.java.net/projects/amber/LVTIstyle.html">official style guidelines</a>:</p></div>
 <div class="olist arabic"><ol class="arabic"><li class="fragment"><p>Reading code is more important than writing it.</p></li><li class="fragment"><p>Code should be clear from local reasoning.</p></li><li class="fragment"><p>Code readability shouldn&#8217;t depend on IDEs.</p></li><li class="fragment"><p>Explicit types are a tradeoff.</p></li></ol></div></section><section id="style_guidelines_2"><h2>Style Guidelines</h2><div class="paragraph"><p>Guidelines:</p></div>
-<div class="olist arabic"><ol class="arabic"><li class="fragment"><p>Choose variable names that provide useful info.</p></li><li class="fragment"><p>Minimize the scope of local variables.</p></li><li class="fragment"><p>Consider <code>var</code> when the initializer provides sufficient information to the reader.</p></li><li class="fragment"><p>Use <code>var</code> to break up chained or nested expressions.</p></li><li class="fragment"><p>Don&#8217;t worry too much about "programming to the interface".</p></li><li class="fragment"><p>Take care when using <code>var</code> with diamonds or generics.</p></li><li class="fragment"><p>Take care when using <code>var</code> with literals.</p></li></ol></div></section><section id="more_on_var"><h2>More on <code>var</code></h2><div class="ulist"><ul><li><p>First Contact With <code>var</code> In Java 10<br>
+<div class="olist arabic"><ol class="arabic"><li class="fragment"><p>Choose variable names that provide useful info.</p></li><li class="fragment"><p>Minimize the scope of local variables.</p></li><li class="fragment"><p>Consider <code>var</code> when the initializer provides sufficient information to the reader.</p></li><li class="fragment"><p>Use <code>var</code> to break up chained or nested expressions.</p></li><li class="fragment"><p>Don&#8217;t worry too much about "programming to the interface".</p></li><li class="fragment"><p>Take care when using <code>var</code> with diamonds or generics.</p></li><li class="fragment"><p>Take care when using <code>var</code> with literals.</p></li></ol></div></section><section id="style_guidelines_3"><h2>Style Guidelines</h2><div class="olist arabic"><ol class="arabic"><li><p>Choose variable names that provide useful info.</p></li></ol></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">/* ✘ */ var u = UserRepository.findUser(id);
+/* ✔ */ var user = UserRepository.findUser(id);
+/* 👍*/ var userToLogIn = UserRepository.findUser(id);</code></pre></div></div></section><section id="style_guidelines_4"><h2>Style Guidelines</h2><div class="olist arabic"><ol class="arabic" start="2"><li><p>Minimize the scope of local variables.</p></li></ol></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// ✘
+var id = 123;
+if (id &lt; 100) {
+	// very long branch
+} else {
+	// oh boy, much more code...
+}
+LOGGER.info("... " + id);
+
+// ✔ replace branches with method calls</code></pre></div></div></section><section id="style_guidelines_5"><h2>Style Guidelines</h2><div class="olist arabic"><ol class="arabic" start="3"><li><p>Consider <code>var</code> when the initializer provides<br>
+sufficient information to the reader.</p></li></ol></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">/* ✘ */ var user = Repository.find(id);
+/* ✔ */ var user = UserRepository.findUser(id);
+/* 👍*/ var user = new User(id);</code></pre></div></div></section><section id="style_guidelines_6"><h2>Style Guidelines</h2><div class="olist arabic"><ol class="arabic" start="4"><li><p>Use <code>var</code> to break up chained or nested expressions.</p></li></ol></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// ✘
+return Canvas
+	.activeCanvas()
+	.drawings()
+	.filter(Drawing::isLine)
+	.map(drawing -&gt; (HorizontalConnection) drawing)
+		// now we have lines
+	.filter(line -&gt; length(line) == 7)
+	.map(this::generateSquare)
+		// now we have squares
+	.map(this::createRandomColoredSquare)
+	.map(this::createRandomBorderedSquare)
+	.collect(toList());</code></pre></div></div></section><section id="style_guidelines_7"><h2>Style Guidelines</h2><div class="olist arabic"><ol class="arabic" start="4"><li><p>Use <code>var</code> to break up chained or nested expressions.</p></li></ol></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// ✔
+var lines = Canvas
+	.activeCanvas()
+	.drawings()
+	.filter(Drawing::isLine)
+	.map(drawing -&gt; (HorizontalConnection) drawing)
+var squares = lines
+	.filter(line -&gt; length(line) == 7)
+	.map(this::generateSquare);
+return squares
+	.map(this::createRandomColoredSquare)
+	.map(this::createRandomBorderedSquare)
+	.collect(toList());</code></pre></div></div></section><section id="style_guidelines_8"><h2>Style Guidelines</h2><div class="olist arabic"><ol class="arabic" start="5"><li><p>Don&#8217;t worry too much about<br>
+"programming to the interface".</p></li></ol></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// inferred as `ArrayList` (not `List`),
+// but that's ok
+var users = new ArrayList&lt;User&gt;();</code></pre></div></div>
+<div class="paragraph"><p>Careful when refactoring:</p></div>
+<div class="ulist"><ul><li><p>extracting methods that use <code>var</code>-ed variables<br>
+puts concrete types into method signatures</p></li><li><p>look out and replace with most general type</p></li></ul></div></section><section id="style_guidelines_9"><h2>Style Guidelines</h2><div class="olist arabic"><ol class="arabic" start="6"><li><p>Take care when using <code>var</code> with diamonds or generics.</p></li></ol></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// ✘ infers `ArrayList&lt;Object&gt;`
+var users = new ArrayList&lt;&gt;();
+
+// ✔ infers `ArrayList&lt;User&gt;`
+var users = new ArrayList&lt;User&gt;();</code></pre></div></div></section><section id="style_guidelines_10"><h2>Style Guidelines</h2><div class="olist arabic"><ol class="arabic" start="7"><li><p>Take care when using <code>var</code> with literals.</p></li></ol></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// ✘ when used with `var`, these
+//   variables become `int`
+byte b = 42;
+short s = 42;
+long l = 42</code></pre></div></div></section><section id="more_on_var"><h2>More on <code>var</code></h2><div class="ulist"><ul><li><p>First Contact With <code>var</code> In Java 10<br>
 💻 <a href="https://blog.codefx.org/java/java-10-var-type-inference/">tiny.cc/java-var</a> /
 ▶ <a href="https://www.youtube.com/watch?v=Le1DbpRZdRQ&amp;index=1&amp;list=PL_-IO8LOLuNp2stY1qBUtXlfMdJW7wvfT">tiny.cc/java-var-yt</a></p></li><li><p><a href="https://snyk.io/blog/local-type-inference-java-cheat-sheet">cheat sheet</a> (<strong>⇜ print when getting started!</strong>)</p></li><li><p><a href="http://openjdk.java.net/projects/amber/LVTIstyle.html">official style guidelines</a></p></li><li><p><code>var</code> and &#8230;&#8203;</p><div class="ulist"><ul><li><p><a href="https://blog.codefx.org/java/intersection-types-var/">intersection types</a></p></li><li><p><a href="https://blog.codefx.org/java/traits-var/">traits</a></p></li><li><p><a href="https://blog.codefx.org/java/tricks-var-anonymous-classes/">anonymous classes</a></p></li></ul></div></li></ul></div></section></section>
 <section><section id="new_language_features_4"><h2>New Language Features</h2><table class="toc">
@@ -329,17 +566,19 @@ public class DeprecatedImports {
 }</code></pre></div></div></section></section>
 <section id="updated_apis"><h2>Updated APIs</h2><table class="toc">
 	<tr><td>String ⑪</td></tr>
-	<tr><td>Stream ⑨⑩</td></tr>
+	<tr><td>Stream ⑨⑩⑫</td></tr>
 	<tr><td>Optional ⑨⑩⑪</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
+	<tr><td>Completable Future ⑫</td></tr>
 </table>
 <div class="paragraph"><p>Existing APIs are continuously improved.</p></div></section>
 <section><section id="updated_apis_2"><h2>Updated APIs</h2><table class="toc">
 	<tr class="toc-current"><td>String ⑪</td></tr>
-	<tr><td>Stream ⑨⑩</td></tr>
+	<tr><td>Stream ⑨⑩⑫</td></tr>
 	<tr><td>Optional ⑨⑩⑪</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
-</table><div class="paragraph"><p>Small improvements to <code>String</code>.</p></div></section><section id="strip_white_space"><h2>Strip White Space</h2><div class="paragraph"><p>Getting rid of white space:</p></div>
+	<tr><td>Completable Future ⑫</td></tr>
+</table><div class="paragraph"><p>Small improvements to <code>String</code>.</p></div></section><section id="strip_white_space"><h2>Strip White Space ⑪</h2><div class="paragraph"><p>Getting rid of white space:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">String strip();
 String stripLeading();
 String stripTrailing();</code></pre></div></div>
@@ -348,22 +587,23 @@ String stripTrailing();</code></pre></div></div>
 <div class="ulist"><ul><li><p><code>trim()</code> defines white space as:</p><div class="quoteblock"><blockquote><div class="paragraph"><p>any character whose codepoint<br>
 is less than or equal to <code>'U+0020'</code><br>
 (the space character)</p></div></blockquote></div></li><li><p><code>strip()</code> relies on <code>Character::isWhitespace</code>,<br>
-which covers many more cases</p></li></ul></div></section><section id="is_blank"><h2>Is Blank?</h2><div class="paragraph"><p>Is a string only white space?</p></div>
+which covers many more cases</p></li></ul></div></section><section id="is_blank"><h2>Is Blank? ⑪</h2><div class="paragraph"><p>Is a string only white space?</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">boolean isBlank();</code></pre></div></div>
 <div class="paragraph"><p>Functionally equivalent to:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">string.isBlank() == string.strip().isEmpty();</code></pre></div></div></section><section id="life_hack"><h2>Life Hack</h2><div class="paragraph"><p>As soon as Java APIs get new method,<br>
 scour StackOverflow for easy karma!</p></div>
 <div class="imageblock diagram" style=""><img src="images/so-repeat-string-q.png" alt="so repeat string q"></div></section><section id="life_hack_2"><h2>Life Hack</h2><div class="paragraph"><p>Formerly accepted answer:</p></div>
 <div class="imageblock diagram" style=""><img src="images/so-repeat-string-a-old.png" alt="so repeat string a old"></div>
-<div class="paragraph"><p>😍</p></div></section><section id="life_hack_3"><h2>Life Hack</h2><div class="paragraph"><p>Ta-da!</p></div>
-<div class="imageblock diagram" style=""><img src="images/so-repeat-string-a.png" alt="so repeat string a"></div></section><section id="streaming_lines"><h2>Streaming Lines</h2><div class="paragraph"><p>Processing a string&#8217;s lines:</p></div>
+<div class="paragraph"><p>😍</p></div></section><section id="life_hack_3"><h2>Life Hack ⑪</h2><div class="paragraph"><p>Ta-da!</p></div>
+<div class="imageblock diagram" style=""><img src="images/so-repeat-string-a.png" alt="so repeat string a"></div></section><section id="streaming_lines"><h2>Streaming Lines ⑪</h2><div class="paragraph"><p>Processing a string&#8217;s lines:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;String&gt; lines();</code></pre></div></div>
 <div class="ulist"><ul><li><p>splits a string on <code>"\n"</code>, <code>"\r"</code>, <code>"\r\n"</code></p></li><li><p>lines do not include terminator</p></li><li><p>more performant than <code>split("\R")</code></p></li><li><p>lazy!</p></li></ul></div></section></section>
 <section><section id="updated_apis_3"><h2>Updated APIs</h2><table class="toc">
 	<tr><td>String ⑪</td></tr>
-	<tr class="toc-current"><td>Stream ⑨⑩</td></tr>
+	<tr class="toc-current"><td>Stream ⑨⑩⑫</td></tr>
 	<tr><td>Optional ⑨⑩⑪</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
+	<tr><td>Completable Future ⑫</td></tr>
 </table><div class="paragraph"><p>Small improvements to Java 8 streams.</p></div></section><section id="of_nullable"><h2>Of Nullable ⑨</h2><div class="paragraph"><p>Create a stream of zero or one elements:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">long zero = Stream.ofNullable(null).count();
 long one = Stream.ofNullable("42").count();</code></pre></div></div></section><section id="iterate"><h2>Iterate ⑨</h2><div class="paragraph"><p>To use <code>for</code> even less&#8230;&#8203;</p></div>
@@ -406,33 +646,27 @@ Collector&lt;T, ?, Set&lt;T&gt;&gt; toUnmodifiableSet();
 Collector&lt;T, ?, Map&lt;K,U&gt;&gt; toUnmodifiableMap(
 	Function&lt;T, K&gt; keyMapper,
 	Function&lt;T, U&gt; valueMapper);
-// plus overload with merge function</code></pre></div></div></section></section>
+// plus overload with merge function</code></pre></div></div></section><section id="teeing_collector"><h2>Teeing Collector ⑫</h2><div class="paragraph"><p>Collect stream elements in two collectors<br>
+and combine their results:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// on Collectors
+Collector&lt;T, ?, R&gt; teeing(
+	Collector&lt;T, ?, R1&gt; downstream1,
+	Collector&lt;T, ?, R2&gt; downstream2,
+	BiFunction&lt;R1, R2, R&gt; merger);</code></pre></div></div></section><section id="teeing_collector_2"><h2>Teeing Collector ⑫</h2><div class="paragraph"><p>Example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Statistics stats = Stream
+	.of(1, 2, 4, 5)
+	.collect(teeing(
+		summingInt(i -&gt; i),
+		averagingInt(i -&gt; i),
+		Statistics::of));
+// stats = Statistics {sum=12, average=3.0}</code></pre></div></div></section></section>
 <section><section id="updated_apis_4"><h2>Updated APIs</h2><table class="toc">
 	<tr><td>String ⑪</td></tr>
-	<tr><td>Stream ⑨⑩</td></tr>
+	<tr><td>Stream ⑨⑩⑫</td></tr>
 	<tr class="toc-current"><td>Optional ⑨⑩⑪</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
-</table><div class="paragraph"><p>Small improvements to Java 8 <code>Optional</code>.</p></div></section><section id="is_empty"><h2>Is Empty ⑪</h2><div class="paragraph"><p>No more <code>!foo.isPresent()</code>:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">boolean isEmpty()</code></pre></div></div>
-<div class="paragraph"><p>Does exactly what<br>
-you think it does.</p></div></section><section id="or_else_throw"><h2>Or Else Throw ⑩</h2><div class="paragraph"><p><code>Optional::get</code> invites misuse<br>
-by calling it reflexively.</p></div>
-<div class="paragraph"><p>Maybe <code>get</code> wasn&#8217;t the best name?<br>
-New:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">T orElseThrow()</code></pre></div></div>
-<div class="paragraph"><p>Works exactly as <code>get</code>,<br>
-but more self-documenting.</p></div></section><section id="aligned_names"><h2>Aligned Names</h2><div class="paragraph"><p>Name in line with other accessors:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">T orElse(T other)
-T orElseGet(Supplier&lt;T&gt; supplier)
-T orElseThrow()
-	throws NoSuchElementException
-T orElseThrow(
-	Supplier&lt;X&gt; exceptionSupplier)
-	throws X</code></pre></div></div></section><section id="get_considered_harmful"><h2>Get Considered Harmful</h2><div class="paragraph"><p><a href="https://bugs.openjdk.java.net/browse/JDK-8160606">JDK-8160606</a>
-will deprecate<br>
-<code>Optional::get</code>.</p></div>
-<div class="ulist"><ul><li><p>when?</p></li><li><p>for removal?</p></li></ul></div>
-<div class="paragraph"><p>We&#8217;ll see&#8230;&#8203;</p></div></section><section id="or"><h2>Or ⑨</h2><div class="paragraph"><p>Choose a non-empty <code>Optional</code>:</p></div>
+	<tr><td>Completable Future ⑫</td></tr>
+</table><div class="paragraph"><p>Small improvements to Java 8 <code>Optional</code>.</p></div></section><section id="or"><h2>Or ⑨</h2><div class="paragraph"><p>Choose a non-empty <code>Optional</code>:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Optional&lt;T&gt; or(Supplier&lt;Optional&lt;T&gt;&gt; supplier);</code></pre></div></div></section><section id="find_in_many_places"><h2>Find in Many Places</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public interface Search {
 	Optional&lt;Customer&gt; inMemory(String id);
 	Optional&lt;Customer&gt; onDisk(String id);
@@ -488,12 +722,33 @@ Stream&lt;Order&gt; findOrdersForCustomer(String id) {
 		.stream()
 		.map(this::getOrders) // lazy
 		.flatMap(List::stream);
-}</code></pre></div></div></section></section>
+}</code></pre></div></div></section><section id="or_else_throw"><h2>Or Else Throw ⑩</h2><div class="paragraph"><p><code>Optional::get</code> invites misuse<br>
+by calling it reflexively.</p></div>
+<div class="paragraph"><p>Maybe <code>get</code> wasn&#8217;t the best name?<br>
+New:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">T orElseThrow()</code></pre></div></div>
+<div class="paragraph"><p>Works exactly as <code>get</code>,<br>
+but more self-documenting.</p></div></section><section id="aligned_names"><h2>Aligned Names</h2><div class="paragraph"><p>Name in line with other accessors:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">T orElse(T other)
+T orElseGet(Supplier&lt;T&gt; supplier)
+T orElseThrow()
+	throws NoSuchElementException
+T orElseThrow(
+	Supplier&lt;X&gt; exceptionSupplier)
+	throws X</code></pre></div></div></section><section id="get_considered_harmful"><h2>Get Considered Harmful</h2><div class="paragraph"><p><a href="https://bugs.openjdk.java.net/browse/JDK-8160606">JDK-8160606</a>
+will deprecate<br>
+<code>Optional::get</code>.</p></div>
+<div class="ulist"><ul><li><p>when?</p></li><li><p>for removal?</p></li></ul></div>
+<div class="paragraph"><p>We&#8217;ll see&#8230;&#8203;</p></div></section><section id="is_empty"><h2>Is Empty ⑪</h2><div class="paragraph"><p>No more <code>!foo.isPresent()</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">boolean isEmpty()</code></pre></div></div>
+<div class="paragraph"><p>Does exactly what<br>
+you think it does.</p></div></section></section>
 <section><section id="updated_apis_5"><h2>Updated APIs</h2><table class="toc">
 	<tr><td>String ⑪</td></tr>
-	<tr><td>Stream ⑨⑩</td></tr>
+	<tr><td>Stream ⑨⑩⑫</td></tr>
 	<tr><td>Optional ⑨⑩⑪</td></tr>
 	<tr class="toc-current"><td>OS Processes ⑨</td></tr>
+	<tr><td>Completable Future ⑫</td></tr>
 </table><div class="paragraph"><p>Improving interaction with OS processes.</p></div></section><section id="simple_example"><h2>Simple Example</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="shell language-shell">ls /home/nipa/tmp | grep pdf</code></pre></div></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Path dir = Paths.get("/home/nipa/tmp");
 ProcessBuilder ls = new ProcessBuilder()
@@ -508,11 +763,77 @@ List&lt;Process&gt; lsThenGrep = ProcessBuilder
 <div class="paragraph"><p>Interesting <code>static</code> methods:</p></div>
 <div class="ulist"><ul><li><p><code>Stream&lt;ProcessHandle&gt; allProcesses();</code></p></li><li><p><code>Optional&lt;ProcessHandle&gt; of(long pid);</code></p></li><li><p><code>ProcessHandle current();</code></p></li></ul></div></section><section id="more_information"><h2>More Information</h2><div class="paragraph"><p><code>ProcessHandle</code> can return <code>Info</code>:</p></div>
 <div class="ulist"><ul><li><p>command, arguments</p></li><li><p>start time</p></li><li><p>CPU time</p></li></ul></div></section></section>
+<section><section id="updated_apis_6"><h2>Updated APIs</h2><table class="toc">
+	<tr><td>String ⑪</td></tr>
+	<tr><td>Stream ⑨⑩⑫</td></tr>
+	<tr><td>Optional ⑨⑩⑪</td></tr>
+	<tr><td>OS Processes ⑨</td></tr>
+	<tr class="toc-current"><td>Completable Future ⑫</td></tr>
+</table><div class="paragraph"><p>Asynchronous error recovery.</p></div></section><section id="recap_on_api_basics"><h2>Recap on API Basics</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// start an asynchronous computation
+public static CompletableFuture&lt;T&gt; supplyAsync(
+	Supplier&lt;T&gt;);
+
+// attach further steps
+public CompletableFuture&lt;U&gt; thenApply(Function&lt;T, U&gt;);
+public CompletableFuture&lt;U&gt; thenCompose(
+	Function&lt;T, CompletableFuture&lt;U&gt;);
+public CompletableFuture&lt;Void&gt; thenAccept(Consumer&lt;T&gt;);
+
+// wait for the computation to finish and get result
+public T join();</code></pre></div></div></section><section id="recap_on_api_basics_2"><h2>Recap on API Basics</h2><div class="paragraph"><p>Example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public void loadWebPage() {
+	String url = "http://codefx.org";
+	CompletableFuture&lt;WebPage&gt; future = CompletableFuture
+			.supplyAsync(() -&gt; webRequest(url))
+			.thenApply(html -&gt; new WebPage(url, html));
+	// ... do other stuff
+	future.join();
+}
+
+private String webRequest(String url) {
+	// make request to URL and return HTML
+	// (this can take a while)
+}</code></pre></div></div></section><section id="recap_on_completion"><h2>Recap on Completion</h2><div class="paragraph"><p>A pipeline or stage <em>completes</em> when<br>
+the underlying computation terminates.</p></div>
+<div class="ulist"><ul><li><p>it <em>completes normally</em> if<br>
+the computation yields a result</p></li><li><p>it <em>completes exceptionally</em> if<br>
+the computation results in an exception</p></li></ul></div></section><section id="recap_on_error_recovery"><h2>Recap on Error Recovery</h2><div class="paragraph"><p>Two methods to recover errors:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// turn the error into a result
+CompletableFuture&lt;T&gt; exceptionally(Function&lt;Throwable, T&gt;);
+// turn the result or error into a new result
+CompletableFuture&lt;U&gt; handle(BiFunction&lt;T, Throwable, U&gt;);</code></pre></div></div>
+<div class="paragraph"><p>They turn <em>exceptional completion</em> of the previous stage<br>
+into <em>normal completion</em> of the new stage.</p></div></section><section id="recap_on_error_recovery_2"><h2>Recap on Error Recovery</h2><div class="paragraph"><p>Example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">loadUser(id)
+	.thenCompose(this::loadUserHistory)
+	.thenCompose(this::createRecommendations)
+	.exceptionally(ex -&gt; {
+		log.warn("Recommendation error", ex)
+		return createDefaultRecommendations();
+	})
+	.thenAccept(this::respondWithRecommendations);</code></pre></div></div></section><section id="composeable_error_recovery"><h2>Composeable Error Recovery ⑫</h2><div class="paragraph"><p>Error recovery accepts functions<br>
+that produce <code>CompletableFuture</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">exceptionallyCompose(
+	Function&lt;Throwable, CompletionStage&lt;T&gt;&gt;)</code></pre></div></div></section><section id="recap_on_asynchronicity"><h2>Recap on (A)Synchronicity</h2><div class="paragraph"><p>Which threads actually compute the stages?</p></div>
+<div class="ulist"><ul><li><p><code>supplyAsync(Supplier&lt;T&gt;)</code> is executed<br>
+in the <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ForkJoinPool.html#commonPool--">common fork/join pool</a></p></li><li><p>for other stages it&#8217;s undefined:</p><div class="ulist"><ul><li><p>could be the same thread as the previous stage</p></li><li><p>could be another thread in the pool</p></li><li><p>could be the thread calling <code>thenAccept</code> et al.</p></li></ul></div></li></ul></div>
+<div class="paragraph"><p>How to force async computation?</p></div></section><section id="recap_on_asynchronicity_2"><h2>Recap on (A)Synchronicity</h2><div class="paragraph"><p>All "composing" methods<br>
+have an <code>&#8230;&#8203;Async</code> companion, e.g.:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">thenApplyAsync(Function&lt;T, U&gt;);
+thenAcceptAsync(Consumer&lt;T&gt;)</code></pre></div></div>
+<div class="paragraph"><p>They submit each stage as a separate task<br>
+to the common fork/join pool.</p></div></section><section id="async_error_recovery"><h2>Async Error Recovery ⑫</h2><div class="paragraph"><p>Error recovery can be asynchronous:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">CompletableFuture&lt;T&gt; exceptionallyAsync(
+	Function&lt;Throwable, T&gt;)
+CompletableFuture&lt;T&gt; exceptionallyComposeAsync(
+	Function&lt;Throwable, CompletableFuture&lt;T&gt;&gt;)</code></pre></div></div>
+<div class="paragraph"><p>There are overloads that accept <code>Executor</code>.</p></div></section></section>
 <section><section id="a_mixed_bag_of_updatedapis"><h2>A Mixed Bag Of Updated&nbsp;APIs</h2><div class="paragraph"><p><strong>In Java 9:</strong></p></div><div class="ulist"><ul><li><p>OASIS XML Catalogs 1.1 (<a href="http://openjdk.java.net/jeps/268">JEP 268</a>),<br>
 Xerces 2.11.0 (<a href="http://openjdk.java.net/jeps/255">JEP 255</a>)</p></li><li><p>Unicode support in<br>
-<code>PropertyResourceBundle</code> (<a href="http://openjdk.java.net/jeps/226">JEP 226</a>)</p></li></ul></div><div class="paragraph"><p>Many lower-level APIs.</p></div></section><section id="a_mixed_bag_of_newiomethods"><h2>A Mixed Bag Of New&nbsp;I/O&nbsp;Methods</h2><div class="paragraph"><p><strong>In Java 10 &amp; 11:</strong></p></div>
+<code>PropertyResourceBundle</code> (<a href="http://openjdk.java.net/jeps/226">JEP 226</a>)</p></li></ul></div><div class="paragraph"><p>Many lower-level APIs.</p></div></section><section id="a_mixed_bag_of_newiomethods"><h2>A Mixed Bag Of New&nbsp;I/O&nbsp;Methods</h2><div class="paragraph"><p><strong>In Java 10, 11, 12:</strong></p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Path.of(String); // ~ Paths.get(String)
 
+Files.mismatch(Path, Path);
 Files.readString(Path);
 Files.writeString(Path, CharSequence, ...);
 
@@ -831,12 +1152,12 @@ as backend for JDK logging.</p></div></section><section id="loggers_and_finders"
 <div class="paragraph"><p><strong>In Java 11:</strong></p></div>
 <div class="ulist"><ul><li><p>Unicode 9 &amp; 10 (<a href="http://openjdk.java.net/jeps/327">JEP 327</a>)</p></li><li><p>Curve25519 and Curve448 (<a href="http://openjdk.java.net/jeps/324">JEP 324</a>)</p></li><li><p>ChaCha20 and Poly1305 (<a href="http://openjdk.java.net/jeps/329">JEP 329</a>)</p></li><li><p>partial TLS 1.3 support (<a href="http://openjdk.java.net/jeps/332">JEP 332</a>)</p></li></ul></div></section></section>
 <section id="performance"><h2>Performance</h2><table class="toc">
-	<tr><td>Application Class-Data Sharing ⑩</td></tr>
+	<tr><td>Application Class-Data Sharing ⑩⑫</td></tr>
 	<tr><td>Compact Strings ⑨</td></tr>
 	<tr><td>Indified String Concatenation ⑨</td></tr>
 </table></section>
 <section><section id="performance_2"><h2>Performance</h2><table class="toc">
-	<tr class="toc-current"><td>Application Class-Data Sharing ⑩</td></tr>
+	<tr class="toc-current"><td>Application Class-Data Sharing ⑩⑫</td></tr>
 	<tr><td>Compact Strings ⑨</td></tr>
 	<tr><td>Indified String Concatenation ⑨</td></tr>
 </table><div class="paragraph"><p>Improving application launch times.</p></div></section><section id="class_data"><h2>Class-Data</h2><div class="paragraph"><p>JVM steps to execute a class&#8217;s bytecode:</p></div>
@@ -850,9 +1171,10 @@ class-data is always the same!</p></div></section><section id="class_data_sharin
 (focusing on classes required for launch):</p></div>
 <div class="ulist"><ul><li><p>archive has 250 MB for ~24k classes</p></li><li><p>launch time reduced from 15s to 12s</p></li></ul></div>
 <div class="paragraph"><p><strong>Bonus</strong>: Archive can be shared across JVMs.</p></div></section><section id="class_data_sharing_2"><h2>Class-Data Sharing</h2><div class="paragraph"><p>Two variants:</p></div>
-<div class="dlist"><dl><dt class="hdlist1">CDS</dt><dd><p>Just for JDK classes<br>
-(⑫ includes archive&#8201;&#8212;&#8201;<a href="http://openjdk.java.net/jeps/341">JEP 341</a>)</p></dd><dt class="hdlist1">AppCDS</dt><dd><p>JDK + application classes</p></dd></dl></div>
-<div class="paragraph"><p>We will focus on AppCDS.</p></div></section><section id="appcds_step_1"><h2>AppCDS - Step #1</h2><div class="paragraph"><p>Create a list of classes</p></div>
+<div class="dlist"><dl><dt class="hdlist1">CDS</dt><dd><p>just for JDK classes</p></dd><dt class="hdlist1">AppCDS</dt><dd><p>JDK + application classes</p></dd></dl></div>
+<div class="paragraph"><p>Quick look into CDS, then focus on AppCDS.</p></div></section><section id="cds"><h2>CDS</h2><div class="paragraph"><p>Java 12+ downloads include<br>
+CDS archive for JDK classes.</p></div>
+<div class="paragraph"><p>More in <a href="http://openjdk.java.net/jeps/341">JEP 341</a>.</p></div></section><section id="appcds_step_1"><h2>AppCDS - Step #1</h2><div class="paragraph"><p>Create a list of classes</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="sh language-sh">$ java
 	-XX:DumpLoadedClassList=classes.lst
 	# [... class path for app and deps ...]
@@ -885,7 +1207,7 @@ We plan to add that support in a future release.</p></div></blockquote><div clas
 <code>-Xlog:class+load</code><br>
 (<a href="https://blog.codefx.org/java/unified-logging-with-the-xlog-option/">unified logging</a>)</p></div></section></section>
 <section><section id="performance_3"><h2>Performance</h2><table class="toc">
-	<tr><td>Application Class-Data Sharing ⑩</td></tr>
+	<tr><td>Application Class-Data Sharing ⑩⑫</td></tr>
 	<tr class="toc-current"><td>Compact Strings ⑨</td></tr>
 	<tr><td>Indified String Concatenation ⑨</td></tr>
 </table><div class="paragraph"><p>Going from UTF-16 to ISO-8859-1.</p></div></section><section id="strings_and_memory"><h2>Strings and memory</h2><div class="ulist"><ul><li><p>20% - 30% of heap are <code>char[]</code> for <code>String</code></p></li><li><p>a <code>char</code> is UTF-16 code unit ⇝ 2 bytes</p></li><li><p>most strings only require ISO-8859-1 ⇝ 1 byte</p></li></ul></div>
@@ -902,7 +1224,7 @@ public String work() {
 <div class="paragraph"><p>Depending on circumstances:</p></div>
 <div class="ulist"><ul><li><p>throughput 1.4x</p></li><li><p>garbage less 1.85x</p></li></ul></div></section></section>
 <section><section id="performance_5"><h2>Performance</h2><table class="toc">
-	<tr><td>Application Class-Data Sharing ⑩</td></tr>
+	<tr><td>Application Class-Data Sharing ⑩⑫</td></tr>
 	<tr><td>Compact Strings ⑨</td></tr>
 	<tr class="toc-current"><td>Indified String Concatenation ⑨</td></tr>
 </table><div class="paragraph"><p><code>"Improving" + "String" + "Concatenation"</code></p></div></section><section id="string_concatenation"><h2>String Concatenation</h2><div class="paragraph"><p>What happens when you run:</p></div>
@@ -926,7 +1248,8 @@ directly to new <code>byte[]</code>.</p></div></section><section id="performance
 <section><section id="a_mixed_bag_of_performance"><h2>A Mixed Bag Of Performance</h2><div class="paragraph"><p><strong>In Java 9:</strong></p></div><div class="ulist"><ul><li><p>G1 default GC (<a href="http://openjdk.java.net/jeps/248">JEP 248</a>)</p></li><li><p>cgroup-memory limits (<a href="https://bugs.openjdk.java.net/browse/JDK-8170888">JDK-8170888</a>)</p></li><li><p>contended locks (<a href="http://openjdk.java.net/jeps/143">JEP 143</a>)</p></li><li><p>security manager (<a href="http://openjdk.java.net/jeps/232">JEP 232</a>)</p></li><li><p>Java 2D rendering (<a href="http://openjdk.java.net/jeps/265">JEP 265</a>)</p></li><li><p>GHASH/RSA computation (<a href="http://openjdk.java.net/jeps/246">JEP 246</a>)</p></li><li><p>Java-level JVM compiler interface (<a href="http://openjdk.java.net/jeps/243">JEP 243</a>)</p></li></ul></div></section><section id="a_mixed_bag_of_performance_2"><h2>A Mixed Bag Of Performance</h2><div class="paragraph"><p><strong>In Java 10:</strong></p></div>
 <div class="ulist"><ul><li><p>Graal&#8201;&#8212;&#8201;Java-based JIT compiler (<a href="http://openjdk.java.net/jeps/317">JEP 317</a>)</p></li><li><p>parallel full GC for G1 (<a href="http://openjdk.java.net/jeps/307">JEP 307</a>)</p></li><li><p>thread-local handshakes (<a href="http://openjdk.java.net/jeps/312">JEP 312</a>)</p></li></ul></div>
 <div class="paragraph"><p><strong>In Java 11:</strong></p></div>
-<div class="ulist"><ul><li><p>Epsilon GC (<a href="http://openjdk.java.net/jeps/318">JEP 318</a>)</p></li><li><p>ZGC (experimental, <a href="http://openjdk.java.net/jeps/333">JEP 333</a>)</p></li><li><p>low-overhead heap profiling (<a href="http://openjdk.java.net/jeps/331">JEP 331</a>)</p></li></ul></div></section></section>
+<div class="ulist"><ul><li><p>Epsilon GC (<a href="http://openjdk.java.net/jeps/318">JEP 318</a>)</p></li><li><p>ZGC (experimental, <a href="http://openjdk.java.net/jeps/333">JEP 333</a>)</p></li><li><p>low-overhead heap profiling (<a href="http://openjdk.java.net/jeps/331">JEP 331</a>)</p></li></ul></div></section><section id="a_mixed_bag_of_performance_3"><h2>A Mixed Bag Of Performance</h2><div class="paragraph"><p><strong>In Java 12:</strong></p></div>
+<div class="ulist"><ul><li><p>Shenandoah (<a href="http://openjdk.java.net/jeps/189">JEP 189</a>)</p></li><li><p>G1 improvements:</p><div class="ulist"><ul><li><p>abortable mixed collections (<a href="http://openjdk.java.net/jeps/344">JEP 344</a>)</p></li><li><p>promptly return unused memory (<a href="http://openjdk.java.net/jeps/346">JEP 346</a>)</p></li></ul></div></li></ul></div></section></section>
 <section id="full_picture" data-background-image="images/shibuya-night.jpg" data-background-size="cover"><h2>Full Picture</h2>
 <div class="paragraph"><p>If you want the full picture:</p></div>
 <div class="paragraph"><p><strong>All You Need To Know For<br>
