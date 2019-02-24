@@ -47,7 +47,7 @@ public enum TernaryBoolean {
 
 === Switch Statement
 
-Before Java 12, you might do this:
+Before Java 12, you might have done this:
 
 ```java
 boolean result;
@@ -132,6 +132,18 @@ Two things to note:
 * `switch` "has a result" +
   ⇝ it's an _expression_, not a _statement_
 * lambda-style arrow syntax
+
+=== Preview Feature
+
+*Note*:
+
+In Java 12, switch expressions are +
+a http://openjdk.java.net/jeps/12[preview language feature]!
+
+* must be enabled with `--enable-preview` +
+  (on `javac` and `java`).
+* in IntelliJ, make sure the module's +
+  language level is set to _12 (Preview) ..._
 
 === Expression vs Statement
 
@@ -228,7 +240,6 @@ String result = switch (ternaryBool) {
 	default -> "insane";
 };
 ```
-
 
 === No Fall-Through
 
@@ -394,7 +405,6 @@ boolean result = switch (ternaryBool) {
 Compiler adds in `default` branch.
 
 === More on `switch`
-
 
 Definitive Guide To Switch Expressions In Java 12
 
