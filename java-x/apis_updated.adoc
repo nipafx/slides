@@ -253,8 +253,11 @@ Example:
 Statistics stats = Stream
 	.of(1, 2, 4, 5)
 	.collect(teeing(
+		// Collector<Integer, ?, Integer>
 		summingInt(i -> i),
+		// Collector<Integer, ?, Double>
 		averagingInt(i -> i),
+		// BiFunction<Integer, Double, Statistics>
 		Statistics::of));
 // stats = Statistics {sum=12, average=3.0}
 ```
