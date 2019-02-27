@@ -1,17 +1,8 @@
 == Java 11
 image::images/11.jpg[background, size=cover]
 
-// ++++
-// <table class="toc">
-// 	<tr><td>Java 8</td></tr>
-// 	<tr><td>Java 9</td></tr>
-// 	<tr><td>Java 10</td></tr>
-// 	<tr class="toc-current"><td>Java 11</td></tr>
-// </table>
-// ++++
-
-* release 09/2018
-* free support *ends 01/2019* +
+* released 09/2018
+* free support *ended 01/2019* +
 (yes, no free LTS--more on that later)
 
 === What's the core of 11?
@@ -20,14 +11,13 @@ image::images/11.jpg[background, size=cover]
 Err...
 
 [%step]
-* single-file source-code programs:
+* single-source-file execution and https://blog.codefx.org/java/scripting-java-shebang/[scripts]:
 +
 [source,java]
 ----
 java HelloWorld.java
 ----
-* reactive HTTP/2 client +
-https://blog.codefx.org/java/http-2-api-tutorial/[http://tiny.cc/http-2]
+* https://blog.codefx.org/java/http-2-api-tutorial[reactive HTTP/2 client]
 * Epsilon GC
 
 include::java-11-scripts.adoc[]

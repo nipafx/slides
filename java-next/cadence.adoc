@@ -117,7 +117,16 @@ Balance shifted between +
 * `@Deprecated(forRemoval=true)`
 * "one major release" is now 6 months, not 36
 * increasing bytecode level
-* incubating features (if used incorrectly)
+* incubating features
+
+=== Incubating features?
+
+Two concepts allow features to incubate:
+
+* https://openjdk.java.net/jeps/11[incubator modules] for APIs
+* https://openjdk.java.net/jeps/12[preview language features]
+
+Both have safeguards against accidental proliferation.
 
 === Expensive migrations
 
