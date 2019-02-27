@@ -58,7 +58,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 </script></div></section>
 <section><section id="lets_get_started"><h2>Let&#8217;s get started!</h2><div class="ulist"><ul><li><p>slides at <a href="http://slides.codefx.org/java-x">slides.codefx.org/java-x</a></p></li><li><p>exercises at<br>
 <a href="https://github.com/nicolaiparlog/course-java-x">github.com/nicolaiparlog/course-java-x</a></p></li><li><p>they cover Java 9 to 12 without JPMS;<br>
-we&#8217;ll focus on Java 9 today</p></li></ul></div></section><section id="lots_to_talk_about"><h2>Lots to talk about!</h2><table class="toc">
+we&#8217;ll focus on Java 10 to 12 today</p></li></ul></div></section><section id="lots_to_talk_about"><h2>Lots to talk about!</h2><table class="toc">
 	<tr><td>Language Changes</td></tr>
 	<tr><td>New and Updated APIs</td></tr>
 	<tr><td>New JVM Features</td></tr>
@@ -139,8 +139,9 @@ possible or convenient</p></li></ul></div></section><section id="switch_expressi
 <div class="paragraph"><p>In Java 12, switch expressions are<br>
 a <a href="http://openjdk.java.net/jeps/12">preview language feature</a>!</p></div>
 <div class="ulist"><ul><li><p>must be enabled with <code>--enable-preview</code><br>
-(on <code>javac</code> and <code>java</code>).</p></li><li><p>in IntelliJ, make sure the module&#8217;s<br>
-language level is set to <em>12 (Preview) &#8230;&#8203;</em></p></li></ul></div></section><section id="expression_vs_statement"><h2>Expression vs Statement</h2><div class="paragraph"><p>Statement:</p></div>
+(on <code>javac</code> and <code>java</code>).</p></li><li><p>in IntelliJ 2018.3 or later,<br>
+set the module&#8217;s language level to<br>
+<em>12 (Preview) - Switch expressions</em></p></li></ul></div></section><section id="expression_vs_statement"><h2>Expression vs Statement</h2><div class="paragraph"><p>Statement:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">if (condition)
     result = doThis();
 else
@@ -656,8 +657,11 @@ Collector&lt;T, ?, R&gt; teeing(
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Statistics stats = Stream
 	.of(1, 2, 4, 5)
 	.collect(teeing(
+		// Collector&lt;Integer, ?, Integer&gt;
 		summingInt(i -&gt; i),
+		// Collector&lt;Integer, ?, Double&gt;
 		averagingInt(i -&gt; i),
+		// BiFunction&lt;Integer, Double, Statistics&gt;
 		Statistics::of));
 // stats = Statistics {sum=12, average=3.0}</code></pre></div></div></section></section>
 <section><section id="updated_apis_4"><h2>Updated APIs</h2><table class="toc">
