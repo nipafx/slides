@@ -498,6 +498,97 @@ and <em>A</em> needs to export used packages</p></li></ul></div>
 <div class="paragraph"><p>The latter two accept <code>ALL-UNNAMED</code> as target.</p></div>
 <div class="paragraph"><p>More at <a href="https://blog.codefx.org">codefx.org</a>:</p></div>
 <div class="paragraph"><p><a href="https://blog.codefx.org/java/five-command-line-options-to-hack-the-java-9-module-system/">Five Command Line Options To Hack The JPMS</a></p></div></section></section>
+<section><section id="analyzing_dependencies_with_jdeps"><h2>Analyzing Dependencies With JDeps</h2><h3>Helping You Modularize!</h3></section><section id="about_jdeps"><h2>About JDeps</h2><div class="ulist"><ul><li><p>a command line tool</p></li><li><p>analyzes bytecode to<br>
+detect dependencies</p></li><li><p>exists since Java 8</p></li><li><p>really shines with modules</p></li></ul></div></section><section id="simplest_invocation"><h2>Simplest Invocation</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">$ jdeps sh-2.6.3.jar
+
+&gt; sh-2.6.3.jar -&gt; java.base
+&gt; sh-2.6.3.jar -&gt; java.datatransfer
+&gt; sh-2.6.3.jar -&gt; java.desktop
+# ... truncated more module dependencies ...
+&gt;    edu.udo.sh -&gt; com.beust.jcommander  not found
+&gt;    edu.udo.sh -&gt; edu.udo.sh.data       sh-2.6.3.jar
+&gt;    edu.udo.sh -&gt; edu.udo.sh.gui        sh-2.6.3.jar
+&gt;    edu.udo.sh -&gt; edu.udo.sh.gui.util   sh-2.6.3.jar
+&gt;    edu.udo.sh -&gt; edu.udo.sh.util       sh-2.6.3.jar
+&gt;    edu.udo.sh -&gt; java.io               java.base
+&gt;    edu.udo.sh -&gt; java.lang             java.base
+&gt;    edu.udo.sh -&gt; javax.swing           java.desktop
+# ... truncated many more package dependencies ...</code></pre></div></div></section><section id="analyzing_dependencies"><h2>Analyzing Dependencies</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">$ jdeps
+	--class-path 'libs/*' -recursive
+	sh-2.6.3.jar
+
+# ... truncated split package warnings ...
+# ... truncated some module/JAR dependencies...
+&gt; sh-2.6.3.jar -&gt; libs/commons-codec-1.6.jar
+&gt; sh-2.6.3.jar -&gt; libs/commons-io-2.4.jar
+&gt; sh-2.6.3.jar -&gt; libs/dom4j-1.6.1.jar
+&gt; sh-2.6.3.jar -&gt; libs/exp4j-0.1.38.jar
+&gt; sh-2.6.3.jar -&gt; libs/guava-18.0.jar
+# ... truncated more module/JAR dependencies...
+# ... truncated many, many package dependencies ...</code></pre></div></div></section><section id="creating_graphs"><h2>Creating Graphs</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">$ jdeps
+	--class-path 'libs/*' -recursive
+	--dot-output dots
+	sh-2.6.3.jar
+# sed -i 's/-1.0-SNAPSHOT.jar//g' summary.dot
+# sed -i '/java.base/d' summary.dot
+$ dot -Tpng -O dots/summary.dot</code></pre></div></div></section><section data-background-color="white" data-background-image="images/jdeps-scaffoldhunter-jars.png" data-background-size="contain" data-state="empty"></section><section id="jdk_internal_apis"><h2>JDK-Internal APIs</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">$ jdeps --jdk-internals
+	-recursive --class-path 'libs/*'
+	sh-2.6.3.jar
+
+&gt; batik-codec.jar -&gt; JDK removed internal API
+&gt;     JPEGImageWriter -&gt; JPEGCodec
+&gt; guava-18.0.jar -&gt; jdk.unsupported
+&gt;     Striped64 -&gt; Unsafe
+&gt; sh-2.6.3.jar -&gt; java.desktop
+&gt;     SteppedComboBox -&gt; WindowsComboBoxUI</code></pre></div></div></section></section>
+<section><section id="creating_runtime_images_with_jlink"><h2>Creating Runtime Images With JLink</h2><h3>Custom-Made For Your Application</h3></section><section id="remember_this" data-background-color="white" data-background-image="images/platform-modules.png" data-background-size="contain"><h2>Remember This?</h2></section><section id="benefiting_from_jdk_modularization"><h2>Benefiting From JDK Modularization</h2><div class="paragraph"><p>Create a JDK install with just the code you need:</p></div>
+<div class="ulist"><ul><li><p>know which modules your app uses (⇝ <code>jdeps</code>)</p></li><li><p>create an image with those modules (⇝ <code>jlink</code>)</p></li></ul></div>
+<div class="paragraph"><p>This is about <code>jlink</code>.</p></div></section><section id="a_minimal_jdk_image"><h2>A Minimal JDK Image</h2><div class="paragraph"><p>Create with <code>jlink</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">$ jlink
+#   define output folder for the image
+    --output jdk-minimal
+#   where to find modules? (obsolete in ⑪)
+    --module-path $JAVA_HOME/jmods
+#   which modules to add (includes dependencies!)
+    --add-modules java.base</code></pre></div></div>
+<div class="paragraph"><p>Try it out:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">$ jdk-minimal/bin/java --list-modules
+&gt; java.base</code></pre></div></div></section><section id="image_for_a_backend"><h2>Image For A Backend</h2><div class="paragraph"><p>Say you use JAXP, JDBC, and JUL:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">$ jlink
+	--output jdk-backend
+	--module-path $JAVA_HOME/jmods # obsolete in ⑪
+	--add-modules java.xml,java.sql,java.logging</code></pre></div></div></section><section id="image_for_a_backend_2"><h2>Image For A Backend</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">$ jdk-backend/bin/java --list-modules
+&gt; java.base
+&gt; java.logging
+&gt; java.sql
+&gt; java.transaction.xa
+&gt; java.xml</code></pre></div></div></section><section id="image_including_your_app_and_dependencies"><h2>Image Including Your App And Dependencies</h2><div class="paragraph"><p>To create an image for your app:</p></div>
+<div class="ulist"><ul><li><p><strong>all JARs need to be modularized!</strong></p></li><li><p>including dependencies</p></li></ul></div>
+<div class="paragraph"><p>Unless you use Gunnar Morling&#8217;s <a href="https://github.com/moditect/moditect#creating-modular-runtime-images">ModiTect</a>,<br>
+which creates module descriptors on the fly.</p></div></section><section id="linking_and_launching"><h2>Linking And Launching</h2><div class="paragraph"><p>Creating the image:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">$ jlink
+	--output app-image
+	--module-path $JAVA_HOME/jmods:mods
+	--add-modules advent
+#   services are not resolves automatically
+	--add-modules factory.surprise,factory.chocolate</code></pre></div></div>
+<div class="paragraph"><p>Launching the app:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">app-image/bin/java --module advent</code></pre></div></div></section><section id="creating_a_launcher"><h2>Creating A Launcher</h2><div class="paragraph"><p>You can even create a launcher:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">$ jlink
+    --output app-image
+    --module-path $JAVA_HOME/jmods:mods
+    --add-modules advent,...
+#   --launcher &lt;name&gt;=&lt;module&gt;[/&lt;mainclass&gt;]
+    --launcher calendar=advent</code></pre></div></div>
+<div class="paragraph"><p>Launching the app:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">app-image/bin/calendar</code></pre></div></div></section><section id="more_features"><h2>More Features</h2><div class="ulist"><ul><li><p>automatic service binding<br>
+(with <code>--bind-services</code>)</p></li><li><p>various optimizations<br>
+(size and launch performance)</p></li><li><p>plugin API (not yet public)</p></li><li><p>cross OS image generation</p></li></ul></div></section><section id="summary_7"><h2>Summary</h2><div class="paragraph"><p>You can use <code>jlink</code> to:</p></div>
+<div class="ulist"><ul><li><p>create a runtime image<br>
+with just the right modules</p></li><li><p>create an application image<br>
+including your code</p></li></ul></div>
+<div class="paragraph"><p>This should make certain kinds of deploys<br>
+smaller and easier.</p></div></section></section>
 <section><section id="migration_challenges"><h2>Migration Challenges</h2><h3>What to look out for<br>when running on JDK 11</h3></section><section id="break_stuff" data-background-image="images/broken-glass.jpg" data-background-size="cover"><h2>Break Stuff</h2>
 <div class="paragraph"><p>Some internal changes <a href="https://blog.codefx.org/java/java-11-migration-guide/">break existing code</a>!</p></div>
 <div class="paragraph"><p>Just by running on JDK 11<br>
@@ -658,12 +749,12 @@ whose names are <strong>based on manifest entry</strong>.</p></div></section></s
 </div>
 <h3>Follow</h3>
 <div class="paragraph"><p>💻 <a href="http://codefx.org">codefx.org</a><br>
-▶ <a href="https://www.youtube.com/c/codefx">youtube.com/c/codefx</a><br>
 🐦 <a href="https://twitter.com/nipafx">@nipafx</a></p></div>
 <h3>Want More?</h3>
+<div class="paragraph"><p>Slides at <a href="https://slides.codefx.org">slides.codefx.org</a></p></div>
 <div class="paragraph"><p>⇜ Get <a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&amp;a_bid=869915cb">my book</a>!</p></div>
 <div class="paragraph"><p>You can <a href="http://blog.codefx.org/hire-nicolai-parlog/">hire me</a>:</p></div>
-<div class="ulist"><ul><li><p>training (Java 8-11, JUnit 5)</p></li><li><p>consulting (Java 8-11)</p></li></ul></div></section>
+<div class="ulist"><ul><li><p>training (Java 8-12, JUnit 5)</p></li><li><p>consulting (Java 8-12)</p></li></ul></div></section>
 <section><section id="image_credits"><h2>Image Credits</h2></section><section id="introduction"><h2>Introduction</h2><div class="ulist"><ul><li><p>puzzle-people:
 <a href="https://www.flickr.com/photos/pagedooley/">Kevin Dooley</a>
 (<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a>)</p></li><li><p>binary-code:
