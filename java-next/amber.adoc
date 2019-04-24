@@ -39,31 +39,11 @@ image::images/amber.jpg[background, size=cover]
 === Endeavors
 image::images/amber.jpg[background, size=cover]
 
-* raw string literals (http://openjdk.java.net/jeps/326[JEP 326])
 * pattern matching (http://openjdk.java.net/jeps/305[JEP 305])
 * records (http://openjdk.java.net/jeps/8222777[JEP draft])
 * serialization revamp (nothing concrete yet)
 * concise method bodies (http://openjdk.java.net/jeps/8209434[JEP draft])
-
-=== Raw string literals
-image::images/amber.jpg[background, size=cover]
-
-[source,java]
-----
-String html =
-	`<html>
-		<body>
-			<p>"Hello, string literals!"</p>
-		</body>
-	</html>`;
-----
-
-*Yeah:*
-
-* multiline strings
-* no escaping of special characters
-
-Preview in http://jdk.java.net/13/[Java 13].
+* raw / multi-line string literals (http://openjdk.java.net/jeps/326[JEP 326])
 
 === Pattern matching
 image::images/amber.jpg[background, size=cover]
@@ -208,6 +188,51 @@ class ListWrapper<E> implements List<E> {
 * simple methods get simple code
 * fewer (empty) lines
 
+=== Raw string literals
+image::images/amber.jpg[background, size=cover]
+
+[source,java]
+----
+String regex = \"\+(\d*[.])?\d"
+----
+
+*Yeah:*
+
+* no escaping of special characters
+
+=== Multi-line string literals
+image::images/amber.jpg[background, size=cover]
+
+[source,java]
+----
+String html = """
+	<html>
+		<body>
+			<p>"Hello, multi-line strings!"</p>
+		</body>
+	</html>""";
+----
+
+*Yeah:*
+
+* multi-line strings that can contain `"`
+
+=== Raw multi-line strings
+image::images/amber.jpg[background, size=cover]
+
+[source,java]
+----
+String yaml = \"""
+		name: "Positive number"
+		regex: "\+(\d*[.])?\d"
+	""";
+----
+
+Was planned as preview in http://jdk.java.net/12/[Java 12], +
+but removed last minute.
+
+Turns out its complicated. 😁
+
 === Project Amber
 image::images/amber.jpg[background, size=cover]
 
@@ -215,8 +240,8 @@ Makes Java more expressive:
 
 * type inference with `var` ⑩
 * switch expressions ⑫
-* raw string literals ⑬
 * pattern matching
 * records
 * serialization revamp
 * concise method bodies
+* raw string literals
