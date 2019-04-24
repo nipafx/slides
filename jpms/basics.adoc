@@ -32,8 +32,9 @@ Modules
 === Implementation
 
 * Modules are JARs with a `module-info.class` +
-(aka *Modular JAR*)
-* gets generated from `module-info.java`:
+  (aka *Modular JAR*)
+* gets generated from `module-info.java` +
+  (in sources root, e.g. `src/main/java`):
 +
 [source,java]
 ----
@@ -235,6 +236,8 @@ https://blog.codefx.org/cheat-sheet-build-run-modules-jars.html[tiny.cc/cheat-mo
 
 // http://yuml.me/edit/4b1f89ab
 image::images/advent-calendar-module-single.png[role="diagram"]
+
+Create `module-info.java` in sources root:
 
 [source,java]
 ----
