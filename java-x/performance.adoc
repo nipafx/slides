@@ -202,7 +202,7 @@ defensive copies of all arguments.
 === Performance
 
 Simple benchmark: +
-(by https://twitter.com/shipilev[Aleksey Shipilëv])
+(by https://shipilev.net/[Aleksey Shipilëv])
 
 ```java
 String method = generateString(size);
@@ -217,6 +217,13 @@ Depending on circumstances:
 * throughput 1.4x
 * garbage less 1.85x
 
+=== More
+
+Background on `String` +
+performance improvements:
+
+https://www.youtube.com/watch?v=wIyeOaitmWM[Aleksey Shipilëv +
+The Lord Of The Strings]
 
 
 == Performance
@@ -287,7 +294,7 @@ Depending on circumstances:
 * throughput 2.6x
 * garbage less 3.4x
 
-(Benchmarks by https://twitter.com/shipilev[Aleksey Shipilëv])
+(Benchmarks by https://shipilev.net/[Aleksey Shipilëv])
 
 === Performance Of Indified Compact String Concat
 
@@ -296,8 +303,15 @@ Depending on circumstances:
 * throughput 2.9x
 * garbage less 6.4x
 
-(Benchmarks by https://twitter.com/shipilev[Aleksey Shipilëv])
+(Benchmarks by https://shipilev.net/[Aleksey Shipilëv])
 
+=== More
+
+Background on `String` +
+performance improvements:
+
+https://www.youtube.com/watch?v=wIyeOaitmWM[Aleksey Shipilëv +
+The Lord Of The Strings]
 
 
 == A Mixed Bag Of Performance
