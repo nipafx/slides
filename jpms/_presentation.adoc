@@ -27,12 +27,12 @@
 
 include::../_shared/highlight.js.adoc[]
 
-:host-name: JEEConf
-:host-url: https://jeeconf.com/
-:host-logo-url: images/logo-jeeconf.png
+:host-name: JUG Nürnberg
+:host-url: https://www.xing.com/communities/groups/java-user-group-metropolregion-nuernberg-1063112
+:host-logo-url: images/logo-jug-nuernberg.png
 // :host-logo-style: background-color: transparent; border-width: 0;
-:host-twitter-name: @jeeconf
-:host-twitter-url: https://twitter.com/jeeconf
+:host-twitter-name: @JUGNBG
+:host-twitter-url: https://twitter.com/JUGNBG
 include::../_shared/event-on-title-and-footer.adoc[]
 
 
@@ -43,16 +43,16 @@ include::../_shared/event-on-title-and-footer.adoc[]
 
 == Let's get started!
 
-// * there's much to talk about +
-// ⇝ this can only cover parts of the JPMS
-// ⇝ we may have to skip some details
+* there's much to talk about +
+⇝ this can only cover parts of the JPMS +
+⇝ we may have to skip some details
 // * if you're shy, tweet questions +
 // with https://twitter.com/search?q=%23vdz17%20%40nipafx[#VDZ17 @nipafx]
 * slides at http://slides.codefx.org/jpms[slides.codefx.org/jpms]
-* exercises at +
-https://github.com/nicolaiparlog/course-jpms[github.com/nicolaiparlog/course-jpms]
+// * exercises at +
+// https://github.com/nicolaiparlog/course-jpms[github.com/nicolaiparlog/course-jpms]
 
-(Please share responsibly)
+// (Please share responsibly)
 
 === Table of contents
 
@@ -62,11 +62,11 @@ https://github.com/nicolaiparlog/course-jpms[github.com/nicolaiparlog/course-jpm
 	<tr><td>Project Jigsaw</td></tr>
 	<tr><td>Java Module System Basics</td></tr>
 	<tr><td>Beyond The Basics</td></tr>
-	<tr><td>Command Line Options</td></tr>
-	<tr><td>Dependency Analysis With <code>jdeps</code></td></tr>
+	<!-- <tr><td>Command Line Options</td></tr> -->
+	<!-- <tr><td>Dependency Analysis With <code>jdeps</code></td></tr> -->
 	<tr><td>Runtime Images With <code>jlink</code></td></tr>
 	<tr><td>Migration Challenges</td></tr>
-	<tr><td>Incremental Modularization</td></tr>
+	<!-- <tr><td>Incremental Modularization</td></tr> -->
 </table>
 ++++
 
@@ -77,21 +77,19 @@ include::project-jigsaw.adoc[]
 
 include::basics.adoc[]
 
+// include::quick-intro.adoc[]
+
 include::advanced.adoc[]
 
-include::command-line.adoc[]
+// include::command-line.adoc[]
 
-include::jdeps.adoc[]
+// include::jdeps.adoc[]
 
 include::jlink.adoc[]
 
 include::migration.adoc[]
 
-include::modularization.adoc[]
-
-// include::quick-intro.adoc[]
-
-// include::../_shared/roadmap.adoc[]
+// include::modularization.adoc[]
 
 // include::osgi.adoc[]
 
