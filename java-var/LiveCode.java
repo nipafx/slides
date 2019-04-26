@@ -44,7 +44,7 @@ public class LiveCode {
 	 */
 
 	/*
-	 * INTERSECTON TYPES
+	 * INTERSECTION TYPES
 	 *  - start with var_intersection
 	 *  - add `Closeable` (var_firstMatch)
 	 *  - new interface
