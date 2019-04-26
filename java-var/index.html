@@ -27,10 +27,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		</div>
 	</div>
 	<div class="participant">
-		<a href="http://virtualjug.com/"><img src="images/logo-vjug.jpg" class="logo" style="{host-logo-style}"></a>
+		<a href="https://jeeconf.com/"><img src="images/logo-jeeconf.png" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="http://virtualjug.com/">vJUG</a></p>
-			<p><a href="https://twitter.com/virtualJUG">@VirtualJUG</a></p>
+			<p><a href="https://jeeconf.com/">JEEConf</a></p>
+			<p><a href="https://twitter.com/jeeconf">@jeeconf</a></p>
 		</div>
 	</div>
 </div>
@@ -45,9 +45,9 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="http://virtualjug.com/"><img src="images/logo-vjug.jpg" class="logo" style="{host-logo-style}"></a>
+		<a href="https://jeeconf.com/"><img src="images/logo-jeeconf.png" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="http://virtualjug.com/">vJUG</a> / <a href="https://twitter.com/virtualJUG">@VirtualJUG</a></p>
+			<p><a href="https://jeeconf.com/">JEEConf</a> / <a href="https://twitter.com/jeeconf">@jeeconf</a></p>
 		</div>
 	</div>
 </footer>
@@ -70,23 +70,10 @@ Code at <a href="https://github.com/CodeFX-org/demo-java-x">github.com/CodeFX-or
 	<tr><td>Traits</td></tr>
 	<tr><td>Ad-hoc Fields And Methods</td></tr>
 </table></section><section id="code"><h2>Code</h2></section><section id="what_about_readability"><h2>What About Readability?</h2><div class="paragraph"><p>This <strong>is</strong> about readability!</p></div>
-<div class="ulist"><ul><li><p>less redundancy</p></li><li><p>more intermediate variables</p></li><li><p>more focus on variable names</p></li><li><p>aligned variable names</p></li></ul></div></section><section id="aligned_variable_names"><h2>Aligned Variable Names</h2><div style="height: 300px;">
-<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">No no = <span class="hljs-keyword">new</span> No();
-AmountIncrease&lt;BigDecimal&gt; more =
-    <span class="hljs-keyword">new</span> BigDecimalAmountIncrease();
-HorizontalConnection&lt;LinePosition, LinePosition&gt;
-    jumping =
-        <span class="hljs-keyword">new</span> HorizontalLinePositionConnection();
-Variable variable = <span class="hljs-keyword">new</span> Constant(<span class="hljs-number">5</span>);
-List&lt;String&gt; names = List.of(<span class="hljs-string">"Max"</span>, <span class="hljs-string">"Maria"</span>);</code></pre></div></div>
-<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">var</span> no = <span class="hljs-keyword">new</span> No();
-<span class="hljs-keyword">var</span> more = <span class="hljs-keyword">new</span> BigDecimalAmountIncrease();
-<span class="hljs-keyword">var</span> jumping = <span class="hljs-keyword">new</span> HorizontalLinePositionConnection();
-<span class="hljs-keyword">var</span> variable = <span class="hljs-keyword">new</span> Constant(<span class="hljs-number">5</span>);
-<span class="hljs-keyword">var</span> names = List.of(<span class="hljs-string">"Max"</span>, <span class="hljs-string">"Maria"</span>);</code></pre></div></div></section><section id="style_guidelines"><h2>Style Guidelines</h2><div class="paragraph"><p>Principles from the
+<div class="ulist"><ul><li><p>less redundancy</p></li><li><p>more intermediate variables</p></li><li><p>more focus on variable names</p></li><li><p>aligned variable names</p></li></ul></div></section><section id="code_2"><h2>Code</h2></section><section id="style_guidelines"><h2>Style Guidelines</h2><div class="paragraph"><p>Principles from the
 <a href="http://openjdk.java.net/projects/amber/LVTIstyle.html">official style guidelines</a>:</p></div>
 <div class="olist arabic"><ol class="arabic"><li class="fragment"><p>Reading code is more important than writing it.</p></li><li class="fragment"><p>Code should be clear from local reasoning.</p></li><li class="fragment"><p>Code readability shouldn&#8217;t depend on IDEs.</p></li><li class="fragment"><p>Explicit types are a tradeoff.</p></li></ol></div></section><section id="style_guidelines_2"><h2>Style Guidelines</h2><div class="paragraph"><p>Guidelines:</p></div>
-<div class="olist arabic"><ol class="arabic"><li class="fragment"><p>Choose variable names that provide useful info.</p></li><li class="fragment"><p>Minimize the scope of local variables.</p></li><li class="fragment"><p>Consider <code>var</code> when the initializer provides sufficient information to the reader.</p></li><li class="fragment"><p>Use <code>var</code> to break up chained or nested expressions.</p></li><li class="fragment"><p>Don&#8217;t worry too much about "programming to the interface".</p></li><li class="fragment"><p>Take care when using <code>var</code> with diamonds or generics.</p></li><li class="fragment"><p>Take care when using <code>var</code> with literals.</p></li></ol></div></section><section id="more_on_var_basics"><h2>More on <code>var</code> basics</h2><div class="ulist"><ul><li><p>First Contact With <code>var</code> In Java 10<br>
+<div class="olist arabic"><ol class="arabic"><li><p>Choose variable names that provide useful info.</p></li><li><p>Minimize the scope of local variables.</p></li><li><p>Consider <code>var</code> when the initializer provides sufficient information to the reader.</p></li><li><p>Use <code>var</code> to break up chained or nested expressions.</p></li><li><p>Don&#8217;t worry too much about "programming to the interface".</p></li><li><p>Take care when using <code>var</code> with diamonds or generics.</p></li><li><p>Take care when using <code>var</code> with literals.</p></li></ol></div></section><section id="code_3"><h2>Code</h2></section><section id="more_on_var_basics"><h2>More on <code>var</code> basics</h2><div class="ulist"><ul><li><p>First Contact With <code>var</code> In Java 10<br>
 💻 <a href="https://blog.codefx.org/java/java-10-var-type-inference/">tiny.cc/java-var</a> /
 ▶ <a href="https://www.youtube.com/watch?v=Le1DbpRZdRQ&amp;index=1&amp;list=PL_-IO8LOLuNp2stY1qBUtXlfMdJW7wvfT">tiny.cc/java-var-yt</a></p></li><li><p><a href="http://openjdk.java.net/projects/amber/LVTIstyle.html">official style guidelines</a></p></li><li><p><a href="https://snyk.io/blog/local-type-inference-java-cheat-sheet">cheat sheet</a> (<strong>⇜ print when getting started!</strong>)</p></li></ul></div></section></section>
 <section><section id="fun_with_var_2"><h2>Fun with <code>var</code></h2><table class="toc">
@@ -106,7 +93,7 @@ is the set of variables that are of both types.</p></div>
 <div class="paragraph"><p><strong>For example:</strong></p></div>
 <div class="paragraph"><p>A variable of type <code>Closeable &amp; Iterator&lt;E&gt;</code><br>
 is both <code>Closeable</code> and an <code>Iterator&lt;E&gt;</code>.</p></div>
-<div class="paragraph"><p>It has <code>close()</code> and <code>hashNext()</code>/<code>next()</code></p></div></section><section id="code_2"><h2>Code</h2></section><section id="intersection_types_2"><h2>Intersection types</h2><div class="olist arabic"><ol class="arabic"><li><p>in method signatures, express with generics:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public &lt;T extends Closeable &amp; Iterator&lt;String&gt;&gt;
+<div class="paragraph"><p>It has <code>close()</code> and <code>hashNext()</code>/<code>next()</code></p></div></section><section id="code_4"><h2>Code</h2></section><section id="intersection_types_2"><h2>Intersection types</h2><div class="olist arabic"><ol class="arabic"><li><p>in method signatures, express with generics:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public &lt;T extends Closeable &amp; Iterator&lt;String&gt;&gt;
 	T createCloseableIterator(...) { ... }
 
 public &lt;E, T extends Closeable &amp; Iterator&lt;E&gt;&gt;
@@ -131,7 +118,7 @@ without creating a new type.</p></div>
 want to attach to it.</p></div></section><section id="traits"><h2>Traits</h2><div class="paragraph"><p>A <strong>trait</strong> extends an interface<br>
 and implements additional behavior.</p></div>
 <div class="paragraph"><p>The language needs to offer a simple way<br>
-to "attach" that trait to an instance at hand.</p></div></section><section id="code_3"><h2>Code</h2></section><section id="traits_2"><h2>Traits</h2><div class="olist arabic"><ol class="arabic"><li><p>create a functional, delegating interface:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@FunctionalInterface
+to "attach" that trait to an instance at hand.</p></div></section><section id="code_5"><h2>Code</h2></section><section id="traits_2"><h2>Traits</h2><div class="olist arabic"><ol class="arabic"><li><p>create a functional, delegating interface:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@FunctionalInterface
 interface MegacorpDelegate extends Megacorp {
 	Megacorp delegate();
 	// implement `Megacorp` with default methods
@@ -160,7 +147,7 @@ with a field or a method.</p></div>
 		return earnings()
 			.compareTo(SUCCESS_BOUNDARY) &gt; 0;
 	}
-};</code></pre></div></div></section><section id="code_4"><h2>Code</h2></section><section id="ad_hoc_fields_methods"><h2>Ad-hoc fields &amp; methods</h2><div class="olist arabic"><ol class="arabic"><li><p>create anonymous class with<br>
+};</code></pre></div></div></section><section id="code_6"><h2>Code</h2></section><section id="ad_hoc_fields_methods"><h2>Ad-hoc fields &amp; methods</h2><div class="olist arabic"><ol class="arabic"><li><p>create anonymous class with<br>
 additional fields and/or methods</p></li><li><p>assigned to <code>var</code>-ed variable</p></li></ol></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">var corp = new SimpleMegacorp(...) {
 	final BigDecimal SUCCESS_BOUNDARY =
@@ -233,13 +220,15 @@ not in 2019, likely not in 2020.</p></div></section><section id="more_on_ad_hoc_
 </div>
 <h3>Follow</h3>
 <div class="paragraph"><p>💻 <a href="http://codefx.org">codefx.org</a><br>
-▶ <a href="https://www.youtube.com/c/codefx">youtube.com/c/codefx</a><br>
 🐦 <a href="https://twitter.com/nipafx">@nipafx</a></p></div>
 <h3>Want More?</h3>
+<div class="paragraph"><p>Slides at <a href="https://slides.codefx.org">slides.codefx.org</a></p></div>
 <div class="paragraph"><p>⇜ Get <a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&amp;a_bid=869915cb">my book</a>!</p></div>
 <div class="paragraph"><p>You can <a href="http://blog.codefx.org/hire-nicolai-parlog/">hire me</a>:</p></div>
-<div class="ulist"><ul><li><p>training (Java 8-11, JUnit 5)</p></li><li><p>consulting (Java 8-11)</p></li></ul></div></section>
-<section id="image_credits"><h2>Image Credits</h2><div class="ulist"><ul><li><p><a href="https://pixabay.com/en/new-year-s-eve-fireworks-beacon-1953253/">fireworks</a>:
+<div class="ulist"><ul><li><p>training (Java 8-12, JUnit 5)</p></li><li><p>consulting (Java 8-12)</p></li></ul></div></section>
+<section id="image_credits"><h2>Image Credits</h2><div class="ulist"><ul><li><p><a href="https://unsplash.com/photos/qWlkCwBnwOE">pineapple party</a>:
+<a href="https://unsplash.com/@pineapple">Pineapple Supply Co.</a>,
+<a href="https://unsplash.com/license">Unsplash license</a></p></li><li><p><a href="https://pixabay.com/en/new-year-s-eve-fireworks-beacon-1953253/">fireworks</a>:
 <a href="https://pixabay.com/en/users/nickgesell-3554748/">nickgesell</a>,
 <a href="https://wiki.creativecommons.org/wiki/CC0">CC0</a></p></li><li><p><a href="https://www.flickr.com/photos/21496790@N06/5065834411">question-mark</a>:
 <a href="http://milosevicmilos.com/">Milos Milosevic</a>,
@@ -308,7 +297,7 @@ Reveal.initialize({
   // Number of slides away from the current that are visible
   viewDistance: 3,
   // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
-  parallaxBackgroundImage: 'images/fireworks.jpg',
+  parallaxBackgroundImage: 'images/pineapple-party.jpg',
   // Parallax background size in CSS syntax (e.g., "2100px 900px")
   parallaxBackgroundSize: '4892px 3261px',
 

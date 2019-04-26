@@ -1218,14 +1218,17 @@ We plan to add that support in a future release.</p></div></blockquote><div clas
 <div class="ulist"><ul><li><p>uses <code>byte[]</code> instead of <code>char[]</code></p></li><li><p>bytes per character:</p><div class="ulist"><ul><li><p>1 if <em>all</em> characters are ISO-8859-1</p></li><li><p>2 otherwise</p></li></ul></div></li></ul></div>
 <div class="paragraph"><p>Only possible because <code>String</code> makes<br>
 defensive copies of all arguments.</p></div></section><section id="performance_4"><h2>Performance</h2><div class="paragraph"><p>Simple benchmark:<br>
-(by <a href="https://twitter.com/shipilev">Aleksey Shipilëv</a>)</p></div>
+(by <a href="https://shipilev.net/">Aleksey Shipilëv</a>)</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">String method = generateString(size);
 
 public String work() {
 	return "Calling method \"" + method + "\"";
 }</code></pre></div></div>
 <div class="paragraph"><p>Depending on circumstances:</p></div>
-<div class="ulist"><ul><li><p>throughput 1.4x</p></li><li><p>garbage less 1.85x</p></li></ul></div></section></section>
+<div class="ulist"><ul><li><p>throughput 1.4x</p></li><li><p>garbage less 1.85x</p></li></ul></div></section><section id="more"><h2>More</h2><div class="paragraph"><p>Background on <code>String</code><br>
+performance improvements:</p></div>
+<div class="paragraph"><p><a href="https://www.youtube.com/watch?v=wIyeOaitmWM">Aleksey Shipilëv<br>
+The Lord Of The Strings</a></p></div></section></section>
 <section><section id="performance_5"><h2>Performance</h2><table class="toc">
 	<tr><td>Application Class-Data Sharing ⑩⑫</td></tr>
 	<tr><td>Compact Strings ⑨</td></tr>
@@ -1245,9 +1248,12 @@ because compiler must use public API.</p></div></section><section id="invokedyna
 <div class="paragraph"><p>JVM executes by writing content<br>
 directly to new <code>byte[]</code>.</p></div></section><section id="performance_6"><h2>Performance</h2><div class="paragraph"><p>Depending on circumstances:</p></div>
 <div class="ulist"><ul><li><p>throughput 2.6x</p></li><li><p>garbage less 3.4x</p></li></ul></div>
-<div class="paragraph"><p>(Benchmarks by <a href="https://twitter.com/shipilev">Aleksey Shipilëv</a>)</p></div></section><section id="performance_of_indified_compact_string_concat"><h2>Performance Of Indified Compact String Concat</h2><div class="paragraph"><p>Depending on circumstances:</p></div>
+<div class="paragraph"><p>(Benchmarks by <a href="https://shipilev.net/">Aleksey Shipilëv</a>)</p></div></section><section id="performance_of_indified_compact_string_concat"><h2>Performance Of Indified Compact String Concat</h2><div class="paragraph"><p>Depending on circumstances:</p></div>
 <div class="ulist"><ul><li><p>throughput 2.9x</p></li><li><p>garbage less 6.4x</p></li></ul></div>
-<div class="paragraph"><p>(Benchmarks by <a href="https://twitter.com/shipilev">Aleksey Shipilëv</a>)</p></div></section></section>
+<div class="paragraph"><p>(Benchmarks by <a href="https://shipilev.net/">Aleksey Shipilëv</a>)</p></div></section><section id="more_2"><h2>More</h2><div class="paragraph"><p>Background on <code>String</code><br>
+performance improvements:</p></div>
+<div class="paragraph"><p><a href="https://www.youtube.com/watch?v=wIyeOaitmWM">Aleksey Shipilëv<br>
+The Lord Of The Strings</a></p></div></section></section>
 <section><section id="a_mixed_bag_of_performance"><h2>A Mixed Bag Of Performance</h2><div class="paragraph"><p><strong>In Java 9:</strong></p></div><div class="ulist"><ul><li><p>G1 default GC (<a href="http://openjdk.java.net/jeps/248">JEP 248</a>)</p></li><li><p>cgroup-memory limits (<a href="https://bugs.openjdk.java.net/browse/JDK-8170888">JDK-8170888</a>)</p></li><li><p>contended locks (<a href="http://openjdk.java.net/jeps/143">JEP 143</a>)</p></li><li><p>security manager (<a href="http://openjdk.java.net/jeps/232">JEP 232</a>)</p></li><li><p>Java 2D rendering (<a href="http://openjdk.java.net/jeps/265">JEP 265</a>)</p></li><li><p>GHASH/RSA computation (<a href="http://openjdk.java.net/jeps/246">JEP 246</a>)</p></li><li><p>Java-level JVM compiler interface (<a href="http://openjdk.java.net/jeps/243">JEP 243</a>)</p></li></ul></div></section><section id="a_mixed_bag_of_performance_2"><h2>A Mixed Bag Of Performance</h2><div class="paragraph"><p><strong>In Java 10:</strong></p></div>
 <div class="ulist"><ul><li><p>Graal&#8201;&#8212;&#8201;Java-based JIT compiler (<a href="http://openjdk.java.net/jeps/317">JEP 317</a>)</p></li><li><p>parallel full GC for G1 (<a href="http://openjdk.java.net/jeps/307">JEP 307</a>)</p></li><li><p>thread-local handshakes (<a href="http://openjdk.java.net/jeps/312">JEP 312</a>)</p></li></ul></div>
 <div class="paragraph"><p><strong>In Java 11:</strong></p></div>

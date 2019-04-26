@@ -96,7 +96,8 @@ ends with <a href="https://www.jcp.org/en/jsr/detail?id=376">JSR 376</a></p></dd
 <div class="ulist"><ul><li><p>have a unique name</p></li><li><p>express their dependencies</p></li><li><p>export specific packages<br>
 (and hide the rest)</p></li></ul></div>
 <aside class="notes"><div class="ulist"><ul><li><p>inverse URL naming schema for modules</p></li></ul></div></aside></section><section id="implementation"><h2>Implementation</h2><div class="ulist"><ul><li><p>Modules are JARs with a <code>module-info.class</code><br>
-(aka <strong>Modular JAR</strong>)</p></li><li><p>gets generated from <code>module-info.java</code>:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">module $module_name {
+(aka <strong>Modular JAR</strong>)</p></li><li><p>gets generated from <code>module-info.java</code><br>
+(in sources root, e.g. <code>src/main/java</code>):</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">module $module_name {
 	requires $other_module;
 	exports $api_package;
 }</code></pre></div></div></li><li><p>this is called a <strong>Module Declaration</strong> or a<br>
@@ -144,6 +145,7 @@ $ java -jar jars/advent.jar</code></pre></div></div>
 <a href="https://blog.codefx.org/cheat-sheet-build-run-modules-jars.html">tiny.cc/cheat-modules</a></p></div>
 <aside class="notes"><div class="ulist"><ul><li><p>explain manifest</p></li><li><p>add dependencies to the class path</p></li><li><p>works on JDK 9 as is</p></li></ul></div></aside></section><section id="a_single_module"><h2>A single module</h2><h3>Modularization</h3>
 <div class="imageblock diagram" style=""><img src="images/advent-calendar-module-single.png" alt="advent calendar module single"></div>
+<div class="paragraph"><p>Create <code>module-info.java</code> in sources root:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">module advent {
 	// java.base is implicitly required
 	// requires no other modules
