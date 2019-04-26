@@ -1,0 +1,413 @@
+== The new world
+
+++++
+<table class="toc">
+	<tr><td>Versions and Features</td></tr>
+	<tr class="toc-current"><td>The New World</td></tr>
+	<tr><td>Projects To Look Out For</td></tr>
+</table>
+++++
+
+=== The new world
+
+* OpenJDK is the default +
+(not Oracle JDK)
+* major release every 6 months +
+(not every 2-5 years)
+* only selected versions get LTS, +
+(not all of them)
+
+
+=== What's OpenJDK?
+
+OpenJDK is Java's reference implementation:
+
+* a project
+* a code base
+
+It doesn't ship binaries, but others do:
+
+* Oracle on https://jdk.java.net/[jdk.java.net]
+* AdoptOpenJDK on https://adoptopenjdk.net/[adoptopenjdk.net]
+
+=== OpenJDK vs Oracle JDK
+
+Sun/Oracle JDK used to...
+
+* contain more features
+* be perceived as more stable
+* be perceived as more performant
+
+As of Java 11, on a technical basis, +
+*Oracle JDK and OpenJDK are identical*.
+https://blogs.oracle.com/java-platform-group/oracle-jdk-releases-for-java-11-and-later[*]
+
+=== OpenJDK vs Oracle JDK
+
+Only difference is license and support model:
+
+* *Oracle's OpenJDK*: licensed under GPL+CE
+* *Oracle JDK* is fully commercial: +
+from 11 on, no free use in production
+
+*⇝ OpenJDK is the new default!*
+
+(More on support later...)
+
+
+=== More releases?
+
+The old plan:
+
+* releases are driven by flagship features
+* new major release roughly every 2 years
+
+The old reality:
+
+* Java 7 took 5 years
+* Java 8 took 3 years
+* Java 9 took 3.5 years
+
+"Bump an 'almost ready' feature +
+2+ years into the future?"
+
+*⇝ "Better to delay the release."*
+
+=== Downsides
+
+* implemented features provide no value
+* increases reaction time
+* puts (political) pressure on projects
+* makes everybody grumpy
+
+=== More releases!
+
+> If it hurts, do it more often.
+
+* fixed six-month release cadence +
+(March and September)
+* ship everything that is ready
+
+All are major releases +
+with known quality guarantees.
+
+⇝ No "beta versions"!
+
+=== Upsides
+
+* completed features get out earlier
+* no pressure to complete features on time
+* easier to react to changes in the ecosystem
+* easier to incubate features
+
+=== Incubate features?
+
+Two concepts allow features to incubate:
+
+* https://openjdk.java.net/jeps/11[incubator modules] for APIs
+* https://openjdk.java.net/jeps/12[preview language features]
+
+Features are shipped for experimentation.
+
+There are safeguards against accidental proliferation.
+
+
+=== What is LTS?
+
+To discuss long-term support, +
+lets look at JDK development:
+
+* there's the OpenJDK code base at +
+https://hg.openjdk.java.net/jdk/jdk/[hg.openjdk.java.net/jdk/jdk/]
+* there are many clones:
+** for each JDK release
+** for each JDK project
+** each vendor has their own
+
+=== OpenJDK development
+
+*A new feature, simplified:*
+
+* developed in "feature branch"
+* merged into "master" when (nearly) finished
+
+*A release, simplified:*
+
+* "release branch" created 3 months prior
+* only bug fixes merged to "release branch"
+
+*A bug/security/etc fix, simplified:*
+
+* usually developed in "master"
+* merged into relevant release branches
+
+=== OpenJDK support
+
+Support really means:
+
+* fixing bugs, usually in "master"
+* merging fixes to "release branches"
+
+How does *Oracle* handle that?
+
+* work on "master" in *OpenJDK*
+* merge to *current* "release branch" in *OpenJDK*
+* merge to *LTS* version in *Oracle JDK*
+
+=== Long-term support
+
+What's left for long-term support?
+
+⇝ *Merging fixes into old JDK versions.*
+
+=== Commercial LTS
+
+* https://www.oracle.com/java/java-se-subscription.html[Oracle]
+* https://developer.ibm.com/javasdk/support/lifecycle/[IBM] /
+https://access.redhat.com/articles/1299013[RedHat]
+* https://www.azul.com/products/azul_support_roadmap/[Azul]
+* ...
+
+=== Free LTS
+
+Long-term support for *OpenJDK*:
+
+* commitment by the community: +
+4+ years for 8, 11, 17, 23, etc.
+* https://access.redhat.com/articles/1299013[under guidance Red Hat's guidance]:
+** for OpenJDK 8 until 06/2023
+** for OpenJDK 11 until 10/2024
+* built and shipped by https://adoptopenjdk.net/[Adopt OpenJDK]
+
+=== Free LTS
+
+One other player:
+
+[quote]
+____
+https://aws.amazon.com/corretto/[Amazon Corretto] is a no-cost, multiplatform, production-ready distribution of the Open Java Development Kit (OpenJDK).
+Corretto comes with long-term support that will include performance enhancements and security fixes.
+// Amazon runs Corretto internally on thousands of production services and Corretto is certified as compatible with the Java SE standard.
+____
+
+=== Free LTS
+
+Amazon Corretto:
+
+* builds on OpenJDK
+* contains additional security +
+and stability fixes by Amazon
+
+It is https://aws.amazon.com/corretto/faqs[updated quarterly]:
+
+* Java 8 until at least 06/2023
+* Java 11 until at least 08/2024
+
+
+=== Release fatigue?
+
+"Java will change too fast."
+
+"Test matrix will explode."
+
+"Ecosystem will fragment."
+
+"Constant migrations will be expensive."
+
+"Nobody will leave Java 11 behind."
+
+[state="empty"]
+=== !
+image::images/panic.gif[background, size=cover]
+
+=== Fast Change
+
+[quote,Mark Reinhold]
+____
+The rate of innovation doesn't change.
+The rate of innovation delivery increases.
+____
+// source: https://www.youtube.com/watch?v=HqxZFoY_snQ&t=14m10s
+
+Maybe speed will pick up a little:
+
+* recent activities target low-hanging fruits
+* Oracle is focusing on Java core (my impression!)
+
+=== Fast Change
+
+By and large:
+
+*Evolution will be _steadier_, not _faster_.*
+
+(see Java 10 - 12)
+
+=== Exploding test matrix
+
+As the range of supported versions increases...
+
+* builds need to run against all of them
+* developers need to switch between them
+
+Many tools already support this. +
+*⇝ We need to know how.*
+
+Also: Moar automization!
+
+=== Fragmenting Ecosystem
+
+"This will be like Python 2/3!"
+
+No.
+
+[state="empty"]
+=== !
+image::images/works-on-java-9.png[background, size=cover]
+
+=== Expensive migrations
+
+Yes, https://blog.codefx.org/java/java-9-migration-guide[Java 9 migration is tough]!
+
+But not the norm:
+
+* Java 10 is trivial
+* Java 11 is easy
+* Java 12 is trivial
+
+Oracle is still committed +
+to backwards compatibility!
+
+=== Expensive migrations
+
+Balance shifted between +
+*compatibility vs evolution*:
+
+* `@Deprecated(forRemoval=true)`
+* "one major release" is now 6 months, not 36
+* increasing bytecode level
+* incubating features (if used inappropriately!)
+
+=== Expensive migrations
+
+Remedies:
+
+* stick to supported APIs
+* stick to standardized behavior
+* stick to well-maintained projects
+* keep dependencies and tools up to date
+// * consider using `jlink`
+
+////
+=== JLink can help
+
+Use `jlink` to create application images:
+
+* contain just the platform modules you need
+* contain your code and your dependencies
+* launch with `image/bin/your-app`
+
+Single deployment unit, +
+independent of installed JRE.
+
+=== JLink considerations
+
+Independent of installed JRE:
+
+* no compatibility issues
+* no automatic performance gain
+* no automatic security updates
+
+Works great if you have +
+*complete control* +
+over the deployment.
+
+Not so much if you deliver software.
+////
+
+=== Staying on Java 11 LTS
+
+I'd love for everyone +
+to always be up to date.
+
+*But:*
+
+Going from Java 11 to 12 +
+is not without risks.
+
+😢
+
+=== Risks for Java 12-16
+
+Lack of support for 12-16:
+
+* free support is very unlikely
+* commercial support is rare +
+(Azul https://www.azul.com/products/azul_support_roadmap/[offers] MTS for 13 and 15)
+
+Without support, you have to upgrade +
+to *each major version* immediately!
+
+=== Risks for Java 12-16
+
+What could possibly go wrong?!
+
+Before you upgrade to Java 12:
+
+[%step]
+. read https://blog.joda.org/2018/10/adopt-java-12-or-stick-on-11.html[_Should you adopt Java 12 [...\]?_] +
+by Stephen Colebourne
+. take a coffee break
+. understand that most risks +
+come from *building against* 12
+. be content that all you need +
+to upgrade is *run on* 12
+
+=== Risks for Java 12-16
+
+What could possibly go wrong?!
+
+* remember `@Deprecated(forRemoval=true)`?
+* changes to unsupported APIs, e.g. `Unsafe`
+
+Problems are not likely, +
+but usually hard to predict.
+
+⇝ *Chance is low.*
+
+=== Risks for Java 12-16
+
+If an upgrade fails, +
+you have two choices:
+
+* run on an unsupported (*unsecure*) JVM 😮
+* *downgrade* to recent LTS 😱
+
+⇝ *Damage is potentially enormous.*
+
+=== Risks for Java 12-16
+
+[source]
+----
+expected_damage = chance * damage
+----
+
+Consider this:
+
+* more up-to-date ⇝ lower chance
+* fewer dependencies ⇝ lower chance
+* smaller code base ⇝ smaller damage
+
+[state="empty",background-color="black"]
+=== !
+image::images/panic-calm.gif[background, size=contain]
+
+=== Advice
+
+* find a suitable upgrade cadence
+* *build on each release* (including EA)
+* only rely on standardized behavior
+* heed deprecation warnings (`jdeprscan`)
+* keep dependencies and tools up to date
+
+Most importantly: +
+*Be aware of what's coming!*
