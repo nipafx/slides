@@ -20,6 +20,7 @@ This *is* about readability!
 * more focus on variable names
 * aligned variable names
 
+////
 === Aligned Variable Names
 
 ++++
@@ -38,6 +39,9 @@ List&lt;String&gt; names = List.of(<span class="hljs-string">"Max"</span>, <span
 <span class="hljs-keyword">var</span> variable = <span class="hljs-keyword">new</span> Constant(<span class="hljs-number">5</span>);
 <span class="hljs-keyword">var</span> names = List.of(<span class="hljs-string">"Max"</span>, <span class="hljs-string">"Maria"</span>);</code></pre></div></div>
 ++++
+////
+
+=== Code
 
 === Style Guidelines
 
@@ -54,7 +58,6 @@ http://openjdk.java.net/projects/amber/LVTIstyle.html[official style guidelines]
 
 Guidelines:
 
-[%step]
 . Choose variable names that provide useful info.
 . Minimize the scope of local variables.
 . Consider `var` when the initializer provides sufficient information to the reader.
@@ -62,6 +65,8 @@ Guidelines:
 . Don't worry too much about "programming to the interface".
 . Take care when using `var` with diamonds or generics.
 . Take care when using `var` with literals.
+
+=== Code
 
 === More on `var` basics
 
