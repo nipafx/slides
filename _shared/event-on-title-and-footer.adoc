@@ -13,11 +13,10 @@
 		<a href="{host-url}"><img src="{host-logo-url}" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
 			<p><a href="{host-url}">{host-name}</a></p>
-			<p><a href="{host-twitter-url}">{host-twitter-name}</a></p>
+			<p><a href="{host-twitter-url}" style="{host-twitter-style}">{host-twitter-name}</a></p>
 		</div>
 	</div>
 </div>
-<!-- Just adding a footer does not work because reveal.js puts it into the slides and we couldn't get it out via CSS. So we move it via JavaScript. -->
 <footer>
 	<div class="participant">
 		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
@@ -30,10 +29,11 @@
 	<div class="participant">
 		<a href="{host-url}"><img src="{host-logo-url}" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="{host-url}">{host-name}</a> / <a href="{host-twitter-url}">{host-twitter-name}</a></p>
+			<p><a href="{host-url}">{host-name}</a> / <a href="{host-twitter-url}" style="{host-twitter-style}">{host-twitter-name}</a></p>
 		</div>
 	</div>
 </footer>
+<!-- Just adding a footer does not work because reveal.js puts it into the slides and we couldn't get it out via CSS. So we move it via JavaScript. -->
 <script>
 	document.addEventListener('DOMContentLoaded', function () {
 		document.body.appendChild(document.querySelector('footer'));
