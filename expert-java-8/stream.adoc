@@ -503,8 +503,192 @@ http://blog.codefx.org/java/stream-findfirst-findany-reduce/[Beware Of findFirst
 </table>
 ++++
 
-Performance is too long to go into.
+Getting a gut feeling
 
-Great talk by Stuart Marks and Brian Goetz:
+=== Performance Caveat
 
-https://www.youtube.com/watch?v=iDplU7mOocU[Thinking in Parallel] (JavaOne 2016)
+Don't get carried away with performance!
+
+Before optimizing loops vs streams:
+
+* gather performance requirements
+* reliably measure performance
+* act when requirements are not met
+* determine that stream is at fault
+
+=== Performance Caveat
+
+Performance measurements are hard +
+and I'm not good at them!
+
+* https://blog.codefx.org/java/stream-performance/[concrete numbers] apply only to my setup
+* focus on how they relate
+* even that differs across setups
+
+If it's important, benchmark yourself!
+
+Use https://openjdk.java.net/projects/code-tools/jmh/[JMH] for that.
+
+=== Stream Performance
+
+Simple benchmark: +
+find max in `int[500_000]`
+
+```java
+// takes 0.123
+int m = Integer.MIN_VALUE;
+for (int i = 0; i < intArray.length; i++)
+	if (intArray[i] > m)
+		m = intArray[i];
+
+// takes 0.599
+Arrays.stream(intArray).max();
+```
+
+20% performance ⇝ streams suck 😱
+
+=== Really, though?
+
+Couple of things to note:
+
+* are 500'000 elements few or many? +
+  ⇝ vary number of elements
+* finding max is really cheap! +
+  ⇝ try other operations
+* arrays are rare; lists more common +
+  ⇝ use different collections
+
+Let's vary things a little.
+
+=== Data structures
+
+Throw a `List<Integer>` into the mix:
+
+[%header]
+|===
+| iteration | array | list
+| for	    | 0.123 | 0.700
+| stream    | 0.599 | 3.272
+|===
+
+⇝ That didn't change much...
+
+=== Cost Per Operation
+
+Benchmark more operations:
+
+* _max_: finding the maximum
+* _sum_: summing `int` (ignoring overflows)
+* _arithmetic_: handful of bit shifts and mults
+* _string_: convert to string, xor char by char
+
+=== Cost Per Operation
+
+*--- Array ---*
+
+[%header]
+|===
+| iteration | max   | sum   | arith   | string
+| for	    | 0.123 | 0.186 | 4.405   | 49.533
+| stream    | 0.599 | 1.394 | 4.100   | 52.236
+|===
+
+*--- List ---*
+
+[%header]
+|===
+| iteration | max   | sum    | arith   | string
+| for	    | 0.700 | 0.714  | 4.099   | 49.943
+| stream    | 3.272 | 3.584  | 7.776   | 64.989
+|===
+
+=== Cost Per Operation
+
+Define `Q` as abstract cost of operation:
+
+* _max_ and _sum_ are very cheap
+* _arithmetic_ is x3 to x20
+* _string_ is another x10
+
+⇝ Reasonably complex operations +
+dominate total run time.
+
+=== Number Of Elements
+
+From 500'000 to 50'000'000 elements:
+
+[%header]
+|===
+| structure | op    | iteration | speedup
+| array     | _sum_ | stream    | x6.62
+| list      | _max_ | stream    | x1.16
+| list      | _sum_ | stream    | x1.08
+| list      | _max_ | for       | x0.89
+| array     | _sum_ | for       | x0.88
+| array     | _max_ | for	    | x0.7
+|===
+
+=== Number Of Elements
+
+Define `N` as number of elements.
+
+For larger `N`, these speed up:
+
+* more complex iteration mechanisms
+* over simple operations
+
+⇝ This benefits streams.
+
+=== Taken together
+
+Streams are always slower than loops, but:
+
+* doesn't matter if `N*Q` is small
+* gets better the larger `N*Q` gets
+* asymptotically approaching x1
+
+*⇝ Unless specific perf reqs are in the way, +
+streams are a good default.*
+
+Streams are easy to parallelize...
+
+=== Parallel Performance
+
+Parallelization adds overhead:
+
+* decomposing the problem
+* task / thread management
+* composing the result
+
+Only benefit: more resources!
+
+(May be limited by memory bandwidth.)
+
+=== Parallel Performance
+
+Super simplified model +
+(remember `N` and `Q`):
+
+*`N*Q` should be five digits (at least)*
+
+⇝ Parallel streams are no good default!
+
+=== Parallel Performance
+
+For details on parallel performance:
+
+https://www.youtube.com/watch?v=iDplU7mOocU&t=25m20s[Thinking in Parallel] +
+by Stuart Marks and Brian Goetz at JavaOne 2016 +
+(start at 25:20 for performance)
+
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/watch?v=iDplU7mOocU&t=25m20s" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+++++
+
+=== Reflection on Performance
+
+* stream overhead is real +
+  but almost disappears for relevant sizes
+* performance is rarely a reason against streams
+* consider parallel streams carefully
+* measure and compare to requirements!
