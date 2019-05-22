@@ -248,11 +248,11 @@ create and destroy them at will
 === Identity Crisis
 
 ```java
-LocalDateTime getLastLogin(User user);
-void storeMessage(LocalDateTime time, String message);
+ZonedDateTime getLastLogin(User user);
+void storeMessage(ZonedDateTime time, String message);
 
 String lastLoginMessage(User user) {
-	LocalDateTime lastLogin = getLastLogin(user); // <1>
+	ZonedDateTime lastLogin = getLastLogin(user); // <1>
 	String message = "Was " + lastLogin;
 	storeMessage(lastLogin, message); // <2>
 	return message;
@@ -275,7 +275,9 @@ locking, serialization
 
 (None of this is checked by the JVM.)
 
-=== VBC in Java 8
+=== VBC in Java
+
+==== Java 8
 
 `java.util`::
 	`Optional`[`Double`, `Long`, `Int`]
@@ -283,6 +285,7 @@ locking, serialization
 	`Duration`, `Instant`, `Period`, +
 	`Year`, `YearMonth`, `MonthDay`, +
 	`Local...`, `Offset...`, `Zoned...`
+	`ZoneId`, `ZoneOffset`
 `java.time.chrono`::
 	`HijrahDate`, `JapaneseDate`, `MinguaDate`, `ThaiBuddhistDate`
 
@@ -291,6 +294,20 @@ locking, serialization
 * Optional uses reference `equals` in its `equals`
 * date classes are serializable
 --
+
+=== VBC in Java
+
+==== Java 9
+
+`java.lang`::
+	`ProcessHandle`, `Runtime.Version`
+`java.util`::
+	types returned by collection factory methods
+
+==== Java 12
+
+`java.lang.constant`::
+	`ConstantDesc`, `DynamicCallSiteDesc`, `DynamicConstantDesc`
 
 === Reflection on VBC
 
