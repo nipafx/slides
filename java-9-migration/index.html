@@ -33,14 +33,13 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://www.sportradar.com/"><img src="images/logo-devoxx.png" class="logo" style="background-color: #FFF; border-color: #FFF;"></a>
+		<a href="https://www.devsum.se/"><img src="images/logo-devsum-2019.png" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://www.sportradar.com/">Devoxx BE</a></p>
-			<p><a href="https://twitter.com/devoxx">@Devoxx</a></p>
+			<p><a href="https://www.devsum.se/">DevSum</a></p>
+			<p><a href="https://twitter.com/DevSum_swe" style="font-size: 0.8em;">@DevSum_swe</a></p>
 		</div>
 	</div>
 </div>
-<!-- Just adding a footer does not work because reveal.js puts it into the slides and we couldn't get it out via CSS. So we move it via JavaScript. -->
 <footer>
 	<div class="participant">
 		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
@@ -51,12 +50,13 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://www.sportradar.com/"><img src="images/logo-devoxx.png" class="logo" style="background-color: #FFF; border-color: #FFF;"></a>
+		<a href="https://www.devsum.se/"><img src="images/logo-devsum-2019.png" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://www.sportradar.com/">Devoxx BE</a> / <a href="https://twitter.com/devoxx">@Devoxx</a></p>
+			<p><a href="https://www.devsum.se/">DevSum</a> / <a href="https://twitter.com/DevSum_swe" style="font-size: 0.8em;">@DevSum_swe</a></p>
 		</div>
 	</div>
 </footer>
+<!-- Just adding a footer does not work because reveal.js puts it into the slides and we couldn't get it out via CSS. So we move it via JavaScript. -->
 <script>
 	document.addEventListener('DOMContentLoaded', function () {
 		document.body.appendChild(document.querySelector('footer'));
@@ -65,7 +65,6 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 <section id="public_service_announcement"><h2>Public Service Announcement</h2><div class="ulist"><ul><li><p>this is about bringing a Java 8 app<br>
 into the future</p></li><li><p>we&#8217;re mostly looking at the bad and the ugly</p></li><li><p>slides at <a href="http://slides.codefx.org/">slides.codefx.org</a></p></li><li><p>code on GitHub at<br>
 <a href="https://github.com/CodeFX-org/demo-java-9-migration">CodeFX-org/demo-java-9-migration</a></p></li></ul></div></section>
-<section data-background-image="images/rate-me.png" data-background-size="cover" data-state="empty"></section>
 <section><section id="java_platform_module_system"><h2>Java Platform Module System</h2><h3>Delaying Java since 2008!</h3></section><section id="jar_hell_is_bad_mkay"><h2>JAR Hell is bad, mkay?</h2><div class="paragraph"><p><strong>JARs have</strong>:</p></div>
 <div class="ulist"><ul><li><p>no name the JVM cares about</p></li><li><p>no explicit dependencies</p></li><li><p>no well-defined API</p></li><li><p>no concept of versions</p></li></ul></div>
 <div class="paragraph"><p><strong>Some consequences</strong>:</p></div>
@@ -104,7 +103,7 @@ contains <em>all</em> JARs on the class path<br>
 "the chaos of the class path" lives on.</p></div>
 <aside class="notes"><div class="ulist"><ul><li><p>one unnamed module per class loader</p></li></ul></div></aside></section></section>
 <section><section id="migration_challenges"><h2>Migration Challenges</h2><h3>What to look out for<br>when running on JDK 11</h3></section><section id="break_stuff" data-background-image="images/broken-glass.jpg" data-background-size="cover"><h2>Break Stuff</h2>
-<div class="paragraph"><p>Some internal changes <a href="https://blog.codefx.org/java/java-9-migration-guide/">break existing code</a>!</p></div>
+<div class="paragraph"><p>Some internal changes <a href="https://blog.codefx.org/java/java-11-migration-guide/">break existing code</a>!</p></div>
 <div class="paragraph"><p>Just by running on JDK 11<br>
 (even without modularizing the application).</p></div></section><section id="of_modules_and_jars_2"><h2>Of Modules And JARs</h2><div class="paragraph"><p>Modularized JDK and legacy JARs have to cooperate.</p></div>
 <div class="paragraph"><p>Two requirements:</p></div>
@@ -169,8 +168,7 @@ in the JDK / JRE folder?</p></li><li><p>are URLs to JDK classes / resources hand
 <div class="ulist"><ul><li><p>Compact Profiles</p></li><li><p>Extension Mechanism</p></li><li><p>Endorsed Standards Override Mechanism</p></li><li><p>Boot Class Path Override</p></li><li><p>JRE version selection with <code>-version:N</code></p></li></ul></div>
 <aside class="notes"><div class="ulist"><ul><li><p>ext. mech.: makes custom APIs available to all applications running on the JDK</p></li><li><p>first 2 replaced by upgradeable modules.</p></li></ul></div></aside></section><section id="but_wait_theres_more" data-background-image="images/shibuya-night.jpg" data-background-size="cover"><h2>But wait, there&#8217;s more!</h2>
 <div class="paragraph"><p>Yes, yes, there&#8217;s more:</p></div>
-<div class="paragraph"><p><strong>Java 9 Migration Guide</strong><br>
-(<a href="https://blog.codefx.org/java/java-9-migration-guide/">tiny.cc/java-9-migration</a>)</p></div>
+<div class="paragraph"><p><a href="https://blog.codefx.org/java/java-11-migration-guide/"><strong>Java 11 Migration Guide</strong></a></p></div>
 <div class="paragraph"><p>Background:</p></div>
 <div class="ulist"><ul><li><p><a href="https://blog.codefx.org/java/planning-your-java-9-update/">Planning Your Java 9 Update</a></p></li><li><p><a href="https://blog.codefx.org/java/five-command-line-options-to-hack-the-java-9-module-system/">JPMS Command Line Options</a></p></li><li><p><a href="https://blog.codefx.org/tools/jdeps-tutorial-analyze-java-project-dependencies/">JDeps Tutorial</a></p></li></ul></div>
 <div class="paragraph"><p>And there are new version strings:</p></div>
@@ -193,8 +191,7 @@ and command line options</p></li><li><p>removal of deprecated Java EE modules</p
 <section id="general_advice" data-background-image="images/sign.jpg" data-background-size="cover"><h2>General Advice</h2>
 <div class="ulist"><ul><li><p>only rely on standardized behavior</p></li><li><p>heed deprecation warnings (<code>jdeprscan</code>)</p></li><li><p>keep dependencies and tools up to date</p></li><li><p>build on each release (including EA)</p></li><li><p>report problems</p></li></ul></div></section>
 <section data-background-image="images/rate-me.png" data-background-size="cover" data-state="empty"></section>
-<section id="about_nicolai_parlog" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>About Nicolai Parlog</h2>
-<div style="float: left; width: 45%; margin:0px;">
+<section><section id="about_nicolai_parlog" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>About Nicolai Parlog</h2><div style="float: left; width: 45%; margin:0px;">
 	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="images/cover-jms.png" style="margin: 0;"></a>
 	<p style="
 		position: fixed;
@@ -210,15 +207,8 @@ and command line options</p></li><li><p>removal of deprecated Java EE modules</p
 		padding: 2px 8px 7px 4px;
 ">37% off with<br>code <em>fccparlog</em></p>
 	<p><a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb">tiny.cc/jms</a></p>
-</div>
-<h3>Follow</h3>
-<div class="paragraph"><p>💻 <a href="http://codefx.org">codefx.org</a><br>
-▶ <a href="https://www.youtube.com/c/codefx">youtube.com/c/codefx</a><br>
-🐦 <a href="https://twitter.com/nipafx">@nipafx</a></p></div>
-<h3>Want More?</h3>
-<div class="paragraph"><p>⇜ Get <a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&amp;a_bid=869915cb">my book</a>!</p></div>
-<div class="paragraph"><p>You can <a href="http://blog.codefx.org/hire-nicolai-parlog/">hire me</a>:</p></div>
-<div class="ulist"><ul><li><p>training (Java 8-11, JUnit 5)</p></li><li><p>consulting (Java 8-11)</p></li></ul></div></section>
+</div><h3>Follow</h3><div class="paragraph"><p>💻 <a href="http://codefx.org">codefx.org</a><br>
+🐦 <a href="https://twitter.com/nipafx">@nipafx</a></p></div><h3>Want More?</h3><div class="paragraph"><p>Slides at <a href="https://slides.codefx.org">slides.codefx.org</a></p></div><div class="paragraph"><p>⇜ Get <a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&amp;a_bid=869915cb">my book</a>!</p></div><div class="paragraph"><p>You can <a href="http://blog.codefx.org/hire-nicolai-parlog/">hire me</a>:</p></div><div class="ulist"><ul><li><p>training (Java 8-12, JUnit 5)</p></li><li><p>consulting (Java 8-12)</p></li></ul></div></section><section data-background-image="images/accento-save.jpg" data-background-size="cover" data-state="empty"></section></section>
 <section id="image_credits"><h2>Image Credits</h2><div class="ulist"><ul><li><p><a href="https://pixabay.com/en/bison-buffalo-group-herd-snow-2237654/">buffalos</a>:
 <a href="https://pixabay.com/en/users/skeeze-272447/">skeeze</a>,
 <a href="https://wiki.creativecommons.org/wiki/CC0">CC0</a></p></li><li><p><a href="https://www.flickr.com/photos/21496790@N06/5065834411">question-mark</a>:
