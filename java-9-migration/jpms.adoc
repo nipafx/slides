@@ -8,32 +8,3 @@ include::../java-x/jpms-basics.adoc[]
 * unnamed and automatic modules (for migration)
 * layers (for containers)
 * `jlink` to create runtime images
-
-=== Of Modules And JARs
-
-Modularized JDK and legacy JARs have to cooperate.
-
-Two requirements:
-
-* for the module system to work, +
-everything needs to be a module
-* for compatibility, the class path +
-and regular JARs have to keep working
-
-=== The Unnamed Module
-
-The *Unnamed Module* +
-contains _all_ JARs on the class path +
-(including modular JARs).
-
-* has no name (surprise!)
-* can read all modules
-* exports all packages
-
-Inside the unnamed module +
-"the chaos of the class path" lives on.
-
-[NOTE.speaker]
---
-* one unnamed module per class loader
---
