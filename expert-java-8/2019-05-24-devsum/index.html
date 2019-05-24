@@ -1,0 +1,676 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Expert Java 8</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="_reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="_reveal.js/css/theme/nipa-night.css" id="theme"><link href="_reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>var link = document.createElement( 'link' );
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = window.location.search.match( /print-pdf/gi ) ? "_reveal.js/css/print/pdf.css" : "_reveal.js/css/print/paper.css";
+document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="_reveal.js/lib/js/html5shiv.js"></script><![endif]--></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>Expert Java 8</h1><div class="preamble"><link rel="stylesheet" href="_highlight.js/styles/monokai-sublime.css">
+<script src="_highlight.js/highlight.pack.js"></script>
+<script>
+	window.onload = function() {
+		hljs.configure({
+			tabReplace: '    ',
+			languages: [ 'java' ]
+		})
+		var codes = document.getElementsByTagName('code');
+		for(var i = 0; i < codes.length; i++) {
+			hljs.highlightBlock(codes.item(i));
+		}
+		hljs.initHighlightingOnLoad();
+	}
+</script>
+<style>
+.reveal .title h2 {
+	font-size: 1.75em;
+}
+</style>
+<h2>Lambdas, Streams, Optionals<br>For Afficionados</h2>
+<div class="event">
+	<div class="participant">
+		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
+		<div class="name">
+			<p><a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a></p>
+			<p><a href="http://codefx.org">codefx.org</a>
+				/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a></p>
+		</div>
+	</div>
+	<div class="participant">
+		<a href="https://www.devsum.se/"><img src="images/logo-devsum-2019.png" class="logo" style="{host-logo-style}"></a>
+		<div class="name">
+			<p><a href="https://www.devsum.se/">DevSum</a></p>
+			<p><a href="https://twitter.com/DevSum_swe" style="font-size: 0.8em;">@DevSum_swe</a></p>
+		</div>
+	</div>
+</div>
+<footer>
+	<div class="participant">
+		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
+		<div class="name"><p>
+			<a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a>
+			/ <a href="http://codefx.org">codefx.org</a>
+			/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a>
+		</p></div>
+	</div>
+	<div class="participant">
+		<a href="https://www.devsum.se/"><img src="images/logo-devsum-2019.png" class="logo" style="{host-logo-style}"></a>
+		<div class="name">
+			<p><a href="https://www.devsum.se/">DevSum</a> / <a href="https://twitter.com/DevSum_swe" style="font-size: 0.8em;">@DevSum_swe</a></p>
+		</div>
+	</div>
+</footer>
+<!-- Just adding a footer does not work because reveal.js puts it into the slides and we couldn't get it out via CSS. So we move it via JavaScript. -->
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		document.body.appendChild(document.querySelector('footer'));
+	})
+</script></div></section>
+<section id="public_service_announcement"><h2>Public Service Announcement</h2><div class="ulist"><ul><li><p>you need to be proficient with Java 8</p></li><li><p>some of what follows is merely my opinion</p></li><li><p>slides at <a href="http://slides.codefx.org/">slides.codefx.org</a></p></li></ul></div></section>
+<section id="streams"><h2>Streams</h2><table class="toc">
+	<tr><td>In APIs</td></tr>
+	<tr><td>Exception Handling</td></tr>
+	<tr><td>Finding Elements</td></tr>
+	<tr><td>Performance</td></tr>
+</table></section>
+<section><section id="streams_2"><h2>Streams</h2><table class="toc">
+	<tr class="toc-current"><td>In APIs</td></tr>
+	<tr><td>Exception Handling</td></tr>
+	<tr><td>Finding Elements</td></tr>
+	<tr><td>Performance</td></tr>
+</table><div class="paragraph"><p>Using streams in your APIs.</p></div></section><section id="interesting_stream_properties"><h2>Interesting Stream Properties</h2><div class="ulist"><ul><li><p>streams are unmodifiable</p></li><li><p>streams are easy to transform</p></li><li><p>streams are lazy</p></li></ul></div>
+<div class="paragraph"><p>⇝ Good way to enrich data in layers.</p></div></section><section id="enrichment_example"><h2>Enrichment Example</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Map&lt;String, User&gt; userById;
+Map&lt;String, Address&gt; addrById;
+
+Stream&lt;User&gt; users() {
+	return userById.values().stream();
+}
+
+Stream&lt;UserAddress&gt; userAddresses() {
+	return users()
+		.map(user -&gt; UserAddress.of(
+				user, addrById.get(user.id())));
+}</code></pre></div></div></section><section id="enrichment_example_2"><h2>Enrichment Example</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Map&lt;Address, List&lt;Order&gt;&gt; ordersByAddr;
+
+Stream&lt;Order&gt; ordersFor(UserAdress userAddr) {
+	return ordersByAddr
+		.get(userAddr.address()).stream();
+}
+
+Stream&lt;Delivery&gt; deliveriesFor(UserAdress userAddr) {
+	return ordersFor(userAddr)
+		.map(order -&gt; Delivery.of(userAddr, order));
+}
+
+Stream&lt;Delivery&gt; deliveries() {
+	return userAddresses().flatMap(this::deliveriesFor);
+}</code></pre></div></div></section><section id="guidelines"><h2>Guidelines</h2><div class="ulist"><ul><li><p>streams can only be traversed once<br>
+⇝ ideally, returned streams can be recreated endlessly</p></li><li><p>during traversal collection must not be mutated<br>
+⇝ stick to layers instead of cycles<br>
+(can be harder than it sounds)</p></li><li><p>decide carefully where to call <code>parallel()</code><br>
+⇝ close to terminal operation is a good default</p></li></ul></div></section><section id="accepting_streams"><h2>Accepting Streams</h2><div class="paragraph"><p>Returning streams is ok.</p></div>
+<div class="paragraph"><p>What about passing them as parameters?</p></div>
+<div class="ulist"><ul><li><p>streams can only be traversed once!</p></li><li><p>caller must assume stream is traversed</p></li><li><p>works for obvious consumer functions</p></li><li><p>possibly a transformed stream can be returned</p></li></ul></div></section><section id="stream_param_example"><h2>Stream Param Example</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// consuming the passed stream
+void addUsers(Stream&lt;User&gt; users) {
+	users.forEach(this.users::add)
+}
+
+// transforming the passed stream
+Stream&lt;UserAddress&gt; userAddresses(Stream&lt;User&gt; users) {
+	return users
+		.map(user -&gt; UserAddress.of(
+				user, addrById.get(user.id())));
+}</code></pre></div></div></section><section id="reflection_on_apis"><h2>Reflection On APIs</h2><h3>Returning Streams</h3><div class="ulist"><ul><li><p>returning streams is great<br>
+(unmodifiable but transformable)</p></li><li><p>preferably if streams can be recreated</p></li><li><p>can be used to gradually enrich data</p></li></ul></div></section><section id="reflection_on_apis_2"><h2>Reflection On APIs</h2><h3>Passing Streams</h3><div class="ulist"><ul><li><p>caller must assume stream is traversed</p></li><li><p>works for obvious consumers</p></li><li><p>transformations can be hard to track</p></li><li><p>never return a traversed stream<br>
+(obvious, right?!)</p></li></ul></div></section><section id="reflection_on_apis_3"><h2>Reflection On APIs</h2><h3>But Look Out</h3><div class="ulist"><ul><li><p>streams can only be traversed once</p></li><li><p>no mutation during traversal</p></li><li><p>don&#8217;t make chains too long or<br>
+debuggability suffers</p></li></ul></div></section></section>
+<section><section id="streams_3"><h2>Streams</h2><table class="toc">
+	<tr><td>In APIs</td></tr>
+	<tr class="toc-current"><td>Exception Handling</td></tr>
+	<tr><td>Finding Elements</td></tr>
+	<tr><td>Performance</td></tr>
+</table><div class="paragraph"><p>Handling checked exceptions in Streams.</p></div></section><section id="setting_the_scene"><h2>Setting the Scene</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;User&gt; parse(Stream&lt;String&gt; strings) {
+	// compile error:
+	// "Unhandled exception ParseException"
+	return strings.map(this::parse);
+}
+
+User parse(String userString) throws ParseException {
+	// ...
+}</code></pre></div></div>
+<div class="paragraph"><p>Which options do we have?</p></div></section><section id="try_in_lambda"><h2>Try in Lambda</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;User&gt; parse(Stream&lt;String&gt; strings) {
+	return strings
+		.map(string -&gt; { try {
+				return parse(string);
+			} catch (ParseException ex) {
+				return null;
+			}})
+		.filter(Objects::nonNull);
+}</code></pre></div></div>
+<div class="ulist"><ul><li><p>super ugly</p></li><li><p>requires extra clean-up step</p></li><li><p>handling exception locally can be hard</p></li><li><p>troublesome elements "disappear"</p></li></ul></div></section><section id="try_in_method"><h2>Try in Method</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;User&gt; parse(Stream&lt;String&gt; strings) {
+	return strings
+			.map(this::tryParse)
+			.filter(Objects::nonNull);
+}
+
+private User tryParse(String string) {
+	try { return parse(string); }
+	catch (ParseException ex) { return null; }
+}</code></pre></div></div>
+<div class="ulist"><ul><li><p>somewhat ugly</p></li><li><p>requires extra clean-up step ("far away")</p></li><li><p>handling exception locally can be hard</p></li><li><p>troublesome elements "disappear"</p></li></ul></div></section><section id="sneaky_throws"><h2>Sneaky Throws</h2><div class="paragraph"><p>How to "trick the compiler":</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">static Function&lt;T, R&gt; hideException(
+		CheckedFunction&lt;T, R, Exception&gt; function) {
+	return element -&gt; {
+		try {
+			return function.apply(element);
+		} catch (Exception ex) {
+			return sneakyThrow(ex);
+		}
+	};
+}
+
+// sneakyThrow does shenanigans with generics
+// and unchecked casts to "confuse the compiler"</code></pre></div></div></section><section id="sneaky_throws_2"><h2>Sneaky Throws</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;User&gt; parse(Stream&lt;String&gt; strings) {
+	return strings
+		.map(Util.hideException(this::parse));
+}</code></pre></div></div>
+<div class="ulist"><ul><li><p>very surprising (hides a bomb in the stream!)</p></li><li><p>stream executor has to handle exception</p></li><li><p>can&#8217;t <code>try</code>-<code>catch(ParseException)</code> because<br>
+checked exceptions need to be declared</p></li><li><p>exception aborts stream pipeline</p></li></ul></div>
+<div class="paragraph"><p><strong>Please never do that!</strong></p></div></section><section id="wrap_in_unchecked"><h2>Wrap in Unchecked</h2><div class="paragraph"><p>Another <code>Util</code> method:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">static Function&lt;T, R&gt; uncheckException(
+		CheckedFunction&lt;T, R, Exception&gt; function) {
+	return element -&gt; {
+		try {
+			return function.apply(element);
+		} catch (Exception ex) {
+			// add special cases for RuntimeException,
+			// InterruptedException, etc.
+			throw new IllegalArgumentException(
+				element, ex);
+		}
+	};
+}</code></pre></div></div></section><section id="wrap_in_unchecked_2"><h2>Wrap in Unchecked</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;User&gt; parse(Stream&lt;String&gt; strings) {
+	return strings
+		.map(Util.uncheckException(this::parse));
+}</code></pre></div></div>
+<div class="ulist"><ul><li><p>stream executor has to handle exception</p></li><li><p>exception aborts stream pipeline</p></li></ul></div></section><section id="remove_trouble"><h2>Remove Trouble</h2><div class="paragraph"><p>Another <code>Util</code> method:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">static Function&lt;T, Optional&lt;R&gt;&gt; wrapOptional(
+		CheckedFunction&lt;T, R, Exception&gt; function) {
+	return element -&gt; {
+		try {
+			return Optional.of(
+				function.apply(element));
+		} catch (Exception ex) {
+			return Optional.empty();
+		}
+	};
+}</code></pre></div></div></section><section id="remove_trouble_2"><h2>Remove Trouble</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;User&gt; parse(Stream&lt;String&gt; strings) {
+	return strings
+		.map(Util.wrapOptional(this::parse))
+		// Java 9: .flatMap(Optional::stream)
+		.filter(Optional::isPresent)
+		.map(Optional::get);
+}</code></pre></div></div>
+<div class="ulist"><ul><li><p>requires extra clean-up step<br>
+(at least supported by compiler)</p></li><li><p>troublesome elements "disappear"</p></li></ul></div></section><section id="expose_with_try"><h2>Expose With <code>Try</code></h2><div class="paragraph"><p><code>Try&lt;T&gt;</code> is similar to <code>Optional</code>:</p></div>
+<div class="ulist"><ul><li><p>has two states (error or success)</p></li><li><p>allows to process them with functions</p></li><li><p>parameterized in type of success result</p></li></ul></div>
+<div class="paragraph"><p>Another <code>Util</code> method:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">static Function&lt;T, Try&lt;R&gt;&gt; wrapTry(
+		CheckedFunction&lt;T, R, Exception&gt; function) {
+	return element -&gt; Try.of(
+		() -&gt; function.apply(element));
+}</code></pre></div></div></section><section id="expose_with_try_2"><h2>Expose With <code>Try</code></h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;Try&lt;User&gt;&gt; parse(Stream&lt;String&gt; strings) {
+	return strings
+		.map(Util.wrapTry(this::parse));
+}</code></pre></div></div>
+<div class="ulist"><ul><li><p>requires external library (e.g. <a href="http://vavr.io/">Vavr</a>)</p></li><li><p>encodes possibility of failure in API</p></li><li><p>makes error available to caller</p></li><li><p>error is encoded as Exception/Throwable</p></li></ul></div></section><section id="expose_with_either"><h2>Expose With <code>Either</code></h2><div class="paragraph"><p><code>Either&lt;L, R&gt;</code> is similar to <code>Optional</code>:</p></div>
+<div class="ulist"><ul><li><p>has two states (left or right)</p></li><li><p>allows to process them with functions</p></li><li><p>parameterized in types of left and right</p></li><li><p>if used for failure/success, exception goes left<br>
+(by convention)</p></li></ul></div></section><section id="expose_with_either_2"><h2>Expose With <code>Either</code></h2><div class="paragraph"><p>Another <code>Util</code> method:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">static Function&lt;T, Either&lt;EX, R&gt;&gt; wrapEither(
+		CheckedFunction&lt;T, R, EX&gt; function) {
+	return element -&gt; {
+		try {
+			return Either.right(
+				function.apply(element));
+		} catch (Exception ex) {
+			// add special cases for RuntimeException,
+			// InterruptedException, etc.
+			return Either.left((EX) ex);
+		}
+	};
+}</code></pre></div></div></section><section id="expose_with_either_3"><h2>Expose With <code>Either</code></h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;Either&lt;ParseException, User&gt;&gt; parse(
+		Stream&lt;String&gt; strings) {
+	return strings
+		.map(Util.wrapEither(this::parse));
+}</code></pre></div></div>
+<div class="ulist"><ul><li><p>requires external library (e.g. <a href="http://vavr.io/">Vavr</a>)</p></li><li><p>encodes possibility of failure in API</p></li><li><p>makes error available to caller</p></li><li><p>error has correct type</p></li></ul></div></section><section id="reflection_on_exceptions"><h2>Reflection on Exceptions</h2><div class="ulist"><ul><li><p>don&#8217;t be smart and "trick the compiler"</p></li><li><p>return a clean stream, no <code>null</code>!</p></li><li><p>ideally, use types to express possibility of failure</p></li></ul></div>
+<div class="paragraph"><p>Streams don&#8217;t cooperate well with checked exceptions.</p></div>
+<div class="paragraph"><p>See that as a chance to use functional concepts<br>
+for greater good of code base!</p></div></section></section>
+<section><section id="streams_4"><h2>Streams</h2><table class="toc">
+	<tr><td>In APIs</td></tr>
+	<tr><td>Exception Handling</td></tr>
+	<tr class="toc-current"><td>Finding Elements</td></tr>
+	<tr><td>Performance</td></tr>
+</table><div class="paragraph"><p>Be careful how you find!</p></div></section><section id="finding_first_or_any"><h2>Finding First or Any</h2><div class="paragraph"><p><code>Stream::findFirst</code> and <code>findAny</code>:</p></div>
+<div class="ulist"><ul><li><p>return an arbitrary element from the Stream</p></li><li><p>if stream has encounter order,<br>
+<code>findFirst</code> returns first element</p></li></ul></div>
+<div class="paragraph"><p>Often used after a filter.</p></div></section><section id="find_example"><h2>Find Example</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Optional&lt;User&gt; findUser(String id) {
+	return users.stream()
+		.filter(user -&gt; user.id().equals(id))
+		.findFirst();
+}</code></pre></div></div>
+<div class="paragraph"><p>Same as the loop:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Optional&lt;User&gt; findUser(String id) {
+	for (User user : users)
+		if (user.id().equals(id))
+			return Optional.of(user);
+	return Optional.empty();
+}</code></pre></div></div></section><section id="small_observation"><h2>Small Observation</h2><div class="paragraph"><p>I sometimes see the following:</p></div>
+<div class="ulist"><ul><li><p>code&#8217;s correctness depends on only<br>
+one element passing the filter</p></li><li><p><strong>but</strong> there are no additional checks</p></li></ul></div>
+<div class="paragraph"><p><strong>⇝ The easy solution might be the wrong one!</strong></p></div>
+<div class="paragraph small-note"><p>(Applies to the loop as well.)</p></div></section><section id="finding_only"><h2>Finding Only</h2><div class="paragraph"><p>Make sure there is only one element:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Optional&lt;User&gt; findUser(String id) {
+	return users.stream()
+		.filter(user -&gt; user.id().equals(id))
+		.reduce(toOnlyElement());
+}
+
+static BinaryOperator toOnlyElement() {
+	return (element, otherElement) -&gt; {
+		throw new IllegalArgumentException();
+	};
+}</code></pre></div></div>
+<div class="paragraph"><p>(<code>Stream::collect</code> is an alternative to <code>reduce</code>.)</p></div></section><section id="properties_of_finding_only"><h2>Properties of Finding Only</h2><div class="paragraph"><p>Upsides:</p></div>
+<div class="ulist"><ul><li><p>guarantees correctness by failing fast</p></li><li><p>expresses intent</p></li></ul></div>
+<div class="paragraph"><p>Downsides:</p></div>
+<div class="ulist"><ul><li><p>materializes entire stream</p></li></ul></div></section><section id="reflection_on_finding"><h2>Reflection On Finding</h2><div class="paragraph"><p>If correctness depends on only one element<br>
+surviving an ad-hoc filter:</p></div>
+<div class="ulist"><ul><li><p><code>findFirst</code>, <code>findAny</code> do not suffice</p></li><li><p>use a reducer or collector to assert uniqueness</p></li><li><p>comes with a performance penalty</p></li></ul></div>
+<h3>Additional Sources</h3><div class="paragraph"><p><a href="http://blog.codefx.org/java/stream-findfirst-findany-reduce/">Beware Of findFirst() And findAny()</a></p></div></section></section>
+<section><section id="stream"><h2>Stream</h2><table class="toc">
+	<tr><td>In APIs</td></tr>
+	<tr><td>Exception Handling</td></tr>
+	<tr><td>Finding Elements</td></tr>
+	<tr class="toc-current"><td>Performance</td></tr>
+</table><div class="paragraph"><p>Getting a gut feeling</p></div></section><section id="performance_caveat"><h2>Performance Caveat</h2><div class="paragraph"><p>Don&#8217;t get carried away with performance!</p></div>
+<div class="paragraph"><p>Before optimizing loops vs streams:</p></div>
+<div class="ulist"><ul><li><p>gather performance requirements</p></li><li><p>reliably measure performance</p></li><li><p>act when requirements are not met</p></li><li><p>determine that stream is at fault</p></li></ul></div></section><section id="performance_caveat_2"><h2>Performance Caveat</h2><div class="paragraph"><p>Performance measurements are hard<br>
+and I&#8217;m not good at them!</p></div>
+<div class="ulist"><ul><li><p><a href="https://blog.codefx.org/java/stream-performance/">concrete numbers</a> apply only to my setup</p></li><li><p>focus on how they relate</p></li><li><p>even that differs across setups</p></li></ul></div>
+<div class="paragraph"><p>If it&#8217;s important, benchmark yourself!</p></div>
+<div class="paragraph"><p>Use <a href="https://openjdk.java.net/projects/code-tools/jmh/">JMH</a> for that.</p></div></section><section id="stream_performance"><h2>Stream Performance</h2><div class="paragraph"><p>Simple benchmark:<br>
+find max in <code>int[500_000]</code></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// takes 0.123
+int m = Integer.MIN_VALUE;
+for (int i = 0; i &lt; intArray.length; i++)
+	if (intArray[i] &gt; m)
+		m = intArray[i];
+
+// takes 0.599
+Arrays.stream(intArray).max();</code></pre></div></div>
+<div class="paragraph"><p>20% performance ⇝ streams suck 😱</p></div></section><section id="really_though"><h2>Really, though?</h2><div class="paragraph"><p>Couple of things to note:</p></div>
+<div class="ulist"><ul><li><p>are 500'000 elements few or many?<br>
+⇝ vary number of elements</p></li><li><p>finding max is really cheap!<br>
+⇝ try other operations</p></li><li><p>arrays are rare; lists more common<br>
+⇝ use different collections</p></li></ul></div>
+<div class="paragraph"><p>Let&#8217;s vary things a little.</p></div></section><section id="data_structures"><h2>Data structures</h2><div class="paragraph"><p>Throw a <code>List&lt;Integer&gt;</code> into the mix:</p></div>
+<table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:33.3333%"><col style="width:33.3333%"><col style="width:33.3334%"></colgroup><thead><tr><th class="tableblock halign-left valign-top">iteration</th><th class="tableblock halign-left valign-top">array</th><th class="tableblock halign-left valign-top">list</th></tr><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">for</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">0.123</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">0.700</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">stream</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">0.599</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">3.272</p></td></tr></table>
+<div class="paragraph"><p>⇝ That didn&#8217;t change much&#8230;&#8203;</p></div></section><section id="cost_per_operation"><h2>Cost Per Operation</h2><div class="paragraph"><p>Benchmark more operations:</p></div>
+<div class="ulist"><ul><li><p><em>max</em>: finding the maximum</p></li><li><p><em>sum</em>: summing <code>int</code> (ignoring overflows)</p></li><li><p><em>arithmetic</em>: handful of bit shifts and mults</p></li><li><p><em>string</em>: convert to string, xor char by char</p></li></ul></div></section><section id="cost_per_operation_2"><h2>Cost Per Operation</h2><div class="paragraph"><p><strong>--- Array ---</strong></p></div>
+<table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:20%"><col style="width:20%"><col style="width:20%"><col style="width:20%"><col style="width:20%"></colgroup><thead><tr><th class="tableblock halign-left valign-top">iteration</th><th class="tableblock halign-left valign-top">max</th><th class="tableblock halign-left valign-top">sum</th><th class="tableblock halign-left valign-top">arith</th><th class="tableblock halign-left valign-top">string</th></tr><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">for</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">0.123</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">0.186</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">4.405</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">49.533</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">stream</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">0.599</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">1.394</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">4.100</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">52.236</p></td></tr></table>
+<div class="paragraph"><p><strong>--- List ---</strong></p></div>
+<table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:20%"><col style="width:20%"><col style="width:20%"><col style="width:20%"><col style="width:20%"></colgroup><thead><tr><th class="tableblock halign-left valign-top">iteration</th><th class="tableblock halign-left valign-top">max</th><th class="tableblock halign-left valign-top">sum</th><th class="tableblock halign-left valign-top">arith</th><th class="tableblock halign-left valign-top">string</th></tr><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">for</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">0.700</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">0.714</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">4.099</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">49.943</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">stream</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">3.272</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">3.584</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">7.776</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">64.989</p></td></tr></table></section><section id="cost_per_operation_3"><h2>Cost Per Operation</h2><div class="paragraph"><p>Define <code>Q</code> as abstract cost of operation:</p></div>
+<div class="ulist"><ul><li><p><em>max</em> and <em>sum</em> are very cheap</p></li><li><p><em>arithmetic</em> is x3 to x20</p></li><li><p><em>string</em> is another x10</p></li></ul></div>
+<div class="paragraph"><p>⇝ Reasonably complex operations<br>
+dominate total run time.</p></div></section><section id="number_of_elements"><h2>Number Of Elements</h2><div class="paragraph"><p>From 500'000 to 50'000'000 elements:</p></div>
+<table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:25%"><col style="width:25%"><col style="width:25%"><col style="width:25%"></colgroup><thead><tr><th class="tableblock halign-left valign-top">structure</th><th class="tableblock halign-left valign-top">op</th><th class="tableblock halign-left valign-top">iteration</th><th class="tableblock halign-left valign-top">speedup</th></tr><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">array</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><em>sum</em></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">stream</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">x6.62</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">list</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><em>max</em></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">stream</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">x1.16</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">list</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><em>sum</em></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">stream</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">x1.08</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">list</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><em>max</em></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">for</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">x0.89</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">array</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><em>sum</em></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">for</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">x0.88</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">array</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><em>max</em></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">for</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">x0.7</p></td></tr></table></section><section id="number_of_elements_2"><h2>Number Of Elements</h2><div class="paragraph"><p>Define <code>N</code> as number of elements.</p></div>
+<div class="paragraph"><p>For larger <code>N</code>, these speed up:</p></div>
+<div class="ulist"><ul><li><p>more complex iteration mechanisms</p></li><li><p>over simple operations</p></li></ul></div>
+<div class="paragraph"><p>⇝ This benefits streams.</p></div></section><section id="taken_together"><h2>Taken together</h2><div class="paragraph"><p>Streams are always slower than loops, but:</p></div>
+<div class="ulist"><ul><li><p>doesn&#8217;t matter if <code>N*Q</code> is small</p></li><li><p>gets better the larger <code>N*Q</code> gets</p></li><li><p>asymptotically approaching x1</p></li></ul></div>
+<div class="paragraph"><p><strong>⇝ Unless specific perf reqs are in the way,<br>
+streams are a good default.</strong></p></div>
+<div class="paragraph"><p>Streams are easy to parallelize&#8230;&#8203;</p></div></section><section id="parallel_performance"><h2>Parallel Performance</h2><div class="paragraph"><p>Parallelization adds overhead:</p></div>
+<div class="ulist"><ul><li><p>decomposing the problem</p></li><li><p>task / thread management</p></li><li><p>composing the result</p></li></ul></div>
+<div class="paragraph"><p>Only benefit: more resources!</p></div>
+<div class="paragraph"><p>(May be limited by memory bandwidth.)</p></div></section><section id="parallel_performance_2"><h2>Parallel Performance</h2><div class="paragraph"><p>Super simplified model<br>
+(remember <code>N</code> and <code>Q</code>):</p></div>
+<div class="paragraph"><p><strong><code>N*Q</code> should be five digits (at least)</strong></p></div>
+<div class="paragraph"><p>⇝ Parallel streams are no good default!</p></div></section><section id="parallel_performance_3"><h2>Parallel Performance</h2><div class="paragraph"><p>For details on parallel performance:</p></div>
+<div class="paragraph"><p><a href="https://www.youtube.com/watch?v=iDplU7mOocU&amp;t=25m20s">Thinking in Parallel</a><br>
+by Stuart Marks and Brian Goetz at JavaOne 2016<br>
+(start at 25:20 for performance)</p></div>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/2nup6Oizpcw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></section><section id="reflection_on_performance"><h2>Reflection on Performance</h2><div class="ulist"><ul><li><p>stream overhead is real<br>
+but almost disappears for relevant sizes</p></li><li><p>performance is rarely a reason against streams</p></li><li><p>consider parallel streams carefully</p></li><li><p>measure and compare to requirements!</p></li></ul></div></section></section>
+<section id="optional"><h2>Optional</h2><h3>Everybody's Favorite Bike Shed!</h3>
+<table class="toc">
+	<tr><td>Usage Patterns</td></tr>
+	<tr><td>Value-Based Class</td></tr>
+	<tr><td>Not a Monad</td></tr>
+</table></section>
+<section><section id="optional_2"><h2>Optional</h2><table class="toc">
+	<tr class="toc-current"><td>Usage Patterns</td></tr>
+	<tr><td>Value-Based Class</td></tr>
+	<tr><td>Not a Monad</td></tr>
+</table><div class="paragraph"><p>The Java community strongly disagrees<br>
+on how to best use <code>Optional</code>.</p></div><div class="paragraph"><p>Some insights into the discussion&#8230;&#8203;</p></div></section><section id="basic_rules"><h2>Basic Rules</h2><div class="paragraph"><p>First some basic rules:</p></div>
+<div class="ulist"><ul><li><p>never, ever, ever call <code>get()</code>/<code>orElseThrow()</code><br>
+without checking <code>isPresent()</code> first</p></li><li><p>prefer functional style<br>
+(<code>map</code>, <code>flatMap</code>, <code>ifPresent</code>, <code>orElse</code>, &#8230;&#8203;)</p></li><li><p>make everyone setting <code>Optional</code> to <code>null</code><br>
+buy a round of drinks or wear a silly hat</p></li></ul></div></section><section id="basic_rules_2"><h2>Basic Rules</h2><div class="paragraph"><p>Nobody (?) wants to see &#8230;&#8203;</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Optional.ofNullable(mango)
+	.ifPresent(System.out::println);</code></pre></div></div>
+<div class="paragraph"><p>... instead of &#8230;&#8203;</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">if (mango != null)
+	System.out.println(mango);</code></pre></div></div></section><section id="different_opinions"><h2>Different Opinions</h2><div class="ulist"><ul><li><p>don&#8217;t use it unless<br>
+absolutely necessary</p></li><li><p>use it as return value</p></li><li><p>use it everywhere</p></li></ul></div></section><section id="dont_use_it"><h2>Don&#8217;t Use It!</h2><h3>Assumptions</h3><div class="ulist"><ul><li><p>API is verbose and invites misuse</p></li><li><p>makes stack traces harder to debug</p></li><li><p>not serializable</p></li><li><p>unsupported by various frameworks</p></li><li><p>dereferencing reduces performance</p></li><li><p>instances increase memory consumption</p></li><li><p>no benefits over explicit <code>null</code> handling</p></li></ul></div></section><section id="dont_use_it_2"><h2>Don&#8217;t Use It!</h2><h3>Conclusions</h3><div class="ulist"><ul><li><p><code>Optional</code> sucks</p></li><li><p>only use it if existing API returns it</p></li><li><p>unpack quickly!</p></li></ul></div>
+<div class="paragraph small-note"><p>(Mark Struberg, Stephen Connolly, Hugues Johnson)</p></div></section><section id="limited_return_value"><h2>Limited Return Value</h2><h3>Assumptions</h3><div class="ulist"><ul><li><p><a href="http://blog.codefx.org/java/dev/design-optional">was designed</a> as a return value</p></li><li><p>not serializable</p></li><li><p>long-lived instances increase<br>
+memory consumption</p></li><li><p>boxing method arguments is verbose</p></li></ul></div></section><section id="limited_return_value_2"><h2>Limited Return Value</h2><h3>Conclusions</h3><div class="ulist"><ul><li><p>use as return value if<br>
+returning <code>null</code> is error-prone</p></li><li><p>no instance variables</p></li><li><p>no method parameters</p></li><li><p>instances should generally be short-lived</p></li></ul></div>
+<div class="paragraph small-note"><p>(Stuart Marks, Brian Goetz)</p></div>
+<div class="paragraph"><p><strong>⇝ This should be your default choice!</strong></p></div></section><section id="return_value"><h2>Return Value</h2><h3>Assumptions</h3><div class="ulist"><ul><li><p>returning <code>null</code> is always error-prone</p></li><li><p>rest as before</p></li></ul></div>
+<h3>Conclusions</h3><div class="ulist"><ul><li><p>use as return value whenever<br>
+value can be absent</p></li><li><p>rest as before</p></li></ul></div>
+<div class="paragraph small-note"><p>(Stephen Colebourne)</p></div></section><section id="use_everywhere"><h2>Use Everywhere!</h2><h3>Assumptions</h3><div class="ulist"><ul><li><p>using <code>Optional</code> instead of <code>null</code><br>
+lifts <code>null</code>-handling into the type system</p></li><li><p>makes any <code>null</code> an implementation error<br>
+(great for debugging)</p></li><li><p>performance arguments can be discarded<br>
+unless proven to be relevant</p></li></ul></div></section><section id="use_everywhere_2"><h2>Use Everywhere!</h2><h3>Conclusions</h3><div class="ulist"><ul><li><p>avoid optionality through good design<br>
+(good recommendation in general)</p></li><li><p>use <code>Optional</code> instead of <code>null</code> everywhere</p></li><li><p>consider providing overloads<br>
+for optional method parameters</p></li></ul></div>
+<div class="paragraph small-note"><p>(Mario Fusco, me)</p></div></section><section id="use_everywhere_3"><h2>Use Everywhere!</h2><h3>Overload Example</h3><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">String bar(Optional&lt;String&gt; drink) {
+	return drink.map(this::bar)
+			.orElseGet(this::bar);
+}
+
+String bar(String drink) { /* ... */ }
+
+String bar() { /* ... */ }</code></pre></div></div></section><section id="reflection_on_usage"><h2>Reflection on Usage</h2><div class="paragraph"><p>Whatever you decide:</p></div>
+<div class="ulist"><ul><li><p>pick my recommendation! :)</p></li><li><p>make it a team decision</p></li><li><p>put it into your code style</p></li><li><p>learn over time</p></li></ul></div>
+<div class="paragraph"><p>Relaxing rules is easier<br>
+than making them stricter!</p></div></section><section id="additional_sources_2"><h2>Additional Sources</h2><div class="paragraph"><p><a href="https://www.youtube.com/watch?v=Ej0sss6cq14">The Mother of All Bikesheds</a> (Stuart Marks)</p></div>
+<div class="paragraph"><p><a href="http://huguesjohnson.com/programming/java/java8optional.html">What&#8217;s the Point?</a> (huguesjohnson.com)</p></div>
+<div class="paragraph"><p><a href="http://blog.codefx.org/java/dev/design-optional">Design Of Optional</a> (codefx.org)</p></div>
+<div class="paragraph"><p><a href="http://blog.joda.org/2015/08/java-se-8-optional-pragmatic-approach.html">Pragmatic Approach</a>  (joda.org)</p></div>
+<div class="paragraph"><p><a href="http://blog.codefx.org/java/stephen-colebourne-optional-a-strict-approach/">Strict Approach</a>  (codefx.org)</p></div></section></section>
+<section><section id="optional_3"><h2>Optional</h2><table class="toc">
+	<tr><td>Usage Patterns</td></tr>
+	<tr class="toc-current"><td>Value-Based Class</td></tr>
+	<tr><td>Not a Monad</td></tr>
+</table><div class="paragraph"><p><code>Optional</code> implements a new "pattern"<br>
+that requires us to be careful with what we do.</p></div></section><section id="value_based_class"><h2>Value-Based Class?</h2><div class="paragraph"><p>Did you RTFM?</p></div>
+<div class="paragraph"><p><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/doc-files/ValueBased.html"><code>Optional</code> Javadoc</a> says:</p></div>
+<div class="quoteblock"><blockquote><div class="paragraph"><p>This is a value-based class; use of identity-sensitive operations [&#8230;&#8203;] on instances of <code>Optional</code> may have unpredictable results and should be avoided.</p></div></blockquote></div>
+<div class="paragraph"><p>What does it mean?</p></div></section><section id="value_types_in_future_java"><h2>Value Types In Future Java</h2><div class="paragraph"><p>A future Java will contain value types:</p></div>
+<div class="ulist"><ul><li><p>pass by value<br>
+(copied when passed as params)</p></li><li><p>immutable</p></li><li><p>no identity</p></li></ul></div>
+<div class="paragraph"><p>Very similar to today&#8217;s primitives.</p></div></section><section id="no_identity"><h2>No Identity?</h2><div class="paragraph"><p>Class instances <strong>have identity</strong>:</p></div>
+<div class="ulist"><ul><li><p>each <code>new Integer(5)</code> creates a new instance</p></li><li><p>they are not identical (<code>!=</code>, different locks, &#8230;&#8203;)</p></li></ul></div>
+<div class="paragraph"><p>Value types will have <strong>no identity</strong>:</p></div>
+<div class="ulist"><ul><li><p>there are no two different <code>int 5</code></p></li><li><p>only their value matters</p></li></ul></div></section><section id="but_isnt_this_java_8"><h2>But Isn&#8217;t This Java 8?</h2><div class="paragraph"><p>From value types to value-based classes:</p></div>
+<div class="ulist"><ul><li><p>value types require wrappers/boxes<br>
+(just like primitives do today)</p></li><li><p>value-based classes might turn out<br>
+wrapping value types</p></li><li><p>as an optimization the JVM will<br>
+create and destroy them at will</p></li></ul></div>
+<div class="paragraph"><p><strong>⇝ Wrappers have identity <em>but</em> it is unstable</strong></p></div>
+<aside class="notes"><div class="ulist"><ul><li><p>vbc will be optimized in Java 10!</p></li></ul></div></aside></section><section id="identity_crisis"><h2>Identity Crisis</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">ZonedDateTime getLastLogin(User user);
+void storeMessage(ZonedDateTime time, String message);
+
+String lastLoginMessage(User user) {
+	ZonedDateTime lastLogin = getLastLogin(user); <b>(1)</b>
+	String message = "Was " + lastLogin;
+	storeMessage(lastLogin, message); <b>(2)</b>
+	return message;
+}</code></pre></div></div>
+<div class="colist arabic"><ol><li><p>might return an instance or a value</p></li><li><p>might receive an instance or a value</p></li></ol></div></section><section id="requirements_for_vbc"><h2>Requirements For VBC</h2><div class="dlist"><dl><dt class="hdlist1">declaration site</dt><dd><div class="ulist"><ul><li><p>final and immutable</p></li><li><p><code>equals</code>, <code>hashCode</code>, <code>toString</code><br>
+must <em>only</em> rely on instance state</p></li><li><p>&#8230;&#8203;</p></li></ul></div></dd><dt class="hdlist1">use site</dt><dd><div class="ulist"><ul><li><p>no use of <code>==</code>, identity hash code,<br>
+locking, serialization</p></li></ul></div></dd></dl></div>
+<div class="paragraph"><p>(None of this is checked by the JVM.)</p></div></section><section id="vbc_in_java"><h2>VBC in Java</h2><h3>Java 8</h3><div class="dlist"><dl><dt class="hdlist1"><code>java.util</code></dt><dd><p><code>Optional</code>[<code>Double</code>, <code>Long</code>, <code>Int</code>]</p></dd><dt class="hdlist1"><code>java.time</code></dt><dd><p><code>Duration</code>, <code>Instant</code>, <code>Period</code>,<br>
+<code>Year</code>, <code>YearMonth</code>, <code>MonthDay</code>,<br>
+<code>Local&#8230;&#8203;</code>, <code>Offset&#8230;&#8203;</code>, <code>Zoned&#8230;&#8203;</code>
+<code>ZoneId</code>, <code>ZoneOffset</code></p></dd><dt class="hdlist1"><code>java.time.chrono</code></dt><dd><p><code>HijrahDate</code>, <code>JapaneseDate</code>, <code>MinguaDate</code>, <code>ThaiBuddhistDate</code></p></dd></dl></div>
+<aside class="notes"><div class="ulist"><ul><li><p>Optional uses reference <code>equals</code> in its <code>equals</code></p></li><li><p>date classes are serializable</p></li></ul></div></aside></section><section id="vbc_in_java_2"><h2>VBC in Java</h2><h3>Java 9</h3><div class="dlist"><dl><dt class="hdlist1"><code>java.lang</code></dt><dd><p><code>ProcessHandle</code>, <code>Runtime.Version</code></p></dd><dt class="hdlist1"><code>java.util</code></dt><dd><p>types returned by collection factory methods</p></dd></dl></div>
+<h3>Java 12</h3><div class="dlist"><dl><dt class="hdlist1"><code>java.lang.constant</code></dt><dd><p><code>ConstantDesc</code>, <code>DynamicCallSiteDesc</code>, <code>DynamicConstantDesc</code></p></dd></dl></div></section><section id="reflection_on_vbc"><h2>Reflection on VBC</h2><div class="paragraph"><p>With <code>Optional</code> and other value-based classes:</p></div>
+<div class="ulist"><ul><li><p>never rely on their identity</p></li><li><p>mainly no <code>==</code>, locking, serialization</p></li></ul></div>
+<div class="paragraph"><p><strong>If this works out,</strong><br>
+<strong>performance hit all but disappears!</strong></p></div>
+<h3>Additional Sources</h3><div class="paragraph"><p><a href="http://blog.codefx.org/java/value-based-classes/">Value-Based Classes</a> (codefx.org)</p></div></section></section>
+<section><section id="optional_4"><h2>Optional</h2><table class="toc">
+	<tr><td>Usage Patterns</td></tr>
+	<tr><td>Value-Based Class</td></tr>
+	<tr class="toc-current"><td>Not a Monad</td></tr>
+</table><div class="paragraph"><p><code>Optional</code> saves us from <code>null</code><br>
+at the expense of breaking Monad Laws.</p></div><div class="paragraph"><p>(No math, I promise!)</p></div></section><section id="left_identity"><h2>Left Identity</h2><div class="paragraph"><p>For a Monad, this should always be true:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Objects.equals(
+	ofNullable(x).flatMap(f),
+	f.apply(x));</code></pre></div></div>
+<div class="paragraph"><p>But:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Function f = s -&gt; of("mango")
+Optional ofMap =
+	ofNullable(null).flatMap(f);
+Optional apply = f.apply(null);
+// Optional[] != Optional["mango"]</code></pre></div></div></section><section id="associativity"><h2>Associativity</h2><div class="paragraph"><p>For a Monad, this should always be true:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Objects.equals(
+	ofNullable(x).map(f).map(g),
+	ofNullable(x).map(f.andThen(g)));</code></pre></div></div>
+<div class="paragraph"><p>But:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Function f = s -&gt; null;
+Function g = s -&gt; "mango";
+Optional map = of("kiwi").map(f).map(g);
+Optional then = of("kiwi").map(f.andThen(g));
+// Optional[] != Optional["mango"]</code></pre></div></div></section><section id="root_cause_analysis"><h2>Root Cause Analysis</h2><div class="ulist"><ul><li><p><code>Optional</code> maps <code>null</code> to <code>empty()</code></p></li><li><p><code>flatMap</code> and <code>map</code> are not executed<br>
+on empty optionals</p></li><li><p>the first occurrence of <code>null</code>/empty<br>
+stops the chain of executions</p></li></ul></div></section><section id="so_what"><h2>So What?</h2><div class="ulist"><ul><li><p>refactoring can change<br>
+which code gets executed</p></li><li><p>functions that can "recover" from <code>null</code><br>
+might not get executed</p></li><li><p>particularly error-prone when<br>
+functions have side effects<br>
+(they generally should not, but it happens)</p></li></ul></div></section><section id="reflection_on_monads"><h2>Reflection on Monads</h2><div class="ulist"><ul><li><p>be aware that <code>Optional</code> is no well-behaved monad</p></li><li><p>see it as a way to avoid handling <code>null</code></p></li><li><p>be aware that refactoring can cause problems<br>
+if <code>null</code> was special cased</p></li></ul></div>
+<h3>Additional Sources</h3><div class="paragraph"><p><a href="https://developer.atlassian.com/blog/2015/08/optional-broken/">More on Optional Being Broken</a> (atlassian.com)</p></div>
+<div class="paragraph"><p><a href="https://www.sitepoint.com/how-optional-breaks-the-monad-laws-and-why-it-matters/">&#8230;&#8203; and Why It Matters</a> (sitepoint.com)</p></div></section></section>
+<section id="default_methods"><h2>Default Methods</h2><table class="toc">
+	<tr><td>Fluent Decorators</td></tr>
+	<tr><td>Interface Evolution</td></tr>
+</table></section>
+<section><section id="default_methods_2"><h2>Default Methods</h2><table class="toc">
+	<tr class="toc-current"><td>Fluent Decorators</td></tr>
+	<tr><td>Interface Evolution</td></tr>
+</table><div class="paragraph"><p>Fluent implementation of<br>
+the decorator pattern</p></div></section><section id="decorator_pattern"><h2>Decorator Pattern</h2><div class="imageblock diagram" style=""><img src="images/decorator.png" alt="decorator"></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Component component = /*...*/;
+Component decorated =
+	new SomeDecorator(
+		new AnotherDecorator(component));</code></pre></div></div></section><section id="fluent_decorators"><h2>Fluent Decorators</h2><div class="paragraph"><p>With lambda expressions and default methods<br>
+we can apply decorators fluently:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Component component = /*...*/;
+Component decorated = DecoratingComponent.from(component)
+	.some() // applies `SomeDecorator`
+	.another("param") // applies `AnotherDecorator`
+	.decorate(YetAnotherDecorator::new);</code></pre></div></div>
+<div class="paragraph"><p>How?</p></div></section><section id="fluent_decorators_2"><h2>Fluent Decorators</h2><div class="imageblock diagram" style=""><img src="images/decorator-8.png" alt="decorator 8"></div>
+<div class="paragraph"><p>The <code>DecoratingComponent</code> interface:</p></div>
+<div class="ulist"><ul><li><p>extends <code>Component</code></p></li><li><p>is implemented by all decorators</p></li><li><p>offers methods that wrap <code>this</code><br>
+in decorator and return it</p></li></ul></div></section><section id="decorating_component"><h2>Decorating Component</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">interface DecoratingC extends Component {
+
+	static DecoratingC from(Component component) {
+		return new DecoratingComponent() {
+			// implement by forwarding to component
+		};
+	}
+
+	default DecoratingC decorate(
+		Function&lt;DecoratingC, DecoratingC&gt; decorator) {
+		return decorator.apply(this);
+	}
+
+}</code></pre></div></div></section><section id="generic_decoration"><h2>Generic Decoration</h2><div class="paragraph"><p>This <em>generic decoration</em><br>
+allows chains like the following:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Component component = /*...*/;
+Component decorated = DecoratingComponent.from(component)
+	.decorate(SomeDecorator::new);
+	.decorate(c -&gt; new AnotherDecorator(c, "param"));
+	.decorate(YetAnotherDecorator::new);</code></pre></div></div></section><section id="specific_decoration"><h2>Specific Decoration</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">interface DecoratingC extends Component {
+
+	default DecoratingC some()
+		return decorate(SomeDecorator::new);
+	}
+
+	default DecoratingC another(String s)
+		return decorate(
+			c -&gt; new AnotherDecorator(c, s));
+	}
+
+}</code></pre></div></div></section><section id="fluent_decoration"><h2>Fluent Decoration</h2><div class="paragraph"><p>Real-life example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">HyperlinkListener listener =
+	this::changeHtmlViewBackgroundColor;
+listener = DecoratingHyperlinkListener.from(listener)
+	.onHoverMakeVisible(urlLabel)
+	.onHoverSetUrlOn(urlLabel)
+	.logEvents()
+	.decorate(l -&gt;
+		new OnActivateHighlightComponent(l, urlLabel))
+	.decorate(OnEnterLogUrl::new);</code></pre></div></div></section><section id="why_default_methods"><h2>Why Default Methods?</h2><div class="paragraph"><p>Why not put these methods on <code>AbstractDecorator</code>?</p></div>
+<div class="ulist"><ul><li><p>clumps up responsibilities:</p><div class="exampleblock"><div class="content"><div class="ulist"><ul><li><p>enabling easy implementation of <code>Component</code></p></li><li><p>decorating instances of <code>Component</code></p></li></ul></div></div></div>
+<div class="paragraph"><p>(change for different reasons)</p></div></li><li><p>requires implementation of abstract helper class</p></li><li><p>makes abstract helper class prominent</p></li></ul></div></section><section id="reflection_on_decorator"><h2>Reflection On Decorator</h2><div class="paragraph"><p>To implement fluent deocators:</p></div>
+<div class="ulist"><ul><li><p>add an additional interface</p></li><li><p>add default method for generic decoration</p></li><li><p>maybe add methods for specific decoration</p></li></ul></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">interface DecoratingComponent extends Component {
+	static DC from(Component component);
+	default DC decorate(Function&lt;DC, DC&gt; decorator);
+	default DC log(Level level);
+}</code></pre></div></div></section></section>
+<section><section id="default_methods_3"><h2>Default Methods</h2><table class="toc">
+	<tr><td>Fluent Decorators</td></tr>
+	<tr class="toc-current"><td>Interface Evolution</td></tr>
+</table><div class="paragraph"><p>Evolving interfaces without breaking code.</p></div></section><section id="interface_evolution"><h2>Interface Evolution</h2><div class="paragraph"><p>If your code has clients that<br>
+you have no control over&#8230;&#8203;</p></div>
+<div class="ulist"><ul><li><p>open-source library</p></li><li><p>internal library</p></li><li><p>extensible application</p></li></ul></div>
+<div class="paragraph"><p>... then evolving interfaces<br>
+always breaks code.</p></div>
+<div class="paragraph"><p>Default methods to the rescue!</p></div></section><section id="general_approach"><h2>General Approach</h2><div class="dlist"><dl><dt class="hdlist1">New Version</dt><dd><div class="ulist"><ul><li><p>interface is transitional (old and new outline)</p></li><li><p>default methods ensure existing code works</p></li></ul></div></dd><dt class="hdlist1">Transition</dt><dd><div class="ulist"><ul><li><p>client moves from old to new outline</p></li><li><p>default methods ensure code keeps working</p></li></ul></div></dd><dt class="hdlist1">New Version</dt><dd><div class="ulist"><ul><li><p>removes old outline</p></li></ul></div></dd></dl></div></section><section id="adding_methods"><h2>Adding Methods</h2><div class="paragraph"><p>Reasonable default impl exists:</p></div>
+<div class="dlist"><dl><dt class="hdlist1">New Version</dt><dd><div class="ulist"><ul><li><p>add the method with default impl</p></li><li><p>internal impls can override</p></li><li><p>internal callers use new method</p></li></ul></div></dd><dt class="hdlist1">Transition</dt><dd><div class="ulist"><ul><li><p>external callers use the method</p></li></ul></div></dd></dl></div>
+<div class="paragraph"><p>That&#8217;s it.</p></div></section><section id="adding_methods_2"><h2>Adding Methods</h2><div class="paragraph"><p>No reasonable default impl exists:</p></div>
+<div class="dlist"><dl><dt class="hdlist1">New Version</dt><dd><div class="ulist"><ul><li><p>add method with default impl throwing UOE</p></li><li><p>override method in all internal impls</p></li></ul></div></dd><dt class="hdlist1">Transition</dt><dd><div class="ulist"><ul><li><p>external impls override the method</p></li><li><p>external callers use the method</p></li></ul></div></dd><dt class="hdlist1">New Version</dt><dd><div class="ulist"><ul><li><p>make method abstract</p></li><li><p>internal callers use new method</p></li></ul></div></dd></dl></div></section><section id="removing_methods"><h2>Removing Methods</h2><div class="paragraph"><p>No external impls exist:</p></div>
+<div class="dlist"><dl><dt class="hdlist1">New Version</dt><dd><div class="ulist"><ul><li><p>deprecate method</p></li><li><p>internal callers stop calling method</p></li></ul></div></dd><dt class="hdlist1">Transition</dt><dd><div class="ulist"><ul><li><p>external callers stop using the method</p></li></ul></div></dd><dt class="hdlist1">New Version</dt><dd><div class="ulist"><ul><li><p>remove the method</p></li></ul></div></dd></dl></div>
+<div class="paragraph"><p>(No default methods required.)</p></div></section><section id="removing_methods_2"><h2>Removing Methods</h2><div class="paragraph"><p>External impls exist:</p></div>
+<div class="dlist"><dl><dt class="hdlist1">New Version</dt><dd><div class="ulist"><ul><li><p>deprecate method</p></li><li><p>provide default impl throwing UOE</p></li><li><p>internal callers stop calling method</p></li></ul></div></dd><dt class="hdlist1">Transition</dt><dd><div class="ulist"><ul><li><p>external callers stop using the method</p></li><li><p>external impls of the method are removed</p></li></ul></div></dd><dt class="hdlist1">New Version</dt><dd><div class="ulist"><ul><li><p>remove the method</p></li></ul></div></dd></dl></div></section><section id="replacing_methods"><h2>Replacing Methods</h2><div class="paragraph"><p>Applies with new signature (name, parameters, &#8230;&#8203;),<br>
+where methods are "functionally equivalent".</p></div>
+<div class="paragraph"><p>Otherwise it&#8217;s a matter of adding new<br>
+and removing old method.</p></div></section><section id="replacing_methods_2"><h2>Replacing Methods</h2><div class="dlist"><dl><dt class="hdlist1">New Version</dt><dd><div class="ulist"><ul><li><p>add <em>new</em> with default impl calling <em>old</em></p></li><li><p>provide default impl of <em>old</em> calling <em>new</em></p></li><li><p>deprecate <em>old</em></p></li><li><p>internal impls override <em>new</em> instead of <em>old</em></p></li><li><p>internal callers use <em>new</em> instead of <em>old</em></p></li></ul></div></dd></dl></div>
+<div class="paragraph"><p>Wtf, circular call?</p></div>
+<div class="ulist"><ul><li><p>ensures it does not matter which version is impl&#8217;d</p></li><li><p>must be thoroughly documented; tests help</p></li></ul></div></section><section id="replacing_methods_3"><h2>Replacing Methods</h2><div class="dlist"><dl><dt class="hdlist1">Transition</dt><dd><div class="ulist"><ul><li><p>external impls override <em>new</em> instead of <em>old</em></p></li><li><p>external callers use <em>new</em> instead of <em>old</em></p></li></ul></div></dd><dt class="hdlist1">New Version</dt><dd><div class="ulist"><ul><li><p>make <em>new</em> abstract</p></li><li><p>remove <em>old</em></p></li></ul></div></dd></dl></div></section><section id="reflection_on_evolution"><h2>Reflection On Evolution</h2><div class="paragraph"><p>If clients can be expected to update their code<br>
+default methods allow interface evolution<br>
+without breaking client code.</p></div>
+<div class="paragraph"><p>Mode is always the same:</p></div>
+<div class="ulist"><ul><li><p>release version with transitional outline</p></li><li><p>give clients time to update</p></li><li><p>release version with new outline</p></li></ul></div></section><section id="additional_source"><h2>Additional Source</h2><div class="paragraph"><p><a href="http://blog.codefx.org/design/patterns/interface-evolution-with-default-methods-methods/">Interface Evolution</a> (codefx.org)</p></div>
+<div class="paragraph"><p><a href="http://blog.codefx.org/java/new-javadoc-tags/">New Javadoc Tags</a> (codefx.org)</p></div></section></section>
+<section><section id="about_nicolai_parlog" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>About Nicolai Parlog</h2><div style="float: left; width: 45%; margin:0px;">
+	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="images/cover-jms.png" style="margin: 0;"></a>
+	<p style="
+		position: fixed;
+		margin: -160px 0 0 60px;
+		transform: rotate(-8deg);
+		font-size: 28pt;
+		color: #cc0000;
+		text-shadow: 2px 2px 3px #660000;
+		font-weight: bold;
+		border: 5px solid #cc0000;
+		border-radius: 12px;
+		background-color: rgba(255,255,255,0.5);
+		padding: 2px 8px 7px 4px;
+">37% off with<br>code <em>fccparlog</em></p>
+	<p><a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb">tiny.cc/jms</a></p>
+</div><h3>Follow</h3><div class="paragraph"><p>💻 <a href="http://codefx.org">codefx.org</a><br>
+🐦 <a href="https://twitter.com/nipafx">@nipafx</a></p></div><h3>Want More?</h3><div class="paragraph"><p>Slides at <a href="https://slides.codefx.org">slides.codefx.org</a></p></div><div class="paragraph"><p>⇜ Get <a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&amp;a_bid=869915cb">my book</a>!</p></div><div class="paragraph"><p>You can <a href="http://blog.codefx.org/hire-nicolai-parlog/">hire me</a>:</p></div><div class="ulist"><ul><li><p>training (Java 8-12, JUnit 5)</p></li><li><p>consulting (Java 8-12)</p></li></ul></div></section><section data-background-image="images/accento-save.jpg" data-background-size="cover" data-state="empty"></section></section>
+<section id="image_credits"><h2>Image Credits</h2><div class="ulist"><ul><li><p><a href="https://pixabay.com/en/number-digit-eight-8-background-1982275/">eight</a>:
+<a href="https://pixabay.com/en/users/PIRO4D-2707530/">PIRO4D</a>,
+<a href="https://wiki.creativecommons.org/wiki/CC0">CC0</a></p></li><li><p><a href="https://www.flickr.com/photos/21496790@N06/5065834411">question-mark</a>:
+<a href="http://milosevicmilos.com/">Milos Milosevic</a>,
+<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a></p></li></ul></div></section></div></div><script src="_reveal.js/lib/js/head.min.js"></script><script src="_reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+Reveal.initialize({
+  // Display controls in the bottom right corner
+  controls: false,
+  // Display a presentation progress bar
+  progress: false,
+  // Set a per-slide timing for speaker notes, null means none
+  defaultTiming: null,
+  // Display the page number of the current slide
+  slideNumber: false,
+  // Push each slide change to the browser history
+  history: true,
+  // Enable keyboard shortcuts for navigation
+  keyboard: true,
+  // Enable the slide overview mode
+  overview: true,
+  // Vertical centering of slides
+  center: true,
+  // Enables touch navigation on devices with touch input
+  touch: true,
+  // Loop the presentation
+  loop: false,
+  // Change the presentation direction to be RTL
+  rtl: false,
+  // Randomizes the order of slides each time the presentation loads
+  shuffle: false,
+  // Turns fragments on and off globally
+  fragments: true,
+  // Flags if the presentation is running in an embedded mode,
+  // i.e. contained within a limited portion of the screen
+  embedded: false,
+  // Flags if we should show a help overlay when the questionmark
+  // key is pressed
+  help: true,
+  // Flags if speaker notes should be visible to all viewers
+  showNotes: false,
+  // Global override for autolaying embedded media (video/audio/iframe)
+  // - null: Media will only autoplay if data-autoplay is present
+  // - true: All media will autoplay, regardless of individual setting
+  // - false: No media will autoplay, regardless of individual setting
+  autoPlayMedia: null,
+  // Number of milliseconds between automatically proceeding to the
+  // next slide, disabled when set to 0, this value can be overwritten
+  // by using a data-autoslide attribute on your slides
+  autoSlide: 0,
+  // Stop auto-sliding after user input
+  autoSlideStoppable: true,
+  // Enable slide navigation via mouse wheel
+  mouseWheel: false,
+  // Hides the address bar on mobile devices
+  hideAddressBar: true,
+  // Opens links in an iframe preview overlay
+  previewLinks: false,
+  // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
+  // NOTE setting the theme in the config no longer works in reveal.js 3.x
+  //theme: Reveal.getQueryHash().theme || 'nipa-night',
+  // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+  transition: Reveal.getQueryHash().transition || 'slide',
+  // Transition speed (e.g., default, fast, slow)
+  transitionSpeed: 'default',
+  // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+  backgroundTransition: 'fade',
+  // Number of slides away from the current that are visible
+  viewDistance: 3,
+  // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+  parallaxBackgroundImage: 'images/8-dark.jpg',
+  // Parallax background size in CSS syntax (e.g., "2100px 900px")
+  parallaxBackgroundSize: '2560px 1440px',
+
+  // The "normal" size of the presentation, aspect ratio will be preserved
+  // when the presentation is scaled to fit different resolutions. Can be
+  // specified using percentage units.
+  width: 960,
+  height: 700,
+
+  // Factor of the display size that should remain empty around the content
+  margin: 0.1,
+
+  // Bounds for smallest/largest possible scale to apply to content
+  minScale: 0.2,
+  maxScale: 1.5,
+
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+      { src: '_reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: '_reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '_reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      
+      { src: '_reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: '_reveal.js/plugin/notes/notes.js', async: true }
+  ]
+});</script></body></html>
