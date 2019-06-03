@@ -1,0 +1,309 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Best Practices</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="../_reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="../_reveal.js/css/theme/nipa-night.css" id="theme"><link href="../_reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>var link = document.createElement( 'link' );
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = window.location.search.match( /print-pdf/gi ) ? "../_reveal.js/css/print/pdf.css" : "../_reveal.js/css/print/paper.css";
+document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="../_reveal.js/lib/js/html5shiv.js"></script><![endif]--></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>Best Practices</h1><div class="preamble"><link rel="stylesheet" href="../_highlight.js/styles/monokai-sublime.css">
+<script src="../_highlight.js/highlight.pack.js"></script>
+<script>
+	window.onload = function() {
+		hljs.configure({
+			tabReplace: '    ',
+			languages: [ 'java' ]
+		})
+		var codes = document.getElementsByTagName('code');
+		for(var i = 0; i < codes.length; i++) {
+			hljs.highlightBlock(codes.item(i));
+		}
+		hljs.initHighlightingOnLoad();
+	}
+</script>
+<h2>Considered Harmful</h2>
+<!-- would like a longer transition, but reveal immediately applies
+     new data-state, which leads to text from the old slide jumping
+	 to the new position before transitioning to the new text :( -->
+<style>
+.reveal .slides > section, .reveal .slides > section > section  {
+	transition-duration: 0ms !important;
+}
+.reveal .slide-background {
+	transition-duration: 0ms;
+}
+.title body {
+	background:url("images/chess.jpg");
+	background-position: center;
+	background-size: cover;
+}
+</style>
+<div class="event">
+	<div class="participant">
+		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
+		<div class="name">
+			<p><a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a></p>
+			<p><a href="http://codefx.org">codefx.org</a>
+				/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a></p>
+		</div>
+	</div>
+	<div class="participant">
+		<a href="http://webmontag.de/location/karlsruhe/index"><img src="images/logo-webmontag.jpg" class="logo" style="{host-logo-style}"></a>
+		<div class="name">
+			<p><a href="http://webmontag.de/location/karlsruhe/index">Webmontag Karlsruhe</a></p>
+			<p><a href="https://twitter.com/webmontag_ka" style="{host-twitter-style}">@webmontag_ka</a></p>
+		</div>
+	</div>
+</div>
+<footer>
+	<div class="participant">
+		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
+		<div class="name"><p>
+			<a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a>
+			/ <a href="http://codefx.org">codefx.org</a>
+			/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a>
+		</p></div>
+	</div>
+	<div class="participant">
+		<a href="http://webmontag.de/location/karlsruhe/index"><img src="images/logo-webmontag.jpg" class="logo" style="{host-logo-style}"></a>
+		<div class="name">
+			<p><a href="http://webmontag.de/location/karlsruhe/index">Webmontag Karlsruhe</a> / <a href="https://twitter.com/webmontag_ka" style="{host-twitter-style}">@webmontag_ka</a></p>
+		</div>
+	</div>
+</footer>
+<!-- Just adding a footer does not work because reveal.js puts it into the slides and we couldn't get it out via CSS. So we move it via JavaScript. -->
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		document.body.appendChild(document.querySelector('footer'));
+	})
+</script>
+</div></section>
+<section><section id="a_few_best_practices" data-background-image="images/chess.jpg" data-background-size="cover"><h2>A few best practices</h2></section><section id="best_practice" data-background-image="images/fruits.jpg" data-background-size="cover" data-state="gallery top left"><h2>Best practice?</h2>
+<div class="paragraph"><p>Eat vegetables and fruits,<br>
+exercise regularly,<br>
+value your sleep.</p></div>
+<aside class="notes"><div class="ulist"><ul><li><p>TODO: sickness re vegetables</p></li><li><p>TODO: sickness re fruits (diabetes?)</p></li><li><p>flu</p></li><li><p>not generally applicable</p></li></ul></div></aside></section><section id="best_practice_2" data-background-image="images/index.jpg" data-background-size="cover" data-state="gallery transparent-slide top right"><h2>Best practice?</h2>
+<div class="paragraph"><p>Add an index for<br>
+each database column<br>
+you <code>SELECT-WHERE</code> by.</p></div>
+<aside class="notes"><div class="ulist"><ul><li><p>even if there are 10x as many writes as reads? 100x? 1.000x?</p></li><li><p>TODO: research</p></li><li><p>may be harmful under certain circumstances</p></li></ul></div></aside></section><section id="best_practice_3" data-background-image="images/tests.jpg" data-background-size="cover" data-state="gallery bottom left"><h2>Best practice?</h2>
+<div class="paragraph"><p>Unit-test your code.</p></div>
+<aside class="notes"><div class="ulist"><ul><li><p>if you feel cheated by the first questions</p></li><li><p>if you&#8217;re thinking when this doesn&#8217;t apply</p></li><li><p>you&#8217;ve already grokked all I want to tell you</p></li><li><p>you can get a beer now</p></li><li><p>best practices are insufficient</p></li></ul></div></aside></section><section data-background-image="images/tests.jpg" data-background-size="cover" data-state="gallery media">
+<video loop data-autoplay src="images/sliding-door.mp4"></video></section><section data-background-image="images/tests.jpg" data-background-size="cover" data-state="gallery media">
+<video loop data-autoplay src="images/windows.mp4"></video></section><section data-background-image="images/tests.jpg" data-background-size="cover" data-state="gallery media">
+<video loop data-autoplay src="images/automatic-doors.mp4"></video></section><section data-background-image="images/tests.jpg" data-background-size="cover" data-state="gallery media">
+<video loop data-autoplay src="images/dryer.mp4" style="height: 600px;"></video></section><section id="best_practice_4" data-background-image="images/wheels.jpg" data-background-size="contain" data-state="gallery bottom right"><h2>Best practice?</h2>
+<div class="paragraph"><p>Don&#8217;t reinvent the wheel.</p></div>
+<aside class="notes"><div class="ulist"><ul><li><p>"If no one ever reinvented the wheel, then we&#8217;d all be driving our cars on wooden tires."
+<a href="https://softwareengineering.stackexchange.com/questions/14856/what-popular-best-practices-are-not-always-best-and-why#comment22895_15273" class="bare">https://softwareengineering.stackexchange.com/questions/14856/what-popular-best-practices-are-not-always-best-and-why#comment22895_15273</a></p></li><li><p>TODO: random facts from "It&#8217;s time to reinvent the wheel."
+<a href="http://glassrivermedia.com/2019/05/24/reinvent-the-wheel-its-time/" class="bare">http://glassrivermedia.com/2019/05/24/reinvent-the-wheel-its-time/</a></p></li></ul></div></aside></section><section data-background-image="images/train-wheel.jpg" data-background-size="cover" data-state="empty"></section><section data-background-image="images/speed-wheel.jpg" data-background-size="cover" data-state="empty"></section><section data-background-image="images/offroad-wheel.jpg" data-background-size="cover" data-state="empty"></section><section data-background-image="images/bike-wheel.jpg" data-background-size="cover" data-state="empty"></section><section data-background-image="images/ferris-wheel.jpg" data-background-size="cover" data-state="empty"></section></section>
+<section><section id="what_does_best_practice_even_mean" data-background-image="images/chess.jpg" data-background-size="cover"><h2>What does <em>best practice</em> even mean?</h2></section><section id="best" data-background-image="images/muhammad-ali.jpg" data-background-size="contain" data-state="gallery top right"><h2>Best</h2>
+<div class="paragraph"><p>Literally, <strong>the best</strong>!</p></div>
+<aside class="notes"><div class="ulist"><ul><li><p>quite a claim</p></li><li><p>more on that later</p></li></ul></div></aside></section><section id="definition_by_committee" data-background-image="images/wat.png" data-background-size="initial" data-state="gallery transparent-slide bg-bottom-left"><h2>Definition By Committee</h2>
+<div class="paragraph"><p>A best practice is a method or technique<br>
+that has been generally accepted as<br>
+superior to any alternatives [&#8230;&#8203;]<br>
+because it has become<br>
+<strong>a standard way of doing things</strong> [&#8230;&#8203;].</p></div>
+<div class="paragraph"><p><a href="https://en.wikipedia.org/wiki/Best_practice">Wikipedia</a>, emphasis mine</p></div>
+<aside class="notes"><div class="ulist"><ul><li><p>that doesn&#8217;t make sense</p></li><li><p>how has it become standard? agreed on by experts?</p></li><li><p>is it an industry standard?</p></li></ul></div></aside></section><section id="standard" data-background-image="images/industry.jpg" data-background-size="cover" data-state="gallery bottom left"><h2>Standard</h2>
+<div class="paragraph"><p>It&#8217;s an industry standard.</p></div>
+<aside class="notes"><div class="ulist"><ul><li><p>why not say that?</p></li><li><p>in the entire industry?</p></li><li><p>TODO: [1]
+[1]: <a href="https://www.satisfice.com/blog/archives/5164" class="bare">https://www.satisfice.com/blog/archives/5164</a></p></li></ul></div></aside></section><section id="experts" data-background-image="images/experts.jpg" data-background-size="cover" data-state="gallery bottom right"><h2>Experts</h2>
+<div class="paragraph"><p>Agreed on by experts.</p></div>
+<aside class="notes"><div class="ulist"><ul><li><p>why not say that?</p></li><li><p>since when do expert agree on anything?</p></li><li><p>who&#8217;s an expert?</p></li><li><p>TODO: [1]</p></li></ul></div></aside></section><section id="default" data-background-image="images/default.jpg" data-background-size="cover" data-state="gallery transparent-slide top"><h2>Default</h2>
+<div class="paragraph"><p>Good</p></div>
+<aside class="notes"><div class="ulist"><ul><li><p>why not say that?</p></li><li><p>more on that later</p></li></ul></div></aside></section><section id="definition_by_excellence" data-background-image="images/muhammad-ali-transparent.png" data-background-size="initial" data-state="gallery transparent-slide right bg-bottom-left"><h2>Definition By Excellence</h2>
+<div class="paragraph"><p>A best practice is a method or technique that has been generally accepted as superior to any alternatives because it produces <strong>results that are superior</strong> to those achieved by other means [&#8230;&#8203;].</p></div>
+<div class="paragraph"><p><a href="https://en.wikipedia.org/wiki/Best_practice">Wikipedia</a>, emphasis mine</p></div>
+<aside class="notes"><div class="ulist"><ul><li><p>let&#8217;s explore that</p></li></ul></div></aside></section></section>
+<section><section id="i_call_bs" data-background-image="images/chess.jpg" data-background-size="cover"><h2>I call BS!</h2></section><section id="the_best" data-background-image="images/vehicles.jpg" data-background-size="cover" data-state="gallery bottom"><h2>The Best</h2>
+<div class="paragraph"><p>Vagueness stems from the term "best"<br>
+which is <strong>subjective</strong>.</p></div>
+<div class="paragraph"><p><a href="https://en.wikipedia.org/wiki/Best_practice">Wikipedia - Best Practices</a>, emphasis mine</p></div>
+<aside class="notes"><div class="ulist"><ul><li><p>no shit</p></li><li><p>who says it can&#8217;t be improved?</p></li><li><p>who says it&#8217;s complete? (unit tests)</p></li><li><p>who said people correctly established causality? (Pixar&#8217;s toilets)</p></li><li><p>it is impossible to determine "best" without context</p></li><li><p>TODO: [1]
+[1]: <a href="https://www.satisfice.com/blog/archives/5164" class="bare">https://www.satisfice.com/blog/archives/5164</a></p></li></ul></div></aside></section><section id="context" data-background-image="images/king.jpg" data-background-size="cover" data-state="gallery right"><h2>Context</h2>
+<div class="paragraph"><p>Good advice comes<br>
+with a rationale<br>
+so you can tell when<br>
+it becomes bad advice.</p></div>
+<div class="paragraph"><p><a href="https://blogs.msdn.microsoft.com/oldnewthing/20091104-00/?p=16153/">Raymond Chen</a></p></div>
+<aside class="notes"><div class="ulist"><ul><li><p>continues: "If you don&#8217;t understanding why something should be done, then you&#8217;ve fallen into the trap of cargo cult programming, and you&#8217;ll keep doing it even when it&#8217;s no longer necessary or even becomes deleterious."</p></li><li><p>context is king</p></li><li><p>TODO: examples?</p></li><li><p>TODO: [1], [2]
+[2]: <a href="https://blogs.msdn.microsoft.com/oldnewthing/20091104-00/?p=16153/" class="bare">https://blogs.msdn.microsoft.com/oldnewthing/20091104-00/?p=16153/</a></p></li></ul></div></aside></section><section id="stifling" data-background-image="images/dispute.jpg" data-background-size="cover" data-state="gallery bottom wide"><h2>Stifling</h2>
+<div class="paragraph"><p>The allure and seduction of best-practice thinking<br>
+poisons genuine dialogue about both what we know<br>
+and the limitations of what we know.</p></div>
+<div class="paragraph"><p><a href="https://www.betterevaluation.org/en/blog/best_practices_arent">Michael Quinn Patton</a></p></div>
+<aside class="notes"><div class="ulist"><ul><li><p>TODO: more from [2]
+[2]: <a href="https://www.betterevaluation.org/en/blog/best_practices_arent" class="bare">https://www.betterevaluation.org/en/blog/best_practices_arent</a></p></li></ul></div></aside></section><section id=""><h2>¯\_(ツ)_/¯</h2><aside class="notes"><div class="ulist"><ul><li><p>are all practices BS?</p></li><li><p>did I just give you the "DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE"? <a href="https://en.wikipedia.org/wiki/WTFPL" class="bare">https://en.wikipedia.org/wiki/WTFPL</a></p></li></ul></div></aside></section></section>
+<section><section id="redeeming_best_practices" data-background-image="images/chess.jpg" data-background-size="cover"><h2>Redeeming <em>best practices</em></h2><aside class="notes"><div class="ulist"><ul><li><p>best practices at least work somewhere</p></li><li><p>constantly out of my depth; "best practices" are life savers</p></li><li><p>if you have little information, skill, and/or time, choosing a best practice is good strategy</p></li><li><p>the less you know, the more you should stick to best practices</p></li></ul></div></aside></section><section id="problems" data-background-image="images/locked-gears.png" data-background-size="contain" data-state="gallery transparent-slide right bg-bottom-left"><h2>Problems</h2>
+<div class="paragraph"><p>Problems:</p></div>
+<div class="ulist"><ul><li><p>term <em>best</em> practice</p></li><li><p>common lack of context</p></li><li><p>lacking completeness</p></li></ul></div></section><section id="terms" data-background-image="images/post-its.jpg" data-background-size="cover" data-state="gallery left bottom"><h2>Terms</h2>
+<div class="paragraph"><p>Better terms:</p></div>
+<div class="ulist"><ul><li><p><em>established practice</em></p></li><li><p><em>known pattern</em></p></li><li><p><em>good default</em></p></li><li><p>(whatever, really)</p></li></ul></div>
+<aside class="notes"><div class="ulist"><ul><li><p>many best practices have value</p></li><li><p>other terms foster research and discussion</p></li></ul></div></aside></section><section id="context_2" data-background-image="images/king.jpg" data-background-size="cover" data-state="gallery right"><h2>Context</h2>
+<div class="paragraph"><p>Good default&#8230;&#8203;</p></div>
+<div class="ulist"><ul><li><p>&#8230;&#8203; in <code>${simplified-context}</code></p></li><li><p>&#8230;&#8203; unless <code>${counter-indicators}</code></p></li></ul></div>
+<aside class="notes"><div class="ulist"><ul><li><p>problem definition</p></li><li><p>actionable steps</p></li><li><p>reasonable explanation of causality</p></li><li><p>measurements before and after</p></li><li><p>trade-offs and limitations</p></li></ul></div></aside></section><section id="judging" data-background-image="images/justicia.jpg" data-background-size="cover" data-state="gallery left"><h2>Judging</h2>
+<div class="ulist"><ul><li><p>context vs unisize</p></li><li><p>concrete vs abstract</p></li><li><p>measured vs guesswork</p></li></ul></div>
+<aside class="notes"><div class="ulist"><ul><li><p>what problem does it solve</p></li><li><p>"it depends" ~&gt; "on what?!"</p></li><li><p>concrete practice or amorphous goal</p></li><li><p>how to measure success</p></li><li><p>document decisions; don&#8217;t shy away from "because the Internet said so"</p></li><li><p>already following a practice?</p><div class="ulist"><ul><li><p>adoption is not free!</p></li><li><p>how much better do you expect the results to be?</p></li></ul></div></li></ul></div></aside></section><section id="balancing" data-background-image="images/balance.jpg" data-background-size="cover" data-state="gallery top left"><h2>Balancing</h2>
+<div class="paragraph"><p>Be wary of best practices,<br>
+but look for good defaults.</p></div>
+<div class="paragraph"><p><strong>Don&#8217;t NIH!</strong></p></div>
+<div class="paragraph"><p>Know your limits<br>
+and focus energy<br>
+on your core competency.</p></div>
+<aside class="notes"><div class="ulist"><ul><li><p>don&#8217;t NIH</p></li><li><p>don&#8217;t reinvent the wheel (how will your practice differ?)</p></li><li><p>if you don&#8217;t have skills/time to research, best practice is likely best choice (statistically)</p></li></ul></div></aside></section></section>
+<section><section id="about_nicolai_parlog" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>About Nicolai Parlog</h2><div style="float: left; width: 45%; margin:0px;">
+	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="images/cover-jms.png" style="margin: 0;"></a>
+	<p style="
+		position: fixed;
+		margin: -160px 0 0 60px;
+		transform: rotate(-8deg);
+		font-size: 28pt;
+		color: #cc0000;
+		text-shadow: 2px 2px 3px #660000;
+		font-weight: bold;
+		border: 5px solid #cc0000;
+		border-radius: 12px;
+		background-color: rgba(255,255,255,0.5);
+		padding: 2px 8px 7px 4px;
+">37% off with<br>code <em>fccparlog</em></p>
+	<p><a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb">tiny.cc/jms</a></p>
+</div><h3>Follow</h3><div class="paragraph"><p>💻 <a href="http://codefx.org">codefx.org</a><br>
+🐦 <a href="https://twitter.com/nipafx">@nipafx</a></p></div><h3>Want More?</h3><div class="paragraph"><p>Slides at <a href="https://slides.codefx.org">slides.codefx.org</a></p></div><div class="paragraph"><p>⇜ Get <a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&amp;a_bid=869915cb">my book</a>!</p></div><div class="paragraph"><p>You can <a href="http://blog.codefx.org/hire-nicolai-parlog/">hire me</a>:</p></div><div class="ulist"><ul><li><p>training (Java 8-12, JUnit 5)</p></li><li><p>consulting (Java 8-12)</p></li></ul></div></section><section data-background-image="images/accento-save.jpg" data-background-size="cover" data-state="empty"></section></section>
+<section><section id="image_credits"><h2>Image Credits</h2><div class="ulist"><ul><li><p><a href="https://pixabay.com/photos/chess-king-chess-pieces-chess-board-2727443/">chess</a>:
+<a href="https://pixabay.com/users/o12-4397258/">O12</a>,
+<a href="https://pixabay.com/service/license/">Pixabay License</a></p></li><li><p><a href="https://unsplash.com/photos/1CsaVdwfIew">fruits</a>:
+<a href="https://unsplash.com/@edgarraw">Edgar Castrejon</a>,
+<a href="https://unsplash.com/license">Unsplash license</a></p></li><li><p><a href="https://pixabay.com/photos/index-card-box-flashcards-karteibox-2288588/">index</a>:
+<a href="https://pixabay.com/users/strichpunkt-2136421">strichpunkt</a>,
+<a href="https://pixabay.com/service/license/">Pixabay License</a></p></li><li><p><a href="https://unsplash.com/photos/3GZi6OpSDcY">tests</a>:
+<a href="https://unsplash.com/@nicolasthomas">Nicolas Thomas</a>,
+<a href="https://unsplash.com/license">Unsplash license</a></p></li><li><p>videos:
+<a href="https://twitter.com/MonkeyTestIt/status/958661917375172609">sliding-door</a>,
+<a href="https://twitter.com/TrustIV/status/689055715089076224">windows</a>,
+<a href="https://twitter.com/ebowman/status/849700748782862337">automatic-doors</a>,
+<a href="https://twitter.com/randal_olson/status/799707563860299776">dryer</a></p></li></ul></div></section><section id="image_credits_2"><h2>Image Credits</h2><div class="ulist"><ul><li><p><a href="https://pixabay.com/photos/wheels-wooden-wheels-old-2630554/">wheels</a>:
+<a href="https://pixabay.com/users/Momentmal-5324081/">Momentmal</a>,
+<a href="https://pixabay.com/service/license/">Pixabay License</a></p></li><li><p><a href="https://unsplash.com/photos/e3v-UOLKR18">train-wheel</a>:
+<a href="https://unsplash.com/@beppe68">Giuseppe Ruco</a>,
+<a href="https://unsplash.com/license">Unsplash license</a></p></li><li><p><a href="https://unsplash.com/photos/XNN9C8MG4KM">sport-wheel</a>:
+<a href="https://unsplash.com/@chinmayjade">Chinmay Jade</a>,
+<a href="https://unsplash.com/license">Unsplash license</a></p></li><li><p><a href="https://unsplash.com/photos/E4BT91WYmKw">offroad-wheel</a>:
+<a href="https://unsplash.com/@kaeyla">Kaeyla McGee</a>,
+<a href="https://unsplash.com/license">Unsplash license</a></p></li><li><p><a href="https://unsplash.com/photos/cAY9X4rPG3g">bike-wheel</a>:
+<a href="https://unsplash.com/@alessandracaretto">Alessandra Caretto</a>,
+<a href="https://unsplash.com/license">Unsplash license</a></p></li><li><p><a href="https://unsplash.com/photos/AZAE2vnnIXk">ferris-wheel</a>:
+<a href="https://unsplash.com/@helloimnik">Hello I&#8217;m Nik</a>,
+<a href="https://unsplash.com/license">Unsplash license</a></p></li></ul></div></section><section id="image_credits_3"><h2>Image Credits</h2><div class="ulist"><ul><li><p><a href="https://agoraimages.com/blog/2018/08/02/behind-iconic-photos-muhammad-ali-neil-leifer/">muhammad-ali</a>:
+Neil Leifer</p></li><li><p><a href="https://knowyourmeme.com/memes/wat">wat</a>: The Internet</p></li><li><p><a href="https://unsplash.com/photos/io7dX_1EFCg">industry</a>:
+<a href="https://unsplash.com/@rozetsky">Ant Rozetsky</a>,
+<a href="https://unsplash.com/license">Unsplash license</a></p></li><li><p>vehicles:</p><div class="ulist"><ul><li><p><a href="https://unsplash.com/photos/o8koK0E-oRg">scooter</a>:
+<a href="https://unsplash.com/@miikola">Nicolas I.</a>,
+<a href="https://unsplash.com/license">Unsplash license</a></p></li><li><p><a href="https://unsplash.com/photos/wdc9ZAiwBB4">motorbike</a>:
+<a href="https://unsplash.com/@harleydavidson">Harley Davidson</a>,
+<a href="https://unsplash.com/license">Unsplash license</a></p></li><li><p><a href="https://pixabay.com/photos/buggy-polaris-rzr-1000-drift-2208873/">buggy</a>:
+<a href="https://pixabay.com/users/RaulOlave-1518305/">RaulOlave</a>,
+<a href="https://pixabay.com/service/license/">Pixabay License</a></p></li></ul></div></li></ul></div></section><section id="image_credits_4"><h2>Image Credits</h2><div class="ulist"><ul><li><p><a href="https://pixabay.com/photos/battle-chess-checkmate-blur-1846807/">king</a>:
+<a href="https://pixabay.com/users/Pexels-2286921/">Pexels</a>,
+<a href="https://pixabay.com/service/license/">Pixabay License</a></p></li><li><p><a href="https://pixabay.com/illustrations/fire-and-water-fight-hands-fire-2354583/">dispute</a>:
+<a href="https://pixabay.com/users/thommas68-2571842/">thommas68</a>,
+<a href="https://pixabay.com/service/license/">Pixabay License</a></p></li><li><p><a href="http://www.clker.com/clipart-gears-inter-lock.html">locked-gears</a>:
+<a href="http://www.clker.com/profile-93307.html">FAROOQ</a>,
+<a href="http://creativecommons.org/publicdomain/zero/1.0/">CC0</a></p></li><li><p><a href="https://unsplash.com/photos/bjemWZcNF34">post-its</a>:
+<a href="https://unsplash.com/@joszczepanska">Jo Szczepanska</a>,
+<a href="https://unsplash.com/license">Unsplash license</a></p></li><li><p><a href="https://pixabay.com/illustrations/justice-right-case-law-court-2071539/">justicia</a>:
+<a href="https://pixabay.com/users/AJEL-676477/">AJEL</a>,
+<a href="https://pixabay.com/service/license/">Pixabay License</a></p></li><li><p><a href="https://pixabay.com/photos/fisherman-fishing-boat-boat-fishing-2739115/">balance</a>:
+<a href="https://pixabay.com/users/Myriams-Fotos-1627417/">Myriams-Fotos</a>,
+<a href="https://pixabay.com/service/license/">Pixabay License</a></p></li><li><p><a href="https://www.flickr.com/photos/21496790@N06/5065834411">question-mark</a>:
+<a href="http://milosevicmilos.com/">Milos Milosevic</a>,
+<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a></p></li></ul></div></section></section></div></div><script src="../_reveal.js/lib/js/head.min.js"></script><script src="../_reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+Reveal.initialize({
+  // Display controls in the bottom right corner
+  controls: false,
+  // Display a presentation progress bar
+  progress: false,
+  // Set a per-slide timing for speaker notes, null means none
+  defaultTiming: null,
+  // Display the page number of the current slide
+  slideNumber: false,
+  // Push each slide change to the browser history
+  history: true,
+  // Enable keyboard shortcuts for navigation
+  keyboard: true,
+  // Enable the slide overview mode
+  overview: true,
+  // Vertical centering of slides
+  center: true,
+  // Enables touch navigation on devices with touch input
+  touch: true,
+  // Loop the presentation
+  loop: false,
+  // Change the presentation direction to be RTL
+  rtl: false,
+  // Randomizes the order of slides each time the presentation loads
+  shuffle: false,
+  // Turns fragments on and off globally
+  fragments: true,
+  // Flags if the presentation is running in an embedded mode,
+  // i.e. contained within a limited portion of the screen
+  embedded: false,
+  // Flags if we should show a help overlay when the questionmark
+  // key is pressed
+  help: true,
+  // Flags if speaker notes should be visible to all viewers
+  showNotes: false,
+  // Global override for autolaying embedded media (video/audio/iframe)
+  // - null: Media will only autoplay if data-autoplay is present
+  // - true: All media will autoplay, regardless of individual setting
+  // - false: No media will autoplay, regardless of individual setting
+  autoPlayMedia: null,
+  // Number of milliseconds between automatically proceeding to the
+  // next slide, disabled when set to 0, this value can be overwritten
+  // by using a data-autoslide attribute on your slides
+  autoSlide: 0,
+  // Stop auto-sliding after user input
+  autoSlideStoppable: true,
+  // Enable slide navigation via mouse wheel
+  mouseWheel: false,
+  // Hides the address bar on mobile devices
+  hideAddressBar: true,
+  // Opens links in an iframe preview overlay
+  previewLinks: false,
+  // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
+  // NOTE setting the theme in the config no longer works in reveal.js 3.x
+  //theme: Reveal.getQueryHash().theme || 'nipa-night',
+  // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+  transition: Reveal.getQueryHash().transition || 'fade',
+  // Transition speed (e.g., default, fast, slow)
+  transitionSpeed: 'default',
+  // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+  backgroundTransition: 'fade',
+  // Number of slides away from the current that are visible
+  viewDistance: 3,
+  // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+  parallaxBackgroundImage: '',
+  // Parallax background size in CSS syntax (e.g., "2100px 900px")
+  parallaxBackgroundSize: '',
+
+  // The "normal" size of the presentation, aspect ratio will be preserved
+  // when the presentation is scaled to fit different resolutions. Can be
+  // specified using percentage units.
+  width: 960,
+  height: 700,
+
+  // Factor of the display size that should remain empty around the content
+  margin: 0.1,
+
+  // Bounds for smallest/largest possible scale to apply to content
+  minScale: 0.2,
+  maxScale: 1.5,
+
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+      { src: '../_reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: '../_reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../_reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      
+      { src: '../_reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: '../_reveal.js/plugin/notes/notes.js', async: true }
+  ]
+});</script></body></html>
