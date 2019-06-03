@@ -1,0 +1,66 @@
+= Best Practices
+:backend: revealjs
+:revealjs_theme: nipa-night
+:revealjsdir: ../_reveal.js
+:revealjs_controls: false
+:revealjs_progress: false
+:revealjs_slideNumber: false
+:revealjs_history: true
+:revealjs_center: true
+:revealjs_transition: fade
+:revealjs_backgroundTransition: fade
+
+:imagedir: images
+
+include::../_shared/highlight.js.adoc[]
+
+++++
+<h2>Considered Harmful</h2>
+<!-- would like a longer transition, but reveal immediately applies
+     new data-state, which leads to text from the old slide jumping
+	 to the new position before transitioning to the new text :( -->
+<style>
+.reveal .slides > section, .reveal .slides > section > section  {
+	transition-duration: 0ms !important;
+}
+.reveal .slide-background {
+	transition-duration: 0ms;
+}
+.title body {
+	background:url("images/chess.jpg");
+	background-position: center;
+	background-size: cover;
+}
+</style>
+++++
+
+:host-name: Webmontag Karlsruhe
+:host-url: http://webmontag.de/location/karlsruhe/index
+:host-logo-url: images/logo-webmontag.jpg
+// :host-logo-style: background-color: transparent; border-width: 0;
+:host-twitter-name: @webmontag_ka
+:host-twitter-url: https://twitter.com/webmontag_ka
+include::../_shared/event-on-title-and-footer.adoc[]
+image::images/fruits.jpg[background, size=cover]
+
+// ####################### //
+// P R E S E N T A T I O N //
+// ####################### //
+
+// ⇝
+
+include::examples.adoc[]
+
+include::meanings.adoc[]
+
+include::criticism.adoc[]
+
+include::redeem.adoc[]
+
+// ######### //
+// O U T R O //
+// ######### //
+
+include::../_shared/about-slide.adoc[]
+
+include::images/sources.adoc[]
