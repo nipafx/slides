@@ -71,14 +71,14 @@ image::images/amber.jpg[background, size=cover]
 
 [source,java]
 ----
-Node n = // ...
-int result = switch(n) {
-	case IntNode(int i) -> i;
-	case NegNode(Node n) -> -eval(n);
-	case AddNode(Node left, Node right) ->
-		eval(left) + eval(right);
-	default -> throw new IllegalStateException(n);
-};
+public int eval(Node n) {
+	return switch(n) {
+		case IntNode(int i) -> i;
+		case NegNode(Node n) -> -eval(n);
+		case AddNode(Node left, Node right) ->
+			eval(left) + eval(right);
+	};
+}
 ----
 
 *Yeah:*
