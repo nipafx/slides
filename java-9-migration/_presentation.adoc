@@ -23,12 +23,12 @@ include::../_shared/highlight.js.adoc[]
 <h2>A Live Migration To Java 11</h2>
 ++++
 
-:host-name: DevSum
-:host-url: https://www.devsum.se/
-:host-logo-url: images/logo-devsum-2019.png
+:host-name: Elsass JUG
+:host-url: http://elsassjug.org
+:host-logo-url: images/duke.png
 // :host-logo-style: background-color: #FFF; border-color: #FFF;
-:host-twitter-style: font-size: 0.8em;
-:host-twitter-name:  @DevSum_swe
+// :host-twitter-style: font-size: 0.8em;
+:host-twitter-name:  @ElsassJUG
 :host-twitter-url: https://twitter.com/DevSum_swe
 include::../_shared/event-on-title-and-footer.adoc[]
 
@@ -60,9 +60,9 @@ include::../jpms/migration.adoc[]
 
 include::migrations-beyond-9.adoc[]
 
-// include::java-8.adoc[]
-//
-// include::modularization.adoc[]
+include::java-8.adoc[]
+
+include::modularization.adoc[]
 //
 // include::reflection.adoc[]
 //
