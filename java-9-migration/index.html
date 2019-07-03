@@ -33,10 +33,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://www.devsum.se/"><img src="images/logo-devsum-2019.png" class="logo" style="{host-logo-style}"></a>
+		<a href="http://elsassjug.org"><img src="images/duke.png" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://www.devsum.se/">DevSum</a></p>
-			<p><a href="https://twitter.com/DevSum_swe" style="font-size: 0.8em;">@DevSum_swe</a></p>
+			<p><a href="http://elsassjug.org">Elsass JUG</a></p>
+			<p><a href="https://twitter.com/DevSum_swe" style="{host-twitter-style}">@ElsassJUG</a></p>
 		</div>
 	</div>
 </div>
@@ -50,9 +50,9 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://www.devsum.se/"><img src="images/logo-devsum-2019.png" class="logo" style="{host-logo-style}"></a>
+		<a href="http://elsassjug.org"><img src="images/duke.png" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://www.devsum.se/">DevSum</a> / <a href="https://twitter.com/DevSum_swe" style="font-size: 0.8em;">@DevSum_swe</a></p>
+			<p><a href="http://elsassjug.org">Elsass JUG</a> / <a href="https://twitter.com/DevSum_swe" style="{host-twitter-style}">@ElsassJUG</a></p>
 		</div>
 	</div>
 </footer>
@@ -92,7 +92,7 @@ into the future</p></li><li><p>we&#8217;re mostly looking at the bad and the ugl
 <div class="paragraph"><p>Say you want to access <code>java.sql.ResultSet</code>.</p></div>
 <div class="paragraph"><p>Module system only grants access if:</p></div>
 <div class="ulist"><ul><li><p><code>ResultSet</code> is public</p></li><li><p><code>java.sql</code> is exported by <em>java.sql</em></p></li><li><p>your module reads <em>java.sql</em></p></li></ul></div></section><section data-background-color="white" data-background-image="images/platform-modules.png" data-background-size="contain" data-state="empty"></section><section id="other_features"><h2>Other Features</h2><div class="ulist"><ul><li><p>decoupling via services</p></li><li><p>finer grained dependencies and exports</p></li><li><p>open packages and modules (for reflection)</p></li><li><p>unnamed and automatic modules (for migration)</p></li><li><p>layers (for containers)</p></li><li><p><code>jlink</code> to create runtime images</p></li></ul></div></section></section>
-<section><section id="migration_challenges"><h2>Migration Challenges</h2><h3>What to look out for<br>when running on JDK 11</h3></section><section id="break_stuff" data-background-image="images/broken-glass.jpg" data-background-size="cover"><h2>Break Stuff</h2>
+<section><section id="migration_challenges"><h2>Migration Challenges</h2><h3>What to look out for<br>when running on JDK 9</h3></section><section id="break_stuff" data-background-image="images/broken-glass.jpg" data-background-size="cover"><h2>Break Stuff</h2>
 <div class="paragraph"><p>Some internal changes <a href="https://blog.codefx.org/java/java-11-migration-guide/">break existing code</a>!</p></div>
 <div class="paragraph"><p>Just by running on JDK 11<br>
 (even without modularizing the application).</p></div></section><section id="of_modules_and_jars"><h2>Of Modules And JARs</h2><div class="paragraph"><p>Modularized JDK and legacy JARs have to cooperate.</p></div>
@@ -180,6 +180,42 @@ and command line options</p></li><li><p>removal of deprecated Java EE modules</p
 <div class="paragraph"><p>⇝ Pick <a href="https://stackoverflow.com/a/48204154/2525313">a third-party implementation</a></p></div></section></section>
 <section id="general_advice" data-background-image="images/sign.jpg" data-background-size="cover"><h2>General Advice</h2>
 <div class="ulist"><ul><li><p>only rely on standardized behavior</p></li><li><p>heed deprecation warnings (<code>jdeprscan</code>)</p></li><li><p>keep dependencies and tools up to date</p></li><li><p>build on each release (including EA)</p></li><li><p>report problems</p></li></ul></div></section>
+<section><section id="migration_challenges_4"><h2>Migration Challenges</h2><h3>Building on 8, Running on 9+</h3></section><section id="staying_on_8"><h2>Staying On 8</h2><div class="paragraph"><p>Projects may decide to keep<br>
+Java 8 as baseline.</p></div>
+<div class="paragraph"><p>Still:</p></div>
+<div class="ulist"><ul><li><p>run (nightly?) builds<br>
+on Java 9+</p></li><li><p>find problems early</p></li><li><p>avoid dead ends</p></li></ul></div></section><section id="staying_on_8_2"><h2>Staying On 8</h2><div class="paragraph"><p>Some problems may<br>
+prevent building on 9+:</p></div>
+<div class="ulist"><ul><li><p>outdated build tool</p></li><li><p>outdated build plugins</p></li></ul></div>
+<div class="paragraph"><p>Try testing on 9+!</p></div></section><section id="testing_on_9"><h2>Testing On 9+</h2><div class="paragraph"><p>Essentially:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="sh language-sh"># regular Java 8 build
+mvn clean install
+# on Java 9+:
+mvn surefire:test
+mvn failsafe:integration-test</code></pre></div></div></section></section>
+<section><section id="modularizing_your_project"><h2>Modularizing Your Project</h2><h3>Making Use Of The Module System</h3></section><section id="the_tale_of_two_paths"><h2>The Tale Of Two Paths</h2><div class="paragraph"><p>Class path is for regular JARs,<br>
+module path is for modular JARs?</p></div>
+<div class="paragraph"><p><strong>Wrong!</strong></p></div>
+<div class="paragraph"><p>Class path is for the unnamed module,<br>
+module path is for named modules!</p></div></section><section id="from_the_bottom_up"><h2>From The Bottom Up</h2><div class="paragraph"><p>You can put modular JARs in the class path<br>
+and everything works like before.</p></div>
+<div class="ulist"><ul><li><p>you can modularize projects,<br>
+without clients even realizing</p></li><li><p>start with the modularization<br>
+from the bottom up</p></li></ul></div></section><section id="from_the_top_down"><h2>From The Top Down</h2><div class="paragraph"><p>What if you want to modularize your code<br>
+but your dependencies aren&#8217;t yet?</p></div>
+<div class="ulist"><ul><li><p>proper modules can not depend on<br>
+"the chaos on the class path"</p></li><li><p>this is not possible:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">module monitor.rest {
+	// we need spark.core
+	requires unnamed;
+}</code></pre></div></div></li></ul></div></section><section id="automatic_modules"><h2>Automatic Modules</h2><div class="paragraph"><p>An <strong>Automatic Module</strong><br>
+is created <em>for each</em> "regular" JAR<br>
+on the module path.</p></div>
+<div class="ulist"><ul><li><p>name defined by manifest entry<br>
+<code>AUTOMATIC-MODULE-NAME</code> or<br>
+derived from JAR name</p></li><li><p>can read all modules<br>
+(including the Unnamed Module)</p></li><li><p>exports all packages</p></li></ul></div></section><section id="automatic_module_example"><h2>Automatic Module Example</h2><div class="ulist"><ul><li><p>put <code>spark-core-2.7.0.jar</code> on the module path</p></li><li><p>then this works:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">module monitor.rest {
+	requires spark.core;
+}</code></pre></div></div></li></ul></div></section><section id="what_goes_where"><h2>What Goes Where?</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:33.3333%"><col style="width:33.3333%"><col style="width:33.3334%"></colgroup><thead><tr><th class="tableblock halign-left valign-top"></th><th class="tableblock halign-left valign-top">Class Path</th><th class="tableblock halign-left valign-top">Module Path</th></tr><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Regular JAR</strong></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Unnamed Module</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Automatic Module</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Modular JAR</strong></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Unnamed Module</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Named Module</p></td></tr></table></section></section>
 <section><section id="about_nicolai_parlog" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>About Nicolai Parlog</h2><div style="float: left; width: 45%; margin:0px;">
 	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="images/cover-jms.png" style="margin: 0;"></a>
 	<p style="
