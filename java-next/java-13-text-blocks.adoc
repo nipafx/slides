@@ -1,0 +1,18 @@
+=== Text Block Sneak
+
+[source,java]
+----
+String html = """
+	<html>
+		<body>
+			<p>"Hello, text blocks!"</p>
+		</body>
+	</html>
+	"""
+----
+
+* open with `"""` and newline
+* close with `"""` on same or own line
+* regular escaping (not raw!)
+* single `"` needs no escape, though
+* indentation determined by closing `"""`

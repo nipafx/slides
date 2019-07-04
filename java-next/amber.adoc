@@ -34,16 +34,18 @@ image::images/amber.jpg[background, size=cover]
 * local-variable type inference with `var` +
   (https://openjdk.java.net/jeps/286[JEP 286]; in Java 10)
 * switch expressions +
-  (http://openjdk.java.net/jeps/325[JEP 325]; preview in Java 12)
+  (http://openjdk.java.net/jeps/325[JEP 325]; preview in Java 12 and 13)
+* text blocks +
+  (https://openjdk.java.net/jeps/355[JEP 355]; preview in Java 13)
 
 === Endeavors
 image::images/amber.jpg[background, size=cover]
 
 * pattern matching (http://openjdk.java.net/jeps/305[JEP 305])
 * records (http://openjdk.java.net/jeps/8222777[JEP draft])
-* serialization revamp (nothing concrete yet)
+* serialization revamp (http://cr.openjdk.java.net/~briangoetz/amber/serialization.html[white paper])
 * concise method bodies (http://openjdk.java.net/jeps/8209434[JEP draft])
-* raw / multi-line string literals (http://openjdk.java.net/jeps/326[JEP 326])
+* raw string literals (maybe)
 
 === Pattern matching
 image::images/amber.jpg[background, size=cover]
@@ -200,38 +202,25 @@ String regex = \"\+(\d*[.])?\d"
 
 * no escaping of special characters
 
-=== Multi-line string literals
-image::images/amber.jpg[background, size=cover]
+*But:*
 
-[source,java]
-----
-String html = """
-	<html>
-		<body>
-			<p>"Hello, multi-line strings!"</p>
-		</body>
-	</html>""";
-----
+* was planned http://openjdk.java.net/jeps/326[as preview in Java 12] +
+* removed last minute
 
-*Yeah:*
-
-* multi-line strings that can contain `"`
+Turns out, it's complicated. 😁
 
 === Raw multi-line strings
 image::images/amber.jpg[background, size=cover]
 
+Maybe?
+
 [source,java]
 ----
 String yaml = \"""
-		name: "Positive number"
-		regex: "\+(\d*[.])?\d"
+	name: "Positive number"
+	regex: "\+(\d*[.])?\d"
 	""";
 ----
-
-Was planned as preview in http://jdk.java.net/12/[Java 12], +
-but removed last minute.
-
-Turns out, it's complicated. 😁
 
 === Project Amber
 image::images/amber.jpg[background, size=cover]
@@ -240,6 +229,7 @@ Makes Java more expressive:
 
 * type inference with `var` ⑩
 * switch expressions ⑫
+* text blocks ⑬
 * pattern matching
 * records
 * serialization revamp
