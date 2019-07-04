@@ -7,9 +7,8 @@ a http://openjdk.java.net/jeps/12[preview language feature]!
 
 * must be enabled with `--enable-preview` +
   (on `javac` and `java`).
-* in IntelliJ 2018.3 or later, +
-  set the module's language level to +
-  _12 (Preview) - Switch expressions_
+* in IntelliJ 2018.3 or later, set the module's +
+  language level to _12 (Preview) - Switch expressions_
 
 === Switch Expression
 
@@ -85,6 +84,7 @@ int numLetters = switch (day) {
 
 * `switch` is used as an expression
 * `break result` returns `result`
+* in ⑬ `break` becomes `yield`
 
 === Arrow vs Colon
 
@@ -104,7 +104,6 @@ results in different behavior.
 ** exhaustiveness
 
 === More about switch
-image::images/12.jpg[background, size=cover]
 
 *Blog post*: +
 https://blog.codefx.org/java/switch-expressions/[Definitive Guide To Switch Expressions In Java 12]
