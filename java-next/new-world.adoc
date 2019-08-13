@@ -14,7 +14,7 @@
 (not Oracle JDK)
 * major release every 6 months +
 (not every 2-5 years)
-* only selected versions get LTS, +
+* only selected versions get LTS +
 (not all of them)
 
 
@@ -105,7 +105,7 @@ with known quality guarantees.
 Two concepts allow features to incubate:
 
 * https://openjdk.java.net/jeps/11[incubator modules] for APIs
-* https://openjdk.java.net/jeps/12[preview language features]
+* https://blog.codefx.org/java/enable-preview-features/[preview language features]
 
 Features are shipped for experimentation.
 
@@ -186,6 +186,7 @@ Other players:
 * https://aws.amazon.com/corretto/[Amazon Corretto]
 * https://sap.github.io/SapMachine/[SapMachine]
 * https://github.com/alibaba/dragonwell8[Alibaba Dragonwell8]
+* https://bell-sw.com/pages/java-12.0.2/[Liberica JDK]
 
 More?
 
@@ -239,7 +240,7 @@ By and large:
 
 *Evolution will be _steadier_, not _faster_.*
 
-(see Java 10 - 12)
+(see Java 10+)
 
 === Exploding test matrix
 
@@ -272,6 +273,7 @@ But not the norm:
 * Java 10 is trivial
 * Java 11 is easy
 * Java 12 is trivial
+* ...
 
 Oracle is still committed +
 to backwards compatibility!
@@ -356,8 +358,8 @@ Before you upgrade to Java 12:
 . read https://blog.joda.org/2018/10/adopt-java-12-or-stick-on-11.html[_Should you adopt Java 12 [...\]?_] +
 by Stephen Colebourne
 . take a coffee break
-. understand that most risks +
-come from *building against* 12
+. understand that most risks come +
+from *building against* 12
 . be content that all you need +
 to upgrade is *run on* 12
 
