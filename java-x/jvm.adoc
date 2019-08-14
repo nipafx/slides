@@ -402,8 +402,6 @@ Module system and JDK take care of the rest!
 * reserved stack areas (http://openjdk.java.net/jeps/270[JEP 270])
 * Unicode 7 & 8 (JEPS http://openjdk.java.net/jeps/227[227] & http://openjdk.java.net/jeps/267[267])
 
-// TODO expand unified logging
-
 === A Mixed Bag Of New&nbsp;JVM&nbsp;Features
 
 *In Java 10:*
@@ -416,3 +414,11 @@ Module system and JDK take care of the rest!
 * Curve25519 and Curve448 (http://openjdk.java.net/jeps/324[JEP 324])
 * ChaCha20 and Poly1305 (http://openjdk.java.net/jeps/329[JEP 329])
 * partial TLS 1.3 support (http://openjdk.java.net/jeps/332[JEP 332])
+
+=== A Mixed Bag Of New&nbsp;JVM&nbsp;Features
+
+*In Java 12:*
+
+* constants API (http://openjdk.java.net/jeps/334[JEP 334])
+* HmacPBE (https://bugs.openjdk.java.net/browse/JDK-8076190[JDK-8215450])
+* finer PKCS12 KeyStore configuration (https://bugs.openjdk.java.net/browse/JDK-8076190[JDK-8076190])

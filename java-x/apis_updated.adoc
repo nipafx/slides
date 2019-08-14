@@ -2,7 +2,7 @@
 
 ++++
 <table class="toc">
-	<tr><td>String ⑪</td></tr>
+	<tr><td>String ⑪⑫</td></tr>
 	<tr><td>Stream ⑨⑩⑫</td></tr>
 	<tr><td>Optional ⑨⑩⑪</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
@@ -12,24 +12,13 @@
 
 Existing APIs are continuously improved.
 
-////
-TODO:
 
-* additions to `CompletableFuture`, e.g. `orTimeout` and `completeOnTimeout`
-* `CompactNumberFormat` (12)
-* `String` (12):
-	* `indent` to add/remove indentation
-		* having to provide _change in indentation_ (instead of _target indentation_) makes it hard to use and fragile
-	* `transform` to apply a function to the string
-		* used at the end of literals
-		* maybe wait with release until multi-line String literals are released?
-////
 
 == Updated APIs
 
 ++++
 <table class="toc">
-	<tr class="toc-current"><td>String ⑪</td></tr>
+	<tr class="toc-current"><td>String ⑪⑫</td></tr>
 	<tr><td>Stream ⑨⑩⑫</td></tr>
 	<tr><td>Optional ⑨⑩⑪</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
@@ -117,13 +106,82 @@ Stream<String> lines();
 * more performant than `split("\R")`
 * lazy!
 
+=== Changing Indentation ⑫
+
+Use `String::indent` to add or remove +
+leading white space:
+
+```java
+String oneTwo = " one\n  two\n";
+oneTwo.indent(0).equals(" one\n  two\n");
+oneTwo.indent(1).equals("  one\n   two\n");
+oneTwo.indent(-1).equals("one\n two\n");
+oneTwo.indent(-2).equals("one\ntwo\n");
+```
+
+Would have been nice to pass _resulting_ indentation, +
+not _change_ in indentation.
+
+=== Changing Indentation ⑫
+
+`String::indent` normalizes line endings +
+so each line ends in `\n`:
+
+```java
+"1\n2".indent(0).equals("1\n2\n");
+"1\r\n2".indent(0).equals("1\n2\n");
+"1\r2\n".indent(0).equals("1\n2\n");
+"1\n2\n".indent(0).equals("1\n2\n");
+```
+
+=== Transforming Strings ⑫
+
+New method on `String`:
+
+```java
+public <R> R transform(Function<String, R> f) {
+	return f.apply(this);
+}
+```
+
+Use to chain calls instead of nesting them:
+
+```java
+User newUser = parse(clean(input));
+User newUser = input.(this::clean).(this::parse);
+```
+
+Makes more sense at end of long call chain +
+(stream pipeline?) to chain more calls.
+
+=== Transforming things
+
+Maybe other classes get `transform`, too! +
+Great for "chain-friendly" APIs like `Stream`, `Optional`:
+
+```java
+// in a museum...
+tourists.stream()
+	.map(this::letEnter)
+	.transform(this::groupsOfFive)
+	.forEach(this::giveTour)
+
+Stream<TouristGroup> groupsOfFive(
+	Stream<Tourist> tourists) {
+	// this is not trivial,
+	// but at least possible
+}
+```
+
+⇝ Practice with `String::transform`!
+
 
 
 == Updated APIs
 
 ++++
 <table class="toc">
-	<tr><td>String ⑪</td></tr>
+	<tr><td>String ⑪⑫</td></tr>
 	<tr class="toc-current"><td>Stream ⑨⑩⑫</td></tr>
 	<tr><td>Optional ⑨⑩⑪</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
@@ -268,7 +326,7 @@ Statistics stats = Stream
 
 ++++
 <table class="toc">
-	<tr><td>String ⑪</td></tr>
+	<tr><td>String ⑪⑫</td></tr>
 	<tr><td>Stream ⑨⑩⑫</td></tr>
 	<tr class="toc-current"><td>Optional ⑨⑩⑪</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
@@ -442,7 +500,7 @@ you think it does.
 
 ++++
 <table class="toc">
-	<tr><td>String ⑪</td></tr>
+	<tr><td>String ⑪⑫</td></tr>
 	<tr><td>Stream ⑨⑩⑫</td></tr>
 	<tr><td>Optional ⑨⑩⑪</td></tr>
 	<tr class="toc-current"><td>OS Processes ⑨</td></tr>
@@ -505,7 +563,7 @@ Interesting `static` methods:
 
 ++++
 <table class="toc">
-	<tr><td>String ⑪</td></tr>
+	<tr><td>String ⑪⑫</td></tr>
 	<tr><td>Stream ⑨⑩⑫</td></tr>
 	<tr><td>Optional ⑨⑩⑪</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
@@ -514,6 +572,11 @@ Interesting `static` methods:
 ++++
 
 Asynchronous error recovery.
+
+////
+TODO
+* Java 9 additions to `CompletableFuture`
+////
 
 === Recap on API Basics
 

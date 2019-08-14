@@ -412,7 +412,11 @@ image::images/stack-walker-limit-with-estimated-size.png[role="diagram"]
 * multi-resolution images (http://openjdk.java.net/jeps/251[JEP 251])
 * native desktop integration (http://openjdk.java.net/jeps/272[JEP 272])
 * deserialization filter (http://openjdk.java.net/jeps/290[JEP 290])
-* DTLS (http://openjdk.java.net/jeps/219[JEP 219]),
+* DTLS (http://openjdk.java.net/jeps/219[JEP 219]), +
   TLS ALPN and OCSP stapling (http://openjdk.java.net/jeps/244[JEP 244])
 
-Many lower-level APIs.
+*In Java 12:*
+
+* `CompactNumberFormat` (https://bugs.openjdk.java.net/browse/JDK-8188147[JDK-8188147])
+
+And often lots of low-level APIs.
