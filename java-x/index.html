@@ -27,14 +27,13 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://jeeconf.com/"><img src="images/logo-jeeconf.png" class="logo" style="{host-logo-style}"></a>
+		<a href="https://www.nav.no/"><img src="images/logo-nav.png" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://jeeconf.com/">JEEConf</a></p>
-			<p><a href="https://twitter.com/jeeconf">@jeeconf</a></p>
+			<p><a href="https://www.nav.no/">NAV</a></p>
+			<p><a href="https://twitter.com/navnorge" style="{host-twitter-style}">@navnorge</a></p>
 		</div>
 	</div>
 </div>
-<!-- Just adding a footer does not work because reveal.js puts it into the slides and we couldn't get it out via CSS. So we move it via JavaScript. -->
 <footer>
 	<div class="participant">
 		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
@@ -45,12 +44,13 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://jeeconf.com/"><img src="images/logo-jeeconf.png" class="logo" style="{host-logo-style}"></a>
+		<a href="https://www.nav.no/"><img src="images/logo-nav.png" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://jeeconf.com/">JEEConf</a> / <a href="https://twitter.com/jeeconf">@jeeconf</a></p>
+			<p><a href="https://www.nav.no/">NAV</a> / <a href="https://twitter.com/navnorge" style="{host-twitter-style}">@navnorge</a></p>
 		</div>
 	</div>
 </footer>
+<!-- Just adding a footer does not work because reveal.js puts it into the slides and we couldn't get it out via CSS. So we move it via JavaScript. -->
 <script>
 	document.addEventListener('DOMContentLoaded', function () {
 		document.body.appendChild(document.querySelector('footer'));
@@ -565,7 +565,7 @@ public class DeprecatedImports {
 
 }</code></pre></div></div></section></section>
 <section id="updated_apis"><h2>Updated APIs</h2><table class="toc">
-	<tr><td>String ⑪</td></tr>
+	<tr><td>String ⑪⑫</td></tr>
 	<tr><td>Stream ⑨⑩⑫</td></tr>
 	<tr><td>Optional ⑨⑩⑪</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
@@ -573,7 +573,7 @@ public class DeprecatedImports {
 </table>
 <div class="paragraph"><p>Existing APIs are continuously improved.</p></div></section>
 <section><section id="updated_apis_2"><h2>Updated APIs</h2><table class="toc">
-	<tr class="toc-current"><td>String ⑪</td></tr>
+	<tr class="toc-current"><td>String ⑪⑫</td></tr>
 	<tr><td>Stream ⑨⑩⑫</td></tr>
 	<tr><td>Optional ⑨⑩⑪</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
@@ -597,9 +597,43 @@ scour StackOverflow for easy karma!</p></div>
 <div class="paragraph"><p>😍</p></div></section><section id="life_hack_3"><h2>Life Hack ⑪</h2><div class="paragraph"><p>Ta-da!</p></div>
 <div class="imageblock diagram" style=""><img src="images/so-repeat-string-a.png" alt="so repeat string a"></div></section><section id="streaming_lines"><h2>Streaming Lines ⑪</h2><div class="paragraph"><p>Processing a string&#8217;s lines:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;String&gt; lines();</code></pre></div></div>
-<div class="ulist"><ul><li><p>splits a string on <code>"\n"</code>, <code>"\r"</code>, <code>"\r\n"</code></p></li><li><p>lines do not include terminator</p></li><li><p>more performant than <code>split("\R")</code></p></li><li><p>lazy!</p></li></ul></div></section></section>
+<div class="ulist"><ul><li><p>splits a string on <code>"\n"</code>, <code>"\r"</code>, <code>"\r\n"</code></p></li><li><p>lines do not include terminator</p></li><li><p>more performant than <code>split("\R")</code></p></li><li><p>lazy!</p></li></ul></div></section><section id="changing_indentation"><h2>Changing Indentation ⑫</h2><div class="paragraph"><p>Use <code>String::indent</code> to add or remove<br>
+leading white space:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">String oneTwo = " one\n  two\n";
+oneTwo.indent(0).equals(" one\n  two\n");
+oneTwo.indent(1).equals("  one\n   two\n");
+oneTwo.indent(-1).equals("one\n two\n");
+oneTwo.indent(-2).equals("one\ntwo\n");</code></pre></div></div>
+<div class="paragraph"><p>Would have been nice to pass <em>resulting</em> indentation,<br>
+not <em>change</em> in indentation.</p></div></section><section id="changing_indentation_2"><h2>Changing Indentation ⑫</h2><div class="paragraph"><p><code>String::indent</code> normalizes line endings<br>
+so each line ends in <code>\n</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">"1\n2".indent(0).equals("1\n2\n");
+"1\r\n2".indent(0).equals("1\n2\n");
+"1\r2\n".indent(0).equals("1\n2\n");
+"1\n2\n".indent(0).equals("1\n2\n");</code></pre></div></div></section><section id="transforming_strings"><h2>Transforming Strings ⑫</h2><div class="paragraph"><p>New method on <code>String</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public &lt;R&gt; R transform(Function&lt;String, R&gt; f) {
+	return f.apply(this);
+}</code></pre></div></div>
+<div class="paragraph"><p>Use to chain calls instead of nesting them:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">User newUser = parse(clean(input));
+User newUser = input.(this::clean).(this::parse);</code></pre></div></div>
+<div class="paragraph"><p>Makes more sense at end of long call chain<br>
+(stream pipeline?) to chain more calls.</p></div></section><section id="transforming_things"><h2>Transforming things</h2><div class="paragraph"><p>Maybe other classes get <code>transform</code>, too!<br>
+Great for "chain-friendly" APIs like <code>Stream</code>, <code>Optional</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// in a museum...
+tourists.stream()
+	.map(this::letEnter)
+	.transform(this::groupsOfFive)
+	.forEach(this::giveTour)
+
+Stream&lt;TouristGroup&gt; groupsOfFive(
+	Stream&lt;Tourist&gt; tourists) {
+	// this is not trivial,
+	// but at least possible
+}</code></pre></div></div>
+<div class="paragraph"><p>⇝ Practice with <code>String::transform</code>!</p></div></section></section>
 <section><section id="updated_apis_3"><h2>Updated APIs</h2><table class="toc">
-	<tr><td>String ⑪</td></tr>
+	<tr><td>String ⑪⑫</td></tr>
 	<tr class="toc-current"><td>Stream ⑨⑩⑫</td></tr>
 	<tr><td>Optional ⑨⑩⑪</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
@@ -664,7 +698,7 @@ Collector&lt;T, ?, R&gt; teeing(
 		Statistics::of));
 // stats = Statistics {sum=12, average=3.0}</code></pre></div></div></section></section>
 <section><section id="updated_apis_4"><h2>Updated APIs</h2><table class="toc">
-	<tr><td>String ⑪</td></tr>
+	<tr><td>String ⑪⑫</td></tr>
 	<tr><td>Stream ⑨⑩⑫</td></tr>
 	<tr class="toc-current"><td>Optional ⑨⑩⑪</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
@@ -747,7 +781,7 @@ will deprecate<br>
 <div class="paragraph"><p>Does exactly what<br>
 you think it does.</p></div></section></section>
 <section><section id="updated_apis_5"><h2>Updated APIs</h2><table class="toc">
-	<tr><td>String ⑪</td></tr>
+	<tr><td>String ⑪⑫</td></tr>
 	<tr><td>Stream ⑨⑩⑫</td></tr>
 	<tr><td>Optional ⑨⑩⑪</td></tr>
 	<tr class="toc-current"><td>OS Processes ⑨</td></tr>
@@ -767,7 +801,7 @@ List&lt;Process&gt; lsThenGrep = ProcessBuilder
 <div class="ulist"><ul><li><p><code>Stream&lt;ProcessHandle&gt; allProcesses();</code></p></li><li><p><code>Optional&lt;ProcessHandle&gt; of(long pid);</code></p></li><li><p><code>ProcessHandle current();</code></p></li></ul></div></section><section id="more_information"><h2>More Information</h2><div class="paragraph"><p><code>ProcessHandle</code> can return <code>Info</code>:</p></div>
 <div class="ulist"><ul><li><p>command, arguments</p></li><li><p>start time</p></li><li><p>CPU time</p></li></ul></div></section></section>
 <section><section id="updated_apis_6"><h2>Updated APIs</h2><table class="toc">
-	<tr><td>String ⑪</td></tr>
+	<tr><td>String ⑪⑫</td></tr>
 	<tr><td>Stream ⑨⑩⑫</td></tr>
 	<tr><td>Optional ⑨⑩⑪</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
@@ -1001,9 +1035,11 @@ Line 11</code></pre></div></div></section><section id="options"><h2>Options</h2>
 (for file name and line number)</p></li><li><p>lazy evaluation pays off for partial traversal</p></li></ul></div>
 <div class="paragraph"><p>(Benchmarks performed by <a href="https://twitter.com/arnaudroger">Arnaud Roger</a>)</p></div></section></section>
 <section id="a_mixed_bag_of_new_apis"><h2>A Mixed Bag Of New APIs</h2><div class="paragraph"><p><strong>In Java 9:</strong></p></div>
-<div class="ulist"><ul><li><p>multi-resolution images (<a href="http://openjdk.java.net/jeps/251">JEP 251</a>)</p></li><li><p>native desktop integration (<a href="http://openjdk.java.net/jeps/272">JEP 272</a>)</p></li><li><p>deserialization filter (<a href="http://openjdk.java.net/jeps/290">JEP 290</a>)</p></li><li><p>DTLS (<a href="http://openjdk.java.net/jeps/219">JEP 219</a>),
+<div class="ulist"><ul><li><p>multi-resolution images (<a href="http://openjdk.java.net/jeps/251">JEP 251</a>)</p></li><li><p>native desktop integration (<a href="http://openjdk.java.net/jeps/272">JEP 272</a>)</p></li><li><p>deserialization filter (<a href="http://openjdk.java.net/jeps/290">JEP 290</a>)</p></li><li><p>DTLS (<a href="http://openjdk.java.net/jeps/219">JEP 219</a>),<br>
 TLS ALPN and OCSP stapling (<a href="http://openjdk.java.net/jeps/244">JEP 244</a>)</p></li></ul></div>
-<div class="paragraph"><p>Many lower-level APIs.</p></div></section>
+<div class="paragraph"><p><strong>In Java 12:</strong></p></div>
+<div class="ulist"><ul><li><p><code>CompactNumberFormat</code> (<a href="https://bugs.openjdk.java.net/browse/JDK-8188147">JDK-8188147</a>)</p></li></ul></div>
+<div class="paragraph"><p>And often lots of low-level APIs.</p></div></section>
 <section id="jvm_features"><h2>JVM Features</h2><table class="toc">
 	<tr><td>Launch Source File ⑪</td></tr>
 	<tr><td>Unified Logging ⑨</td></tr>
@@ -1153,7 +1189,8 @@ as backend for JDK logging.</p></div></section><section id="loggers_and_finders"
 <section><section id="a_mixed_bag_of_newjvmfeatures"><h2>A Mixed Bag Of New&nbsp;JVM&nbsp;Features</h2><div class="paragraph"><p><strong>In Java 9:</strong></p></div><div class="ulist"><ul><li><p>new version strings (<a href="http://openjdk.java.net/jeps/223">JEP 223</a>)</p></li><li><p>GNU-style command line options (<a href="http://openjdk.java.net/jeps/293">JEP 293</a>)</p></li><li><p>command line flag validation (<a href="http://openjdk.java.net/jeps/245">JEP 245</a>)</p></li><li><p>reserved stack areas (<a href="http://openjdk.java.net/jeps/270">JEP 270</a>)</p></li><li><p>Unicode 7 &amp; 8 (JEPS <a href="http://openjdk.java.net/jeps/227">227</a> &amp; <a href="http://openjdk.java.net/jeps/267">267</a>)</p></li></ul></div></section><section id="a_mixed_bag_of_newjvmfeatures_2"><h2>A Mixed Bag Of New&nbsp;JVM&nbsp;Features</h2><div class="paragraph"><p><strong>In Java 10:</strong></p></div>
 <div class="ulist"><ul><li><p>alternative memory device support (<a href="http://openjdk.java.net/jeps/316">JEP 316</a>)</p></li></ul></div>
 <div class="paragraph"><p><strong>In Java 11:</strong></p></div>
-<div class="ulist"><ul><li><p>Unicode 9 &amp; 10 (<a href="http://openjdk.java.net/jeps/327">JEP 327</a>)</p></li><li><p>Curve25519 and Curve448 (<a href="http://openjdk.java.net/jeps/324">JEP 324</a>)</p></li><li><p>ChaCha20 and Poly1305 (<a href="http://openjdk.java.net/jeps/329">JEP 329</a>)</p></li><li><p>partial TLS 1.3 support (<a href="http://openjdk.java.net/jeps/332">JEP 332</a>)</p></li></ul></div></section></section>
+<div class="ulist"><ul><li><p>Unicode 9 &amp; 10 (<a href="http://openjdk.java.net/jeps/327">JEP 327</a>)</p></li><li><p>Curve25519 and Curve448 (<a href="http://openjdk.java.net/jeps/324">JEP 324</a>)</p></li><li><p>ChaCha20 and Poly1305 (<a href="http://openjdk.java.net/jeps/329">JEP 329</a>)</p></li><li><p>partial TLS 1.3 support (<a href="http://openjdk.java.net/jeps/332">JEP 332</a>)</p></li></ul></div></section><section id="a_mixed_bag_of_newjvmfeatures_3"><h2>A Mixed Bag Of New&nbsp;JVM&nbsp;Features</h2><div class="paragraph"><p><strong>In Java 12:</strong></p></div>
+<div class="ulist"><ul><li><p>constants API (<a href="http://openjdk.java.net/jeps/334">JEP 334</a>)</p></li><li><p>HmacPBE (<a href="https://bugs.openjdk.java.net/browse/JDK-8076190">JDK-8215450</a>)</p></li><li><p>finer PKCS12 KeyStore configuration (<a href="https://bugs.openjdk.java.net/browse/JDK-8076190">JDK-8076190</a>)</p></li></ul></div></section></section>
 <section id="performance"><h2>Performance</h2><table class="toc">
 	<tr><td>Application Class-Data Sharing ⑩⑫</td></tr>
 	<tr><td>Compact Strings ⑨</td></tr>
@@ -1259,15 +1296,7 @@ The Lord Of The Strings</a></p></div></section></section>
 <div class="paragraph"><p><strong>In Java 11:</strong></p></div>
 <div class="ulist"><ul><li><p>Epsilon GC (<a href="http://openjdk.java.net/jeps/318">JEP 318</a>)</p></li><li><p>ZGC (experimental, <a href="http://openjdk.java.net/jeps/333">JEP 333</a>)</p></li><li><p>low-overhead heap profiling (<a href="http://openjdk.java.net/jeps/331">JEP 331</a>)</p></li></ul></div></section><section id="a_mixed_bag_of_performance_3"><h2>A Mixed Bag Of Performance</h2><div class="paragraph"><p><strong>In Java 12:</strong></p></div>
 <div class="ulist"><ul><li><p>Shenandoah (<a href="http://openjdk.java.net/jeps/189">JEP 189</a>)</p></li><li><p>G1 improvements:</p><div class="ulist"><ul><li><p>abortable mixed collections (<a href="http://openjdk.java.net/jeps/344">JEP 344</a>)</p></li><li><p>promptly return unused memory (<a href="http://openjdk.java.net/jeps/346">JEP 346</a>)</p></li></ul></div></li></ul></div></section></section>
-<section id="full_picture" data-background-image="images/shibuya-night.jpg" data-background-size="cover"><h2>Full Picture</h2>
-<div class="paragraph"><p>If you want the full picture:</p></div>
-<div class="paragraph"><p><strong>All You Need To Know For<br>
-Migrating To Java 11</strong><br>
-<a href="https://blog.codefx.org/java/java-11-migration-guide/">tiny.cc/java-11</a></p></div>
-<div class="paragraph"><p><strong>Code First Java 9 Tutorial</strong><br>
-<a href="https://blog.codefx.org/java/java-9-tutorial">tiny.cc/java-9-tutorial</a></p></div></section>
-<section id="about_nicolai_parlog" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>About Nicolai Parlog</h2>
-<div style="float: left; width: 45%; margin:0px;">
+<section><section id="about_nicolai_parlog" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>About Nicolai Parlog</h2><div style="float: left; width: 45%; margin:0px;">
 	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="images/cover-jms.png" style="margin: 0;"></a>
 	<p style="
 		position: fixed;
@@ -1283,16 +1312,11 @@ Migrating To Java 11</strong><br>
 		padding: 2px 8px 7px 4px;
 ">37% off with<br>code <em>fccparlog</em></p>
 	<p><a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb">tiny.cc/jms</a></p>
-</div>
-<h3>Follow</h3>
-<div class="paragraph"><p>💻 <a href="http://codefx.org">codefx.org</a><br>
-🐦 <a href="https://twitter.com/nipafx">@nipafx</a></p></div>
-<h3>Want More?</h3>
-<div class="paragraph"><p>Slides at <a href="https://slides.codefx.org">slides.codefx.org</a></p></div>
-<div class="paragraph"><p>⇜ Get <a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&amp;a_bid=869915cb">my book</a>!</p></div>
-<div class="paragraph"><p>You can <a href="http://blog.codefx.org/hire-nicolai-parlog/">hire me</a>:</p></div>
-<div class="ulist"><ul><li><p>training (Java 8-12, JUnit 5)</p></li><li><p>consulting (Java 8-12)</p></li></ul></div></section>
-<section id="image_credits"><h2>Image Credits</h2><div class="ulist"><ul><li><p>Eleven: © Netflix</p></li><li><p><a href="https://www.flickr.com/photos/21496790@N06/5065834411">question-mark</a>:
+</div><h3>Follow</h3><div class="paragraph"><p>💻 <a href="http://codefx.org">codefx.org</a><br>
+🐦 <a href="https://twitter.com/nipafx">@nipafx</a></p></div><h3>Want More?</h3><div class="paragraph"><p>Slides at <a href="https://slides.codefx.org">slides.codefx.org</a></p></div><div class="paragraph"><p>⇜ Get <a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&amp;a_bid=869915cb">my book</a>!</p></div><div class="paragraph"><p>You can <a href="http://blog.codefx.org/hire-nicolai-parlog/">hire me</a>:</p></div><div class="ulist"><ul><li><p>training (Java 8-12, JUnit 5)</p></li><li><p>consulting (Java 8-12)</p></li></ul></div></section><section data-background-image="images/accento-save.jpg" data-background-size="cover" data-state="empty"></section></section>
+<section id="image_credits"><h2>Image Credits</h2><div class="ulist"><ul><li><p>Eleven: © Netflix</p></li><li><p><a href="https://unsplash.com/photos/Gc-sbPFGmYc">twelve</a>:
+<a href="https://unsplash.com/@terminath0r">Thor Alvis</a>,
+<a href="https://unsplash.com/license">Unsplash license</a></p></li><li><p><a href="https://www.flickr.com/photos/21496790@N06/5065834411">question-mark</a>:
 <a href="http://milosevicmilos.com/">Milos Milosevic</a>,
 <a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a></p></li></ul></div></section></div></div><script src="../_reveal.js/lib/js/head.min.js"></script><script src="../_reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
 Reveal.initialize({
@@ -1359,9 +1383,9 @@ Reveal.initialize({
   // Number of slides away from the current that are visible
   viewDistance: 3,
   // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
-  parallaxBackgroundImage: 'images/11.jpg',
+  parallaxBackgroundImage: 'images/12.jpg',
   // Parallax background size in CSS syntax (e.g., "2100px 900px")
-  parallaxBackgroundSize: '3840px 1920px',
+  parallaxBackgroundSize: '4000px 2000px',
 
   // The "normal" size of the presentation, aspect ratio will be preserved
   // when the presentation is scaled to fit different resolutions. Can be
