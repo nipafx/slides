@@ -2,6 +2,7 @@
 
 ++++
 <table class="toc">
+	<tr><td>Text Blocks ⑬</td></tr>
 	<tr><td>Switch Expressions ⑫</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
@@ -18,6 +19,76 @@
 
 ++++
 <table class="toc">
+	<tr class="toc-current"><td>Text Blocks ⑬</td></tr>
+	<tr><td>Switch Expressions ⑫</td></tr>
+	<tr><td>Local-Variable Type Inference ⑩</td></tr>
+	<tr><td>Private Interface Methods ⑨</td></tr>
+	<tr><td>Try-With-Resources ⑨</td></tr>
+	<tr><td>Diamond Operator ⑨</td></tr>
+	<tr><td>SafeVarargs ⑨</td></tr>
+	<tr><td>Deprecation Warnings ⑨</td></tr>
+</table>
+++++
+
+Multiline strings. Finally.
+
+=== Multiline Strings
+
+Text blocks are straightforward:
+
+```java
+String haiku = """
+	worker bees can leave
+	 even drones can fly away
+	  the queen is their slave""";
+System.out.println(haiku);
+// > worker bees can leave
+// >  even drones can fly away
+// >   the queen is their slave
+
+```
+
+* line breaks remain
+* intentional indentation remains
+* accidental indentation is removed
+
+=== Syntax
+
+* can be used in same place +
+  as `"string literals"`
+* start with `"""` and new line
+* end with `"""`
+** on the last line of content
+** on its own line
+
+Position of closing `"""` decides +
+whether string ends with `"\n"`.
+
+=== Indentation
+
+Compiler discerns:
+
+* accidental indentation +
+  (from code style; gets removed)
+* essential indentation +
+  (within the string; remains)
+
+How?
+
+=== Accidental Indentation
+
+* closing `"""` are on their own line +
+⇝ their indentation is accidental
+* otherwise, line with smallest indentation
+⇝ its indentation is accidental
+
+
+
+== New Language Features
+
+++++
+<table class="toc">
+	<tr><td>Text Blocks ⑬</td></tr>
 	<tr class="toc-current"><td>Switch Expressions ⑫</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
@@ -418,6 +489,7 @@ Definitive Guide To Switch Expressions In Java 12
 
 ++++
 <table class="toc">
+	<tr><td>Text Blocks ⑬</td></tr>
 	<tr><td>Switch Expressions ⑫</td></tr>
 	<tr class="toc-current"><td>Local-Variable Type Inference ⑩</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
@@ -727,6 +799,7 @@ long l = 42
 
 ++++
 <table class="toc">
+	<tr><td>Text Blocks ⑬</td></tr>
 	<tr><td>Switch Expressions ⑫</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
 	<tr class="toc-current"><td>Private Interface Methods ⑨</td></tr>
@@ -783,6 +856,7 @@ Just like private methods in abstract classes:
 
 ++++
 <table class="toc">
+	<tr><td>Text Blocks ⑬</td></tr>
 	<tr><td>Switch Expressions ⑫</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
@@ -850,6 +924,7 @@ Q: Can instance be created but not assigned? No.
 
 ++++
 <table class="toc">
+	<tr><td>Text Blocks ⑬</td></tr>
 	<tr><td>Switch Expressions ⑫</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
@@ -917,6 +992,7 @@ Box<?> createCrazyBox(Object content) {
 
 ++++
 <table class="toc">
+	<tr><td>Text Blocks ⑬</td></tr>
 	<tr><td>Switch Expressions ⑫</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
@@ -1012,6 +1088,7 @@ can be applied to private methods.
 
 ++++
 <table class="toc">
+	<tr><td>Text Blocks ⑬</td></tr>
 	<tr><td>Switch Expressions ⑫</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
