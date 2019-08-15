@@ -616,7 +616,9 @@ so each line ends in <code>\n</code>:</p></div>
 }</code></pre></div></div>
 <div class="paragraph"><p>Use to chain calls instead of nesting them:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">User newUser = parse(clean(input));
-User newUser = input.(this::clean).(this::parse);</code></pre></div></div>
+User newUser = input
+	.transform(this::clean)
+	.transform(this::parse);</code></pre></div></div>
 <div class="paragraph"><p>Makes more sense at end of long call chain<br>
 (stream pipeline?) to chain more calls.</p></div></section><section id="transforming_things"><h2>Transforming things</h2><div class="paragraph"><p>Maybe other classes get <code>transform</code>, too!<br>
 Great for "chain-friendly" APIs like <code>Stream</code>, <code>Optional</code>:</p></div>
