@@ -148,7 +148,9 @@ Use to chain calls instead of nesting them:
 
 ```java
 User newUser = parse(clean(input));
-User newUser = input.(this::clean).(this::parse);
+User newUser = input
+	.transform(this::clean)
+	.transform(this::parse);
 ```
 
 Makes more sense at end of long call chain +
