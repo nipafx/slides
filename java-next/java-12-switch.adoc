@@ -2,13 +2,13 @@
 
 *Note*:
 
-In Java 12, switch expressions are +
-a http://openjdk.java.net/jeps/12[preview language feature]!
+In Java 12 & 13, switch expressions are +
+a https://blog.codefx.org/java/enable-preview-language-features/[preview language feature]!
 
 * must be enabled with `--enable-preview` +
   (on `javac` and `java`).
-* in IntelliJ 2018.3 or later, set the module's +
-  language level to _12 (Preview) - Switch expressions_
+* in IntelliJ, set the module's language level to +
+  _12 (Preview) - ..._ or _13 (Preview) - ..._
 
 === Switch Expression
 
@@ -75,16 +75,16 @@ expressions and statements, e.g.:
 
 ```java
 int numLetters = switch (day) {
-	case MONDAY, FRIDAY, SUNDAY: break 6;
-	case TUESDAY: break 7;
-	case THURSDAY, SATURDAY: break 8;
-	case WEDNESDAY: break 9;
+	case MONDAY, FRIDAY, SUNDAY: yield 6;
+	case TUESDAY: yield 7;
+	case THURSDAY, SATURDAY: yield 8;
+	case WEDNESDAY: yield 9;
 };
 ```
 
 * `switch` is used as an expression
-* `break result` returns `result`
-* in ⑬ `break` becomes `yield`
+* `yield result` returns `result`
+* ⑬ introduced `yield` - in ⑫ it was `break`
 
 === Arrow vs Colon
 
@@ -106,7 +106,7 @@ results in different behavior.
 === More about switch
 
 *Blog post*: +
-https://blog.codefx.org/java/switch-expressions/[Definitive Guide To Switch Expressions In Java 12]
+https://blog.codefx.org/java/switch-expressions/[Definitive Guide To Switch Expressions]
 
 *Video*:
 
