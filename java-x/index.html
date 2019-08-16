@@ -65,7 +65,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 </table></section></section>
 <section id="new_language_features"><h2>New Language Features</h2><table class="toc">
 	<tr><td>Text Blocks ⑬</td></tr>
-	<tr><td>Switch Expressions ⑫</td></tr>
+	<tr><td>Switch Expressions ⑫⑬</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
@@ -75,7 +75,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 </table></section>
 <section><section id="new_language_features_2"><h2>New Language Features</h2><table class="toc">
 	<tr class="toc-current"><td>Text Blocks ⑬</td></tr>
-	<tr><td>Switch Expressions ⑫</td></tr>
+	<tr><td>Switch Expressions ⑫⑬</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
@@ -103,7 +103,7 @@ whether string ends with <code>"\n"</code>.</p></div></section><section id="inde
 ⇝ its indentation is accidental</p></li></ul></div></section></section>
 <section><section id="new_language_features_3"><h2>New Language Features</h2><table class="toc">
 	<tr><td>Text Blocks ⑬</td></tr>
-	<tr class="toc-current"><td>Switch Expressions ⑫</td></tr>
+	<tr class="toc-current"><td>Switch Expressions ⑫⑬</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
@@ -153,7 +153,7 @@ switch (ternaryBool) {
 <div class="ulist"><ul><li><p><code>return</code> prevents fall-through</p></li><li><p>results are created on the spot</p></li><li><p>compiler complains on missing branches</p></li></ul></div>
 <div class="paragraph"><p>But:</p></div>
 <div class="ulist"><ul><li><p><code>default</code> is not really necessary</p></li><li><p>creating a method is not always<br>
-possible or convenient</p></li></ul></div></section><section id="switch_expression"><h2>Switch Expression</h2><div class="paragraph"><p>Enter Java 12 <code>switch</code> expressions:</p></div>
+possible or convenient</p></li></ul></div></section><section id="switch_expression"><h2>Switch Expression</h2><div class="paragraph"><p>Enter <code>switch</code> expressions:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">boolean result = switch(ternaryBool) {
     case TRUE -&gt; true;
     case FALSE -&gt; false;
@@ -165,12 +165,11 @@ possible or convenient</p></li></ul></div></section><section id="switch_expressi
 <div class="paragraph"><p>Two things to note:</p></div>
 <div class="ulist"><ul><li><p><code>switch</code> "has a result"<br>
 ⇝ it&#8217;s an <em>expression</em>, not a <em>statement</em></p></li><li><p>lambda-style arrow syntax</p></li></ul></div></section><section id="preview_feature"><h2>Preview Feature</h2><div class="paragraph"><p><strong>Note</strong>:</p></div>
-<div class="paragraph"><p>In Java 12, switch expressions are<br>
-a <a href="http://openjdk.java.net/jeps/12">preview language feature</a>!</p></div>
+<div class="paragraph"><p>In Java 12 &amp; 13, switch expressions are<br>
+a <a href="https://blog.codefx.org/java/enable-preview-language-features/">preview language feature</a>!</p></div>
 <div class="ulist"><ul><li><p>must be enabled with <code>--enable-preview</code><br>
-(on <code>javac</code> and <code>java</code>).</p></li><li><p>in IntelliJ 2018.3 or later,<br>
-set the module&#8217;s language level to<br>
-<em>12 (Preview) - Switch expressions</em></p></li></ul></div></section><section id="expression_vs_statement"><h2>Expression vs Statement</h2><div class="paragraph"><p>Statement:</p></div>
+(on <code>javac</code> and <code>java</code>).</p></li><li><p>in IntelliJ, set the module&#8217;s language level to<br>
+<em>12 (Preview) - &#8230;&#8203;</em> or <em>13 (Preview) - &#8230;&#8203;</em></p></li></ul></div></section><section id="expression_vs_statement"><h2>Expression vs Statement</h2><div class="paragraph"><p>Statement:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">if (condition)
     result = doThis();
 else
@@ -189,14 +188,14 @@ treated as a statement</p></li></ul></div>
 (more on that later).</p></div></section><section id="arrow_vs_colon"><h2>Arrow vs Colon</h2><div class="paragraph"><p>You can use <code>:</code> and <code>-&gt;</code> with<br>
 expressions and statements, e.g.:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">boolean result = switch(ternaryBool) {
-    case TRUE: break true;
-    case FALSE: break false;
+    case TRUE: yield true;
+    case FALSE: yield false;
     case FILE_NOT_FOUND:
 		throw new UncheckedIOException(
 			"This is ridiculous!",
 			new FileNotFoundException());
 };</code></pre></div></div>
-<div class="ulist"><ul><li><p><code>switch</code> is used as an expression</p></li><li><p><code>break result</code> returns <code>result</code></p></li></ul></div></section><section id="arrow_vs_colon_2"><h2>Arrow vs Colon</h2><div class="paragraph"><p>Whether you use arrow or colon<br>
+<div class="ulist"><ul><li><p><code>switch</code> is used as an expression</p></li><li><p><code>yield result</code> returns <code>result</code></p></li><li><p>⑬ introduced <code>yield</code> - in ⑫ it was <code>break</code></p></li></ul></div></section><section id="arrow_vs_colon_2"><h2>Arrow vs Colon</h2><div class="paragraph"><p>Whether you use arrow or colon<br>
 results in different behavior<br>
 (more on that later).</p></div></section><section id="switch_evolution"><h2>Switch Evolution</h2><div class="ulist"><ul><li><p>general improvements</p><div class="ulist"><ul><li><p>multiple case labels</p></li></ul></div></li><li><p>specifics of arrow form</p><div class="ulist"><ul><li><p>no fall-through</p></li><li><p>statement blocks</p></li></ul></div></li><li><p>specifics of expressions</p><div class="ulist"><ul><li><p>poly expression</p></li><li><p>returning early</p></li><li><p>exhaustiveness</p></li></ul></div></li></ul></div></section><section id="multiple_case_labels"><h2>Multiple Case Labels</h2><div class="paragraph"><p>Statements and expressions,<br>
 in colon and arrow form<br>
@@ -223,11 +222,11 @@ the arrow form can use statement blocks:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">boolean result = switch (Bool.random()) {
     case TRUE -&gt; {
         System.out.println("Bool true");
-        break true;
+        yield true;
     }
     case FALSE -&gt; {
         System.out.println("Bool false");
-        break false;
+        yield false;
     }
 	// cases `FILE_NOT_FOUND` and `default`
 };</code></pre></div></div></section><section id="statement_blocks_2"><h2>Statement Blocks</h2><div class="paragraph"><p>Natural way to create scope:</p></div>
@@ -299,11 +298,11 @@ boolean result = switch (ternaryBool) {
 			"This is ridiculous!",
 			new FileNotFoundException());
 };</code></pre></div></div>
-<div class="paragraph"><p>Compiler adds in <code>default</code> branch.</p></div></section><section id="more_on_switch"><h2>More on <code>switch</code></h2><div class="paragraph"><p>Definitive Guide To Switch Expressions In Java 12</p></div>
+<div class="paragraph"><p>Compiler adds in <code>default</code> branch.</p></div></section><section id="more_on_switch"><h2>More on <code>switch</code></h2><div class="paragraph"><p>Definitive Guide To Switch Expressions</p></div>
 <div class="ulist"><ul><li><p>💻 <a href="https://blog.codefx.org/java/switch-expressions/">tiny.cc/java-12-switch</a></p></li><li><p>▶ <a href="https://www.youtube.com/watch?v=1znHEf3oSNI&amp;list=PL_-IO8LOLuNp2stY1qBUtXlfMdJW7wvfT">tiny.cc/java-12-switch-yt</a></p></li></ul></div></section></section>
 <section><section id="new_language_features_4"><h2>New Language Features</h2><table class="toc">
 	<tr><td>Text Blocks ⑬</td></tr>
-	<tr><td>Switch Expressions ⑫</td></tr>
+	<tr><td>Switch Expressions ⑫⑬</td></tr>
 	<tr class="toc-current"><td>Local-Variable Type Inference ⑩</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
@@ -431,7 +430,7 @@ long l = 42</code></pre></div></div></section><section id="more_on_var"><h2>More
 ▶ <a href="https://www.youtube.com/watch?v=Le1DbpRZdRQ&amp;index=1&amp;list=PL_-IO8LOLuNp2stY1qBUtXlfMdJW7wvfT">tiny.cc/java-var-yt</a></p></li><li><p><a href="https://snyk.io/blog/local-type-inference-java-cheat-sheet">cheat sheet</a> (<strong>⇜ print when getting started!</strong>)</p></li><li><p><a href="http://openjdk.java.net/projects/amber/LVTIstyle.html">official style guidelines</a></p></li><li><p><code>var</code> and &#8230;&#8203;</p><div class="ulist"><ul><li><p><a href="https://blog.codefx.org/java/intersection-types-var/">intersection types</a></p></li><li><p><a href="https://blog.codefx.org/java/traits-var/">traits</a></p></li><li><p><a href="https://blog.codefx.org/java/tricks-var-anonymous-classes/">anonymous classes</a></p></li></ul></div></li></ul></div></section></section>
 <section><section id="new_language_features_5"><h2>New Language Features</h2><table class="toc">
 	<tr><td>Text Blocks ⑬</td></tr>
-	<tr><td>Switch Expressions ⑫</td></tr>
+	<tr><td>Switch Expressions ⑫⑬</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
 	<tr class="toc-current"><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
@@ -463,7 +462,7 @@ long l = 42</code></pre></div></div></section><section id="more_on_var"><h2>More
 <div class="ulist"><ul><li><p>must be implemented</p></li><li><p>can not be overriden</p></li><li><p>can only be called in same source file</p></li></ul></div></section></section>
 <section><section id="new_language_features_6"><h2>New Language Features</h2><table class="toc">
 	<tr><td>Text Blocks ⑬</td></tr>
-	<tr><td>Switch Expressions ⑫</td></tr>
+	<tr><td>Switch Expressions ⑫⑬</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr class="toc-current"><td>Try-With-Resources ⑨</td></tr>
@@ -491,7 +490,7 @@ and can be made implicitly final</p></li></ul></div>
 <aside class="notes"><div class="paragraph"><p>Q: Can instance be created but not assigned? No.</p></div></aside></section></section>
 <section><section id="new_language_features_7"><h2>New Language Features</h2><table class="toc">
 	<tr><td>Text Blocks ⑬</td></tr>
-	<tr><td>Switch Expressions ⑫</td></tr>
+	<tr><td>Switch Expressions ⑫⑬</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
@@ -519,7 +518,7 @@ for anonymous classes</p></li><li><p>can not be expressed by JVM</p></li></ul></
 }</code></pre></div></div></section></section>
 <section><section id="new_language_features_8"><h2>New Language Features</h2><table class="toc">
 	<tr><td>Text Blocks ⑬</td></tr>
-	<tr><td>Switch Expressions ⑫</td></tr>
+	<tr><td>Switch Expressions ⑫⑬</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
@@ -563,7 +562,7 @@ that can not be overriden</p></li></ul></div>
 can be applied to private methods.</p></div></section></section>
 <section><section id="new_language_features_9"><h2>New Language Features</h2><table class="toc">
 	<tr><td>Text Blocks ⑬</td></tr>
-	<tr><td>Switch Expressions ⑫</td></tr>
+	<tr><td>Switch Expressions ⑫⑬</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
@@ -1230,12 +1229,12 @@ as backend for JDK logging.</p></div></section><section id="loggers_and_finders"
 <div class="ulist"><ul><li><p>Unicode 9 &amp; 10 (<a href="http://openjdk.java.net/jeps/327">JEP 327</a>)</p></li><li><p>Curve25519 and Curve448 (<a href="http://openjdk.java.net/jeps/324">JEP 324</a>)</p></li><li><p>ChaCha20 and Poly1305 (<a href="http://openjdk.java.net/jeps/329">JEP 329</a>)</p></li><li><p>partial TLS 1.3 support (<a href="http://openjdk.java.net/jeps/332">JEP 332</a>)</p></li></ul></div></section><section id="a_mixed_bag_of_newjvmfeatures_3"><h2>A Mixed Bag Of New&nbsp;JVM&nbsp;Features</h2><div class="paragraph"><p><strong>In Java 12:</strong></p></div>
 <div class="ulist"><ul><li><p>constants API (<a href="http://openjdk.java.net/jeps/334">JEP 334</a>)</p></li><li><p>HmacPBE (<a href="https://bugs.openjdk.java.net/browse/JDK-8076190">JDK-8215450</a>)</p></li><li><p>finer PKCS12 KeyStore configuration (<a href="https://bugs.openjdk.java.net/browse/JDK-8076190">JDK-8076190</a>)</p></li></ul></div></section></section>
 <section id="performance"><h2>Performance</h2><table class="toc">
-	<tr><td>Application Class-Data Sharing ⑩⑫</td></tr>
+	<tr><td>Application Class-Data Sharing ⑩⑫⑬</td></tr>
 	<tr><td>Compact Strings ⑨</td></tr>
 	<tr><td>Indified String Concatenation ⑨</td></tr>
 </table></section>
 <section><section id="performance_2"><h2>Performance</h2><table class="toc">
-	<tr class="toc-current"><td>Application Class-Data Sharing ⑩⑫</td></tr>
+	<tr class="toc-current"><td>Application Class-Data Sharing ⑩⑫⑬</td></tr>
 	<tr><td>Compact Strings ⑨</td></tr>
 	<tr><td>Indified String Concatenation ⑨</td></tr>
 </table><div class="paragraph"><p>Improving application launch times.</p></div></section><section id="class_data"><h2>Class-Data</h2><div class="paragraph"><p>JVM steps to execute a class&#8217;s bytecode:</p></div>
@@ -1266,10 +1265,18 @@ slash-separated names of loaded classes.</p></div></section><section id="appcds_
 	# [... class path for app and deps ...]</code></pre></div></div>
 <div class="paragraph"><p>Creates archive <code>app-cds.jsa</code>.</p></div></section><section id="appcds_step_3"><h2>AppCDS - Step #3</h2><div class="paragraph"><p>Use the archive:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="sh language-sh">$ java
-	-Xshare:on
+	-Xshare:on # not needed on ⑫
 	-XX:SharedArchiveFile=app-cds.jsa
 	# [... class path for app and deps ...]
-	org.example.Main</code></pre></div></div></section><section id="heed_the_class_path"><h2>Heed The Class Path</h2><div class="paragraph"><p>What are the two biggest challenges<br>
+	org.example.Main</code></pre></div></div></section><section id="dynamic_appcds"><h2>Dynamic AppCDS</h2><div class="paragraph"><p>Java 13 can create archive<br>
+when program exits:</p></div>
+<div class="ulist"><ul><li><p>steps #1 and #2 are replaced by:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="sh language-sh">$ java
+	-XX:ArchiveClassesAtExit=dyn-cds.jsa
+	# [... class path for app and deps ...]
+	org.example.Main</code></pre></div></div></li><li><p>step #3 as before:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="sh language-sh">$ java
+	-XX:SharedArchiveFile=app-cds.jsa
+	# [... class path for app and deps ...]
+	org.example.Main</code></pre></div></div></li></ul></div></section><section id="dynamic_appcds_2"><h2>Dynamic AppCDS</h2><div class="paragraph"><p>*</p></div></section><section id="heed_the_class_path"><h2>Heed The Class Path</h2><div class="paragraph"><p>What are the two biggest challenges<br>
 in software development?</p></div>
 <div class="olist arabic"><ol class="arabic"><li class="fragment"><p>naming</p></li><li class="fragment"><p>cache invalidation</p></li><li class="fragment"><p>off-by-one errors</p></li></ol></div></section><section id="heed_the_class_path_2"><h2>Heed The Class Path</h2><div class="paragraph"><p>The archive is a cache!</p></div>
 <div class="paragraph"><p>It&#8217;s invalid when:</p></div>
@@ -1285,7 +1292,7 @@ We plan to add that support in a future release.</p></div></blockquote><div clas
 <code>-Xlog:class+load</code><br>
 (<a href="https://blog.codefx.org/java/unified-logging-with-the-xlog-option/">unified logging</a>)</p></div></section></section>
 <section><section id="performance_3"><h2>Performance</h2><table class="toc">
-	<tr><td>Application Class-Data Sharing ⑩⑫</td></tr>
+	<tr><td>Application Class-Data Sharing ⑩⑫⑬</td></tr>
 	<tr class="toc-current"><td>Compact Strings ⑨</td></tr>
 	<tr><td>Indified String Concatenation ⑨</td></tr>
 </table><div class="paragraph"><p>Going from UTF-16 to ISO-8859-1.</p></div></section><section id="strings_and_memory"><h2>Strings and memory</h2><div class="ulist"><ul><li><p>20% - 30% of heap are <code>char[]</code> for <code>String</code></p></li><li><p>a <code>char</code> is UTF-16 code unit ⇝ 2 bytes</p></li><li><p>most strings only require ISO-8859-1 ⇝ 1 byte</p></li></ul></div>
@@ -1305,7 +1312,7 @@ performance improvements:</p></div>
 <div class="paragraph"><p><a href="https://www.youtube.com/watch?v=wIyeOaitmWM">Aleksey Shipilëv<br>
 The Lord Of The Strings</a></p></div></section></section>
 <section><section id="performance_5"><h2>Performance</h2><table class="toc">
-	<tr><td>Application Class-Data Sharing ⑩⑫</td></tr>
+	<tr><td>Application Class-Data Sharing ⑩⑫⑬</td></tr>
 	<tr><td>Compact Strings ⑨</td></tr>
 	<tr class="toc-current"><td>Indified String Concatenation ⑨</td></tr>
 </table><div class="paragraph"><p><code>"Improving" + "String" + "Concatenation"</code></p></div></section><section id="string_concatenation"><h2>String Concatenation</h2><div class="paragraph"><p>What happens when you run:</p></div>
@@ -1333,7 +1340,9 @@ The Lord Of The Strings</a></p></div></section></section>
 <div class="ulist"><ul><li><p>Graal&#8201;&#8212;&#8201;Java-based JIT compiler (<a href="http://openjdk.java.net/jeps/317">JEP 317</a>)</p></li><li><p>parallel full GC for G1 (<a href="http://openjdk.java.net/jeps/307">JEP 307</a>)</p></li><li><p>thread-local handshakes (<a href="http://openjdk.java.net/jeps/312">JEP 312</a>)</p></li></ul></div>
 <div class="paragraph"><p><strong>In Java 11:</strong></p></div>
 <div class="ulist"><ul><li><p>Epsilon GC (<a href="http://openjdk.java.net/jeps/318">JEP 318</a>)</p></li><li><p>ZGC (experimental, <a href="http://openjdk.java.net/jeps/333">JEP 333</a>)</p></li><li><p>low-overhead heap profiling (<a href="http://openjdk.java.net/jeps/331">JEP 331</a>)</p></li></ul></div></section><section id="a_mixed_bag_of_performance_3"><h2>A Mixed Bag Of Performance</h2><div class="paragraph"><p><strong>In Java 12:</strong></p></div>
-<div class="ulist"><ul><li><p>Shenandoah (<a href="http://openjdk.java.net/jeps/189">JEP 189</a>)</p></li><li><p>G1 improvements:</p><div class="ulist"><ul><li><p>abortable mixed collections (<a href="http://openjdk.java.net/jeps/344">JEP 344</a>)</p></li><li><p>promptly return unused memory (<a href="http://openjdk.java.net/jeps/346">JEP 346</a>)</p></li></ul></div></li></ul></div></section></section>
+<div class="ulist"><ul><li><p>Shenandoah (<a href="http://openjdk.java.net/jeps/189">JEP 189</a>)</p></li><li><p>G1 improvements:</p><div class="ulist"><ul><li><p>abortable mixed collections (<a href="http://openjdk.java.net/jeps/344">JEP 344</a>)</p></li><li><p>promptly return unused memory (<a href="http://openjdk.java.net/jeps/346">JEP 346</a>)</p></li></ul></div></li></ul></div>
+<div class="paragraph"><p><strong>In Java 13:</strong></p></div>
+<div class="ulist"><ul><li><p>ZGC: Uncommit Unused Memory (<a href="https://openjdk.java.net/jeps/351">JEP 351</a>)</p></li></ul></div></section></section>
 <section><section id="about_nicolai_parlog" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>About Nicolai Parlog</h2><div style="float: left; width: 45%; margin:0px;">
 	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="images/cover-jms.png" style="margin: 0;"></a>
 	<p style="
