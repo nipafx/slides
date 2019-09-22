@@ -728,22 +728,34 @@ TODO
 
 === A Mixed Bag Of New&nbsp;I/O&nbsp;Methods
 
-*In Java 10, 11, 12:*
+*In Java 9 to 11:*
 
 ```java
-Path.of(String); // ~ Paths.get(String)
+Path.of(String); // ~ Paths.get(String) ⑪
 
-Files.mismatch(Path, Path);
-Files.readString(Path);
-Files.writeString(Path, CharSequence, ...);
+Files.readString(Path); // ⑪
+Files.writeString(Path, CharSequence, ...); // ⑪
 
-Reader.transferTo(Writer);
-ByteArrayInputStream.transferTo(OutputStream);
+Reader.transferTo(Writer); // ⑩
+InputStream.transferTo(OutputStream); // ⑨
 
-Reader.nullReader();
-Writer.nullWriter();
-InputStream.nullInputStream();
-OutputStream.nullOutputStream();
+Reader.nullReader(); // ⑪
+Writer.nullWriter(); // ⑪
+InputStream.nullInputStream(); // ⑪
+OutputStream.nullOutputStream(); // ⑪
+```
+
+=== A Mixed Bag Of New&nbsp;I/O&nbsp;Methods
+
+*In Java 12 and 13:*
+
+```java
+Files.mismatch(Path, Path); // ⑫
+
+FileSystems.newFileSystem(Path, ...); // ⑬
+
+ByteBuffer.get(int, ...) // ⑬
+ByteBuffer.put(int, ...) // ⑬
 ```
 
 === A Mixed Bag Of New&nbsp;Methods
