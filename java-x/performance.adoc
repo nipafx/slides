@@ -2,7 +2,7 @@
 
 ++++
 <table class="toc">
-	<tr><td>Application Class-Data Sharing ⑩⑫</td></tr>
+	<tr><td>Application Class-Data Sharing ⑩⑫⑬</td></tr>
 	<tr><td>Compact Strings ⑨</td></tr>
 	<tr><td>Indified String Concatenation ⑨</td></tr>
 </table>
@@ -14,7 +14,7 @@
 
 ++++
 <table class="toc">
-	<tr class="toc-current"><td>Application Class-Data Sharing ⑩⑫</td></tr>
+	<tr class="toc-current"><td>Application Class-Data Sharing ⑩⑫⑬</td></tr>
 	<tr><td>Compact Strings ⑨</td></tr>
 	<tr><td>Indified String Concatenation ⑨</td></tr>
 </table>
@@ -63,18 +63,49 @@ Two variants:
 CDS:: just for JDK classes
 AppCDS:: JDK + application classes
 
-Quick look into CDS, then focus on AppCDS.
+=== CDS - Step #1
 
-=== CDS
+Create JDK archive on Java 10/11:
+
+```sh
+# possibly as root
+java -Xshare:dump
+```
 
 Java 12+ downloads include +
 CDS archive for JDK classes.
 
-More in http://openjdk.java.net/jeps/341[JEP 341].
+=== CDS - Step #2
 
-=== AppCDS - Step #1
+Use the archive:
 
-Create a list of classes
+```sh
+$ java
+	-Xshare:on
+	# [... class path for app and deps ...]
+	org.example.Main
+```
+
+If archive is missing or faulty:
+
+* `-Xshare:on` fails fast
+* `-Xshare:auto` (default) ignores archive
+
+(Slides rely on default, i.e. no `-Xshare`.)
+
+=== AppCDS
+
+Create an AppCDS archive:
+
+* manually on Java 10+
+* dynamically on Java 13+
+
+First manually, then dynamically.
+
+=== AppCDS - Step #0
+
+To manually create an AppCDS archive, +
+first create a list of classes
 
 ```sh
 $ java
@@ -86,7 +117,7 @@ $ java
 Then, `classes.lst` contains +
 slash-separated names of loaded classes.
 
-=== AppCDS - Step #2
+=== AppCDS - Step #1
 
 Use the list to create the archive:
 
@@ -100,17 +131,47 @@ $ java
 
 Creates archive `app-cds.jsa`.
 
-=== AppCDS - Step #3
+=== AppCDS - Step #2
 
 Use the archive:
 
 ```sh
 $ java
-	-Xshare:on
 	-XX:SharedArchiveFile=app-cds.jsa
 	# [... class path for app and deps ...]
 	org.example.Main
 ```
+
+=== Dynamic AppCDS
+
+Java 13 can create archive when +
+program exits (without crash):
+
+* steps #0 and #1 are replaced by:
++
+```sh
+$ java
+	-XX:ArchiveClassesAtExit=dyn-cds.jsa
+	# [... class path for app and deps ...]
+	org.example.Main
+```
+* step #2 as before:
++
+```sh
+$ java
+	-XX:SharedArchiveFile=app-cds.jsa
+	# [... class path for app and deps ...]
+	org.example.Main
+```
+
+=== Dynamic AppCDS
+
+The dynamic archive:
+
+* builds on the JDK-archive
+* contains all loaded app/lib classes
+* including those loaded by +
+  user-defined class loaders
 
 === Heed The Class Path
 
@@ -171,7 +232,7 @@ Observe sharing with +
 
 ++++
 <table class="toc">
-	<tr><td>Application Class-Data Sharing ⑩⑫</td></tr>
+	<tr><td>Application Class-Data Sharing ⑩⑫⑬</td></tr>
 	<tr class="toc-current"><td>Compact Strings ⑨</td></tr>
 	<tr><td>Indified String Concatenation ⑨</td></tr>
 </table>
@@ -230,7 +291,7 @@ The Lord Of The Strings]
 
 ++++
 <table class="toc">
-	<tr><td>Application Class-Data Sharing ⑩⑫</td></tr>
+	<tr><td>Application Class-Data Sharing ⑩⑫⑬</td></tr>
 	<tr><td>Compact Strings ⑨</td></tr>
 	<tr class="toc-current"><td>Indified String Concatenation ⑨</td></tr>
 </table>
