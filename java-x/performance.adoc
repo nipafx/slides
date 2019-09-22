@@ -396,11 +396,14 @@ The Lord Of The Strings]
 * parallel full GC for G1 (http://openjdk.java.net/jeps/307[JEP 307])
 * thread-local handshakes (http://openjdk.java.net/jeps/312[JEP 312])
 
+=== A Mixed Bag Of Performance
+
 *In Java 11:*
 
 * Epsilon GC (http://openjdk.java.net/jeps/318[JEP 318])
 * ZGC (experimental, http://openjdk.java.net/jeps/333[JEP 333])
 * low-overhead heap profiling (http://openjdk.java.net/jeps/331[JEP 331])
+* open-source Flight Recorder (http://openjdk.java.net/jeps/328[JEP 328])
 
 === A Mixed Bag Of Performance
 
@@ -410,11 +413,3 @@ The Lord Of The Strings]
 * G1 improvements:
 ** abortable mixed collections (http://openjdk.java.net/jeps/344[JEP 344])
 ** promptly return unused memory (http://openjdk.java.net/jeps/346[JEP 346])
-
-////
-TODO expand:
-* G1 (http://mail.openjdk.java.net/pipermail/hotspot-gc-use/2018-June/002759.html)
-* Epsilon GC
-* Flight Recorder http://openjdk.java.net/jeps/328
-* Low-Overhead Heap Profiling
-////
