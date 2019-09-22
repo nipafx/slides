@@ -83,7 +83,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 	<tr><td>SafeVarargs ⑨</td></tr>
 	<tr><td>Deprecation Warnings ⑨</td></tr>
 </table><div class="paragraph"><p>Multiline strings. Finally.</p></div></section><section id="multiline_strings"><h2>Multiline Strings</h2><div class="paragraph"><p>Text blocks are straightforward:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">String haiku = """
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">String haikuBlock = """
 	worker bees can leave
 	 even drones can fly away
 	  the queen is their slave""";
@@ -91,16 +91,51 @@ System.out.println(haiku);
 // &gt; worker bees can leave
 // &gt;  even drones can fly away
 // &gt;   the queen is their slave</code></pre></div></div>
-<div class="ulist"><ul><li><p>line breaks remain</p></li><li><p>intentional indentation remains</p></li><li><p>accidental indentation is removed</p></li></ul></div></section><section id="syntax"><h2>Syntax</h2><div class="ulist"><ul><li><p>can be used in same place<br>
+<div class="ulist"><ul><li><p>line breaks are normalized to <code>\n</code></p></li><li><p>intentional indentation remains</p></li><li><p>accidental indentation is removed</p></li></ul></div></section><section id="syntax"><h2>Syntax</h2><div class="ulist"><ul><li><p>can be used in same place<br>
 as <code>"string literals"</code></p></li><li><p>start with <code>"""</code> and new line</p></li><li><p>end with <code>"""</code></p><div class="ulist"><ul><li><p>on the last line of content</p></li><li><p>on its own line</p></li></ul></div></li></ul></div>
 <div class="paragraph"><p>Position of closing <code>"""</code> decides<br>
-whether string ends with <code>"\n"</code>.</p></div></section><section id="indentation"><h2>Indentation</h2><div class="paragraph"><p>Compiler discerns:</p></div>
+whether string ends with <code>"\n"</code>.</p></div></section><section id="vs_string_literals"><h2>Vs String Literals</h2><div class="paragraph"><p>Compare to:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">String haikuLiteral = ""
+	+ "worker bees can leave\n"
+	+ " even drones can fly away\n"
+	+ "  the queen is their slave";</code></pre></div></div>
+<div class="ulist"><ul><li><p><code>haikuBlock.equals(haikuLiteral)</code></p></li><li><p>thanks to string interning even<br>
+<code>haikuBlock == haikuLiteral</code></p></li></ul></div>
+<div class="paragraph"><p>⇝ No way to discern source at run time!</p></div></section><section id="line_endings"><h2>Line Endings</h2><div class="paragraph"><p>Line ending depends on configuration.<br>
+Source file properties influence semantics?</p></div>
+<div class="paragraph"><p><strong>Text block lines always end with <code>\n</code>!</strong></p></div>
+<div class="paragraph"><p>Escape sequences are translated afterwards:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">String windows = """
+    Windows\r
+    line\r
+    endings\r
+    """</code></pre></div></div></section><section id="indentation"><h2>Indentation</h2><div class="paragraph"><p>Compiler discerns:</p></div>
 <div class="ulist"><ul><li><p>accidental indentation<br>
 (from code style; gets removed)</p></li><li><p>essential indentation<br>
 (within the string; remains)</p></li></ul></div>
 <div class="paragraph"><p>How?</p></div></section><section id="accidental_indentation"><h2>Accidental Indentation</h2><div class="ulist"><ul><li><p>closing <code>"""</code> are on their own line<br>
-⇝ their indentation is accidental</p></li><li><p>otherwise, line with smallest indentation
-⇝ its indentation is accidental</p></li></ul></div></section></section>
+⇝ their indentation is accidental</p></li><li><p>otherwise, line with smallest indentation<br>
+⇝ its indentation is accidental</p></li></ul></div></section><section id="indentation_2"><h2>Indentation</h2><div class="paragraph"><p>Accidental vs intentional indentation<br>
+(separated with <code>|</code>):</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">String haikuBlock = """
+		|worker bees can leave
+		| even drones can fly away
+		|  the queen is their slave""";
+String haikuBlock = """
+	|	worker bees can leave
+	|	 even drones can fly away
+	|	  the queen is their slave
+	""";</code></pre></div></div></section><section id="manual_indentation"><h2>Manual Indentation</h2><div class="paragraph"><p>To manually manage indentation:</p></div>
+<div class="ulist"><ul><li><p><code>String::stripIndent</code></p></li><li><p><code>String::indent</code></p></li></ul></div></section><section id="escape_sequences"><h2>Escape Sequences</h2><div class="paragraph"><p>Text blocks are not <em>raw</em>:</p></div>
+<div class="ulist"><ul><li><p>escape sequences work (e.g. <code>\r</code>)</p></li><li><p>escape sequences are necessary</p></li></ul></div>
+<div class="paragraph"><p>But: <code>"</code> is not special!</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">String phrase = """
+    {
+        greeting: "hello",
+        audience: "text blocks",
+    }
+    """;</code></pre></div></div>
+<div class="paragraph"><p>⇝ Way fewer escapes in HTML/JSON/SQL/etc.</p></div></section><section id="more_on_text_blocks"><h2>More on Text Blocks</h2><div class="ulist"><ul><li><p><a href="https://blog.codefx.org/java/text-blocks/">Definitive Guide To Text Blocks</a></p></li><li><p><a href="http://cr.openjdk.java.net/~jlaskey/Strings/TextBlocksGuide_v9.html">Programmer&#8217;s Guide To Text Blocks</a></p></li></ul></div></section></section>
 <section><section id="new_language_features_3"><h2>New Language Features</h2><table class="toc">
 	<tr><td>Text Blocks ⑬</td></tr>
 	<tr class="toc-current"><td>Switch Expressions ⑫⑬</td></tr>
@@ -169,7 +204,8 @@ possible or convenient</p></li></ul></div></section><section id="switch_expressi
 a <a href="https://blog.codefx.org/java/enable-preview-language-features/">preview language feature</a>!</p></div>
 <div class="ulist"><ul><li><p>must be enabled with <code>--enable-preview</code><br>
 (on <code>javac</code> and <code>java</code>).</p></li><li><p>in IntelliJ, set the module&#8217;s language level to<br>
-<em>12 (Preview) - &#8230;&#8203;</em> or <em>13 (Preview) - &#8230;&#8203;</em></p></li></ul></div></section><section id="expression_vs_statement"><h2>Expression vs Statement</h2><div class="paragraph"><p>Statement:</p></div>
+<em>12 (Preview) - &#8230;&#8203;</em> or <em>13 (Preview) - &#8230;&#8203;</em></p></li><li><p>in Eclipse, go to <em>Compiler Settings</em><br>
+and check <em>Enable preview features</em></p></li></ul></div></section><section id="expression_vs_statement"><h2>Expression vs Statement</h2><div class="paragraph"><p>Statement:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">if (condition)
     result = doThis();
 else
@@ -904,20 +940,25 @@ CompletableFuture&lt;T&gt; exceptionallyComposeAsync(
 <div class="paragraph"><p>There are overloads that accept <code>Executor</code>.</p></div></section></section>
 <section><section id="a_mixed_bag_of_updatedapis"><h2>A Mixed Bag Of Updated&nbsp;APIs</h2><div class="paragraph"><p><strong>In Java 9:</strong></p></div><div class="ulist"><ul><li><p>OASIS XML Catalogs 1.1 (<a href="http://openjdk.java.net/jeps/268">JEP 268</a>),<br>
 Xerces 2.11.0 (<a href="http://openjdk.java.net/jeps/255">JEP 255</a>)</p></li><li><p>Unicode support in<br>
-<code>PropertyResourceBundle</code> (<a href="http://openjdk.java.net/jeps/226">JEP 226</a>)</p></li></ul></div><div class="paragraph"><p>Many lower-level APIs.</p></div></section><section id="a_mixed_bag_of_newiomethods"><h2>A Mixed Bag Of New&nbsp;I/O&nbsp;Methods</h2><div class="paragraph"><p><strong>In Java 10, 11, 12:</strong></p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Path.of(String); // ~ Paths.get(String)
+<code>PropertyResourceBundle</code> (<a href="http://openjdk.java.net/jeps/226">JEP 226</a>)</p></li></ul></div><div class="paragraph"><p>Many lower-level APIs.</p></div></section><section id="a_mixed_bag_of_newiomethods"><h2>A Mixed Bag Of New&nbsp;I/O&nbsp;Methods</h2><div class="paragraph"><p><strong>In Java 9 to 11:</strong></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Path.of(String); // ~ Paths.get(String) ⑪
 
-Files.mismatch(Path, Path);
-Files.readString(Path);
-Files.writeString(Path, CharSequence, ...);
+Files.readString(Path); // ⑪
+Files.writeString(Path, CharSequence, ...); // ⑪
 
-Reader.transferTo(Writer);
-ByteArrayInputStream.transferTo(OutputStream);
+Reader.transferTo(Writer); // ⑩
+InputStream.transferTo(OutputStream); // ⑨
 
-Reader.nullReader();
-Writer.nullWriter();
-InputStream.nullInputStream();
-OutputStream.nullOutputStream();</code></pre></div></div></section><section id="a_mixed_bag_of_newmethods"><h2>A Mixed Bag Of New&nbsp;Methods</h2><div class="paragraph"><p><strong>In Java 10:</strong></p></div>
+Reader.nullReader(); // ⑪
+Writer.nullWriter(); // ⑪
+InputStream.nullInputStream(); // ⑪
+OutputStream.nullOutputStream(); // ⑪</code></pre></div></div></section><section id="a_mixed_bag_of_newiomethods_2"><h2>A Mixed Bag Of New&nbsp;I/O&nbsp;Methods</h2><div class="paragraph"><p><strong>In Java 12 and 13:</strong></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Files.mismatch(Path, Path); // ⑫
+
+FileSystems.newFileSystem(Path, ...); // ⑬
+
+ByteBuffer.get(int, ...) // ⑬
+ByteBuffer.put(int, ...) // ⑬</code></pre></div></div></section><section id="a_mixed_bag_of_newmethods"><h2>A Mixed Bag Of New&nbsp;Methods</h2><div class="paragraph"><p><strong>In Java 10:</strong></p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">DateTimeFormatter.localizedBy(Locale locale);</code></pre></div></div>
 <div class="paragraph"><p><strong>In Java 11:</strong></p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Collection.toArray(IntFunction&lt;T[]&gt; generator);
@@ -1248,35 +1289,47 @@ class-data is always the same!</p></div></section><section id="class_data_sharin
 (focusing on classes required for launch):</p></div>
 <div class="ulist"><ul><li><p>archive has 250 MB for ~24k classes</p></li><li><p>launch time reduced from 15s to 12s</p></li></ul></div>
 <div class="paragraph"><p><strong>Bonus</strong>: Archive can be shared across JVMs.</p></div></section><section id="class_data_sharing_2"><h2>Class-Data Sharing</h2><div class="paragraph"><p>Two variants:</p></div>
-<div class="dlist"><dl><dt class="hdlist1">CDS</dt><dd><p>just for JDK classes</p></dd><dt class="hdlist1">AppCDS</dt><dd><p>JDK + application classes</p></dd></dl></div>
-<div class="paragraph"><p>Quick look into CDS, then focus on AppCDS.</p></div></section><section id="cds"><h2>CDS</h2><div class="paragraph"><p>Java 12+ downloads include<br>
-CDS archive for JDK classes.</p></div>
-<div class="paragraph"><p>More in <a href="http://openjdk.java.net/jeps/341">JEP 341</a>.</p></div></section><section id="appcds_step_1"><h2>AppCDS - Step #1</h2><div class="paragraph"><p>Create a list of classes</p></div>
+<div class="dlist"><dl><dt class="hdlist1">CDS</dt><dd><p>just for JDK classes</p></dd><dt class="hdlist1">AppCDS</dt><dd><p>JDK + application classes</p></dd></dl></div></section><section id="cds_step_1"><h2>CDS - Step #1</h2><div class="paragraph"><p>Create JDK archive on Java 10/11:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="sh language-sh"># possibly as root
+java -Xshare:dump</code></pre></div></div>
+<div class="paragraph"><p>Java 12+ downloads include<br>
+CDS archive for JDK classes.</p></div></section><section id="cds_step_2"><h2>CDS - Step #2</h2><div class="paragraph"><p>Use the archive:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="sh language-sh">$ java
+	-Xshare:on
+	# [... class path for app and deps ...]
+	org.example.Main</code></pre></div></div>
+<div class="paragraph"><p>If archive is missing or faulty:</p></div>
+<div class="ulist"><ul><li><p><code>-Xshare:on</code> fails fast</p></li><li><p><code>-Xshare:auto</code> (default) ignores archive</p></li></ul></div>
+<div class="paragraph"><p>(Slides rely on default, i.e. no <code>-Xshare</code>.)</p></div></section><section id="appcds"><h2>AppCDS</h2><div class="paragraph"><p>Create an AppCDS archive:</p></div>
+<div class="ulist"><ul><li><p>manually on Java 10+</p></li><li><p>dynamically on Java 13+</p></li></ul></div>
+<div class="paragraph"><p>First manually, then dynamically.</p></div></section><section id="appcds_step_0"><h2>AppCDS - Step #0</h2><div class="paragraph"><p>To manually create an AppCDS archive,<br>
+first create a list of classes</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="sh language-sh">$ java
 	-XX:DumpLoadedClassList=classes.lst
 	# [... class path for app and deps ...]
 	org.example.Main</code></pre></div></div>
 <div class="paragraph"><p>Then, <code>classes.lst</code> contains<br>
-slash-separated names of loaded classes.</p></div></section><section id="appcds_step_2"><h2>AppCDS - Step #2</h2><div class="paragraph"><p>Use the list to create the archive:</p></div>
+slash-separated names of loaded classes.</p></div></section><section id="appcds_step_1"><h2>AppCDS - Step #1</h2><div class="paragraph"><p>Use the list to create the archive:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="sh language-sh">$ java
 	-Xshare:dump
 	-XX:SharedClassListFile=classes.lst
 	-XX:SharedArchiveFile=app-cds.jsa
 	# [... class path for app and deps ...]</code></pre></div></div>
-<div class="paragraph"><p>Creates archive <code>app-cds.jsa</code>.</p></div></section><section id="appcds_step_3"><h2>AppCDS - Step #3</h2><div class="paragraph"><p>Use the archive:</p></div>
+<div class="paragraph"><p>Creates archive <code>app-cds.jsa</code>.</p></div></section><section id="appcds_step_2"><h2>AppCDS - Step #2</h2><div class="paragraph"><p>Use the archive:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="sh language-sh">$ java
-	-Xshare:on # not needed on ⑫
 	-XX:SharedArchiveFile=app-cds.jsa
 	# [... class path for app and deps ...]
-	org.example.Main</code></pre></div></div></section><section id="dynamic_appcds"><h2>Dynamic AppCDS</h2><div class="paragraph"><p>Java 13 can create archive<br>
-when program exits:</p></div>
-<div class="ulist"><ul><li><p>steps #1 and #2 are replaced by:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="sh language-sh">$ java
+	org.example.Main</code></pre></div></div></section><section id="dynamic_appcds"><h2>Dynamic AppCDS</h2><div class="paragraph"><p>Java 13 can create archive when<br>
+program exits (without crash):</p></div>
+<div class="ulist"><ul><li><p>steps #0 and #1 are replaced by:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="sh language-sh">$ java
 	-XX:ArchiveClassesAtExit=dyn-cds.jsa
 	# [... class path for app and deps ...]
-	org.example.Main</code></pre></div></div></li><li><p>step #3 as before:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="sh language-sh">$ java
+	org.example.Main</code></pre></div></div></li><li><p>step #2 as before:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="sh language-sh">$ java
 	-XX:SharedArchiveFile=app-cds.jsa
 	# [... class path for app and deps ...]
-	org.example.Main</code></pre></div></div></li></ul></div></section><section id="dynamic_appcds_2"><h2>Dynamic AppCDS</h2><div class="paragraph"><p>*</p></div></section><section id="heed_the_class_path"><h2>Heed The Class Path</h2><div class="paragraph"><p>What are the two biggest challenges<br>
+	org.example.Main</code></pre></div></div></li></ul></div></section><section id="dynamic_appcds_2"><h2>Dynamic AppCDS</h2><div class="paragraph"><p>The dynamic archive:</p></div>
+<div class="ulist"><ul><li><p>builds on the JDK-archive</p></li><li><p>contains all loaded app/lib classes</p></li><li><p>including those loaded by<br>
+user-defined class loaders</p></li></ul></div></section><section id="heed_the_class_path"><h2>Heed The Class Path</h2><div class="paragraph"><p>What are the two biggest challenges<br>
 in software development?</p></div>
 <div class="olist arabic"><ol class="arabic"><li class="fragment"><p>naming</p></li><li class="fragment"><p>cache invalidation</p></li><li class="fragment"><p>off-by-one errors</p></li></ol></div></section><section id="heed_the_class_path_2"><h2>Heed The Class Path</h2><div class="paragraph"><p>The archive is a cache!</p></div>
 <div class="paragraph"><p>It&#8217;s invalid when:</p></div>
@@ -1337,12 +1390,10 @@ performance improvements:</p></div>
 <div class="paragraph"><p><a href="https://www.youtube.com/watch?v=wIyeOaitmWM">Aleksey Shipilëv<br>
 The Lord Of The Strings</a></p></div></section></section>
 <section><section id="a_mixed_bag_of_performance"><h2>A Mixed Bag Of Performance</h2><div class="paragraph"><p><strong>In Java 9:</strong></p></div><div class="ulist"><ul><li><p>G1 default GC (<a href="http://openjdk.java.net/jeps/248">JEP 248</a>)</p></li><li><p>cgroup-memory limits (<a href="https://bugs.openjdk.java.net/browse/JDK-8170888">JDK-8170888</a>)</p></li><li><p>contended locks (<a href="http://openjdk.java.net/jeps/143">JEP 143</a>)</p></li><li><p>security manager (<a href="http://openjdk.java.net/jeps/232">JEP 232</a>)</p></li><li><p>Java 2D rendering (<a href="http://openjdk.java.net/jeps/265">JEP 265</a>)</p></li><li><p>GHASH/RSA computation (<a href="http://openjdk.java.net/jeps/246">JEP 246</a>)</p></li><li><p>Java-level JVM compiler interface (<a href="http://openjdk.java.net/jeps/243">JEP 243</a>)</p></li></ul></div></section><section id="a_mixed_bag_of_performance_2"><h2>A Mixed Bag Of Performance</h2><div class="paragraph"><p><strong>In Java 10:</strong></p></div>
-<div class="ulist"><ul><li><p>Graal&#8201;&#8212;&#8201;Java-based JIT compiler (<a href="http://openjdk.java.net/jeps/317">JEP 317</a>)</p></li><li><p>parallel full GC for G1 (<a href="http://openjdk.java.net/jeps/307">JEP 307</a>)</p></li><li><p>thread-local handshakes (<a href="http://openjdk.java.net/jeps/312">JEP 312</a>)</p></li></ul></div>
-<div class="paragraph"><p><strong>In Java 11:</strong></p></div>
-<div class="ulist"><ul><li><p>Epsilon GC (<a href="http://openjdk.java.net/jeps/318">JEP 318</a>)</p></li><li><p>ZGC (experimental, <a href="http://openjdk.java.net/jeps/333">JEP 333</a>)</p></li><li><p>low-overhead heap profiling (<a href="http://openjdk.java.net/jeps/331">JEP 331</a>)</p></li></ul></div></section><section id="a_mixed_bag_of_performance_3"><h2>A Mixed Bag Of Performance</h2><div class="paragraph"><p><strong>In Java 12:</strong></p></div>
-<div class="ulist"><ul><li><p>Shenandoah (<a href="http://openjdk.java.net/jeps/189">JEP 189</a>)</p></li><li><p>G1 improvements:</p><div class="ulist"><ul><li><p>abortable mixed collections (<a href="http://openjdk.java.net/jeps/344">JEP 344</a>)</p></li><li><p>promptly return unused memory (<a href="http://openjdk.java.net/jeps/346">JEP 346</a>)</p></li></ul></div></li></ul></div>
-<div class="paragraph"><p><strong>In Java 13:</strong></p></div>
-<div class="ulist"><ul><li><p>ZGC: Uncommit Unused Memory (<a href="https://openjdk.java.net/jeps/351">JEP 351</a>)</p></li></ul></div></section></section>
+<div class="ulist"><ul><li><p>Graal&#8201;&#8212;&#8201;Java-based JIT compiler (<a href="http://openjdk.java.net/jeps/317">JEP 317</a>)</p></li><li><p>parallel full GC for G1 (<a href="http://openjdk.java.net/jeps/307">JEP 307</a>)</p></li><li><p>thread-local handshakes (<a href="http://openjdk.java.net/jeps/312">JEP 312</a>)</p></li></ul></div></section><section id="a_mixed_bag_of_performance_3"><h2>A Mixed Bag Of Performance</h2><div class="paragraph"><p><strong>In Java 11:</strong></p></div>
+<div class="ulist"><ul><li><p>Epsilon GC (<a href="http://openjdk.java.net/jeps/318">JEP 318</a>)</p></li><li><p>ZGC (experimental, <a href="http://openjdk.java.net/jeps/333">JEP 333</a>)</p></li><li><p>low-overhead heap profiling (<a href="http://openjdk.java.net/jeps/331">JEP 331</a>)</p></li><li><p>open-source Flight Recorder (<a href="http://openjdk.java.net/jeps/328">JEP 328</a>)</p></li></ul></div></section><section id="a_mixed_bag_of_performance_4"><h2>A Mixed Bag Of Performance</h2><div class="paragraph"><p><strong>In Java 12:</strong></p></div>
+<div class="ulist"><ul><li><p>Shenandoah (<a href="http://openjdk.java.net/jeps/189">JEP 189</a>)</p></li><li><p>G1 improvements:</p><div class="ulist"><ul><li><p>abortable mixed collections (<a href="http://openjdk.java.net/jeps/344">JEP 344</a>)</p></li><li><p>promptly return unused memory (<a href="http://openjdk.java.net/jeps/346">JEP 346</a>)</p></li></ul></div></li></ul></div></section><section id="a_mixed_bag_of_performance_5"><h2>A Mixed Bag Of Performance</h2><div class="paragraph"><p><strong>In Java 13:</strong></p></div>
+<div class="ulist"><ul><li><p>Shenandoah improvements:</p><div class="ulist"><ul><li><p>internals (<a href="https://bugs.openjdk.java.net/browse/JDK-8221766">JDK-8221766</a>, <a href="https://bugs.openjdk.java.net/browse/JDK-8224584">JDK-8224584</a>)</p></li><li><p>more platforms (<a href="https://bugs.openjdk.java.net/browse/JDK-8225048">JDK-8225048</a>, <a href="https://bugs.openjdk.java.net/browse/JDK-8223767">JDK-8223767</a>)</p></li></ul></div></li><li><p>ZGC improvements:</p><div class="ulist"><ul><li><p>implements <code>-XX:SoftMaxHeapSize</code> (<a href="https://bugs.openjdk.java.net/browse/JDK-8222145">JDK-8222145</a>)</p></li><li><p>max heap size of 16 TB (<a href="https://bugs.openjdk.java.net/browse/JDK-8221786">JDK-8221786</a>)</p></li><li><p>uncommits unused memory (<a href="https://openjdk.java.net/jeps/351">JEP 351</a>)</p></li></ul></div></li></ul></div></section></section>
 <section><section id="about_nicolai_parlog" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>About Nicolai Parlog</h2><div style="float: left; width: 45%; margin:0px;">
 	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="images/cover-jms.png" style="margin: 0;"></a>
 	<p style="
@@ -1357,7 +1408,7 @@ The Lord Of The Strings</a></p></div></section></section>
 		border-radius: 12px;
 		background-color: rgba(255,255,255,0.5);
 		padding: 2px 8px 7px 4px;
-">37% off with<br>code <em>fccparlog</em></p>
+">40% off with<br>code <em>mtpvjug19</em></p>
 	<p><a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb">tiny.cc/jms</a></p>
 </div><h3>Follow</h3><div class="paragraph"><p>💻 <a href="http://codefx.org">codefx.org</a><br>
 🐦 <a href="https://twitter.com/nipafx">@nipafx</a></p></div><h3>Want More?</h3><div class="paragraph"><p>Slides at <a href="https://slides.codefx.org">slides.codefx.org</a></p></div><div class="paragraph"><p>⇜ Get <a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&amp;a_bid=869915cb">my book</a>!</p></div><div class="paragraph"><p>You can <a href="http://blog.codefx.org/hire-nicolai-parlog/">hire me</a>:</p></div><div class="ulist"><ul><li><p>training (Java 8-12, JUnit 5)</p></li><li><p>consulting (Java 8-12)</p></li></ul></div></section><section data-background-image="images/accento-save.jpg" data-background-size="cover" data-state="empty"></section></section>
