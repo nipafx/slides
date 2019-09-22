@@ -37,7 +37,7 @@ Multiline strings. Finally.
 Text blocks are straightforward:
 
 ```java
-String haiku = """
+String haikuBlock = """
 	worker bees can leave
 	 even drones can fly away
 	  the queen is their slave""";
@@ -48,7 +48,7 @@ System.out.println(haiku);
 
 ```
 
-* line breaks remain
+* line breaks are normalized to `\n`
 * intentional indentation remains
 * accidental indentation is removed
 
@@ -63,6 +63,40 @@ System.out.println(haiku);
 
 Position of closing `"""` decides +
 whether string ends with `"\n"`.
+
+=== Vs String Literals
+
+Compare to:
+
+```java
+String haikuLiteral = ""
+	+ "worker bees can leave\n"
+	+ " even drones can fly away\n"
+	+ "  the queen is their slave";
+```
+
+* `haikuBlock.equals(haikuLiteral)`
+* thanks to string interning even +
+  `haikuBlock == haikuLiteral`
+
+⇝ No way to discern source at run time!
+
+=== Line Endings
+
+Line ending depends on configuration. +
+Source file properties influence semantics?
+
+*Text block lines always end with `\n`!*
+
+Escape sequences are translated afterwards:
+
+```java
+String windows = """
+    Windows\r
+    line\r
+    endings\r
+    """
+```
 
 === Indentation
 
@@ -79,9 +113,57 @@ How?
 
 * closing `"""` are on their own line +
 ⇝ their indentation is accidental
-* otherwise, line with smallest indentation
+* otherwise, line with smallest indentation +
 ⇝ its indentation is accidental
 
+=== Indentation
+
+Accidental vs intentional indentation +
+(separated with `|`):
+
+```java
+String haikuBlock = """
+		|worker bees can leave
+		| even drones can fly away
+		|  the queen is their slave""";
+String haikuBlock = """
+	|	worker bees can leave
+	|	 even drones can fly away
+	|	  the queen is their slave
+	""";
+```
+
+=== Manual Indentation
+
+To manually manage indentation:
+
+* `String::stripIndent`
+* `String::indent`
+
+=== Escape Sequences
+
+Text blocks are not _raw_:
+
+* escape sequences work (e.g. `\r`)
+* escape sequences are necessary
+
+But: `"` is not special!
+
+```java
+String phrase = """
+    {
+        greeting: "hello",
+        audience: "text blocks",
+    }
+    """;
+```
+
+⇝ Way fewer escapes in HTML/JSON/SQL/etc.
+
+=== More on Text Blocks
+
+* https://blog.codefx.org/java/text-blocks/[Definitive Guide To Text Blocks]
+* http://cr.openjdk.java.net/~jlaskey/Strings/TextBlocksGuide_v9.html[Programmer's Guide To Text Blocks]
 
 
 == New Language Features
