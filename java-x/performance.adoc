@@ -413,3 +413,16 @@ The Lord Of The Strings]
 * G1 improvements:
 ** abortable mixed collections (http://openjdk.java.net/jeps/344[JEP 344])
 ** promptly return unused memory (http://openjdk.java.net/jeps/346[JEP 346])
+
+=== A Mixed Bag Of Performance
+
+*In Java 13:*
+
+* Shenandoah improvements:
+** internals (https://bugs.openjdk.java.net/browse/JDK-8221766[JDK-8221766], https://bugs.openjdk.java.net/browse/JDK-8224584[JDK-8224584])
+** more platforms (https://bugs.openjdk.java.net/browse/JDK-8225048[JDK-8225048], https://bugs.openjdk.java.net/browse/JDK-8223767[JDK-8223767])
+
+* ZGC improvements:
+** implements `-XX:SoftMaxHeapSize` (https://bugs.openjdk.java.net/browse/JDK-8222145[JDK-8222145])
+** max heap size of 16 TB (https://bugs.openjdk.java.net/browse/JDK-8221786[JDK-8221786])
+** uncommits unused memory (https://openjdk.java.net/jeps/351[JEP 351])
