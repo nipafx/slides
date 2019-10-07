@@ -81,6 +81,141 @@ ask your colleagues first</p></li><li><p>there are no stupid questions!</p></li>
 	<tr><td>Summary</td></tr>
 </table></section></section>
 <section><section id="java_8"><h2>Java 8</h2><table class="toc">
+	<tr class="toc-current"><td>Generics Recap ⑤</td></tr>
+	<tr><td>Lambda Expressions</td></tr>
+	<tr><td>Stream API</td></tr>
+	<tr><td>Optional API</td></tr>
+	<tr><td>Functional Programming Basics</td></tr>
+	<tr><td>CompletableFuture API</td></tr>
+	<tr><td>Default Methods</td></tr>
+	<tr><td>Summary</td></tr>
+</table></section><section id="generics_recap"><h2>Generics Recap</h2><div class="paragraph"><p>A <code>List</code> is "a list of anything":</p></div>
+<div class="ulist"><ul><li><p>can add anything ⇝ <code>void add(Object)</code></p></li><li><p>can return anything ⇝ <code>Object get()</code></p></li><li><p>we need to track what is safe!</p></li></ul></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List messages = new ArrayList&lt;&gt;();
+messages.add("Hello, Generics!")
+messages.add("5");
+String first = (String) messages.get(0);
+// when does this explode? 💣
+Integer second = (Integer) messages.get(1);</code></pre></div></div></section><section id="generics_recap_2"><h2>Generics Recap</h2><div class="paragraph"><p>A <code>List&lt;String&gt;</code> is "a list of strings":</p></div>
+<div class="ulist"><ul><li><p>can only add strings ⇝ <code>void add(String)</code></p></li><li><p>can only return strings ⇝ <code>String get()</code></p></li><li><p>compiler tracks what is safe!</p></li></ul></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;String&gt; messages = new ArrayList();
+messages.add("Hello, Generics!")
+messages.add("5");
+String first = messages.get(0);
+// when does this explode? 💣
+Integer second = messages.get(1);</code></pre></div></div></section><section id="exercise_1"><h2>Exercise 1</h2><div class="paragraph"><p>Why generics?</p></div></section></section>
+<section><section id="generics_recap_3"><h2>Generics Recap</h2><table class="toc">
+	<tr class="toc-current"><td>Generic Basics</td></tr>
+	<tr><td>Wildcards [n.a.]</td></tr>
+	<tr><td>Recursive Generics [n.a.]</td></tr>
+	<tr><td>Summary</td></tr>
+</table></section><section id="a_gift_box"><h2>A Gift Box</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class GiftBox {
+
+	private Object gift;
+
+	public void wrap(Object gift) {
+		this.gift = gift;
+	}
+
+	public Object unwrap() {
+		return gift;
+	}
+
+}</code></pre></div></div></section><section id="surprise"><h2>Surprise!</h2><div class="paragraph"><p>Surprises may be great presents,<br>
+but they&#8217;re not good code.</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public void getPresent(GiftBox box) {
+	// I hope/expect to be given a tablet
+	// but `unwrap()` returns `Object`
+	Tablet present = (Tablet) box.unwrap();
+}</code></pre></div></div></section><section id="the_problem_with_anything"><h2>The Problem With "Anything"</h2><div class="paragraph"><p>Problem is that <code>GiftBox</code> wraps "anything",<br>
+but it can be a different "anything"<br>
+for each call to <code>wrap</code> and <code>unwrap</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">GiftBox box = new GiftBox();
+box.wrap(0);
+box.wrap("Tablet");
+Object present = box.unwrap();
+Tablet tablet = (Tablet) box.unwrap();</code></pre></div></div></section><section id="the_generic_anything"><h2>The Generic "Anything"</h2><div class="paragraph"><p>With generics:</p></div>
+<div class="ulist"><ul><li><p>"anything" gets a name</p></li><li><p>fields, parameters, variables<br>
+can be forced to be <em>that</em> "anything"</p></li><li><p>compiler makes sure we get it right</p></li></ul></div></section><section id="declaring_generic_types"><h2>Declaring Generic Types</h2><div class="paragraph"><p>To "generify" <code>GiftBox</code>:</p></div>
+<div class="ulist"><ul><li><p>when declaring <code>GiftBox</code>, add <em>type variable</em> <code>T</code><br>
+(this makes <code>GiftBox</code> a <em>generic class</em>)</p></li><li><p>use <code>T</code> to express type of fields, parameters, variables</p></li></ul></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class GiftBox&lt;T&gt; {
+
+	private T gift;
+
+	// [...]
+
+}</code></pre></div></div></section><section id="a_generic_gift_box"><h2>A Generic Gift Box</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class GiftBox&lt;T&gt; {
+
+	private T gift;
+
+	public void wrap(T gift) {
+		this.gift = gift;
+	}
+
+	public T unwrap() {
+		return gift;
+	}
+
+}</code></pre></div></div></section><section id="using_generic_types"><h2>Using Generic Types</h2><div class="paragraph"><p>When using a generic type,<br>
+a concrete type is "assigned to" <code>T</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">GiftBox&lt;Tablet&gt; box = new GiftBox&lt;Tablet&gt;();</code></pre></div></div>
+<div class="paragraph"><p>As if:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class TabletGiftBox {
+
+	private Tablet gift;
+
+	public void wrap(Tablet gift) { /*...*/ }
+	public Tablet unwrap() { /*...*/ }
+
+}</code></pre></div></div></section><section id="using_generic_types_2"><h2>Using Generic Types</h2><div class="paragraph"><p><code>GiftBox&lt;T&gt;</code> is type-safe because<br>
+the type of present is no longer a surprise.</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public void getPresent(GiftBox&lt;Tablet&gt; box) {
+	// `unwrap()` returns `Tablet`
+	Tablet present = box.unwrap();
+}</code></pre></div></div></section><section id="types_arent_everything"><h2>Types Aren&#8217;t Everything</h2><div class="paragraph"><p>Assume a more complicated <code>GiftBox</code><br>
+and this utility method:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public static Object unwrap(GiftBox box) {
+	box.readCard();
+	box.removeRibbon();
+	box.removeWrappingPaper();
+	Object present = box.open();
+	return present;
+}</code></pre></div></div>
+<div class="paragraph"><p>This <strong>method</strong> wants to be generic!</p></div></section><section id="declaring_generic_methods"><h2>Declaring Generic Methods</h2><div class="paragraph"><p>Type variables can also be added to methods:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public static &lt;T&gt; T unwrap(GiftBox&lt;T&gt; box) {
+	box.readCard();
+	box.removeRibbon();
+	box.removeWrappingPaper();
+	T present = box.open();
+	return present;
+}</code></pre></div></div></section><section id="using_generic_methods"><h2>Using Generic Methods</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">GiftBox&lt;Tablet&gt; box = // ...
+// signature: `&lt;T&gt; T unwrap(GiftBox&lt;T&gt; box)`
+Tablet present = GiftUtilities.&lt;Tablet&gt; unwrap(box);</code></pre></div></div></section><section id="type_variables_for_classes_vs_methods"><h2>Type Variables For Classes Vs Methods</h2><div class="paragraph"><p>A generic class' type variable:</p></div>
+<div class="ulist"><ul><li><p>can be used in all instance fields/methods</p></li><li><p>can&#8217;t be used in static fields/methods</p></li></ul></div>
+<div class="paragraph"><p>Instance and static methods<br>
+can have (extra) type variables.</p></div></section><section id="classes_vs_methods"><h2>Classes Vs Methods</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class GiftBox&lt;T&gt; {
+
+	private T gift;
+
+	public void wrap(T gift) { /*...*/ }
+	public Card readCard() { /*...*/ }
+	public Ribbon removeRibbon() { /*...*/ }
+	public WrappingPaper removeWrappingPaper() { /*...*/ }
+
+	// not the same `T`!
+	public static &lt;T&gt; T unwrap(GiftBox&lt;T&gt; box) { /*...*/ }
+
+}</code></pre></div></div></section><section id="type_inference"><h2>Type Inference</h2><div class="paragraph"><p>Compiler can infer generic types:</p></div>
+<div class="ulist"><ul><li><p>for generic constructor, use <em>diamond operator</em> <code>&lt;&gt;</code>:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">GiftBox&lt;Tablet&gt; box = new GiftBox&lt;&gt;();</code></pre></div></div></li><li><p>for generic method, don&#8217;t use <code>&lt;&#8230;&#8203;&gt;</code> at all:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">GiftBox&lt;Tablet&gt; box = // ...
+Tablet present = GiftUtilities.unwrap(box);</code></pre></div></div></li></ul></div></section><section id="type_inference_2"><h2>Type Inference</h2><div class="paragraph"><p>Type inference is very reliable, but:</p></div>
+<div class="ulist"><ul><li><p>may occasionally infer the wrong type</p></li><li><p>may occasionally make code harder to read<br>
+because type information is implicit</p></li></ul></div>
+<div class="paragraph"><p>For such cases:</p></div>
+<div class="ulist"><ul><li><p>remember the explicit syntax<br>
+(particularly for generic methods)</p></li><li><p>use it to clarify code for compiler or colleagues</p></li></ul></div></section><section id="exercise_2"><h2>Exercise 2</h2><div class="paragraph"><p>"Generify" a tree.</p></div></section></section>
+<section><section id="java_8_2"><h2>Java 8</h2><table class="toc">
+	<tr><td>Generics Recap ⑤</td></tr>
 	<tr class="toc-current"><td>Lambda Expressions</td></tr>
 	<tr><td>Stream API</td></tr>
 	<tr><td>Optional API</td></tr>
@@ -90,7 +225,7 @@ ask your colleagues first</p></li><li><p>there are no stupid questions!</p></li>
 	<tr><td>Summary</td></tr>
 </table></section><section id="lambda_expressions"><h2>Lambda Expressions</h2><div class="paragraph"><p>Make it easy to pass code as data,<br>
 by making it easy to create functions:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code>Runnable r = () -&gt; System.out.println("Hello");</code></pre></div></div></section><section id="exercise_1"><h2>Exercise 1</h2><div class="paragraph"><p>Pass code as data</p></div></section></section>
+<div class="listingblock"><div class="content"><pre class="highlight"><code>Runnable r = () -&gt; System.out.println("Hello");</code></pre></div></div></section><section id="exercise_1_2"><h2>Exercise 1</h2><div class="paragraph"><p>Pass code as data</p></div></section></section>
 <section><section id="lambda_expressions_2"><h2>Lambda Expressions</h2><table class="toc">
 	<tr class="toc-current"><td>Lambda Expression Syntax</td></tr>
 	<tr><td>Lambdas vs Closures</td></tr>
@@ -126,7 +261,7 @@ an interface with a <strong>simple</strong> abstract method:</p></div>
 $Interface variable = $parameter -&gt; $expression;
 
 // instead of `call(new $Interface {...})`
-call($parameter -&gt; $expression);</code></pre></div></div></section><section id="exercise_2"><h2>Exercise 2</h2><div class="paragraph"><p>Refactor anonymous classes to lambda expressions</p></div></section><section id="lambda_expression"><h2>Lambda Expression</h2><div class="paragraph"><p>General form:</p></div>
+call($parameter -&gt; $expression);</code></pre></div></div></section><section id="exercise_2_2"><h2>Exercise 2</h2><div class="paragraph"><p>Refactor anonymous classes to lambda expressions</p></div></section><section id="lambda_expression"><h2>Lambda Expression</h2><div class="paragraph"><p>General form:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">interface $Interface {
 	$result method($parameters) {
 		$body
@@ -299,7 +434,8 @@ of the first parameter:</p></div>
 <div class="ulist"><ul><li><p>interface must be functional</p></li><li><p>parameters:</p><div class="ulist"><ul><li><p>can have types</p></li><li><p>must have parenthesis if more than one</p></li></ul></div></li><li><p>body:</p><div class="ulist"><ul><li><p>can be block in curly braces</p></li><li><p>can be expression of single line</p></li></ul></div></li></ul></div></section><section id="summary_3"><h2>Summary</h2><div class="ulist"><ul><li><p>variables used in body must be effectively final</p></li><li><p>capturing lambdas use fields or non-lambda parameters</p></li></ul></div>
 <div class="paragraph"><p>Method reference:</p></div>
 <div class="ulist"><ul><li><p>static method: <code>$TYPE::$METHOD</code></p></li><li><p>constructor: <code>$TYPE::new</code></p></li><li><p>instance method: <code>$INSTANCE::$METHOD</code></p></li><li><p>method on first parameter: <code>$TYPE::$METHOD</code></p></li></ul></div></section></section>
-<section><section id="java_8_2"><h2>Java 8</h2><table class="toc">
+<section><section id="java_8_3"><h2>Java 8</h2><table class="toc">
+	<tr><td>Generics Recap ⑤</td></tr>
 	<tr><td>Lambda Expressions</td></tr>
 	<tr class="toc-current"><td>Stream API</td></tr>
 	<tr><td>Optional API</td></tr>
@@ -310,7 +446,7 @@ of the first parameter:</p></div>
 </table></section><section id="demo"><h2>Demo</h2></section><section id="building_blocks"><h2>Building Blocks</h2><div class="paragraph"><p>Typical collection operations:</p></div>
 <div class="ulist"><ul><li><p>start with a collection (<em>source</em>)</p></li><li><p>perform operation on each element<br>
 (<em>filter</em>, <em>map</em>)</p></li><li><p>gather results (<em>reduce</em>, <em>collect</em>)</p></li></ul></div>
-<div class="paragraph"><p>Why not formalize that?</p></div></section><section id="exercise_1_2"><h2>Exercise 1</h2><div class="paragraph"><p>Create Lambda-based collection processing API</p></div></section><section id="loops_vs_whatever"><h2>Loops vs &lt;Whatever&gt;</h2><div class="paragraph"><p>What do you think about that API?</p></div></section><section id="loops_vs_whatever_2"><h2>Loops vs &lt;Whatever&gt;</h2><div class="paragraph"><p>Loop upsides:</p></div>
+<div class="paragraph"><p>Why not formalize that?</p></div></section><section id="exercise_1_3"><h2>Exercise 1</h2><div class="paragraph"><p>Create Lambda-based collection processing API</p></div></section><section id="loops_vs_whatever"><h2>Loops vs &lt;Whatever&gt;</h2><div class="paragraph"><p>What do you think about that API?</p></div></section><section id="loops_vs_whatever_2"><h2>Loops vs &lt;Whatever&gt;</h2><div class="paragraph"><p>Loop upsides:</p></div>
 <div class="ulist"><ul><li><p>are more efficient</p></li><li><p>are easier to debug</p></li><li><p>make side effects easier / more likely</p></li></ul></div>
 <div class="paragraph"><p>Loop downsides:</p></div>
 <div class="ulist"><ul><li><p>mix looping with domain logic</p></li><li><p>make optimization/parallelization harder</p></li><li><p>make side effects easier / more likely</p></li></ul></div></section><section id="a_word_on_mapreduce"><h2>A Word On MapReduce</h2><div class="paragraph"><p>Google&#8217;s MapReduce has the same logic:</p></div>
@@ -339,7 +475,7 @@ with all important operations</p></li></ul></div></section><section id="stream_t
 <div class="dlist"><dl><dt class="hdlist1">Source (one)</dt><dd><p>Get a stream, notably from a collection<br>
 with <code>Collection::stream</code></p></dd><dt class="hdlist1">Intermediate Operations (zero or more)</dt><dd><p>All methods on <code>Stream</code> that return a <code>Stream</code>,<br>
 notably <code>map</code> and <code>filter</code></p></dd><dt class="hdlist1">Terminal Operation (one)</dt><dd><p>All methods on <code>Stream</code> that don&#8217;t return a <code>Stream</code>,<br>
-notably <code>collect</code> and <code>reduce</code></p></dd></dl></div></section><section id="exercise_2_2"><h2>Exercise 2</h2><div class="paragraph"><p>Refactor use of self-made API to stream API</p></div></section></section>
+notably <code>collect</code> and <code>reduce</code></p></dd></dl></div></section><section id="exercise_2_3"><h2>Exercise 2</h2><div class="paragraph"><p>Refactor use of self-made API to stream API</p></div></section></section>
 <section><section id="stream_api_2"><h2>Stream API</h2><table class="toc">
 	<tr><td>Stream Basics</td></tr>
 	<tr class="toc-current"><td>Stream Operations</td></tr>
@@ -710,7 +846,8 @@ order-independent, thread-safe, performant</p></li></ul></div></section></sectio
 debuggability suffers</p></li></ul></div></section><section id="cheat_sheets"><h2>Cheat Sheets</h2><div class="paragraph"><p>Have a look at these cheat sheets<br>
 when you get started:</p></div>
 <div class="ulist"><ul><li><p><a href="http://www.java8.org/">java8.org</a></p></li><li><p><a href="https://zeroturnaround.com/rebellabs/java-8-streams-cheat-sheet/">zeroturnaround.com/rebellabs/java-8-streams-cheat-sheet</a></p></li><li><p><a href="https://github.com/BafS/Java8-CheatSheet">github.com/BafS/Java8-CheatSheet</a></p></li></ul></div></section></section>
-<section><section id="java_8_3"><h2>Java 8</h2><table class="toc">
+<section><section id="java_8_4"><h2>Java 8</h2><table class="toc">
+	<tr><td>Generics Recap ⑤</td></tr>
 	<tr><td>Lambda Expressions</td></tr>
 	<tr><td>Stream API</td></tr>
 	<tr class="toc-current"><td>Optional API</td></tr>
@@ -774,7 +911,7 @@ Optional&lt;String&gt; nameOpt = /* stream pipeline */;
 name = nameOpt.orElse("John Doe");
 name = nameOpt.orElseGet(this::computeDefaultName);
 name = nameOpt.orElseThrow(() -&gt;
-	new IllegalStateException("Name should be given."));</code></pre></div></div></section><section id="exercise_1_3"><h2>Exercise 1</h2><div class="paragraph"><p>Imperative use of <code>Optional</code>.</p></div></section></section>
+	new IllegalStateException("Name should be given."));</code></pre></div></div></section><section id="exercise_1_4"><h2>Exercise 1</h2><div class="paragraph"><p>Imperative use of <code>Optional</code>.</p></div></section></section>
 <section><section id="optional_api_3"><h2>Optional API</h2><table class="toc">
 	<tr><td>Optional Basics</td></tr>
 	<tr><td>The Imperative Way</td></tr>
@@ -814,7 +951,7 @@ to get back to imperative code</p></li><li><p>do it as late as possible</p></li>
 			.or(() -&gt; remotely(id));
 	}
 
-}</code></pre></div></div></section><section id="exercise_2_3"><h2>Exercise 2</h2><div class="paragraph"><p>Functional use of <code>Optional</code>.</p></div></section></section>
+}</code></pre></div></div></section><section id="exercise_2_4"><h2>Exercise 2</h2><div class="paragraph"><p>Functional use of <code>Optional</code>.</p></div></section></section>
 <section><section id="optional_api_4"><h2>Optional API</h2><table class="toc">
 	<tr><td>Optional Basics</td></tr>
 	<tr><td>The Imperative Way</td></tr>
@@ -860,7 +997,8 @@ of zero or one element(s):</p></div>
 	<tr class="toc-current"><td>Summary</td></tr>
 </table></section><section id="summary_11"><h2>Summary</h2><div class="ulist"><ul><li><p>get <code>Optional</code> from streams, other APIs<br>
 or create with <code>of</code>, <code>empty</code>, <code>ofNullable</code></p></li><li><p>use like streams with <code>map</code>, <code>flatMap</code>, <code>filter</code></p></li><li><p>process value with <code>ifPresent</code></p></li><li><p>get value out with <code>get</code>, <code>orElse&#8230;&#8203;</code></p></li></ul></div></section></section>
-<section id="java_8_4"><h2>Java 8</h2><table class="toc">
+<section id="java_8_5"><h2>Java 8</h2><table class="toc">
+	<tr><td>Generics Recap ⑤</td></tr>
 	<tr><td>Lambda Expressions</td></tr>
 	<tr><td>Stream API</td></tr>
 	<tr><td>Optional API</td></tr>
@@ -1279,7 +1417,8 @@ and pure functions</p></li></ul></div>
 <div class="paragraph"><p>These benefits are gradual.</p></div>
 <div class="paragraph"><p>Writing subsystems in a functional style<br>
 with OOP-style boundary makes sense!</p></div></section></section>
-<section><section id="java_8_5"><h2>Java 8</h2><table class="toc">
+<section><section id="java_8_6"><h2>Java 8</h2><table class="toc">
+	<tr><td>Generics Recap ⑤</td></tr>
 	<tr><td>Lambda Expressions</td></tr>
 	<tr><td>Stream API</td></tr>
 	<tr><td>Optional API</td></tr>
@@ -1586,7 +1725,8 @@ to abort long-running computations</p></li><li><p>reuse a stage and create sever
 dependent stages to fork computation</p></li><li><p>there are various ways to join computations</p></li></ul></div></section><section id="summary_15"><h2>Summary</h2><div class="ulist"><ul><li><p>to make sure expensive operations are
 executed async, use <code>&#8230;&#8203;Async</code> methods</p></li><li><p>when using <code>CompletableFuture</code> a lot,<br>
 consider managing thread pools</p></li></ul></div></section></section>
-<section><section id="java_8_6"><h2>Java 8</h2><table class="toc">
+<section><section id="java_8_7"><h2>Java 8</h2><table class="toc">
+	<tr><td>Generics Recap ⑤</td></tr>
 	<tr><td>Lambda Expressions</td></tr>
 	<tr><td>Stream API</td></tr>
 	<tr><td>Optional API</td></tr>
@@ -1639,7 +1779,7 @@ that have to be fixed manually.</p></div>
 <div class="ulist"><ul><li><p>you can properly implement the method</p></li><li><p>you can call a specific default method:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public void collidingMethod() {
 	ImplementedInterface.super
 		.collidingMethod();
-}</code></pre></div></div></li></ul></div></section><section id="exercise_1_4"><h2>Exercise 1</h2><div class="paragraph"><p>Adding default methods and<br>
+}</code></pre></div></div></li></ul></div></section><section id="exercise_1_5"><h2>Exercise 1</h2><div class="paragraph"><p>Adding default methods and<br>
 observing resolution strategy.</p></div></section><section id="static_interface_methods"><h2>Static Interface Methods</h2><div class="paragraph"><p>Interfaces can now also have static methods.<br>
 (<strong>These are not "static default" methods!</strong>)</p></div>
 <div class="paragraph"><p>Syntax as usual:</p></div>
@@ -1705,7 +1845,7 @@ methods just like classes</p></li></ul></div></section><section id="summary_17">
 have default methods.</p></div>
 <div class="paragraph"><p>Specific use cases:</p></div>
 <div class="ulist"><ul><li><p>create fluent decorator APIs</p></li><li><p>evolve interfaces without breaking clients</p></li></ul></div></section></section>
-<section><section id="java_8_7"><h2>Java 8</h2><table class="toc">
+<section><section id="java_8_8"><h2>Java 8</h2><table class="toc">
 	<tr><td>Lambda Expressions</td></tr>
 	<tr><td>Stream API</td></tr>
 	<tr><td>Optional API</td></tr>
