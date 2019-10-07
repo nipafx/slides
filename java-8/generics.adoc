@@ -13,6 +13,40 @@
 </table>
 ++++
 
+=== Generics Recap
+
+A `List` is "a list of anything":
+
+* can add anything ⇝ `void add(Object)`
+* can return anything ⇝ `Object get()`
+* we need to track what is safe!
+
+```java
+List messages = new ArrayList<>();
+messages.add("Hello, Generics!")
+messages.add("5");
+String first = (String) messages.get(0);
+// when does this explode? 💣
+Integer second = (Integer) messages.get(1);
+```
+
+=== Generics Recap
+
+A `List<String>` is "a list of strings":
+
+* can only add strings ⇝ `void add(String)`
+* can only return strings ⇝ `String get()`
+* compiler tracks what is safe!
+
+```java
+List<String> messages = new ArrayList();
+messages.add("Hello, Generics!")
+messages.add("5");
+String first = messages.get(0);
+// when does this explode? 💣
+Integer second = messages.get(1);
+```
+
 === Exercise 1
 
 Why generics?
