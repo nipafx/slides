@@ -56,10 +56,235 @@ Why generics?
 
 ++++
 <table class="toc">
-	<tr class="toc-current"><td>Generic Basics [n.a.]</td></tr>
+	<tr class="toc-current"><td>Generic Basics</td></tr>
 	<tr><td>Wildcards [n.a.]</td></tr>
 	<tr><td>Recursive Generics [n.a.]</td></tr>
 	<tr><td>Summary</td></tr>
 </table>
 ++++
 
+=== A Gift Box
+
+```java
+public class GiftBox {
+
+	private Object gift;
+
+	public void wrap(Object gift) {
+		this.gift = gift;
+	}
+
+	public Object unwrap() {
+		return gift;
+	}
+
+}
+```
+
+=== Surprise!
+
+Surprises may be great presents, +
+but they're not good code.
+
+```java
+public void getPresent(GiftBox box) {
+	// I hope/expect to be given a tablet
+	// but `unwrap()` returns `Object`
+	Tablet present = (Tablet) box.unwrap();
+}
+```
+
+=== The Problem With "Anything"
+
+Problem is that `GiftBox` wraps "anything", +
+but it can be a different "anything" +
+for each call to `wrap` and `unwrap`:
+
+```java
+GiftBox box = new GiftBox();
+box.wrap(0);
+box.wrap("Tablet");
+Object present = box.unwrap();
+Tablet tablet = (Tablet) box.unwrap();
+```
+
+=== The Generic "Anything"
+
+With generics:
+
+* "anything" gets a name
+* fields, parameters, variables +
+  can be forced to be _that_ "anything"
+* compiler makes sure we get it right
+
+=== Declaring Generic Types
+
+To "generify" `GiftBox`:
+
+* when declaring `GiftBox`, add _type variable_ `T` +
+  (this makes `GiftBox` a _generic class_)
+* use `T` to express type of fields, parameters, variables
+
+```java
+public class GiftBox<T> {
+
+	private T gift;
+
+	// [...]
+
+}
+```
+
+=== A Generic Gift Box
+
+```java
+public class GiftBox<T> {
+
+	private T gift;
+
+	public void wrap(T gift) {
+		this.gift = gift;
+	}
+
+	public T unwrap() {
+		return gift;
+	}
+
+}
+```
+
+=== Using Generic Types
+
+When using a generic type, +
+a concrete type is "assigned to" `T`:
+
+```java
+GiftBox<Tablet> box = new GiftBox<Tablet>();
+```
+
+As if:
+
+```java
+public class TabletGiftBox {
+
+	private Tablet gift;
+
+	public void wrap(Tablet gift) { /*...*/ }
+	public Tablet unwrap() { /*...*/ }
+
+}
+```
+
+=== Using Generic Types
+
+`GiftBox<T>` is type-safe because +
+the type of present is no longer a surprise.
+
+```java
+public void getPresent(GiftBox<Tablet> box) {
+	// `unwrap()` returns `Tablet`
+	Tablet present = box.unwrap();
+}
+```
+
+=== Types Aren't Everything
+
+Assume a more complicated `GiftBox` +
+and this utility method:
+
+```java
+public static Object unwrap(GiftBox box) {
+	box.readCard();
+	box.removeRibbon();
+	box.removeWrappingPaper();
+	Object present = box.open();
+	return present;
+}
+```
+
+This *method* wants to be generic!
+
+=== Declaring Generic Methods
+
+Type variables can also be added to methods:
+
+```java
+public static <T> T unwrap(GiftBox<T> box) {
+	box.readCard();
+	box.removeRibbon();
+	box.removeWrappingPaper();
+	T present = box.open();
+	return present;
+}
+```
+
+=== Using Generic Methods
+
+```java
+GiftBox<Tablet> box = // ...
+// signature: `<T> T unwrap(GiftBox<T> box)`
+Tablet present = GiftUtilities.<Tablet> unwrap(box);
+```
+
+=== Type Variables For Classes Vs Methods
+
+A generic class' type variable:
+
+* can be used in all instance fields/methods
+* can't be used in static fields/methods
+
+Instance and static methods +
+can have (extra) type variables.
+
+=== Classes Vs Methods
+
+```java
+public class GiftBox<T> {
+
+	private T gift;
+
+	public void wrap(T gift) { /*...*/ }
+	public Card readCard() { /*...*/ }
+	public Ribbon removeRibbon() { /*...*/ }
+	public WrappingPaper removeWrappingPaper() { /*...*/ }
+
+	// not the same `T`!
+	public static <T> T unwrap(GiftBox<T> box) { /*...*/ }
+
+}
+```
+
+
+=== Type Inference
+
+Compiler can infer generic types:
+
+* for generic constructor, use _diamond operator_ `<>`:
++
+```java
+GiftBox<Tablet> box = new GiftBox<>();
+```
+* for generic method, don't use `<...>` at all:
++
+```java
+GiftBox<Tablet> box = // ...
+Tablet present = GiftUtilities.unwrap(box);
+```
+
+=== Type Inference
+
+Type inference is very reliable, but:
+
+* may occasionally infer the wrong type
+* may occasionally make code harder to read +
+  because type information is implicit
+
+For such cases:
+
+* remember the explicit syntax +
+  (particularly for generic methods)
+* use it to clarify code for compiler or colleagues
+
+=== Exercise 2
+
+"Generify" a tree.
