@@ -33,10 +33,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		</div>
 	</div>
 	<div class="participant">
-		<a href="http://virtualjug.com/"><img src="images/logo-vjug.jpg" class="logo" style="{host-logo-style}"></a>
+		<a href="https://www.accenture.de"><img src="images/logo-accenture.jpg" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="http://virtualjug.com/">vJUG</a></p>
-			<p><a href="https://twitter.com/VirtualJUG" style="{host-twitter-style}">@VirtualJUG</a></p>
+			<p><a href="https://www.accenture.de">Accenture</a></p>
+			<p><a href="https://twitter.com/AccentureDACH" style="{host-twitter-style}">@AccentureDACH</a></p>
 		</div>
 	</div>
 </div>
@@ -50,9 +50,9 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="http://virtualjug.com/"><img src="images/logo-vjug.jpg" class="logo" style="{host-logo-style}"></a>
+		<a href="https://www.accenture.de"><img src="images/logo-accenture.jpg" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="http://virtualjug.com/">vJUG</a> / <a href="https://twitter.com/VirtualJUG" style="{host-twitter-style}">@VirtualJUG</a></p>
+			<p><a href="https://www.accenture.de">Accenture</a> / <a href="https://twitter.com/AccentureDACH" style="{host-twitter-style}">@AccentureDACH</a></p>
 		</div>
 	</div>
 </footer>
@@ -174,7 +174,8 @@ int numLetters = switch (day) {
 <a href="https://blogs.oracle.com/java-platform-group/oracle-jdk-releases-for-java-11-and-later">*</a></p></div></section><section id="openjdk_vs_oracle_jdk_2"><h2>OpenJDK vs Oracle JDK</h2><div class="paragraph"><p>Only difference is license and support model:</p></div>
 <div class="ulist"><ul><li><p><strong>Oracle&#8217;s OpenJDK</strong>: licensed under GPL+CE</p></li><li><p><strong>Oracle JDK</strong> is fully commercial:<br>
 from 11 on, no free use in production</p></li></ul></div>
-<div class="paragraph"><p><strong>⇝ OpenJDK is the new default!</strong></p></div>
+<div class="paragraph"><p><strong>⇝ OpenJDK is the new default!</strong><br>
+<strong>(<a href="https://medium.com/@javachampions/java-is-still-free-2-0-0-6b9aa8d6d244">Java is still free</a>)</strong></p></div>
 <div class="paragraph"><p>(More on support later&#8230;&#8203;)</p></div></section><section id="more_releases"><h2>More releases?</h2><div class="paragraph"><p>The old plan:</p></div>
 <div class="ulist"><ul><li><p>releases are driven by flagship features</p></li><li><p>new major release roughly every 2 years</p></li></ul></div>
 <div class="paragraph"><p>The old reality:</p></div>
@@ -189,7 +190,10 @@ with known quality guarantees.</p></div>
 <div class="paragraph"><p>⇝ No "beta versions"!</p></div></section><section id="upsides"><h2>Upsides</h2><div class="ulist"><ul><li><p>completed features get out earlier</p></li><li><p>no pressure to complete features on time</p></li><li><p>easier to react to changes in the ecosystem</p></li><li><p>easier to incubate features</p></li></ul></div></section><section id="incubate_features"><h2>Incubate features?</h2><div class="paragraph"><p>Two concepts allow features to incubate:</p></div>
 <div class="ulist"><ul><li><p><a href="https://openjdk.java.net/jeps/11">incubator modules</a> for APIs</p></li><li><p><a href="https://blog.codefx.org/java/enable-preview-features/">preview language features</a></p></li></ul></div>
 <div class="paragraph"><p>Features are shipped for experimentation.</p></div>
-<div class="paragraph"><p>There are safeguards against accidental proliferation.</p></div></section><section id="what_is_lts"><h2>What is LTS?</h2><div class="paragraph"><p>To discuss long-term support,<br>
+<div class="paragraph"><p>There are safeguards against accidental proliferation.</p></div></section><section id="release_fatigue"><h2>Release fatigue?</h2><div class="paragraph"><p>"Java will change too fast."</p></div>
+<div class="paragraph"><p>"Test matrix will explode."</p></div>
+<div class="paragraph"><p>"Ecosystem will fragment."</p></div>
+<div class="paragraph"><p>"Constant migrations will be expensive."</p></div></section><section id="what_is_lts"><h2>What is LTS?</h2><div class="paragraph"><p>To discuss long-term support,<br>
 lets look at JDK development:</p></div>
 <div class="ulist"><ul><li><p>there&#8217;s the OpenJDK code base at<br>
 <a href="https://hg.openjdk.java.net/jdk/jdk/">hg.openjdk.java.net/jdk/jdk/</a></p></li><li><p>there are many clones:</p><div class="ulist"><ul><li><p>for each JDK release</p></li><li><p>for each JDK project</p></li><li><p>each vendor has their own</p></li></ul></div></li></ul></div></section><section id="openjdk_development"><h2>OpenJDK development</h2><div class="paragraph"><p><strong>A new feature, simplified:</strong></p></div>
@@ -206,32 +210,7 @@ lets look at JDK development:</p></div>
 <div class="ulist"><ul><li><p>commitment by the community:<br>
 4+ years for 8, 11, 17, 23, etc.</p></li><li><p><a href="https://access.redhat.com/articles/1299013">under Red Hat&#8217;s guidance</a>:</p><div class="ulist"><ul><li><p>for OpenJDK 8 until 06/2023</p></li><li><p>for OpenJDK 11 until 10/2024</p></li></ul></div></li><li><p>built and shipped by <a href="https://adoptopenjdk.net/">Adopt OpenJDK</a></p></li></ul></div></section><section id="free_lts_2"><h2>Free LTS</h2><div class="paragraph"><p>Other players:</p></div>
 <div class="ulist"><ul><li><p><a href="https://aws.amazon.com/corretto/">Amazon Corretto</a></p></li><li><p><a href="https://sap.github.io/SapMachine/">SapMachine</a></p></li><li><p><a href="https://github.com/alibaba/dragonwell8">Alibaba Dragonwell8</a></p></li><li><p><a href="https://bell-sw.com/pages/java-12.0.2/">Liberica JDK</a></p></li></ul></div>
-<div class="paragraph"><p>More?</p></div></section><section id="free_lts_3"><h2>Free LTS</h2><div class="paragraph"><p>Amazon Corretto:</p></div>
-<div class="ulist"><ul><li><p>builds on OpenJDK</p></li><li><p>contains additional security<br>
-and stability fixes by Amazon</p></li></ul></div>
-<div class="paragraph"><p>It is <a href="https://aws.amazon.com/corretto/faqs">updated quarterly</a>:</p></div>
-<div class="ulist"><ul><li><p>Java 8 until at least 06/2023</p></li><li><p>Java 11 until at least 08/2024</p></li></ul></div></section><section id="release_fatigue"><h2>Release fatigue?</h2><div class="paragraph"><p>"Java will change too fast."</p></div>
-<div class="paragraph"><p>"Test matrix will explode."</p></div>
-<div class="paragraph"><p>"Ecosystem will fragment."</p></div>
-<div class="paragraph"><p>"Constant migrations will be expensive."</p></div>
-<div class="paragraph"><p>"Nobody will leave Java 11 behind."</p></div></section><section data-background-image="images/panic.gif" data-background-size="cover" data-state="empty"></section><section id="fast_change"><h2>Fast Change</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>The rate of innovation doesn&#8217;t change.
-The rate of innovation delivery increases.</p></div></blockquote><div class="attribution">&#8212; Mark Reinhold</div></div>
-<div class="paragraph"><p>Maybe speed will pick up a little:</p></div>
-<div class="ulist"><ul><li><p>recent activities target low-hanging fruits</p></li><li><p>Oracle is focusing on Java core (my impression!)</p></li></ul></div></section><section id="fast_change_2"><h2>Fast Change</h2><div class="paragraph"><p>By and large:</p></div>
-<div class="paragraph"><p><strong>Evolution will be <em>steadier</em>, not <em>faster</em>.</strong></p></div>
-<div class="paragraph"><p>(see Java 10+)</p></div></section><section id="exploding_test_matrix"><h2>Exploding test matrix</h2><div class="paragraph"><p>As the range of supported versions increases&#8230;&#8203;</p></div>
-<div class="ulist"><ul><li><p>builds need to run against all of them</p></li><li><p>developers need to switch between them</p></li></ul></div>
-<div class="paragraph"><p>Many tools already support this.<br>
-<strong>⇝ We need to know how.</strong></p></div>
-<div class="paragraph"><p>Also: Moar automization!</p></div></section><section id="fragmenting_ecosystem"><h2>Fragmenting Ecosystem</h2><div class="paragraph"><p>"This will be like Python 2/3!"</p></div>
-<div class="paragraph"><p>No.</p></div></section><section data-background-image="images/works-on-java-9.png" data-background-size="cover" data-state="empty"></section><section id="expensive_migrations"><h2>Expensive migrations</h2><div class="paragraph"><p>Yes, <a href="https://blog.codefx.org/java/java-9-migration-guide">Java 9 migration is tough</a>!</p></div>
-<div class="paragraph"><p>But not the norm:</p></div>
-<div class="ulist"><ul><li><p>Java 10 is trivial</p></li><li><p>Java 11 is easy</p></li><li><p>Java 12 is trivial</p></li><li><p>&#8230;&#8203;</p></li></ul></div>
-<div class="paragraph"><p>Oracle is still committed<br>
-to backwards compatibility!</p></div></section><section id="expensive_migrations_2"><h2>Expensive migrations</h2><div class="paragraph"><p>Balance shifted between<br>
-<strong>compatibility vs evolution</strong>:</p></div>
-<div class="ulist"><ul><li><p><code>@Deprecated(forRemoval=true)</code></p></li><li><p>"one major release" is now 6 months, not 36</p></li><li><p>increasing bytecode level</p></li><li><p>incubating features (if used inappropriately!)</p></li></ul></div></section><section id="expensive_migrations_3"><h2>Expensive migrations</h2><div class="paragraph"><p>Remedies:</p></div>
-<div class="ulist"><ul><li><p>stick to supported APIs</p></li><li><p>stick to standardized behavior</p></li><li><p>stick to well-maintained projects</p></li><li><p>keep dependencies and tools up to date</p></li></ul></div></section><section id="staying_on_java_11_lts"><h2>Staying on Java 11 LTS</h2><div class="paragraph"><p>I&#8217;d love for everyone<br>
+<div class="paragraph"><p>More?</p></div></section><section id="staying_on_java_11_lts"><h2>Staying on Java 11 LTS</h2><div class="paragraph"><p>I&#8217;d love for everyone<br>
 to always be up to date.</p></div>
 <div class="paragraph"><p><strong>But:</strong></p></div>
 <div class="paragraph"><p>Going from Java 11 to 12<br>
@@ -446,7 +425,8 @@ talks:
 <section id="projects_4"><h2>Projects</h2><div class="paragraph"><p>To know what&#8217;s coming:</p></div>
 <div class="ulist"><ul><li><p>pick a project that interests you</p></li><li><p>look out for mentions</p></li><li><p>subscribe to the mailing list</p></li><li><p>find early access builds and try them</p></li><li><p>give feedback</p></li></ul></div>
 <div class="paragraph"><p>Tell your colleagues about it!</p></div></section>
-<section><section id="about_nicolai_parlog" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>About Nicolai Parlog</h2><div style="float: left; width: 45%; margin:0px;">
+<section id="about_nicolai_parlog" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>About Nicolai Parlog</h2>
+<div style="float: left; width: 45%; margin:0px;">
 	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="images/cover-jms.png" style="margin: 0;"></a>
 	<p style="
 		position: fixed;
@@ -460,10 +440,17 @@ talks:
 		border-radius: 12px;
 		background-color: rgba(255,255,255,0.5);
 		padding: 2px 8px 7px 4px;
-">40% off with<br>code <em>mtpvjug19</em></p>
+">37% off with<br>code <em>fccparlog</em></p>
 	<p><a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb">tiny.cc/jms</a></p>
-</div><h3>Follow</h3><div class="paragraph"><p>💻 <a href="http://codefx.org">codefx.org</a><br>
-🐦 <a href="https://twitter.com/nipafx">@nipafx</a></p></div><h3>Want More?</h3><div class="paragraph"><p>Slides at <a href="https://slides.codefx.org">slides.codefx.org</a></p></div><div class="paragraph"><p>⇜ Get <a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&amp;a_bid=869915cb">my book</a>!</p></div><div class="paragraph"><p>You can <a href="http://blog.codefx.org/hire-nicolai-parlog/">hire me</a>:</p></div><div class="ulist"><ul><li><p>training (Java 8-12, JUnit 5)</p></li><li><p>consulting (Java 8-12)</p></li></ul></div></section><section data-background-image="images/accento-save.jpg" data-background-size="cover" data-state="empty"></section></section>
+</div>
+<h3>Follow</h3>
+<div class="paragraph"><p>💻 <a href="http://codefx.org">codefx.org</a><br>
+🐦 <a href="https://twitter.com/nipafx">@nipafx</a></p></div>
+<h3>Want More?</h3>
+<div class="paragraph"><p>Slides at <a href="https://slides.codefx.org">slides.codefx.org</a></p></div>
+<div class="paragraph"><p>⇜ Get <a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&amp;a_bid=869915cb">my book</a>!</p></div>
+<div class="paragraph"><p>You can <a href="http://blog.codefx.org/hire-nicolai-parlog/">hire me</a>:</p></div>
+<div class="ulist"><ul><li><p>training (Java 8-12, JUnit 5)</p></li><li><p>consulting (Java 8-12)</p></li></ul></div></section>
 <section><section id="image_credits"><h2>Image Credits</h2><div class="ulist"><ul><li><p><a href="https://unsplash.com/photos/bEXy1YQNIII">merry-go-round</a>:
 <a href="https://unsplash.com/@ja5on">Jason Chen</a>,
 <a href="https://unsplash.com/license">Unsplash license</a></p></li><li><p><a href="https://pixabay.com/en/number-digit-eight-8-background-1982275/">eight</a>:

@@ -33,10 +33,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://www.nav.no/"><img src="images/logo-nav.png" class="logo" style="{host-logo-style}"></a>
+		<a href="https://www.accenture.de"><img src="images/logo-accenture.jpg" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://www.nav.no/">NAV</a></p>
-			<p><a href="https://twitter.com/navnorge" style="{host-twitter-style}">@navnorge</a></p>
+			<p><a href="https://www.accenture.de">Accenture</a></p>
+			<p><a href="https://twitter.com/AccentureDACH" style="{host-twitter-style}">@AccentureDACH</a></p>
 		</div>
 	</div>
 </div>
@@ -50,9 +50,9 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://www.nav.no/"><img src="images/logo-nav.png" class="logo" style="{host-logo-style}"></a>
+		<a href="https://www.accenture.de"><img src="images/logo-accenture.jpg" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://www.nav.no/">NAV</a> / <a href="https://twitter.com/navnorge" style="{host-twitter-style}">@navnorge</a></p>
+			<p><a href="https://www.accenture.de">Accenture</a> / <a href="https://twitter.com/AccentureDACH" style="{host-twitter-style}">@AccentureDACH</a></p>
 		</div>
 	</div>
 </footer>
@@ -70,8 +70,8 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 	<tr><td>Project Jigsaw</td></tr>
 	<tr><td>Java Module System Basics</td></tr>
 	<tr><td>Beyond The Basics</td></tr>
-	<!-- <tr><td>Command Line Options</td></tr> -->
-	<!-- <tr><td>Dependency Analysis With <code>jdeps</code></td></tr> -->
+	<tr><td>Command Line Options</td></tr>
+	<tr><td>Dependency Analysis With <code>jdeps</code></td></tr>
 	<tr><td>Runtime Images With <code>jlink</code></td></tr>
 	<tr><td>Migration Challenges</td></tr>
 	<!-- <tr><td>Incremental Modularization</td></tr> -->
@@ -451,6 +451,102 @@ at run time only</p></li><li><p>particularly valuable to open<br>
 for reflection</p></li></ul></div>
 <div class="paragraph"><p>Use to make types available for reflection<br>
 without making them public API.</p></div></section></section>
+<section><section id="command_line_options"><h2>Command Line Options</h2><div class="paragraph"><p>The module system is pretty strict but&#8230;&#8203;</p></div><div class="ulist"><ul><li><p>&#8230;&#8203; not all modules are well-designed</p></li><li><p>&#8230;&#8203; not all use cases were intended</p></li></ul></div><div class="paragraph"><p>What to do then?</p></div><div class="paragraph"><p>Command line options to the rescue!<br>
+(I often call them "escape hatches".)</p></div></section><section id="command_line_options_2"><h2>Command Line Options</h2><div class="paragraph"><p>All command line flags can be applied<br>
+to <code>javac</code> and <code>java</code>!</p></div>
+<div class="paragraph"><p>When used during compilation,<br>
+they do <em>not</em> change the resulting<br>
+module descriptor!</p></div></section><section id="add_modules"><h2>Add Modules</h2><div class="paragraph"><p>If a module is not required,<br>
+it might not make it into the module graph.</p></div>
+<div class="paragraph"><p><strong>Help it get there with <code>--add-modules</code>:</strong></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">$ java --module-path mods
+#   --add-modules &lt;module&gt;(,&lt;module&gt;)*
+    --add-modules java.xml.ws.annotation
+    --module advent</code></pre></div></div></section><section id="add_readability_edges"><h2>Add Readability Edges</h2><div class="paragraph"><p>Maybe a module in the graph is not readable<br>
+by another but you need it to be.</p></div>
+<div class="paragraph"><p><strong>Add readability edges with <code>--add-reads</code>:</strong></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">$ java --module-path mods
+#   --add-reads &lt;module&gt;=&lt;target&gt;(,&lt;more&gt;)*
+    --add-reads advent=factories
+    --module advent</code></pre></div></div></section><section id="add_exports"><h2>Add Exports</h2><div class="paragraph"><p>A common case:</p></div>
+<div class="paragraph"><p>A module needs types that<br>
+the owning module doesn&#8217;t export.</p></div>
+<div class="paragraph"><p><strong>Export them with <code>--add-exports</code>:</strong></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">$ java --module-path mods
+#   --add-exports &lt;module&gt;/&lt;package&gt;=&lt;target&gt;
+    --add-exports factories/factory.quotes=advent
+    --module advent</code></pre></div></div>
+<div class="paragraph"><p>Use target <code>ALL-UNNAMED</code> to export<br>
+to code on the class path.</p></div></section><section id="open_packages_2"><h2>Open Packages</h2><div class="paragraph"><p>Another common case:</p></div>
+<div class="paragraph"><p>A module reflects on types from a package that<br>
+the owning module doesn&#8217;t open.</p></div>
+<div class="paragraph"><p><strong>Open packages with <code>add-opens</code>:</strong></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">$ java --module-path mods
+#   --add-opens &lt;module&gt;/&lt;package&gt;=&lt;target&gt;
+    --add-opens factories/factory.quotes=advent
+    --module advent</code></pre></div></div>
+<div class="paragraph"><p>Use target <code>ALL-UNNAMED</code> to open<br>
+to code on the class path.</p></div>
+<div class="paragraph"><p>(It is not possible to open an entire module.)</p></div></section><section id="patch_modules"><h2>Patch Modules</h2><div class="paragraph"><p>Maybe you have a package split&#8230;&#8203;</p></div>
+<div class="paragraph"><p><strong>Mend it with <code>--patch-module</code>:</strong></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">$ java --module-path mods
+    --add-modules java.xml.ws.annotation
+#   --patch-module &lt;module&gt;=&lt;JAR&gt;
+    --patch-module java.xml.ws.annotation=jsr305.jar
+    --module advent</code></pre></div></div>
+<div class="paragraph"><p>All classes from <code>jsr305.jar</code> are put<br>
+into <em>java.xml.ws.annotation</em>.</p></div></section><section id="patch_module"><h2>Patch Module</h2><div class="paragraph"><p>By putting JAR content into a module <em>A</em>:</p></div>
+<div class="ulist"><ul><li><p>split packages can be mended</p></li><li><p><em>A</em> needs to read JAR&#8217;s dependencies,<br>
+which need to export used packages</p></li><li><p>modules using JAR content need to read <em>A</em><br>
+and <em>A</em> needs to export used packages</p></li></ul></div>
+<div class="paragraph"><p>Often used with <code>--add-reads</code> and <code>--add-exports</code>.</p></div></section><section id="summary_6"><h2>Summary</h2><div class="paragraph"><p>Edit module graph with:</p></div>
+<div class="ulist"><ul><li><p><code>--add-modules</code> to add modules</p></li><li><p><code>--add-reads</code> to add readability edges</p></li><li><p><code>--patch-module</code> to add classes to module</p></li><li><p><code>--add-exports</code> to export packages to modules</p></li><li><p><code>--add-opens</code> to open packages to modules</p></li></ul></div>
+<div class="paragraph"><p>The latter two accept <code>ALL-UNNAMED</code> as target.</p></div>
+<div class="paragraph"><p>More at <a href="https://blog.codefx.org">codefx.org</a>:</p></div>
+<div class="paragraph"><p><a href="https://blog.codefx.org/java/five-command-line-options-to-hack-the-java-9-module-system/">Five Command Line Options To Hack The JPMS</a></p></div></section></section>
+<section><section id="analyzing_dependencies_with_jdeps"><h2>Analyzing Dependencies With JDeps</h2><h3>Helping You Modularize!</h3></section><section id="about_jdeps"><h2>About JDeps</h2><div class="ulist"><ul><li><p>a command line tool</p></li><li><p>analyzes bytecode to<br>
+detect dependencies</p></li><li><p>exists since Java 8</p></li><li><p>really shines with modules</p></li></ul></div></section><section id="simplest_invocation"><h2>Simplest Invocation</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">$ jdeps sh-2.6.3.jar
+
+&gt; sh-2.6.3.jar -&gt; java.base
+&gt; sh-2.6.3.jar -&gt; java.datatransfer
+&gt; sh-2.6.3.jar -&gt; java.desktop
+# ... truncated more module dependencies ...
+&gt;    edu.udo.sh -&gt; com.beust.jcommander  not found
+&gt;    edu.udo.sh -&gt; edu.udo.sh.data       sh-2.6.3.jar
+&gt;    edu.udo.sh -&gt; edu.udo.sh.gui        sh-2.6.3.jar
+&gt;    edu.udo.sh -&gt; edu.udo.sh.gui.util   sh-2.6.3.jar
+&gt;    edu.udo.sh -&gt; edu.udo.sh.util       sh-2.6.3.jar
+&gt;    edu.udo.sh -&gt; java.io               java.base
+&gt;    edu.udo.sh -&gt; java.lang             java.base
+&gt;    edu.udo.sh -&gt; javax.swing           java.desktop
+# ... truncated many more package dependencies ...</code></pre></div></div></section><section id="analyzing_dependencies"><h2>Analyzing Dependencies</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">$ jdeps
+	--class-path 'libs/*' -recursive
+	sh-2.6.3.jar
+
+# ... truncated split package warnings ...
+# ... truncated some module/JAR dependencies...
+&gt; sh-2.6.3.jar -&gt; libs/commons-codec-1.6.jar
+&gt; sh-2.6.3.jar -&gt; libs/commons-io-2.4.jar
+&gt; sh-2.6.3.jar -&gt; libs/dom4j-1.6.1.jar
+&gt; sh-2.6.3.jar -&gt; libs/exp4j-0.1.38.jar
+&gt; sh-2.6.3.jar -&gt; libs/guava-18.0.jar
+# ... truncated more module/JAR dependencies...
+# ... truncated many, many package dependencies ...</code></pre></div></div></section><section id="creating_graphs"><h2>Creating Graphs</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">$ jdeps
+	--class-path 'libs/*' -recursive
+	--dot-output dots
+	sh-2.6.3.jar
+# sed -i 's/-1.0-SNAPSHOT.jar//g' summary.dot
+# sed -i '/java.base/d' summary.dot
+$ dot -Tpng -O dots/summary.dot</code></pre></div></div></section><section data-background-color="white" data-background-image="images/jdeps-scaffoldhunter-jars.png" data-background-size="contain" data-state="empty"></section><section id="jdk_internal_apis"><h2>JDK-Internal APIs</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">$ jdeps --jdk-internals
+	-recursive --class-path 'libs/*'
+	sh-2.6.3.jar
+
+&gt; batik-codec.jar -&gt; JDK removed internal API
+&gt;     JPEGImageWriter -&gt; JPEGCodec
+&gt; guava-18.0.jar -&gt; jdk.unsupported
+&gt;     Striped64 -&gt; Unsafe
+&gt; sh-2.6.3.jar -&gt; java.desktop
+&gt;     SteppedComboBox -&gt; WindowsComboBoxUI</code></pre></div></div></section></section>
 <section><section id="creating_runtime_images_with_jlink"><h2>Creating Runtime Images With JLink</h2><h3>Custom-Made For Your Application</h3></section><section id="remember_this" data-background-color="white" data-background-image="images/platform-modules.png" data-background-size="contain"><h2>Remember This?</h2></section><section id="benefiting_from_jdk_modularization"><h2>Benefiting From JDK Modularization</h2><div class="paragraph"><p>Create a JDK install with just the code you need:</p></div>
 <div class="ulist"><ul><li><p>know which modules your app uses (⇝ <code>jdeps</code>)</p></li><li><p>create an image with those modules (⇝ <code>jlink</code>)</p></li></ul></div>
 <div class="paragraph"><p>This is about <code>jlink</code>.</p></div></section><section id="a_minimal_jdk_image"><h2>A Minimal JDK Image</h2><div class="paragraph"><p>Create with <code>jlink</code>:</p></div>
@@ -493,7 +589,7 @@ which creates module descriptors on the fly.</p></div></section><section id="lin
 <div class="paragraph"><p>Launching the app:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">app-image/bin/calendar</code></pre></div></div></section><section id="more_features"><h2>More Features</h2><div class="ulist"><ul><li><p>automatic service binding<br>
 (with <code>--bind-services</code>)</p></li><li><p>various optimizations<br>
-(size and launch performance)</p></li><li><p>plugin API (not yet public)</p></li><li><p>cross OS image generation</p></li></ul></div></section><section id="summary_6"><h2>Summary</h2><div class="paragraph"><p>You can use <code>jlink</code> to:</p></div>
+(size and launch performance)</p></li><li><p>plugin API (not yet public)</p></li><li><p>cross OS image generation</p></li></ul></div></section><section id="summary_7"><h2>Summary</h2><div class="paragraph"><p>You can use <code>jlink</code> to:</p></div>
 <div class="ulist"><ul><li><p>create a runtime image<br>
 with just the right modules</p></li><li><p>create an application image<br>
 including your code</p></li></ul></div>
@@ -575,7 +671,8 @@ in the JDK / JRE folder?</p></li><li><p>are URLs to JDK classes / resources hand
 <div class="ulist"><ul><li><p>get your code in shape<br>
 (and prevent relapses)</p></li><li><p>check your dependencies and tools</p></li><li><p>if any are suspicious<br>
 (automatically true for IDEs, build tools):</p><div class="ulist"><ul><li><p>make sure they&#8217;re alive</p></li><li><p><strong>get them up to date!</strong></p></li><li><p>or look for alternatives</p></li></ul></div></li><li><p>download Java 11 and <strong>try it!</strong></p></li></ul></div></section></section>
-<section><section id="about_nicolai_parlog" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>About Nicolai Parlog</h2><div style="float: left; width: 45%; margin:0px;">
+<section id="about_nicolai_parlog" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>About Nicolai Parlog</h2>
+<div style="float: left; width: 45%; margin:0px;">
 	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="images/cover-jms.png" style="margin: 0;"></a>
 	<p style="
 		position: fixed;
@@ -591,8 +688,15 @@ in the JDK / JRE folder?</p></li><li><p>are URLs to JDK classes / resources hand
 		padding: 2px 8px 7px 4px;
 ">37% off with<br>code <em>fccparlog</em></p>
 	<p><a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb">tiny.cc/jms</a></p>
-</div><h3>Follow</h3><div class="paragraph"><p>💻 <a href="http://codefx.org">codefx.org</a><br>
-🐦 <a href="https://twitter.com/nipafx">@nipafx</a></p></div><h3>Want More?</h3><div class="paragraph"><p>Slides at <a href="https://slides.codefx.org">slides.codefx.org</a></p></div><div class="paragraph"><p>⇜ Get <a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&amp;a_bid=869915cb">my book</a>!</p></div><div class="paragraph"><p>You can <a href="http://blog.codefx.org/hire-nicolai-parlog/">hire me</a>:</p></div><div class="ulist"><ul><li><p>training (Java 8-12, JUnit 5)</p></li><li><p>consulting (Java 8-12)</p></li></ul></div></section><section data-background-image="images/accento-save.jpg" data-background-size="cover" data-state="empty"></section></section>
+</div>
+<h3>Follow</h3>
+<div class="paragraph"><p>💻 <a href="http://codefx.org">codefx.org</a><br>
+🐦 <a href="https://twitter.com/nipafx">@nipafx</a></p></div>
+<h3>Want More?</h3>
+<div class="paragraph"><p>Slides at <a href="https://slides.codefx.org">slides.codefx.org</a></p></div>
+<div class="paragraph"><p>⇜ Get <a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&amp;a_bid=869915cb">my book</a>!</p></div>
+<div class="paragraph"><p>You can <a href="http://blog.codefx.org/hire-nicolai-parlog/">hire me</a>:</p></div>
+<div class="ulist"><ul><li><p>training (Java 8-12, JUnit 5)</p></li><li><p>consulting (Java 8-12)</p></li></ul></div></section>
 <section><section id="image_credits"><h2>Image Credits</h2></section><section id="introduction"><h2>Introduction</h2><div class="ulist"><ul><li><p>puzzle-people:
 <a href="https://www.flickr.com/photos/pagedooley/">Kevin Dooley</a>
 (<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a>)</p></li><li><p>binary-code:
