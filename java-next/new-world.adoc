@@ -18,6 +18,8 @@
 (not all of them)
 
 
+// OPEN JDK
+
 === What's OpenJDK?
 
 OpenJDK is Java's reference implementation:
@@ -50,10 +52,13 @@ Only difference is license and support model:
 * *Oracle JDK* is fully commercial: +
 from 11 on, no free use in production
 
-*⇝ OpenJDK is the new default!*
+*⇝ OpenJDK is the new default!* +
+*(https://medium.com/@javachampions/java-is-still-free-2-0-0-6b9aa8d6d244[Java is still free])*
 
 (More on support later...)
 
+
+// SIX-MONTH RELEASES
 
 === More releases?
 
@@ -111,99 +116,6 @@ Features are shipped for experimentation.
 
 There are safeguards against accidental proliferation.
 
-
-=== What is LTS?
-
-To discuss long-term support, +
-lets look at JDK development:
-
-* there's the OpenJDK code base at +
-https://hg.openjdk.java.net/jdk/jdk/[hg.openjdk.java.net/jdk/jdk/]
-* there are many clones:
-** for each JDK release
-** for each JDK project
-** each vendor has their own
-
-=== OpenJDK development
-
-*A new feature, simplified:*
-
-* developed in "feature branch"
-* merged into "master" when (nearly) finished
-
-*A release, simplified:*
-
-* "release branch" created 3 months prior
-* only bug fixes merged to "release branch"
-
-*A bug/security/etc fix, simplified:*
-
-* usually developed in "master"
-* merged into relevant release branches
-
-=== OpenJDK support
-
-Support really means:
-
-* fixing bugs, usually in "master"
-* merging fixes to "release branches"
-
-How does *Oracle* handle that?
-
-* work on "master" in *OpenJDK*
-* merge to *current* "release branch" in *OpenJDK*
-* merge to *LTS* version in *Oracle JDK*
-
-=== Long-term support
-
-What's left for long-term support?
-
-⇝ *Merging fixes into old JDK versions.*
-
-=== Commercial LTS
-
-* https://www.oracle.com/java/java-se-subscription.html[Oracle]
-* https://developer.ibm.com/javasdk/support/lifecycle/[IBM] /
-https://access.redhat.com/articles/1299013[RedHat]
-* https://www.azul.com/products/azul_support_roadmap/[Azul]
-* ...
-
-=== Free LTS
-
-Long-term support for *OpenJDK*:
-
-* commitment by the community: +
-4+ years for 8, 11, 17, 23, etc.
-* https://access.redhat.com/articles/1299013[under Red Hat's guidance]:
-** for OpenJDK 8 until 06/2023
-** for OpenJDK 11 until 10/2024
-* built and shipped by https://adoptopenjdk.net/[Adopt OpenJDK]
-
-=== Free LTS
-
-Other players:
-
-* https://aws.amazon.com/corretto/[Amazon Corretto]
-* https://sap.github.io/SapMachine/[SapMachine]
-* https://github.com/alibaba/dragonwell8[Alibaba Dragonwell8]
-* https://bell-sw.com/pages/java-12.0.2/[Liberica JDK]
-
-More?
-
-=== Free LTS
-
-Amazon Corretto:
-
-* builds on OpenJDK
-* contains additional security +
-and stability fixes by Amazon
-
-It is https://aws.amazon.com/corretto/faqs[updated quarterly]:
-
-* Java 8 until at least 06/2023
-* Java 11 until at least 08/2024
-
-
 === Release fatigue?
 
 "Java will change too fast."
@@ -214,8 +126,9 @@ It is https://aws.amazon.com/corretto/faqs[updated quarterly]:
 
 "Constant migrations will be expensive."
 
-"Nobody will leave Java 11 behind."
+// "Nobody will leave Java 11 behind."
 
+////
 [state="empty"]
 === !
 image::images/panic.gif[background, size=cover]
@@ -298,7 +211,6 @@ Remedies:
 * keep dependencies and tools up to date
 // * consider using `jlink`
 
-////
 === JLink can help
 
 Use `jlink` to create application images:
@@ -323,6 +235,102 @@ Works great if you have +
 over the deployment.
 
 Not so much if you deliver software.
+////
+
+
+// LTS
+
+=== What is LTS?
+
+To discuss long-term support, +
+lets look at JDK development:
+
+* there's the OpenJDK code base at +
+https://hg.openjdk.java.net/jdk/jdk/[hg.openjdk.java.net/jdk/jdk/]
+* there are many clones:
+** for each JDK release
+** for each JDK project
+** each vendor has their own
+
+=== OpenJDK development
+
+*A new feature, simplified:*
+
+* developed in "feature branch"
+* merged into "master" when (nearly) finished
+
+*A release, simplified:*
+
+* "release branch" created 3 months prior
+* only bug fixes merged to "release branch"
+
+*A bug/security/etc fix, simplified:*
+
+* usually developed in "master"
+* merged into relevant release branches
+
+=== OpenJDK support
+
+Support really means:
+
+* fixing bugs, usually in "master"
+* merging fixes to "release branches"
+
+How does *Oracle* handle that?
+
+* work on "master" in *OpenJDK*
+* merge to *current* "release branch" in *OpenJDK*
+* merge to *LTS* version in *Oracle JDK*
+
+=== Long-term support
+
+What's left for long-term support?
+
+⇝ *Merging fixes into old JDK versions.*
+
+=== Commercial LTS
+
+* https://www.oracle.com/java/java-se-subscription.html[Oracle]
+* https://developer.ibm.com/javasdk/support/lifecycle/[IBM] /
+https://access.redhat.com/articles/1299013[RedHat]
+* https://www.azul.com/products/azul_support_roadmap/[Azul]
+* ...
+
+=== Free LTS
+
+Long-term support for *OpenJDK*:
+
+* commitment by the community: +
+4+ years for 8, 11, 17, 23, etc.
+* https://access.redhat.com/articles/1299013[under Red Hat's guidance]:
+** for OpenJDK 8 until 06/2023
+** for OpenJDK 11 until 10/2024
+* built and shipped by https://adoptopenjdk.net/[Adopt OpenJDK]
+
+=== Free LTS
+
+Other players:
+
+* https://aws.amazon.com/corretto/[Amazon Corretto]
+* https://sap.github.io/SapMachine/[SapMachine]
+* https://github.com/alibaba/dragonwell8[Alibaba Dragonwell8]
+* https://bell-sw.com/pages/java-12.0.2/[Liberica JDK]
+
+More?
+
+////
+=== Free LTS
+
+Amazon Corretto:
+
+* builds on OpenJDK
+* contains additional security +
+and stability fixes by Amazon
+
+It is https://aws.amazon.com/corretto/faqs[updated quarterly]:
+
+* Java 8 until at least 06/2023
+* Java 11 until at least 08/2024
 ////
 
 === Staying on Java 11 LTS
