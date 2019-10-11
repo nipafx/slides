@@ -60,7 +60,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 <section><section id="hello_java_8"><h2>Hello, Java 8</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">() -&gt; System.out.println("Hello, Java 8!")</code></pre></div></div></section><section id="about_me"><h2>About Me</h2><div class="paragraph"><p>My name is <strong>Nicolai</strong> (Parlog)</p></div>
 <div class="ulist"><ul><li><p>Java since 2005, professionally since 2011</p></li><li><p>blogger since 2014</p></li><li><p>freelancing developer, speaker, trainer since 2016</p></li><li><p>published author since 2019</p></li></ul></div>
 <div class="paragraph"><p>Main topics:</p></div>
-<div class="ulist"><ul><li><p>JDK features (language, APIs, JVM)</p></li><li><p>code quality (clean code and comments)</p></li><li><p>processes (code reviews, knowledge sharing)</p></li></ul></div></section><section id="about_you"><h2>About You</h2><div class="ulist"><ul><li><p>what&#8217;s your name?</p></li><li><p>when did you write the last <code>for</code> loop?</p></li><li><p>did you ever write a lambda expression?</p></li></ul></div></section><section id="code_of_conduct"><h2>Code of Conduct</h2><div class="ulist"><ul><li><p>ask any question you have<br>
+<div class="ulist"><ul><li><p>JDK features (language, APIs, JVM)</p></li><li><p>code quality (clean code and comments)</p></li><li><p>processes (code reviews, knowledge sharing)</p></li></ul></div></section><section id="about_you"><h2>About You</h2><div class="ulist"><ul><li><p>what&#8217;s your name?</p></li><li><p>since when do you write Java?</p></li><li><p>when did you write the last <code>for</code> loop?</p></li><li><p>did you ever write a lambda expression?</p></li></ul></div></section><section id="code_of_conduct"><h2>Code of Conduct</h2><div class="ulist"><ul><li><p>ask any question you have<br>
 as soon as you have it</p></li><li><p>during exercises,<br>
 ask your colleagues first</p></li><li><p>there are no stupid questions!</p></li><li><p>work in pairs or triples<br>
 (+1 for mixing skill levels)</p></li><li><p>consider taking notes</p></li></ul></div></section><section id="slides"><h2>Slides</h2><div class="ulist"><ul><li><p>online at <a href="http://slides.codefx.org/java-8">slides.codefx.org/java-8</a></p></li><li><p>press "?" to learn how to navigate</p></li><li><p>there will be a permalink when the course is over</p></li><li><p>version-specific content is marked with ⑨, ⑩, ⑪</p></li></ul></div>
@@ -91,14 +91,14 @@ ask your colleagues first</p></li><li><p>there are no stupid questions!</p></li>
 	<tr><td>Summary</td></tr>
 </table></section><section id="generics_recap"><h2>Generics Recap</h2><div class="paragraph"><p>A <code>List</code> is "a list of anything":</p></div>
 <div class="ulist"><ul><li><p>can add anything ⇝ <code>void add(Object)</code></p></li><li><p>can return anything ⇝ <code>Object get()</code></p></li><li><p>we need to track what is safe!</p></li></ul></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List messages = new ArrayList&lt;&gt;();
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List messages = new ArrayList();
 messages.add("Hello, Generics!")
 messages.add("5");
 String first = (String) messages.get(0);
 // when does this explode? 💣
 Integer second = (Integer) messages.get(1);</code></pre></div></div></section><section id="generics_recap_2"><h2>Generics Recap</h2><div class="paragraph"><p>A <code>List&lt;String&gt;</code> is "a list of strings":</p></div>
 <div class="ulist"><ul><li><p>can only add strings ⇝ <code>void add(String)</code></p></li><li><p>can only return strings ⇝ <code>String get()</code></p></li><li><p>compiler tracks what is safe!</p></li></ul></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;String&gt; messages = new ArrayList();
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;String&gt; messages = new ArrayList&lt;&gt;();
 messages.add("Hello, Generics!")
 messages.add("5");
 String first = messages.get(0);
@@ -381,7 +381,7 @@ it must have exactly one abstract method.</p></div>
 which leads to compile error when not functional.</p></div></section><section id="functional_jdk"><h2>Functional JDK</h2><div class="paragraph"><p>JDK has many functional interfaces!</p></div>
 <div class="ulist"><ul><li><p>basic types</p></li><li><p>special cases</p></li><li><p>two parameters</p></li><li><p>primitive specializations</p></li></ul></div></section><section id="basic_func_int"><h2>Basic Func. Int.</h2><div class="ulist"><ul><li><p><code>Supplier&lt;T&gt;</code>: <code>T get()</code></p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Supplier&lt;String&gt; s = () -&gt; "foo";</code></pre></div></div></li><li><p><code>Consumer&lt;T&gt;</code>: <code>void accept(T)</code></p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Consumer&lt;String&gt; c = s -&gt; System.out.println(s);</code></pre></div></div></li><li><p><code>Function&lt;T, R&gt;</code>: <code>R apply(T)</code></p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Function&lt;String, Integer&gt; f = s -&gt; s.length();</code></pre></div></div></li></ul></div></section><section id="special_cases"><h2>Special Cases</h2><div class="ulist"><ul><li><p><code>UnaryOperator&lt;T&gt;</code>: <code>T apply(T)</code></p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">UnaryOperator&lt;String&gt; o = s -&gt; s + s;</code></pre></div></div></li><li><p><code>Predicate&lt;T&gt;</code>: <code>boolean test(T)</code></p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Predicate&lt;String&gt; p = s -&gt; s.isEmpty();</code></pre></div></div></li></ul></div></section><section id="terminology"><h2>Terminology</h2><div class="paragraph"><p>Essential terminology:</p></div>
 <div class="ulist"><ul><li><p><code>Supplier</code> returns something without input</p></li><li><p><code>Consumer</code> uses something without return</p></li><li><p><code>Function</code> transforms input into return</p></li><li><p><code>Operator</code> works as <code>Function</code> but on the same type</p></li><li><p><code>Predicate</code> tests something re <code>true</code>/<code>false</code></p></li></ul></div></section><section id="two_parameters"><h2>Two Parameters</h2><div class="ulist"><ul><li><p>no <code>BiSupplier&lt;T&gt;</code></p></li><li><p><code>BiConsumer&lt;T, U&gt;</code>: <code>void accept(T, U)</code></p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">BiConsumer&lt;String, Integer&gt; c =
-	(s, i) -&gt; System.out.println(s + ": " + i);</code></pre></div></div></li><li><p><code>BiFunction&lt;T, U, R&gt;</code>: <code>R apply(T, U)</code></p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Function&lt;String, Boolean, Integer&gt; f =
+	(s, i) -&gt; System.out.println(s + ": " + i);</code></pre></div></div></li><li><p><code>BiFunction&lt;T, U, R&gt;</code>: <code>R apply(T, U)</code></p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">BiFunction&lt;String, Boolean, Integer&gt; f =
 	(s, b) -&gt; b ? s.length() : 0;</code></pre></div></div></li><li><p><code>BinaryOperator&lt;T&gt;</code>: <code>T apply(T, T)</code></p></li><li><p><code>BiPredicate&lt;T, U&gt;</code>: <code>boolean test(T, U)</code></p></li></ul></div></section><section id="primitive_specializations"><h2>Primitive Specializations</h2><div class="paragraph"><p>For <code>int</code>, <code>long</code>, <code>double</code> exist specializations:</p></div>
 <div class="ulist"><ul><li><p><code>IntSupplier</code>: <code>int getAsInt()</code></p></li><li><p><code>IntConsumer</code>: <code>void accept(int)</code></p></li><li><p><code>IntFunction&lt;R&gt;</code>: <code>R apply(int)</code></p></li><li><p><code>ToIntFunction&lt;T&gt;</code>: <code>int applyAsInt(T)</code></p></li><li><p><code>IntUnaryOperator</code>: <code>int applyAsInt(int)</code></p></li><li><p><code>IntBinaryOperator</code>: <code>int applyAsInt(int, int)</code></p></li><li><p><code>IntPredicate</code>: <code>boolean test(int)</code></p></li></ul></div></section><section id="functional_interfaces_2"><h2>Functional Interfaces</h2><div class="paragraph"><p>All of these can be found<br>
 in <code>java.util.function</code>:</p></div>
@@ -464,12 +464,12 @@ of the first parameter:</p></div>
 <div class="ulist"><ul><li><p>streams are lazy:<br>
 they do nothing until terminal operation</p></li><li><p>streams are clever:<br>
 lots of internal optimizations</p></li><li><p>streams come with support for parallelization</p></li></ul></div></section><section id="simple_stream_pipeline"><h2>Simple Stream Pipeline</h2><div class="paragraph"><p>Your first <em>stream pipeline</em>:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Todo&gt; todos = // ...
-Set&lt;String&gt; = todos               // source
-	.stream()                     // start streaming
-	.map(Todo::description)       // operate on
-	.filter(d -&gt; d.length &gt; 10)   //     the stream
-	.collect(Collectors.toSet()); // terminal op.</code></pre></div></div></section><section id="stream_basics"><h2>Stream Basics</h2><div class="ulist"><ul><li><p>new package <code>java.util.stream</code><br>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Set&lt;Todo&gt; todos = // ...
+List&lt;String&gt; = todos               // source
+	.stream()                      // start streaming
+	.map(Todo::description)        // operate on
+	.filter(d -&gt; d.length &gt; 10)    //     the stream
+	.collect(Collectors.toList()); // terminal op.</code></pre></div></div></section><section id="stream_basics"><h2>Stream Basics</h2><div class="ulist"><ul><li><p>new package <code>java.util.stream</code><br>
 with <a href="https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html">excellent Javadoc</a></p></li><li><p>new interface <code>java.util.stream.Stream</code><br>
 with all important operations</p></li></ul></div></section><section id="stream_terminology"><h2>Stream Terminology</h2><div class="paragraph"><p>Every stream pipeline has three steps:</p></div>
 <div class="dlist"><dl><dt class="hdlist1">Source (one)</dt><dd><p>Get a stream, notably from a collection<br>
@@ -1489,11 +1489,12 @@ public CompletableFuture&lt;Void&gt; thenAccept(Consumer&lt;T&gt;);
 // wait for the computation to finish and get result
 public T join();</code></pre></div></div></section><section id="first_example"><h2>First Example</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public void loadWebPage() {
 	String url = "http://codefx.org";
-	CompletableFuture&lt;WebPage&gt; future = CompletableFuture
+	CompletableFuture&lt;WebPage&gt; futurePage = CompletableFuture
 			.supplyAsync(() -&gt; webRequest(url))
 			.thenApply(html -&gt; new WebPage(url, html));
 	// ... do other stuff
-	future.join();
+	WebPage page = futurePage.join();
+	// ... do something with `page`
 }
 
 private String webRequest(String url) {
@@ -1850,8 +1851,8 @@ have default methods.</p></div>
 	<tr><td>Stream API</td></tr>
 	<tr><td>Optional API</td></tr>
 	<tr><td>Functional Programming Basics</td></tr>
-	<tr><td>Default Methods</td></tr>
 	<tr><td>CompletableFuture API</td></tr>
+	<tr><td>Default Methods</td></tr>
 	<tr class="toc-current"><td>Summary</td></tr>
 </table></section><section id="summary_of_summaries"><h2>Summary of summaries</h2><div class="ulist"><ul><li><p>use lambdas to "pass code as data"<br>
 (stream API is excellent example)</p></li><li><p>give functions and immutability a shot</p></li><li><p>be aware of default methods</p></li><li><p>use monads to lift code to<br>
