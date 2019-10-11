@@ -157,11 +157,12 @@ public T join();
 ```java
 public void loadWebPage() {
 	String url = "http://codefx.org";
-	CompletableFuture<WebPage> future = CompletableFuture
+	CompletableFuture<WebPage> futurePage = CompletableFuture
 			.supplyAsync(() -> webRequest(url))
 			.thenApply(html -> new WebPage(url, html));
 	// ... do other stuff
-	future.join();
+	WebPage page = futurePage.join();
+	// ... do something with `page`
 }
 
 private String webRequest(String url) {

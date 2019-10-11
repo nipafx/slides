@@ -92,12 +92,12 @@ lots of internal optimizations
 Your first _stream pipeline_:
 
 ```java
-List<Todo> todos = // ...
-Set<String> = todos               // source
-	.stream()                     // start streaming
-	.map(Todo::description)       // operate on
-	.filter(d -> d.length > 10)   //     the stream
-	.collect(Collectors.toSet()); // terminal op.
+Set<Todo> todos = // ...
+List<String> = todos               // source
+	.stream()                      // start streaming
+	.map(Todo::description)        // operate on
+	.filter(d -> d.length > 10)    //     the stream
+	.collect(Collectors.toList()); // terminal op.
 ```
 
 === Stream Basics

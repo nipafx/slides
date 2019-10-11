@@ -22,7 +22,7 @@ A `List` is "a list of anything":
 * we need to track what is safe!
 
 ```java
-List messages = new ArrayList<>();
+List messages = new ArrayList();
 messages.add("Hello, Generics!")
 messages.add("5");
 String first = (String) messages.get(0);
@@ -39,7 +39,7 @@ A `List<String>` is "a list of strings":
 * compiler tracks what is safe!
 
 ```java
-List<String> messages = new ArrayList();
+List<String> messages = new ArrayList<>();
 messages.add("Hello, Generics!")
 messages.add("5");
 String first = messages.get(0);

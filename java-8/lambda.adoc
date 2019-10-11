@@ -453,7 +453,7 @@ BiConsumer<String, Integer> c =
 * `BiFunction<T, U, R>`: `R apply(T, U)`
 +
 ```java
-Function<String, Boolean, Integer> f =
+BiFunction<String, Boolean, Integer> f =
 	(s, b) -> b ? s.length() : 0;
 ```
 * `BinaryOperator<T>`: `T apply(T, T)`
