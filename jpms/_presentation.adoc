@@ -27,12 +27,12 @@
 
 include::../_shared/highlight.js.adoc[]
 
-:host-name: NAV
-:host-url: https://www.nav.no/
-:host-logo-url: images/logo-nav.png
+:host-name: Accenture
+:host-url: https://www.accenture.de
+:host-logo-url: images/logo-accenture.jpg
 // :host-logo-style: background-color: transparent; border-width: 0;
-:host-twitter-name: @navnorge
-:host-twitter-url: https://twitter.com/navnorge
+:host-twitter-name: @AccentureDACH
+:host-twitter-url: https://twitter.com/AccentureDACH
 include::../_shared/event-on-title-and-footer.adoc[]
 
 
@@ -62,8 +62,8 @@ https://github.com/nicolaiparlog/course-jpms[github.com/nicolaiparlog/course-jpm
 	<tr><td>Project Jigsaw</td></tr>
 	<tr><td>Java Module System Basics</td></tr>
 	<tr><td>Beyond The Basics</td></tr>
-	<!-- <tr><td>Command Line Options</td></tr> -->
-	<!-- <tr><td>Dependency Analysis With <code>jdeps</code></td></tr> -->
+	<tr><td>Command Line Options</td></tr>
+	<tr><td>Dependency Analysis With <code>jdeps</code></td></tr>
 	<tr><td>Runtime Images With <code>jlink</code></td></tr>
 	<tr><td>Migration Challenges</td></tr>
 	<!-- <tr><td>Incremental Modularization</td></tr> -->
@@ -81,9 +81,9 @@ include::basics.adoc[]
 
 include::advanced.adoc[]
 
-// include::command-line.adoc[]
+include::command-line.adoc[]
 
-// include::jdeps.adoc[]
+include::jdeps.adoc[]
 
 include::jlink.adoc[]
 
