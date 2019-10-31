@@ -43,6 +43,7 @@ image::images/amber.jpg[background, size=cover]
 
 * pattern matching (http://openjdk.java.net/jeps/305[JEP 305])
 * records (https://openjdk.java.net/jeps/359[JEP 359])
+* sealed types (https://openjdk.java.net/jeps/360[JEP 360])
 * serialization revamp (http://cr.openjdk.java.net/~briangoetz/amber/serialization.html[white paper])
 * concise method bodies (http://openjdk.java.net/jeps/8209434[JEP draft])
 * raw string literals (maybe)
@@ -142,6 +143,42 @@ public record Range(int low, int high) {
 }
 ----
 
+=== Sealed types
+image::images/amber.jpg[background, size=cover]
+
+Have a closer look at the cases:
+
+[source,java]
+----
+public int eval(Node n) {
+	return switch(n) {
+		case IntNode(int i) -> // ...
+		case NegNode(Node n) -> // ...
+		case AddNode(Node left, Node right) -> // ...
+	};
+}
+----
+
+Why is there no `default` branch?
+
+=== Sealed types
+image::images/amber.jpg[background, size=cover]
+
+[source,java]
+----
+public sealed interface Node
+	permits IntNode, NegNode, AddNode {
+
+	// interface declaration
+
+}
+----
+
+*Yeah:*
+
+* code expresses intended subtypes
+* pattern matching can check completeness
+
 === Death to serialization!
 
 Serialization is hell:
@@ -232,6 +269,7 @@ Makes Java more expressive:
 * text blocks ⑬
 * pattern matching
 * records
+* sealed types
 * serialization revamp
 * concise method bodies
 * raw string literals
