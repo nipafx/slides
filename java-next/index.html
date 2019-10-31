@@ -33,10 +33,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://www.accenture.de"><img src="images/logo-accenture.jpg" class="logo" style="{host-logo-style}"></a>
+		<a href="https://www.meetup.com/Java-User-Group-Hessen-JUGH/"><img src="images/logo-jug-hessen.png" class="logo" style="background-color: white;"></a>
 		<div class="name">
-			<p><a href="https://www.accenture.de">Accenture</a></p>
-			<p><a href="https://twitter.com/AccentureDACH" style="{host-twitter-style}">@AccentureDACH</a></p>
+			<p><a href="https://www.meetup.com/Java-User-Group-Hessen-JUGH/">JUG Hessen</a></p>
+			<p><a href="" style="{host-twitter-style}"></a></p>
 		</div>
 	</div>
 </div>
@@ -50,9 +50,9 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://www.accenture.de"><img src="images/logo-accenture.jpg" class="logo" style="{host-logo-style}"></a>
+		<a href="https://www.meetup.com/Java-User-Group-Hessen-JUGH/"><img src="images/logo-jug-hessen.png" class="logo" style="background-color: white;"></a>
 		<div class="name">
-			<p><a href="https://www.accenture.de">Accenture</a> / <a href="https://twitter.com/AccentureDACH" style="{host-twitter-style}">@AccentureDACH</a></p>
+			<p><a href="https://www.meetup.com/Java-User-Group-Hessen-JUGH/">JUG Hessen</a> / <a href="" style="{host-twitter-style}"></a></p>
 		</div>
 	</div>
 </footer>
@@ -146,7 +146,11 @@ int numLetters = switch (day) {
 	case TUESDAY -&gt; 7;
 	case THURSDAY, SATURDAY -&gt; 8;
 	case WEDNESDAY -&gt; 9;
-};</code></pre></div></div></li></ul></div></section><section id="project_amber_2" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Project Amber</h2>
+};</code></pre></div></div></li></ul></div></section><section id="more_about_switch"><h2>More about switch</h2><div class="paragraph"><p><strong>Blog post</strong>:<br>
+<a href="https://blog.codefx.org/java/switch-expressions/">Definitive Guide To Switch Expressions</a></p></div>
+<div class="paragraph"><p><strong>Video</strong>:</p></div>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/1znHEf3oSNI" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<div class="paragraph"><p><a href="https://youtube.com/codefx">youtube.com/codefx</a></p></div></section><section id="project_amber_2" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Project Amber</h2>
 <div class="paragraph"><p>No, even later&#8230;&#8203;</p></div></section></section>
 <section><section id="java_13" data-background-image="images/13.jpg" data-background-size="cover"><h2>Java 13</h2><div class="ulist"><ul><li><p>release 09/2019</p></li><li><p>support <strong>ends 01/2020</strong></p></li></ul></div></section><section id="the_core_of_13" data-background-image="images/13.jpg" data-background-size="cover"><h2>The core of 13</h2>
 <div class="ulist"><ul><li class="fragment"><p>preview on <a href="https://blog.codefx.org/java/text-blocks/">text blocks</a>:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">String html = """
@@ -155,7 +159,8 @@ int numLetters = switch (day) {
 			&lt;p&gt;"Hello, text blocks!"&lt;/p&gt;
 		&lt;/body&gt;
 	&lt;/html&gt;
-	"""</code></pre></div></div></li></ul></div></section><section id="project_amber_3" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Project Amber</h2>
+	"""</code></pre></div></div></li></ul></div></section><section id="more_about_text_blocks"><h2>More about text blocks</h2><div class="paragraph"><p><strong>Blog post</strong>:<br>
+<a href="https://blog.codefx.org/java/text-blocks/">Definite Guide To Text Blocks</a></p></div></section><section id="project_amber_3" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Project Amber</h2>
 <div class="paragraph"><p>I said later!</p></div></section></section>
 <section><section id="the_new_world"><h2>The new world</h2><table class="toc">
 	<tr><td>Versions and Features</td></tr>
@@ -233,7 +238,7 @@ you have two choices:</p></div>
 <div class="ulist"><ul><li><p>run on an unsupported (<strong>unsecure</strong>) JVM 😮</p></li><li><p><strong>downgrade</strong> to recent LTS 😱</p></li></ul></div>
 <div class="paragraph"><p>⇝ <strong>Damage is potentially enormous.</strong></p></div></section><section id="risks_for_java_12_16_5"><h2>Risks for Java 12-16</h2><div class="listingblock"><div class="content"><pre class="highlight"><code>expected_damage = chance * damage</code></pre></div></div>
 <div class="paragraph"><p>Consider this:</p></div>
-<div class="ulist"><ul><li><p>more up-to-date ⇝ lower chance</p></li><li><p>fewer dependencies ⇝ lower chance</p></li><li><p>smaller code base ⇝ smaller damage</p></li></ul></div></section><section data-background-color="black" data-background-image="images/panic-calm.gif" data-background-size="contain" data-state="empty"></section><section id="advice"><h2>Advice</h2><div class="ulist"><ul><li><p>find a suitable upgrade cadence</p></li><li><p><strong>build on each release</strong> (including EA)</p></li><li><p>only rely on standardized behavior</p></li><li><p>heed deprecation warnings (<code>jdeprscan</code>)</p></li><li><p>keep dependencies and tools up to date</p></li></ul></div>
+<div class="ulist"><ul><li><p>more up-to-date ⇝ lower chance</p></li><li><p>fewer dependencies ⇝ lower chance</p></li><li><p>smaller code base ⇝ smaller damage</p></li></ul></div></section><section id="advice"><h2>Advice</h2><div class="ulist"><ul><li><p>find a suitable upgrade cadence</p></li><li><p><strong>build on each release</strong> (including EA)</p></li><li><p>only rely on standardized behavior</p></li><li><p>heed deprecation warnings (<code>jdeprscan</code>)</p></li><li><p>keep dependencies and tools up to date</p></li></ul></div>
 <div class="paragraph"><p>Most importantly:<br>
 <strong>Be aware of what&#8217;s coming!</strong></p></div></section></section>
 <section><section id="projects_3"><h2>Projects</h2><table class="toc">
@@ -260,7 +265,7 @@ talks:
 (<a href="https://openjdk.java.net/jeps/286">JEP 286</a>; in Java 10)</p></li><li><p>switch expressions<br>
 (<a href="http://openjdk.java.net/jeps/325">JEP 325</a>; preview in Java 12 and 13)</p></li><li><p>text blocks<br>
 (<a href="https://openjdk.java.net/jeps/355">JEP 355</a>; preview in Java 13)</p></li></ul></div></section><section id="endeavors" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Endeavors</h2>
-<div class="ulist"><ul><li><p>pattern matching (<a href="http://openjdk.java.net/jeps/305">JEP 305</a>)</p></li><li><p>records (<a href="http://openjdk.java.net/jeps/8222777">JEP draft</a>)</p></li><li><p>serialization revamp (<a href="http://cr.openjdk.java.net/~briangoetz/amber/serialization.html">white paper</a>)</p></li><li><p>concise method bodies (<a href="http://openjdk.java.net/jeps/8209434">JEP draft</a>)</p></li><li><p>raw string literals (maybe)</p></li></ul></div></section><section id="pattern_matching" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Pattern matching</h2>
+<div class="ulist"><ul><li><p>pattern matching (<a href="http://openjdk.java.net/jeps/305">JEP 305</a>)</p></li><li><p>records (<a href="https://openjdk.java.net/jeps/359">JEP 359</a>)</p></li><li><p>sealed types (<a href="https://openjdk.java.net/jeps/360">JEP 360</a>)</p></li><li><p>serialization revamp (<a href="http://cr.openjdk.java.net/~briangoetz/amber/serialization.html">white paper</a>)</p></li><li><p>concise method bodies (<a href="http://openjdk.java.net/jeps/8209434">JEP draft</a>)</p></li><li><p>raw string literals (maybe)</p></li></ul></div></section><section id="pattern_matching" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Pattern matching</h2>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Object value = // ...
 String formatted = switch (value) {
 	case Integer i -&gt; String.format("int %d", i);
@@ -309,7 +314,24 @@ String formatted = switch (value) {
 		this.low = low;
 	}
 
-}</code></pre></div></div></section><section id="death_to_serialization"><h2>Death to serialization!</h2><div class="paragraph"><p>Serialization is hell:</p></div>
+}</code></pre></div></div></section><section id="sealed_types" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Sealed types</h2>
+<div class="paragraph"><p>Have a closer look at the cases:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public int eval(Node n) {
+	return switch(n) {
+		case IntNode(int i) -&gt; // ...
+		case NegNode(Node n) -&gt; // ...
+		case AddNode(Node left, Node right) -&gt; // ...
+	};
+}</code></pre></div></div>
+<div class="paragraph"><p>Why is there no <code>default</code> branch?</p></div></section><section id="sealed_types_2" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Sealed types</h2>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public sealed interface Node
+	permits IntNode, NegNode, AddNode {
+
+	// interface declaration
+
+}</code></pre></div></div>
+<div class="paragraph"><p><strong>Yeah:</strong></p></div>
+<div class="ulist"><ul><li><p>code expresses intended subtypes</p></li><li><p>pattern matching can check completeness</p></li></ul></div></section><section id="death_to_serialization"><h2>Death to serialization!</h2><div class="paragraph"><p>Serialization is hell:</p></div>
 <div class="ulist"><ul><li><p>complicates every JDK feature</p></li><li><p>repeated security vulnerabilities</p></li><li><p>uses "invisible" mechanisms</p></li></ul></div>
 <div class="paragraph"><p>The JDK team wants to get rid of it!</p></div></section><section id="serializing_records"><h2>Serializing records</h2><div class="paragraph"><p>Replacement may look as follows:</p></div>
 <div class="ulist"><ul><li><p>only works with records</p></li><li><p>deconstructs a record graph</p></li><li><p>passes data to serialization engine</p></li><li><p>one engine per format:<br>
@@ -337,7 +359,7 @@ XML, JSON, YAML, &#8230;&#8203;</p></li></ul></div></section><section id="new_se
 	regex: "\+(\d*[.])?\d"
 	""";</code></pre></div></div></section><section id="project_amber_5" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Project Amber</h2>
 <div class="paragraph"><p>Makes Java more expressive:</p></div>
-<div class="ulist"><ul><li><p>type inference with <code>var</code> ⑩</p></li><li><p>switch expressions ⑫</p></li><li><p>text blocks ⑬</p></li><li><p>pattern matching</p></li><li><p>records</p></li><li><p>serialization revamp</p></li><li><p>concise method bodies</p></li><li><p>raw string literals</p></li></ul></div></section></section>
+<div class="ulist"><ul><li><p>type inference with <code>var</code> ⑩</p></li><li><p>switch expressions ⑫</p></li><li><p>text blocks ⑬</p></li><li><p>pattern matching</p></li><li><p>records</p></li><li><p>sealed types</p></li><li><p>serialization revamp</p></li><li><p>concise method bodies</p></li><li><p>raw string literals</p></li></ul></div></section></section>
 <section><section id="project_valhalla" data-background-image="images/valhalla.jpg" data-background-size="cover"><h2>Project Valhalla</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>Advanced Java VM and Language feature candidates</p></div></blockquote></div><div class="paragraph"><p>Profile:</p></div><div class="ulist"><ul><li><p>led by Brian Goetz and John Rose</p></li><li><p><a href="http://openjdk.java.net/projects/valhalla/">project</a> /
 <a href="https://wiki.openjdk.java.net/display/valhalla/Main">wiki</a> /
 <a href="http://mail.openjdk.java.net/mailman/listinfo/valhalla-dev">mailing list</a> /
