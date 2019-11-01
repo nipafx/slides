@@ -77,7 +77,7 @@ image::images/amber.jpg[background, size=cover]
 public int eval(Node n) {
 	return switch(n) {
 		case IntNode(int i) -> i;
-		case NegNode(Node n) -> -eval(n);
+		case NegNode(Node nn) -> -eval(nn);
 		case AddNode(Node left, Node right) ->
 			eval(left) + eval(right);
 	};
