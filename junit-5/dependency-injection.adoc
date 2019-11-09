@@ -48,7 +48,7 @@ void test(@TempDir Path tempDir) { /*...*/ }
 For example _org.springframework : spring-test_:
 
 ```java
-// just to demo - in rl use @SpringJUnitConfig
+// just to demo - irl use @SpringJUnitConfig
 @ExtendWith(SpringExtension.class)
 public class ApiControllerTest {
 	private final ApiController controller;
