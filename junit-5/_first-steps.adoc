@@ -3,8 +3,8 @@
 ++++
 <table class="toc">
 	<tr class="toc-current"><td>First Steps</td></tr>
+		<tr><td><ul><li>What's new?</li></ul></td></tr>
 		<tr><td><ul><li>Setup &amp; Tools</li></ul></td></tr>
-		<tr><td><ul><li>Basics</li></ul></td></tr>
 	<tr><td>Mechanisms</td></tr>
 	<tr><td>Sophisticated Tests</td></tr>
 	<tr><td>From 4 To 5</td></tr>
@@ -15,21 +15,8 @@
 :toc: pass:[ \
 <table class="toc"> \
 	<tr><td>First Steps</td></tr> \
-		<tr class="toc-current"><td><ul><li>Setup &amp; Tools</li></ul></td></tr> \
-		<tr><td><ul><li>Basics</li></ul></td></tr> \
-	<tr><td>Mechanisms</td></tr> \
-	<tr><td>Sophisticated Tests</td></tr> \
-	<tr><td>From 4 To 5</td></tr> \
-	<tr><td>Extensions</td></tr> \
-</table> \
-]
-include::setup.adoc[]
-
-:toc: pass:[ \
-<table class="toc"> \
-	<tr><td>First Steps</td></tr> \
+		<tr class="toc-current"><td><ul><li>What's new</li></ul></td></tr> \
 		<tr><td><ul><li>Setup &amp; Tools</li></ul></td></tr> \
-		<tr class="toc-current"><td><ul><li>Basics</li></ul></td></tr> \
 	<tr><td>Mechanisms</td></tr> \
 	<tr><td>Sophisticated Tests</td></tr> \
 	<tr><td>From 4 To 5</td></tr> \
@@ -37,3 +24,16 @@ include::setup.adoc[]
 </table> \
 ]
 include::basics.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>First Steps</td></tr> \
+		<tr><td><ul><li>Basics</li></ul></td></tr> \
+		<tr class="toc-current"><td><ul><li>Setup &amp; Tools</li></ul></td></tr> \
+	<tr><td>Mechanisms</td></tr> \
+	<tr><td>Sophisticated Tests</td></tr> \
+	<tr><td>From 4 To 5</td></tr> \
+	<tr><td>Extensions</td></tr> \
+</table> \
+]
+include::setup.adoc[]
