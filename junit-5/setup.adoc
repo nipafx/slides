@@ -9,7 +9,7 @@ Add test dependency:
 ```shell
 org.junit.jupiter
 junit-jupiter-api
-5.2.0
+5.5.2
 ```
 
 Have fun!
@@ -30,7 +30,7 @@ Add test dependency:
 ```shell
 org.junit.jupiter
 junit-jupiter-engine
-5.2.0
+5.5.2
 ```
 
 === Running tests
@@ -42,7 +42,7 @@ With build tools:
 ** add `test` dependency on engine
 * *Gradle*:
 ** since 4.6
-** add `testRuntime` dependency on engine
+** add `testRuntimeOnly` dependency on engine
 ** activate JUnit 5:
 +
 [source,groovy]
@@ -59,9 +59,7 @@ With IDEs:
 * *IntelliJ*: since https://blog.jetbrains.com/idea/2016/08/using-junit-5-in-intellij-idea/[2016.2],
 but https://blog.jetbrains.com/idea/2017/11/intellij-idea-2017-3-junit-support/[2017.3] recommended
 * *Eclipse*: since https://www.eclipse.org/eclipse/news/4.7.1a/#junit-5-support"[Oxygen.1a (4.7.1a)]
-// search for all issues with "JUnit" in them:
-// https://netbeans.org/bugzilla/buglist.cgi?quicksearch=JUnit%205
-* *NetBeans*: not even an issue
+* *NetBeans*: since https://issues.apache.org/jira/browse/NETBEANS-6[10.0]
 
 === Running tests
 
@@ -99,7 +97,7 @@ java -jar junit-platform-console-standalone.jar
 === Setup & Tools
 ==== Summary
 
-* native support in Maven, Gradle, IntelliJ, Eclipse +
+* support in Maven, Gradle, IntelliJ, Eclipse, NetBeans +
 (remember to add the engine as dependency)
 * for outdated tools, run with JUnit 4
 * console launcher as last resort
