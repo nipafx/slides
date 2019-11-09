@@ -8,6 +8,7 @@
 		<tr><td><ul><li>Nested Tests</li></ul></td></tr>
 		<tr><td><ul><li>Repeated Tests</li></ul></td></tr>
 		<tr><td><ul><li>Parameterized Tests</li></ul></td></tr>
+		<tr><td><ul><li>Parallel Tests</li></ul></td></tr>
 		<tr><td><ul><li>Dynamic Tests</li></ul></td></tr>
 	<tr><td>From 4 To 5</td></tr>
 	<tr><td>Extensions</td></tr>
@@ -22,6 +23,7 @@
 		<tr class="toc-current"><td><ul><li>Nested Tests</li></ul></td></tr> \
 		<tr><td><ul><li>Repeated Tests</li></ul></td></tr> \
 		<tr><td><ul><li>Parameterized Tests</li></ul></td></tr> \
+		<tr><td><ul><li>Parallel Tests</li></ul></td></tr> \
 		<tr><td><ul><li>Dynamic Tests</li></ul></td></tr> \
 	<tr><td>From 4 To 5</td></tr> \
 	<tr><td>Extensions</td></tr> \
@@ -37,6 +39,7 @@ include::nested-tests.adoc[]
 		<tr><td><ul><li>Nested Tests</li></ul></td></tr> \
 		<tr class="toc-current"><td><ul><li>Repeated Tests</li></ul></td></tr> \
 		<tr><td><ul><li>Parameterized Tests</li></ul></td></tr> \
+		<tr><td><ul><li>Parallel Tests</li></ul></td></tr> \
 		<tr><td><ul><li>Dynamic Tests</li></ul></td></tr> \
 	<tr><td>From 4 To 5</td></tr> \
 	<tr><td>Extensions</td></tr> \
@@ -52,6 +55,7 @@ include::repeated-tests.adoc[]
 		<tr><td><ul><li>Nested Tests</li></ul></td></tr> \
 		<tr><td><ul><li>Repeated Tests</li></ul></td></tr> \
 		<tr class="toc-current"><td><ul><li>Parameterized Tests</li></ul></td></tr> \
+		<tr><td><ul><li>Parallel Tests</li></ul></td></tr> \
 		<tr><td><ul><li>Dynamic Tests</li></ul></td></tr> \
 	<tr><td>From 4 To 5</td></tr> \
 	<tr><td>Extensions</td></tr> \
@@ -67,6 +71,23 @@ include::parameterized-tests.adoc[]
 		<tr><td><ul><li>Nested Tests</li></ul></td></tr> \
 		<tr><td><ul><li>Repeated Tests</li></ul></td></tr> \
 		<tr><td><ul><li>Parameterized Tests</li></ul></td></tr> \
+		<tr class="toc-current"><td><ul><li>Parallel Tests</li></ul></td></tr> \
+		<tr><td><ul><li>Dynamic Tests</li></ul></td></tr> \
+	<tr><td>From 4 To 5</td></tr> \
+	<tr><td>Extensions</td></tr> \
+</table> \
+]
+include::parallel-tests.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>First Steps</td></tr> \
+	<tr><td>Mechanisms</td></tr> \
+	<tr><td>Sophisticated Tests</td></tr> \
+		<tr><td><ul><li>Nested Tests</li></ul></td></tr> \
+		<tr><td><ul><li>Repeated Tests</li></ul></td></tr> \
+		<tr><td><ul><li>Parameterized Tests</li></ul></td></tr> \
+		<tr><td><ul><li>Parallel Tests</li></ul></td></tr> \
 		<tr class="toc-current"><td><ul><li>Dynamic Tests</li></ul></td></tr> \
 	<tr><td>From 4 To 5</td></tr> \
 	<tr><td>Extensions</td></tr> \

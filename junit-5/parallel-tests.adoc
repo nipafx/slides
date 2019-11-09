@@ -1,0 +1,129 @@
+== Parallel tests
+
+{toc}
+
+=== Parallel tests
+
+Main reason to parallelize anything: +
+*better performance*.
+
+Minor reason to parallelize tests: +
+may ferret out concurrency issues.
+
+No good support for parallel tests in JUnit 4:
+
+* parallelized by build tool
+* no control from within tests
+
+JUnit 5 does it better!
+
+=== Test execution
+
+* sequential by default
+* parallel on demand
+
+To enable parallel execution, link:#configuring_junit[configure JUnit] with +
+`junit.jupiter.execution.parallel.enabled = true`
+
+But that's not enough!
+
+=== Execution modes
+
+Each test node (e.g. class, nested class, method) +
+has an execution mode:
+
+`SAME_THREAD`::
+node is executed in same thread as parent node
+`CONCURRENT`::
+allow concurrent execution
+
+`SAME_THREAD` is default +
+⇝ all tests run in same thread +
+⇝ tests run sequentially
+
+=== Execution modes
+
+Several ways to configure execution modes:
+
+* set `j.j.e.parallel.mode.default` +
+  to `concurrent` or `same_thread`
+* set `j.j.e.parallel.mode.classes.default` +
+  to `concurrent` or `same_thread`
+* apply `@Execution` to class/method with +
+  `ExecutionMode.CONCURRENT` or +
+  `ExecutionMode.SAME_THREAD`
+
+=== Execution strategy
+
+Various executoin strategies:
+
+`dynamic`::
+configure `factor`, then: +
+`#threads = #cores * factor`
+`fixed`::
+configure fixed number of threads
+`custom`::
+provide your own strategy
+
+⇝ https://junit.org/junit5/docs/current/user-guide/#writing-tests-parallel-execution-config[More on execution modes]
+
+=== Full control
+
+JUnit 5 gives full control over concurrency:
+
+* parallelize everything, +
+  just classes, or just methods
+* finer control with `@Execution`
+* various execution strategies
+
+Or based on resource access...
+
+=== Resource locks
+
+Use `@ResourceLock` to mark use +
+of shared, thread-unsafe resources:
+
+```java
+	@Test
+	@ResourceLock(value = "props", mode = READ)
+	void customPropertyIsNotSetByDefault() {
+		assertNull(System.getProperty("my.prop"));
+	}
+
+	@Test
+	@ResourceLock(value = "props", mode = READ_WRITE)
+	void canSetCustomPropertyToApple() {
+		System.setProperty("my.prop", "apple");
+		assertEquals(
+			"apple",
+			System.getProperty("my.prop"));
+	}
+```
+
+=== Resource locks
+
+Great way to handle flaky tests:
+
+* add `@ResourceLock` for shared resources
+* JUnit organizes test execution accordingly
+
+=== Possible approach
+
+One way to approach parallel tests:
+
+* parallelize all the things
+* sequentialize integration test classes
+* further lock on shared resources
+
+=== Parallel tests
+==== Summary
+
+* sequential execution by default
+* enable parallel execution with +
+  `j.j.execution.parallel.enabled`
+* switch all/selected tests to parallel execution:
+** `j.j.execution.parallel.mode.default`
+** `j.j.execution.parallel.mode.classes.default`
+** `@Execution(CONCURRENT)`
+** `@ResourceLock`
+* optionally provide an execution strategy
