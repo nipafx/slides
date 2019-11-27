@@ -33,10 +33,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://www.meetup.com/Java-User-Group-Hessen-JUGH/"><img src="images/logo-jug-hessen.png" class="logo" style="background-color: white;"></a>
+		<a href="https://sites.google.com/site/jugffm/home"><img src="images/logo-jug-ffm.jpg" class="logo" style="background-color: white;"></a>
 		<div class="name">
-			<p><a href="https://www.meetup.com/Java-User-Group-Hessen-JUGH/">JUG Hessen</a></p>
-			<p><a href="" style="{host-twitter-style}"></a></p>
+			<p><a href="https://sites.google.com/site/jugffm/home">JUG Frankfurt</a></p>
+			<p><a href="https://twitter.com/jugffm" style="{host-twitter-style}">@jugffm</a></p>
 		</div>
 	</div>
 </div>
@@ -50,9 +50,9 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://www.meetup.com/Java-User-Group-Hessen-JUGH/"><img src="images/logo-jug-hessen.png" class="logo" style="background-color: white;"></a>
+		<a href="https://sites.google.com/site/jugffm/home"><img src="images/logo-jug-ffm.jpg" class="logo" style="background-color: white;"></a>
 		<div class="name">
-			<p><a href="https://www.meetup.com/Java-User-Group-Hessen-JUGH/">JUG Hessen</a> / <a href="" style="{host-twitter-style}"></a></p>
+			<p><a href="https://sites.google.com/site/jugffm/home">JUG Frankfurt</a> / <a href="https://twitter.com/jugffm" style="{host-twitter-style}">@jugffm</a></p>
 		</div>
 	</div>
 </footer>
@@ -101,7 +101,8 @@ that is then evolved</p></li><li><p>can take a long time</p></li><li><p>are fair
 		border-radius: 12px;
 		background-color: rgba(255,255,255,0.5);
 		padding: 2px 8px 7px 4px;
-">40% off with<br>code <em>mtpvjug19</em></p>
+">37% off with<br>code <em>fccparlog</em></p>
+	<p><a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb">tiny.cc/jms</a></p>
 </div>
 <div class="paragraph"><p><strong>I&#8217;ve written a book!</strong><br>
 <a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&amp;a_bid=869915cb">tiny.cc/jms</a></p></div>
@@ -230,7 +231,7 @@ to <strong>each major version</strong> immediately!</p></div></section><section 
 by Stephen Colebourne</p></li><li class="fragment"><p>take a coffee break</p></li><li class="fragment"><p>understand that most risks come<br>
 from <strong>building against</strong> 12</p></li><li class="fragment"><p>be content that all you need<br>
 to upgrade is <strong>run on</strong> 12</p></li></ol></div></section><section id="risks_for_java_12_16_3"><h2>Risks for Java 12-16</h2><div class="paragraph"><p>What could possibly go wrong?!</p></div>
-<div class="ulist"><ul><li><p>remember <code>@Deprecated(forRemoval=true)</code>?</p></li><li><p>changes to unsupported APIs, e.g. <code>Unsafe</code></p></li></ul></div>
+<div class="ulist"><ul><li><p><code>@Deprecated(forRemoval=true)</code></p></li><li><p>changes to unsupported APIs, e.g. <code>Unsafe</code></p></li></ul></div>
 <div class="paragraph"><p>Problems are not likely,<br>
 but usually hard to predict.</p></div>
 <div class="paragraph"><p>⇝ <strong>Chance is low.</strong></p></div></section><section id="risks_for_java_12_16_4"><h2>Risks for Java 12-16</h2><div class="paragraph"><p>If an upgrade fails,<br>
@@ -280,7 +281,7 @@ String formatted = switch (value) {
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public int eval(Node n) {
 	return switch(n) {
 		case IntNode(int i) -&gt; i;
-		case NegNode(Node n) -&gt; -eval(n);
+		case NegNode(Node nn) -&gt; -eval(nn);
 		case AddNode(Node left, Node right) -&gt;
 			eval(left) + eval(right);
 	};
@@ -472,7 +473,7 @@ talks:
 <div class="paragraph"><p>Slides at <a href="https://slides.codefx.org">slides.codefx.org</a></p></div>
 <div class="paragraph"><p>⇜ Get <a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&amp;a_bid=869915cb">my book</a>!</p></div>
 <div class="paragraph"><p>You can <a href="http://blog.codefx.org/hire-nicolai-parlog/">hire me</a>:</p></div>
-<div class="ulist"><ul><li><p>training (Java 8-12, JUnit 5)</p></li><li><p>consulting (Java 8-12)</p></li></ul></div></section>
+<div class="ulist"><ul><li><p>training (Java 8-14, JUnit 5)</p></li><li><p>consulting (Java 8-14)</p></li></ul></div></section>
 <section><section id="image_credits"><h2>Image Credits</h2><div class="ulist"><ul><li><p><a href="https://unsplash.com/photos/bEXy1YQNIII">merry-go-round</a>:
 <a href="https://unsplash.com/@ja5on">Jason Chen</a>,
 <a href="https://unsplash.com/license">Unsplash license</a></p></li><li><p><a href="https://pixabay.com/en/number-digit-eight-8-background-1982275/">eight</a>:
