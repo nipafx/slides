@@ -1,0 +1,35 @@
+= Java After Eight
+:backend: revealjs
+:revealjs_theme: nipa-night
+:revealjsdir: ../_reveal.js
+:revealjs_controls: false
+:revealjs_progress: false
+:revealjs_slideNumber: false
+:revealjs_history: true
+:revealjs_center: true
+:revealjs_transition: slide
+:revealjs_backgroundTransition: fade
+// :revealjs_parallaxBackgroundImage: images/merry-go-round.jpg
+:revealjs_parallaxBackgroundSize: 2560px 1440px
+
+include::../_shared/highlight.js.adoc[]
+
+:host-name: Jfokus
+:host-url: https://www.jfokus.se/
+:host-logo-url: images/logo-jfokus-2020.png
+// :host-logo-style: border-color: black;
+:host-twitter-name: @jfokus
+:host-twitter-url: https://twitter.com/jfokus
+include::../_shared/event-on-title-and-footer.adoc[]
+
+
+// ######### //
+// I N T R O //
+// ######### //
+
+// ⇝
+
+
+include::../_shared/about-slide.adoc[]
+
+include::images/sources.adoc[]
