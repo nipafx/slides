@@ -6,3 +6,4 @@ source 'https://rubygems.org'
 gem 'asciidoctor-revealjs', '1.1.3'
 gem 'guard', '2.16.1'
 gem 'guard-shell', '0.7.1'
+gem "concurrent-ruby", "~> 1.1"
