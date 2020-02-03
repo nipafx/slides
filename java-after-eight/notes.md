@@ -1,29 +1,8 @@
-# Slides
+# Guide
 
-* compare final commit with master
-
-* result
-	* stronger encapsulation
-	* better services
-	* safer code (String::strip, versions, PIDs, etc.)
-	* faster launches (maybe)
-	* 20% less code
+* compare final commit with master: `git diff --stat master *.java`
 
 # Code
-
-fix `ArticleTestHelper::createWithSlug`:
-
-```java
-	public static Article createWithSlug(String slug) {
-		return new Article(
-				Title.from("Title"),
-				Tag.from("[Tag]"),
-				LocalDate.now(),
-				Description.from("description"),
-				Slug.from(slug),
-				() -> Stream.of(""));
-	}
-```
 
 possible switch expression:
 
