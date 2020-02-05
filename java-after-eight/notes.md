@@ -1,6 +1,8 @@
-# Guide
+# TODO
 
-* compare final commit with master: `git diff --stat master *.java`
+* create `run.sh` and use from `stats.sh`
+* `Tag::from` uses `java.util.stream.Collectors.`
+* `Main::recommendationsToJson` has misplaced "\n" in `String recommendation`
 
 # Code
 
