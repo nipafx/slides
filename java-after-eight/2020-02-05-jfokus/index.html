@@ -1,0 +1,213 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Java After Eight</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="_reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="_reveal.js/css/theme/nipa-night.css" id="theme"><link href="_reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>var link = document.createElement( 'link' );
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = window.location.search.match( /print-pdf/gi ) ? "_reveal.js/css/print/pdf.css" : "_reveal.js/css/print/paper.css";
+document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="_reveal.js/lib/js/html5shiv.js"></script><![endif]--></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>Java After Eight</h1><div class="preamble"><link rel="stylesheet" href="_highlight.js/styles/monokai-sublime.css">
+<script src="_highlight.js/highlight.pack.js"></script>
+<script>
+	window.onload = function() {
+		hljs.configure({
+			tabReplace: '    ',
+			languages: [ 'java' ]
+		})
+		var codes = document.getElementsByTagName('code');
+		for(var i = 0; i < codes.length; i++) {
+			hljs.highlightBlock(codes.item(i));
+		}
+		hljs.initHighlightingOnLoad();
+	}
+</script>
+<div class="event">
+	<div class="participant">
+		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
+		<div class="name">
+			<p><a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a></p>
+			<p><a href="http://codefx.org">codefx.org</a>
+				/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a></p>
+		</div>
+	</div>
+	<div class="participant">
+		<a href="https://www.jfokus.se/"><img src="images/logo-jfokus-2020.png" class="logo" style="{host-logo-style}"></a>
+		<div class="name">
+			<p><a href="https://www.jfokus.se/">Jfokus</a></p>
+			<p><a href="https://twitter.com/jfokus" style="{host-twitter-style}">@jfokus</a></p>
+		</div>
+	</div>
+</div>
+<footer>
+	<div class="participant">
+		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
+		<div class="name"><p>
+			<a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a>
+			/ <a href="http://codefx.org">codefx.org</a>
+			/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a>
+		</p></div>
+	</div>
+	<div class="participant">
+		<a href="https://www.jfokus.se/"><img src="images/logo-jfokus-2020.png" class="logo" style="{host-logo-style}"></a>
+		<div class="name">
+			<p><a href="https://www.jfokus.se/">Jfokus</a> / <a href="https://twitter.com/jfokus" style="{host-twitter-style}">@jfokus</a></p>
+		</div>
+	</div>
+</footer>
+<!-- Just adding a footer does not work because reveal.js puts it into the slides and we couldn't get it out via CSS. So we move it via JavaScript. -->
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		document.body.appendChild(document.querySelector('footer'));
+	})
+</script></div></section>
+<section><section id="lots_to_talk_about"><h2>Lots to talk about</h2><div class="paragraph"><p>The plan for today:</p></div><div class="ulist"><ul><li><p>start with a <strong>Java 8</strong> code base</p></li><li><p>take it all the way to <strong>Java 14</strong></p></li><li><p>be amazed by how much changes</p></li></ul></div><div class="paragraph"><p>This talk is:</p></div><div class="ulist"><ul><li><p>a showcase, not a tutorial</p></li><li><p>not a complete list</p></li></ul></div></section><section id="links"><h2>Links</h2><div class="ulist"><ul><li><p>slides at <a href="https://slides.codefx.org/">slides.codefx.org</a></p></li><li><p>code at <a href="https://github.com/CodeFX-org">github.com/CodeFx-org</a></p><div class="ulist"><ul><li><p>demo code base: <a href="https://github.com/CodeFX-org/java-after-eight">/java-after-eight</a></p></li><li><p>more Java 9+ features: <a href="https://github.com/CodeFX-org/demo-java-x">/demo-java-x</a></p></li></ul></div></li></ul></div></section></section>
+<section><section id="java_8"><h2>Java 8</h2><div class="ulist"><ul><li><p>released 03/2014</p></li><li><p>free support by Oracle <strong>ended 01/2019</strong></p></li><li><p>free support by Red Hat <strong>until 06/2023</strong></p></li><li><p>more free and commercial support available</p></li></ul></div></section><section id="its_a_great_release"><h2>It&#8217;s a great release&#8230;&#8203;</h2><div class="ulist"><ul><li><p>solid feature set</p></li><li><p>good performance</p></li><li><p>very stable</p></li><li><p>occasional backports</p></li><li><p>great support</p></li></ul></div></section><section id="but_its_getting_dated"><h2>&#8230;&#8203;but it&#8217;s getting dated</h2><div class="paragraph"><p>Java 8 misses out on most recent developments:</p></div>
+<div class="ulist"><ul><li><p>many new language features</p></li><li><p>many new and improved APIs</p></li><li><p>many new JVM features</p></li><li><p>improved performance<br>
+(in certain cases)</p></li></ul></div></section><section id="time_to_upgrade"><h2>Time to upgrade</h2><div class="paragraph"><p>Let me show you how much<br>
+you&#8217;re missing out on<br>
+if you&#8217;re still on Java 8.</p></div></section></section>
+<section id="code"><h2>Code</h2><div class="paragraph"><p>Code, code, code, code</p></div>
+<div class="paragraph"><p>(<a href="https://github.com/CodeFX-org/java-after-eight">code base</a>)</p></div></section>
+<section><section id="java_9"><h2>Java 9</h2><div class="ulist"><ul><li><p>released 09/2017</p></li><li><p>support <strong>ended 01/2018</strong></p></li></ul></div></section><section id="what_weve_seen"><h2>What we&#8217;ve seen</h2><div class="ulist"><ul><li><p>module system | <code>module-info.java</code></p></li><li><p>collection factories | <code>List::of</code></p></li><li><p>new process API | <code>ProcessHandle::pid</code></p></li><li><p>new version API | <code>Version::major</code></p></li><li><p>improved streams | <code>Stream::dropWhile</code></p></li><li><p>improved <code>Optional</code> | <code>Optional::or</code></p></li></ul></div></section><section id="what_we_havent_seen"><h2>What we haven&#8217;t seen</h2><div class="ulist"><ul><li><p><code>try</code> with effectively final resource</p></li><li><p>private interface methods</p></li><li><p>stack walking API (improves logging perf)</p></li><li><p>unified logging</p></li><li><p>multi-release JARs</p></li><li><p>app/runtime images | <code>jlink</code></p></li></ul></div></section></section>
+<section><section id="java_10"><h2>Java 10</h2><div class="ulist"><ul><li><p>released 03/2018</p></li><li><p>support <strong>ended 07/2018</strong></p></li></ul></div></section><section id="what_weve_seen_2"><h2>What we&#8217;ve seen</h2><div class="ulist"><ul><li><p>local-variable type inference | <code>var tags</code></p></li><li><p>more collection factories | <code>Map::copyOf</code></p></li><li><p>more collectors | <code>Collectors::toUnmodifiableList</code></p></li><li><p>application class-data sharing</p></li></ul></div></section></section>
+<section><section id="java_11"><h2>Java 11</h2><div class="ulist"><ul><li><p>released 09/2018</p></li><li><p>free support by Oracle <strong>ended 01/2019</strong></p></li><li><p>free support by Red Hat <strong>until 10/2024</strong></p></li><li><p>commercial support available</p></li></ul></div></section><section id="what_weve_seen_3"><h2>What we&#8217;ve seen</h2><div class="ulist"><ul><li><p>improved whitespace handling | <code>String::strip</code></p></li><li><p>uniform array creation | <code>toArray(String[]::new)</code></p></li><li><p>better <code>Path</code> creation | <code>Path::of</code></p></li><li><p>better <code>Predicate</code> negation | <code>Predicate::not</code></p></li></ul></div></section><section id="what_we_havent_seen_2"><h2>What we haven&#8217;t seen</h2><div class="ulist"><ul><li><p>reactive HTTP/2 API | ↴</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">HttpRequest request = HttpRequest.newBuilder()
+    .GET()
+    .uri(URI.create("http://codefx.org"))
+    .header("Accept-Language", "en-US,en;q=0.5")
+    .build();</code></pre></div></div></li><li><p>more <code>String</code> improvements | <code>String::lines</code></p></li><li><p>easier IO | <code>Files::readString</code></p></li><li><p>improved <code>Optional</code> | <code>Optional::isEmpty</code></p></li><li><p>Java scripts | <code>java SourceFile.java</code></p></li></ul></div></section></section>
+<section><section id="java_12"><h2>Java 12</h2><div class="ulist"><ul><li><p>release 03/2019</p></li><li><p>support <strong>ended 07/2019</strong></p></li></ul></div></section><section id="what_weve_seen_4"><h2>What we&#8217;ve seen</h2><div class="ulist"><ul><li><p>more powerful collections | <code>Collectors::teeing</code></p></li><li><p>better async error handling | ↴<br>
+<code>CompletableFuture::exceptionallyCompose</code></p></li><li><p>included JDK CDS archive</p></li></ul></div></section><section id="what_we_havent_seen_3"><h2>What we haven&#8217;t seen</h2><div class="ulist"><ul><li><p>switch expressions | ↴</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">boolean bool = switch (ternaryBool) {
+	case TRUE -&gt; true;
+	case FALSE -&gt; false;
+	case FILE_NOT_FOUND -&gt; throw
+			new FileNotFoundException("🤬");
+};</code></pre></div></div></li><li><p>transforming Strings | ↴<br>
+<code>String.transform(Function&lt;String, R&gt;)</code></p></li><li><p>social media number format | ↴<br>
+<code>NumberFormat::getCompactNumberInstance</code></p></li><li><p>easy file comparison | <code>Files::mismatch</code></p></li></ul></div></section></section>
+<section><section id="java_13"><h2>Java 13</h2><div class="ulist"><ul><li><p>released 09/2019</p></li><li><p>free support <strong>ended 01/2020</strong></p></li><li><p>commercial support available <a href="https://www.azul.com/products/azul_support_roadmap/">by Azul</a></p></li></ul></div></section><section id="what_weve_seen_5"><h2>What we&#8217;ve seen</h2><div class="ulist"><ul><li><p>text blocks | ↴</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">var recommendation = """
+		{
+			"title": '$TITLE',
+			"recommendations": $RECS
+		}
+	""";</code></pre></div></div></li><li><p>obvious <code>String</code> formattting | <code>String::format</code></p></li><li><p>automatic application CDS archive</p></li></ul></div></section></section>
+<section><section id="java_14"><h2>Java 14</h2><div class="ulist"><ul><li><p>release 03/2020</p></li><li><p>support <strong>ends 07/2020</strong></p></li></ul></div></section><section id="what_weve_seen_6"><h2>What we&#8217;ve seen</h2><div class="ulist"><ul><li><p>records | <code>record Title(String text)</code></p></li><li><p>pattern matching | <code>o instanceof Article a</code></p></li><li><p>helpful NPE messages</p></li></ul></div></section><section id="what_we_havent_seen_4"><h2>What we haven&#8217;t seen</h2><div class="ulist"><ul><li><p>standardized foreign-memory access</p></li><li><p>JFR event streaming</p></li><li><p>OS-specific installers | <code>jpackage</code></p></li></ul></div></section></section>
+<section id="java_8_to_14"><h2>Java 8 to 14</h2><div class="ulist"><ul><li><p>stronger encapsulation and better services | modules</p></li><li><p>safer code | processes, versions, whitespace, etc.</p></li><li><p>more expressive code | LOC: 1654 📉 1242</p></li><li><p>faster code | run time: ~1s 📉 ~ 0.8 ms</p></li><li><p>better JVM | MR-JARs, GCs, packaging, monitoring, etc.</p></li></ul></div>
+<div class="paragraph"><p><strong>Sure you don&#8217;t want to upgrade?</strong></p></div></section>
+<section id="about_nicolai_parlog" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>About Nicolai Parlog</h2>
+<div style="float: left; width: 45%; margin:0px;">
+	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="images/cover-jms.png" style="margin: 0;"></a>
+	<p style="
+		position: fixed;
+		margin: -160px 0 0 60px;
+		transform: rotate(-8deg);
+		font-size: 28pt;
+		color: #cc0000;
+		text-shadow: 2px 2px 3px #660000;
+		font-weight: bold;
+		border: 5px solid #cc0000;
+		border-radius: 12px;
+		background-color: rgba(255,255,255,0.5);
+		padding: 2px 8px 7px 4px;
+">37% off with<br>code <em>fccparlog</em></p>
+	<p><a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb">tiny.cc/jms</a></p>
+</div>
+<h3>Follow</h3>
+<div class="paragraph"><p>💻 <a href="http://codefx.org">codefx.org</a><br>
+🐦 <a href="https://twitter.com/nipafx">@nipafx</a></p></div>
+<h3>Want More?</h3>
+<div class="paragraph"><p>Slides at <a href="https://slides.codefx.org">slides.codefx.org</a></p></div>
+<div class="paragraph"><p>⇜ Get <a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&amp;a_bid=869915cb">my book</a>!</p></div>
+<div class="paragraph"><p>You can <a href="http://blog.codefx.org/hire-nicolai-parlog/">hire me</a>:</p></div>
+<div class="ulist"><ul><li><p>training (Java 8-14, JUnit 5)</p></li><li><p>consulting (Java 8-14)</p></li></ul></div></section>
+<section id="image_credits"><h2>Image Credits</h2><div class="ulist"><ul><li><p><a href="https://unsplash.com/photos/4dnG4q3kxdg">raspberry chocolate</a>:
+<a href="https://unsplash.com/@joannakosinska">Joanna Kosinska</a>,
+<a href="https://unsplash.com/license">Unsplash license</a></p></li><li><p><a href="https://www.flickr.com/photos/21496790@N06/5065834411">question-mark</a>:
+<a href="http://milosevicmilos.com/">Milos Milosevic</a>,
+<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a></p></li></ul></div></section></div></div><script src="_reveal.js/lib/js/head.min.js"></script><script src="_reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+Reveal.initialize({
+  // Display controls in the bottom right corner
+  controls: false,
+  // Display a presentation progress bar
+  progress: false,
+  // Set a per-slide timing for speaker notes, null means none
+  defaultTiming: null,
+  // Display the page number of the current slide
+  slideNumber: false,
+  // Push each slide change to the browser history
+  history: true,
+  // Enable keyboard shortcuts for navigation
+  keyboard: true,
+  // Enable the slide overview mode
+  overview: true,
+  // Vertical centering of slides
+  center: true,
+  // Enables touch navigation on devices with touch input
+  touch: true,
+  // Loop the presentation
+  loop: false,
+  // Change the presentation direction to be RTL
+  rtl: false,
+  // Randomizes the order of slides each time the presentation loads
+  shuffle: false,
+  // Turns fragments on and off globally
+  fragments: true,
+  // Flags if the presentation is running in an embedded mode,
+  // i.e. contained within a limited portion of the screen
+  embedded: false,
+  // Flags if we should show a help overlay when the questionmark
+  // key is pressed
+  help: true,
+  // Flags if speaker notes should be visible to all viewers
+  showNotes: false,
+  // Global override for autolaying embedded media (video/audio/iframe)
+  // - null: Media will only autoplay if data-autoplay is present
+  // - true: All media will autoplay, regardless of individual setting
+  // - false: No media will autoplay, regardless of individual setting
+  autoPlayMedia: null,
+  // Number of milliseconds between automatically proceeding to the
+  // next slide, disabled when set to 0, this value can be overwritten
+  // by using a data-autoslide attribute on your slides
+  autoSlide: 0,
+  // Stop auto-sliding after user input
+  autoSlideStoppable: true,
+  // Enable slide navigation via mouse wheel
+  mouseWheel: false,
+  // Hides the address bar on mobile devices
+  hideAddressBar: true,
+  // Opens links in an iframe preview overlay
+  previewLinks: false,
+  // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
+  // NOTE setting the theme in the config no longer works in reveal.js 3.x
+  //theme: Reveal.getQueryHash().theme || 'nipa-night',
+  // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+  transition: Reveal.getQueryHash().transition || 'slide',
+  // Transition speed (e.g., default, fast, slow)
+  transitionSpeed: 'default',
+  // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+  backgroundTransition: 'fade',
+  // Number of slides away from the current that are visible
+  viewDistance: 3,
+  // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+  parallaxBackgroundImage: 'images/raspberry-and-chocolate.jpg',
+  // Parallax background size in CSS syntax (e.g., "2100px 900px")
+  parallaxBackgroundSize: '6016px 3151px',
+
+  // The "normal" size of the presentation, aspect ratio will be preserved
+  // when the presentation is scaled to fit different resolutions. Can be
+  // specified using percentage units.
+  width: 960,
+  height: 700,
+
+  // Factor of the display size that should remain empty around the content
+  margin: 0.1,
+
+  // Bounds for smallest/largest possible scale to apply to content
+  minScale: 0.2,
+  maxScale: 1.5,
+
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+      { src: '_reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: '_reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '_reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      
+      { src: '_reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: '_reveal.js/plugin/notes/notes.js', async: true }
+  ]
+});</script></body></html>
