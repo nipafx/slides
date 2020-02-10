@@ -1,8 +1,11 @@
 # TODO
 
+* add general tip: use [sdkman](https://sdkman.io/)
+* note that \u2001 (" ") is the culprit ~> 2001 - Odyssey in Space
 * create `run.sh` and use from `stats.sh`
-* `Tag::from` uses `java.util.stream.Collectors.`
+* `Tag::from` uses `java.util.stream.Collectors.` and `.collect` not on its own line
 * `Main::recommendationsToJson` has misplaced "\n" in `String recommendation`
+* remove module dependency on _java.management_ when updating to Version API
 
 # Code
 
