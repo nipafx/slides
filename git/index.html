@@ -1,0 +1,383 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Git Crash Course</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="../_reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="../_reveal.js/css/theme/nipa-night.css" id="theme"><link href="../_reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>var link = document.createElement( 'link' );
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = window.location.search.match( /print-pdf/gi ) ? "../_reveal.js/css/print/pdf.css" : "../_reveal.js/css/print/paper.css";
+document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="../_reveal.js/lib/js/html5shiv.js"></script><![endif]--></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>Git Crash Course</h1><div class="preamble"><link rel="stylesheet" href="../_highlight.js/styles/monokai-sublime.css">
+<script src="../_highlight.js/highlight.pack.js"></script>
+<script>
+	window.onload = function() {
+		hljs.configure({
+			tabReplace: '    ',
+			languages: [ 'java' ]
+		})
+		var codes = document.getElementsByTagName('code');
+		for(var i = 0; i < codes.length; i++) {
+			hljs.highlightBlock(codes.item(i));
+		}
+		hljs.initHighlightingOnLoad();
+	}
+</script>
+<div class="event">
+	<div class="participant">
+		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
+		<div class="name">
+			<p><a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a></p>
+			<p><a href="http://codefx.org">codefx.org</a>
+				/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a></p>
+		</div>
+	</div>
+	<div class="participant">
+		<a href="https://www.disy.net/"><img src="images/logo-disy.png" class="logo" style="{host-logo-style}"></a>
+		<div class="name">
+			<p><a href="https://www.disy.net/">Disy</a></p>
+			<p><a href="https://twitter.com/DisyNet" style="{host-twitter-style}">@DisyNet</a></p>
+		</div>
+	</div>
+</div>
+<footer>
+	<div class="participant">
+		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
+		<div class="name"><p>
+			<a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a>
+			/ <a href="http://codefx.org">codefx.org</a>
+			/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a>
+		</p></div>
+	</div>
+	<div class="participant">
+		<a href="https://www.disy.net/"><img src="images/logo-disy.png" class="logo" style="{host-logo-style}"></a>
+		<div class="name">
+			<p><a href="https://www.disy.net/">Disy</a> / <a href="https://twitter.com/DisyNet" style="{host-twitter-style}">@DisyNet</a></p>
+		</div>
+	</div>
+</footer>
+<!-- Just adding a footer does not work because reveal.js puts it into the slides and we couldn't get it out via CSS. So we move it via JavaScript. -->
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		document.body.appendChild(document.querySelector('footer'));
+	})
+</script></div></section>
+<section id="links"><h2>Links</h2><div class="ulist"><ul><li><p>slides at <a href="https://slides.codefx.org/git">slides.codefx.org/git</a></p></li><li><p><a href="https://git1.disy.net/code-academy/code-academy/tree/master/git"><em>Disy Code Academy</em> Git course</a><br>
+(you can ignore Pluralsight)</p></li><li><p>free, online book <a href="https://git-scm.com/book/en/v2"><em>Pro Git</em></a></p></li><li><p>channel <a href="https://im.disy.net/channel/tools-git">#tools-git</a> in RocketChat</p></li></ul></div></section>
+<section id="table_of_contents"><h2>Table of contents</h2><table class="toc">
+	<tr><td>Git Is Different</td></tr>
+	<tr><td>Git's Innards</td></tr>
+	<tr><td>Setup</td></tr>
+	<tr><td>Getting Started</td></tr>
+	<tr><td>Branching & Merging</td></tr>
+	<tr><td>Rebasing</td></tr>
+	<tr><td>Workflow @ Disy</td></tr>
+</table></section>
+<section><section id="git_is_different"><h2>Git is different</h2><table class="toc">
+	<tr class="toc-current"><td>Git Is Different</td></tr>
+	<tr><td>Git's Innards</td></tr>
+	<tr><td>Setup</td></tr>
+	<tr><td>Getting Started</td></tr>
+	<tr><td>Branching & Merging</td></tr>
+	<tr><td>Rebasing</td></tr>
+	<tr><td>Workflow @ Disy</td></tr>
+</table></section><section id="not_your_fathers_vcs"><h2>Not your father&#8217;s VCS</h2><div class="paragraph"><p>Forget other version control systems (VCS)!</p></div>
+<div class="paragraph"><p>Git has&#8230;&#8203;</p></div>
+<div class="ulist"><ul><li><p>repositories</p></li><li><p><code>add</code>, <code>checkout</code>, <code>commit</code></p></li><li><p>branches, merges</p></li></ul></div>
+<div class="paragraph"><p>&#8230;&#8203;but they don&#8217;t mean<br>
+what you think they do.</p></div>
+<div class="paragraph"><p>Here&#8217;s how Git is different.</p></div></section><section id="changes_vs_snapshots"><h2>Changes vs snapshots</h2><div class="paragraph"><p>Many VCS operate on changes:</p></div>
+<div class="imageblock diagram" style=""><img src="https://git-scm.com/book/en/v2/images/deltas.png" alt="deltas"></div></section><section id="changes_vs_snapshots_2"><h2>Changes vs snapshots</h2><div class="paragraph"><p>Git operates on snapshots:</p></div>
+<div class="imageblock diagram" style=""><img src="https://git-scm.com/book/en/v2/images/snapshots.png" alt="snapshots"></div></section><section id="changes_vs_snapshots_3"><h2>Changes vs snapshots</h2><div class="paragraph"><p><strong>Each commit references<br>
+all files and folders!</strong></p></div>
+<div class="paragraph"><p>Consequence for file moves:</p></div>
+<div class="ulist"><ul><li><p>are not tracked, essentially <code>delete</code> + <code>add</code></p></li><li><p>computes similarity to reconstruct moves</p></li></ul></div></section><section id="decentralized"><h2>(De)Centralized</h2><div class="paragraph"><p>Many VCS need a central repository to</p></div>
+<div class="ulist"><ul><li><p>see the history</p></li><li><p>checkout commits</p></li><li><p>create commits</p></li></ul></div>
+<div class="paragraph"><p>Git creates a<br>
+<strong>local, self-sufficient</strong><br>
+copy of the repo!</p></div></section><section id="gits_folder"><h2>Git&#8217;s folder</h2><div class="paragraph"><p>The <code>.git</code> folder contains:</p></div>
+<div class="ulist"><ul><li><p>all files and folders ever committed</p></li><li><p>all commits, branches, and messages</p></li></ul></div>
+<div class="paragraph"><p>(More on that later.)</p></div>
+<div class="paragraph"><p>Remote and local <code>.git</code> folder<br>
+are almost identical.</p></div></section><section id="everythings_local"><h2>Everything&#8217;s local</h2><div class="paragraph"><p>Local operations are fast, e.g.:</p></div>
+<div class="ulist"><ul><li><p>checking out a commit</p></li><li><p>looking at the log</p></li><li><p>creating a commit</p></li><li><p>creating a branch</p></li></ul></div>
+<div class="paragraph"><p>Interaction with remotes<br>
+though <code>pull</code> and <code>push</code>.</p></div></section><section id=""><h2>5 &gt; 2</h2><div class="paragraph"><p>Many VCS have two stages:</p></div>
+<div class="ulist"><ul><li><p>checked-out files</p></li><li><p>remote repository</p></li></ul></div>
+<div class="paragraph"><p>Git has five:</p></div>
+<div class="ulist"><ul><li><p>working tree</p></li><li><p>stash</p></li><li><p>index / staging</p></li><li><p>local repository</p></li><li><p>remote repository</p></li></ul></div></section><section id="stages"><h2>5 stages</h2><div class="dlist"><dl><dt class="hdlist1">working tree</dt><dd><p>plain files that you change</p></dd><dt class="hdlist1">stash</dt><dd><p>park changes for a moment</p></dd><dt class="hdlist1">index / stage</dt><dd><p>the parts of your changes you want to commit</p></dd><dt class="hdlist1">local repository</dt><dd><p>the committed snapshots</p></dd><dt class="hdlist1">remote repository</dt><dd><p>push and pull snapshots</p></dd></dl></div></section><section id="basic_workflow"><h2>Basic workflow</h2><div class="ulist"><ul><li><p>pull remote changes into working tree</p></li><li><p>edit working tree</p></li><li><p>stage selected changes to index</p></li><li><p>commit index to local repository</p></li><li><p>push commits to remote repository</p></li></ul></div></section><section id="commits"><h2>Commits</h2><div class="paragraph"><p>Git&#8217;s commits:</p></div>
+<div class="ulist"><ul><li><p>know their parents</p></li><li><p>are immutable, even if local</p></li><li><p>can be "edited and rearranged"<br>
+(new commits are created)</p></li></ul></div></section><section id="everythings_safe"><h2>Everything&#8217;s safe</h2><div class="ulist"><ul><li><p>common Git operations<br>
+don&#8217;t delete data</p></li><li><p>once it&#8217;s in <code>.git</code>, it&#8217;s safe!</p></li><li><p>just need to find a way<br>
+to get it back out</p></li></ul></div></section><section id="vcs_vs_git"><h2>VCS vs Git</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:33.3333%"><col style="width:33.3333%"><col style="width:33.3334%"></colgroup><thead><tr><th class="tableblock halign-left valign-top"></th><th class="tableblock halign-center valign-top">Old-school VCS</th><th class="tableblock halign-right valign-top">Git</th></tr><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">world view</p></td><td class="tableblock halign-center valign-top"><p class="tableblock">changes</p></td><td class="tableblock halign-right valign-top"><p class="tableblock">snapshots</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">organized</p></td><td class="tableblock halign-center valign-top"><p class="tableblock">centralized</p></td><td class="tableblock halign-right valign-top"><p class="tableblock">decentralized</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">operations</p></td><td class="tableblock halign-center valign-top"><p class="tableblock">need remote</p></td><td class="tableblock halign-right valign-top"><p class="tableblock">all local</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">workflow</p></td><td class="tableblock halign-center valign-top"><p class="tableblock">few steps</p></td><td class="tableblock halign-right valign-top"><p class="tableblock">more steps</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">commits</p></td><td class="tableblock halign-center valign-top"><p class="tableblock">immovable</p></td><td class="tableblock halign-right valign-top"><p class="tableblock">malleable</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">recovery</p></td><td class="tableblock halign-center valign-top"><p class="tableblock">it depends&#8230;&#8203;</p></td><td class="tableblock halign-right valign-top"><p class="tableblock">(almost) always</p></td></tr></table></section></section>
+<section><section id="gits_innards"><h2>Git&#8217;s innards</h2><table class="toc">
+	<tr><td>Git Is Different</td></tr>
+	<tr class="toc-current"><td>Git's Innards</td></tr>
+	<tr><td>Setup</td></tr>
+	<tr><td>Getting Started</td></tr>
+	<tr><td>Branching & Merging</td></tr>
+	<tr><td>Rebasing</td></tr>
+	<tr><td>Workflow @ Disy</td></tr>
+</table></section><section id="gits_innards_2"><h2>Git&#8217;s innards</h2><div class="paragraph"><p>What follows are <em>not basics</em>!<br>
+Few Git users know them.</p></div>
+<div class="paragraph"><p><strong>But</strong>:</p></div>
+<div class="ulist"><ul><li><p>I wish I knew them earlier</p></li><li><p>makes Git less magic</p></li><li><p>makes Git more predictable</p></li></ul></div></section><section id="gits_folder_2"><h2>Git&#8217;s folder</h2><div class="paragraph"><p>Local <code>.git</code> folder contains:</p></div>
+<div class="ulist"><ul><li><p>all files and folders ever committed</p></li><li><p>all commits and messages</p></li></ul></div>
+<div class="paragraph"><p>How?</p></div></section><section id="gits_folder_3"><h2>Git&#8217;s folder</h2><div class="paragraph"><p>Some files and folders in <code>.git</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="none language-none">.git
+├── HEAD    // points to current commit
+├── config  // repo configuration
+├── index   // captures all tracked files
+├── logs    // history of branch HEADs
+├── objects // hashed blobs of all files
+└── refs    // HEADs for current branch</code></pre></div></div></section><section id="key_value_store"><h2>Key-value store</h2><div class="paragraph"><p>Git uses <code>.git/objects</code> as key-value store.</p></div>
+<div class="paragraph"><p>Given an object (e.g. file or text):</p></div>
+<div class="ulist"><ul><li><p>uses SHA-1 to generate a 40 char hash</p></li><li><p>compresses object to binary blob</p></li><li><p>stores blob under hash</p></li></ul></div></section><section id="key_value_store_2"><h2>Key-value store</h2><div class="paragraph"><p>Hash is split:</p></div>
+<div class="ulist"><ul><li><p>first 2 chars become folder name</p></li><li><p>last 38 chats become file name</p></li></ul></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="none language-none">.git/objects
+├── 5c
+│   └── 0b7ade5e0b1e915c575e7271d2a88dad573dd0
+├── 94
+│   ├── 059158d176cc6761e83e5a0c52c48b2deb7325
+│   └── 1a46385f8c02c4f12e6af2adc1616b7fcca9f3
+└── b2
+    └── 175898375cf78bed686625af84df01bd5c01ff</code></pre></div></div>
+<div class="paragraph"><p>The file is the binary blob.</p></div></section><section id="objects"><h2>Objects</h2><div class="paragraph"><p>All these are objects:</p></div>
+<div class="ulist"><ul><li><p>files</p></li><li><p>folders / trees</p></li><li><p>commits</p></li></ul></div></section><section id="files"><h2>Files</h2><div class="olist arabic"><ol class="arabic"><li><p>compressed to blobs</p></li><li><p>stored under their hash in <code>.git/objects</code></p></li></ol></div></section><section id="folders_trees"><h2>Folders / trees</h2><div class="olist arabic"><ol class="arabic"><li><p>turned into files:</p><div class="listingblock"><div class="content"><pre class="highlight"><code>100644 blob c3ef2aa... README.md
+100644 blob 770358f... pom.xml
+040000 tree b8b055e... src</code></pre></div></div></li><li><p>compressed to blobs</p></li><li><p>stored under their hash in <code>.git/objects</code></p></li></ol></div></section><section id="commits_2"><h2>Commits</h2><div class="olist arabic"><ol class="arabic"><li><p>turned into files:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="none language-none">tree 81999e9...
+parent d729e58...
+author Nicolai Parlog
+    &lt;nipa@codefx.org&gt; 1530020370 +0200
+
+Add configuration for Disy workflow</code></pre></div></div></li><li><p>compressed to blobs</p></li><li><p>stored under their hash in <code>.git/objects</code></p></li></ol></div></section><section data-background-color="white" data-background-image="https://aboullaite.me/content/images/2017/06/git-objects.png" data-background-size="contain" data-state="empty"></section><section id="branches_and_tags"><h2>Branches and Tags</h2><div class="paragraph"><p>Branches and tags:</p></div>
+<div class="ulist"><ul><li><p>are turned into files<br>
+containing a commit hash</p></li><li><p>stored in <code>.git/refs/heads</code><br>
+or <code>.git/refs/tags</code></p></li></ul></div>
+<div class="paragraph"><p>That&#8217;s why branches are free!</p></div></section><section id="head"><h2>HEAD</h2><div class="paragraph"><p><code>HEAD</code> reflects checked out commit.</p></div>
+<div class="paragraph"><p>It&#8217;s a file <code>.git/HEAD</code> that contains <em>either</em>:</p></div>
+<div class="ulist"><ul><li><p>name of current branch <em>or</em></p></li><li><p>hash of current commit<br>
+if not on a branch<br>
+(called <em>detached HEAD</em>)</p></li></ul></div></section><section id="making_a_new_commit"><h2>Making a new commit</h2><div class="olist arabic"><ol class="arabic"><li><p>build tree for root folder:</p><div class="ulist"><ul><li><p>reference unchanged files/trees</p></li><li><p>create new objects were needed</p></li></ul></div></li><li><p>point branch indicated by <code>HEAD</code> to new tree</p></li></ol></div></section><section id="checking_out_a_commit"><h2>Checking out a commit</h2><div class="olist arabic"><ol class="arabic"><li><p>find commit in <code>.git/objects</code></p></li><li><p>to rebuild working tree:</p><div class="ulist"><ul><li><p>walk hashed objects</p></li><li><p>uncompress blobs</p></li></ul></div></li><li><p>update <code>HEAD</code> to commit<br>
+(now detached)</p></li></ol></div></section><section id="checking_out_a_branch"><h2>Checking out a branch</h2><div class="olist arabic"><ol class="arabic"><li><p>find branch in <code>.git/refs/heads</code></p></li><li><p>find indicated commit in <code>.git/objects</code></p></li><li><p>to rebuild working tree:</p><div class="ulist"><ul><li><p>walk hashed objects</p></li><li><p>uncompress blobs</p></li></ul></div></li><li><p>update <code>HEAD</code> to branch</p></li></ol></div></section></section>
+<section><section id="setting_git_up"><h2>Setting Git up</h2><table class="toc">
+	<tr><td>Git Is Different</td></tr>
+	<tr><td>Git's Innards</td></tr>
+	<tr class="toc-current"><td>Setup</td></tr>
+	<tr><td>Getting Started</td></tr>
+	<tr><td>Branching & Merging</td></tr>
+	<tr><td>Rebasing</td></tr>
+	<tr><td>Workflow @ Disy</td></tr>
+</table></section><section id="setting_git_up_2"><h2>Setting Git up</h2><div class="paragraph"><p>Two steps:</p></div>
+<div class="ulist"><ul><li><p><a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">installation</a></p></li><li><p><a href="https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup">configuration</a></p></li></ul></div>
+<div class="paragraph"><p>We only focus on configuration</p></div></section><section id="configuration"><h2>Configuration</h2><div class="paragraph"><p>Git can be configured with <code>git config</code><br>
+on three levels:</p></div>
+<div class="ulist"><ul><li><p><code>--system</code> for all users<br>
+(in <code>etc</code> or install folder)</p></li><li><p><code>--global</code> for one user<br>
+(in <code>~/.gitconfig</code>)</p></li><li><p><code>--local</code> for one repository<br>
+(in repo in <code>.git/config</code>)</p></li></ul></div></section><section id="global_configuration"><h2>Global configuration</h2><div class="paragraph"><p>Configure with <code>git config --global</code>:</p></div>
+<div class="ulist"><ul><li><p><code>user.name</code> (your LDAP user name)</p></li><li><p><code>user.email</code> (your Disy address)</p></li><li><p><code>core.editor</code> (unless you enjoy vi)</p></li></ul></div>
+<div class="paragraph"><p>Example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code>git config --global user.name "Nicolai Parlog"</code></pre></div></div></section><section id="disy_configuration"><h2>Disy configuration</h2><div class="paragraph"><p>To automate authentication<br>
+<a href="https://docs.gitlab.com/ee/ssh/">set up SSH keys</a>.</p></div>
+<div class="paragraph"><p>For <a href="https://conf.disy.net/x/ChAlF">Disy&#8217;s Git workflow</a>:</p></div>
+<div class="ulist"><ul><li><p><code>pull.rebase true</code> (prevents merges on pull)</p></li><li><p><code>merge.ff only</code> (prevents merge commits)</p></li></ul></div>
+<div class="paragraph"><p>Example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code>git config --global pull.rebase true</code></pre></div></div></section><section id="your_turn"><h2>Your turn!</h2><div class="paragraph"><p><a href="https://git1.disy.net/code-academy/code-academy/blob/master/git/01-setup.md">Install and configure Git.</a></p></div></section></section>
+<section><section id="getting_started"><h2>Getting started</h2><table class="toc">
+	<tr><td>Git Is Different</td></tr>
+	<tr><td>Git's Innards</td></tr>
+	<tr><td>Setup</td></tr>
+	<tr class="toc-current"><td>Getting Started</td></tr>
+	<tr><td>Branching & Merging</td></tr>
+	<tr><td>Rebasing</td></tr>
+	<tr><td>Workflow @ Disy</td></tr>
+</table></section><section id="getting_started_2"><h2>Getting started</h2><div class="ulist"><ul><li><p>working locally</p></li><li><p>working with remotes</p></li></ul></div></section><section id="basic_commands"><h2>Basic commands</h2><div class="paragraph"><p>Editing:</p></div>
+<div class="ulist"><ul><li><p><code>git init</code> to create a new repo</p></li><li><p><code>git add</code> to stage changes</p></li><li><p><code>git commit</code> to commit staged changes</p></li></ul></div>
+<div class="paragraph"><p>Observing:</p></div>
+<div class="ulist"><ul><li><p><code>git log</code> to see past commits</p></li><li><p><code>git checkout $commit</code> to check out a commit</p></li><li><p><code>git status</code> to see changed files</p></li><li><p><code>git diff</code> to see changes</p></li></ul></div></section><section id="undoing_changes"><h2>Undoing changes</h2><div class="ulist"><ul><li><p><code>git checkout $file</code> to restore a file/folder to HEAD</p></li><li><p><code>git reset --hard $commit</code> to restore to commit</p></li><li><p><code>git clean</code> to delete untracked files</p></li></ul></div></section><section id="ignoring_changes"><h2>Ignoring changes</h2><div class="paragraph"><p>Add files, directories, and patterns<br>
+to ignore to <code>.gitignore</code>.</p></div></section><section id="interacting_with_remotes"><h2>Interacting with remotes</h2><div class="paragraph"><p>To register remotes:</p></div>
+<div class="ulist"><ul><li><p><code>git clone $url</code> to clone an existing repo</p></li><li><p><code>git remote add $name $url</code> to add a new remote</p></li></ul></div>
+<div class="paragraph"><p>To transfer commits:</p></div>
+<div class="ulist"><ul><li><p><code>git pull</code> to pull new commits</p></li><li><p><code>git push</code> to push your commits</p></li></ul></div></section><section id="your_turn_2"><h2>Your turn!</h2><div class="paragraph"><p>Take first steps with Git,<br>
+<a href="https://git1.disy.net/code-academy/code-academy/blob/master/git/02-basics-local.md">locally</a> and <a href="https://git1.disy.net/code-academy/code-academy/blob/master/git/02-basics-remote.md">remotely</a>.</p></div></section></section>
+<section><section id="branching_merging"><h2>Branching &amp; Merging</h2><table class="toc">
+	<tr><td>Git Is Different</td></tr>
+	<tr><td>Git's Innards</td></tr>
+	<tr><td>Setup</td></tr>
+	<tr><td>Getting Started</td></tr>
+	<tr class="toc-current"><td>Branching & Merging</td></tr>
+	<tr><td>Rebasing</td></tr>
+	<tr><td>Workflow @ Disy</td></tr>
+</table></section><section id="branching"><h2>Branching</h2><div class="ulist"><ul><li><p>branching occurs when two commits<br>
+have the same parent</p></li><li><p>a <em>branch</em> is just a pointer to a commit</p></li></ul></div></section><section id="branches"><h2>Branches</h2><div class="ulist"><ul><li><p><code>git branch $name</code> creates a new branch</p></li><li><p><code>git checkout $branch</code> to check out branch</p></li><li><p><code>git checkout -b $name</code> is 2-in-1:<br>
+creates and checks out</p></li></ul></div></section><section id="handling_branches"><h2>Handling branches</h2><div class="ulist"><ul><li><p><code>git branch</code> to see local branches</p></li><li><p><code>git branch --no-merged</code> to see unmerged branches</p></li><li><p><code>git branch -vv</code> to see local branches with more info</p></li><li><p><code>git branch -d $branch</code> to delete merged branch</p></li><li><p><code>git branch -D $branch</code> to delete branch</p></li><li><p><code>git log --oneline --decorate --graph --all</code><br>
+to see log with branches</p></li></ul></div></section><section id="merges"><h2>Merges</h2><div class="paragraph"><p>A <em>merge</em> brings commits<br>
+from one branch into another:</p></div>
+<div class="ulist"><ul><li><p><code>git merge</code> merges named branch<br>
+into current branch</p></li></ul></div>
+<div class="paragraph"><p>Two possible results:</p></div>
+<div class="ulist"><ul><li><p>can be <em>fast-forward</em> if named branch<br>
+contains all commits of current branch</p></li><li><p>can create a merge commit<br>
+("just" a commit with two parents)</p></li></ul></div></section><section id="branching_merging_2"><h2>Branching &amp; Merging</h2><div class="paragraph"><p>Your turn:</p></div>
+<div class="ulist"><ul><li><p>go to <a href="https://git-scm.com/book/en/v2">Pro Git Book</a> and <a href="http://git-school.github.io/visualizing-git/">Visualizing Git</a></p></li><li><p>read these book sections and<br>
+enter commands into Visualizing Git:</p><div class="ulist"><ul><li><p><em>3.2 Basic Branching and Merging</em></p></li><li><p><em>3.3 Branch Management</em></p></li><li><p><em>3.5 Remote Branches</em></p></li></ul></div></li></ul></div>
+<div class="paragraph"><p>(You don&#8217;t need to make actual changes;<br>
+just <code>git commit</code>.)</p></div></section></section>
+<section><section id="rebasing"><h2>Rebasing</h2><table class="toc">
+	<tr><td>Git Is Different</td></tr>
+	<tr><td>Git's Innards</td></tr>
+	<tr><td>Setup</td></tr>
+	<tr><td>Getting Started</td></tr>
+	<tr><td>Branching & Merging</td></tr>
+	<tr class="toc-current"><td>Rebasing</td></tr>
+	<tr><td>Workflow @ Disy</td></tr>
+</table></section><section id="too_many_merges"><h2>Too many merges</h2><div class="paragraph"><p>So far:</p></div>
+<div class="ulist"><ul><li><p>whether working on <code>master</code> or a branch,<br>
+branching will happen all the time</p></li><li><p>every merge creates a merge commit:</p><div class="imageblock diagram" style=""><img src="https://git-scm.com/book/en/v2/images/basic-rebase-2.png" alt="basic rebase 2"></div></li></ul></div></section><section id="too_many_merges_2"><h2>Too many merges</h2><div class="paragraph"><p>15 developers, pushing twice a day</p></div>
+<div class="paragraph"><p><strong>30 merge commits a day!</strong></p></div>
+<div class="paragraph"><p>😨</p></div></section><section id="too_many_merges_3"><h2>Too many merges</h2><div class="paragraph"><p>Wouldn&#8217;t it be nice to edit a commit&#8217;s parent?</p></div>
+<div class="imageblock diagram" style=""><img src="https://git-scm.com/book/en/v2/images/basic-rebase-3.png" alt="basic rebase 3"></div>
+<div class="ulist"><ul><li><p><code>C4</code> had <code>C2</code> as <em>base</em> (other word for parent)</p></li><li><p><code>C4'</code> is like <code>C4</code>, but has new base <code>C3</code></p></li><li><p><code>C4</code> was <em>rebased</em></p></li></ul></div></section><section id="rebasing_2"><h2>Rebasing</h2><div class="paragraph"><p>While we&#8217;re editing, why not&#8230;&#8203;</p></div>
+<div class="ulist"><ul><li><p>apply a change elsewhere?<br>
+(e.g. on a different branch)</p></li><li><p>edit changes before applying them?</p></li><li><p>edit the message?</p></li><li><p>split and combine changes?</p></li></ul></div>
+<div class="paragraph"><p>Rebasing allows all of that!</p></div></section><section id="rebasing_3"><h2>Rebasing</h2><div class="paragraph"><p>Remember, changes don&#8217;t get lost:</p></div>
+<div class="ulist"><ul><li><p>commits are <em>immutable</em></p></li><li><p>graph of commits is <em>append-only</em></p></li></ul></div>
+<div class="paragraph"><p>Instead, rebasing&#8230;&#8203;</p></div>
+<div class="ulist"><ul><li><p>creates new commits from existing ones</p></li><li><p>points branch to new commits</p></li></ul></div>
+<div class="paragraph"><p>⇝ Old commits remain available for recovery!</p></div></section><section id="rebase"><h2>Rebase</h2><div class="paragraph"><p>Two important rebasing use cases:</p></div>
+<div class="ulist"><ul><li><p>replaying a branch on updated master</p></li><li><p>editing commits in an unpublished branch</p></li></ul></div></section><section id="replaying_a_branch"><h2>Replaying a branch</h2><div class="paragraph"><p>Situation:</p></div>
+<div class="ulist"><ul><li><p>you are working on a branch</p></li><li><p>you want to apply the changes<br>
+to <code>master</code> without merging</p></li></ul></div>
+<div class="paragraph"><p>Solution:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code>git checkout $branch
+git rebase master
+git checkout master
+git merge $branch</code></pre></div></div></section><section id="editing_commits"><h2>Editing commits</h2><div class="paragraph"><p>Situation:</p></div>
+<div class="ulist"><ul><li><p>you are working on a branch</p></li><li><p>you want to clean up the commits<br>
+to prepare them for pushing</p></li></ul></div>
+<div class="paragraph"><p>Solution:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code>git checkout $branch
+git rebase -i $commit</code></pre></div></div>
+<div class="paragraph"><p>(Rebases all commits after <code>$commit</code>.)</p></div></section><section id="rebasing_4"><h2>Rebasing</h2><div class="paragraph"><p>No rebase if working tree has changes:<br>
+<code>git stash</code><br>
+(Later: <code>git stash pop</code>)</p></div>
+<div class="paragraph"><p>If a rebase gets out of hand:<br>
+<code>git rebase --abort</code></p></div></section><section id="rebasing_5"><h2>Rebasing</h2><div class="paragraph"><p>Your turn:</p></div>
+<div class="ulist"><ul><li><p>go to <a href="https://learngitbranching.js.org/">learngitbranching.js.org</a></p></li><li><p>do all exercises up to <em>A Mixed Bag</em></p></li></ul></div>
+<div class="paragraph"><p>(You don&#8217;t need to make actual changes;<br>
+just <code>git commit</code>.)</p></div></section></section>
+<section><section id="git_workflow_disy"><h2>Git Workflow @ Disy</h2><table class="toc">
+	<tr><td>Git Is Different</td></tr>
+	<tr><td>Git's Innards</td></tr>
+	<tr><td>Setup</td></tr>
+	<tr><td>Getting Started</td></tr>
+	<tr><td>Branching & Merging</td></tr>
+	<tr><td>Rebasing</td></tr>
+	<tr class="toc-current"><td>Workflow @ Disy</td></tr>
+</table></section><section id="what_we_dont_want"><h2>What we don&#8217;t want</h2><div class="paragraph"><p>We don&#8217;t want:</p></div>
+<div class="ulist"><ul><li><p>long-lived branches</p></li><li><p>merge commits</p></li></ul></div></section><section id="configuration_2"><h2>Configuration</h2><div class="paragraph"><p>Consequences:</p></div>
+<div class="ulist"><ul><li><p>GitLab was configured to reject new branches</p></li><li><p>Git was configured (with <code>git config</code>)<br>
+to prevent non-fast-forward merges</p></li></ul></div></section><section id="how_to_develop"><h2>How to develop</h2><div class="paragraph"><p>Two possibilities:</p></div>
+<div class="ulist"><ul><li><p>on master</p></li><li><p>on local branch</p></li></ul></div></section><section id="developing_on_master"><h2>Developing on <code>master</code></h2><div class="paragraph"><p>Working on <code>master</code> is simpler:</p></div>
+<div class="ulist"><ul><li><p>commit changes on <code>master</code></p></li><li><p><code>git pull</code> was configured<br>
+to rebase your commits<br>
+<em>(here be conflicts!)</em></p></li><li><p><code>git push</code></p></li></ul></div></section><section id="developing_on_branch"><h2>Developing on branch</h2><div class="paragraph"><p>Working on a branch is cleaner:</p></div>
+<div class="ulist"><ul><li><p>commit changes on your <code>$branch</code></p></li><li><p>rebase on updated <code>master</code><br>
+<em>(here be conflicts!)</em></p></li><li><p>fast-forward <code>master</code> to <code>$branch</code></p></li><li><p><code>git push</code></p></li></ul></div></section><section id="developing_on_branch_2"><h2>Developing on branch</h2><div class="paragraph"><p>Once a branch is done:</p></div>
+<div class="ulist"><ul><li><p>on <code>master</code>, <code>git branch -D $branch</code></p></li></ul></div>
+<div class="paragraph"><p>(This only removes the entry<br>
+in <code>.git/refs/heads</code>)</p></div></section><section id="release_branches"><h2>Release branches</h2><div class="paragraph"><p>Default workflow for release branches:</p></div>
+<div class="ulist"><ul><li><p>develop/review on <code>master</code></p></li><li><p>apply individual commits to <code>$release</code><br>
+with <code>git cherry-pick $commit</code></p></li></ul></div></section><section id="your_turn_3"><h2>Your turn</h2><div class="paragraph"><p>Carefully read<br>
+<a href="https://conf.disy.net/display/PRD/Git+Workflow+@+Disy"><em>Git Workflow @ Disy</em></a></p></div></section></section>
+<section id="image_credits"><h2>Image Credits</h2><div class="ulist"><ul><li><p><a href="https://pixabay.com/en/tree-solitary-sunset-weather-mood-117582/">tree</a>:
+<a href="https://pixabay.com/en/users/geralt-9301/">geralt</a>,
+<a href="https://wiki.creativecommons.org/wiki/CC0">CC0</a></p></li><li><p><a href="https://www.flickr.com/photos/21496790@N06/5065834411">question-mark</a>:
+<a href="http://milosevicmilos.com/">Milos Milosevic</a>,
+<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a></p></li></ul></div></section></div></div><script src="../_reveal.js/lib/js/head.min.js"></script><script src="../_reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+Reveal.initialize({
+  // Display controls in the bottom right corner
+  controls: false,
+  // Display a presentation progress bar
+  progress: false,
+  // Set a per-slide timing for speaker notes, null means none
+  defaultTiming: null,
+  // Display the page number of the current slide
+  slideNumber: false,
+  // Push each slide change to the browser history
+  history: true,
+  // Enable keyboard shortcuts for navigation
+  keyboard: true,
+  // Enable the slide overview mode
+  overview: true,
+  // Vertical centering of slides
+  center: true,
+  // Enables touch navigation on devices with touch input
+  touch: true,
+  // Loop the presentation
+  loop: false,
+  // Change the presentation direction to be RTL
+  rtl: false,
+  // Randomizes the order of slides each time the presentation loads
+  shuffle: false,
+  // Turns fragments on and off globally
+  fragments: true,
+  // Flags if the presentation is running in an embedded mode,
+  // i.e. contained within a limited portion of the screen
+  embedded: false,
+  // Flags if we should show a help overlay when the questionmark
+  // key is pressed
+  help: true,
+  // Flags if speaker notes should be visible to all viewers
+  showNotes: false,
+  // Global override for autolaying embedded media (video/audio/iframe)
+  // - null: Media will only autoplay if data-autoplay is present
+  // - true: All media will autoplay, regardless of individual setting
+  // - false: No media will autoplay, regardless of individual setting
+  autoPlayMedia: null,
+  // Number of milliseconds between automatically proceeding to the
+  // next slide, disabled when set to 0, this value can be overwritten
+  // by using a data-autoslide attribute on your slides
+  autoSlide: 0,
+  // Stop auto-sliding after user input
+  autoSlideStoppable: true,
+  // Enable slide navigation via mouse wheel
+  mouseWheel: false,
+  // Hides the address bar on mobile devices
+  hideAddressBar: true,
+  // Opens links in an iframe preview overlay
+  previewLinks: false,
+  // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
+  // NOTE setting the theme in the config no longer works in reveal.js 3.x
+  //theme: Reveal.getQueryHash().theme || 'nipa-night',
+  // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+  transition: Reveal.getQueryHash().transition || 'slide',
+  // Transition speed (e.g., default, fast, slow)
+  transitionSpeed: 'default',
+  // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+  backgroundTransition: 'fade',
+  // Number of slides away from the current that are visible
+  viewDistance: 3,
+  // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+  parallaxBackgroundImage: 'images/tree.jpg',
+  // Parallax background size in CSS syntax (e.g., "2100px 900px")
+  parallaxBackgroundSize: '2048px 1440px',
+
+  // The "normal" size of the presentation, aspect ratio will be preserved
+  // when the presentation is scaled to fit different resolutions. Can be
+  // specified using percentage units.
+  width: 960,
+  height: 700,
+
+  // Factor of the display size that should remain empty around the content
+  margin: 0.1,
+
+  // Bounds for smallest/largest possible scale to apply to content
+  minScale: 0.2,
+  maxScale: 1.5,
+
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+      { src: '../_reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: '../_reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../_reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      
+      { src: '../_reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: '../_reveal.js/plugin/notes/notes.js', async: true }
+  ]
+});</script></body></html>
