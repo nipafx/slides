@@ -124,6 +124,9 @@ Code, code, code, code
 * local-variable type inference | `var tags`
 * more collection factories | `Map::copyOf`
 * more collectors | `Collectors::toUnmodifiableList`
+
+=== What we haven't seen
+
 * application class-data sharing
 
 
@@ -168,7 +171,6 @@ HttpRequest request = HttpRequest.newBuilder()
 * more powerful collections | `Collectors::teeing`
 * better async error handling | ↴ +
   `CompletableFuture::exceptionallyCompose`
-* included JDK CDS archive
 
 === What we haven't seen
 
@@ -187,6 +189,7 @@ boolean bool = switch (ternaryBool) {
 * social media number format | ↴ +
   `NumberFormat::getCompactNumberInstance`
 * easy file comparison | `Files::mismatch`
+* included JDK CDS archive
 
 
 == Java 13
@@ -208,6 +211,9 @@ var recommendation = """
 	""";
 ```
 * obvious `String` formattting | `String::format`
+
+=== What we haven't seen
+
 * automatic application CDS archive
 
 
