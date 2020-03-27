@@ -426,3 +426,10 @@ The Lord Of The Strings]
 ** implements `-XX:SoftMaxHeapSize` (https://bugs.openjdk.java.net/browse/JDK-8222145[JDK-8222145])
 ** max heap size of 16 TB (https://bugs.openjdk.java.net/browse/JDK-8221786[JDK-8221786])
 ** uncommits unused memory (https://openjdk.java.net/jeps/351[JEP 351])
+
+=== A Mixed Bag Of Performance
+
+*In Java 14:*
+
+* JFR event streaming API (https://openjdk.java.net/jeps/349[JEP 349])
+* Shenadoah, G1, ZGC improvements

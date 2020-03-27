@@ -415,8 +415,15 @@ image::images/stack-walker-limit-with-estimated-size.png[role="diagram"]
 * DTLS (http://openjdk.java.net/jeps/219[JEP 219]), +
   TLS ALPN and OCSP stapling (http://openjdk.java.net/jeps/244[JEP 244])
 
+== A Mixed Bag Of New APIs
+
 *In Java 12:*
 
 * `CompactNumberFormat` (https://bugs.openjdk.java.net/browse/JDK-8188147[JDK-8188147])
+
+*In Java 14:*
+
+* foreign-memory access (http://openjdk.java.net/jeps/370[JEP 370])
+* non-volatile `MappedByteBuffer` (http://openjdk.java.net/jeps/352[JEP 352])
 
 And often lots of low-level APIs.
