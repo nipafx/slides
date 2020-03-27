@@ -2,6 +2,7 @@
 
 ++++
 <table class="toc">
+	<tr><td>Helpful NPEs ⑭</td></tr>
 	<tr><td>Launch Source File ⑪</td></tr>
 	<tr><td>Unified Logging ⑨</td></tr>
 	<tr><td>Multi-Release JARs ⑨</td></tr>
@@ -15,6 +16,61 @@
 
 ++++
 <table class="toc">
+	<tr class="toc-current"><td>Helpful NPEs ⑭</td></tr>
+	<tr><td>Launch Source File ⑪</td></tr>
+	<tr><td>Unified Logging ⑨</td></tr>
+	<tr><td>Multi-Release JARs ⑨</td></tr>
+	<tr><td>Redirected Platform Logging ⑨</td></tr>
+</table>
+++++
+
+Finally can NPEs be helpful!
+
+=== Typical NPEs
+
+```sh
+java.lang.NullPointerException
+		at org.codefx.Regular.doing(Regular.java:28)
+		at org.codefx.Business.its(Business.java:20)
+		at org.codefx.Code.thing(Code.java:11)
+```
+
+Ok-ish for coders, but suck for everybody else.
+
+=== Helpful NPEs
+
+With `-XX:+ShowCodeDetailsInExceptionMessages`:
+
+```sh
+java.lang.NullPointerException:
+	Cannot invoke "String.length()" because the return
+	value of "org.codefx.courses.Irregular.doing()"
+	is null
+		at org.codefx.Regular.doing(Regular.java:28)
+		at org.codefx.Business.its(Business.java:20)
+		at org.codefx.Code.thing(Code.java:11)
+```
+
+=== Why the flag?
+
+The command line option +
+is needed (for now), because:
+
+* performance
+* security
+* compatibility
+
+But:
+
+> It is intended to enable code details +
+> in exception messages by default +
+> in a later release.
+
+== JVM Features
+
+++++
+<table class="toc">
+	<tr><td>Helpful NPEs ⑭</td></tr>
 	<tr class="toc-current"><td>Launch Source File ⑪</td></tr>
 	<tr><td>Unified Logging ⑨</td></tr>
 	<tr><td>Multi-Release JARs ⑨</td></tr>
@@ -99,6 +155,7 @@ hello-java-11
 
 ++++
 <table class="toc">
+	<tr><td>Helpful NPEs ⑭</td></tr>
 	<tr><td>Launch Source File ⑪</td></tr>
 	<tr class="toc-current"><td>Unified Logging ⑨</td></tr>
 	<tr><td>Multi-Release JARs ⑨</td></tr>
@@ -232,6 +289,7 @@ Elements have to be defined from left to right. +
 
 ++++
 <table class="toc">
+	<tr><td>Helpful NPEs ⑭</td></tr>
 	<tr><td>Launch Source File ⑪</td></tr>
 	<tr><td>Unified Logging ⑨</td></tr>
 	<tr class="toc-current"><td>Multi-Release JARs ⑨</td></tr>
@@ -319,6 +377,7 @@ Great Success!
 
 ++++
 <table class="toc">
+	<tr><td>Helpful NPEs ⑭</td></tr>
 	<tr><td>Launch Source File ⑪</td></tr>
 	<tr><td>Unified Logging ⑨</td></tr>
 	<tr><td>Multi-Release JARs ⑨</td></tr>
