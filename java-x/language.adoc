@@ -2,6 +2,7 @@
 
 ++++
 <table class="toc">
+	<tr><td>Records ⑭</td></tr>
 	<tr><td>Text Blocks ⑬</td></tr>
 	<tr><td>Switch Expressions ⑫⑬</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
@@ -15,6 +16,216 @@
 
 ++++
 <table class="toc">
+	<tr class="toc-current"><td>Records ⑭</td></tr>
+	<tr><td>Pattern Matching ⑭</td></tr>
+	<tr><td>Text Blocks ⑬</td></tr>
+	<tr><td>Switch Expressions ⑫⑬</td></tr>
+	<tr><td>Local-Variable Type Inference ⑩</td></tr>
+	<tr><td>All The Small Things... ⑨</td></tr>
+</table>
+++++
+
+Simple classes ~> simple code
+
+=== Spilling Beans
+
+Typical Java Bean:
+
+```java
+public class Range {
+
+	// part I 😀
+
+	private final int low;
+	private final int high;
+
+	public Range(int low, int high) {
+		this.low = low;
+		this.high = high;
+	}
+
+}
+```
+
+=== Spilling Beans
+
+```java
+public class Range {
+
+	// part II 🙄
+
+	public int getLow() {
+		return low;
+	}
+
+	public int getHigh() {
+		return high;
+	}
+
+}
+```
+
+=== Spilling Beans
+
+```java
+public class Range {
+
+	// part III 🤨
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Range range = (Range) o;
+		return low == range.low &&
+				high == range.high;
+	}
+
+}
+```
+
+=== Spilling Beans
+
+```java
+public class Range {
+
+	// part IV 🥴
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(low, high);
+	}
+
+}
+```
+
+=== Spilling Beans
+
+```java
+public class Range {
+
+	// part V 😭
+
+	@Override
+	public String toString() {
+		return "[" + low + "; " + high + "]";
+	}
+
+}
+```
+
+=== "Java is Verbose"
+
+`Range.java` is simple:
+
+* declares type `Range`
+* declares two components, `low` and `high`
+
+Takes 44 lines!
+
+* verbose
+* room for error
+* unexpressive
+
+=== Records
+
+```java
+//                these are "components"
+public record Range(int low, int high) {
+
+	// compiler generates:
+	//  * constructor
+	//  * accessors low(), high()
+	//  * equals, hashCode, toString
+
+}
+```
+
+=== Records
+
+> The API for a record models the state, the whole state, and nothing but the state.
+
+The deal:
+
+* give up encapsulation
+* couple API to internal state
+* get API for free
+
+=== Records
+
+The benefits:
+
+* no boilerplate for plain "data carriers"
+* no room for error
+* makes Java more expressive
+
+On to the details!
+
+=== Limited Records
+
+Records are limited classes:
+
+* no inheritance
+** can't use `extends`
+** are `final`
+* component fields are `final`
+* no additional fields
+
+=== Customizable Records
+
+Records can be customized:
+
+* override constructor
+* add constructors and +
+  static factory methods
+* override accessors
+* add other methods
+* override `Object` methods
+* implement interfaces
+
+=== Customizable Record
+
+Override constructor:
+
+```java
+public Range(int low, int high) {
+	if (high < low)
+		throw new IllegalArgumentException();
+	this.low = low;
+	this.high = high;
+}
+```
+
+=== Customizable Record
+
+Compact form:
+
+```java
+// executed before fields are assigned
+public Range {
+	if (high < low)
+		throw new IllegalArgumentException();
+}
+```
+
+=== Summary
+
+* use records to replace data carriers
+* it's not anty-boilerplate pixie dust +
+  ⇝ use only when "the deal" makes sense
+* beware of limitations
+* beware of class-building facilites
+* observe ecosystem for adoption
+
+
+
+== New Language Features
+
+++++
+<table class="toc">
+	<tr><td>Records ⑭</td></tr>
 	<tr class="toc-current"><td>Text Blocks ⑬</td></tr>
 	<tr><td>Switch Expressions ⑫⑬</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
@@ -162,6 +373,7 @@ String phrase = """
 
 ++++
 <table class="toc">
+	<tr><td>Records ⑭</td></tr>
 	<tr><td>Text Blocks ⑬</td></tr>
 	<tr class="toc-current"><td>Switch Expressions ⑫⑬</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
@@ -561,6 +773,7 @@ Definitive Guide To Switch Expressions
 
 ++++
 <table class="toc">
+	<tr><td>Records ⑭</td></tr>
 	<tr><td>Text Blocks ⑬</td></tr>
 	<tr><td>Switch Expressions ⑫⑬</td></tr>
 	<tr class="toc-current"><td>Local-Variable Type Inference ⑩</td></tr>
@@ -867,7 +1080,7 @@ long l = 42
 
 ++++
 <table class="toc">
-	<tr><td>All The Cool Things... ⑩⑫⑬</td></tr>
+	<tr><td>All The Cool Things... ⑩⑫⑬⑭</td></tr>
 	<tr class="toc-current"><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
 	<tr><td>Diamond Operator ⑨</td></tr>
@@ -922,7 +1135,7 @@ Just like private methods in abstract classes:
 
 ++++
 <table class="toc">
-	<tr><td>All The Cool Things... ⑩⑫⑬</td></tr>
+	<tr><td>All The Cool Things... ⑩⑫⑬⑭</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr class="toc-current"><td>Try-With-Resources ⑨</td></tr>
 	<tr><td>Diamond Operator ⑨</td></tr>
@@ -988,7 +1201,7 @@ Q: Can instance be created but not assigned? No.
 
 ++++
 <table class="toc">
-	<tr><td>All The Cool Things... ⑩⑫⑬</td></tr>
+	<tr><td>All The Cool Things... ⑩⑫⑬⑭</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
 	<tr class="toc-current"><td>Diamond Operator ⑨</td></tr>
@@ -1054,7 +1267,7 @@ Box<?> createCrazyBox(Object content) {
 
 ++++
 <table class="toc">
-	<tr><td>All The Cool Things... ⑩⑫⑬</td></tr>
+	<tr><td>All The Cool Things... ⑩⑫⑬⑭</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
 	<tr><td>Diamond Operator ⑨</td></tr>
@@ -1148,7 +1361,7 @@ can be applied to private methods.
 
 ++++
 <table class="toc">
-	<tr><td>All The Cool Things... ⑩⑫⑬</td></tr>
+	<tr><td>All The Cool Things... ⑩⑫⑬⑭</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
 	<tr><td>Diamond Operator ⑨</td></tr>
