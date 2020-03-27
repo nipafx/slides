@@ -1,8 +1,8 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Java 9 To 13</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="../_reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="../_reveal.js/css/theme/nipa-night.css" id="theme"><link href="../_reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>var link = document.createElement( 'link' );
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Java 9 To 14</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="../_reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="../_reveal.js/css/theme/nipa-night.css" id="theme"><link href="../_reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>var link = document.createElement( 'link' );
 link.rel = 'stylesheet';
 link.type = 'text/css';
 link.href = window.location.search.match( /print-pdf/gi ) ? "../_reveal.js/css/print/pdf.css" : "../_reveal.js/css/print/paper.css";
-document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="../_reveal.js/lib/js/html5shiv.js"></script><![endif]--></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>Java 9 To 13</h1><div class="preamble"><link rel="stylesheet" href="../_highlight.js/styles/monokai-sublime.css">
+document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="../_reveal.js/lib/js/html5shiv.js"></script><![endif]--></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>Java 9 To 14</h1><div class="preamble"><link rel="stylesheet" href="../_highlight.js/styles/monokai-sublime.css">
 <script src="../_highlight.js/highlight.pack.js"></script>
 <script>
 	window.onload = function() {
@@ -57,31 +57,131 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 	})
 </script></div></section>
 <section><section id="lets_get_started"><h2>Let&#8217;s get started!</h2><div class="ulist"><ul><li><p>slides at <a href="http://slides.codefx.org/java-x">slides.codefx.org/java-x</a></p></li><li><p>exercises at<br>
-<a href="https://github.com/nicolaiparlog/course-java-x">github.com/nicolaiparlog/course-java-x</a></p></li><li><p>they cover Java 9 to 13 without JPMS</p></li></ul></div><div class="paragraph"><p>(Please share responsibly)</p></div></section><section id="lots_to_talk_about"><h2>Lots to talk about!</h2><table class="toc">
+<a href="https://github.com/nicolaiparlog/course-java-x">github.com/nicolaiparlog/course-java-x</a></p></li><li><p>they cover Java 9 to 14 without JPMS</p></li></ul></div><div class="paragraph"><p>(Please share responsibly)</p></div></section><section id="lots_to_talk_about"><h2>Lots to talk about!</h2><table class="toc">
 	<tr><td>Language Changes</td></tr>
 	<tr><td>New and Updated APIs</td></tr>
 	<tr><td>New JVM Features</td></tr>
 	<tr><td>Performance Improvements</td></tr>
 </table></section></section>
 <section id="new_language_features"><h2>New Language Features</h2><table class="toc">
+	<tr><td>Records ⑭</td></tr>
+	<tr><td>Pattern Matching ⑭</td></tr>
 	<tr><td>Text Blocks ⑬</td></tr>
 	<tr><td>Switch Expressions ⑫⑬</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
-	<tr><td>Private Interface Methods ⑨</td></tr>
-	<tr><td>Try-With-Resources ⑨</td></tr>
-	<tr><td>Diamond Operator ⑨</td></tr>
-	<tr><td>SafeVarargs ⑨</td></tr>
-	<tr><td>Deprecation Warnings ⑨</td></tr>
+	<tr><td>All The Small Things... ⑨</td></tr>
 </table></section>
 <section><section id="new_language_features_2"><h2>New Language Features</h2><table class="toc">
+	<tr class="toc-current"><td>Records ⑭</td></tr>
+	<tr><td>Pattern Matching ⑭</td></tr>
+	<tr><td>Text Blocks ⑬</td></tr>
+	<tr><td>Switch Expressions ⑫⑬</td></tr>
+	<tr><td>Local-Variable Type Inference ⑩</td></tr>
+	<tr><td>All The Small Things... ⑨</td></tr>
+</table><div class="paragraph"><p>Simple classes ~&gt; simple code</p></div></section><section id="spilling_beans"><h2>Spilling Beans</h2><div class="paragraph"><p>Typical Java Bean:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class Range {
+
+	// part I 😀
+
+	private final int low;
+	private final int high;
+
+	public Range(int low, int high) {
+		this.low = low;
+		this.high = high;
+	}
+
+}</code></pre></div></div></section><section id="spilling_beans_2"><h2>Spilling Beans</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class Range {
+
+	// part II 🙄
+
+	public int getLow() {
+		return low;
+	}
+
+	public int getHigh() {
+		return high;
+	}
+
+}</code></pre></div></div></section><section id="spilling_beans_3"><h2>Spilling Beans</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class Range {
+
+	// part III 🤨
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Range range = (Range) o;
+		return low == range.low &amp;&amp;
+				high == range.high;
+	}
+
+}</code></pre></div></div></section><section id="spilling_beans_4"><h2>Spilling Beans</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class Range {
+
+	// part IV 🥴
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(low, high);
+	}
+
+}</code></pre></div></div></section><section id="spilling_beans_5"><h2>Spilling Beans</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class Range {
+
+	// part V 😭
+
+	@Override
+	public String toString() {
+		return "[" + low + "; " + high + "]";
+	}
+
+}</code></pre></div></div></section><section id="java_is_verbose"><h2>"Java is Verbose"</h2><div class="paragraph"><p><code>Range.java</code> is simple:</p></div>
+<div class="ulist"><ul><li><p>declares type <code>Range</code></p></li><li><p>declares two components, <code>low</code> and <code>high</code></p></li></ul></div>
+<div class="paragraph"><p>Takes 44 lines!</p></div>
+<div class="ulist"><ul><li><p>verbose</p></li><li><p>room for error</p></li><li><p>unexpressive</p></li></ul></div></section><section id="records"><h2>Records</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">//                these are "components"
+public record Range(int low, int high) {
+
+	// compiler generates:
+	//  * constructor
+	//  * accessors low(), high()
+	//  * equals, hashCode, toString
+
+}</code></pre></div></div></section><section id="records_2"><h2>Records</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>The API for a record models the state, the whole state, and nothing but the state.</p></div></blockquote></div>
+<div class="paragraph"><p>The deal:</p></div>
+<div class="ulist"><ul><li><p>give up encapsulation</p></li><li><p>couple API to internal state</p></li><li><p>get API for free</p></li></ul></div></section><section id="records_3"><h2>Records</h2><div class="paragraph"><p>The benefits:</p></div>
+<div class="ulist"><ul><li><p>no boilerplate for plain "data carriers"</p></li><li><p>no room for error</p></li><li><p>makes Java more expressive</p></li></ul></div>
+<div class="paragraph"><p>On to the details!</p></div></section><section id="limited_records"><h2>Limited Records</h2><div class="paragraph"><p>Records are limited classes:</p></div>
+<div class="ulist"><ul><li><p>no inheritance</p><div class="ulist"><ul><li><p>can&#8217;t use <code>extends</code></p></li><li><p>are <code>final</code></p></li></ul></div></li><li><p>component fields are <code>final</code></p></li><li><p>no additional fields</p></li></ul></div></section><section id="customizable_records"><h2>Customizable Records</h2><div class="paragraph"><p>Records can be customized:</p></div>
+<div class="ulist"><ul><li><p>override constructor</p></li><li><p>add constructors and<br>
+static factory methods</p></li><li><p>override accessors</p></li><li><p>add other methods</p></li><li><p>override <code>Object</code> methods</p></li><li><p>implement interfaces</p></li></ul></div></section><section id="customizable_record"><h2>Customizable Record</h2><div class="paragraph"><p>Override constructor:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public Range(int low, int high) {
+	if (high &lt; low)
+		throw new IllegalArgumentException();
+	this.low = low;
+	this.high = high;
+}</code></pre></div></div></section><section id="customizable_record_2"><h2>Customizable Record</h2><div class="paragraph"><p>Compact form:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// executed before fields are assigned
+public Range {
+	if (high &lt; low)
+		throw new IllegalArgumentException();
+}</code></pre></div></div></section><section id="summary"><h2>Summary</h2><div class="ulist"><ul><li><p>use records to replace data carriers</p></li><li><p>it&#8217;s not anty-boilerplate pixie dust<br>
+⇝ use only when "the deal" makes sense</p></li><li><p>beware of limitations</p></li><li><p>beware of class-building facilites</p></li><li><p>observe ecosystem for adoption</p></li></ul></div></section></section>
+<section><section id="new_language_features_3"><h2>New Language Features</h2><table class="toc">
+	<tr><td>Records ⑭</td></tr>
+	<tr class="toc-current"><td>Pattern Matching ⑭</td></tr>
+	<tr><td>Text Blocks ⑬</td></tr>
+	<tr><td>Switch Expressions ⑫⑬</td></tr>
+	<tr><td>Local-Variable Type Inference ⑩</td></tr>
+	<tr><td>All The Small Things... ⑨</td></tr>
+</table><div class="paragraph"><p>Fewer <code>if</code>-s.</p></div></section><section id="pattern_matching"><h2>Pattern Matching</h2><div class="paragraph"><p>TODO14</p></div></section></section>
+<section><section id="new_language_features_4"><h2>New Language Features</h2><table class="toc">
+	<tr><td>Records ⑭</td></tr>
+	<tr><td>Pattern Matching ⑭</td></tr>
 	<tr class="toc-current"><td>Text Blocks ⑬</td></tr>
 	<tr><td>Switch Expressions ⑫⑬</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
-	<tr><td>Private Interface Methods ⑨</td></tr>
-	<tr><td>Try-With-Resources ⑨</td></tr>
-	<tr><td>Diamond Operator ⑨</td></tr>
-	<tr><td>SafeVarargs ⑨</td></tr>
-	<tr><td>Deprecation Warnings ⑨</td></tr>
+	<tr><td>All The Small Things... ⑨</td></tr>
 </table><div class="paragraph"><p>Multiline strings. Finally.</p></div></section><section id="multiline_strings"><h2>Multiline Strings</h2><div class="paragraph"><p>Text blocks are straightforward:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">String haikuBlock = """
 	worker bees can leave
@@ -136,17 +236,14 @@ String haikuBlock = """
     }
     """;</code></pre></div></div>
 <div class="paragraph"><p>⇝ Way fewer escapes in HTML/JSON/SQL/etc.</p></div></section><section id="more_on_text_blocks"><h2>More on Text Blocks</h2><div class="ulist"><ul><li><p><a href="https://blog.codefx.org/java/text-blocks/">Definitive Guide To Text Blocks</a></p></li><li><p><a href="http://cr.openjdk.java.net/~jlaskey/Strings/TextBlocksGuide_v9.html">Programmer&#8217;s Guide To Text Blocks</a></p></li></ul></div></section></section>
-<section><section id="new_language_features_3"><h2>New Language Features</h2><table class="toc">
+<section><section id="new_language_features_5"><h2>New Language Features</h2><table class="toc">
+	<tr><td>Records ⑭</td></tr>
+	<tr><td>Pattern Matching ⑭</td></tr>
 	<tr><td>Text Blocks ⑬</td></tr>
 	<tr class="toc-current"><td>Switch Expressions ⑫⑬</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
-	<tr><td>Private Interface Methods ⑨</td></tr>
-	<tr><td>Try-With-Resources ⑨</td></tr>
-	<tr><td>Diamond Operator ⑨</td></tr>
-	<tr><td>SafeVarargs ⑨</td></tr>
-	<tr><td>Deprecation Warnings ⑨</td></tr>
-</table><div class="paragraph"><p>More powerful <code>switch</code> and<br>
-beginnings of pattern matching.</p></div></section><section id="switching"><h2>Switching</h2><div class="paragraph"><p>Say you&#8217;re facing <a href="https://thedailywtf.com/articles/What_Is_Truth_0x3f_">the dreaded ternary Boolean</a> &#8230;&#8203;</p></div>
+	<tr><td>All The Small Things... ⑨</td></tr>
+</table><div class="paragraph"><p>More powerful <code>switch</code>.</p></div></section><section id="switching"><h2>Switching</h2><div class="paragraph"><p>Say you&#8217;re facing <a href="https://thedailywtf.com/articles/What_Is_Truth_0x3f_">the dreaded ternary Boolean</a> &#8230;&#8203;</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public enum TernaryBoolean {
 	TRUE,
 	FALSE,
@@ -336,15 +433,13 @@ boolean result = switch (ternaryBool) {
 };</code></pre></div></div>
 <div class="paragraph"><p>Compiler adds in <code>default</code> branch.</p></div></section><section id="more_on_switch"><h2>More on <code>switch</code></h2><div class="paragraph"><p>Definitive Guide To Switch Expressions</p></div>
 <div class="ulist"><ul><li><p>💻 <a href="https://blog.codefx.org/java/switch-expressions/">tiny.cc/java-12-switch</a></p></li><li><p>▶ <a href="https://www.youtube.com/watch?v=1znHEf3oSNI&amp;list=PL_-IO8LOLuNp2stY1qBUtXlfMdJW7wvfT">tiny.cc/java-12-switch-yt</a></p></li></ul></div></section></section>
-<section><section id="new_language_features_4"><h2>New Language Features</h2><table class="toc">
+<section><section id="new_language_features_6"><h2>New Language Features</h2><table class="toc">
+	<tr><td>Records ⑭</td></tr>
+	<tr><td>Pattern Matching ⑭</td></tr>
 	<tr><td>Text Blocks ⑬</td></tr>
 	<tr><td>Switch Expressions ⑫⑬</td></tr>
 	<tr class="toc-current"><td>Local-Variable Type Inference ⑩</td></tr>
-	<tr><td>Private Interface Methods ⑨</td></tr>
-	<tr><td>Try-With-Resources ⑨</td></tr>
-	<tr><td>Diamond Operator ⑨</td></tr>
-	<tr><td>SafeVarargs ⑨</td></tr>
-	<tr><td>Deprecation Warnings ⑨</td></tr>
+	<tr><td>All The Small Things... ⑨</td></tr>
 </table><div class="paragraph"><p>Type inference with <code>var</code>.<br>
 Less typing, but still strongly typed.</p></div></section><section id="type_duplication"><h2>Type Duplication</h2><div class="paragraph"><p>We&#8217;re used to duplicating<br>
 type information:</p></div>
@@ -464,10 +559,8 @@ short s = 42;
 long l = 42</code></pre></div></div></section><section id="more_on_var"><h2>More on <code>var</code></h2><div class="ulist"><ul><li><p>First Contact With <code>var</code> In Java 10<br>
 💻 <a href="https://blog.codefx.org/java/java-10-var-type-inference/">tiny.cc/java-var</a> /
 ▶ <a href="https://www.youtube.com/watch?v=Le1DbpRZdRQ&amp;index=1&amp;list=PL_-IO8LOLuNp2stY1qBUtXlfMdJW7wvfT">tiny.cc/java-var-yt</a></p></li><li><p><a href="https://snyk.io/blog/local-type-inference-java-cheat-sheet">cheat sheet</a> (<strong>⇜ print when getting started!</strong>)</p></li><li><p><a href="http://openjdk.java.net/projects/amber/LVTIstyle.html">official style guidelines</a></p></li><li><p><code>var</code> and &#8230;&#8203;</p><div class="ulist"><ul><li><p><a href="https://blog.codefx.org/java/intersection-types-var/">intersection types</a></p></li><li><p><a href="https://blog.codefx.org/java/traits-var/">traits</a></p></li><li><p><a href="https://blog.codefx.org/java/tricks-var-anonymous-classes/">anonymous classes</a></p></li></ul></div></li></ul></div></section></section>
-<section><section id="new_language_features_5"><h2>New Language Features</h2><table class="toc">
-	<tr><td>Text Blocks ⑬</td></tr>
-	<tr><td>Switch Expressions ⑫⑬</td></tr>
-	<tr><td>Local-Variable Type Inference ⑩</td></tr>
+<section><section id="new_language_features_7"><h2>New Language Features</h2><table class="toc">
+	<tr><td>All The Cool Things... ⑩⑫⑬⑭</td></tr>
 	<tr class="toc-current"><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
 	<tr><td>Diamond Operator ⑨</td></tr>
@@ -496,10 +589,8 @@ long l = 42</code></pre></div></div></section><section id="more_on_var"><h2>More
 }</code></pre></div></div>
 <div class="paragraph"><p>Just like private methods in abstract classes:</p></div>
 <div class="ulist"><ul><li><p>must be implemented</p></li><li><p>can not be overriden</p></li><li><p>can only be called in same source file</p></li></ul></div></section></section>
-<section><section id="new_language_features_6"><h2>New Language Features</h2><table class="toc">
-	<tr><td>Text Blocks ⑬</td></tr>
-	<tr><td>Switch Expressions ⑫⑬</td></tr>
-	<tr><td>Local-Variable Type Inference ⑩</td></tr>
+<section><section id="new_language_features_8"><h2>New Language Features</h2><table class="toc">
+	<tr><td>All The Cool Things... ⑩⑫⑬⑭</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr class="toc-current"><td>Try-With-Resources ⑨</td></tr>
 	<tr><td>Diamond Operator ⑨</td></tr>
@@ -524,10 +615,8 @@ and can be made implicitly final</p></li></ul></div>
 }</code></pre></div></div>
 <div class="ulist"><ul><li><p>compiler knows that <code>connection</code> is not reassigned</p></li><li><p>developers know what <em>effectively final</em> means</p></li></ul></div>
 <aside class="notes"><div class="paragraph"><p>Q: Can instance be created but not assigned? No.</p></div></aside></section></section>
-<section><section id="new_language_features_7"><h2>New Language Features</h2><table class="toc">
-	<tr><td>Text Blocks ⑬</td></tr>
-	<tr><td>Switch Expressions ⑫⑬</td></tr>
-	<tr><td>Local-Variable Type Inference ⑩</td></tr>
+<section><section id="new_language_features_9"><h2>New Language Features</h2><table class="toc">
+	<tr><td>All The Cool Things... ⑩⑫⑬⑭</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
 	<tr class="toc-current"><td>Diamond Operator ⑨</td></tr>
@@ -552,10 +641,8 @@ for anonymous classes</p></li><li><p>can not be expressed by JVM</p></li></ul></
 	// compile error
 	return new Box&lt;&gt;(innerList) { };
 }</code></pre></div></div></section></section>
-<section><section id="new_language_features_8"><h2>New Language Features</h2><table class="toc">
-	<tr><td>Text Blocks ⑬</td></tr>
-	<tr><td>Switch Expressions ⑫⑬</td></tr>
-	<tr><td>Local-Variable Type Inference ⑩</td></tr>
+<section><section id="new_language_features_10"><h2>New Language Features</h2><table class="toc">
+	<tr><td>All The Cool Things... ⑩⑫⑬⑭</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
 	<tr><td>Diamond Operator ⑨</td></tr>
@@ -596,10 +683,8 @@ that can not be overriden</p></li></ul></div>
 ⇝ Damn! 😭</p></div></section><section id="safevarargs_on_privatemethods"><h2>@SafeVarargs on Private&nbsp;Methods</h2><div class="paragraph"><p>Looong story, here&#8217;s the point:</p></div>
 <div class="paragraph"><p>In Java 9 <code>@SafeVarargs</code><br>
 can be applied to private methods.</p></div></section></section>
-<section><section id="new_language_features_9"><h2>New Language Features</h2><table class="toc">
-	<tr><td>Text Blocks ⑬</td></tr>
-	<tr><td>Switch Expressions ⑫⑬</td></tr>
-	<tr><td>Local-Variable Type Inference ⑩</td></tr>
+<section><section id="new_language_features_11"><h2>New Language Features</h2><table class="toc">
+	<tr><td>All The Cool Things... ⑩⑫⑬⑭</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
 	<tr><td>Diamond Operator ⑨</td></tr>
@@ -1114,17 +1199,45 @@ Line 11</code></pre></div></div></section><section id="options"><h2>Options</h2>
 <div class="paragraph"><p>(Benchmarks performed by <a href="https://twitter.com/arnaudroger">Arnaud Roger</a>)</p></div></section></section>
 <section id="a_mixed_bag_of_new_apis"><h2>A Mixed Bag Of New APIs</h2><div class="paragraph"><p><strong>In Java 9:</strong></p></div>
 <div class="ulist"><ul><li><p>multi-resolution images (<a href="http://openjdk.java.net/jeps/251">JEP 251</a>)</p></li><li><p>native desktop integration (<a href="http://openjdk.java.net/jeps/272">JEP 272</a>)</p></li><li><p>deserialization filter (<a href="http://openjdk.java.net/jeps/290">JEP 290</a>)</p></li><li><p>DTLS (<a href="http://openjdk.java.net/jeps/219">JEP 219</a>),<br>
-TLS ALPN and OCSP stapling (<a href="http://openjdk.java.net/jeps/244">JEP 244</a>)</p></li></ul></div>
-<div class="paragraph"><p><strong>In Java 12:</strong></p></div>
+TLS ALPN and OCSP stapling (<a href="http://openjdk.java.net/jeps/244">JEP 244</a>)</p></li></ul></div></section>
+<section id="a_mixed_bag_of_new_apis_2"><h2>A Mixed Bag Of New APIs</h2><div class="paragraph"><p><strong>In Java 12:</strong></p></div>
 <div class="ulist"><ul><li><p><code>CompactNumberFormat</code> (<a href="https://bugs.openjdk.java.net/browse/JDK-8188147">JDK-8188147</a>)</p></li></ul></div>
+<div class="paragraph"><p><strong>In Java 14:</strong></p></div>
+<div class="ulist"><ul><li><p>foreign-memory access (<a href="http://openjdk.java.net/jeps/370">JEP 370</a>)</p></li><li><p>non-volatile <code>MappedByteBuffer</code> (<a href="http://openjdk.java.net/jeps/352">JEP 352</a>)</p></li></ul></div>
 <div class="paragraph"><p>And often lots of low-level APIs.</p></div></section>
 <section id="jvm_features"><h2>JVM Features</h2><table class="toc">
+	<tr><td>Helpful NPEs ⑭</td></tr>
 	<tr><td>Launch Source File ⑪</td></tr>
 	<tr><td>Unified Logging ⑨</td></tr>
 	<tr><td>Multi-Release JARs ⑨</td></tr>
 	<tr><td>Redirected Platform Logging ⑨</td></tr>
 </table></section>
 <section><section id="jvm_features_2"><h2>JVM Features</h2><table class="toc">
+	<tr class="toc-current"><td>Helpful NPEs ⑭</td></tr>
+	<tr><td>Launch Source File ⑪</td></tr>
+	<tr><td>Unified Logging ⑨</td></tr>
+	<tr><td>Multi-Release JARs ⑨</td></tr>
+	<tr><td>Redirected Platform Logging ⑨</td></tr>
+</table><div class="paragraph"><p>Finally can NPEs be helpful!</p></div></section><section id="typical_npes"><h2>Typical NPEs</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="sh language-sh">java.lang.NullPointerException
+		at org.codefx.Regular.doing(Regular.java:28)
+		at org.codefx.Business.its(Business.java:20)
+		at org.codefx.Code.thing(Code.java:11)</code></pre></div></div>
+<div class="paragraph"><p>Ok-ish for coders, but suck for everybody else.</p></div></section><section id="helpful_npes"><h2>Helpful NPEs</h2><div class="paragraph"><p>With <code>-XX:+ShowCodeDetailsInExceptionMessages</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="sh language-sh">java.lang.NullPointerException:
+	Cannot invoke "String.length()" because the return
+	value of "org.codefx.courses.Irregular.doing()"
+	is null
+		at org.codefx.Regular.doing(Regular.java:28)
+		at org.codefx.Business.its(Business.java:20)
+		at org.codefx.Code.thing(Code.java:11)</code></pre></div></div></section><section id="why_the_flag"><h2>Why the flag?</h2><div class="paragraph"><p>The command line option<br>
+is needed (for now), because:</p></div>
+<div class="ulist"><ul><li><p>performance</p></li><li><p>security</p></li><li><p>compatibility</p></li></ul></div>
+<div class="paragraph"><p>But:</p></div>
+<div class="quoteblock"><blockquote><div class="paragraph"><p>It is intended to enable code details<br>
+in exception messages by default<br>
+in a later release.</p></div></blockquote></div></section></section>
+<section><section id="jvm_features_3"><h2>JVM Features</h2><table class="toc">
+	<tr><td>Helpful NPEs ⑭</td></tr>
 	<tr class="toc-current"><td>Launch Source File ⑪</td></tr>
 	<tr><td>Unified Logging ⑨</td></tr>
 	<tr><td>Multi-Release JARs ⑨</td></tr>
@@ -1145,7 +1258,8 @@ simple Java programs is verbose.</p></div>
 ./hello-java-11
 # from PATH:
 hello-java-11</code></pre></div></div></li></ul></div></section></section>
-<section><section id="jvm_features_3"><h2>JVM Features</h2><table class="toc">
+<section><section id="jvm_features_4"><h2>JVM Features</h2><table class="toc">
+	<tr><td>Helpful NPEs ⑭</td></tr>
 	<tr><td>Launch Source File ⑪</td></tr>
 	<tr class="toc-current"><td>Unified Logging ⑨</td></tr>
 	<tr><td>Multi-Release JARs ⑨</td></tr>
@@ -1187,7 +1301,8 @@ hello-java-11</code></pre></div></div></li></ul></div></section></section>
 (the docs call this <em>what-expression</em>)</p></li><li><p><code>$OUTPUT</code> is <code>stdout</code>, <code>stderr</code>, or <code>file=&lt;filename&gt;</code></p></li><li><p><code>$DECORATORS</code> define what is shown</p></li><li><p><code>$OUTPUT_OPTS</code> configure file rotation</p></li></ul></div>
 <div class="paragraph"><p>Elements have to be defined from left to right.<br>
 (No skipping!)</p></div></section></section>
-<section><section id="jvm_features_4"><h2>JVM Features</h2><table class="toc">
+<section><section id="jvm_features_5"><h2>JVM Features</h2><table class="toc">
+	<tr><td>Helpful NPEs ⑭</td></tr>
 	<tr><td>Launch Source File ⑪</td></tr>
 	<tr><td>Unified Logging ⑨</td></tr>
 	<tr class="toc-current"><td>Multi-Release JARs ⑨</td></tr>
@@ -1226,7 +1341,8 @@ public class Version {
                     └ Version.class</code></pre></div></div></section><section id="run"><h2>Run!</h2><div class="paragraph"><p>With <code>java -cp out/mr.jar &#8230;&#8203;Main</code>:</p></div>
 <div class="ulist"><ul><li><p>prints <code>"Java 8"</code> on Java 8</p></li><li><p>prints <code>"Java 9"</code> on Java 9</p></li></ul></div>
 <div class="paragraph"><p>Great Success!</p></div></section></section>
-<section><section id="jvm_features_5"><h2>JVM Features</h2><table class="toc">
+<section><section id="jvm_features_6"><h2>JVM Features</h2><table class="toc">
+	<tr><td>Helpful NPEs ⑭</td></tr>
 	<tr><td>Launch Source File ⑪</td></tr>
 	<tr><td>Unified Logging ⑨</td></tr>
 	<tr><td>Multi-Release JARs ⑨</td></tr>
@@ -1268,7 +1384,9 @@ as backend for JDK logging.</p></div></section><section id="loggers_and_finders"
 <div class="ulist"><ul><li><p>alternative memory device support (<a href="http://openjdk.java.net/jeps/316">JEP 316</a>)</p></li></ul></div>
 <div class="paragraph"><p><strong>In Java 11:</strong></p></div>
 <div class="ulist"><ul><li><p>Unicode 9 &amp; 10 (<a href="http://openjdk.java.net/jeps/327">JEP 327</a>)</p></li><li><p>Curve25519 and Curve448 (<a href="http://openjdk.java.net/jeps/324">JEP 324</a>)</p></li><li><p>ChaCha20 and Poly1305 (<a href="http://openjdk.java.net/jeps/329">JEP 329</a>)</p></li><li><p>partial TLS 1.3 support (<a href="http://openjdk.java.net/jeps/332">JEP 332</a>)</p></li></ul></div></section><section id="a_mixed_bag_of_newjvmfeatures_3"><h2>A Mixed Bag Of New&nbsp;JVM&nbsp;Features</h2><div class="paragraph"><p><strong>In Java 12:</strong></p></div>
-<div class="ulist"><ul><li><p>constants API (<a href="http://openjdk.java.net/jeps/334">JEP 334</a>)</p></li><li><p>HmacPBE (<a href="https://bugs.openjdk.java.net/browse/JDK-8076190">JDK-8215450</a>)</p></li><li><p>finer PKCS12 KeyStore configuration (<a href="https://bugs.openjdk.java.net/browse/JDK-8076190">JDK-8076190</a>)</p></li></ul></div></section></section>
+<div class="ulist"><ul><li><p>constants API (<a href="http://openjdk.java.net/jeps/334">JEP 334</a>)</p></li><li><p>HmacPBE (<a href="https://bugs.openjdk.java.net/browse/JDK-8076190">JDK-8215450</a>)</p></li><li><p>finer PKCS12 KeyStore configuration (<a href="https://bugs.openjdk.java.net/browse/JDK-8076190">JDK-8076190</a>)</p></li></ul></div>
+<div class="paragraph"><p><strong>In Java 14:</strong></p></div>
+<div class="ulist"><ul><li><p>packaging tool (<a href="http://openjdk.java.net/jeps/343">JEP 343</a>)</p></li></ul></div></section></section>
 <section id="performance"><h2>Performance</h2><table class="toc">
 	<tr><td>Application Class-Data Sharing ⑩⑫⑬</td></tr>
 	<tr><td>Compact Strings ⑨</td></tr>
@@ -1393,7 +1511,8 @@ The Lord Of The Strings</a></p></div></section></section>
 <div class="ulist"><ul><li><p>Graal&#8201;&#8212;&#8201;Java-based JIT compiler (<a href="http://openjdk.java.net/jeps/317">JEP 317</a>)</p></li><li><p>parallel full GC for G1 (<a href="http://openjdk.java.net/jeps/307">JEP 307</a>)</p></li><li><p>thread-local handshakes (<a href="http://openjdk.java.net/jeps/312">JEP 312</a>)</p></li></ul></div></section><section id="a_mixed_bag_of_performance_3"><h2>A Mixed Bag Of Performance</h2><div class="paragraph"><p><strong>In Java 11:</strong></p></div>
 <div class="ulist"><ul><li><p>Epsilon GC (<a href="http://openjdk.java.net/jeps/318">JEP 318</a>)</p></li><li><p>ZGC (experimental, <a href="http://openjdk.java.net/jeps/333">JEP 333</a>)</p></li><li><p>low-overhead heap profiling (<a href="http://openjdk.java.net/jeps/331">JEP 331</a>)</p></li><li><p>open-source Flight Recorder (<a href="http://openjdk.java.net/jeps/328">JEP 328</a>)</p></li></ul></div></section><section id="a_mixed_bag_of_performance_4"><h2>A Mixed Bag Of Performance</h2><div class="paragraph"><p><strong>In Java 12:</strong></p></div>
 <div class="ulist"><ul><li><p>Shenandoah (<a href="http://openjdk.java.net/jeps/189">JEP 189</a>)</p></li><li><p>G1 improvements:</p><div class="ulist"><ul><li><p>abortable mixed collections (<a href="http://openjdk.java.net/jeps/344">JEP 344</a>)</p></li><li><p>promptly return unused memory (<a href="http://openjdk.java.net/jeps/346">JEP 346</a>)</p></li></ul></div></li></ul></div></section><section id="a_mixed_bag_of_performance_5"><h2>A Mixed Bag Of Performance</h2><div class="paragraph"><p><strong>In Java 13:</strong></p></div>
-<div class="ulist"><ul><li><p>Shenandoah improvements:</p><div class="ulist"><ul><li><p>internals (<a href="https://bugs.openjdk.java.net/browse/JDK-8221766">JDK-8221766</a>, <a href="https://bugs.openjdk.java.net/browse/JDK-8224584">JDK-8224584</a>)</p></li><li><p>more platforms (<a href="https://bugs.openjdk.java.net/browse/JDK-8225048">JDK-8225048</a>, <a href="https://bugs.openjdk.java.net/browse/JDK-8223767">JDK-8223767</a>)</p></li></ul></div></li><li><p>ZGC improvements:</p><div class="ulist"><ul><li><p>implements <code>-XX:SoftMaxHeapSize</code> (<a href="https://bugs.openjdk.java.net/browse/JDK-8222145">JDK-8222145</a>)</p></li><li><p>max heap size of 16 TB (<a href="https://bugs.openjdk.java.net/browse/JDK-8221786">JDK-8221786</a>)</p></li><li><p>uncommits unused memory (<a href="https://openjdk.java.net/jeps/351">JEP 351</a>)</p></li></ul></div></li></ul></div></section></section>
+<div class="ulist"><ul><li><p>Shenandoah improvements:</p><div class="ulist"><ul><li><p>internals (<a href="https://bugs.openjdk.java.net/browse/JDK-8221766">JDK-8221766</a>, <a href="https://bugs.openjdk.java.net/browse/JDK-8224584">JDK-8224584</a>)</p></li><li><p>more platforms (<a href="https://bugs.openjdk.java.net/browse/JDK-8225048">JDK-8225048</a>, <a href="https://bugs.openjdk.java.net/browse/JDK-8223767">JDK-8223767</a>)</p></li></ul></div></li><li><p>ZGC improvements:</p><div class="ulist"><ul><li><p>implements <code>-XX:SoftMaxHeapSize</code> (<a href="https://bugs.openjdk.java.net/browse/JDK-8222145">JDK-8222145</a>)</p></li><li><p>max heap size of 16 TB (<a href="https://bugs.openjdk.java.net/browse/JDK-8221786">JDK-8221786</a>)</p></li><li><p>uncommits unused memory (<a href="https://openjdk.java.net/jeps/351">JEP 351</a>)</p></li></ul></div></li></ul></div></section><section id="a_mixed_bag_of_performance_6"><h2>A Mixed Bag Of Performance</h2><div class="paragraph"><p><strong>In Java 14:</strong></p></div>
+<div class="ulist"><ul><li><p>JFR event streaming API (<a href="https://openjdk.java.net/jeps/349">JEP 349</a>)</p></li><li><p>Shenadoah, G1, ZGC improvements</p></li></ul></div></section></section>
 <section id="about_nicolai_parlog" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>About Nicolai Parlog</h2>
 <div style="float: left; width: 45%; margin:0px;">
 	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="images/cover-jms.png" style="margin: 0;"></a>
@@ -1409,7 +1528,7 @@ The Lord Of The Strings</a></p></div></section></section>
 		border-radius: 12px;
 		background-color: rgba(255,255,255,0.5);
 		padding: 2px 8px 7px 4px;
-">40% off with<br>code <em>mtpvjug19</em></p>
+">37% off with<br>code <em>fccparlog</em></p>
 	<p><a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb">tiny.cc/jms</a></p>
 </div>
 <h3>Follow</h3>
@@ -1419,7 +1538,7 @@ The Lord Of The Strings</a></p></div></section></section>
 <div class="paragraph"><p>Slides at <a href="https://slides.codefx.org">slides.codefx.org</a></p></div>
 <div class="paragraph"><p>⇜ Get <a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&amp;a_bid=869915cb">my book</a>!</p></div>
 <div class="paragraph"><p>You can <a href="http://blog.codefx.org/hire-nicolai-parlog/">hire me</a>:</p></div>
-<div class="ulist"><ul><li><p>training (Java 8-12, JUnit 5)</p></li><li><p>consulting (Java 8-12)</p></li></ul></div></section>
+<div class="ulist"><ul><li><p>training (Java 8-14, JUnit 5)</p></li><li><p>consulting (Java 8-14)</p></li></ul></div></section>
 <section id="image_credits"><h2>Image Credits</h2><div class="ulist"><ul><li><p>Eleven: © Netflix</p></li><li><p><a href="https://www.pexels.com/photo/selective-focus-photography-of-bombay-cat-1931367/">black cat</a>:
 <a href="https://www.pexels.com/@wildlittlethingsphoto">Helena Lopes</a>,
 <a href="https://www.pexels.com/photo-license/">Pexels license</a></p></li><li><p><a href="https://www.flickr.com/photos/21496790@N06/5065834411">question-mark</a>:
