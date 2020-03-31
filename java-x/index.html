@@ -65,7 +65,6 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 </table></section></section>
 <section id="new_language_features"><h2>New Language Features</h2><table class="toc">
 	<tr><td>Records ⑭</td></tr>
-	<tr><td>Pattern Matching ⑭</td></tr>
 	<tr><td>Text Blocks ⑬</td></tr>
 	<tr><td>Switch Expressions ⑫⑬</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
@@ -169,15 +168,6 @@ public Range {
 ⇝ use only when "the deal" makes sense</p></li><li><p>beware of limitations</p></li><li><p>beware of class-building facilites</p></li><li><p>observe ecosystem for adoption</p></li></ul></div></section></section>
 <section><section id="new_language_features_3"><h2>New Language Features</h2><table class="toc">
 	<tr><td>Records ⑭</td></tr>
-	<tr class="toc-current"><td>Pattern Matching ⑭</td></tr>
-	<tr><td>Text Blocks ⑬</td></tr>
-	<tr><td>Switch Expressions ⑫⑬</td></tr>
-	<tr><td>Local-Variable Type Inference ⑩</td></tr>
-	<tr><td>All The Small Things... ⑨</td></tr>
-</table><div class="paragraph"><p>Fewer <code>if</code>-s.</p></div></section><section id="pattern_matching"><h2>Pattern Matching</h2><div class="paragraph"><p>TODO14</p></div></section></section>
-<section><section id="new_language_features_4"><h2>New Language Features</h2><table class="toc">
-	<tr><td>Records ⑭</td></tr>
-	<tr><td>Pattern Matching ⑭</td></tr>
 	<tr class="toc-current"><td>Text Blocks ⑬</td></tr>
 	<tr><td>Switch Expressions ⑫⑬</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
@@ -236,14 +226,14 @@ String haikuBlock = """
     }
     """;</code></pre></div></div>
 <div class="paragraph"><p>⇝ Way fewer escapes in HTML/JSON/SQL/etc.</p></div></section><section id="more_on_text_blocks"><h2>More on Text Blocks</h2><div class="ulist"><ul><li><p><a href="https://blog.codefx.org/java/text-blocks/">Definitive Guide To Text Blocks</a></p></li><li><p><a href="http://cr.openjdk.java.net/~jlaskey/Strings/TextBlocksGuide_v9.html">Programmer&#8217;s Guide To Text Blocks</a></p></li></ul></div></section></section>
-<section><section id="new_language_features_5"><h2>New Language Features</h2><table class="toc">
+<section><section id="new_language_features_4"><h2>New Language Features</h2><table class="toc">
 	<tr><td>Records ⑭</td></tr>
-	<tr><td>Pattern Matching ⑭</td></tr>
 	<tr><td>Text Blocks ⑬</td></tr>
 	<tr class="toc-current"><td>Switch Expressions ⑫⑬</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
 	<tr><td>All The Small Things... ⑨</td></tr>
-</table><div class="paragraph"><p>More powerful <code>switch</code>.</p></div></section><section id="switching"><h2>Switching</h2><div class="paragraph"><p>Say you&#8217;re facing <a href="https://thedailywtf.com/articles/What_Is_Truth_0x3f_">the dreaded ternary Boolean</a> &#8230;&#8203;</p></div>
+</table><div class="paragraph"><p>More powerful <code>switch</code> and<br>
+beginnings of pattern matching.</p></div></section><section id="switching"><h2>Switching</h2><div class="paragraph"><p>Say you&#8217;re facing <a href="https://thedailywtf.com/articles/What_Is_Truth_0x3f_">the dreaded ternary Boolean</a> &#8230;&#8203;</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public enum TernaryBoolean {
 	TRUE,
 	FALSE,
@@ -433,9 +423,8 @@ boolean result = switch (ternaryBool) {
 };</code></pre></div></div>
 <div class="paragraph"><p>Compiler adds in <code>default</code> branch.</p></div></section><section id="more_on_switch"><h2>More on <code>switch</code></h2><div class="paragraph"><p>Definitive Guide To Switch Expressions</p></div>
 <div class="ulist"><ul><li><p>💻 <a href="https://blog.codefx.org/java/switch-expressions/">tiny.cc/java-12-switch</a></p></li><li><p>▶ <a href="https://www.youtube.com/watch?v=1znHEf3oSNI&amp;list=PL_-IO8LOLuNp2stY1qBUtXlfMdJW7wvfT">tiny.cc/java-12-switch-yt</a></p></li></ul></div></section></section>
-<section><section id="new_language_features_6"><h2>New Language Features</h2><table class="toc">
+<section><section id="new_language_features_5"><h2>New Language Features</h2><table class="toc">
 	<tr><td>Records ⑭</td></tr>
-	<tr><td>Pattern Matching ⑭</td></tr>
 	<tr><td>Text Blocks ⑬</td></tr>
 	<tr><td>Switch Expressions ⑫⑬</td></tr>
 	<tr class="toc-current"><td>Local-Variable Type Inference ⑩</td></tr>
@@ -559,7 +548,7 @@ short s = 42;
 long l = 42</code></pre></div></div></section><section id="more_on_var"><h2>More on <code>var</code></h2><div class="ulist"><ul><li><p>First Contact With <code>var</code> In Java 10<br>
 💻 <a href="https://blog.codefx.org/java/java-10-var-type-inference/">tiny.cc/java-var</a> /
 ▶ <a href="https://www.youtube.com/watch?v=Le1DbpRZdRQ&amp;index=1&amp;list=PL_-IO8LOLuNp2stY1qBUtXlfMdJW7wvfT">tiny.cc/java-var-yt</a></p></li><li><p><a href="https://snyk.io/blog/local-type-inference-java-cheat-sheet">cheat sheet</a> (<strong>⇜ print when getting started!</strong>)</p></li><li><p><a href="http://openjdk.java.net/projects/amber/LVTIstyle.html">official style guidelines</a></p></li><li><p><code>var</code> and &#8230;&#8203;</p><div class="ulist"><ul><li><p><a href="https://blog.codefx.org/java/intersection-types-var/">intersection types</a></p></li><li><p><a href="https://blog.codefx.org/java/traits-var/">traits</a></p></li><li><p><a href="https://blog.codefx.org/java/tricks-var-anonymous-classes/">anonymous classes</a></p></li></ul></div></li></ul></div></section></section>
-<section><section id="new_language_features_7"><h2>New Language Features</h2><table class="toc">
+<section><section id="new_language_features_6"><h2>New Language Features</h2><table class="toc">
 	<tr><td>All The Cool Things... ⑩⑫⑬⑭</td></tr>
 	<tr class="toc-current"><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
@@ -589,7 +578,7 @@ long l = 42</code></pre></div></div></section><section id="more_on_var"><h2>More
 }</code></pre></div></div>
 <div class="paragraph"><p>Just like private methods in abstract classes:</p></div>
 <div class="ulist"><ul><li><p>must be implemented</p></li><li><p>can not be overriden</p></li><li><p>can only be called in same source file</p></li></ul></div></section></section>
-<section><section id="new_language_features_8"><h2>New Language Features</h2><table class="toc">
+<section><section id="new_language_features_7"><h2>New Language Features</h2><table class="toc">
 	<tr><td>All The Cool Things... ⑩⑫⑬⑭</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr class="toc-current"><td>Try-With-Resources ⑨</td></tr>
@@ -615,7 +604,7 @@ and can be made implicitly final</p></li></ul></div>
 }</code></pre></div></div>
 <div class="ulist"><ul><li><p>compiler knows that <code>connection</code> is not reassigned</p></li><li><p>developers know what <em>effectively final</em> means</p></li></ul></div>
 <aside class="notes"><div class="paragraph"><p>Q: Can instance be created but not assigned? No.</p></div></aside></section></section>
-<section><section id="new_language_features_9"><h2>New Language Features</h2><table class="toc">
+<section><section id="new_language_features_8"><h2>New Language Features</h2><table class="toc">
 	<tr><td>All The Cool Things... ⑩⑫⑬⑭</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
@@ -641,7 +630,7 @@ for anonymous classes</p></li><li><p>can not be expressed by JVM</p></li></ul></
 	// compile error
 	return new Box&lt;&gt;(innerList) { };
 }</code></pre></div></div></section></section>
-<section><section id="new_language_features_10"><h2>New Language Features</h2><table class="toc">
+<section><section id="new_language_features_9"><h2>New Language Features</h2><table class="toc">
 	<tr><td>All The Cool Things... ⑩⑫⑬⑭</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
@@ -683,7 +672,7 @@ that can not be overriden</p></li></ul></div>
 ⇝ Damn! 😭</p></div></section><section id="safevarargs_on_privatemethods"><h2>@SafeVarargs on Private&nbsp;Methods</h2><div class="paragraph"><p>Looong story, here&#8217;s the point:</p></div>
 <div class="paragraph"><p>In Java 9 <code>@SafeVarargs</code><br>
 can be applied to private methods.</p></div></section></section>
-<section><section id="new_language_features_11"><h2>New Language Features</h2><table class="toc">
+<section><section id="new_language_features_10"><h2>New Language Features</h2><table class="toc">
 	<tr><td>All The Cool Things... ⑩⑫⑬⑭</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
@@ -1071,9 +1060,9 @@ Map&lt;String, Integer&gt; mapImmediate = Map.of(
 		"two", 2,
 		"three", 3);
 Map&lt;String, Integer&gt; mapEntries = Map.ofEntries(
-		entry("one", 1),
-		entry("two", 2),
-		entry("three", 3));</code></pre></div></div>
+		Map.entry("one", 1),
+		Map.entry("two", 2),
+		Map.entry("three", 3));</code></pre></div></div>
 <aside class="notes"><div class="paragraph"><p>Q: Where does <code>entry</code> come from? <code>Map</code>
 Q: Overloads on <code>of</code>? 10
 Q: Overloads on <code>Map::ofEntries</code>? 1</p></div></aside></section><section id="interesting_details"><h2>Interesting Details</h2><div class="ulist"><ul><li><p>collections are immutable<br>
@@ -1323,7 +1312,7 @@ hello-java-11</code></pre></div></div></li></ul></div></section></section>
 
 public class Version {
 
-	public String get() { return "Java 9"; }
+	public String get() { return "Java 9+"; }
 
 }</code></pre></div></div>
 <div class="paragraph"><p>(Btw, IDEs hate this!)</p></div></section><section id="creating_a_multireleasejar"><h2>Creating A Multi&#8209;Release&nbsp;JAR</h2><div class="paragraph"><p>Now, here&#8217;s the magic:</p></div>
@@ -1339,7 +1328,7 @@ public class Version {
             └ org
                 └ codefx ... (moar folders)
                     └ Version.class</code></pre></div></div></section><section id="run"><h2>Run!</h2><div class="paragraph"><p>With <code>java -cp out/mr.jar &#8230;&#8203;Main</code>:</p></div>
-<div class="ulist"><ul><li><p>prints <code>"Java 8"</code> on Java 8</p></li><li><p>prints <code>"Java 9"</code> on Java 9</p></li></ul></div>
+<div class="ulist"><ul><li><p>prints <code>"Java 8"</code> on Java 8</p></li><li><p>prints <code>"Java 9+"</code> on Java 9 and later</p></li></ul></div>
 <div class="paragraph"><p>Great Success!</p></div></section></section>
 <section><section id="jvm_features_6"><h2>JVM Features</h2><table class="toc">
 	<tr><td>Helpful NPEs ⑭</td></tr>

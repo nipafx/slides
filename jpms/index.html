@@ -96,8 +96,7 @@ ends with <a href="https://www.jcp.org/en/jsr/detail?id=376">JSR 376</a></p></dd
 <h3>Pieces of a puzzle</h3>
 <div class="paragraph"><p>These are the nodes in our graph.</p></div></section><section id="definition"><h2>Definition</h2><div class="paragraph"><p>Modules</p></div>
 <div class="ulist"><ul><li><p>have a unique name</p></li><li><p>express their dependencies</p></li><li><p>export specific packages<br>
-(and hide the rest)</p></li></ul></div>
-<aside class="notes"><div class="ulist"><ul><li><p>inverse URL naming schema for modules</p></li></ul></div></aside></section><section id="implementation"><h2>Implementation</h2><div class="ulist"><ul><li><p>Modules are JARs with a <code>module-info.class</code><br>
+(and hide the rest)</p></li></ul></div></section><section id="implementation"><h2>Implementation</h2><div class="ulist"><ul><li><p>Modules are JARs with a <code>module-info.class</code><br>
 (aka <strong>Modular JAR</strong>)</p></li><li><p>gets generated from <code>module-info.java</code><br>
 (in sources root, e.g. <code>src/main/java</code>):</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">module $module_name {
 	requires $other_module;
@@ -111,10 +110,8 @@ ends with <a href="https://www.jcp.org/en/jsr/detail?id=376">JSR 376</a></p></dd
 	requires B;
 }</code></pre></div></div>
 <div class="paragraph"><p>we say</p></div>
-<div class="ulist"><ul><li><p><em>A</em> requires <em>B</em></p></li><li><p><em>A</em> depends on <em>B</em></p></li><li><p><em>A</em> reads <em>B</em></p></li><li><p><em>B</em> is readable by <em>A</em></p></li></ul></div>
-<aside class="notes"><div class="ulist"><ul><li><p>Implied Readability also leads to "A reads B"</p></li><li><p>the first two are always true</p></li><li><p>the last two materialize at run time</p></li></ul></div></aside></section><section id="reliable_configuration"><h2>Reliable Configuration</h2><div class="paragraph"><p>Java will only compile/launch when</p></div>
-<div class="ulist"><ul><li><p>every dependency is fulfilled</p></li><li><p>there are no cycles</p></li><li><p>there is no ambiguity</p></li></ul></div>
-<aside class="notes"><div class="ulist"><ul><li><p>multiple modules with the same name</p></li><li><p>split packages</p></li></ul></div></aside></section><section id="consequences_2"><h2>Consequences</h2><div class="ulist"><ul><li><p>boost for reliability</p></li><li><p>module system is strict <em>and</em> rigid<br>
+<div class="ulist"><ul><li><p><em>A</em> requires <em>B</em></p></li><li><p><em>A</em> depends on <em>B</em></p></li><li><p><em>A</em> reads <em>B</em></p></li><li><p><em>B</em> is readable by <em>A</em></p></li></ul></div></section><section id="reliable_configuration"><h2>Reliable Configuration</h2><div class="paragraph"><p>Java will only compile/launch when</p></div>
+<div class="ulist"><ul><li><p>every dependency is fulfilled</p></li><li><p>there are no cycles</p></li><li><p>there is no ambiguity</p></li></ul></div></section><section id="consequences_2"><h2>Consequences</h2><div class="ulist"><ul><li><p>boost for reliability</p></li><li><p>module system is strict <em>and</em> rigid<br>
 (no way to easily alter dependencies)</p></li><li><p>module name changes are not supported</p></li><li><p>accidental long cycles will cause problems</p></li></ul></div></section><section id="accessibility" data-background-image="images/iceberg.jpg" data-background-size="cover"><h2>Accessibility</h2>
 <h3>Hiding internals</h3>
 <div class="paragraph"><p>Accessibility governs which types a module can see.</p></div>
@@ -137,15 +134,12 @@ on the class path as before</p></li></ul></div>
 <p class="fragment current-visible" data-fragment-index="1">(Boring...)</p></section><section id="no_module_2"><h2>No Module</h2><h3>Compilation, Packaging, Execution</h3>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash"># compile
 $ javac -d classes ${*.java}
-# package with manifest
-$ jar --create --file jars/advent.jar
-    --manifest ${manifest}
-    ${*.class}
+# package
+$ jar --create --file jars/advent.jar ${*.class}
 # run
-$ java -jar jars/advent.jar</code></pre></div></div>
+$ java --class-path 'jars/*' ${main-class}</code></pre></div></div>
 <div class="paragraph"><p>To look up <code>javac</code>, <code>jar</code>, <code>java</code> basics:<br>
-<a href="https://blog.codefx.org/cheat-sheet-build-run-modules-jars.html">tiny.cc/cheat-modules</a></p></div>
-<aside class="notes"><div class="ulist"><ul><li><p>explain manifest</p></li><li><p>add dependencies to the class path</p></li><li><p>works on JDK 9 as is</p></li></ul></div></aside></section><section id="a_single_module"><h2>A single module</h2><h3>Modularization</h3>
+<a href="https://blog.codefx.org/cheat-sheet-build-run-modules-jars.html">tiny.cc/cheat-modules</a></p></div></section><section id="a_single_module"><h2>A single module</h2><h3>Modularization</h3>
 <div class="imageblock diagram" style=""><img src="images/advent-calendar-module-single.png" alt="advent calendar module single"></div>
 <div class="paragraph"><p>Create <code>module-info.java</code> in sources root:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">module advent {
@@ -153,8 +147,7 @@ $ java -jar jars/advent.jar</code></pre></div></div>
 	// requires no other modules
 	// exports no API
 }</code></pre></div></div>
-<p class="fragment current-visible" data-fragment-index="1">(Still Boring...)</p>
-<aside class="notes"><div class="ulist"><ul><li><p>talk about <code>java.base</code></p></li><li><p>this is a simple module graph</p></li></ul></div></aside></section><section id="a_single_module_2"><h2>A single module</h2><h3>Compilation, Packaging, Execution</h3>
+<p class="fragment current-visible" data-fragment-index="1">(Still Boring...)</p></section><section id="a_single_module_2"><h2>A single module</h2><h3>Compilation, Packaging, Execution</h3>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash"># compile with module-info.java
 $ javac -d classes ${*.java}
 # package with module-info.class
@@ -180,8 +173,7 @@ $ java --module-path mods # ...</code></pre></div></div></section><section id="a
 	<div class="content diagram">
 		<img src="images/advent-calendar-module-multi.png" alt="b2e21fbf" style="margin: 0;">
 	</div>
-</div>
-<aside class="notes"><div class="ulist"><ul><li><p>this is another module graph</p></li></ul></div></aside></section><section id="multiple_modules_2"><h2>Multiple Modules</h2><div class="imageblock diagram" style=""><img src="images/advent-calendar-module-multi.png" alt="advent calendar module multi"></div>
+</div></section><section id="multiple_modules_2"><h2>Multiple Modules</h2><div class="imageblock diagram" style=""><img src="images/advent-calendar-module-multi.png" alt="advent calendar module multi"></div>
 <div style="height: 210px;">
 <div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">module surprise {
 	<span class="hljs-comment">// requires no other modules</span>
@@ -696,7 +688,7 @@ in the JDK / JRE folder?</p></li><li><p>are URLs to JDK classes / resources hand
 <div class="paragraph"><p>Slides at <a href="https://slides.codefx.org">slides.codefx.org</a></p></div>
 <div class="paragraph"><p>⇜ Get <a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&amp;a_bid=869915cb">my book</a>!</p></div>
 <div class="paragraph"><p>You can <a href="http://blog.codefx.org/hire-nicolai-parlog/">hire me</a>:</p></div>
-<div class="ulist"><ul><li><p>training (Java 8-12, JUnit 5)</p></li><li><p>consulting (Java 8-12)</p></li></ul></div></section>
+<div class="ulist"><ul><li><p>training (Java 8-14, JUnit 5)</p></li><li><p>consulting (Java 8-14)</p></li></ul></div></section>
 <section><section id="image_credits"><h2>Image Credits</h2></section><section id="introduction"><h2>Introduction</h2><div class="ulist"><ul><li><p>puzzle-people:
 <a href="https://www.flickr.com/photos/pagedooley/">Kevin Dooley</a>
 (<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a>)</p></li><li><p>binary-code:

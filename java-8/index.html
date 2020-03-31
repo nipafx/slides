@@ -280,16 +280,17 @@ $result method(TypeA a, TypeB b, ...) {
 <div class="paragraph"><p>Possible simplifications:</p></div>
 <div class="ulist"><ul><li><p>leave out types</p></li><li><p>leave out parenthesis<br>
 if single parameter</p></li></ul></div></section><section id="infer_parameter_types"><h2>Infer Parameter Types</h2><div class="paragraph"><p>Compiler can infer types in most cases:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// lambda
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// explicit types
 (TypeA a, TypeB b, ...) -&gt; { $body };
 
-// inferred
-(a, b, ...) -&gt; { $body };</code></pre></div></div></section><section id="single_parameter"><h2>Single Parameter</h2><div class="paragraph"><p>For single parameters, leave out parenthesis:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// lambda
-(TypeA a) -&gt; { $body };
+// inferred types
+(a, b, ...) -&gt; { $body };</code></pre></div></div></section><section id="single_parameter"><h2>Single Parameter</h2><div class="paragraph"><p>For a single parameter with inferred type,<br>
+leave out parenthesis:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// single inferred type
+(a) -&gt; { $body };
 
-// inferred
-TypeA a -&gt; { $body };</code></pre></div></div></section><section id="keep_it_simple"><h2>Keep It "Simple"</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// instead of
+// no parenthesis
+a -&gt; { $body };</code></pre></div></div></section><section id="keep_it_simple"><h2>Keep It "Simple"</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// instead of
 TodoFilter filter = (Todo todo) -&gt; { $body };
 
 // usually
@@ -465,7 +466,7 @@ of the first parameter:</p></div>
 they do nothing until terminal operation</p></li><li><p>streams are clever:<br>
 lots of internal optimizations</p></li><li><p>streams come with support for parallelization</p></li></ul></div></section><section id="simple_stream_pipeline"><h2>Simple Stream Pipeline</h2><div class="paragraph"><p>Your first <em>stream pipeline</em>:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Set&lt;Todo&gt; todos = // ...
-List&lt;String&gt; = todos               // source
+List&lt;String&gt; descriptions = todos  // source
 	.stream()                      // start streaming
 	.map(Todo::description)        // operate on
 	.filter(d -&gt; d.length &gt; 10)    //     the stream
@@ -571,16 +572,17 @@ List&lt;Todo&gt; sorted = todos.stream()
 	.collect(toList());</code></pre></div></div>
 <div class="paragraph"><p>Todo needs to implement <code>Comparable&lt;Todo&gt;</code>!</p></div></section><section id="sorting_minima_maxima_2"><h2>Sorting, Minima, Maxima</h2><div class="paragraph"><p><em>"I have todos and want to sort by due date"</em></p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Todo&gt; todos = // ...
+//  instantiate Comparator with lambda
+Comparator&lt;Todo&gt; byDueDate = // ...
 List&lt;Todo&gt; sorted = todos.stream()
-//  provide Comparator implementation with lambda
-	.sorted((todo1, todo2) -&gt;
-		todo1.due().compareTo(todo2.due()))
+	.sorted(byDueDate)
 	.collect(toList());</code></pre></div></div>
 <div class="paragraph"><p>Alternatively, use <code>Comparator::comparing</code> (⇝ later)</p></div></section><section id="sorting_minima_maxima_3"><h2>Sorting, Minima, Maxima</h2><div class="paragraph"><p><em>"I have sorted elements and need to<br>
 do something in that order"</em></p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Element&gt; elements = // ...
+Comparator&lt;Todo&gt; byDueDate = // ...
 elements.stream()
-	.sorted(/* ... */)
+	.sorted(byDueDate)
 	.forEachOrdered(/* ... */);</code></pre></div></div>
 <div class="paragraph"><p>On sorted streams, use <code>forEachOrdered</code><br>
 or stream API is free to ignore order!</p></div></section><section id="sorting_minima_maxima_4"><h2>Sorting, Minima, Maxima</h2><div class="paragraph"><p><em>"I have todos and want the one with earliest due date"</em></p></div>
@@ -1290,7 +1292,8 @@ turns a <em>kitchen + food</em> into a <em>kitchen + other food</em><br>
 <div class="paragraph"><p>In code:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// compare to `prepare`:
 // Kitchen&lt;Food&gt; prepare(Function&lt;Food, Food&gt; f)
-Kitchen&lt;Food&gt; flatPrepare(Function&lt;Food, Kitchen&lt;Food&gt;&gt; f)</code></pre></div></div>
+Kitchen&lt;Food&gt; flatPrepare(
+	Function&lt;Food, Kitchen&lt;Food&gt;&gt; f)</code></pre></div></div>
 <div class="paragraph"><p>The three laws can be formulated accordingly.</p></div></section><section id="kitchen_law_benefits" data-background-image="images/kitchen.jpg" data-background-size="cover"><h2>Kitchen law benefits</h2>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">private Food cut(Food v) { /*...*/ }
 private Food cook(Food v) { /*...*/ }
@@ -1301,12 +1304,12 @@ Kitchen.bring(ingredients)
 	.prepare(this::cook);
 
 Kitchen.bring(ingredients)
-//          "artistic freedom"
+	// "artistic freedom"
 	.prepare(v -&gt; cook(cut(v)));
 
-//           "the recipe is holy"
+	// "the recipe is holy"
 Kitchen.bring(cut(ingredients))
-//          "don't play with food"
+	// "don't play with food"
 	.prepare(this::admire)
 	.prepare(this::cook);</code></pre></div></div></section><section id="monad_parts"><h2>Monad parts</h2><div class="paragraph"><p>A monad consists of three parts:</p></div>
 <div class="ulist"><ul><li><p>a type over values<br>
@@ -1331,9 +1334,12 @@ public ComplexResource getResource() {
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class Lazy&lt;T&gt; {
 
 	public static &lt;T&gt; Lazy&lt;T&gt; of(Supplier&lt;T&gt; generator);
+
 	public T get();
-	public &lt;U&gt; Lazy&lt;U&gt; map(Function&lt;T, U&gt; function);
-	public &lt;U&gt; Lazy&lt;U&gt; flatMap(Function&lt;T, Lazy&lt;U&gt;&gt; function);
+
+	public &lt;U&gt; Lazy&lt;U&gt; map(Function&lt;T, U&gt; f);
+
+	public &lt;U&gt; Lazy&lt;U&gt; flatMap(Function&lt;T, Lazy&lt;U&gt;&gt; f);
 
 }</code></pre></div></div></section><section id="the_lazy_monad_3"><h2>The <code>Lazy</code> monad</h2><div class="paragraph"><p>Creation:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">private final Supplier&lt;T&gt; generator;
@@ -1351,12 +1357,14 @@ public static &lt;T&gt; Lazy&lt;T&gt; of(Supplier&lt;T&gt; generator) {
 	return new Lazy&lt;&gt;(generator);
 }
 
-public &lt;U&gt; Lazy&lt;U&gt; map(Function&lt;T, U&gt; function) {
-	return Lazy.of(() -&gt; function.apply(this.get()));
+public &lt;U&gt; Lazy&lt;U&gt; map(Function&lt;T, U&gt; f) {
+	return Lazy.of(
+		() -&gt; function.apply(this.get()));
 }
 
-public &lt;U&gt; Lazy&lt;U&gt; flatMap(Function&lt;T, Lazy&lt;U&gt;&gt; function) {
-	return Lazy.of(() -&gt; function.apply(this.get()).get());
+public &lt;U&gt; Lazy&lt;U&gt; flatMap(Function&lt;T, Lazy&lt;U&gt;&gt; f) {
+	return Lazy.of(
+		() -&gt; function.apply(this.get()).get());
 }</code></pre></div></div></section><section id="the_lazy_monad_5"><h2>The <code>Lazy</code> monad</h2><div class="paragraph"><p>At-most-once initialization:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">private final Supplier&lt;T&gt; generator;
 private T element;
@@ -1427,39 +1435,33 @@ with OOP-style boundary makes sense!</p></div></section></section>
 	<tr><td>Default Methods</td></tr>
 	<tr><td>Summary</td></tr>
 </table></section><section id="sync_programming"><h2>Sync Programming</h2><div class="paragraph"><p>Fictitious REST request handling:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">verifyUserAuthorization(request);
-Forecast one = weatherService("one", request);
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Forecast one = weatherService("one", request);
 Forecast two = weatherService("two", request);
-sendResponse(one, two);</code></pre></div></div>
-<div class="paragraph"><p>What if <em>one</em> and <em>two</em> take a long time?</p></div></section><section id="async_programming"><h2>Async Programming</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">verifyUserAuthorization(request);
-// make each call in a background thread;
+sendResponse(one, two);</code></pre></div></div></section><section id="async_programming"><h2>Async Programming</h2><div class="paragraph"><p>What if <em>one</em> and <em>two</em> take a long time?</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// make each call in a background thread;
 // initiate both calls at "the same time"
 Later&lt;Forecast&gt; one = weatherService("one", request);
 Later&lt;Forecast&gt; two = weatherService("two", request);
 // wait for both threads to come back with results
 waitFor(one, two);
-sendResponse(one, two);</code></pre></div></div>
-<div class="paragraph"><p>What if I only need one forecast?</p></div></section><section id="with_selection"><h2>With Selection</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">verifyUserAuthorization(request);
-Later&lt;Forecast&gt; one = weatherService("one", request);
+sendResponse(one, two);</code></pre></div></div></section><section id="with_selection"><h2>With Selection</h2><div class="paragraph"><p>What if I only need one forecast?</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Later&lt;Forecast&gt; one = weatherService("one", request);
 Later&lt;Forecast&gt; two = weatherService("two", request);
 // wait for the first thread to come back with a result
 Forecast first = waitForFirst(one, two);
-sendResponse(first);</code></pre></div></div>
-<div class="paragraph"><p>What if I want to cancel long-running calls?</p></div></section><section id="with_timeouts"><h2>With Timeouts</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">verifyUserAuthorization(request);
-Later&lt;Forecast&gt; one = weatherService("one", request)
+sendResponse(first);</code></pre></div></div></section><section id="with_timeouts"><h2>With Timeouts</h2><div class="paragraph"><p>What if I want to cancel long-running calls?</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Later&lt;Forecast&gt; one = weatherService("one", request)
 	// time out after 10 seconds
 	.timeout(10);
 Later&lt;Forecast&gt; two = /*...*/;
-sendResponse(waitForFirst(one, two));</code></pre></div></div>
-<div class="paragraph"><p>What if there are additional operations on the results?</p></div></section><section id="with_dependent_operations"><h2>With Dependent Operations</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">verifyUserAuthorization(request);
-Later&lt;Forecast&gt; one = weatherService("one", request)
+sendResponse(waitForFirst(one, two));</code></pre></div></div></section><section id="with_dependent_operations"><h2>With Dependent Operations</h2><div class="paragraph"><p>What if there are additional operations on the results?</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Later&lt;Forecast&gt; one = weatherService("one", request)
 	.timeout(10)
 	// charge user once the forecast was received
 	.later(forecast -&gt; chargeUser(forecast));
 Later&lt;Forecast&gt; two = /*...*/;
-sendResponse(waitForFirst(one, two));</code></pre></div></div>
-<div class="paragraph"><p>What if there are errors?</p></div></section><section id="with_error_handling"><h2>With Error Handling</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">verifyUserAuthorization(request);
-Later&lt;Forecast&gt; one = weatherService("one", request)
+sendResponse(waitForFirst(one, two));</code></pre></div></div></section><section id="with_error_handling"><h2>With Error Handling</h2><div class="paragraph"><p>What if there are errors?</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Later&lt;Forecast&gt; one = weatherService("one", request)
 	.timeout(10)
 	.later(forecast -&gt; chargeUser(forecast))
 	// in error case, create a dummy forecast
@@ -1483,7 +1485,7 @@ public static CompletableFuture&lt;T&gt; supplyAsync(Supplier&lt;T&gt;);
 // attach further steps
 public CompletableFuture&lt;U&gt; thenApply(Function&lt;T, U&gt;);
 public CompletableFuture&lt;U&gt; thenCompose(
-	Function&lt;T, CompletableFuture&lt;U&gt;);
+	Function&lt;T, CompletableFuture&lt;U&gt;&gt;);
 public CompletableFuture&lt;Void&gt; thenAccept(Consumer&lt;T&gt;);
 
 // wait for the computation to finish and get result
@@ -1785,7 +1787,7 @@ observing resolution strategy.</p></div></section><section id="static_interface_
 (<strong>These are not "static default" methods!</strong>)</p></div>
 <div class="paragraph"><p>Syntax as usual:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public static &lt;T&gt; Comparator&lt;T&gt; nullsLast(
-		Comparator&lt;? super T&gt; comparator) {
+		Comparator&lt;T&gt; comparator) {
 	return new Comparators
 		.NullComparator&lt;&gt;(false, comparator);
 }</code></pre></div></div></section><section id="static_interface_methods_2"><h2>Static Interface Methods</h2><div class="paragraph"><p>Use cases:</p></div>
