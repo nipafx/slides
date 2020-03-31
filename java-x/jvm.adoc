@@ -326,7 +326,7 @@ public class Version {
 
 public class Version {
 
-	public String get() { return "Java 9"; }
+	public String get() { return "Java 9+"; }
 
 }
 ```
@@ -367,7 +367,7 @@ jar --create --file out/mr.jar
 With `java -cp out/mr.jar ...Main`:
 
 * prints `"Java 8"` on Java 8
-* prints `"Java 9"` on Java 9
+* prints `"Java 9+"` on Java 9 and later
 
 Great Success!
 

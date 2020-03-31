@@ -50,9 +50,9 @@ Map<String, Integer> mapImmediate = Map.of(
 		"two", 2,
 		"three", 3);
 Map<String, Integer> mapEntries = Map.ofEntries(
-		entry("one", 1),
-		entry("two", 2),
-		entry("three", 3));
+		Map.entry("one", 1),
+		Map.entry("two", 2),
+		Map.entry("three", 3));
 ```
 
 [NOTE.speaker]
