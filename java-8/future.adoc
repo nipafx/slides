@@ -18,18 +18,16 @@
 Fictitious REST request handling:
 
 ```java
-verifyUserAuthorization(request);
 Forecast one = weatherService("one", request);
 Forecast two = weatherService("two", request);
 sendResponse(one, two);
 ```
 
-What if _one_ and _two_ take a long time?
-
 === Async Programming
 
+What if _one_ and _two_ take a long time?
+
 ```java
-verifyUserAuthorization(request);
 // make each call in a background thread;
 // initiate both calls at "the same time"
 Later<Forecast> one = weatherService("one", request);
@@ -39,12 +37,11 @@ waitFor(one, two);
 sendResponse(one, two);
 ```
 
-What if I only need one forecast?
-
 === With Selection
 
+What if I only need one forecast?
+
 ```java
-verifyUserAuthorization(request);
 Later<Forecast> one = weatherService("one", request);
 Later<Forecast> two = weatherService("two", request);
 // wait for the first thread to come back with a result
@@ -52,12 +49,11 @@ Forecast first = waitForFirst(one, two);
 sendResponse(first);
 ```
 
-What if I want to cancel long-running calls?
-
 === With Timeouts
 
+What if I want to cancel long-running calls?
+
 ```java
-verifyUserAuthorization(request);
 Later<Forecast> one = weatherService("one", request)
 	// time out after 10 seconds
 	.timeout(10);
@@ -65,12 +61,11 @@ Later<Forecast> two = /*...*/;
 sendResponse(waitForFirst(one, two));
 ```
 
-What if there are additional operations on the results?
-
 === With Dependent Operations
 
+What if there are additional operations on the results?
+
 ```java
-verifyUserAuthorization(request);
 Later<Forecast> one = weatherService("one", request)
 	.timeout(10)
 	// charge user once the forecast was received
@@ -79,12 +74,11 @@ Later<Forecast> two = /*...*/;
 sendResponse(waitForFirst(one, two));
 ```
 
-What if there are errors?
-
 === With Error Handling
 
+What if there are errors?
+
 ```java
-verifyUserAuthorization(request);
 Later<Forecast> one = weatherService("one", request)
 	.timeout(10)
 	.later(forecast -> chargeUser(forecast))
@@ -145,7 +139,7 @@ public static CompletableFuture<T> supplyAsync(Supplier<T>);
 // attach further steps
 public CompletableFuture<U> thenApply(Function<T, U>);
 public CompletableFuture<U> thenCompose(
-	Function<T, CompletableFuture<U>);
+	Function<T, CompletableFuture<U>>);
 public CompletableFuture<Void> thenAccept(Consumer<T>);
 
 // wait for the computation to finish and get result

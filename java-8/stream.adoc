@@ -93,7 +93,7 @@ Your first _stream pipeline_:
 
 ```java
 Set<Todo> todos = // ...
-List<String> = todos               // source
+List<String> descriptions = todos  // source
 	.stream()                      // start streaming
 	.map(Todo::description)        // operate on
 	.filter(d -> d.length > 10)    //     the stream
@@ -391,10 +391,10 @@ _"I have todos and want to sort by due date"_
 
 ```java
 List<Todo> todos = // ...
+//  instantiate Comparator with lambda
+Comparator<Todo> byDueDate = // ...
 List<Todo> sorted = todos.stream()
-//  provide Comparator implementation with lambda
-	.sorted((todo1, todo2) ->
-		todo1.due().compareTo(todo2.due()))
+	.sorted(byDueDate)
 	.collect(toList());
 ```
 
@@ -407,8 +407,9 @@ do something in that order"_
 
 ```java
 List<Element> elements = // ...
+Comparator<Todo> byDueDate = // ...
 elements.stream()
-	.sorted(/* ... */)
+	.sorted(byDueDate)
 	.forEachOrdered(/* ... */);
 ```
 

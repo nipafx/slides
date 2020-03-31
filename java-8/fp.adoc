@@ -886,7 +886,8 @@ In code:
 ```java
 // compare to `prepare`:
 // Kitchen<Food> prepare(Function<Food, Food> f)
-Kitchen<Food> flatPrepare(Function<Food, Kitchen<Food>> f)
+Kitchen<Food> flatPrepare(
+	Function<Food, Kitchen<Food>> f)
 ```
 
 The three laws can be formulated accordingly.
@@ -961,12 +962,12 @@ Kitchen.bring(ingredients)
 	.prepare(this::cook);
 
 Kitchen.bring(ingredients)
-//          "artistic freedom"
+	// "artistic freedom"
 	.prepare(v -> cook(cut(v)));
 
-//           "the recipe is holy"
+	// "the recipe is holy"
 Kitchen.bring(cut(ingredients))
-//          "don't play with food"
+	// "don't play with food"
 	.prepare(this::admire)
 	.prepare(this::cook);
 ```
@@ -1081,9 +1082,12 @@ Public API (sans generic wildcards):
 public class Lazy<T> {
 
 	public static <T> Lazy<T> of(Supplier<T> generator);
+
 	public T get();
-	public <U> Lazy<U> map(Function<T, U> function);
-	public <U> Lazy<U> flatMap(Function<T, Lazy<U>> function);
+
+	public <U> Lazy<U> map(Function<T, U> f);
+
+	public <U> Lazy<U> flatMap(Function<T, Lazy<U>> f);
 
 }
 ```
@@ -1115,12 +1119,14 @@ public static <T> Lazy<T> of(Supplier<T> generator) {
 	return new Lazy<>(generator);
 }
 
-public <U> Lazy<U> map(Function<T, U> function) {
-	return Lazy.of(() -> function.apply(this.get()));
+public <U> Lazy<U> map(Function<T, U> f) {
+	return Lazy.of(
+		() -> function.apply(this.get()));
 }
 
-public <U> Lazy<U> flatMap(Function<T, Lazy<U>> function) {
-	return Lazy.of(() -> function.apply(this.get()).get());
+public <U> Lazy<U> flatMap(Function<T, Lazy<U>> f) {
+	return Lazy.of(
+		() -> function.apply(this.get()).get());
 }
 ```
 

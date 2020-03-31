@@ -158,23 +158,24 @@ if single parameter
 Compiler can infer types in most cases:
 
 ```java
-// lambda
+// explicit types
 (TypeA a, TypeB b, ...) -> { $body };
 
-// inferred
+// inferred types
 (a, b, ...) -> { $body };
 ```
 
 === Single Parameter
 
-For single parameters, leave out parenthesis:
+For a single parameter with inferred type, +
+leave out parenthesis:
 
 ```java
-// lambda
-(TypeA a) -> { $body };
+// single inferred type
+(a) -> { $body };
 
-// inferred
-TypeA a -> { $body };
+// no parenthesis
+a -> { $body };
 ```
 
 === Keep It "Simple"

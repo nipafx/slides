@@ -149,7 +149,7 @@ Syntax as usual:
 
 ```java
 public static <T> Comparator<T> nullsLast(
-		Comparator<? super T> comparator) {
+		Comparator<T> comparator) {
 	return new Comparators
 		.NullComparator<>(false, comparator);
 }
