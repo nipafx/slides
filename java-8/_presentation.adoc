@@ -63,10 +63,18 @@ include::images/sources.adoc[]
 
 
 ////
-TODO
+TODO - slides
 
-* exceptions in lambdas, streams, Optional
 * code as data https://stackoverflow.com/a/28403347/2525313 (longer)
-* demonstrating value of lambdas and streams, e.g. by refactoring existing demo API
 * type inference; overloaded methods that accept lambdas
+* visualizations for stream operations a la marble diagrams
+* exceptions in lambdas, streams, Optional
+* demonstrating value of lambdas and streams, e.g. by refactoring existing demo API
+* point out that a default method can't implement a method in an unrelated interface
+	(in solution of Ex 01 comment out `NoOpEditor::verify` ~> compile error)
+
+TODO - exercises
+* exercises for CompletableFuture
+* more tests
+
 ////
