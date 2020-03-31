@@ -23,11 +23,6 @@ Modules
 * export specific packages +
 (and hide the rest)
 
-[NOTE.speaker]
---
-* inverse URL naming schema for modules
---
-
 
 === Implementation
 
@@ -75,13 +70,6 @@ we say
 * _A_ reads _B_
 * _B_ is readable by _A_
 
-[NOTE.speaker]
---
-* Implied Readability also leads to "A reads B"
-* the first two are always true
-* the last two materialize at run time
---
-
 
 === Reliable Configuration
 
@@ -90,12 +78,6 @@ Java will only compile/launch when
 * every dependency is fulfilled
 * there are no cycles
 * there is no ambiguity
-
-[NOTE.speaker]
---
-* multiple modules with the same name
-* split packages
---
 
 
 === Consequences
@@ -209,23 +191,14 @@ on the class path as before
 ----
 # compile
 $ javac -d classes ${*.java}
-# package with manifest
-$ jar --create --file jars/advent.jar
-    --manifest ${manifest}
-    ${*.class}
+# package
+$ jar --create --file jars/advent.jar ${*.class}
 # run
-$ java -jar jars/advent.jar
+$ java --class-path 'jars/*' ${main-class}
 ----
 
 To look up `javac`, `jar`, `java` basics: +
 https://blog.codefx.org/cheat-sheet-build-run-modules-jars.html[tiny.cc/cheat-modules]
-
-[NOTE.speaker]
---
-* explain manifest
-* add dependencies to the class path
-* works on JDK 9 as is
---
 
 
 === A single module
@@ -251,12 +224,6 @@ module advent {
 ++++
 <p class="fragment current-visible" data-fragment-index="1">(Still Boring...)</p>
 ++++
-
-[NOTE.speaker]
---
-* talk about `java.base`
-* this is a simple module graph
---
 
 
 === A single module
@@ -326,11 +293,6 @@ image::images/advent-calendar-readability-accessibility.png[role="diagram"]
 	</div>
 </div>
 ++++
-
-[NOTE.speaker]
---
-* this is another module graph
---
 
 
 === Multiple Modules
