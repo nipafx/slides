@@ -14,7 +14,7 @@
 //***********************************************//
 // T R A N S I T I V E   D E P E N D E N C I E S //
 //***********************************************//
-
+////
 == Java Module System Beyond The Basics
 
 ++++
@@ -193,6 +193,7 @@ More at https://blog.codefx.org[codefx.org]:
 
 https://blog.codefx.org/java/implied-readability[Implied Readability]
 
+
 //*****************************************//
 // O P T I O N L   D E P E N D E N C I E S //
 //*****************************************//
@@ -369,7 +370,6 @@ https://blog.codefx.org/java/module-system-optional-dependencies/[Optional Depen
 // S E R V I C E S //
 //*****************//
 
-
 == Java Module System Beyond The Basics
 
 ++++
@@ -499,7 +499,7 @@ Module system is service locator; +
 request implementations from `ServiceLoader`:
 
 `ServiceLoader.load(Service.class)`
-
+////
 
 //***********************************//
 // Q U A L I F I E D   E X P O R T S //
