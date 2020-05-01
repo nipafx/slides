@@ -1,0 +1,42 @@
+[subs="attributes"]
+++++
+<div class="event">
+	<div class="participant">
+		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
+		<div class="name">
+			<p><a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a></p>
+			<p><a href="http://codefx.org">codefx.org</a>
+				/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a></p>
+		</div>
+	</div>
+	<div class="participant">
+		<a href="https://twitch.tv/nipafx"><img src="images/logo-twitch.png" class="logo" style="background-color: #9147ff; border-color: #9147ff;"></a>
+		<div class="name">
+			<p><a href="https://twitch.tv/nipafx">Java streams:</a></p>
+			<p><a href="https://twitch.tv/nipafx">twitch.tv/nipafx</a></p>
+		</div>
+	</div>
+</div>
+<footer>
+	<div class="participant">
+		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
+		<div class="name"><p>
+			<a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a>
+			/ <a href="http://codefx.org">codefx.org</a>
+			/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a>
+		</p></div>
+	</div>
+	<div class="participant">
+		<a href="https://twitch.tv/nipafx"><img src="images/logo-twitch.png" class="logo" style="background-color: #9147ff; border-color: #9147ff;"></a>
+		<div class="name">
+			<p><a href="https://twitch.tv/nipafx"">twitch.tv/nipafx</a></p>
+		</div>
+	</div>
+</footer>
+<!-- Just adding a footer does not work because reveal.js puts it into the slides and we couldn't get it out via CSS. So we move it via JavaScript. -->
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		document.body.appendChild(document.querySelector('footer'));
+	})
+</script>
+++++
