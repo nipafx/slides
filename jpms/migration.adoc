@@ -1,7 +1,7 @@
 == Migration Challenges
 
 ++++
-<h3>What to look out for<br>when running on JDK 9</h3>
+<h3>What to look out for<br>when running on JDK 11</h3>
 ++++
 
 
@@ -47,7 +47,7 @@ Inside the unnamed module +
 === Challenges
 
 * internal APIs
-* Java EE modules
+* JEE modules
 * split packages
 * runtime images
 
@@ -103,7 +103,7 @@ $ jdeps --jdk-internals
 `--illegal-access`
 
 
-=== Java EE Modules
+=== JEE Modules
 image::images/java-ee.jpg[background, size=cover]
 
 * _java.activation_ (`javax.activation`)
@@ -219,17 +219,14 @@ in the JDK / JRE folder?
 === Obsolete
 image::images/obsolete.jpg[background, size=cover]
 
-* Compact Profiles
-* Extension Mechanism
-* Endorsed Standards Override Mechanism
-* Boot Class Path Override
-* JRE version selection with `-version:N`
+* Compact Profiles -- `jlink`
+* Endorsed Standards Override Mechanism, +
+Extension Mechanism, +
+Boot Class Path Override -- `--upgrade-module-path`
+* JRE selection `-version:N` -- `jlink`?
+* Web Start -- https://openwebstart.com/[openwebstart.com]
+* JavaFX -- https://openjfx.io/[openjfx.io/]
 
-[NOTE.speaker]
---
-* ext. mech.: makes custom APIs available to all applications running on the JDK
-* first 2 replaced by upgradeable modules.
---
 
 
 === But wait, there's more!
@@ -257,7 +254,7 @@ The most relevant for most applications:
 
 * internal APIs
 * split packages
-* Java EE modules
+* JEE modules
 
 
 === General Advice II
