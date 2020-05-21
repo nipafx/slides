@@ -1,0 +1,198 @@
+== Java 11
+
+// TODO: title
+
+// TODO: subtitle
+
+// TODO: toc
+
+// TODO: note about updating (Java EE modules)
+
+=== String
+
+=== Strip White Space
+
+Getting rid of white space:
+
+```java
+String strip();
+String stripLeading();
+String stripTrailing();
+```
+
+Only at beginning and end of string:
+
+```java
+" foo bar ".strip().equals("foo bar");
+```
+
+=== What About Trim?
+
+Wait, what about `trim()`?
+
+* `trim()` defines white space as:
++
+____
+any character whose codepoint +
+is less than or equal to `'U+0020'` +
+(the space character)
+____
+* `strip()` relies on `Character::isWhitespace`, +
+  which covers many more cases
+
+=== Is Blank?
+
+Is a string only white space?
+
+```java
+boolean isBlank();
+```
+
+Functionally equivalent to:
+
+```java
+string.isBlank() == string.strip().isEmpty();
+```
+
+=== Life Hack
+
+As soon as Java APIs get new method, +
+scour StackOverflow for easy karma!
+
+image::images/so-repeat-string-q.png[role="diagram"]
+
+=== Life Hack
+
+Formerly accepted answer:
+
+image::images/so-repeat-string-a-old.png[role="diagram"]
+
+😍
+
+=== Life Hack
+
+Ta-da!
+
+image::images/so-repeat-string-a.png[role="diagram"]
+
+=== Streaming Lines
+
+Processing a string's lines:
+
+```java
+Stream<String> lines();
+```
+
+* splits a string on `"\n"`, `"\r"`, `"\r\n"`
+* lines do not include terminator
+* more performant than `split("\R")`
+* lazy!
+
+
+=== A Mixed Bag Of New&nbsp;Methods
+
+```java
+Optional.isEmpty();
+
+Path.of(String); // ~ Paths.get(String)
+
+Files.readString(Path);
+Files.writeString(Path, CharSequence, ...);
+
+Reader.nullReader();
+Writer.nullWriter();
+InputStream.nullInputStream();
+OutputStream.nullOutputStream();
+
+DateTimeFormatter.localizedBy(Locale locale);
+```
+
+
+=== Launch Source File
+
+Faster feedback with fewer tools.
+
+=== Launching A Single Source File
+
+Compiling and running +
+simple Java programs is verbose.
+
+Not any more!
+
+```
+java HelloJava11.java
+```
+
+=== Background
+
+How it works:
+
+* compiles source into memory
+* runs from there
+
+Details:
+
+* requires module _jdk.compiler_
+* processes options like class/module path et al.
+* interprets `@files` for easier option management
+
+=== Use Cases
+
+Mostly similar to `jshell`:
+
+* easier demonstrations
+* more portable examples
+* experimentation with new language features +
+  (combine with `--enable-preview`)
+
+*But also: script files!*
+
+=== Scripts
+
+Steps towards easier scripting:
+
+* arbitrary file names
+* shebang support
+
+=== Arbitrary File Names
+
+Use `--source` if file doesn't end in `.java`:
+
+```
+java --source 11 hello-java-11
+```
+
+=== Shebang Support
+
+To create "proper scripts":
+
+* include shebang in source:
++
+```sh
+#!/opt/jdk-11/bin/java --source 11
+```
+* name script and make it executable
+* execute it as any other script:
++
+```sh
+# from current directory:
+./hello-java-11
+# from PATH:
+hello-java-11
+```
+
+
+=== A Mixed Bag Of New&nbsp;JVM&nbsp;Features
+
+* Unicode 9 & 10 (http://openjdk.java.net/jeps/327[JEP 327])
+* Curve25519 and Curve448 (http://openjdk.java.net/jeps/324[JEP 324])
+* ChaCha20 and Poly1305 (http://openjdk.java.net/jeps/329[JEP 329])
+* partial TLS 1.3 support (http://openjdk.java.net/jeps/332[JEP 332])
+
+
+=== A Mixed Bag Of Performance
+
+* Epsilon GC (http://openjdk.java.net/jeps/318[JEP 318])
+* ZGC (experimental, http://openjdk.java.net/jeps/333[JEP 333])
+* low-overhead heap profiling (http://openjdk.java.net/jeps/331[JEP 331])
+* open-source Flight Recorder (http://openjdk.java.net/jeps/328[JEP 328])

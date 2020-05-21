@@ -1,0 +1,1157 @@
+== Java 9
+
+// TODO: title
+
+// TODO: subtitle
+
+// TODO: toc
+
+// TODO: note about updating
+
+=== Private Interface Methods
+
+Enabling reuse between default methods.
+
+=== No Reuse
+
+```java
+public interface InJava8 {
+
+	default boolean evenSum(int... numbers) {
+		return sum(numbers) % 2 == 0;
+	}
+
+	default boolean oddSum(int... numbers) {
+		return sum(numbers) % 2 == 1;
+	}
+
+	default int sum(int[] numbers) {
+		return IntStream.of(numbers).sum();
+	}
+
+}
+```
+
+=== Private Methods
+
+```java
+public interface InJava9 {
+
+	private int sum(int[] numbers) {
+		return IntStream.of(numbers).sum();
+	}
+
+}
+```
+
+Just like private methods in abstract classes:
+
+* must be implemented
+* can not be overriden
+* can only be called in same source file
+
+
+=== Try-With-Resources
+
+Making `try`-with-resources blocks cleaner.
+
+=== Useless Variable
+
+```java
+void doSomethingWith(Connection connection)
+		throws Exception {
+	try(Connection c = connection) {
+		c.doSomething();
+	}
+}
+```
+
+Why is `c` necessary?
+
+=== Why is `c` necessary?
+
+* target of `close()` must be obvious +
+⇝ resource should not be reassigned
+* easiest if resource is final
+* easiest if resource must be assigned +
+and can be made implicitly final
+
+```java
+try(Connection c = connection)
+```
+
+=== Effectively Final Resource
+
+But since Java 8 we have _effectively final_!
+
+This works in Java 9:
+
+```java
+void doSomethingWith(Connection connection)
+		throws Exception {
+	try(connection) {
+		connection.doSomething();
+	}
+}
+
+```
+
+* compiler knows that `connection` is not reassigned
+* developers know what _effectively final_ means
+
+[NOTE.speaker]
+--
+Q: Can instance be created but not assigned? No.
+--
+
+
+=== Diamond Operator
+
+A little more type inference.
+
+=== Diamond Operator
+
+Maybe the best example:
+
+```java
+List<String> strings = new ArrayList<>();
+```
+
+* used at a constructor call
+* tells Java to infer the parametric type
+
+
+=== Anonymous Classes
+
+Diamond did not work with anonymous classes:
+
+```java
+<T> Box<T> createBox(T content) {
+	// we have to put the `T` here :(
+	return new Box<T>(content) { };
+}
+```
+
+Reason are non-denotable types:
+
+* might be inferred by compiler +
+  for anonymous classes
+* can not be expressed by JVM
+
+=== Infer Denotable Types
+
+Java 9 infers denotable types:
+
+```java
+<T> Box<T> createBox(T content) {
+	return new Box<>(content) { };
+}
+```
+
+Gives compile error if type is non-denotable:
+
+```java
+Box<?> createCrazyBox(Object content) {
+	List<?> innerList = Arrays.asList(content);
+	// compile error
+	return new Box<>(innerList) { };
+}
+```
+
+
+=== SafeVarargs
+
+One less warning you couldn't do anything about.
+
+=== Heap Pollution
+
+Innocent looking code...
+
+```java
+private <T> Optional<T> firstNonNull(T... args) {
+	return stream(args)
+			.filter(Objects::nonNull)
+			.findFirst();
+}
+```
+
+Compiler warns (on call site, too):
+
+```
+Possible heap pollution from
+parameterized vararg type
+```
+
+=== Heap Pollution?
+
+For generic varargs argument `T... args`, +
+you *must not* depend on it being a `T[]`!
+
+```java
+private <T> T[] replaceTwoNulls(
+		T value, T first, T second) {
+	return replaceAllNulls(value, first, second);
+}
+
+private <T> T[] replaceAllNulls(T value, T... args) {
+	// loop over `args`, replacing `null` with `value`
+	return args;
+}
+```
+
+=== Compiler Warning
+
+Compiler is aware of the problem and warns you.
+
+If you think, everything's under control:
+
+```java
+@SafeVarargs
+private <T> Optional<T> firstNonNull(T... args) {
+	return // [...]
+}
+```
+
+Or not... In Java 8 this is a compile error!
+
+```
+Invalid SafeVarargs annotation. Instance
+method <T>firstNonNull(T...) is not final.
+```
+
+=== But Why?
+
+The `@SafeVarargs` annotation:
+
+* tells _the caller_ that all is fine
+* only makes sense on methods +
+that can not be overriden
+
+Which methods can't be overriden? +
+⇝ `final` methods
+
+What about `private` methods? +
+⇝ Damn! 😭
+
+=== @SafeVarargs on Private&nbsp;Methods
+
+Looong story, here's the point:
+
+In Java 9 `@SafeVarargs` +
+can be applied to private methods.
+
+
+=== Deprecation Warnings
+
+_Another_ warning you couldn't do anything about.
+
+=== Deprecation Warnings
+
+Should this code emit a warning?
+
+++++
+<div style="height: 350px;">
+<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">// LineNumberInputStream is deprecated
+<span class="hljs-keyword">import</span> java.io.LineNumberInputStream;
+
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DeprecatedImports</span> </span>{
+
+    LineNumberInputStream stream;
+
+}</code></pre></div></div>
+<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">// LineNumberInputStream is deprecated
+<span class="hljs-keyword">import</span> java.io.LineNumberInputStream;
+
+<span class="hljs-meta">@Deprecated</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DeprecatedImports</span> </span>{
+
+    LineNumberInputStream stream;
+
+}</code></pre></div></div></div>
+++++
+
+=== Not On Imports
+
+Java 9 no longer emits warnings +
+for importing deprecated members.
+
+Warning free:
+
+```java
+import java.io.LineNumberInputStream;
+
+@Deprecated
+public class DeprecatedImports {
+
+	LineNumberInputStream stream;
+
+}
+```
+
+=== Collection Factories
+
+Easy creation of ad-hoc collections.
+
+=== Hope is Pain
+
+Wouldn't this be awesome?
+
+```java
+List<String> list = [ "a", "b", "c" ];
+Map<String, Integer> map = [ "one" = 1, "two" = 2 ];
+```
+
+Not gonna happen!
+
+* language change is costly
+* binds language to collection framework
+* strongly favors specific collections
+
+=== Next Best Thing
+
+```java
+List<String> list = List.of("a", "b", "c");
+Map<String, Integer> mapImmediate = Map.of(
+		"one", 1,
+		"two", 2,
+		"three", 3);
+Map<String, Integer> mapEntries = Map.ofEntries(
+		Map.entry("one", 1),
+		Map.entry("two", 2),
+		Map.entry("three", 3));
+```
+
+[NOTE.speaker]
+--
+Q: Where does `entry` come from? `Map`
+Q: Overloads on `of`? 10
+Q: Overloads on `Map::ofEntries`? 1
+--
+
+=== Interesting Details
+
+* collections are immutable +
+(no immutability in type system, though)
+* collections are value-based
+* `null` elements/keys/values are forbidden
+* iteration order is random between JVM starts +
+(except for lists, of course!)
+
+
+=== Reactive Streams
+
+The JDK as common ground +
+for reactive stream libraries.
+
+=== Reactive Types
+
+`Publisher`::
+* produces items to consume
+* can be subscribed to
+`Subscriber`::
+* subscribes to publisher
+* `onNext`, `onError`, `onComplete`
+`Subscription`::
+* connection between publisher and subscriber
+* `request`, `cancel`
+
+=== Reactive Flow
+==== Subscribing
+
+* create `Publisher pub` and `Subscriber sub`
+* call `pub.subscribe(sub)`
+* pub creates `Subscription script` +
+and calls `sub.onSubscription(script)`
+* `sub` can store `script`
+
+=== Reactive Flow
+==== Streaming
+
+* `sub` calls `script.request(10)`
+* `pub` calls `sub.onNext(element)` (max 10x)
+
+==== Canceling
+
+* `pub` may call `sub.OnError(err)` +
+or `sub.onComplete()`
+* `sub` may call `script.cancel()`
+
+=== Reactive APIs?
+
+JDK only provides three interfaces +
+and one simple implementation.
+
+(Also called *Flow API*.)
+
+No JDK API uses them. +
+(No reactive HTTP connections etc.)
+
+
+=== Stack-Walking
+
+Examining the stack faster and easier.
+
+=== `StackWalker::forEach`
+
+```java
+void forEach (Consumer<StackFrame>);
+```
+
+```java
+public static void main(String[] args) { one(); }
+static void one() { two(); }
+static void two() {
+	StackWalker.getInstance()
+		.forEach(System.out::println);
+}
+
+// output
+StackWalkingExample.two(StackWalking.java:14)
+StackWalkingExample.one(StackWalking.java:11)
+StackWalkingExample.main(StackWalking.java:10)
+```
+
+=== `StackWalker::walk`
+
+```java
+T walk (Function<Stream<StackFrame>, T>);
+```
+
+```java
+static void three() {
+	String line = StackWalker.getInstance().walk(
+		frames -> frames
+			.filter(f -> f.getMethodName().contains("one"))
+			.findFirst()
+			.map(f -> "Line " + f.getLineNumber())
+			.orElse("Unknown line");
+	);
+	System.out.println(line);
+}
+
+// output
+Line 11
+```
+
+=== Options
+
+`getInstance` takes options as arguments:
+
+* `SHOW_REFLECT_FRAMES` for reflection frames
+* `SHOW_HIDDEN_FRAMES` e.g. for lambda frames
+* `RETAIN_CLASS_REFERENCE` for `Class<?>`
+
+=== Frames and Traces
+
+`forEach` and `walk` operate on `StackFrame`:
+
+* class and method name
+* class as `Class<?>`
+* bytecode index and isNative
+
+Can upgrade to `StackTraceElement` (expensive):
+
+* file name and line number
+
+=== Performance I
+
+image::images/stack-walker-vs-exception.png[role="diagram"]
+
+=== Performance II
+
+image::images/stack-walker-limit-with-estimated-size.png[role="diagram"]
+
+=== Performance III
+
+* creating `StackTraceElement` is expensive +
+(for file name and line number)
+* lazy evaluation pays off for partial traversal
+
+(Benchmarks performed by https://twitter.com/arnaudroger[Arnaud Roger])
+
+
+=== A Mixed Bag Of New APIs
+
+* multi-resolution images (http://openjdk.java.net/jeps/251[JEP 251])
+* native desktop integration (http://openjdk.java.net/jeps/272[JEP 272])
+* deserialization filter (http://openjdk.java.net/jeps/290[JEP 290])
+* DTLS (http://openjdk.java.net/jeps/219[JEP 219]), +
+  TLS ALPN and OCSP stapling (http://openjdk.java.net/jeps/244[JEP 244])
+
+
+=== Stream
+
+=== Of Nullable
+
+Create a stream of zero or one elements:
+
+```java
+long zero = Stream.ofNullable(null).count();
+long one = Stream.ofNullable("42").count();
+```
+
+=== Iterate
+
+To use `for` even less...
+
+```java
+iterate(
+	T seed,
+	Predicate<T> hasNext,
+	UnaryOperator<T> next);
+```
+
+Example:
+
+```java
+Stream
+	.iterate(1, i -> i<=10, i -> 2*i)
+	.forEach(System.out::println);
+// output: 1 2 4 8
+```
+
+=== Iterate
+
+Counter Example:
+
+```java
+Enumeration<Integer> en = // ...
+Stream.iterate(
+		en.nextElement(),
+		el -> en.hasMoreElements(),
+		el -> en.nextElement())
+	.forEach(System.out::println);
+```
+
+* first `nextElement()`
+* then `hasMoreElements()`
+* ⇝ fail
+
+=== Take While
+
+Stream as long as a condition is true:
+
+```java
+Stream<T> takeWhile(Predicate<T> predicate);
+```
+
+Example:
+
+```java
+Stream.of("a-", "b-", "c-", "", "e-")
+	.takeWhile(s -> !s.isEmpty());
+	.forEach(System.out::print);
+
+// output: a-b-c-
+```
+
+=== Drop While
+
+Ignore as long as a condition is true:
+
+```java
+Stream<T> dropWhile(Predicate<T> predicate);
+```
+
+Example:
+
+```java
+Stream.of("a-", "b-", "c-", "de-", "f-")
+	.dropWhile(s -> s.length() <= 2);
+	.forEach(System.out::print);
+
+// output: de-f-
+```
+
+=== Optional
+
+=== Or
+
+Choose a non-empty `Optional`:
+
+```java
+Optional<T> or(Supplier<Optional<T>> supplier);
+```
+
+=== Find in Many Places
+
+```java
+public interface Search {
+	Optional<Customer> inMemory(String id);
+	Optional<Customer> onDisk(String id);
+	Optional<Customer> remotely(String id);
+
+	default Optional<Customer> anywhere(String id) {
+		return inMemory(id)
+			.or(() -> onDisk(id))
+			.or(() -> remotely(id));
+	}
+
+}
+```
+
+=== If Present Or Else
+
+Like `ifPresent` but do something if empty:
+
+```java
+void ifPresentOrElse(
+	Consumer<T> action,
+	Runnable emptyAction);
+```
+
+Example:
+
+```java
+void logLogin(String id) {
+	findCustomer(id)
+		.ifPresentOrElse(
+			this::logCustomerLogin,
+			() -> logUnknownLogin(id));
+}
+```
+
+=== Stream
+
+Turns an `Optional` into a `Stream` +
+of zero or one elements:
+
+```java
+Stream<T> stream();
+```
+
+=== Filter-Map ...
+
+```java
+private Optional<Customer> findCustomer(String id) {
+	// ...
+}
+
+Stream<Customer> findCustomers(List<String> ids) {
+	return ids.stream()
+		.map(this::findCustomer)
+		// now we have a Stream<Optional<Customer>>
+		.filter(Optional::isPresent)
+		.map(Optional::get)
+}
+```
+
+[transition=none]
+=== ... in one Step
+
+```java
+private Optional<Customer> findCustomer(String id) {
+	// ...
+}
+
+Stream<Customer> findCustomers(List<String> ids) {
+	return ids.stream()
+		.map(this::findCustomer)
+		// now we have a Stream<Optional<Customer>>
+		// we can now filter-map in one step
+		.flatMap(Optional::stream)
+}
+```
+
+=== From Eager to Lazy
+
+`List<Order> getOrders(Customer c)` is expensive:
+
+```java
+List<Order> findOrdersForCustomer(String id) {
+	return findCustomer(id)
+		.map(this::getOrders) // eager
+		.orElse(new ArrayList<>());
+}
+
+Stream<Order> findOrdersForCustomer(String id) {
+	return findCustomer(id)
+		.stream()
+		.map(this::getOrders) // lazy
+		.flatMap(List::stream);
+}
+```
+
+
+=== OS Processes
+
+=== Simple Example
+
+```shell
+ls /home/nipa/tmp | grep pdf
+```
+
+```java
+Path dir = Paths.get("/home/nipa/tmp");
+ProcessBuilder ls = new ProcessBuilder()
+		.command("ls")
+		.directory(dir.toFile());
+ProcessBuilder grepPdf = new ProcessBuilder()
+		.command("grep", "pdf")
+		.redirectOutput(Redirect.INHERIT);
+List<Process> lsThenGrep = ProcessBuilder
+		.startPipeline(List.of(ls, grepPdf));
+```
+
+=== Extended `Process`
+
+Cool new methods on `Process`:
+
+* `boolean supportsNormalTermination();`
+* `long pid();`
+* `CompletableFuture<Process> onExit();`
+* `Stream<ProcessHandle> children();`
+* `Stream<ProcessHandle> descendants();`
+* `ProcessHandle toHandle();`
+
+=== New `ProcessHandle`
+
+New functionality actually comes from `ProcessHandle`.
+
+Interesting `static` methods:
+
+* `Stream<ProcessHandle> allProcesses();`
+* `Optional<ProcessHandle> of(long pid);`
+* `ProcessHandle current();`
+
+=== More Information
+
+`ProcessHandle` can return `Info`:
+
+* command, arguments
+* start time
+* CPU time
+
+// TODO: additions to `CompletableFuture`
+
+=== A Mixed Bag Of Updated&nbsp;APIs
+
+* OASIS XML Catalogs 1.1 (http://openjdk.java.net/jeps/268[JEP 268]), +
+Xerces 2.11.0 (http://openjdk.java.net/jeps/255[JEP 255])
+// TODO does this include Xerxes support for XSLT 2?
+* Unicode support in +
+`PropertyResourceBundle` (http://openjdk.java.net/jeps/226[JEP 226])
+* `InputStream.transferTo(OutputStream);`
+
+Many lower-level APIs.
+
+
+=== Unified Logging </td></tr>
+
+Observing the JVM at work.
+
+=== Unified Logging
+
+New logging infrastructure for the JVM +
+(e.g. OS interaction, threading, GC, etc.):
+
+* JVM log messages pass through new mechanism +
+* works similar to known logging frameworks:
+** textual messages
+** log level
+** time stamps
+** meta information (like subsystem)
+* output can be configured with `-Xlog`
+
+=== Unified Logging
+
+image::images/unified-logging.png[role="diagram"]
+
+=== First Try
+
+Plain use of `-Xlog`:
+
+```sh
+$ java -Xlog -version
+
+# truncated a few messages
+> [0.002s][info][os       ] HotSpot is running ...
+# truncated a lot of messages
+```
+
+You can see:
+
+* JVM uptime (2ms)
+* log level (`info`)
+* tags (`os`)
+* message
+
+=== Configuring `-Xlog`
+
+This can be configured:
+
+* which messages to show
+* where messages go
+* what messages should say
+
+How? `-Xlog:help` lists all options.
+
+=== Which Messages?
+
+Configure with _selectors_: `$TAG_SET=$LEVEL`:
+
+```sh
+# "exactly gc" on "warning"
+-Xlog:gc=warning
+# "including gc" on "warning"
+-Xlog:gc*=warning
+# "exactly gc and os" on "debug"
+-Xlog:gc+os=debug
+# "gc" on "debug" and "os" on warning
+-Xlog:gc=debug,os=warning
+```
+
+Defaults:
+
+```sh
+-Xlog       # the same as -Xlog:all
+-Xlog:$TAG  # same as -Xlog:$TAG=info
+```
+
+=== Where Do Messages Go?
+
+Three possible locations:
+
+* `stdout` (default)
+* `stderr`
+* `file=$FILENAME` +
+  (file rotation is possible)
+
+Example:
+
+```sh
+# all debug messages into application.log
+-Xlog:all=debug:file=application.log
+```
+
+=== Which Information?
+
+_Decorators_ define what is shown:
+
+* `time`: time and date (also in ms and ns)
+* `uptime`: time since JVM start (also in ms and ns)
+* `pid`: process identifier
+* `tid`: thread identifier
+* `level`: log level
+* `tags`: tag-set
+
+Example:
+
+```sh
+# show uptime in ms and level
+-Xlog:all:stdout:level,uptimemillis
+```
+
+=== Put Together
+
+Formal syntax:
+
+```sh
+-Xlog:$SELECTORS:$OUTPUT:$DECORATORS:$OUTPUT_OPTS
+```
+
+* `$SELECTORS` are pairs of tag sets and log levels +
+  (the docs call this _what-expression_)
+* `$OUTPUT` is `stdout`, `stderr`, or `file=<filename>`
+* `$DECORATORS` define what is shown
+* `$OUTPUT_OPTS` configure file rotation
+
+Elements have to be defined from left to right. +
+(No skipping!)
+
+
+=== Multi-Release JARs
+
+"Do this on Java X, do that on Java Y."
+
+=== Version Dependence
+
+`Main` calls `Version`:
+
+```java
+public class Main {
+
+	public static void main(String[] args) {
+		System.out.println(new Version().get());
+	}
+
+}
+```
+
+=== Version Dependence
+
+`Version` exists twice:
+
+```java
+public class Version {
+
+	public String get() { return "Java 8"; }
+
+}
+
+public class Version {
+
+	public String get() { return "Java 9+"; }
+
+}
+```
+
+(Btw, IDEs hate this!)
+
+=== Creating A Multi&#8209;Release&nbsp;JAR
+
+Now, here's the magic:
+
+* compile `Main` and `Version[8]` to `out/java-8`
+* compile `Version[9]` to `out/java-9`
+* use new `jar` flag `--release`:
++
+```bash
+jar --create --file out/mr.jar
+	-C out/java-8 .
+	--release 9 -C out/java-9 .
+```
+
+=== JAR Content
+
+```bash
+└ org
+    └ codefx ... (moar folders)
+        ├ Main.class
+        └ Version.class
+└ META-INF
+    └ versions
+        └ 9
+            └ org
+                └ codefx ... (moar folders)
+                    └ Version.class
+```
+
+=== Run!
+
+With `java -cp out/mr.jar ...Main`:
+
+* prints `"Java 8"` on Java 8
+* prints `"Java 9+"` on Java 9 and later
+
+Great Success!
+
+
+
+=== Redirected Platform Logging
+
+Use your logging framework of choice +
+as backend for JDK logging.
+
+=== Loggers and Finders
+
+New logging infrastructure for the core libraries +
+(i.e. this does not apply to JVM log messages!)
+
+* new interface `System.Logger`
+* used by JDK classes
+* instances created by `System.LoggerFinder`
+
+The interesting bit:
+
+*`LoggerFinder` is a service!*
+
+=== Creating a `Logger`
+
+```java
+public class SystemOutLogger implements Logger {
+
+	public String getName() { return "SystemOut"; }
+
+	public boolean isLoggable(Level level) { return true; }
+
+	public void log(
+			Level level, ResourceBundle bundle,
+			String format, Object... params) {
+		System.out.println(/* ...*/);
+	}
+
+	// another, similar `log` method
+
+}
+```
+
+=== Creating a `LoggerFinder`
+
+```java
+public class SystemOutLoggerFinder
+		extends LoggerFinder {
+
+	public Logger getLogger(
+			String name, Module module) {
+		return new SystemOutLogger();
+	}
+
+}
+```
+
+=== Registering the Service
+
+Module descriptor for _system.out.logger_:
+
+++++
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> system.out.logger {
+    <span class="hljs-keyword">provides</span> java.lang.System.LoggerFinder
+        <span class="hljs-keyword">with</span> system.out.logger.SystemOutLoggerFinder;
+}</code></pre></div></div>
+++++
+
+Module system and JDK take care of the rest!
+
+
+=== A Mixed Bag Of New&nbsp;JVM&nbsp;Features
+
+* new version strings (http://openjdk.java.net/jeps/223[JEP 223])
+* GNU-style command line options (http://openjdk.java.net/jeps/293[JEP 293])
+* command line flag validation (http://openjdk.java.net/jeps/245[JEP 245])
+* reserved stack areas (http://openjdk.java.net/jeps/270[JEP 270])
+* Unicode 7 & 8 (JEPS http://openjdk.java.net/jeps/227[227] & http://openjdk.java.net/jeps/267[267])
+
+
+=== Compact Strings
+
+Going from UTF-16 to ISO-8859-1.
+
+=== Strings and memory
+
+* 20% - 30% of heap are `char[]` for `String`
+* a `char` is UTF-16 code unit ⇝ 2 bytes
+* most strings only require ISO-8859-1 ⇝ 1 byte
+
+*10% - 15% of memory is wasted!*
+
+=== Compact Strings
+
+For Java 9, `String` was changed:
+
+* uses `byte[]` instead of `char[]`
+* bytes per character:
+** 1 if _all_ characters are ISO-8859-1
+** 2 otherwise
+
+Only possible because `String` makes +
+defensive copies of all arguments.
+
+=== Performance
+
+Simple benchmark: +
+(by https://shipilev.net/[Aleksey Shipilëv])
+
+```java
+String method = generateString(size);
+
+public String work() {
+	return "Calling method \"" + method + "\"";
+}
+```
+
+Depending on circumstances:
+
+* throughput 1.4x
+* garbage less 1.85x
+
+=== More
+
+Background on `String` +
+performance improvements:
+
+https://www.youtube.com/watch?v=wIyeOaitmWM[Aleksey Shipilëv +
+The Lord Of The Strings]
+
+
+=== Indified String Concatenation
+
+`"Improving" + "String" + "Concatenation"`
+
+=== String Concatenation
+
+What happens when you run:
+
+```java
+String s = greeting + ", " + place + "!";
+```
+
+* bytecode uses `StringBuilder`
+* JIT may (!) recognize and optimize +
+by writing content directly to new `byte[]`
+* breaks down quickly +
+(e.g. with `long` or `double`)
+
+=== Why Not Create Better Bytecode?
+
+* new optimizations create new bytecode
+* new optimizations require recompile
+* test matrix _JVMs vs bytecodes_ explodes
+
+=== Why Not Call `String::concat`?
+
+There is no such method.
+
+* `concat(String... args)` requires `toString`
+* `concat(Object... args)` requires boxing
+
+Nothing fancy can be done +
+because compiler must use public API.
+
+=== Invokedynamic
+
+Invokedynamic came in Java 7:
+
+* compiler creates a recipe
+* runtime has to process it
+* defers decisions from compiler to runtime
+
+(Used for lambda expressions and in Nashorn.)
+
+=== Indy To The Rescue
+
+With Indy compiler can express +
+_"concat these things"_ +
+(without boxing!)
+
+JVM executes by writing content +
+directly to new `byte[]`.
+
+=== Performance
+
+Depending on circumstances:
+
+* throughput 2.6x
+* garbage less 3.4x
+
+(Benchmarks by https://shipilev.net/[Aleksey Shipilëv])
+
+=== Performance Of Indified Compact String Concat
+
+Depending on circumstances:
+
+* throughput 2.9x
+* garbage less 6.4x
+
+(Benchmarks by https://shipilev.net/[Aleksey Shipilëv])
+
+=== More
+
+Background on `String` +
+performance improvements:
+
+https://www.youtube.com/watch?v=wIyeOaitmWM[Aleksey Shipilëv +
+The Lord Of The Strings]
+
+
+=== A Mixed Bag Of Performance
+
+* G1 default GC (http://openjdk.java.net/jeps/248[JEP 248])
+* cgroup-memory limits (https://bugs.openjdk.java.net/browse/JDK-8170888[JDK-8170888])
+* contended locks (http://openjdk.java.net/jeps/143[JEP 143])
+* security manager (http://openjdk.java.net/jeps/232[JEP 232])
+// * intern strings in CDS archives (http://openjdk.java.net/jeps/250[JEP 250])
+* Java 2D rendering (http://openjdk.java.net/jeps/265[JEP 265])
+* GHASH/RSA computation (http://openjdk.java.net/jeps/246[JEP 246])
+* Java-level JVM compiler interface (http://openjdk.java.net/jeps/243[JEP 243])

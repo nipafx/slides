@@ -1,0 +1,582 @@
+== Java 10
+
+// TODO: title
+
+// TODO: subtitle
+
+// TODO: toc
+
+=== Local-Variable Type Inference
+
+Less typing, but still strongly typed.
+
+=== Type Duplication
+
+We're used to duplicating +
+type information:
+
+```java
+URL codefx = new URL("http://codefx.org");
+URLConnection connection = codefx.openConnection();
+Reader reader = new BufferedReader(
+	new InputStreamReader(
+		connection.getInputStream()));
+```
+
+Not so bad?
+
+=== Type Duplication
+
+What about this?
+
+```java
+No no = new No();
+AmountIncrease<BigDecimal> more =
+	new BigDecimalAmountIncrease();
+HorizontalConnection<LinePosition, LinePosition>
+	jumping =
+		new HorizontalLinePositionConnection();
+Variable variable = new Constant(5);
+List<String> names = List.of("Max", "Maria");
+```
+
+=== Type Deduplication
+
+Can't somebody else do that? +
+Compiler knows the types!
+
+Enter `var`:
+
+```java
+var codefx = new URL("http://codefx.org");
+var connection = codefx.openConnection();
+var reader = new BufferedReader(
+	new InputStreamReader(
+		connection.getInputStream()));
+```
+
+=== Locality
+
+How much information is used for inference?
+
+* type inference can be +
+  arbitrarily complex/powerful
+* critical resource is not +
+  compiler but developer
+* code should be readable +
+  (without compiler/IDE)
+
+⇝ Better to keep it simple!
+
+=== "Action at a distance"
+
+```java
+// inferred as `int`
+var id = 123;
+if (id < 100) {
+	// very long branch
+} else {
+	// oh boy, much more code...
+}
+
+// now we add this line:
+id = "124";
+```
+
+What type should `id` be?
+
+Where does the error show up?
+
+=== Rules of `var`
+
+Hence, `var` only works in limited scopes:
+
+[%step]
+* compiler infers type from right-hand side +
+  ⇝ rhs has to *exist* and *define a type*
+* only works for local variables, `for`, `try` +
+  ⇝ no `var` on fields or in method signatures
+* also on lambda parameters ⑪ +
+  ⇝ annotate inferred type on lambda parameters
+
+=== Rules of `var`
+
+Two more:
+
+* not a keyword, but a _reserved type name_ +
+  ⇝ variables/fields can be named `var`
+* compiler writes type into bytecode +
+  ⇝ no run-time component
+
+=== What About Readability?
+
+This *is* about readability!
+
+* less redundancy
+* more intermediate variables
+* more focus on variable names
+* aligned variable names
+
+=== Aligned Variable Names
+
+```java
+var no = new No();
+var more = new BigDecimalAmountIncrease();
+var jumping = new HorizontalLinePositionConnection();
+var variable = new Constant(5);
+var names = List.of("Max", "Maria");
+```
+
+=== What About Readability?
+
+Still think omitting types is always bad?
+
+Ever wrote a lambda without declaring types?
+
+```java
+rhetoricalQuestion.answer(yes -> "see my point?");
+```
+
+=== Style Guidelines
+
+Principles from the
+http://openjdk.java.net/projects/amber/LVTIstyle.html[official style guidelines]:
+
+[%step]
+. Reading code is more important than writing it.
+. Code should be clear from local reasoning.
+. Code readability shouldn't depend on IDEs.
+. Explicit types are a tradeoff.
+
+=== Style Guidelines
+
+Guidelines:
+
+[%step]
+. Choose variable names that provide useful info.
+. Minimize the scope of local variables.
+. Consider `var` when the initializer provides sufficient information to the reader.
+. Use `var` to break up chained or nested expressions.
+. Don't worry too much about "programming to the interface".
+. Take care when using `var` with diamonds or generics.
+. Take care when using `var` with literals.
+
+=== Style Guidelines
+
+1. Choose variable names that provide useful info.
+
+```java
+/* ✘ */ var u = UserRepository.findUser(id);
+/* ✔ */ var user = UserRepository.findUser(id);
+/* 👍*/ var userToLogIn = UserRepository.findUser(id);
+```
+
+=== Style Guidelines
+
+[start=2]
+. Minimize the scope of local variables.
+
+```java
+// ✘
+var id = 123;
+if (id < 100) {
+	// very long branch
+} else {
+	// oh boy, much more code...
+}
+LOGGER.info("... " + id);
+
+// ✔ replace branches with method calls
+```
+
+=== Style Guidelines
+
+[start=3]
+. Consider `var` when the initializer provides +
+  sufficient information to the reader.
+
+```java
+/* ✘ */ var user = Repository.find(id);
+/* ✔ */ var user = UserRepository.findUser(id);
+/* 👍*/ var user = new User(id);
+```
+
+=== Style Guidelines
+
+[start=4]
+. Use `var` to break up chained or nested expressions.
+
+```java
+// ✘
+return Canvas
+	.activeCanvas()
+	.drawings()
+	.filter(Drawing::isLine)
+	.map(drawing -> (HorizontalConnection) drawing)
+		// now we have lines
+	.filter(line -> length(line) == 7)
+	.map(this::generateSquare)
+		// now we have squares
+	.map(this::createRandomColoredSquare)
+	.map(this::createRandomBorderedSquare)
+	.collect(toList());
+```
+
+=== Style Guidelines
+
+[start=4]
+. Use `var` to break up chained or nested expressions.
+
+```java
+// ✔
+var lines = Canvas
+	.activeCanvas()
+	.drawings()
+	.filter(Drawing::isLine)
+	.map(drawing -> (HorizontalConnection) drawing)
+var squares = lines
+	.filter(line -> length(line) == 7)
+	.map(this::generateSquare);
+return squares
+	.map(this::createRandomColoredSquare)
+	.map(this::createRandomBorderedSquare)
+	.collect(toList());
+```
+
+=== Style Guidelines
+
+[start=5]
+. Don't worry too much about +
+  "programming to the interface".
+
+```java
+// inferred as `ArrayList` (not `List`),
+// but that's ok
+var users = new ArrayList<User>();
+```
+
+Careful when refactoring:
+
+* extracting methods that use `var`-ed variables +
+  puts concrete types into method signatures
+* look out and replace with most general type
+
+=== Style Guidelines
+
+[start=6]
+. Take care when using `var` with diamonds or generics.
+
+```java
+// ✘ infers `ArrayList<Object>`
+var users = new ArrayList<>();
+
+// ✔ infers `ArrayList<User>`
+var users = new ArrayList<User>();
+```
+
+=== Style Guidelines
+
+[start=7]
+. Take care when using `var` with literals.
+
+```java
+// ✘ when used with `var`, these
+//   variables become `int`
+byte b = 42;
+short s = 42;
+long l = 42
+```
+
+=== More on `var`
+
+* First Contact With `var` In Java 10 +
+💻 https://blog.codefx.org/java/java-10-var-type-inference/[tiny.cc/java-var] /
+▶ https://www.youtube.com/watch?v=Le1DbpRZdRQ&index=1&list=PL_-IO8LOLuNp2stY1qBUtXlfMdJW7wvfT[tiny.cc/java-var-yt]
+* https://snyk.io/blog/local-type-inference-java-cheat-sheet[cheat sheet] (*⇜ print when getting started!*)
+* http://openjdk.java.net/projects/amber/LVTIstyle.html[official style guidelines]
+* `var` and ...
+** https://blog.codefx.org/java/intersection-types-var/[intersection types]
+** https://blog.codefx.org/java/traits-var/[traits]
+** https://blog.codefx.org/java/tricks-var-anonymous-classes/[anonymous classes]
+
+
+=== Stream
+
+=== Collect Unmodifiable
+
+Create unmodifiable collections +
+(in the sense of `List::of` et al) +
+with `Collectors`:
+
+```java
+Collector<T, ?, List<T>> toUnmodifiableList();
+
+Collector<T, ?, Set<T>> toUnmodifiableSet();
+
+Collector<T, ?, Map<K,U>> toUnmodifiableMap(
+	Function<T, K> keyMapper,
+	Function<T, U> valueMapper);
+// plus overload with merge function
+```
+
+
+=== Optional
+
+=== Or Else Throw
+
+`Optional::get` invites misuse +
+by calling it reflexively.
+
+Maybe `get` wasn't the best name? +
+New:
+
+```java
+T orElseThrow()
+```
+
+Works exactly as `get`, +
+but more self-documenting.
+
+=== Aligned Names
+
+Name in line with other accessors:
+
+```java
+T orElse(T other)
+T orElseGet(Supplier<T> supplier)
+T orElseThrow()
+	throws NoSuchElementException
+T orElseThrow(
+	Supplier<X> exceptionSupplier)
+	throws X
+```
+
+=== Get Considered Harmful
+
+https://bugs.openjdk.java.net/browse/JDK-8160606[JDK-8160606]
+will deprecate +
+`Optional::get`.
+
+* when?
+* for removal?
+
+We'll see...
+
+
+=== Collection Factories
+
+Creating immutable copies:
+
+```java
+/* on List */ List<E> copyOf(Collection<E> coll);
+/* on Set */ Set<E> copyOf(Collection<E> coll);
+/* on Map */ Map<K, V> copyOf(Map<K,V> map);
+```
+
+Great for defensive copies:
+
+```java
+public Customer(List<Order> orders) {
+	this.orders = List.copyOf(orders);
+}
+```
+
+
+
+=== A Mixed Bag Of New&nbsp;Methods
+
+```java
+Reader.transferTo(Writer);
+DateTimeFormatter.localizedBy(Locale locale);
+```
+
+
+=== A Mixed Bag Of New&nbsp;JVM&nbsp;Features
+
+* alternative memory device support (http://openjdk.java.net/jeps/316[JEP 316])
+
+
+=== Application Class-Data Sharing
+
+Improving application launch times.
+
+=== Class-Data
+
+JVM steps to execute a class's bytecode:
+
+* looks up class in JAR
+* loads bytecode
+* verifies bytecode
+* stores class-data in +
+internal data structure
+
+This takes quite some time.
+
+If classes don't change, the resulting +
+class-data is always the same!
+
+=== Class-Data Sharing
+
+Idea behind class-data sharing:
+
+* create class-data once
+* dump it into an archive
+* reuse the archive in future launches +
+  (file is mapped into memory)
+
+=== Effects
+
+My experiments with a large desktop app +
+(focusing on classes required for launch):
+
+* archive has 250 MB for ~24k classes
+* launch time reduced from 15s to 12s
+
+*Bonus*: Archive can be shared across JVMs.
+
+=== Class-Data Sharing
+
+Two variants:
+
+CDS:: just for JDK classes
+AppCDS:: JDK + application classes
+
+=== CDS - Step #1
+
+Create JDK archive:
+
+```sh
+# possibly as root
+java -Xshare:dump
+```
+
+Java 12+ downloads include +
+CDS archive for JDK classes.
+
+=== CDS - Step #2
+
+Use the archive:
+
+```sh
+$ java
+	-Xshare:on
+	# [... class path for app and deps ...]
+	org.example.Main
+```
+
+If archive is missing or faulty:
+
+* `-Xshare:on` fails fast
+* `-Xshare:auto` (default) ignores archive
+
+(Slides rely on default, i.e. no `-Xshare`.)
+
+=== AppCDS
+
+Create an AppCDS archive:
+
+* manually ⑩+
+* dynamically on ⑬+
+
+Now manually, later dynamically.
+
+=== AppCDS - Step #0
+
+To manually create an AppCDS archive, +
+first create a list of classes
+
+```sh
+$ java
+	-XX:DumpLoadedClassList=classes.lst
+	# [... class path for app and deps ...]
+	org.example.Main
+```
+
+Then, `classes.lst` contains +
+slash-separated names of loaded classes.
+
+=== AppCDS - Step #1
+
+Use the list to create the archive:
+
+```sh
+$ java
+	-Xshare:dump
+	-XX:SharedClassListFile=classes.lst
+	-XX:SharedArchiveFile=app-cds.jsa
+	# [... class path for app and deps ...]
+```
+
+Creates archive `app-cds.jsa`.
+
+=== AppCDS - Step #2
+
+Use the archive:
+
+```sh
+$ java
+	-XX:SharedArchiveFile=app-cds.jsa
+	# [... class path for app and deps ...]
+	org.example.Main
+```
+
+=== Heed The Class Path
+
+What are the two biggest challenges +
+in software development?
+
+[%step]
+. naming
+. cache invalidation
+. off-by-one errors
+
+=== Heed The Class Path
+
+The archive is a cache!
+
+It's invalid when:
+
+* a JAR is updated
+* class path is reordered
+* a JAR is added +
+  (unless when appended)
+
+=== Heed The Class Path
+
+To invalidate the archive:
+
+* during creation:
+** Java stores used class path in archive
+** class path may not contain wild cards
+** class path may not contain exploded JARs
+* when used: +
+** Java checks whether stored path +
+   is prefix of current path
+
+=== Module Path?
+
+Class path, class path... +
+what about the module path?
+
+[quote, 'http://openjdk.java.net/jeps/310[JEP 310]']
+____
+In this release, CDS cannot archive classes from user-defined modules (such as those specified in `--module-path`).
+We plan to add that support in a future release.
+____
+
+=== More On (App)CDS
+
+For more, read this article: +
+https://blog.codefx.org/java/application-class-data-sharing/[tiny.cc/app-cds]
+
+Observe sharing with +
+`-Xlog:class+load` +
+(https://blog.codefx.org/java/unified-logging-with-the-xlog-option/[unified logging])
+
+
+=== A Mixed Bag Of Performance
+
+* Graal -- Java-based JIT compiler (http://openjdk.java.net/jeps/317[JEP 317])
+* parallel full GC for G1 (http://openjdk.java.net/jeps/307[JEP 307])
+* thread-local handshakes (http://openjdk.java.net/jeps/312[JEP 312])
+

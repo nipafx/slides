@@ -1,0 +1,426 @@
+== JUnit 5 Extensions
+
+// TODO: subtitle
+
+// TODO: intro with a few examples
+
+=== Extension points
+
+// TODO: toc
+
+=== Extensions in JUnit 4
+==== Runners
+
+Manage a test's full lifecycle.
+
+```java
+@RunWith(MockitoJUnitRunner.class)
+public class MyTest { ... }
+```
+
+* very flexible
+* heavyweight
+* exclusive
+
+=== Extensions in JUnit 4
+==== Rules
+
+Execute code before and after statements.
+
+```java
+public class MyTest {
+	@Rule
+	public MockitoRule rule =
+		MockitoJUnit.rule();
+}
+```
+
+* added in 4.7
+* lightweight
+* limited to before/after behavior
+
+=== Extensions in JUnit 4
+
+Extension model is not optimal:
+
+* two competing mechanisms
+** each with limitations
+** but with considerable overlap
+* composition can cause problems
+
+=== Approaching extensions
+
+From JUnit 5's
+https://github.com/junit-team/junit5/wiki/Core-Principles[Core Principles]:
+
+> Prefer extension points over features
+
+Quite literally, +
+JUnit 5 has _Extension Points_
+
+=== Extension points
+
+* instance post processor
+* template invocation
+* `@BeforeAll` and `@BeforeEach`
+* execution condition
+* parameter resolution
+* before test execution
+* after test execution
+* exception handling
+* `@AfterEach` and `@AfterAll`
+
+=== Implementing extensions
+
+* one interface for each extension point
+* method arguments capture context
+
+```java
+public interface BeforeEachCallback
+		extends Extension {
+
+	void beforeEach(ExtensionContext context);
+}
+```
+
+* an extension can use multiple points +
+to implement its feature
+
+=== Example extension
+
+We want to benchmark our tests!
+
+* for each test method
+* write the elapsed time to console
+
+How?
+
+* before test execution: store test launch time
+* after test execution: print elapsed time
+
+=== Benchmark extension
+
+```java
+public class BenchmarkExtension implements
+		BeforeTestExecutionCallback,
+		AfterTestExecutionCallback {
+
+	private long launchTime;
+
+	// ...
+}
+```
+
+=== Benchmark extension
+
+```java
+@Override
+public void beforeTestExecution( /*...*/ ) {
+	launchTime = currentTimeMillis();
+}
+
+@Override
+public void afterTestExecution( /*...*/ ) {
+	printf("Test '%s' took %d ms.%n",
+		context.getDisplayName(),
+		currentTimeMillis() - launchTime);
+}
+```
+
+=== Other examples
+
+Remember This?
+
+```java
+@Test
+@DisabledOnFriday
+void failingTest() {
+	assertTrue(false);
+}
+```
+
+Let's see how it works!
+
+=== Disabled extension
+
+```java
+public class DisabledOnFridayCondition
+		implements ExecutionCondition {
+
+	@Override
+	public ConditionEvaluationResult evaluate( /*...*/ ) {
+		if (isFriday())
+			return disabled("Weekend!");
+		else
+			return enabled("Fix it!");
+	}
+
+}
+```
+
+=== Other examples
+
+What about parameter injection?
+
+```java
+@Test
+void someTest(MyServer server) {
+	// do something with `server`
+}
+```
+
+=== Parameter injection
+
+```java
+public class MyServerParameterResolver
+		implements ParameterResolver {
+
+	@Override
+	public boolean supportsParameter(
+			ParameterContext pCtx, /*...*/) {
+		return MyServer.class
+			== pCtx.getParameter().getType();
+	}
+
+	@Override
+	public Object resolveParameter(
+			ParameterContext pCtx, /*...*/) {
+		return new MyServer();
+	}
+
+}
+```
+
+=== Extension points
+==== Summary
+
+* Jupiter provides many extension points
+* each extension point is an interface
+* extensions implement various interfaces
+* implementations are called when +
+test execution reaches corresponding point
+
+
+=== Extension context
+
+// TODO: toc
+
+=== Extension context
+
+Quick look at `ExtensionContext`:
+
+```java
+// every node has its own context
+Optional<ExtensionContext> getParent();
+ExtensionContext getRoot();
+
+// some node-related info
+String getUniqueId();
+String getDisplayName();
+Set<String> getTags();
+
+// don't use System.out!
+void publishReportEntry(String key, String value);
+
+// configure your extension with system properties
+Optional<String> getConfigurationParameter(String key)
+```
+
+=== Extension context
+
+Quick look at `ExtensionContext`:
+
+```java
+// to reflect over the test class/method
+Optional<AnnotatedElement> getElement();
+Optional<Class<?>> getTestClass();
+Optional<Method> getTestMethod();
+Optional<Lifecycle> getTestInstanceLifecycle();
+
+// use the store for extension state
+Store getStore(Namespace namespace);
+```
+
+=== Stateless extensions
+
+JUnit makes no promises regarding +
+extension instance lifecycle.
+
+*⇝ Extensions must be stateless!*
+
+Use the `Store`, Luke:
+
+* namespaced
+* hierarchical
+* key-value
+
+=== Extension store
+==== Namespaced
+
+Store is accessed via `ExtensionContext` +
+given a `Namespace`:
+
+```java
+Store getStore(Namespace namespace);
+```
+
+* keeps extensions from stepping +
+on each other's toes
+* could allow deliberate communication 🤔
+
+=== Extension store
+==== Hierarchical
+
+Reads from the store forward to parent stores:
+
+* method store ⇝ class store
+* nested class store ⇝ surrounding class store
+
+Writes always go to the called store.
+
+=== Extension store
+==== Key-Value
+
+The store is essentially a map:
+
+```java
+Object getObject(Object key);
+Object getOrComputeIfAbsent(
+		K key, Function creator);
+
+void put(Object key, Object value)
+
+Object remove(Object key)
+```
+
+Overloads with type tokens exist.
+
+=== Stateless benchmark
+
+```java
+void storeNowAsLaunchTime(
+		ExtensionContext context) {
+	long now = currentTimeMillis();
+	context.getStore(NAMESPACE)
+			.put(KEY, now);
+}
+
+long loadLaunchTime(
+		ExtensionContext context) {
+	return context.getStore(NAMESPACE)
+			.get(KEY, long.class);
+}
+```
+
+=== Extension context
+==== Summary
+
+* use `ExecutionContext` to access +
+information about the test, e.g. +
+parents, tags, test class/method
+* use `Store` to be stateless
+
+
+=== Registering extensions
+
+// TODO: toc
+
+=== Three ways...
+
+Three ways to register extensions:
+
+* declaratively with `@ExtendWith`
+* programmatically with `@RegisterExtension`
+* automatically with service loader
+
+=== Declaratively
+
+Use `@ExtendWith` to register extension +
+with annotation:
+
+```java
+@ExtendWith(DisabledOnFridayCondition.class)
+class SomeTest {
+	...
+}
+```
+
+That's technical and verbose... :(
+
+=== Declaratively
+
+https://en.wikibooks.org/wiki/Java_Programming/Annotations/Meta-Annotations[Meta-annotations] to the rescue!
+
+* JUnit 5's annotations are meta-annotations
+* JUnit 5 checks recursively for annotations
+
+⇝ We can create our own annotations!
+
+=== Creating annotations
+
+```java
+@ExtendWith(DisabledOnFridayCondition.class)
+public @interface DisabledOnFriday { }
+
+@Test
+@Tag("integration")
+@ExtendWith(BenchmarkExtension.class)
+@ExtendWith(MyServerParameterResolver.class)
+public @interface IntegrationTest { }
+
+@IntegrationTest
+@DisabledOnFriday
+void testLogin(MyServer server) { ... }
+```
+
+=== Programmatically
+
+Annotations only accept compile-time constants:
+
+```java
+@DisabledByFormula(
+	"After Mayan b'ak'tun 13",
+	// Nope 😩
+	now().isAfter(MAYAN_B_AK_TUN_13))
+class DisabledByFormulaTest {
+
+	private static final LocalDateTime
+		MAYAN_B_AK_TUN_13 = of(2012, 12, 21, 0, 0);
+}
+```
+
+=== Programmatically
+
+Instead declare extension as field +
+and annotate with `@RegisterExtension`:
+
+```java
+class DisabledByFormulaTest {
+
+	private static final LocalDateTime
+		MAYAN_B_AK_TUN_13 = of(2012, 12, 21, 0, 0);
+
+	@RegisterExtension
+	static DisabledByFormula FORMULA = disabledWhen(
+			"After Mayan b'ak'tun 13",
+			now().isAfter(MAYAN_B_AK_TUN_13));
+}
+```
+
+=== Automatically
+
+You can use Java's service loader +
+to register extensions globally, +
+(i.e. without putting them into code) +
+but I won't go into it here.
+
+⇝ https://junit.org/junit5/docs/current/user-guide/#extensions-registration-automatic[User guide on global registration].
+
+=== Registering extensions
+==== Summary
+
+Extensions can be registered in three ways:
+
+* declaratively with `@ExtendWith`
+* programmatically with `@RegisterExtension`
+* automatically with service loader

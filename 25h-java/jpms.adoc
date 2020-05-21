@@ -1,0 +1,449 @@
+== Java Module System
+
+// TODO: subtitle
+
+// TODO: explain module graph, explain layers
+
+=== Modules
+
+Modules
+
+* have a unique name
+* express their dependencies
+* export specific packages +
+and hide the rest
+
+These information
+
+* are defined in `module-info.java`
+* get compiled to `module-info.class`
+* end up in JAR root folder
+
+=== Readability
+
+Modules express dependencies +
+with `requires` directives:
+
+[source,java]
+----
+module A {
+	requires B;
+}
+----
+
+* module system checks all dependencies +
+(⇝ _reliable configuration_)
+* lets module _read_ its dependencies
+
+
+=== Accessibility
+
+Modules export packages +
+with `exports` directives
+
+[source,java]
+----
+module B {
+	exports p;
+}
+----
+
+Code in module _A_ can only access `Type` in module _B_ if:
+
+* `Type` is public
+* `Type` is in an exported package
+* _A_ reads _B_
+
+(⇝ _strong encapsulation_)
+
+
+[state="empty",background-color="white"]
+=== !
+image::images/platform-modules.png[background, size=contain]
+
+
+=== Jigsaw Advent Calendar
+image::images/advent-calendar.jpg[background, size=cover]
+
+++++
+<h3>A simple example</h3>
+++++
+
+
+=== Structure
+
+// http://yuml.me/edit/64cd5858
+image::images/advent-calendar-structure.png[role="diagram"]
+
+
+=== Code
+
+[source,java]
+----
+public static void main(String[] args) {
+	List<SurpriseFactory> factories = List.of(
+		new ChocolateFactory(), new QuoteFactory());
+	Calendar cal = Calendar.create(factories);
+	System.out.println(cal.asText());
+}
+----
+
+// see above
+image::images/advent-calendar-structure.png[_,75%,role="diagram"]
+
+
+=== Module Structure
+
+// image #1: taken from "Structure"
+// iamge #2: http://yuml.me/edit/a61aa29b
+++++
+<div class="imageblock" style="">
+	<div class="content diagram">
+		<img src="images/advent-calendar-structure.png" style="margin: 25px; width:75%;">
+	</div>
+</div>
+<div class="imageblock fragment current-visible" data-fragment-index="0">
+	<div class="content diagram">
+		<img src="images/advent-calendar-module-multi.png" alt="b2e21fbf" style="margin: 0;">
+	</div>
+</div>
+++++
+
+[NOTE.speaker]
+--
+* this is another module graph
+--
+
+
+=== Module Structure
+
+// taken from previous slide
+image::images/advent-calendar-module-multi.png[role="diagram"]
+
+// The outer div's height must be specified explicitly so that
+// vertical space is reserved for the non-displayed fragments.
+++++
+<div style="height: 210px;">
+<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">module surprise {
+	<span class="hljs-comment">// requires no other modules</span>
+	exports org.codefx.advent.surprise;
+}</code></pre></div></div>
+<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">module calendar {
+	requires surprise;
+	exports org.codefx.advent.calendar;
+}</code></pre></div></div>
+<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">module factories {
+	requires surprise;
+	exports org.codefx.advent.factories;
+}</code></pre></div></div>
+<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">module advent {
+	requires calendar;
+	requires factories;
+	requires surprise;
+}</code></pre></div></div>
+</div>
+++++
+
+
+=== Module Creation
+
+++++
+<h3>Compilation, Packaging, Execution</h3>
+++++
+
+[source,bash]
+----
+# compile with module-info.java
+$ javac -d classes ${*.java}
+# package with module-info.class
+# and specify main class
+$ jar --create
+    --file mods/advent.jar
+    --main-class advent.Main
+    ${*.class}
+# run by specifying a module path
+# and a module to run (by name)
+$ java --module-path mods --module advent
+----
+
+// [source,bash]
+// ----
+// # compile all modules at once
+// $ javac -d classes
+//     --module-source-path "src"
+//     --module advent
+// # package one by one, eventually advent
+// $ jar --create
+//     --file mods/advent.jar
+//     --main-class advent.Main
+//     ${*.class}
+// # launch the application
+// $ java --module-path mods --module advent
+// ----
+
+
+=== Dependency Inversion?
+
+// https://yuml.me/edit/e46b1686
+image::images/advent-dependency-inversion.png[role="diagram"]
+
+
+=== Service Locator Pattern
+
+*Consumers* and *implementations* +
+of an API should be decoupled.
+
+Service locator pattern:
+
+* service registry as central arbiter
+* implementors inform registry
+* consumers call registry to get implementations
+
+
+=== Services in JPMS
+
+In the JPMS:
+
+* modules declare which services they use
+* modules declare which services they provide
+* `ServiceLoader` is the registry
+* code can interact with it to load services
+
+
+=== Service Declarations
+
+Module declarations:
+
+[source,java]
+----
+// consumer
+module A {
+	uses some.Service;
+}
+
+// provider
+module B {
+	provides some.Service
+		with some.Type;
+}
+----
+
+(_A_ and _B_ need access to `some.Service`)
+
+
+=== Loading Services
+
+* _A_ never "sees" providers like _B_
+* module system picks up all providers
+* _A_ can get providers from `ServiceLoader`
+
+[source,java]
+----
+ServiceLoader.load(Service.class)
+----
+
+
+=== Factory Services
+
+[source,java]
+----
+module advent {
+	requires surprise;
+	uses surprise.SurpriseFactory;
+}
+
+module factory.chocolate {
+	requires surprise;
+	provides surprise.SurpriseFactory
+		with factory.chocolate.ChocolateFactory;
+}
+
+module factory.quote {
+	requires surprise;
+	provides surprise.SurpriseFactory
+		with factory.quote.QuoteFactory;
+}
+----
+
+
+=== Factory Services
+
+// https://yuml.me/edit/aeff75c1
+image::images/advent-services.png[role="diagram"]
+
+
+=== Factory Services
+
+[source,java]
+----
+public static void main(String[] args) {
+	List<SurpriseFactory> factories = ServiceLoader
+		.load(SurpriseFactory.class).stream()
+		.map(Provider::get)
+		.collect(toList());
+	Calendar cal = Calendar.create(factories);
+	System.out.println(cal.asText());
+}
+----
+
+
+=== Summary
+
+To decouple API consumers and providers:
+
+* consumer `uses Service`
+* provider `provides Service with Impl`
+
+Module system is service locator; +
+request implementations from `ServiceLoader`:
+
+`ServiceLoader.load(Service.class)`
+
+
+=== Creating Runtime Images With JLink
+
+++++
+<h3>Custom-Made For Your Application</h3>
+++++
+
+
+[background-color="white"]
+=== Remember This?
+image::images/platform-modules.png[background, size=contain]
+
+
+=== Benefiting From JDK Modularization
+
+Create a JDK install with just the code you need:
+
+* know which modules your app uses (⇝ `jdeps`)
+* create an image with those modules (⇝ `jlink`)
+
+This is about `jlink`.
+
+
+=== A Minimal JDK Image
+
+Create with `jlink`:
+
+[source,bash]
+----
+$ jlink
+#   define output folder for the image
+    --output jdk-minimal
+#   where to find modules? (obsolete in ⑪)
+    --module-path $JAVA_HOME/jmods
+#   which modules to add (includes dependencies!)
+    --add-modules java.base
+----
+
+Try it out:
+
+[source,bash]
+----
+$ jdk-minimal/bin/java --list-modules
+> java.base
+----
+
+
+=== Image For A Backend
+
+Say you use JAXP, JDBC, and JUL:
+
+[source,bash]
+----
+$ jlink
+	--output jdk-backend
+	--add-modules java.xml,java.sql,java.logging
+----
+
+
+=== Image For A Backend
+
+[source,bash]
+----
+$ jdk-backend/bin/java --list-modules
+> java.base
+> java.logging
+> java.sql
+> java.transaction.xa
+> java.xml
+----
+
+
+=== Image Including Your App And Dependencies
+
+
+To create an image for your app:
+
+* *all JARs need to be modularized!*
+* including dependencies
+
+Unless you use Gunnar Morling's https://github.com/moditect/moditect#creating-modular-runtime-images[ModiTect], +
+which creates module descriptors on the fly.
+
+=== Linking And Launching
+
+Creating the image:
+
+[source,bash]
+----
+$ jlink
+	--output app-image
+	--module-path $JAVA_HOME/jmods:mods
+	--add-modules advent
+#   services are not resolves automatically
+	--add-modules factory.surprise,factory.chocolate
+----
+
+Launching the app:
+
+[source,bash]
+----
+app-image/bin/java --module advent
+----
+
+
+=== Creating A Launcher
+
+You can even create a launcher:
+
+[source,bash]
+----
+$ jlink
+    --output app-image
+    --module-path $JAVA_HOME/jmods:mods
+    --add-modules advent,...
+#   --launcher <name>=<module>[/<mainclass>]
+    --launcher calendar=advent
+----
+
+Launching the app:
+
+[source,bash]
+----
+app-image/bin/calendar
+----
+
+
+=== More Features
+
+* automatic service binding +
+(with `--bind-services`)
+* various optimizations +
+(size and launch performance)
+* plugin API (not yet public)
+* cross OS image generation
+
+
+=== Summary
+
+You can use `jlink` to:
+
+* create a runtime image +
+with just the right modules
+* create an application image +
+including your code
+
+This should make certain kinds of deploys +
+smaller and easier.

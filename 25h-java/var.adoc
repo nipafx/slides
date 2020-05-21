@@ -1,0 +1,232 @@
+== Fun with `var`
+
+// TODO: subtitle
+
+// TODO: toc
+
+=== Intersection Types
+
+=== Motivation
+
+Sometimes you need a type +
+that implements two interfaces +
+without creating a new interface.
+
+*For example:*
+
+You need something +
+that is `Closeable` and an `Iterator` +
+without creating `CloseableIterator`.
+
+[state="empty"]
+=== !
+image::images/intersection-venn.png[background, size=cover]
+
+=== Intersection types
+
+Given two types, the *intersection type* +
+is the set of variables that are of both types.
+
+An intersection type has the API of both types!
+
+*For example:*
+
+A variable of type `Closeable & Iterator<E>` +
+is both `Closeable` and an `Iterator<E>`.
+
+It has `close()` and `hashNext()`/`next()`
+
+=== Code
+
+=== Intersection types
+
+. in method signatures, express with generics:
++
+```java
+public <T extends Closeable & Iterator<String>>
+	T createCloseableIterator(...) { ... }
+
+public <E, T extends Closeable & Iterator<E>>
+	E firstMatch(T elements, ...) { ... }
+```
+. for variables use `var`:
++
+```java
+var elements = createCloseableIterator(true);
+firstMatch(elements, ...);
+```
+
+=== Evaluation
+
+Downsides:
+
+* combination of non-trivial Java features:
+** generics with bounded wildcards
+** type inference
+* refactoring becomes harder
+
+But:
+
+* intersection types are known concept
+* can be really helpful in a bind
+
+*Add to tool box; use with care.*
+
+=== More on intersection&nbsp;types
+
+I've written a blog post: +
+https://blog.codefx.org/java/intersection-types-var/[blog.codefx.org/java/intersection-types-var]
+
+
+=== Traits
+
+=== Motivation
+
+Sometimes you need to attach +
+prepared functionality to an instance +
+without creating a new type.
+
+*For example:*
+
+You have a `Megacorp` instance and an +
+`IsSuccessful`-interface that you +
+want to attach to it.
+
+=== Traits
+
+A *trait* extends an interface +
+and implements additional behavior.
+
+The language needs to offer a simple way +
+to "attach" that trait to an instance at hand.
+
+=== Code
+
+=== Traits
+
+. create a functional, delegating interface:
++
+```java
+@FunctionalInterface
+interface MegacorpDelegate extends Megacorp {
+	Megacorp delegate();
+	// implement `Megacorp` with default methods
+	// by forwarding calls to `delegate()`
+}
+```
+. create traits as interfaces:
++
+```java
+interface IsEvil extends Megacorp {
+	default boolean isEvil() { return true; }
+}
+```
+
+=== Traits
+
+[start=3]
+. cast lambda to desired intersection +
+and assign to `var`-ed variable:
++
+```java
+var corp = (MegacorpDelegate & IsEvil) () -> original;
+```
+
+=== Evaluation
+
+Downsides:
+
+* combination of non-trivial Java features:
+** lambda as poly expression
+** type inference
+** default methods
+* refactoring becomes harder +
+(see intersection types)
+* delegating interface is cumbersome
+* breaks in collections (*!*)
+
+*Never use in "real" code!*
+
+=== More on traits
+
+I've written a blog post: +
+https://blog.codefx.org/java/traits-var/[blog.codefx.org/java/traits-var]
+
+
+=== Ad-hoc Fields And Methods
+
+=== Motivation
+
+Sometimes you need to extend a type +
+with a field or a method.
+
+But not enough to create a new subtype.
+
+Maybe with an anonymous class?
+
+=== Anonymous class
+
+```java
+new SimpleMegacorp(...) {
+	final BigDecimal SUCCESS_BOUNDARY =
+		new BigDecimal("1000000000000");
+
+	boolean isSuccessful() {
+		return earnings()
+			.compareTo(SUCCESS_BOUNDARY) > 0;
+	}
+};
+```
+
+=== Code
+
+=== Ad-hoc fields & methods
+
+. create anonymous class with +
+additional fields and/or methods
+. assigned to `var`-ed variable
+
+
+```java
+var corp = new SimpleMegacorp(...) {
+	final BigDecimal SUCCESS_BOUNDARY =
+		new BigDecimal("1000000000000");
+
+	boolean isSuccessful() {
+		return earnings()
+			.compareTo(SUCCESS_BOUNDARY) > 0;
+	}
+};
+corp.isSuccessful();
+```
+
+=== Evaluation
+
+Downsides:
+
+* anonymous class is verbose (e.g. in stream)
+* combination of non-trivial Java features:
+** anonymous classes
+** type inference
+* impedes refactoring (*!*)
+
+*Prefer the alternatives!*
+
+=== Alternatives
+
+Alternatives for ad-hoc fields:
+
+* `Map.Entry`
+* tuples from http://www.vavr.io/[Vavr], https://github.com/aol/cyclops[Cyclops], etc.
+* records
+
+Alternatives for ad-hoc methods:
+
+* extending base types
+* utility methods
+* traits
+
+=== More on ad-hoc fields&nbsp;and&nbsp;methods
+
+I've written a blog post: +
+https://blog.codefx.org/java/tricks-var-anonymous-classes/[blog.codefx.org/java/tricks-var-anonymous-classes]

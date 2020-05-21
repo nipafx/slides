@@ -1,0 +1,272 @@
+== Java 14
+
+// TODO: title
+
+// TODO: subtitle
+
+// TODO: toc
+
+=== Records
+
+Simple classes ~> simple code
+
+=== Spilling Beans
+
+Typical Java Bean:
+
+```java
+public class Range {
+
+	// part I 😀
+
+	private final int low;
+	private final int high;
+
+	public Range(int low, int high) {
+		this.low = low;
+		this.high = high;
+	}
+
+}
+```
+
+=== Spilling Beans
+
+```java
+public class Range {
+
+	// part II 🙄
+
+	public int getLow() {
+		return low;
+	}
+
+	public int getHigh() {
+		return high;
+	}
+
+}
+```
+
+=== Spilling Beans
+
+```java
+public class Range {
+
+	// part III 🤨
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Range range = (Range) o;
+		return low == range.low &&
+				high == range.high;
+	}
+
+}
+```
+
+=== Spilling Beans
+
+```java
+public class Range {
+
+	// part IV 🥴
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(low, high);
+	}
+
+}
+```
+
+=== Spilling Beans
+
+```java
+public class Range {
+
+	// part V 😭
+
+	@Override
+	public String toString() {
+		return "[" + low + "; " + high + "]";
+	}
+
+}
+```
+
+=== "Java is Verbose"
+
+`Range.java` is simple:
+
+* declares type `Range`
+* declares two components, `low` and `high`
+
+Takes 44 lines!
+
+* verbose
+* room for error
+* unexpressive
+
+=== Records
+
+```java
+//                these are "components"
+public record Range(int low, int high) {
+
+	// compiler generates:
+	//  * constructor
+	//  * accessors low(), high()
+	//  * equals, hashCode, toString
+
+}
+```
+
+=== Records
+
+> The API for a record models the state, the whole state, and nothing but the state.
+
+The deal:
+
+* give up encapsulation
+* couple API to internal state
+* get API for free
+
+=== Records
+
+The benefits:
+
+* no boilerplate for plain "data carriers"
+* no room for error
+* makes Java more expressive
+
+On to the details!
+
+=== Limited Records
+
+Records are limited classes:
+
+* no inheritance
+** can't use `extends`
+** are `final`
+* component fields are `final`
+* no additional fields
+
+=== Customizable Records
+
+Records can be customized:
+
+* override constructor
+* add constructors and +
+  static factory methods
+* override accessors
+* add other methods
+* override `Object` methods
+* implement interfaces
+
+=== Customizable Record
+
+Override constructor:
+
+```java
+public Range(int low, int high) {
+	if (high < low)
+		throw new IllegalArgumentException();
+	this.low = low;
+	this.high = high;
+}
+```
+
+=== Customizable Record
+
+Compact form:
+
+```java
+// executed before fields are assigned
+public Range {
+	if (high < low)
+		throw new IllegalArgumentException();
+}
+```
+
+=== Summary
+
+* use records to replace data carriers
+* it's not anty-boilerplate pixie dust +
+  ⇝ use only when "the deal" makes sense
+* beware of limitations
+* beware of class-building facilites
+* observe ecosystem for adoption
+
+
+=== Pattern Matching
+
+Fewer `if`-s.
+
+// TODO
+
+
+=== A Mixed Bag Of New APIs
+
+* foreign-memory access (http://openjdk.java.net/jeps/370[JEP 370])
+* non-volatile `MappedByteBuffer` (http://openjdk.java.net/jeps/352[JEP 352])
+
+
+=== Helpful NPEs
+
+Finally can NPEs be helpful!
+
+=== Typical NPEs
+
+```sh
+java.lang.NullPointerException
+		at org.codefx.Regular.doing(Regular.java:28)
+		at org.codefx.Business.its(Business.java:20)
+		at org.codefx.Code.thing(Code.java:11)
+```
+
+Ok-ish for coders, but suck for everybody else.
+
+=== Helpful NPEs
+
+With `-XX:+ShowCodeDetailsInExceptionMessages`:
+
+```sh
+java.lang.NullPointerException:
+	Cannot invoke "String.length()" because the return
+	value of "org.codefx.courses.Irregular.doing()"
+	is null
+		at org.codefx.Regular.doing(Regular.java:28)
+		at org.codefx.Business.its(Business.java:20)
+		at org.codefx.Code.thing(Code.java:11)
+```
+
+=== Why the flag?
+
+The command line option +
+is needed (for now), because:
+
+* performance
+* security
+* compatibility
+
+But:
+
+> It is intended to enable code details +
+> in exception messages by default +
+> in a later release.
+
+
+=== A Mixed Bag Of New&nbsp;JVM&nbsp;Features
+
+* packaging tool (http://openjdk.java.net/jeps/343[JEP 343])
+
+
+=== A Mixed Bag Of Performance
+
+* JFR event streaming API (https://openjdk.java.net/jeps/349[JEP 349])
+* Shenadoah, G1, ZGC improvements

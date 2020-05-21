@@ -1,0 +1,201 @@
+== Java 13
+
+// TODO: title
+
+// TODO: subtitle
+
+// TODO: toc
+
+=== Text Blocks
+
+Multiline strings. Finally.
+
+// TODO: update to Java 14/15
+
+=== Multiline Strings
+
+Text blocks are straightforward:
+
+```java
+String haikuBlock = """
+	worker bees can leave
+	 even drones can fly away
+	  the queen is their slave""";
+System.out.println(haiku);
+// > worker bees can leave
+// >  even drones can fly away
+// >   the queen is their slave
+
+```
+
+* line breaks are normalized to `\n`
+* intentional indentation remains
+* accidental indentation is removed
+
+=== Syntax
+
+* can be used in same place +
+  as `"string literals"`
+* start with `"""` and new line
+* end with `"""`
+** on the last line of content
+** on its own line
+
+Position of closing `"""` decides +
+whether string ends with `"\n"`.
+
+=== Vs String Literals
+
+Compare to:
+
+```java
+String haikuLiteral = ""
+	+ "worker bees can leave\n"
+	+ " even drones can fly away\n"
+	+ "  the queen is their slave";
+```
+
+* `haikuBlock.equals(haikuLiteral)`
+* thanks to string interning even +
+  `haikuBlock == haikuLiteral`
+
+⇝ No way to discern source at run time!
+
+=== Line Endings
+
+Line ending depends on configuration. +
+Source file properties influence semantics?
+
+*Text block lines always end with `\n`!*
+
+Escape sequences are translated afterwards:
+
+```java
+String windows = """
+    Windows\r
+    line\r
+    endings\r
+    """
+```
+
+=== Indentation
+
+Compiler discerns:
+
+* accidental indentation +
+  (from code style; gets removed)
+* essential indentation +
+  (within the string; remains)
+
+How?
+
+=== Accidental Indentation
+
+* closing `"""` are on their own line +
+⇝ their indentation is accidental
+* otherwise, line with smallest indentation +
+⇝ its indentation is accidental
+
+=== Indentation
+
+Accidental vs intentional indentation +
+(separated with `|`):
+
+```java
+String haikuBlock = """
+		|worker bees can leave
+		| even drones can fly away
+		|  the queen is their slave""";
+String haikuBlock = """
+	|	worker bees can leave
+	|	 even drones can fly away
+	|	  the queen is their slave
+	""";
+```
+
+=== Manual Indentation
+
+To manually manage indentation:
+
+* `String::stripIndent`
+* `String::indent`
+
+=== Escape Sequences
+
+Text blocks are not _raw_:
+
+* escape sequences work (e.g. `\r`)
+* escape sequences are necessary
+
+But: `"` is not special!
+
+```java
+String phrase = """
+    {
+        greeting: "hello",
+        audience: "text blocks",
+    }
+    """;
+```
+
+⇝ Way fewer escapes in HTML/JSON/SQL/etc.
+
+=== More on Text Blocks
+
+* https://blog.codefx.org/java/text-blocks/[Definitive Guide To Text Blocks]
+* http://cr.openjdk.java.net/~jlaskey/Strings/TextBlocksGuide_v9.html[Programmer's Guide To Text Blocks]
+
+
+=== A Mixed Bag Of New&nbsp;I/O&nbsp;Methods
+
+```java
+FileSystems.newFileSystem(Path, ...);
+ByteBuffer.get(int, ...)
+ByteBuffer.put(int, ...)
+```
+
+
+=== Dynamic AppCDS
+
+// TODO repeat essential info
+
+Java 13 can create archive when +
+program exits (without crash):
+
+* steps #0 and #1 are replaced by:
++
+```sh
+$ java
+	-XX:ArchiveClassesAtExit=dyn-cds.jsa
+	# [... class path for app and deps ...]
+	org.example.Main
+```
+* step #2 as before:
++
+```sh
+$ java
+	-XX:SharedArchiveFile=app-cds.jsa
+	# [... class path for app and deps ...]
+	org.example.Main
+```
+
+=== Dynamic AppCDS
+
+The dynamic archive:
+
+* builds on the JDK-archive
+* contains all loaded app/lib classes
+* including those loaded by +
+  user-defined class loaders
+
+
+=== A Mixed Bag Of Performance
+
+* Shenandoah improvements:
+** internals (https://bugs.openjdk.java.net/browse/JDK-8221766[JDK-8221766], https://bugs.openjdk.java.net/browse/JDK-8224584[JDK-8224584])
+** more platforms (https://bugs.openjdk.java.net/browse/JDK-8225048[JDK-8225048], https://bugs.openjdk.java.net/browse/JDK-8223767[JDK-8223767])
+
+* ZGC improvements:
+** implements `-XX:SoftMaxHeapSize` (https://bugs.openjdk.java.net/browse/JDK-8222145[JDK-8222145])
+** max heap size of 16 TB (https://bugs.openjdk.java.net/browse/JDK-8221786[JDK-8221786])
+** uncommits unused memory (https://openjdk.java.net/jeps/351[JEP 351])
