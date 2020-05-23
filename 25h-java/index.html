@@ -56,7 +56,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		document.body.appendChild(document.querySelector('footer'));
 	})
 </script></div></section>
-<section><section id="stream_exception_handling"><h2>Stream Exception Handling</h2><div class="paragraph"><p>Handling checked exceptions in Streams</p></div></section><section id="setting_the_scene"><h2>Setting the Scene</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;User&gt; parse(Stream&lt;String&gt; strings) {
+<section><section id="stream_exception_handling" data-background-image="images/stream.jpg" data-background-size="cover"><h2>Stream Exception Handling</h2></section><section id="setting_the_scene"><h2>Setting the Scene</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;User&gt; parse(Stream&lt;String&gt; strings) {
 	// compile error:
 	// "Unhandled exception ParseException"
 	return strings.map(this::parse);
@@ -174,7 +174,7 @@ checked exceptions need to be declared</p></li><li><p>exception aborts stream pi
 <div class="paragraph"><p>Streams don&#8217;t cooperate well with checked exceptions.</p></div>
 <div class="paragraph"><p>See that as a chance to use functional concepts<br>
 for greater good of code base!</p></div></section></section>
-<section><section id="java_module_system"><h2>Java Module System</h2></section><section id="modules"><h2>Modules</h2><div class="paragraph"><p>Modules</p></div>
+<section><section id="java_module_system" data-background-image="images/puzzle.jpg" data-background-size="cover"><h2>Java Module System</h2><div class="paragraph"><p>Source: <a href="https://github.com/CodeFX-org/demo-jpms-monitor">github.com/CodeFX-org/demo-jpms-monitor</a></p></div></section><section id="modules"><h2>Modules</h2><div class="paragraph"><p>Modules</p></div>
 <div class="ulist"><ul><li><p>have a unique name</p></li><li><p>express their dependencies</p></li><li><p>export specific packages<br>
 and hide the rest</p></li></ul></div>
 <div class="paragraph"><p>These information</p></div>
@@ -327,7 +327,7 @@ with just the right modules</p></li><li><p>create an application image<br>
 including your code</p></li></ul></div>
 <div class="paragraph"><p>This should make certain kinds of deploys<br>
 smaller and easier.</p></div></section></section>
-<section><section id="junit_5_extensions"><h2>JUnit 5 Extensions</h2></section><section id="extension_points"><h2>Extension points</h2></section><section id="extensions_in_junit_4"><h2>Extensions in JUnit 4</h2><h3>Runners</h3><div class="paragraph"><p>Manage a test&#8217;s full lifecycle.</p></div>
+<section><section id="junit_5_extensions" data-background-image="images/tools.jpg" data-background-size="cover"><h2>JUnit 5 Extensions</h2><div class="paragraph"><p>Sources: <a href="https://github.com/CodeFX-org/demo-junit-5">github.com/CodeFX-org/demo-junit-5</a></p></div></section><section id="extension_points"><h2>Extension points</h2></section><section id="extensions_in_junit_4"><h2>Extensions in JUnit 4</h2><h3>Runners</h3><div class="paragraph"><p>Manage a test&#8217;s full lifecycle.</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@RunWith(MockitoJUnitRunner.class)
 public class MyTest { ... }</code></pre></div></div>
 <div class="ulist"><ul><li><p>very flexible</p></li><li><p>heavyweight</p></li><li><p>exclusive</p></li></ul></div></section><section id="extensions_in_junit_4_2"><h2>Extensions in JUnit 4</h2><h3>Rules</h3><div class="paragraph"><p>Execute code before and after statements.</p></div>
@@ -505,7 +505,7 @@ to register extensions globally,<br>
 but I won&#8217;t go into it here.</p></div>
 <div class="paragraph"><p>⇝ <a href="https://junit.org/junit5/docs/current/user-guide/#extensions-registration-automatic">User guide on global registration</a>.</p></div></section><section id="registering_extensions_2"><h2>Registering extensions</h2><h3>Summary</h3><div class="paragraph"><p>Extensions can be registered in three ways:</p></div>
 <div class="ulist"><ul><li><p>declaratively with <code>@ExtendWith</code></p></li><li><p>programmatically with <code>@RegisterExtension</code></p></li><li><p>automatically with service loader</p></li></ul></div></section></section>
-<section><section id="the_new_world"><h2>The new world</h2></section><section id="the_new_world_2"><h2>The new world</h2><div class="ulist"><ul><li><p>OpenJDK is the default<br>
+<section><section id="releases_licenses_support" data-background-image="images/merry-go-round.jpg" data-background-size="cover"><h2>Releases, Licenses, Support</h2></section><section id="the_new_world"><h2>The new world</h2><div class="ulist"><ul><li><p>OpenJDK is the default<br>
 (not Oracle JDK)</p></li><li><p>major release every 6 months<br>
 (not every 2-5 years)</p></li><li><p>only selected versions get LTS<br>
 (not all of them)</p></li></ul></div></section><section id="whats_openjdk"><h2>What&#8217;s OpenJDK?</h2><div class="paragraph"><p>OpenJDK is Java&#8217;s reference implementation:</p></div>
@@ -580,7 +580,7 @@ you have two choices:</p></div>
 <div class="ulist"><ul><li><p>more up-to-date ⇝ lower chance</p></li><li><p>fewer dependencies ⇝ lower chance</p></li><li><p>smaller code base ⇝ smaller damage</p></li></ul></div></section><section id="advice"><h2>Advice</h2><div class="ulist"><ul><li><p>find a suitable upgrade cadence</p></li><li><p><strong>build on each release</strong> (including EA)</p></li><li><p>only rely on standardized behavior</p></li><li><p>heed deprecation warnings (<code>jdeprscan</code>)</p></li><li><p>keep dependencies and tools up to date</p></li></ul></div>
 <div class="paragraph"><p>Most importantly:<br>
 <strong>Be aware of what&#8217;s coming!</strong></p></div></section></section>
-<section><section id="projects"><h2>Projects</h2></section><section id="project_amber" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Project Amber</h2>
+<section><section id="amber_valhalla_loom_leyden"><h2>Amber, Valhalla, Loom, Leyden</h2></section><section id="project_amber" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Project Amber</h2>
 <div class="quoteblock"><blockquote><div class="paragraph"><p>Smaller, productivity-oriented Java language features</p></div></blockquote></div>
 <div class="paragraph"><p>Profile:</p></div>
 <div class="ulist"><ul><li><p>led by Brian Goetz</p></li><li><p><a href="http://openjdk.java.net/projects/amber/">project</a> /
@@ -590,16 +590,12 @@ talks:
 <a href="https://www.youtube.com/watch?v=A-mxj2vhVAA&amp;t=13m58s">0</a>,
 <a href="https://www.youtube.com/watch?v=qul2B8iPC-o">1</a>,
 <a href="https://www.youtube.com/watch?v=n3_8YcYKScw">2</a> /<br>
-<a href="https://builds.shipilev.net/openjdk-amber/">inofficial early access builds</a></p></li><li><p>launched March 2017</p></li></ul></div></section><section id="motivation" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Motivation</h2>
-<div class="paragraph"><p>Java compared to more modern languages:</p></div>
+<a href="https://builds.shipilev.net/openjdk-amber/">inofficial early access builds</a></p></li><li><p>launched March 2017</p></li></ul></div></section><section id="motivation"><h2>Motivation</h2><div class="paragraph"><p>Java compared to more modern languages:</p></div>
 <div class="ulist"><ul><li><p>can be cumbersome</p></li><li><p>lacks expressiveness</p></li><li><p>tends to require boilerplate</p></li></ul></div>
-<div class="paragraph"><p>Amber wants to improve that situation!</p></div></section><section id="delivered" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Delivered</h2>
-<div class="ulist"><ul><li><p>local-variable type inference with <code>var</code><br>
+<div class="paragraph"><p>Amber wants to improve that situation!</p></div></section><section id="delivered"><h2>Delivered</h2><div class="ulist"><ul><li><p>local-variable type inference with <code>var</code><br>
 (<a href="https://openjdk.java.net/jeps/286">JEP 286</a>; in Java 10)</p></li><li><p>switch expressions<br>
 (<a href="http://openjdk.java.net/jeps/325">JEP 325</a>; preview in Java 12 and 13)</p></li><li><p>text blocks<br>
-(<a href="https://openjdk.java.net/jeps/355">JEP 355</a>; preview in Java 13)</p></li></ul></div></section><section id="endeavors" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Endeavors</h2>
-<div class="ulist"><ul><li><p>pattern matching (<a href="http://openjdk.java.net/jeps/305">JEP 305</a>)</p></li><li><p>records (<a href="https://openjdk.java.net/jeps/359">JEP 359</a>)</p></li><li><p>sealed types (<a href="https://openjdk.java.net/jeps/360">JEP 360</a>)</p></li><li><p>serialization revamp (<a href="http://cr.openjdk.java.net/~briangoetz/amber/serialization.html">white paper</a>)</p></li><li><p>concise method bodies (<a href="http://openjdk.java.net/jeps/8209434">JEP draft</a>)</p></li><li><p>raw string literals (maybe)</p></li></ul></div></section><section id="pattern_matching" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Pattern matching</h2>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Object value = // ...
+(<a href="https://openjdk.java.net/jeps/355">JEP 355</a>; preview in Java 13)</p></li></ul></div></section><section id="endeavors"><h2>Endeavors</h2><div class="ulist"><ul><li><p>pattern matching (<a href="http://openjdk.java.net/jeps/305">JEP 305</a>)</p></li><li><p>records (<a href="https://openjdk.java.net/jeps/359">JEP 359</a>)</p></li><li><p>sealed types (<a href="https://openjdk.java.net/jeps/360">JEP 360</a>)</p></li><li><p>serialization revamp (<a href="http://cr.openjdk.java.net/~briangoetz/amber/serialization.html">white paper</a>)</p></li><li><p>concise method bodies (<a href="http://openjdk.java.net/jeps/8209434">JEP draft</a>)</p></li><li><p>raw string literals (maybe)</p></li></ul></div></section><section id="pattern_matching"><h2>Pattern matching</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Object value = // ...
 String formatted = switch (value) {
 	case Integer i -&gt; String.format("int %d", i);
 	case Byte b    -&gt; String.format("byte %d", b);
@@ -609,8 +605,7 @@ String formatted = switch (value) {
 	default        -&gt; "unknown " + value.toString();
 };</code></pre></div></div>
 <div class="paragraph"><p><strong>Yeah:</strong></p></div>
-<div class="ulist"><ul><li><p>more powerful conditions</p></li><li><p>no repetition between condition and block</p></li></ul></div></section><section id="pattern_matching_2" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Pattern matching</h2>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public int eval(Node n) {
+<div class="ulist"><ul><li><p>more powerful conditions</p></li><li><p>no repetition between condition and block</p></li></ul></div></section><section id="pattern_matching_2"><h2>Pattern matching</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public int eval(Node n) {
 	return switch(n) {
 		case IntNode(int i) -&gt; i;
 		case NegNode(Node nn) -&gt; -eval(nn);
@@ -619,8 +614,7 @@ String formatted = switch (value) {
 	};
 }</code></pre></div></div>
 <div class="paragraph"><p><strong>Yeah:</strong></p></div>
-<div class="ulist"><ul><li><p>deconstructing complex objects</p></li><li><p>goodbye visitor pattern!</p></li></ul></div></section><section id="records" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Records</h2>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public record Range(int low, int high) {
+<div class="ulist"><ul><li><p>deconstructing complex objects</p></li><li><p>goodbye visitor pattern!</p></li></ul></div></section><section id="records"><h2>Records</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public record Range(int low, int high) {
 
 	// compiler generates:
 	//  * constructor, deconstructor
@@ -629,11 +623,9 @@ String formatted = switch (value) {
 
 }</code></pre></div></div>
 <div class="paragraph"><p><strong>Yeah:</strong></p></div>
-<div class="ulist"><ul><li><p>no boilerplate for plain "data carriers"</p></li><li><p>no room for error in <code>equals</code>/<code>hashCode</code></p></li><li><p>makes Java more expressive</p></li></ul></div></section><section id="records_2" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Records</h2>
-<div class="quoteblock"><blockquote><div class="paragraph"><p>The API for a record models the state, the whole state, and nothing but the state.</p></div></blockquote></div>
+<div class="ulist"><ul><li><p>no boilerplate for plain "data carriers"</p></li><li><p>no room for error in <code>equals</code>/<code>hashCode</code></p></li><li><p>makes Java more expressive</p></li></ul></div></section><section id="records_2"><h2>Records</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>The API for a record models the state, the whole state, and nothing but the state.</p></div></blockquote></div>
 <div class="paragraph"><p>The deal:</p></div>
-<div class="ulist"><ul><li><p>give up encapsulation</p></li><li><p>couple API to internal state</p></li><li><p>get API for free</p></li></ul></div></section><section id="customized_records" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Customized records</h2>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public record Range(int low, int high) {
+<div class="ulist"><ul><li><p>give up encapsulation</p></li><li><p>couple API to internal state</p></li><li><p>get API for free</p></li></ul></div></section><section id="customized_records"><h2>Customized records</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public record Range(int low, int high) {
 
 	// compiler knows signature and assigns to fields
 	public Range {
@@ -647,8 +639,7 @@ String formatted = switch (value) {
 		this.low = low;
 	}
 
-}</code></pre></div></div></section><section id="sealed_types" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Sealed types</h2>
-<div class="paragraph"><p>Have a closer look at the cases:</p></div>
+}</code></pre></div></div></section><section id="sealed_types"><h2>Sealed types</h2><div class="paragraph"><p>Have a closer look at the cases:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public int eval(Node n) {
 	return switch(n) {
 		case IntNode(int i) -&gt; // ...
@@ -656,24 +647,19 @@ String formatted = switch (value) {
 		case AddNode(Node left, Node right) -&gt; // ...
 	};
 }</code></pre></div></div>
-<div class="paragraph"><p>Why is there no <code>default</code> branch?</p></div></section><section id="sealed_types_2" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Sealed types</h2>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public sealed interface Node
+<div class="paragraph"><p>Why is there no <code>default</code> branch?</p></div></section><section id="sealed_types_2"><h2>Sealed types</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public sealed interface Node
 	permits IntNode, NegNode, AddNode {
 
 	// interface declaration
 
 }</code></pre></div></div>
 <div class="paragraph"><p><strong>Yeah:</strong></p></div>
-<div class="ulist"><ul><li><p>code expresses intended subtypes</p></li><li><p>pattern matching can check completeness</p></li></ul></div></section><section id="death_to_serialization" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Death to serialization!</h2>
-<div class="paragraph"><p>Serialization is hell:</p></div>
+<div class="ulist"><ul><li><p>code expresses intended subtypes</p></li><li><p>pattern matching can check completeness</p></li></ul></div></section><section id="death_to_serialization"><h2>Death to serialization!</h2><div class="paragraph"><p>Serialization is hell:</p></div>
 <div class="ulist"><ul><li><p>complicates every JDK feature</p></li><li><p>repeated security vulnerabilities</p></li><li><p>uses "invisible" mechanisms</p></li></ul></div>
-<div class="paragraph"><p>The JDK team wants to get rid of it!</p></div></section><section id="serializing_records" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Serializing records</h2>
-<div class="paragraph"><p>Replacement may look as follows:</p></div>
+<div class="paragraph"><p>The JDK team wants to get rid of it!</p></div></section><section id="serializing_records"><h2>Serializing records</h2><div class="paragraph"><p>Replacement may look as follows:</p></div>
 <div class="ulist"><ul><li><p>only works with records</p></li><li><p>deconstructs a record graph</p></li><li><p>passes data to serialization engine</p></li><li><p>one engine per format:<br>
-XML, JSON, YAML, &#8230;&#8203;</p></li></ul></div></section><section id="new_serialization" data-background-image="images/amber.jpg" data-background-size="cover"><h2>New serialization</h2>
-<div class="paragraph"><p><strong>Yeah:</strong></p></div>
-<div class="ulist"><ul><li><p>records are a great fit for serialization</p></li><li><p>new mechanism uses (de)constructors</p></li><li><p>superior maintainability</p></li></ul></div></section><section id="concise_method_bodies" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Concise method bodies</h2>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">class ListWrapper&lt;E&gt; implements List&lt;E&gt; {
+XML, JSON, YAML, &#8230;&#8203;</p></li></ul></div></section><section id="new_serialization"><h2>New serialization</h2><div class="paragraph"><p><strong>Yeah:</strong></p></div>
+<div class="ulist"><ul><li><p>records are a great fit for serialization</p></li><li><p>new mechanism uses (de)constructors</p></li><li><p>superior maintainability</p></li></ul></div></section><section id="concise_method_bodies"><h2>Concise method bodies</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">class ListWrapper&lt;E&gt; implements List&lt;E&gt; {
 
     private List&lt;E&gt; list;
 
@@ -683,19 +669,16 @@ XML, JSON, YAML, &#8230;&#8203;</p></li></ul></div></section><section id="new_se
 
 }</code></pre></div></div>
 <div class="paragraph"><p><strong>Yeah:</strong></p></div>
-<div class="ulist"><ul><li><p>simple methods get simple code</p></li><li><p>fewer (empty) lines</p></li></ul></div></section><section id="raw_string_literals" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Raw string literals</h2>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">String regex = \"\+(\d*[.])?\d"</code></pre></div></div>
+<div class="ulist"><ul><li><p>simple methods get simple code</p></li><li><p>fewer (empty) lines</p></li></ul></div></section><section id="raw_string_literals"><h2>Raw string literals</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">String regex = \"\+(\d*[.])?\d"</code></pre></div></div>
 <div class="paragraph"><p><strong>Yeah:</strong></p></div>
 <div class="ulist"><ul><li><p>no escaping of special characters</p></li></ul></div>
 <div class="paragraph"><p><strong>But:</strong></p></div>
 <div class="ulist"><ul><li><p>was planned <a href="http://openjdk.java.net/jeps/326">as preview in Java 12</a><br></p></li><li><p>removed last minute</p></li></ul></div>
-<div class="paragraph"><p>Turns out, it&#8217;s complicated. 😁</p></div></section><section id="raw_multi_line_strings" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Raw multi-line strings</h2>
-<div class="paragraph"><p>Maybe?</p></div>
+<div class="paragraph"><p>Turns out, it&#8217;s complicated. 😁</p></div></section><section id="raw_multi_line_strings"><h2>Raw multi-line strings</h2><div class="paragraph"><p>Maybe?</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">String yaml = \"""
 	name: "Positive number"
 	regex: "\+(\d*[.])?\d"
-	""";</code></pre></div></div></section><section id="project_amber_2" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Project Amber</h2>
-<div class="paragraph"><p>Makes Java more expressive:</p></div>
+	""";</code></pre></div></div></section><section id="project_amber_2"><h2>Project Amber</h2><div class="paragraph"><p>Makes Java more expressive:</p></div>
 <div class="ulist"><ul><li><p>type inference with <code>var</code> ⑩</p></li><li><p>switch expressions ⑫</p></li><li><p>text blocks ⑬</p></li><li><p>pattern matching</p></li><li><p>records</p></li><li><p>sealed types</p></li><li><p>serialization revamp</p></li><li><p>concise method bodies</p></li><li><p>raw string literals</p></li></ul></div></section><section id="project_valhalla" data-background-image="images/valhalla.jpg" data-background-size="cover"><h2>Project Valhalla</h2>
 <div class="quoteblock"><blockquote><div class="paragraph"><p>Advanced Java VM and Language feature candidates</p></div></blockquote></div>
 <div class="paragraph"><p>Profile:</p></div>
@@ -707,12 +690,10 @@ talks:
 <a href="https://www.youtube.com/watch?v=A-mxj2vhVAA&amp;t=35m10s">1</a>,
 <a href="https://www.youtube.com/watch?v=_26KZAegYRM">2</a>,
 <a href="https://www.youtube.com/watch?v=1H4vmT-Va4o">3</a> /<br>
-<a href="http://jdk.java.net/valhalla/">official early access builds</a></p></li><li><p>launched July 2014</p></li></ul></div></section><section id="motivation_2" data-background-image="images/valhalla.jpg" data-background-size="cover"><h2>Motivation</h2>
-<div class="paragraph"><p>In Java, (almost) everything is a class:</p></div>
+<a href="http://jdk.java.net/valhalla/">official early access builds</a></p></li><li><p>launched July 2014</p></li></ul></div></section><section id="motivation_2"><h2>Motivation</h2><div class="paragraph"><p>In Java, (almost) everything is a class:</p></div>
 <div class="ulist"><ul><li><p>mutable by default</p></li><li><p>memory access indirection</p></li><li><p>requires extra memory for header</p></li><li><p>allows locking and other<br>
 identity-based operations</p></li></ul></div>
-<div class="paragraph"><p>Wouldn&#8217;t it be nice to create a custom <code>int</code>?</p></div></section><section id="value_types" data-background-image="images/valhalla.jpg" data-background-size="cover"><h2>Value types</h2>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public value Range {
+<div class="paragraph"><p>Wouldn&#8217;t it be nice to create a custom <code>int</code>?</p></div></section><section id="value_types"><h2>Value types</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public value Range {
 
 	// implicitly final
 	private int low;
@@ -723,35 +704,28 @@ identity-based operations</p></li></ul></div>
 	//  * equals/hashCode/toString
 	//  * accessors, etc.
 
-}</code></pre></div></div></section><section id="value_types_2" data-background-image="images/valhalla.jpg" data-background-size="cover"><h2>Value types</h2>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public value Range {
+}</code></pre></div></div></section><section id="value_types_2"><h2>Value types</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public value Range {
 	private int low;
 	private int high;
 }</code></pre></div></div>
 <div class="paragraph"><p><strong>Yeah:</strong></p></div>
-<div class="ulist"><ul><li><p>enforced immutability</p></li><li><p>no memory indirection! (<em>flat</em>)</p></li><li><p>no <code>Object</code> header! (<em>dense</em>)</p></li><li><p>makes Java more expressive</p></li></ul></div></section><section id="value_types_3" data-background-image="images/valhalla.jpg" data-background-size="cover"><h2>Value types</h2>
-<div class="quoteblock"><blockquote><div class="paragraph"><p>Codes like a class, works like an <code>int</code>.</p></div></blockquote></div>
+<div class="ulist"><ul><li><p>enforced immutability</p></li><li><p>no memory indirection! (<em>flat</em>)</p></li><li><p>no <code>Object</code> header! (<em>dense</em>)</p></li><li><p>makes Java more expressive</p></li></ul></div></section><section id="value_types_3"><h2>Value types</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>Codes like a class, works like an <code>int</code>.</p></div></blockquote></div>
 <div class="paragraph"><p>The deal:</p></div>
 <div class="ulist"><ul><li><p>give up identity / mutability<br>
-(and self references)</p></li><li><p>get flat and dense memory layout</p></li></ul></div></section><section id="values_vs_records" data-background-image="images/valhalla.jpg" data-background-size="cover"><h2>Values vs Records</h2>
-<h3>Values</h3><div class="paragraph"><p>no identity / mutability<br>
+(and self references)</p></li><li><p>get flat and dense memory layout</p></li></ul></div></section><section id="values_vs_records"><h2>Values vs Records</h2><h3>Values</h3><div class="paragraph"><p>no identity / mutability<br>
 ⇝ flat and dense memory layout</p></div>
 <h3>Records</h3><div class="paragraph"><p>no encapsulation<br>
 ⇝ less boilerplate</p></div>
-<div class="paragraph"><p>Might be combinable to "value records".</p></div></section><section id="generic_specialization" data-background-image="images/valhalla.jpg" data-background-size="cover"><h2>Generic specialization</h2>
-<div class="paragraph"><p>When everybody creates their own "primitives",<br>
+<div class="paragraph"><p>Might be combinable to "value records".</p></div></section><section id="generic_specialization"><h2>Generic specialization</h2><div class="paragraph"><p>When everybody creates their own "primitives",<br>
 boxing becomes omni-present and very painful!</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;int&gt; ids = new ArrayList&lt;&gt;();</code></pre></div></div>
 <div class="paragraph"><p><strong>Yeah:</strong></p></div>
-<div class="ulist"><ul><li><p>backed by an actual <code>int[]</code></p></li><li><p>great performance</p></li><li><p>works with your value types</p></li></ul></div></section><section id="put_together" data-background-image="images/valhalla.jpg" data-background-size="cover"><h2>Put together</h2>
-<div class="paragraph"><p>Value types and generic specialization together,<br>
+<div class="ulist"><ul><li><p>backed by an actual <code>int[]</code></p></li><li><p>great performance</p></li><li><p>works with your value types</p></li></ul></div></section><section id="put_together"><h2>Put together</h2><div class="paragraph"><p>Value types and generic specialization together,<br>
 have immense effects inside the JDK!</p></div>
-<div class="ulist"><ul><li><p>no more manual specializations:</p><div class="ulist"><ul><li><p>functional interfaces</p></li><li><p>stream API</p></li><li><p><code>Optional</code> API</p></li></ul></div></li><li><p>better performance</p></li></ul></div></section><section id="put_together_2" data-background-image="images/valhalla.jpg" data-background-size="cover"><h2>Put together</h2>
-<div class="paragraph"><p>Value types and generic specialization together,<br>
+<div class="ulist"><ul><li><p>no more manual specializations:</p><div class="ulist"><ul><li><p>functional interfaces</p></li><li><p>stream API</p></li><li><p><code>Optional</code> API</p></li></ul></div></li><li><p>better performance</p></li></ul></div></section><section id="put_together_2"><h2>Put together</h2><div class="paragraph"><p>Value types and generic specialization together,<br>
 have immense effects on your code!</p></div>
 <div class="ulist"><ul><li><p>fewer trade-offs between<br>
-design and performance</p></li><li><p>better performance</p></li><li><p>can express design more clearly</p></li><li><p>more robust APIs</p></li></ul></div></section><section id="project_valhalla_2" data-background-image="images/valhalla.jpg" data-background-size="cover"><h2>Project Valhalla</h2>
-<div class="paragraph"><p>Makes Java more expressive and performant:</p></div>
+design and performance</p></li><li><p>better performance</p></li><li><p>can express design more clearly</p></li><li><p>more robust APIs</p></li></ul></div></section><section id="project_valhalla_2"><h2>Project Valhalla</h2><div class="paragraph"><p>Makes Java more expressive and performant:</p></div>
 <div class="ulist"><ul><li><p>value types</p></li><li><p>primitive specialization</p></li></ul></div></section><section id="project_loom" data-background-image="images/loom.jpg" data-background-size="cover"><h2>Project Loom</h2>
 <div class="quoteblock"><blockquote><div class="paragraph"><p>Fibers, delimited continuations, explicit tail-call</p></div></blockquote></div>
 <div class="paragraph"><p>Profile:</p></div>
@@ -762,30 +736,28 @@ talks:
 <a href="https://www.youtube.com/watch?v=fpyub8fbrVE">0</a>,
 <a href="https://www.youtube.com/watch?v=J31o0ZMQEnI">1</a>,
 <a href="https://www.youtube.com/watch?v=NV46KFV1m-4">2</a> /<br>
-<a href="http://jdk.java.net/loom">official early access builds</a></p></li><li><p>launched January 2018</p></li></ul></div></section><section id="motivation_3" data-background-image="images/loom.jpg" data-background-size="cover"><h2>Motivation</h2>
-<div class="paragraph"><p>Imagine a hypothetical request:</p></div>
+<a href="http://jdk.java.net/loom">official early access builds</a></p></li><li><p>launched January 2018</p></li></ul></div></section><section id="motivation_3"><h2>Motivation</h2><div class="paragraph"><p>Imagine a hypothetical request:</p></div>
 <div class="olist arabic"><ol class="arabic"><li><p>interpret request</p></li><li><p>query database (<em>blocks</em>)</p></li><li><p>process data for response</p></li></ol></div>
 <div class="paragraph"><p>JVM resource utilization:</p></div>
 <div class="ulist"><ul><li><p>good for tasks 1., 3.</p></li><li><p>really bad for task 2.</p></li></ul></div>
-<div class="paragraph"><p>How to implement that request?</p></div></section><section id="motivation_4" data-background-image="images/loom.jpg" data-background-size="cover"><h2>Motivation</h2>
-<div class="dlist"><dl><dt class="hdlist1">Synchronous (simple)</dt><dd><div class="ulist"><ul><li><p>thread per request</p></li><li><p>blocks on certain calls</p></li><li><p>bad thread utilization</p></li></ul></div></dd><dt class="hdlist1">Asynchronous (not so simple)</dt><dd><div class="ulist"><ul><li><p>use non-blocking APIs with futures</p></li><li><p>incompatible with synchronous code</p></li><li><p>great thread utilization (scalable!)</p></li></ul></div></dd></dl></div>
-<aside class="notes"><div class="ulist"><ul><li><p>common CPU load: 5-30%</p></li></ul></div></aside></section><section id="enter_fibers" data-background-image="images/loom.jpg" data-background-size="cover"><h2>Enter fibers!</h2>
-<div class="paragraph"><p>A fiber:</p></div>
-<div class="ulist"><ul><li><p>looks like a thread to devs</p></li><li><p>low memory footprint ([k]bytes)</p></li><li><p>small switching cost</p></li><li><p><strong>scheduled by the JVM</strong></p></li></ul></div></section><section id="fiber_management" data-background-image="images/loom.jpg" data-background-size="cover"><h2>Fiber management</h2>
-<div class="paragraph"><p>The JVM manages fibers:</p></div>
+<div class="paragraph"><p>How to implement that request?</p></div></section><section id="motivation_4"><h2>Motivation</h2><div class="dlist"><dl><dt class="hdlist1">Synchronous (simple)</dt><dd><div class="ulist"><ul><li><p>thread per request</p></li><li><p>blocks on certain calls</p></li><li><p>bad thread utilization</p></li></ul></div></dd><dt class="hdlist1">Asynchronous (not so simple)</dt><dd><div class="ulist"><ul><li><p>use non-blocking APIs with futures</p></li><li><p>incompatible with synchronous code</p></li><li><p>great thread utilization (scalable!)</p></li></ul></div></dd></dl></div>
+<aside class="notes"><div class="ulist"><ul><li><p>common CPU load: 5-30%</p></li></ul></div></aside></section><section id="enter_fibers"><h2>Enter fibers!</h2><div class="paragraph"><p>A fiber:</p></div>
+<div class="ulist"><ul><li><p>looks like a thread to devs</p></li><li><p>low memory footprint ([k]bytes)</p></li><li><p>small switching cost</p></li><li><p><strong>scheduled by the JVM</strong></p></li></ul></div></section><section id="fiber_management"><h2>Fiber management</h2><div class="paragraph"><p>The JVM manages fibers:</p></div>
 <div class="ulist"><ul><li><p>runs them in a pool of <em>carrier threads</em></p></li><li><p>makes fibers <em>yield</em> on blocking calls<br>
-(<strong>frees the carrier thread!</strong>)</p></li><li><p><em>continues</em> fibers when calls return</p></li></ul></div></section><section id="fiber_example" data-background-image="images/loom.jpg" data-background-size="cover"><h2>Fiber example</h2>
-<div class="paragraph"><p>Remember the hypothetical request:</p></div>
+(<strong>frees the carrier thread!</strong>)</p></li><li><p><em>continues</em> fibers when calls return</p></li></ul></div></section><section id="fiber_example"><h2>Fiber example</h2><div class="paragraph"><p>Remember the hypothetical request:</p></div>
 <div class="olist arabic"><ol class="arabic"><li><p>interpret request</p></li><li><p>query database (<em>blocks</em>)</p></li><li><p>process data for response</p></li></ol></div>
 <div class="paragraph"><p>In a fiber:</p></div>
-<div class="ulist"><ul><li class="fragment"><p>JVM submits fiber to thread pool</p></li><li class="fragment"><p>when 2. blocks, fiber yields</p></li><li class="fragment"><p>JVM hands thread back to pool<br></p></li><li class="fragment"><p>when 2. unblocks, JVM resubmits fiber</p></li><li class="fragment"><p>fiber continues with 3. (how?)</p></li></ul></div></section><section id="fibers" data-background-image="images/loom.jpg" data-background-size="cover"><h2>Fibers</h2>
-<div class="paragraph"><p><strong>Yeah:</strong></p></div>
-<div class="ulist"><ul><li><p>great thread utilization</p></li><li><p>code is written/debugged as if synchronous</p></li><li><p>legacy code <em>may</em> be forward compatible</p></li></ul></div></section><section id="continuations" data-background-image="images/loom.jpg" data-background-size="cover"><h2>Continuations</h2>
-<div class="paragraph"><p>How do fibers <em>continue</em>?</p></div>
-<div class="ulist"><ul><li><p>use continuations (low-level API)</p></li><li><p>JVM stores and restores call stack</p></li></ul></div></section><section id="project_loom_2" data-background-image="images/loom.jpg" data-background-size="cover"><h2>Project Loom</h2>
-<div class="paragraph"><p>Makes threading more pleasant:</p></div>
-<div class="ulist"><ul><li><p>simple programming model</p></li><li><p>great thread utilization</p></li></ul></div></section></section>
-<section><section id="java_9"><h2>Java 9</h2></section><section id="private_interface_methods"><h2>Private Interface Methods</h2><div class="paragraph"><p>Enabling reuse between default methods.</p></div></section><section id="no_reuse"><h2>No Reuse</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public interface InJava8 {
+<div class="ulist"><ul><li class="fragment"><p>JVM submits fiber to thread pool</p></li><li class="fragment"><p>when 2. blocks, fiber yields</p></li><li class="fragment"><p>JVM hands thread back to pool<br></p></li><li class="fragment"><p>when 2. unblocks, JVM resubmits fiber</p></li><li class="fragment"><p>fiber continues with 3. (how?)</p></li></ul></div></section><section id="fibers"><h2>Fibers</h2><div class="paragraph"><p><strong>Yeah:</strong></p></div>
+<div class="ulist"><ul><li><p>great thread utilization</p></li><li><p>code is written/debugged as if synchronous</p></li><li><p>legacy code <em>may</em> be forward compatible</p></li></ul></div></section><section id="continuations"><h2>Continuations</h2><div class="paragraph"><p>How do fibers <em>continue</em>?</p></div>
+<div class="ulist"><ul><li><p>use continuations (low-level API)</p></li><li><p>JVM stores and restores call stack</p></li></ul></div></section><section id="project_loom_2"><h2>Project Loom</h2><div class="paragraph"><p>Makes threading more pleasant:</p></div>
+<div class="ulist"><ul><li><p>simple programming model</p></li><li><p>great thread utilization</p></li></ul></div></section><section id="project_leyden" data-background-image="images/leyden.png" data-background-size="cover"><h2>Project Leyden</h2>
+<div class="quoteblock"><blockquote><div class="paragraph"><p>Faster startup, shorter time to peak performance, smaller footprint</p></div></blockquote></div>
+<div class="paragraph"><p>Profile:</p></div>
+<div class="ulist"><ul><li><p>led by Mark Reinhold</p></li><li><p><a href="https://mail.openjdk.java.net/pipermail/discuss/2020-April/005429.html">Call for Discussion</a></p></li><li><p>first discussed in April 2020</p></li><li><p>not yet officially launched</p></li></ul></div></section></section>
+<section><section id="java_9" data-background-image="images/9-dark.jpg" data-background-size="cover"><h2>Java 9</h2><div class="paragraph"><p>Sources: <a href="https://github.com/CodeFX-org/demo-java-x">github.com/CodeFX-org/demo-java-x</a></p></div></section><section id="migration_modularization"><h2>Migration &amp; Modularization</h2><div class="paragraph"><p>I recently did a stream on that:<br>
+<a href="https://www.twitch.tv/videos/614048355">twitch.tv/videos/614048355</a></p></div>
+<div class="paragraph"><p><strong>TL;DR:</strong></p></div>
+<div class="olist arabic"><ol class="arabic"><li><p>update all the things</p></li><li><p>cross fingers</p></li></ol></div></section><section id="private_interface_methods"><h2>Private Interface Methods</h2><div class="paragraph"><p>Enabling reuse between default methods.</p></div></section><section id="no_reuse"><h2>No Reuse</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public interface InJava8 {
 
 	default boolean evenSum(int... numbers) {
 		return sum(numbers) % 2 == 0;
@@ -1203,7 +1175,7 @@ directly to new <code>byte[]</code>.</p></div></section><section id="performance
 performance improvements:</p></div>
 <div class="paragraph"><p><a href="https://www.youtube.com/watch?v=wIyeOaitmWM">Aleksey Shipilëv<br>
 The Lord Of The Strings</a></p></div></section><section id="a_mixed_bag_of_performance"><h2>A Mixed Bag Of Performance</h2><div class="ulist"><ul><li><p>G1 default GC (<a href="http://openjdk.java.net/jeps/248">JEP 248</a>)</p></li><li><p>cgroup-memory limits (<a href="https://bugs.openjdk.java.net/browse/JDK-8170888">JDK-8170888</a>)</p></li><li><p>contended locks (<a href="http://openjdk.java.net/jeps/143">JEP 143</a>)</p></li><li><p>security manager (<a href="http://openjdk.java.net/jeps/232">JEP 232</a>)</p></li><li><p>Java 2D rendering (<a href="http://openjdk.java.net/jeps/265">JEP 265</a>)</p></li><li><p>GHASH/RSA computation (<a href="http://openjdk.java.net/jeps/246">JEP 246</a>)</p></li><li><p>Java-level JVM compiler interface (<a href="http://openjdk.java.net/jeps/243">JEP 243</a>)</p></li></ul></div></section></section>
-<section><section id="java_10"><h2>Java 10</h2></section><section id="local_variable_type_inference"><h2>Local-Variable Type Inference</h2><div class="paragraph"><p>Less typing, but still strongly typed.</p></div></section><section id="type_duplication"><h2>Type Duplication</h2><div class="paragraph"><p>We&#8217;re used to duplicating<br>
+<section><section id="java_10" data-background-image="images/10.jpg" data-background-size="cover"><h2>Java 10</h2><div class="paragraph"><p>Sources: <a href="https://github.com/CodeFX-org/demo-java-x">github.com/CodeFX-org/demo-java-x</a></p></div></section><section id="local_variable_type_inference"><h2>Local-Variable Type Inference</h2><div class="paragraph"><p>Less typing, but still strongly typed.</p></div></section><section id="type_duplication"><h2>Type Duplication</h2><div class="paragraph"><p>We&#8217;re used to duplicating<br>
 type information:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">URL codefx = new URL("http://codefx.org");
 URLConnection connection = codefx.openConnection();
@@ -1411,7 +1383,11 @@ We plan to add that support in a future release.</p></div></blockquote><div clas
 <div class="paragraph"><p>Observe sharing with<br>
 <code>-Xlog:class+load</code><br>
 (<a href="https://blog.codefx.org/java/unified-logging-with-the-xlog-option/">unified logging</a>)</p></div></section><section id="a_mixed_bag_of_performance_2"><h2>A Mixed Bag Of Performance</h2><div class="ulist"><ul><li><p>Graal&#8201;&#8212;&#8201;Java-based JIT compiler (<a href="http://openjdk.java.net/jeps/317">JEP 317</a>)</p></li><li><p>parallel full GC for G1 (<a href="http://openjdk.java.net/jeps/307">JEP 307</a>)</p></li><li><p>thread-local handshakes (<a href="http://openjdk.java.net/jeps/312">JEP 312</a>)</p></li></ul></div></section></section>
-<section><section id="java_11"><h2>Java 11</h2></section><section id="string"><h2>String</h2></section><section id="strip_white_space"><h2>Strip White Space</h2><div class="paragraph"><p>Getting rid of white space:</p></div>
+<section><section id="java_11" data-background-image="images/11.jpg" data-background-size="cover"><h2>Java 11</h2><div class="paragraph"><p>Sources: <a href="https://github.com/CodeFX-org/demo-java-x">github.com/CodeFX-org/demo-java-x</a></p></div></section><section id="migration"><h2>Migration</h2><div class="paragraph"><p>I recently did a stream on that:<br>
+<a href="https://www.twitch.tv/videos/614048355">twitch.tv/videos/614048355</a></p></div>
+<div class="paragraph"><p><strong>TL;DR:</strong></p></div>
+<div class="paragraph"><p>Replace Java EE modules<br>
+with regular dependencies</p></div></section><section id="string"><h2>String</h2></section><section id="strip_white_space"><h2>Strip White Space</h2><div class="paragraph"><p>Getting rid of white space:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">String strip();
 String stripLeading();
 String stripTrailing();</code></pre></div></div>
@@ -1458,7 +1434,7 @@ simple Java programs is verbose.</p></div>
 ./hello-java-11
 # from PATH:
 hello-java-11</code></pre></div></div></li></ul></div></section><section id="a_mixed_bag_of_newjvmfeatures_3"><h2>A Mixed Bag Of New&nbsp;JVM&nbsp;Features</h2><div class="ulist"><ul><li><p>Unicode 9 &amp; 10 (<a href="http://openjdk.java.net/jeps/327">JEP 327</a>)</p></li><li><p>Curve25519 and Curve448 (<a href="http://openjdk.java.net/jeps/324">JEP 324</a>)</p></li><li><p>ChaCha20 and Poly1305 (<a href="http://openjdk.java.net/jeps/329">JEP 329</a>)</p></li><li><p>partial TLS 1.3 support (<a href="http://openjdk.java.net/jeps/332">JEP 332</a>)</p></li></ul></div></section><section id="a_mixed_bag_of_performance_3"><h2>A Mixed Bag Of Performance</h2><div class="ulist"><ul><li><p>Epsilon GC (<a href="http://openjdk.java.net/jeps/318">JEP 318</a>)</p></li><li><p>ZGC (experimental, <a href="http://openjdk.java.net/jeps/333">JEP 333</a>)</p></li><li><p>low-overhead heap profiling (<a href="http://openjdk.java.net/jeps/331">JEP 331</a>)</p></li><li><p>open-source Flight Recorder (<a href="http://openjdk.java.net/jeps/328">JEP 328</a>)</p></li></ul></div></section></section>
-<section><section id="fun_with_var"><h2>Fun with <code>var</code></h2></section><section id="intersection_types"><h2>Intersection Types</h2></section><section id="motivation_5"><h2>Motivation</h2><div class="paragraph"><p>Sometimes you need a type<br>
+<section><section id="fun_with_var" data-background-image="images/elephant.jpg" data-background-size="cover"><h2>Fun with <code>var</code></h2><div class="paragraph"><p>Sources: <a href="https://github.com/CodeFX-org/demo-java-x">github.com/CodeFX-org/demo-java-x</a></p></div></section><section id="intersection_types"><h2>Intersection Types</h2></section><section id="motivation_5"><h2>Motivation</h2><div class="paragraph"><p>Sometimes you need a type<br>
 that implements two interfaces<br>
 without creating a new interface.</p></div>
 <div class="paragraph"><p><strong>For example:</strong></p></div>
@@ -1530,7 +1506,7 @@ corp.isSuccessful();</code></pre></div></div></section><section id="evaluation_3
 <div class="paragraph"><p>Alternatives for ad-hoc methods:</p></div>
 <div class="ulist"><ul><li><p>extending base types</p></li><li><p>utility methods</p></li><li><p>traits</p></li></ul></div></section><section id="more_on_ad_hoc_fieldsandmethods"><h2>More on ad-hoc fields&nbsp;and&nbsp;methods</h2><div class="paragraph"><p>I&#8217;ve written a blog post:<br>
 <a href="https://blog.codefx.org/java/tricks-var-anonymous-classes/">blog.codefx.org/java/tricks-var-anonymous-classes</a></p></div></section></section>
-<section><section id="java_12"><h2>Java 12</h2></section><section id="switch_expressions"><h2>Switch Expressions</h2><div class="paragraph"><p>More powerful <code>switch</code>.</p></div></section><section id="switching"><h2>Switching</h2><div class="paragraph"><p>Say you&#8217;re facing <a href="https://thedailywtf.com/articles/What_Is_Truth_0x3f_">the dreaded ternary Boolean</a> &#8230;&#8203;</p></div>
+<section><section id="java_12" data-background-image="images/12.jpg" data-background-size="cover"><h2>Java 12</h2><div class="paragraph"><p>Sources: <a href="https://github.com/CodeFX-org/demo-java-x">github.com/CodeFX-org/demo-java-x</a></p></div></section><section id="switch_expressions"><h2>Switch Expressions</h2><div class="paragraph"><p>More powerful <code>switch</code>.</p></div></section><section id="switching"><h2>Switching</h2><div class="paragraph"><p>Say you&#8217;re facing <a href="https://thedailywtf.com/articles/What_Is_Truth_0x3f_">the dreaded ternary Boolean</a> &#8230;&#8203;</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public enum TernaryBoolean {
 	TRUE,
 	FALSE,
@@ -1830,7 +1806,7 @@ to the common fork/join pool.</p></div></section><section id="async_error_recove
 CompletableFuture&lt;T&gt; exceptionallyComposeAsync(
 	Function&lt;Throwable, CompletableFuture&lt;T&gt;&gt;)</code></pre></div></div>
 <div class="paragraph"><p>There are overloads that accept <code>Executor</code>.</p></div></section><section id="a_mixed_bag_of_newiomethods"><h2>A Mixed Bag Of New&nbsp;I/O&nbsp;Methods</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Files.mismatch(Path, Path);</code></pre></div></div></section><section id="a_mixed_bag_of_newjvmfeatures_4"><h2>A Mixed Bag Of New&nbsp;JVM&nbsp;Features</h2><div class="ulist"><ul><li><p>constants API (<a href="http://openjdk.java.net/jeps/334">JEP 334</a>)</p></li><li><p>HmacPBE (<a href="https://bugs.openjdk.java.net/browse/JDK-8076190">JDK-8215450</a>)</p></li><li><p>finer PKCS12 KeyStore configuration (<a href="https://bugs.openjdk.java.net/browse/JDK-8076190">JDK-8076190</a>)</p></li></ul></div></section><section id="application_class_data_sharing_2"><h2>Application Class Data Sharing</h2></section><section id="a_mixed_bag_of_performance_4"><h2>A Mixed Bag Of Performance</h2><div class="ulist"><ul><li><p>Shenandoah (<a href="http://openjdk.java.net/jeps/189">JEP 189</a>)</p></li><li><p>G1 improvements:</p><div class="ulist"><ul><li><p>abortable mixed collections (<a href="http://openjdk.java.net/jeps/344">JEP 344</a>)</p></li><li><p>promptly return unused memory (<a href="http://openjdk.java.net/jeps/346">JEP 346</a>)</p></li></ul></div></li></ul></div></section></section>
-<section><section id="java_13"><h2>Java 13</h2></section><section id="text_blocks"><h2>Text Blocks</h2><div class="paragraph"><p>Multiline strings. Finally.</p></div></section><section id="multiline_strings"><h2>Multiline Strings</h2><div class="paragraph"><p>Text blocks are straightforward:</p></div>
+<section><section id="java_13" data-background-image="images/black-cat.jpg" data-background-size="cover"><h2>Java 13</h2><div class="paragraph"><p>Sources: <a href="https://github.com/CodeFX-org/demo-java-x">github.com/CodeFX-org/demo-java-x</a></p></div></section><section id="text_blocks"><h2>Text Blocks</h2><div class="paragraph"><p>Multiline strings. Finally.</p></div></section><section id="multiline_strings"><h2>Multiline Strings</h2><div class="paragraph"><p>Text blocks are straightforward:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">String haikuBlock = """
 	worker bees can leave
 	 even drones can fly away
@@ -1896,7 +1872,8 @@ program exits (without crash):</p></div>
 	org.example.Main</code></pre></div></div></li></ul></div></section><section id="dynamic_appcds_2"><h2>Dynamic AppCDS</h2><div class="paragraph"><p>The dynamic archive:</p></div>
 <div class="ulist"><ul><li><p>builds on the JDK-archive</p></li><li><p>contains all loaded app/lib classes</p></li><li><p>including those loaded by<br>
 user-defined class loaders</p></li></ul></div></section><section id="a_mixed_bag_of_performance_5"><h2>A Mixed Bag Of Performance</h2><div class="ulist"><ul><li><p>Shenandoah improvements:</p><div class="ulist"><ul><li><p>internals (<a href="https://bugs.openjdk.java.net/browse/JDK-8221766">JDK-8221766</a>, <a href="https://bugs.openjdk.java.net/browse/JDK-8224584">JDK-8224584</a>)</p></li><li><p>more platforms (<a href="https://bugs.openjdk.java.net/browse/JDK-8225048">JDK-8225048</a>, <a href="https://bugs.openjdk.java.net/browse/JDK-8223767">JDK-8223767</a>)</p></li></ul></div></li><li><p>ZGC improvements:</p><div class="ulist"><ul><li><p>implements <code>-XX:SoftMaxHeapSize</code> (<a href="https://bugs.openjdk.java.net/browse/JDK-8222145">JDK-8222145</a>)</p></li><li><p>max heap size of 16 TB (<a href="https://bugs.openjdk.java.net/browse/JDK-8221786">JDK-8221786</a>)</p></li><li><p>uncommits unused memory (<a href="https://openjdk.java.net/jeps/351">JEP 351</a>)</p></li></ul></div></li></ul></div></section></section>
-<section><section id="java_14"><h2>Java 14</h2></section><section id="records_4"><h2>Records</h2><div class="paragraph"><p>Simple classes ~&gt; simple code</p></div></section><section id="spilling_beans"><h2>Spilling Beans</h2><div class="paragraph"><p>Typical Java Bean:</p></div>
+<section><section id="java_14" data-background-image="images/records.jpg" data-background-size="cover"><h2>Java 14</h2><div class="paragraph"><p>Sources: <a href="https://github.com/CodeFX-org/demo-java-x">github.com/CodeFX-org/demo-java-x</a><br>
+(not yet updated)</p></div></section><section id="records_4"><h2>Records</h2><div class="paragraph"><p>Simple classes ~&gt; simple code</p></div></section><section id="spilling_beans"><h2>Spilling Beans</h2><div class="paragraph"><p>Typical Java Bean:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class Range {
 
 	// part I 😀
@@ -2002,14 +1979,36 @@ is needed (for now), because:</p></div>
 <div class="quoteblock"><blockquote><div class="paragraph"><p>It is intended to enable code details<br>
 in exception messages by default<br>
 in a later release.</p></div></blockquote></div></section><section id="a_mixed_bag_of_newjvmfeatures_5"><h2>A Mixed Bag Of New&nbsp;JVM&nbsp;Features</h2><div class="ulist"><ul><li><p>packaging tool (<a href="http://openjdk.java.net/jeps/343">JEP 343</a>)</p></li></ul></div></section><section id="a_mixed_bag_of_performance_6"><h2>A Mixed Bag Of Performance</h2><div class="ulist"><ul><li><p>JFR event streaming API (<a href="https://openjdk.java.net/jeps/349">JEP 349</a>)</p></li><li><p>Shenadoah, G1, ZGC improvements</p></li></ul></div></section></section>
-<section id="image_credits"><h2>Image Credits</h2><div class="ulist"><ul><li><p><a href="https://unsplash.com/photos/-gDHgEcec6Q">birthday cake</a>:
+<section><section id="image_credits"><h2>Image Credits</h2><div class="ulist"><ul><li><p><a href="https://unsplash.com/photos/-gDHgEcec6Q">birthday cake</a>:
 <a href="https://unsplash.com/@fochrist1">Robert Anderson</a>,
+<a href="https://unsplash.com/license">Unsplash license</a></p></li><li><p><a href="https://unsplash.com/photos/-qrcOR33ErA">stream</a>:
+<a href="https://unsplash.com/@the_bracketeer">Hendrik Cornelissen</a>,
+<a href="https://unsplash.com/license">Unsplash license</a></p></li><li><p>puzzle:
+<a href="https://www.flickr.com/photos/pagedooley/">Kevin Dooley</a>,
+<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a></p></li><li><p><a href="https://unsplash.com/photos/NL_DF0Klepc">tools</a>:
+<a href="https://unsplash.com/@carlevarino">Cesar Carlevarino Aragon</a>,
+<a href="https://unsplash.com/license">Unsplash license</a></p></li><li><p><a href="https://unsplash.com/photos/bEXy1YQNIII">merry-go-round</a>:
+<a href="https://unsplash.com/@ja5on">Jason Chen</a>,
 <a href="https://unsplash.com/license">Unsplash license</a></p></li><li><p><a href="https://pxhere.com/en/photo/1247296">amber</a>:
 <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a></p></li><li><p><a href="https://en.wikipedia.org/wiki/Valhalla#/media/File:Walhall_by_Emil_Doepler.jpg">valhalla</a>:
 <a href="https://en.wikipedia.org/wiki/Emil_Doepler">Emil Doepler</a>,
 public domain</p></li><li><p><a href="https://unsplash.com/photos/pgF1IXhdBJM">loom</a>:
 <a href="https://unsplash.com/@fancycrave">Fancycrave</a>,
-<a href="https://unsplash.com/license">Unsplash license</a></p></li></ul></div></section></div></div><script src="../_reveal.js/lib/js/head.min.js"></script><script src="../_reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+<a href="https://unsplash.com/license">Unsplash license</a></p></li></ul></div></section><section id="image_credits_2"><h2>Image Credits</h2><div class="ulist"><ul><li><p><a href="https://pixabay.com/en/number-digit-nine-9-background-1982274/">nine</a>:
+<a href="https://pixabay.com/en/users/PIRO4D-2707530/">PIRO4D</a>,
+<a href="https://wiki.creativecommons.org/wiki/CC0">CC0</a></p></li><li><p><a href="https://unsplash.com/photos/da_9GHX5z80">ten</a>:
+<a href="https://unsplash.com/@meanxshadows">Taylor Bryant</a>,
+<a href="https://creativecommons.org/licenses/by-nd/2.0/">CC-BY-ND 2.0</a></p></li><li><p>Eleven: © Netflix</p></li></ul></div>
+<div class="paragraph"><p><a href="https://pixabay.com/illustrations/elephant-ears-butterfly-1057465/">elephant</a>:
+<a href="https://pixabay.com/users/fotshot-401149">Michael Drummond</a>,
+<a href="https://pixabay.com/service/license/">Pixabay License</a></p></div>
+<div class="ulist"><ul><li><p><a href="https://unsplash.com/photos/xCbD8Gi0Lck">twelve</a>:
+<a href="https://unsplash.com/@mjskok">Michael Skok</a>,
+<a href="https://unsplash.com/license">Unsplash license</a></p></li><li><p><a href="https://www.pexels.com/photo/selective-focus-photography-of-bombay-cat-1931367/">black cat</a>:
+<a href="https://www.pexels.com/@wildlittlethingsphoto">Helena Lopes</a>,
+<a href="https://www.pexels.com/photo-license/">Pexels license</a></p></li><li><p><a href="https://unsplash.com/photos/dZOFaMG-0Q0">records</a>:
+<a href="https://unsplash.com/@manuelsardo?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Manuel Sardo</a>,
+<a href="https://unsplash.com/license">Unsplash license</a></p></li></ul></div></section></section></div></div><script src="../_reveal.js/lib/js/head.min.js"></script><script src="../_reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
 Reveal.initialize({
   // Display controls in the bottom right corner
   controls: false,
