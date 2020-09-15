@@ -4,6 +4,6 @@ source 'https://rubygems.org'
 # not to process revealjs_parallaxBackgroundImage, which lead to
 # the presentation having no background image
 gem 'asciidoctor-revealjs', '1.1.3'
-gem 'guard', '2.16.1'
+gem 'guard', '2.16.2'
 gem 'guard-shell', '0.7.1'
-gem "concurrent-ruby", "~> 1.1"
+gem "concurrent-ruby", "~> 1.1.6"
