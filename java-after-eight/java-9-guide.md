@@ -4,7 +4,7 @@
 
 * strong encapsulation:
 	* in _genealogy_:
-		* export `genealogist` and `articles`
+		* export `post` and `genealogist`
 	* in _genealogist_:
 		* export nothing
 * services:
@@ -34,9 +34,9 @@
 	* creation of field `weights` in `GenealogyTests` and `RelationTests` (remove constructors)
 	* two non-null `weightMap`s in `WeightsTests`
 * `Stream`:
-	* in `ArticleFactory::extractFrontMatter` and `extractContent` use `Stream::dropWhile` and `Stream::takeWhile`
+	* in `PostFactory::readFrontMatter` and `extractContent` use `Stream::dropWhile` and `Stream::takeWhile`
 * `Optional`:
-	* * `ifPresentOrElse` in `Main::main`
+	* `ifPresentOrElse` in `Main::main`
 	* `or` in `ProcessDetails::getPid`
 * OS process API: replace `ProcessDetails::getPid`
 * Java version API: replace `ProcessDetails::getMajorJavaVersion`

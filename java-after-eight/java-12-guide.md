@@ -7,12 +7,11 @@ Need to update ASM dependency of Maven Surefire:
 	<dependency>
 		<groupId>org.ow2.asm</groupId>
 		<artifactId>asm</artifactId>
-		<version>7.3.1</version>
+		<version>8.0.1</version>
 	</dependency>
 </dependencies>
 ```
 
-* mention switch expressions
 * `Collectors::teeing` in `Relation::aggregate`:
 	```java
 	return typedRelations.collect(

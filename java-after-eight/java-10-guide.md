@@ -4,10 +4,10 @@
 
 * `var`
 	* obvious / inconsequential:
+		* all over `Main`, `TagTests`, `TextParserTests`
 		* `TagGenealogist::infer` for `Set<Tag>`
 		* `Description::from`, `Title::from`
 		* `Tag::from`, `Recommendation::from`
-		* all over `Main`, `TagTests`, `TextParserTests`
 		* test methods in `GenealogyTests`, `RelationTests`, `WeightTests`, `RecommenderTests`
 	* discussion:
 		* `ArticleFactory::createArticle` and `keyValuePairFrom`
@@ -16,7 +16,7 @@
 
 * collection factories:
 	* in `Weights` constructor use `Map::copyOf` (also remove following null checks)
-- `Collectors::toUnmodifiable...`: search `toList()`, `toMap(`, `toSet()`
+* `Collectors::toUnmodifiable...`: search `toList()`, `toMap(`, `toSet()`
 
 ## JVM
 

@@ -29,20 +29,21 @@ include::../_shared/event-on-title-and-footer.adoc[]
 
 // ⇝
 
-// TODO: mention that we created the talk on Twitch and thank contributors
-
 == Lots to talk about
 
 The plan for today:
 
 * start with a *Java 8* code base
-* take it all the way to *Java 14*
+* take it all the way to *Java 15* +
+  (and beyond)
 * be amazed by how much changes
 
 This talk is:
 
 * a showcase, not a tutorial
 * not a complete list
+* created with the lavish help +
+  of the people in https://tiwtch.tv/nipafx[Twitch] chat
 
 === Links
 
@@ -110,7 +111,7 @@ Code, code, code, code
 
 * `try` with effectively final resource
 * private interface methods
-* stack walking API (improves logging perf)
+* stack walking API
 * unified logging
 * multi-release JARs
 * app/runtime images | `jlink`
@@ -142,6 +143,7 @@ Code, code, code, code
 === What we've seen
 
 * improved whitespace handling | `String::strip`
+* easier optionality | `Optional::isEmpty`
 * uniform array creation | `toArray(String[]::new)`
 * better `Path` creation | `Path::of`
 * better `Predicate` negation | `Predicate::not`
@@ -159,7 +161,6 @@ HttpRequest request = HttpRequest.newBuilder()
 ```
 * more `String` improvements | `String::lines`
 * easier IO | `Files::readString`
-* improved `Optional` | `Optional::isEmpty`
 * Java scripts | `java SourceFile.java`
 
 
@@ -176,16 +177,6 @@ HttpRequest request = HttpRequest.newBuilder()
 
 === What we haven't seen
 
-* switch expressions | ↴
-+
-```java
-boolean bool = switch (ternaryBool) {
-	case TRUE -> true;
-	case FALSE -> false;
-	case FILE_NOT_FOUND -> throw
-			new FileNotFoundException("🤬");
-};
-```
 * transforming Strings | ↴ +
   `String.transform(Function<String, R>)`
 * social media number format | ↴ +
@@ -199,6 +190,42 @@ boolean bool = switch (ternaryBool) {
 * released 09/2019
 * free support *ended 01/2020*
 * commercial support available https://www.azul.com/products/azul_support_roadmap/[by Azul]
+
+=== What we haven't seen
+
+* automatic application CDS archive
+
+
+== Java 14
+
+* release 03/2020
+* support *ends 07/2020*
+
+=== What we've seen
+
+* switch expressions | ↴
++
+```java
+boolean bool = switch (ternaryBool) {
+	case TRUE -> true;
+	case FALSE -> false;
+	case FILE_NOT_FOUND -> throw
+			new FileNotFoundException("🤬");
+};
+```
+* helpful NPE messages
+
+=== What we haven't seen
+
+* standardized foreign-memory access
+* JFR event streaming
+* OS-specific installers | `jpackage`
+
+
+== Java 15
+
+* released *today*
+* support *ends 01/2021*
 
 === What we've seen
 
@@ -216,34 +243,33 @@ var recommendation = """
 
 === What we haven't seen
 
-* automatic application CDS archive
+* hidden classes
 
 
-== Java 14
+== Java Next
 
-* release 03/2020
-* support *ends 07/2020*
+* some features are already in preview
+* more are on the horizon
 
 === What we've seen
 
 * records | `record Title(String text)`
 * pattern matching | `o instanceof Article a`
-* helpful NPE messages
+* sealed clases | `sealed class ... permits`
 
 === What we haven't seen
 
-* standardized foreign-memory access
-* JFR event streaming
-* OS-specific installers | `jpackage`
+* concise method bodies | http://openjdk.java.net/projects/amber/[Project Amber]
+* inline classes | http://openjdk.java.net/projects/valhalla/[Project Valhalla]
+* fibers | http://openjdk.java.net/projects/loom/[Project Loom]
 
-
-== Java 8 to 14
+== Java 8 to 15+
 
 * stronger encapsulation and better services | modules
 * safer code | processes, versions, whitespace, etc.
-* more expressive code | LOC: 1654 📉 1242
-// characters: 58103 📉 47107
-* faster code | run time: ~1s 📉 ~ 0.8 ms
+* more expressive code | LOC: 2159 📉 1587
+// characters: 72863 📉 58012
+* faster code | run time: ~ 0.8 s 📈 ~ 1.1 s 😞
 * better JVM | MR-JARs, GCs, packaging, monitoring, etc.
 
 *Sure you don't want to upgrade?*
