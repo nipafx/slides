@@ -12,17 +12,17 @@ Need to update ASM dependency of Maven Surefire:
 </dependencies>
 ```
 
+* `CompletableFuture` in `Config` - instead of `exceptionally`, use `exceptionallyCompose​`(`Async`)
 * `Collectors::teeing` in `Relation::aggregate`:
 	```java
 	return typedRelations.collect(
 			teeing(
 					mapping(
-							rel -> new Article[]{ rel.article1(), rel.article2() },
+							rel -> new Post[]{ rel.post1(), rel.post2() },
 							collectEqualElement(Arrays::equals)),
 					averagingDouble(rel -> rel.score() * weights.weightOf(rel.type())),
-					(articles, score) -> articles.map(arts -> new Relation(arts[0], arts[1], round(score)))
+					(posts, score) -> posts.map(ps -> new Relation(ps[0], ps[1], round(score)))
 			))
 			.orElseThrow(() -> new IllegalArgumentException("Can't create relation from zero typed relations."));
 	```
-* `CompletableFuture` in `Config` - instead of `exceptionally`, use `exceptionallyCompose​`(`Async`)
 * CDS archive for JDK classes is included: turn off with `-Xshare:off`
