@@ -59,4 +59,5 @@ printf "\n"
 if [ "$answer" == "y" ]
 then
 	git push --quiet --all
+	git push --quiet --tag
 fi
