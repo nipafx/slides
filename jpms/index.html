@@ -25,10 +25,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 </script>
 <div class="event">
 	<div class="participant">
-		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
+		<a href="https://nipafx.dev/nicolai-parlog"><img src="images/nipa-face.jpg" class="logo"></a>
 		<div class="name">
-			<p><a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a></p>
-			<p><a href="http://codefx.org">codefx.org</a>
+			<p><a href="https://nipafx.dev/nicolai-parlog">Nicolai Parlog</a></p>
+			<p><a href="https://nipafx.dev.dev">nipafx.dev</a>
 				/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a></p>
 		</div>
 	</div>
@@ -42,10 +42,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 </div>
 <footer>
 	<div class="participant">
-		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
+		<a href="https://nipafx.dev/nicolai-parlog"><img src="images/nipa-face.jpg" class="logo"></a>
 		<div class="name"><p>
-			<a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a>
-			/ <a href="http://codefx.org">codefx.org</a>
+			<a href="https://nipafx.dev/nicolai-parlog">Nicolai Parlog</a>
+			/ <a href="https://nipafx.dev.dev">nipafx.dev</a>
 			/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a>
 		</p></div>
 	</div>
@@ -64,7 +64,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 </script></div></section>
 <section><section id="lets_get_started"><h2>Let&#8217;s get started!</h2><div class="ulist"><ul><li><p>there&#8217;s much to talk about<br>
 ⇝ this can only cover parts of the JPMS<br>
-⇝ we have to skip some details</p></li><li><p>slides at <a href="http://slides.codefx.org/jpms">slides.codefx.org/jpms</a></p></li></ul></div></section><section id="table_of_contents"><h2>Table of contents</h2><table class="toc">
+⇝ we have to skip some details</p></li><li><p>slides at <a href="http://slides.nipafx.dev/jpms">slides.nipafx.dev/jpms</a></p></li></ul></div></section><section id="table_of_contents"><h2>Table of contents</h2><table class="toc">
 	<!-- <tr><td>Impedance Mismatch</td></tr> -->
 	<!-- <tr><td>Project Jigsaw</td></tr> -->
 	<tr><td>Java Module System Basics</td></tr>
@@ -113,15 +113,15 @@ with <code>exports</code> directives</p></div>
 <div style="height: 210px;">
 <div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">module surprise {
 	<span class="hljs-comment">// requires no other modules</span>
-	exports org.codefx.advent.surprise;
+	exports dev.nipafx.advent.surprise;
 }</code></pre></div></div>
 <div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">module calendar {
 	requires surprise;
-	exports org.codefx.advent.calendar;
+	exports dev.nipafx.advent.calendar;
 }</code></pre></div></div>
 <div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">module factories {
 	requires surprise;
-	exports org.codefx.advent.factories;
+	exports dev.nipafx.advent.factories;
 }</code></pre></div></div>
 <div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">module advent {
 	requires calendar;
@@ -254,7 +254,7 @@ and <em>A</em> needs to export used packages</p></li></ul></div>
 <div class="paragraph"><p>Often used with <code>--add-reads</code> and <code>--add-exports</code>.</p></div></section><section id="summary_3"><h2>Summary</h2><div class="paragraph"><p>Edit module graph with:</p></div>
 <div class="ulist"><ul><li><p><code>--add-modules</code> to add modules</p></li><li><p><code>--add-reads</code> to add readability edges</p></li><li><p><code>--patch-module</code> to add classes to module</p></li><li><p><code>--add-exports</code> to export packages to modules</p></li><li><p><code>--add-opens</code> to open packages to modules</p></li></ul></div>
 <div class="paragraph"><p>The latter two accept <code>ALL-UNNAMED</code> as target.</p></div>
-<div class="paragraph"><p>More at <a href="https://blog.codefx.org">codefx.org</a>:</p></div>
+<div class="paragraph"><p>More at <a href="https://nipafx.dev">nipafx.dev</a>:</p></div>
 <div class="paragraph"><p><a href="https://blog.codefx.org/java/five-command-line-options-to-hack-the-java-9-module-system/">Five Command Line Options To Hack The JPMS</a></p></div></section></section>
 <section><section id="migration_challenges"><h2>Migration Challenges</h2><h3>What to look out for<br>when running on JDK 11</h3></section><section id="break_stuff" data-background-image="images/broken-glass.jpg" data-background-size="cover"><h2>Break Stuff</h2>
 <div class="paragraph"><p>Some internal changes <a href="https://blog.codefx.org/java/java-11-migration-guide/">break existing code</a>!</p></div>
@@ -415,14 +415,18 @@ whose names are <strong>based on manifest entry</strong>.</p></div></section></s
 ">37% off with<br>code <em>fccparlog</em></p>
 	<p><a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb">tiny.cc/jms</a></p>
 </div>
-<h3>Follow</h3>
-<div class="paragraph"><p>💻 <a href="http://codefx.org">codefx.org</a><br>
-🐦 <a href="https://twitter.com/nipafx">@nipafx</a></p></div>
-<h3>Want More?</h3>
-<div class="paragraph"><p>Slides at <a href="https://slides.codefx.org">slides.codefx.org</a></p></div>
+<h3 style="margin-top: -0.25em">Follow</h3>
+<div class="paragraph"><p><a href="https://nipafx.dev">nipafx.dev</a></p></div>
+<div class="paragraph"><p><strong>nipafx</strong> on<br>
+<a href="https://twitter.com/nipafx">🐦</a> //
+<a href="https://www.youtube.com/nipafx">▶</a> //
+<a href="https://www.twitch.tv/nipafx">📺</a> //
+<a href="https://github.com/nipafx">🐙🐱</a></p></div>
+<h3 style="margin-top: 0.5em">More</h3>
+<div class="paragraph"><p>Slides at <a href="https://slides.nipafx.dev">slides.nipafx.dev</a></p></div>
 <div class="paragraph"><p>⇜ Get <a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&amp;a_bid=869915cb">my book</a>!</p></div>
-<div class="paragraph"><p>You can <a href="http://blog.codefx.org/hire-nicolai-parlog/">hire me</a>:</p></div>
-<div class="ulist"><ul><li><p>training (Java 8-14, JUnit 5)</p></li><li><p>consulting (Java 8-14)</p></li></ul></div></section>
+<div class="paragraph"><p><a href="http://nipafx.dev/hire">Hire me</a> as a trainer<br>
+(Java 8+, JUnit 5)</p></div></section>
 <section><section id="image_credits"><h2>Image Credits</h2></section><section id="introduction"><h2>Introduction</h2><div class="ulist"><ul><li><p>puzzle-people:
 <a href="https://www.flickr.com/photos/pagedooley/">Kevin Dooley</a>
 (<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a>)</p></li><li><p>binary-code:

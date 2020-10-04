@@ -25,10 +25,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 <h2>A Live Migration To Java 11</h2>
 <div class="event">
 	<div class="participant">
-		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
+		<a href="https://nipafx.dev/nicolai-parlog"><img src="images/nipa-face.jpg" class="logo"></a>
 		<div class="name">
-			<p><a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a></p>
-			<p><a href="http://codefx.org">codefx.org</a>
+			<p><a href="https://nipafx.dev/nicolai-parlog">Nicolai Parlog</a></p>
+			<p><a href="https://nipafx.dev.dev">nipafx.dev</a>
 				/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a></p>
 		</div>
 	</div>
@@ -42,10 +42,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 </div>
 <footer>
 	<div class="participant">
-		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
+		<a href="https://nipafx.dev/nicolai-parlog"><img src="images/nipa-face.jpg" class="logo"></a>
 		<div class="name"><p>
-			<a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a>
-			/ <a href="http://codefx.org">codefx.org</a>
+			<a href="https://nipafx.dev/nicolai-parlog">Nicolai Parlog</a>
+			/ <a href="https://nipafx.dev.dev">nipafx.dev</a>
 			/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a>
 		</p></div>
 	</div>
@@ -63,8 +63,8 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 	})
 </script></div></section>
 <section id="public_service_announcement"><h2>Public Service Announcement</h2><div class="ulist"><ul><li><p>this is about bringing a Java 8 app<br>
-into the future</p></li><li><p>we&#8217;re mostly looking at the bad and the ugly</p></li><li><p>slides at <a href="http://slides.codefx.org/">slides.codefx.org</a></p></li><li><p>code on GitHub at<br>
-<a href="https://github.com/CodeFX-org/demo-java-9-migration">CodeFX-org/demo-java-9-migration</a></p></li></ul></div></section>
+into the future</p></li><li><p>we&#8217;re mostly looking at the bad and the ugly</p></li><li><p>slides at <a href="http://slides.nipafx.dev/">slides.nipafx.dev</a></p></li><li><p>code on GitHub at<br>
+<a href="https://github.com/nipafx/demo-java-9-migration">nipafx/demo-java-9-migration</a></p></li></ul></div></section>
 <section><section id="java_platform_module_system"><h2>Java Platform Module System</h2><h3>Delaying Java since 2008!</h3></section><section id="jar_hell_is_bad_mkay"><h2>JAR Hell is bad, mkay?</h2><div class="paragraph"><p><strong>JARs have</strong>:</p></div>
 <div class="ulist"><ul><li><p>no name the JVM cares about</p></li><li><p>no explicit dependencies</p></li><li><p>no well-defined API</p></li><li><p>no concept of versions</p></li></ul></div>
 <div class="paragraph"><p><strong>Some consequences</strong>:</p></div>
@@ -92,7 +92,7 @@ into the future</p></li><li><p>we&#8217;re mostly looking at the bad and the ugl
 <div class="paragraph"><p>Say you want to access <code>java.sql.ResultSet</code>.</p></div>
 <div class="paragraph"><p>Module system only grants access if:</p></div>
 <div class="ulist"><ul><li><p><code>ResultSet</code> is public</p></li><li><p><code>java.sql</code> is exported by <em>java.sql</em></p></li><li><p>your module reads <em>java.sql</em></p></li></ul></div></section><section data-background-color="white" data-background-image="images/platform-modules.png" data-background-size="contain" data-state="empty"></section><section id="other_features"><h2>Other Features</h2><div class="ulist"><ul><li><p>decoupling via services</p></li><li><p>finer grained dependencies and exports</p></li><li><p>open packages and modules (for reflection)</p></li><li><p>unnamed and automatic modules (for migration)</p></li><li><p>layers (for containers)</p></li><li><p><code>jlink</code> to create runtime images</p></li></ul></div></section></section>
-<section><section id="migration_challenges"><h2>Migration Challenges</h2><h3>What to look out for<br>when running on JDK 9</h3></section><section id="break_stuff" data-background-image="images/broken-glass.jpg" data-background-size="cover"><h2>Break Stuff</h2>
+<section><section id="migration_challenges"><h2>Migration Challenges</h2><h3>What to look out for<br>when running on JDK 11</h3></section><section id="break_stuff" data-background-image="images/broken-glass.jpg" data-background-size="cover"><h2>Break Stuff</h2>
 <div class="paragraph"><p>Some internal changes <a href="https://blog.codefx.org/java/java-11-migration-guide/">break existing code</a>!</p></div>
 <div class="paragraph"><p>Just by running on JDK 11<br>
 (even without modularizing the application).</p></div></section><section id="of_modules_and_jars"><h2>Of Modules And JARs</h2><div class="paragraph"><p>Modularized JDK and legacy JARs have to cooperate.</p></div>
@@ -105,7 +105,7 @@ contains <em>all</em> JARs on the class path<br>
 <div class="ulist"><ul><li><p>has no name (surprise!)</p></li><li><p>can read all modules</p></li><li><p>exports all packages</p></li></ul></div>
 <div class="paragraph"><p>Inside the unnamed module<br>
 "the chaos of the class path" lives on.</p></div>
-<aside class="notes"><div class="ulist"><ul><li><p>one unnamed module per class loader</p></li></ul></div></aside></section><section id="challenges"><h2>Challenges</h2><div class="ulist"><ul><li><p>internal APIs</p></li><li><p>Java EE modules</p></li><li><p>split packages</p></li><li><p>runtime images</p></li></ul></div></section><section id="internal_apis" data-background-image="images/internals.jpg" data-background-size="cover"><h2>Internal APIs</h2>
+<aside class="notes"><div class="ulist"><ul><li><p>one unnamed module per class loader</p></li></ul></div></aside></section><section id="challenges"><h2>Challenges</h2><div class="ulist"><ul><li><p>internal APIs</p></li><li><p>JEE modules</p></li><li><p>split packages</p></li><li><p>runtime images</p></li></ul></div></section><section id="internal_apis" data-background-image="images/internals.jpg" data-background-size="cover"><h2>Internal APIs</h2>
 <div class="ulist"><ul><li><p>internal APIs are:</p><div class="ulist"><ul><li><p>all in <code>sun.*</code></p></li><li><p>most in <code>com.sun.*</code><br>
 (unless marked <code>@jdk.Exported</code>)</p></li></ul></div></li><li><p>encapsulated at compile time</p></li><li><p>accessible at run time<br>
 for some time</p></li><li><p>critical APIs may survive longer<br>
@@ -122,7 +122,7 @@ for some time</p></li><li><p>critical APIs may survive longer<br>
 &gt;     SteppedComboBox -&gt; WindowsComboBoxUI</code></pre></div></div></section><section id="what_else_to_look_for"><h2>What else to look for?</h2><div class="ulist"><ul><li><p>look for reflection, especially</p><div class="ulist"><ul><li><p><code>Class::forName</code></p></li><li><p><code>AccessibleObject::setAccessible</code></p></li></ul></div></li><li><p>recursively check your dependencies!</p></li></ul></div></section><section id="what_to_do"><h2>What to do?</h2><div class="olist arabic"><ol class="arabic"><li><p>fix your code</p></li><li><p>contact library developers</p></li><li><p>look for alternatives<br>
 (in the JDK or other libraries)</p></li><li><p>consider command line flags<br>
 <code>--add-exports</code>, <code>--add-opens</code>, or<br>
-<code>--illegal-access</code></p></li></ol></div></section><section id="java_ee_modules" data-background-image="images/java-ee.jpg" data-background-size="cover"><h2>Java EE Modules</h2>
+<code>--illegal-access</code></p></li></ol></div></section><section id="jee_modules" data-background-image="images/java-ee.jpg" data-background-size="cover"><h2>JEE Modules</h2>
 <div class="ulist"><ul><li><p><em>java.activation</em> (<code>javax.activation</code>)</p></li><li><p><em>java.corba</em> (CORBA packages)</p></li><li><p><em>java.transaction</em> (<code>javax.transaction</code>)</p></li><li><p><em>java.xml.bind</em> (<code>javax.xml.bind.*</code>)</p></li><li><p><em>java.xml.ws</em> (JAX-WS packages)</p></li><li><p><em>java.xml.ws.annotation</em> (<code>javax.annotation</code>)</p></li></ul></div>
 <div class="paragraph"><p>These were</p></div>
 <div class="ulist"><ul><li><p>deprecated for removal in ⑨</p></li><li><p>removed in ⑪</p></li></ul></div></section><section id="what_to_look_for_2"><h2>What to look for?</h2><div class="paragraph"><p>JDeps shows dependencies on platform modules:</p></div>
@@ -155,8 +155,9 @@ are inaccessible</p></li></ul></div></section><section id="examples"><h2>Example
 <div class="ulist"><ul><li><p>new JDK/JRE layout</p></li><li><p>internal JARs are gone (e.g. <code>rt.jar</code>, <code>tools.jar</code>)</p></li><li><p>JARs are now JMODs</p></li><li><p>application class loader is no <code>URLClassLoader</code><br>
 (no way to append to its class path)</p></li><li><p>new URL schema for run-time image content</p></li></ul></div></section><section id="what_to_look_for_4"><h2>What to look for?</h2><div class="ulist"><ul><li><p>does the code rummage around<br>
 in the JDK / JRE folder?</p></li><li><p>are URLs to JDK classes / resources handcrafted?</p></li><li><p>search for casts to <code>URLClassLoader</code></p></li></ul></div></section><section id="obsolete" data-background-image="images/obsolete.jpg" data-background-size="cover"><h2>Obsolete</h2>
-<div class="ulist"><ul><li><p>Compact Profiles</p></li><li><p>Extension Mechanism</p></li><li><p>Endorsed Standards Override Mechanism</p></li><li><p>Boot Class Path Override</p></li><li><p>JRE version selection with <code>-version:N</code></p></li></ul></div>
-<aside class="notes"><div class="ulist"><ul><li><p>ext. mech.: makes custom APIs available to all applications running on the JDK</p></li><li><p>first 2 replaced by upgradeable modules.</p></li></ul></div></aside></section><section id="but_wait_theres_more" data-background-image="images/shibuya-night.jpg" data-background-size="cover"><h2>But wait, there&#8217;s more!</h2>
+<div class="ulist"><ul><li><p>Compact Profiles&#8201;&#8212;&#8201;<code>jlink</code></p></li><li><p>Endorsed Standards Override Mechanism,<br>
+Extension Mechanism,<br>
+Boot Class Path Override&#8201;&#8212;&#8201;<code>--upgrade-module-path</code></p></li><li><p>JRE selection <code>-version:N</code>&#8201;&#8212;&#8201;<code>jlink</code>?</p></li><li><p>Web Start&#8201;&#8212;&#8201;<a href="https://openwebstart.com/">openwebstart.com</a></p></li><li><p>JavaFX&#8201;&#8212;&#8201;<a href="https://openjfx.io/">openjfx.io/</a></p></li></ul></div></section><section id="but_wait_theres_more" data-background-image="images/shibuya-night.jpg" data-background-size="cover"><h2>But wait, there&#8217;s more!</h2>
 <div class="paragraph"><p>Yes, yes, there&#8217;s more:</p></div>
 <div class="paragraph"><p><a href="https://blog.codefx.org/java/java-11-migration-guide/"><strong>Java 11 Migration Guide</strong></a></p></div>
 <div class="paragraph"><p>Background:</p></div>
@@ -164,7 +165,7 @@ in the JDK / JRE folder?</p></li><li><p>are URLs to JDK classes / resources hand
 <div class="paragraph"><p>And there are new version strings:</p></div>
 <div class="ulist"><ul><li><p>goodbye <code>1.9.0_31</code>, hello <code>9.0.1</code><br></p></li></ul></div></section><section id="general_advice_i" data-background-image="images/sign.jpg" data-background-size="cover"><h2>General Advice I</h2>
 <div class="paragraph"><p>The most relevant for most applications:</p></div>
-<div class="ulist"><ul><li><p>internal APIs</p></li><li><p>split packages</p></li><li><p>Java EE modules</p></li></ul></div></section><section id="general_advice_ii" data-background-image="images/sign.jpg" data-background-size="cover"><h2>General Advice II</h2>
+<div class="ulist"><ul><li><p>internal APIs</p></li><li><p>split packages</p></li><li><p>JEE modules</p></li></ul></div></section><section id="general_advice_ii" data-background-image="images/sign.jpg" data-background-size="cover"><h2>General Advice II</h2>
 <div class="ulist"><ul><li><p>get your code in shape<br>
 (and prevent relapses)</p></li><li><p>check your dependencies and tools</p></li><li><p>if any are suspicious<br>
 (automatically true for IDEs, build tools):</p><div class="ulist"><ul><li><p>make sure they&#8217;re alive</p></li><li><p><strong>get them up to date!</strong></p></li><li><p>or look for alternatives</p></li></ul></div></li><li><p>download Java 11 and <strong>try it!</strong></p></li></ul></div></section></section>
@@ -175,12 +176,13 @@ and command line options</p></li><li><p>bytecode level increases to <code>54.0</
 <div class="paragraph"><p>⇝ Get used to updating ASM, et al.</p></div></section></section>
 <section><section id="migration_challenges_3"><h2>Migration Challenges</h2><h3>What to look out for<br>when running on JDK 11</h3></section><section id="nothing_much_2"><h2>Nothing much&#8230;&#8203;</h2><div class="paragraph"><p>Java 11 contains few breaking changes:</p></div>
 <div class="ulist"><ul><li><p>removal of deprecated classes/methods<br>
-and command line options</p></li><li><p>removal of deprecated Java EE modules</p></li><li><p>bytecode level increases to <code>55.0</code></p></li></ul></div></section><section id="java_ee_modules_2" data-background-image="images/java-ee.jpg" data-background-size="cover"><h2>Java EE Modules</h2>
+and command line options</p></li><li><p>removal of deprecated Java EE modules</p></li><li><p>bytecode level increases to <code>55.0</code></p></li></ul></div></section><section id="jee_modules_2" data-background-image="images/java-ee.jpg" data-background-size="cover"><h2>JEE Modules</h2>
 <div class="ulist"><ul><li><p><em>java.activation</em> (<code>javax.activation</code>)</p></li><li><p><em>java.corba</em> (CORBA packages)</p></li><li><p><em>java.transaction</em> (<code>javax.transaction</code>)</p></li><li><p><em>java.xml.bind</em> (<code>javax.xml.bind.*</code>)</p></li><li><p><em>java.xml.ws</em> (JAX-WS packages)</p></li><li><p><em>java.xml.ws.annotation</em> (<code>javax.annotation</code>)</p></li></ul></div>
 <div class="paragraph"><p>⇝ Pick <a href="https://stackoverflow.com/a/48204154/2525313">a third-party implementation</a></p></div></section></section>
 <section id="general_advice" data-background-image="images/sign.jpg" data-background-size="cover"><h2>General Advice</h2>
 <div class="ulist"><ul><li><p>only rely on standardized behavior</p></li><li><p>heed deprecation warnings (<code>jdeprscan</code>)</p></li><li><p>keep dependencies and tools up to date</p></li><li><p>build on each release (including EA)</p></li><li><p>report problems</p></li></ul></div></section>
-<section><section id="about_nicolai_parlog" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>About Nicolai Parlog</h2><div style="float: left; width: 45%; margin:0px;">
+<section id="about_nicolai_parlog" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>About Nicolai Parlog</h2>
+<div style="float: left; width: 45%; margin:0px;">
 	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="images/cover-jms.png" style="margin: 0;"></a>
 	<p style="
 		position: fixed;
@@ -196,8 +198,19 @@ and command line options</p></li><li><p>removal of deprecated Java EE modules</p
 		padding: 2px 8px 7px 4px;
 ">37% off with<br>code <em>fccparlog</em></p>
 	<p><a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb">tiny.cc/jms</a></p>
-</div><h3>Follow</h3><div class="paragraph"><p>💻 <a href="http://codefx.org">codefx.org</a><br>
-🐦 <a href="https://twitter.com/nipafx">@nipafx</a></p></div><h3>Want More?</h3><div class="paragraph"><p>Slides at <a href="https://slides.codefx.org">slides.codefx.org</a></p></div><div class="paragraph"><p>⇜ Get <a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&amp;a_bid=869915cb">my book</a>!</p></div><div class="paragraph"><p>You can <a href="http://blog.codefx.org/hire-nicolai-parlog/">hire me</a>:</p></div><div class="ulist"><ul><li><p>training (Java 8-12, JUnit 5)</p></li><li><p>consulting (Java 8-12)</p></li></ul></div></section><section data-background-image="images/accento-save.jpg" data-background-size="cover" data-state="empty"></section></section>
+</div>
+<h3 style="margin-top: -0.25em">Follow</h3>
+<div class="paragraph"><p><a href="https://nipafx.dev">nipafx.dev</a></p></div>
+<div class="paragraph"><p><strong>nipafx</strong> on<br>
+<a href="https://twitter.com/nipafx">🐦</a> //
+<a href="https://www.youtube.com/nipafx">▶</a> //
+<a href="https://www.twitch.tv/nipafx">📺</a> //
+<a href="https://github.com/nipafx">🐙🐱</a></p></div>
+<h3 style="margin-top: 0.5em">More</h3>
+<div class="paragraph"><p>Slides at <a href="https://slides.nipafx.dev">slides.nipafx.dev</a></p></div>
+<div class="paragraph"><p>⇜ Get <a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&amp;a_bid=869915cb">my book</a>!</p></div>
+<div class="paragraph"><p><a href="http://nipafx.dev/hire">Hire me</a> as a trainer<br>
+(Java 8+, JUnit 5)</p></div></section>
 <section id="image_credits"><h2>Image Credits</h2><div class="ulist"><ul><li><p><a href="https://pixabay.com/en/bison-buffalo-group-herd-snow-2237654/">buffalos</a>:
 <a href="https://pixabay.com/en/users/skeeze-272447/">skeeze</a>,
 <a href="https://wiki.creativecommons.org/wiki/CC0">CC0</a></p></li><li><p><a href="https://www.flickr.com/photos/21496790@N06/5065834411">question-mark</a>:

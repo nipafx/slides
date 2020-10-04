@@ -19,10 +19,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 </script>
 <div class="event">
 	<div class="participant">
-		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
+		<a href="https://nipafx.dev/nicolai-parlog"><img src="images/nipa-face.jpg" class="logo"></a>
 		<div class="name">
-			<p><a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a></p>
-			<p><a href="http://codefx.org">codefx.org</a>
+			<p><a href="https://nipafx.dev/nicolai-parlog">Nicolai Parlog</a></p>
+			<p><a href="https://nipafx.dev.dev">nipafx.dev</a>
 				/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a></p>
 		</div>
 	</div>
@@ -36,10 +36,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 </div>
 <footer>
 	<div class="participant">
-		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
+		<a href="https://nipafx.dev/nicolai-parlog"><img src="images/nipa-face.jpg" class="logo"></a>
 		<div class="name"><p>
-			<a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a>
-			/ <a href="http://codefx.org">codefx.org</a>
+			<a href="https://nipafx.dev/nicolai-parlog">Nicolai Parlog</a>
+			/ <a href="https://nipafx.dev.dev">nipafx.dev</a>
 			/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a>
 		</p></div>
 	</div>
@@ -56,7 +56,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		document.body.appendChild(document.querySelector('footer'));
 	})
 </script></div></section>
-<section><section id="lets_get_started"><h2>Let&#8217;s get started!</h2><div class="ulist"><ul><li><p>slides at <a href="http://slides.codefx.org/java-x">slides.codefx.org/java-x</a></p></li><li><p>exercises at<br>
+<section><section id="lets_get_started"><h2>Let&#8217;s get started!</h2><div class="ulist"><ul><li><p>slides at <a href="http://slides.nipafx.dev/java-x">slides.nipafx.dev/java-x</a></p></li><li><p>exercises at<br>
 <a href="https://github.com/nicolaiparlog/course-java-x">github.com/nicolaiparlog/course-java-x</a></p></li><li><p>they cover Java 9 to 14 without JPMS</p></li></ul></div><div class="paragraph"><p>(Please share responsibly)</p></div></section><section id="lots_to_talk_about"><h2>Lots to talk about!</h2><table class="toc">
 	<tr><td>Language Changes</td></tr>
 	<tr><td>New and Updated APIs</td></tr>
@@ -65,6 +65,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 </table></section></section>
 <section id="new_language_features"><h2>New Language Features</h2><table class="toc">
 	<tr><td>Records ⑭</td></tr>
+	<tr><td>Pattern Matching ⑭</td></tr>
 	<tr><td>Text Blocks ⑬</td></tr>
 	<tr><td>Switch Expressions ⑫⑬</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
@@ -168,6 +169,15 @@ public Range {
 ⇝ use only when "the deal" makes sense</p></li><li><p>beware of limitations</p></li><li><p>beware of class-building facilites</p></li><li><p>observe ecosystem for adoption</p></li></ul></div></section></section>
 <section><section id="new_language_features_3"><h2>New Language Features</h2><table class="toc">
 	<tr><td>Records ⑭</td></tr>
+	<tr class="toc-current"><td>Pattern Matching ⑭</td></tr>
+	<tr><td>Text Blocks ⑬</td></tr>
+	<tr><td>Switch Expressions ⑫⑬</td></tr>
+	<tr><td>Local-Variable Type Inference ⑩</td></tr>
+	<tr><td>All The Small Things... ⑨</td></tr>
+</table><div class="paragraph"><p>Fewer <code>if</code>-s.</p></div></section><section id="pattern_matching"><h2>Pattern Matching</h2></section></section>
+<section><section id="new_language_features_4"><h2>New Language Features</h2><table class="toc">
+	<tr><td>Records ⑭</td></tr>
+	<tr><td>Pattern Matching ⑭</td></tr>
 	<tr class="toc-current"><td>Text Blocks ⑬</td></tr>
 	<tr><td>Switch Expressions ⑫⑬</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
@@ -226,14 +236,14 @@ String haikuBlock = """
     }
     """;</code></pre></div></div>
 <div class="paragraph"><p>⇝ Way fewer escapes in HTML/JSON/SQL/etc.</p></div></section><section id="more_on_text_blocks"><h2>More on Text Blocks</h2><div class="ulist"><ul><li><p><a href="https://blog.codefx.org/java/text-blocks/">Definitive Guide To Text Blocks</a></p></li><li><p><a href="http://cr.openjdk.java.net/~jlaskey/Strings/TextBlocksGuide_v9.html">Programmer&#8217;s Guide To Text Blocks</a></p></li></ul></div></section></section>
-<section><section id="new_language_features_4"><h2>New Language Features</h2><table class="toc">
+<section><section id="new_language_features_5"><h2>New Language Features</h2><table class="toc">
 	<tr><td>Records ⑭</td></tr>
+	<tr><td>Pattern Matching ⑭</td></tr>
 	<tr><td>Text Blocks ⑬</td></tr>
 	<tr class="toc-current"><td>Switch Expressions ⑫⑬</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
 	<tr><td>All The Small Things... ⑨</td></tr>
-</table><div class="paragraph"><p>More powerful <code>switch</code> and<br>
-beginnings of pattern matching.</p></div></section><section id="switching"><h2>Switching</h2><div class="paragraph"><p>Say you&#8217;re facing <a href="https://thedailywtf.com/articles/What_Is_Truth_0x3f_">the dreaded ternary Boolean</a> &#8230;&#8203;</p></div>
+</table><div class="paragraph"><p>More powerful <code>switch</code>.</p></div></section><section id="switching"><h2>Switching</h2><div class="paragraph"><p>Say you&#8217;re facing <a href="https://thedailywtf.com/articles/What_Is_Truth_0x3f_">the dreaded ternary Boolean</a> &#8230;&#8203;</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public enum TernaryBoolean {
 	TRUE,
 	FALSE,
@@ -423,8 +433,9 @@ boolean result = switch (ternaryBool) {
 };</code></pre></div></div>
 <div class="paragraph"><p>Compiler adds in <code>default</code> branch.</p></div></section><section id="more_on_switch"><h2>More on <code>switch</code></h2><div class="paragraph"><p>Definitive Guide To Switch Expressions</p></div>
 <div class="ulist"><ul><li><p>💻 <a href="https://blog.codefx.org/java/switch-expressions/">tiny.cc/java-12-switch</a></p></li><li><p>▶ <a href="https://www.youtube.com/watch?v=1znHEf3oSNI&amp;list=PL_-IO8LOLuNp2stY1qBUtXlfMdJW7wvfT">tiny.cc/java-12-switch-yt</a></p></li></ul></div></section></section>
-<section><section id="new_language_features_5"><h2>New Language Features</h2><table class="toc">
+<section><section id="new_language_features_6"><h2>New Language Features</h2><table class="toc">
 	<tr><td>Records ⑭</td></tr>
+	<tr><td>Pattern Matching ⑭</td></tr>
 	<tr><td>Text Blocks ⑬</td></tr>
 	<tr><td>Switch Expressions ⑫⑬</td></tr>
 	<tr class="toc-current"><td>Local-Variable Type Inference ⑩</td></tr>
@@ -432,8 +443,8 @@ boolean result = switch (ternaryBool) {
 </table><div class="paragraph"><p>Type inference with <code>var</code>.<br>
 Less typing, but still strongly typed.</p></div></section><section id="type_duplication"><h2>Type Duplication</h2><div class="paragraph"><p>We&#8217;re used to duplicating<br>
 type information:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">URL codefx = new URL("http://codefx.org");
-URLConnection connection = codefx.openConnection();
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">URL nipafx = new URL("https://nipafx.dev");
+URLConnection connection = nipafx.openConnection();
 Reader reader = new BufferedReader(
 	new InputStreamReader(
 		connection.getInputStream()));</code></pre></div></div>
@@ -448,8 +459,8 @@ Variable variable = new Constant(5);
 List&lt;String&gt; names = List.of("Max", "Maria");</code></pre></div></div></section><section id="type_deduplication"><h2>Type Deduplication</h2><div class="paragraph"><p>Can&#8217;t somebody else do that?<br>
 Compiler knows the types!</p></div>
 <div class="paragraph"><p>Enter <code>var</code>:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">var codefx = new URL("http://codefx.org");
-var connection = codefx.openConnection();
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">var nipafx = new URL("https://nipafx.dev");
+var connection = nipafx.openConnection();
 var reader = new BufferedReader(
 	new InputStreamReader(
 		connection.getInputStream()));</code></pre></div></div></section><section id="locality"><h2>Locality</h2><div class="paragraph"><p>How much information is used for inference?</p></div>
@@ -547,8 +558,8 @@ byte b = 42;
 short s = 42;
 long l = 42</code></pre></div></div></section><section id="more_on_var"><h2>More on <code>var</code></h2><div class="ulist"><ul><li><p>First Contact With <code>var</code> In Java 10<br>
 💻 <a href="https://blog.codefx.org/java/java-10-var-type-inference/">tiny.cc/java-var</a> /
-▶ <a href="https://www.youtube.com/watch?v=Le1DbpRZdRQ&amp;index=1&amp;list=PL_-IO8LOLuNp2stY1qBUtXlfMdJW7wvfT">tiny.cc/java-var-yt</a></p></li><li><p><a href="https://snyk.io/blog/local-type-inference-java-cheat-sheet">cheat sheet</a> (<strong>⇜ print when getting started!</strong>)</p></li><li><p><a href="http://openjdk.java.net/projects/amber/LVTIstyle.html">official style guidelines</a></p></li><li><p><code>var</code> and &#8230;&#8203;</p><div class="ulist"><ul><li><p><a href="https://blog.codefx.org/java/intersection-types-var/">intersection types</a></p></li><li><p><a href="https://blog.codefx.org/java/traits-var/">traits</a></p></li><li><p><a href="https://blog.codefx.org/java/tricks-var-anonymous-classes/">anonymous classes</a></p></li></ul></div></li></ul></div></section></section>
-<section><section id="new_language_features_6"><h2>New Language Features</h2><table class="toc">
+▶ <a href="https://www.youtube.com/watch?v=Le1DbpRZdRQ&amp;index=1&amp;list=PL_-IO8LOLuNp2stY1qBUtXlfMdJW7wvfT">tiny.cc/java-var-yt</a></p></li><li><p><a href="https://snyk.io/blog/local-type-inference-java-cheat-sheet">cheat sheet</a> (<strong>⇜ print when getting started!</strong>)</p></li><li><p><a href="http://openjdk.java.net/projects/amber/LVTIstyle.html">official style guidelines</a></p></li><li><p><code>var</code> and &#8230;&#8203;</p><div class="ulist"><ul><li><p><a href="https://blog.codefx.org/java/intersection-types-var/">intersection types</a></p></li><li><p><a href="https://nipafx.dev/java-var-traits">traits</a></p></li><li><p><a href="https://blog.codefx.org/java/tricks-var-anonymous-classes/">anonymous classes</a></p></li></ul></div></li></ul></div></section></section>
+<section><section id="new_language_features_7"><h2>New Language Features</h2><table class="toc">
 	<tr><td>All The Cool Things... ⑩⑫⑬⑭</td></tr>
 	<tr class="toc-current"><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
@@ -578,7 +589,7 @@ long l = 42</code></pre></div></div></section><section id="more_on_var"><h2>More
 }</code></pre></div></div>
 <div class="paragraph"><p>Just like private methods in abstract classes:</p></div>
 <div class="ulist"><ul><li><p>must be implemented</p></li><li><p>can not be overriden</p></li><li><p>can only be called in same source file</p></li></ul></div></section></section>
-<section><section id="new_language_features_7"><h2>New Language Features</h2><table class="toc">
+<section><section id="new_language_features_8"><h2>New Language Features</h2><table class="toc">
 	<tr><td>All The Cool Things... ⑩⑫⑬⑭</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr class="toc-current"><td>Try-With-Resources ⑨</td></tr>
@@ -604,7 +615,7 @@ and can be made implicitly final</p></li></ul></div>
 }</code></pre></div></div>
 <div class="ulist"><ul><li><p>compiler knows that <code>connection</code> is not reassigned</p></li><li><p>developers know what <em>effectively final</em> means</p></li></ul></div>
 <aside class="notes"><div class="paragraph"><p>Q: Can instance be created but not assigned? No.</p></div></aside></section></section>
-<section><section id="new_language_features_8"><h2>New Language Features</h2><table class="toc">
+<section><section id="new_language_features_9"><h2>New Language Features</h2><table class="toc">
 	<tr><td>All The Cool Things... ⑩⑫⑬⑭</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
@@ -630,7 +641,7 @@ for anonymous classes</p></li><li><p>can not be expressed by JVM</p></li></ul></
 	// compile error
 	return new Box&lt;&gt;(innerList) { };
 }</code></pre></div></div></section></section>
-<section><section id="new_language_features_9"><h2>New Language Features</h2><table class="toc">
+<section><section id="new_language_features_10"><h2>New Language Features</h2><table class="toc">
 	<tr><td>All The Cool Things... ⑩⑫⑬⑭</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
@@ -672,7 +683,7 @@ that can not be overriden</p></li></ul></div>
 ⇝ Damn! 😭</p></div></section><section id="safevarargs_on_privatemethods"><h2>@SafeVarargs on Private&nbsp;Methods</h2><div class="paragraph"><p>Looong story, here&#8217;s the point:</p></div>
 <div class="paragraph"><p>In Java 9 <code>@SafeVarargs</code><br>
 can be applied to private methods.</p></div></section></section>
-<section><section id="new_language_features_10"><h2>New Language Features</h2><table class="toc">
+<section><section id="new_language_features_11"><h2>New Language Features</h2><table class="toc">
 	<tr><td>All The Cool Things... ⑩⑫⑬⑭</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
@@ -966,7 +977,7 @@ public CompletableFuture&lt;Void&gt; thenAccept(Consumer&lt;T&gt;);
 // wait for the computation to finish and get result
 public T join();</code></pre></div></div></section><section id="recap_on_api_basics_2"><h2>Recap on API Basics</h2><div class="paragraph"><p>Example:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public void loadWebPage() {
-	String url = "http://codefx.org";
+	String url = "https://nipafx.dev";
 	CompletableFuture&lt;WebPage&gt; future = CompletableFuture
 			.supplyAsync(() -&gt; webRequest(url))
 			.thenApply(html -&gt; new WebPage(url, html));
@@ -1103,7 +1114,7 @@ and one simple implementation.</p></div>
 <div class="paragraph"><p>More options:</p></div>
 <div class="ulist"><ul><li><p>proxy</p></li><li><p>SSL context/parameters</p></li><li><p>authenticator</p></li><li><p>cookie handler</p></li></ul></div></section><section id="building_a_request"><h2>Building a Request</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">HttpRequest request = HttpRequest.newBuilder()
 	.GET()
-	.uri(URI.create("http://codefx.org"))
+	.uri(URI.create("https://nipafx.dev"))
 	.setHeader("header-name", "header-value")
 	.build();</code></pre></div></div>
 <div class="ulist"><ul><li><p>more HTTP methods (duh!)</p></li><li><p>individual timeout</p></li><li><p>individual HTTP version</p></li><li><p>request <code>"100 CONTINUE"</code> before sending body</p></li></ul></div></section><section id="receiving_a_response"><h2>Receiving a Response</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// the generic `String`...
@@ -1186,14 +1197,12 @@ Line 11</code></pre></div></div></section><section id="options"><h2>Options</h2>
 <div class="ulist"><ul><li><p>file name and line number</p></li></ul></div></section><section id="performance_i"><h2>Performance I</h2><div class="imageblock diagram" style=""><img src="images/stack-walker-vs-exception.png" alt="stack walker vs exception"></div></section><section id="performance_ii"><h2>Performance II</h2><div class="imageblock diagram" style=""><img src="images/stack-walker-limit-with-estimated-size.png" alt="stack walker limit with estimated size"></div></section><section id="performance_iii"><h2>Performance III</h2><div class="ulist"><ul><li><p>creating <code>StackTraceElement</code> is expensive<br>
 (for file name and line number)</p></li><li><p>lazy evaluation pays off for partial traversal</p></li></ul></div>
 <div class="paragraph"><p>(Benchmarks performed by <a href="https://twitter.com/arnaudroger">Arnaud Roger</a>)</p></div></section></section>
-<section id="a_mixed_bag_of_new_apis"><h2>A Mixed Bag Of New APIs</h2><div class="paragraph"><p><strong>In Java 9:</strong></p></div>
-<div class="ulist"><ul><li><p>multi-resolution images (<a href="http://openjdk.java.net/jeps/251">JEP 251</a>)</p></li><li><p>native desktop integration (<a href="http://openjdk.java.net/jeps/272">JEP 272</a>)</p></li><li><p>deserialization filter (<a href="http://openjdk.java.net/jeps/290">JEP 290</a>)</p></li><li><p>DTLS (<a href="http://openjdk.java.net/jeps/219">JEP 219</a>),<br>
-TLS ALPN and OCSP stapling (<a href="http://openjdk.java.net/jeps/244">JEP 244</a>)</p></li></ul></div></section>
-<section id="a_mixed_bag_of_new_apis_2"><h2>A Mixed Bag Of New APIs</h2><div class="paragraph"><p><strong>In Java 12:</strong></p></div>
+<section><section id="a_mixed_bag_of_new_apis"><h2>A Mixed Bag Of New APIs</h2><div class="paragraph"><p><strong>In Java 9:</strong></p></div><div class="ulist"><ul><li><p>multi-resolution images (<a href="http://openjdk.java.net/jeps/251">JEP 251</a>)</p></li><li><p>native desktop integration (<a href="http://openjdk.java.net/jeps/272">JEP 272</a>)</p></li><li><p>deserialization filter (<a href="http://openjdk.java.net/jeps/290">JEP 290</a>)</p></li><li><p>DTLS (<a href="http://openjdk.java.net/jeps/219">JEP 219</a>),<br>
+TLS ALPN and OCSP stapling (<a href="http://openjdk.java.net/jeps/244">JEP 244</a>)</p></li></ul></div></section><section id="a_mixed_bag_of_new_apis_2"><h2>A Mixed Bag Of New APIs</h2><div class="paragraph"><p><strong>In Java 12:</strong></p></div>
 <div class="ulist"><ul><li><p><code>CompactNumberFormat</code> (<a href="https://bugs.openjdk.java.net/browse/JDK-8188147">JDK-8188147</a>)</p></li></ul></div>
 <div class="paragraph"><p><strong>In Java 14:</strong></p></div>
 <div class="ulist"><ul><li><p>foreign-memory access (<a href="http://openjdk.java.net/jeps/370">JEP 370</a>)</p></li><li><p>non-volatile <code>MappedByteBuffer</code> (<a href="http://openjdk.java.net/jeps/352">JEP 352</a>)</p></li></ul></div>
-<div class="paragraph"><p>And often lots of low-level APIs.</p></div></section>
+<div class="paragraph"><p>And often lots of low-level APIs.</p></div></section></section>
 <section id="jvm_features"><h2>JVM Features</h2><table class="toc">
 	<tr><td>Helpful NPEs ⑭</td></tr>
 	<tr><td>Launch Source File ⑪</td></tr>
@@ -1208,17 +1217,17 @@ TLS ALPN and OCSP stapling (<a href="http://openjdk.java.net/jeps/244">JEP 244</
 	<tr><td>Multi-Release JARs ⑨</td></tr>
 	<tr><td>Redirected Platform Logging ⑨</td></tr>
 </table><div class="paragraph"><p>Finally can NPEs be helpful!</p></div></section><section id="typical_npes"><h2>Typical NPEs</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="sh language-sh">java.lang.NullPointerException
-		at org.codefx.Regular.doing(Regular.java:28)
-		at org.codefx.Business.its(Business.java:20)
-		at org.codefx.Code.thing(Code.java:11)</code></pre></div></div>
+		at dev.nipafx.Regular.doing(Regular.java:28)
+		at dev.nipafx.Business.its(Business.java:20)
+		at dev.nipafx.Code.thing(Code.java:11)</code></pre></div></div>
 <div class="paragraph"><p>Ok-ish for coders, but suck for everybody else.</p></div></section><section id="helpful_npes"><h2>Helpful NPEs</h2><div class="paragraph"><p>With <code>-XX:+ShowCodeDetailsInExceptionMessages</code>:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="sh language-sh">java.lang.NullPointerException:
 	Cannot invoke "String.length()" because the return
-	value of "org.codefx.courses.Irregular.doing()"
+	value of "dev.nipafx.Irregular.doing()"
 	is null
-		at org.codefx.Regular.doing(Regular.java:28)
-		at org.codefx.Business.its(Business.java:20)
-		at org.codefx.Code.thing(Code.java:11)</code></pre></div></div></section><section id="why_the_flag"><h2>Why the flag?</h2><div class="paragraph"><p>The command line option<br>
+		at dev.nipafx.Regular.doing(Regular.java:28)
+		at dev.nipafx.Business.its(Business.java:20)
+		at dev.nipafx.Code.thing(Code.java:11)</code></pre></div></div></section><section id="why_the_flag"><h2>Why the flag?</h2><div class="paragraph"><p>The command line option<br>
 is needed (for now), because:</p></div>
 <div class="ulist"><ul><li><p>performance</p></li><li><p>security</p></li><li><p>compatibility</p></li></ul></div>
 <div class="paragraph"><p>But:</p></div>
@@ -1318,15 +1327,15 @@ public class Version {
 <div class="paragraph"><p>(Btw, IDEs hate this!)</p></div></section><section id="creating_a_multireleasejar"><h2>Creating A Multi&#8209;Release&nbsp;JAR</h2><div class="paragraph"><p>Now, here&#8217;s the magic:</p></div>
 <div class="ulist"><ul><li><p>compile <code>Main</code> and <code>Version[8]</code> to <code>out/java-8</code></p></li><li><p>compile <code>Version[9]</code> to <code>out/java-9</code></p></li><li><p>use new <code>jar</code> flag <code>--release</code>:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">jar --create --file out/mr.jar
 	-C out/java-8 .
-	--release 9 -C out/java-9 .</code></pre></div></div></li></ul></div></section><section id="jar_content"><h2>JAR Content</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">└ org
-    └ codefx ... (moar folders)
+	--release 9 -C out/java-9 .</code></pre></div></div></li></ul></div></section><section id="jar_content"><h2>JAR Content</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">└ dev
+    └ nipafx ... (moar folders)
         ├ Main.class
         └ Version.class
 └ META-INF
     └ versions
         └ 9
-            └ org
-                └ codefx ... (moar folders)
+            └ dev
+                └ nipafx ... (moar folders)
                     └ Version.class</code></pre></div></div></section><section id="run"><h2>Run!</h2><div class="paragraph"><p>With <code>java -cp out/mr.jar &#8230;&#8203;Main</code>:</p></div>
 <div class="ulist"><ul><li><p>prints <code>"Java 8"</code> on Java 8</p></li><li><p>prints <code>"Java 9+"</code> on Java 9 and later</p></li></ul></div>
 <div class="paragraph"><p>Great Success!</p></div></section></section>
@@ -1520,14 +1529,18 @@ The Lord Of The Strings</a></p></div></section></section>
 ">37% off with<br>code <em>fccparlog</em></p>
 	<p><a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb">tiny.cc/jms</a></p>
 </div>
-<h3>Follow</h3>
-<div class="paragraph"><p>💻 <a href="http://codefx.org">codefx.org</a><br>
-🐦 <a href="https://twitter.com/nipafx">@nipafx</a></p></div>
-<h3>Want More?</h3>
-<div class="paragraph"><p>Slides at <a href="https://slides.codefx.org">slides.codefx.org</a></p></div>
+<h3 style="margin-top: -0.25em">Follow</h3>
+<div class="paragraph"><p><a href="https://nipafx.dev">nipafx.dev</a></p></div>
+<div class="paragraph"><p><strong>nipafx</strong> on<br>
+<a href="https://twitter.com/nipafx">🐦</a> //
+<a href="https://www.youtube.com/nipafx">▶</a> //
+<a href="https://www.twitch.tv/nipafx">📺</a> //
+<a href="https://github.com/nipafx">🐙🐱</a></p></div>
+<h3 style="margin-top: 0.5em">More</h3>
+<div class="paragraph"><p>Slides at <a href="https://slides.nipafx.dev">slides.nipafx.dev</a></p></div>
 <div class="paragraph"><p>⇜ Get <a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&amp;a_bid=869915cb">my book</a>!</p></div>
-<div class="paragraph"><p>You can <a href="http://blog.codefx.org/hire-nicolai-parlog/">hire me</a>:</p></div>
-<div class="ulist"><ul><li><p>training (Java 8-14, JUnit 5)</p></li><li><p>consulting (Java 8-14)</p></li></ul></div></section>
+<div class="paragraph"><p><a href="http://nipafx.dev/hire">Hire me</a> as a trainer<br>
+(Java 8+, JUnit 5)</p></div></section>
 <section id="image_credits"><h2>Image Credits</h2><div class="ulist"><ul><li><p>Eleven: © Netflix</p></li><li><p><a href="https://www.pexels.com/photo/selective-focus-photography-of-bombay-cat-1931367/">black cat</a>:
 <a href="https://www.pexels.com/@wildlittlethingsphoto">Helena Lopes</a>,
 <a href="https://www.pexels.com/photo-license/">Pexels license</a></p></li><li><p><a href="https://www.flickr.com/photos/21496790@N06/5065834411">question-mark</a>:
