@@ -193,7 +193,7 @@ More options:
 ```java
 HttpRequest request = HttpRequest.newBuilder()
 	.GET()
-	.uri(URI.create("http://codefx.org"))
+	.uri(URI.create("https://nipafx.dev"))
 	.setHeader("header-name", "header-value")
 	.build();
 ```

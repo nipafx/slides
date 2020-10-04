@@ -1,7 +1,7 @@
 == Java 9
 image::images/9-dark.jpg[background, size=cover]
 
-Sources: https://github.com/CodeFX-org/demo-java-x[github.com/CodeFX-org/demo-java-x]
+Sources: https://github.com/nipafx/demo-java-x[github.com/nipafx/demo-java-x]
 
 // TODO: toc
 
@@ -924,15 +924,15 @@ jar --create --file out/mr.jar
 === JAR Content
 
 ```bash
-└ org
-    └ codefx ... (moar folders)
+└ dev
+    └ nipafx ... (moar folders)
         ├ Main.class
         └ Version.class
 └ META-INF
     └ versions
         └ 9
-            └ org
-                └ codefx ... (moar folders)
+            └ dev
+                └ nipafx ... (moar folders)
                     └ Version.class
 ```
 

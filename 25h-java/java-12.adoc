@@ -1,7 +1,7 @@
 == Java 12
 image::images/12.jpg[background, size=cover]
 
-Sources: https://github.com/CodeFX-org/demo-java-x[github.com/CodeFX-org/demo-java-x]
+Sources: https://github.com/nipafx/demo-java-x[github.com/nipafx/demo-java-x]
 
 // TODO: toc
 
@@ -530,7 +530,7 @@ Example:
 
 ```java
 public void loadWebPage() {
-	String url = "http://codefx.org";
+	String url = "http://nipafx.dev";
 	CompletableFuture<WebPage> future = CompletableFuture
 			.supplyAsync(() -> webRequest(url))
 			.thenApply(html -> new WebPage(url, html));

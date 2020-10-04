@@ -1,7 +1,7 @@
 == Java Module System
 image::images/puzzle.jpg[background, size=cover]
 
-Source: https://github.com/CodeFX-org/demo-jpms-monitor[github.com/CodeFX-org/demo-jpms-monitor]
+Source: https://github.com/nipafx/demo-jpms-monitor[github.com/nipafx/demo-jpms-monitor]
 
 // TODO: explain module graph, explain layers
 
@@ -127,15 +127,15 @@ image::images/advent-calendar-module-multi.png[role="diagram"]
 <div style="height: 210px;">
 <div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">module surprise {
 	<span class="hljs-comment">// requires no other modules</span>
-	exports org.codefx.advent.surprise;
+	exports dev.nipafx.advent.surprise;
 }</code></pre></div></div>
 <div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">module calendar {
 	requires surprise;
-	exports org.codefx.advent.calendar;
+	exports dev.nipafx.advent.calendar;
 }</code></pre></div></div>
 <div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">module factories {
 	requires surprise;
-	exports org.codefx.advent.factories;
+	exports dev.nipafx.advent.factories;
 }</code></pre></div></div>
 <div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">module advent {
 	requires calendar;

@@ -30,9 +30,9 @@ Finally can NPEs be helpful!
 
 ```sh
 java.lang.NullPointerException
-		at org.codefx.Regular.doing(Regular.java:28)
-		at org.codefx.Business.its(Business.java:20)
-		at org.codefx.Code.thing(Code.java:11)
+		at dev.nipafx.Regular.doing(Regular.java:28)
+		at dev.nipafx.Business.its(Business.java:20)
+		at dev.nipafx.Code.thing(Code.java:11)
 ```
 
 Ok-ish for coders, but suck for everybody else.
@@ -44,11 +44,11 @@ With `-XX:+ShowCodeDetailsInExceptionMessages`:
 ```sh
 java.lang.NullPointerException:
 	Cannot invoke "String.length()" because the return
-	value of "org.codefx.courses.Irregular.doing()"
+	value of "dev.nipafx.Irregular.doing()"
 	is null
-		at org.codefx.Regular.doing(Regular.java:28)
-		at org.codefx.Business.its(Business.java:20)
-		at org.codefx.Code.thing(Code.java:11)
+		at dev.nipafx.Regular.doing(Regular.java:28)
+		at dev.nipafx.Business.its(Business.java:20)
+		at dev.nipafx.Code.thing(Code.java:11)
 ```
 
 === Why the flag?
@@ -352,15 +352,15 @@ jar --create --file out/mr.jar
 === JAR Content
 
 ```bash
-└ org
-    └ codefx ... (moar folders)
+└ dev
+    └ nipafx ... (moar folders)
         ├ Main.class
         └ Version.class
 └ META-INF
     └ versions
         └ 9
-            └ org
-                └ codefx ... (moar folders)
+            └ dev
+                └ nipafx ... (moar folders)
                     └ Version.class
 ```
 

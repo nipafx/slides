@@ -816,8 +816,8 @@ We're used to duplicating +
 type information:
 
 ```java
-URL codefx = new URL("http://codefx.org");
-URLConnection connection = codefx.openConnection();
+URL nipafx = new URL("https://nipafx.dev");
+URLConnection connection = nipafx.openConnection();
 Reader reader = new BufferedReader(
 	new InputStreamReader(
 		connection.getInputStream()));
@@ -848,8 +848,8 @@ Compiler knows the types!
 Enter `var`:
 
 ```java
-var codefx = new URL("http://codefx.org");
-var connection = codefx.openConnection();
+var nipafx = new URL("https://nipafx.dev");
+var connection = nipafx.openConnection();
 var reader = new BufferedReader(
 	new InputStreamReader(
 		connection.getInputStream()));
@@ -1096,7 +1096,7 @@ long l = 42
 * http://openjdk.java.net/projects/amber/LVTIstyle.html[official style guidelines]
 * `var` and ...
 ** https://blog.codefx.org/java/intersection-types-var/[intersection types]
-** https://blog.codefx.org/java/traits-var/[traits]
+** https://nipafx.dev/java-var-traits[traits]
 ** https://blog.codefx.org/java/tricks-var-anonymous-classes/[anonymous classes]
 
 

@@ -150,7 +150,7 @@ public T join();
 
 ```java
 public void loadWebPage() {
-	String url = "http://codefx.org";
+	String url = "https://nipafx.dev";
 	CompletableFuture<WebPage> futurePage = CompletableFuture
 			.supplyAsync(() -> webRequest(url))
 			.thenApply(html -> new WebPage(url, html));

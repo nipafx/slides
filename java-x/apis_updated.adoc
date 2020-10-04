@@ -607,7 +607,7 @@ Example:
 
 ```java
 public void loadWebPage() {
-	String url = "http://codefx.org";
+	String url = "https://nipafx.dev";
 	CompletableFuture<WebPage> future = CompletableFuture
 			.supplyAsync(() -> webRequest(url))
 			.thenApply(html -> new WebPage(url, html));

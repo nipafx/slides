@@ -7,8 +7,8 @@ We're used to duplicating +
 type information:
 
 ```java
-URL codefx = new URL("http://codefx.org");
-URLConnection connection = codefx.openConnection();
+URL nipafx = new URL("https://nipafx.dev");
+URLConnection connection = nipafx.openConnection();
 Reader reader = new BufferedReader(
 	new InputStreamReader(
 		connection.getInputStream()));
@@ -39,8 +39,8 @@ Compiler knows the types!
 Enter `var`:
 
 ```java
-var codefx = new URL("http://codefx.org");
-var connection = codefx.openConnection();
+var nipafx = new URL("http://nipafx.dev");
+var connection = nipafx.openConnection();
 var reader = new BufferedReader(
 	new InputStreamReader(
 		connection.getInputStream()));
@@ -107,7 +107,7 @@ https://blog.codefx.org/java/java-10-var-type-inference/[First Contact With `var
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Le1DbpRZdRQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 ++++
 
-https://youtube.com/codefx[youtube.com/codefx]
+https://youtube.com/nipafx[youtube.com/nipafx]
 
 === Even more on `var`
 
@@ -115,5 +115,5 @@ https://youtube.com/codefx[youtube.com/codefx]
 * https://snyk.io/blog/local-type-inference-java-cheat-sheet[cheat sheet] (*⇜ print when getting started!*)
 * `var` and ...
 ** https://blog.codefx.org/java/intersection-types-var/[intersection types]
-** https://blog.codefx.org/java/traits-var/[traits]
+** https://nipafx.dev/java-var-traits[traits]
 ** https://blog.codefx.org/java/tricks-var-anonymous-classes/[anonymous classes]

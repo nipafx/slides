@@ -1,5 +1,5 @@
 = Fun with `var`
-Nicolai Parlog <nipa@codefx.org>
+Nicolai Parlog <nicolai@nipafx.dev>
 
 
 == Basics
@@ -7,9 +7,9 @@ Nicolai Parlog <nipa@codefx.org>
 Start with:
 
 ```java
-URL codefx = new URL("http://codefx.org");
+URL nipafx = new URL("https://nipafx.dev");
 // connection needs to be closed but not in the demo
-URLConnection connection = codefx.openConnection();
+URLConnection connection = nipafx.openConnection();
 Reader reader = new BufferedReader(
 		new InputStreamReader(
 				connection.getInputStream()));
@@ -18,9 +18,9 @@ Reader reader = new BufferedReader(
 Convert to `var`:
 
 ```java
-var codefx = new URL("http://codefx.org");
+var nipafx = new URL("https://nipafx.dev");
 // connection needs to be closed but not in the demo
-var connection = codefx.openConnection();
+var connection = nipafx.openConnection();
 var reader = new BufferedReader(
 		new InputStreamReader(
 				connection.getInputStream()));

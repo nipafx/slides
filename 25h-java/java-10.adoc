@@ -1,7 +1,7 @@
 == Java 10
 image::images/10.jpg[background, size=cover]
 
-Sources: https://github.com/CodeFX-org/demo-java-x[github.com/CodeFX-org/demo-java-x]
+Sources: https://github.com/nipafx/demo-java-x[github.com/nipafx/demo-java-x]
 
 // TODO: toc
 
@@ -15,8 +15,8 @@ We're used to duplicating +
 type information:
 
 ```java
-URL codefx = new URL("http://codefx.org");
-URLConnection connection = codefx.openConnection();
+URL nipafx = new URL("http://nipafx.dev");
+URLConnection connection = nipafx.openConnection();
 Reader reader = new BufferedReader(
 	new InputStreamReader(
 		connection.getInputStream()));
@@ -47,8 +47,8 @@ Compiler knows the types!
 Enter `var`:
 
 ```java
-var codefx = new URL("http://codefx.org");
-var connection = codefx.openConnection();
+var nipafx = new URL("http://nipafx.dev");
+var connection = nipafx.openConnection();
 var reader = new BufferedReader(
 	new InputStreamReader(
 		connection.getInputStream()));

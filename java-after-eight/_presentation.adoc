@@ -48,10 +48,10 @@ This talk is:
 
 === Links
 
-* slides at https://slides.codefx.org/[slides.codefx.org]
-* code at https://github.com/CodeFX-org[github.com/CodeFx-org]
-** demo code base: https://github.com/CodeFX-org/java-after-eight[/java-after-eight]
-** more Java 9+ features: https://github.com/CodeFX-org/demo-java-x[/demo-java-x]
+* slides at https://slides.nipafx.dev/[slides.nipafx.dev]
+* code at https://github.com/nipafx[github.com/nipafx]
+** demo code base: https://github.com/nipafx/java-after-eight[/java-after-eight]
+** more Java 9+ features: https://github.com/nipafx/demo-java-x[/demo-java-x]
 
 // Tweet questions with https://twitter.com/hashtag/JavaNext?src=hash[#JavaNext]
 
@@ -113,7 +113,7 @@ Java 11 misses out on many recent developments:
 * a few new JVM features
 * improved performance
 
-=== Curious?
+=== Curious?sd
 
 Let me show you how much +
 you're missing out on +
@@ -124,7 +124,7 @@ if you're (still?) on Java 11.
 
 Code, code, code, code
 
-(https://github.com/CodeFX-org/java-after-eight[code base])
+(https://github.com/nipafx/java-after-eight[code base])
 
 ////
 
@@ -190,7 +190,7 @@ Code, code, code, code
 ```java
 HttpRequest request = HttpRequest.newBuilder()
     .GET()
-    .uri(URI.create("http://codefx.org"))
+    .uri(URI.create("https://nipafx.dev"))
     .header("Accept-Language", "en-US,en;q=0.5")
     .build();
 ```
