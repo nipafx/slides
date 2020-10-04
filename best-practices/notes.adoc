@@ -1,0 +1,237 @@
+== Misc
+
+* "Simple-minded, care-free near-incompetence can be better than industrial-strength good intentions paving a superhighway to hell." https://yosefk.com/blog/why-bad-scientific-code-beats-code-following-best-practices.html
+
+== Best practices?
+
+* umbrella in the rain? even in storm?
+* something with accessibility?
+* adopting microservices, monorepos, ...
+* yagni
+
+=== DRY
+
+From Kevlin Henney (Mail from 18.06.2019):
+
+> A couple of years ago I visited a company that had been trying to factor
+> out a library of common code and services between two applications. The
+> reasoning was fairly typical: avoid duplicated code and effort, aim for
+> reuse. The problem was that one of the applications was mature (~10 years
+> in production) and the other not (a few months of development, not in
+> production, based on more recent frameworks). Instead of speeding up
+> development, as they'd hoped, application development slowed down, their
+> bug rate increased, etc.
+>
+> The solution was to decouple the applications and get rid of the common
+> library, realising that the newer application was not yet stable enough to
+> act as a reuse base for the older one, and also that the amount of
+> commonality they shared and, therefore, duplicated was less around 5%. The
+> duplication cost was a minor fee compared to the hassle and slowdown that
+> eliminating it would cause.
+
+=== Premature Optimization
+
+> Premature optimization is the root of all evil
+
+"It is easier to optimize correct code than to correct optimized code."
+http://www.billharlan.com/pub/papers/A_Tirade_Against_the_Cult_of_Performance.html
+
+Actual quote: "We should forget about small efficiencies, say about 97% of the time: premature optimization is the root of all evil. Yet we should not pass up our opportunities in that critical 3%. A good programmer will not be lulled into complacency by such reasoning, he will be wise to look carefully at the critical code; but only after that code has been identified."
+
+https://softwareengineering.stackexchange.com/a/14882
+
+http://www.flounder.com/optimization.htm
+
+
+
+== Criticism
+
+=== James Marcus Bach
+
+"No best practices"
+https://www.satisfice.com/blog/archives/5164
+
+* context matters!
+* impossible to determine "best"
+* there's is never a consensus
+
+=== Michael Quinn Patton - Qualitative Research & Evaluation Methods
+
+> the only best practice in which I have complete confidence is avoiding the label 'best practice'
+
+> The allure and seduction of best-practice thinking poisons genuine dialogue about both what we know and the limitations of what we know. [...] That modeling of and nurturing deliberative, inclusive, and, yes, humble dialogue may make a greater contribution to societal welfare than the search for generalizable, "best-practice" findings – conclusions that risk becoming the latest rigid orthodoxies even as they are becoming outdated anyway.
+
+* avoid asking or entertaining the question "Which is best?"
+* instead ask more nuanced questions related to conditions and contexts
+* use terms which "tend less toward overgeneralization" like better practices, effective practices, or promising practices
+
+=== Eugene Bardach - Eightfold path (policy analysis)
+
+==== Framework
+
+* develop realistic expectations: +
+"Because a practice seems to be tailored to a specific policy problem and also based on solid research, it does not necessarily mean it is creating good results."
+
+* analyze smart practices: +
+"Smart practices take advantage of an idle opportunity at a low cost and little risk."
+
+* observe the practice: +
+"when adapting smart practices for another source, it is important to identify the core essence of the practice while allowing flexibility for how it is implemented so it remains sensitive to local conditions"
+
+* describe generic vulnerabilities: +
+"an analyst should describe potential vulnerabilities that could lead a smart practice to fail"
+
+* but will it work here? +
+"The final step in identifying an appropriate best practice for a policy problem is to ensure that the context from which the practice is derived is comparable to the context in which it will be applied.""
+
+==== Steps
+
+. define the problem
+. assemble some evidence
+. construct the alternatives
+. select the criteria
+. project the outcomes
+. confront the trade-offs
+. decide
+. tell your story
+
+> The New York taxi driver test is a technique for evaluating the effectiveness of communication between policy makers and analysts. Bardach contends that policy explanations must be clear and down-to-earth enough for a taxi driver to be able to understand the premise during a trip through city streets. The New York taxi driver is presumed to be both a non-specialist and a tough customer
+
+=== Contingency theory
+
+Hot takes from the 50s and 60s
+
+https://en.wikipedia.org/wiki/Contingency_theory
+
+A contingency theory is an organizational theory that claims that there is no best way to organize a corporation, to lead a company, or to make decisions. Instead, the optimal course of action is contingent (dependent) upon the internal and external situation.
+
+* Organizations are open systems that need careful management to satisfy and balance internal needs and to adapt to environmental circumstances
+* There is not one best way of organizing. The appropriate form depends on the kind of task or environment one is dealing with.
+* Management must be concerned, above all else, with achieving alignments and good fits
+* Different types or species of organizations are needed in different types of environments
+
+== Strategies to find suitable practices
+
+=== Wikipedia
+
+[quote, 'https://en.wikipedia.org/wiki/Best_practice[Wikipedia]']
+____
+Instead of it being "the best", a practice might simply be a smart practice, a good practice, or a promising practice.
+This allows for a mix and match approach for making recommendations that might encompass pieces of many good practices.
+____
+
+
+=== Eugene Bardach - Eightfold path (policy analysis)
+
+==== Framework
+
+* develop realistic expectations: +
+"Because a practice seems to be tailored to a specific policy problem and also based on solid research, it does not necessarily mean it is creating good results."
+
+* analyze smart practices: +
+"Smart practices take advantage of an idle opportunity at a low cost and little risk."
+
+* observe the practice: +
+"when adapting smart practices for another source, it is important to identify the core essence of the practice while allowing flexibility for how it is implemented so it remains sensitive to local conditions"
+
+* describe generic vulnerabilities: +
+"an analyst should describe potential vulnerabilities that could lead a smart practice to fail"
+
+* but will it work here? +
+"The final step in identifying an appropriate best practice for a policy problem is to ensure that the context from which the practice is derived is comparable to the context in which it will be applied.""
+
+==== Steps
+
+. define the problem
+. assemble some evidence
+. construct the alternatives
+. select the criteria
+. project the outcomes
+. confront the trade-offs
+. decide
+. tell your story
+
+> The New York taxi driver test is a technique for evaluating the effectiveness of communication between policy makers and analysts. Bardach contends that policy explanations must be clear and down-to-earth enough for a taxi driver to be able to understand the premise during a trip through city streets. The New York taxi driver is presumed to be both a non-specialist and a tough customer
+
+=== Contingency theory
+
+Hot takes from the 50s and 60s
+
+https://en.wikipedia.org/wiki/Contingency_theory
+
+A contingency theory is an organizational theory that claims that there is no best way to organize a corporation, to lead a company, or to make decisions. Instead, the optimal course of action is contingent (dependent) upon the internal and external situation.
+
+* Organizations are open systems that need careful management to satisfy and balance internal needs and to adapt to environmental circumstances
+* There is not one best way of organizing. The appropriate form depends on the kind of task or environment one is dealing with.
+* Management must be concerned, above all else, with achieving alignments and good fits
+* Different types or species of organizations are needed in different types of environments
+
+
+=== Michael Quinn Patton - Qualitative Research & Evaluation Methods
+
+* avoid asking or entertaining the question "Which is best?"
+* instead ask more nuanced questions related to conditions and contexts
+* use terms which "tend less toward overgeneralization" like better practices, effective practices, or promising practices
+
+== Strategies to find suitable practices
+
+=== Wikipedia
+
+[quote, 'https://en.wikipedia.org/wiki/Best_practice[Wikipedia]']
+____
+Instead of it being "the best", a practice might simply be a smart practice, a good practice, or a promising practice.
+This allows for a mix and match approach for making recommendations that might encompass pieces of many good practices.
+____
+
+
+=== Eugene Bardach - Eightfold path (policy analysis)
+
+==== Framework
+
+* develop realistic expectations: +
+"Because a practice seems to be tailored to a specific policy problem and also based on solid research, it does not necessarily mean it is creating good results."
+
+* analyze smart practices: +
+"Smart practices take advantage of an idle opportunity at a low cost and little risk."
+
+* observe the practice: +
+"when adapting smart practices for another source, it is important to identify the core essence of the practice while allowing flexibility for how it is implemented so it remains sensitive to local conditions"
+
+* describe generic vulnerabilities: +
+"an analyst should describe potential vulnerabilities that could lead a smart practice to fail"
+
+* but will it work here? +
+"The final step in identifying an appropriate best practice for a policy problem is to ensure that the context from which the practice is derived is comparable to the context in which it will be applied.""
+
+==== Steps
+
+. define the problem
+. assemble some evidence
+. construct the alternatives
+. select the criteria
+. project the outcomes
+. confront the trade-offs
+. decide
+. tell your story
+
+> The New York taxi driver test is a technique for evaluating the effectiveness of communication between policy makers and analysts. Bardach contends that policy explanations must be clear and down-to-earth enough for a taxi driver to be able to understand the premise during a trip through city streets. The New York taxi driver is presumed to be both a non-specialist and a tough customer
+
+=== Contingency theory
+
+Hot takes from the 50s and 60s
+
+https://en.wikipedia.org/wiki/Contingency_theory
+
+A contingency theory is an organizational theory that claims that there is no best way to organize a corporation, to lead a company, or to make decisions. Instead, the optimal course of action is contingent (dependent) upon the internal and external situation.
+
+* Organizations are open systems that need careful management to satisfy and balance internal needs and to adapt to environmental circumstances
+* There is not one best way of organizing. The appropriate form depends on the kind of task or environment one is dealing with.
+* Management must be concerned, above all else, with achieving alignments and good fits
+* Different types or species of organizations are needed in different types of environments
+
+
+=== Michael Quinn Patton - Qualitative Research & Evaluation Methods
+
+* avoid asking or entertaining the question "Which is best?"
+* instead ask more nuanced questions related to conditions and contexts
+* use terms which "tend less toward overgeneralization" like better practices, effective practices, or promising practices
