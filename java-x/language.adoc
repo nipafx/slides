@@ -137,7 +137,7 @@ Takes 44 lines!
 public record Range(int low, int high) {
 
 	// compiler generates:
-	//  * constructor
+	//  * canonical constructor
 	//  * accessors low(), high()
 	//  * equals, hashCode, toString
 
@@ -185,10 +185,9 @@ Records can be customized:
 * add other methods
 * override `Object` methods
 * implement interfaces
+* made serializable
 
-=== Customizable Record
-
-Override constructor:
+=== Override Constructors
 
 ```java
 public Range(int low, int high) {
@@ -199,9 +198,9 @@ public Range(int low, int high) {
 }
 ```
 
-=== Customizable Record
+=== Override Constructors
 
-Compact form:
+Compact canonical constructor:
 
 ```java
 // executed before fields are assigned
@@ -209,12 +208,101 @@ public Range {
 	if (high < low)
 		throw new IllegalArgumentException();
 }
+
+// arguments can be reassigned
+public Range {
+	if (high < low)
+		high = low;
+}
 ```
+
+=== Override Constructors
+
+* implicit constructor has same visibility as record
+* explicit constructors can't reduce visibility
+* can't assign fields in compact form +
+(happens automatically after its execution)
+
+=== Add Constructors
+
+Additional constructors work as usual:
+
+```java
+public Range(int high) {
+	this(0, high);
+}
+```
+
+(Compact canonical constructor can't delegate.)
+
+=== Add Static Factories
+
+Additional static factories work as usual:
+
+```java
+public Range static open(
+		int low, int high) {
+	return new Range(low, high + 1);
+}
+```
+
+Can't reduce constructor visibility, though.
+
+```java
+@Deprecated
+// use static factory method instead
+public Range { }
+```
+
+=== Override Accessors
+
+Accessors can be overridden:
+
+```java
+@Override
+public low() {
+	return Math.max(0, low);
+}
+```
+
+Not a good example!
+
+> The API for a record models the state, the whole state, and nothing but the state.
+
+=== Implement Interfaces
+
+```java
+public record Range(int low, int high)
+		implements Comparable<Range> {
+
+	@Override
+	public int compareTo(Range other) {
+		return this.low == other.low
+			? this.high - other.high
+			: this.low - other.low;
+	}
+
+}
+```
+
+=== Serializable Records
+
+```java
+public record Range(int low, int high)
+		implements Serializable { }
+```
+
+* has default `serialVersionUID` 0
+* uses `FileOutputStream` and +
+  `FileInputStream` as usual
+* deserializaton calls constructor 🙌
+* framework support is growing +
+  (e.g. https://johnzon.apache.org/[Apache Johnzon] for JSON-B)
 
 === Summary
 
 * use records to replace data carriers
-* it's not anty-boilerplate pixie dust +
+* it's not anti-boilerplate pixie dust +
   ⇝ use only when "the deal" makes sense
 * beware of limitations
 * beware of class-building facilites
