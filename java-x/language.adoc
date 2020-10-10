@@ -323,12 +323,113 @@ public record Range(int low, int high)
 </table>
 ++++
 
-Fewer `if`-s.
+Type check and cast in one operation.
+
+=== Old-school `instanceof`
+
+`instanceof` is cumbersome:
+
+```java
+public void feed(Animal animal) {
+	if (animal instanceof Elephant)
+		((Elephant) animal).eatPlants();
+	else if (animal instanceof Tiger)
+		((Tiger) animal).eatMeat();
+}
+```
+
+Three things are happening:
+
+. type test
+. type conversaion
+. variable declaration (implicit)
 
 === Pattern Matching
 
-// TODO fill with content
+```java
+public void feed(Animal animal) {
+	if (animal instanceof Elephant elephant)
+		elephant.eatPlants();
+	else if (animal instanceof Tiger tiger)
+		tiger.eatMeat();
+}
+```
 
+`animal instanceof Tiger tiger`:
+
+. does all three things in one operation
+. `tiger` is scoped to `true`-branch
+
+=== What is a Pattern?
+
+A _pattern_ is:
+
+. a _test_/_predicate_ +
+  that is applied to a target
+. _pattern variables_  +
+  that are extracted from the target +
+  if the test passes
+
+```java
+//         |--------- pattern --------|
+//  target |----- test ------| variable
+    animal instanceof Elephant elephant
+```
+
+We will see more patterns in the future.
+
+=== Pattern Variable Scope
+
+Pattern var is in scope +
+where compiler can prove pattern is `true`:
+
+```java
+public void inverted(Object object) {
+	if (!(object instanceof String string))
+		throw new IllegalArgumentException();
+	// after inverted test
+	System.out.println(string.length());
+}
+```
+
+=== Pattern Variable Scope
+
+```java
+public void scoped(Object object) {
+	// later in same expression
+	if (object instanceof String string
+			&& string.length() > 50)
+		System.out.println("Long string");
+
+	if (object instanceof String string
+			// compiler error because || means
+			// it's not necessarily a string
+			|| string.length() > 50)
+		System.out.println("Maybe string");
+}
+```
+
+=== Summary
+
+* `$TARGET instanceof $TYPE $VAR`:
+	. checks whether `$TARGET` is of type `$TYPE`
+	. creates variable `$TYPE $VAR = $TARGET`
+	. in scope wherever `instanceof $TYPE` is `true`
+* first of many (?) match patterns
+* keep an eye out for integration with `switch`
+
+=== Preview
+
+`switch` will be able to use pattern matching:
+
+```java
+switch (animal) {
+	case instanceof Elephant elephant
+		-> elephant.eatPlants();
+	case instanceof Tiger tiger
+		-> tiger.eatMeat();
+}
+```
 
 
 
