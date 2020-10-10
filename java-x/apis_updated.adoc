@@ -575,14 +575,7 @@ Interesting `static` methods:
 
 Asynchronous error recovery.
 
-////
-TODO
-* Java 9 additions to `CompletableFuture`
-* Java 14: https://gunnarmorling.github.io/jdk-api-diff/jdk13-jdk14-api-diff.html#java.lang.StrictMath
-* Java 15:
-	* https://gunnarmorling.github.io/jdk-api-diff/jdk14-jdk15-api-diff.html#java.lang.Math
-	* https://gunnarmorling.github.io/jdk-api-diff/jdk14-jdk15-api-diff.html#java.lang.StrictMath
-////
+// TODO: Java 9 additions to `CompletableFuture`
 
 === Recap on API Basics
 
@@ -713,22 +706,23 @@ There are overloads that accept `Executor`.
 
 == A Mixed Bag Of Updated&nbsp;APIs
 
+Two great sources on +
+Java API changes +
+between versions:
+
+* https://javaalmanac.io/[Java Version Almanac]
+* https://github.com/AdoptOpenJDK/jdk-api-diff[JDK API Diff Report Generator]
+
+=== A Mixed Bag Of Updated&nbsp;APIs
+
 *In Java 9:*
 
 * OASIS XML Catalogs 1.1 (http://openjdk.java.net/jeps/268[JEP 268]), +
 Xerces 2.11.0 (http://openjdk.java.net/jeps/255[JEP 255])
-// TODO does this include Xerxes support for XSLT 2?
 * Unicode support in +
 `PropertyResourceBundle` (http://openjdk.java.net/jeps/226[JEP 226])
 
 Many lower-level APIs.
-
-////
-TODO
-* how to get line by line out of process
-* JKS keystore is read-only
-* mention diff Javadoc for version updates
-////
 
 === A Mixed Bag Of New&nbsp;I/O&nbsp;Methods
 
@@ -767,13 +761,44 @@ ByteBuffer.put(int, ...) // ⑬
 *In Java 10:*
 
 ```java
-DateTimeFormatter.localizedBy(Locale locale);
+DateTimeFormatter.localizedBy(Locale);
 ```
 
 *In Java 11:*
 
 ```java
-Collection.toArray(IntFunction<T[]> generator);
-Predicate.not(Predicate<T> target); // static
+Collection.toArray(IntFunction<T[]>);
+Predicate.not(Predicate<T>); // static
 Pattern.asMatchPredicate(); // ⇝ Predicate<String>
+```
+
+=== A Mixed Bag Of New&nbsp;Math&nbsp;Methods
+
+```java
+// in Java 14
+StrictMath.decrementExact(int);
+StrictMath.decrementExact(long);
+StrictMath.incrementExact(int);
+StrictMath.incrementExact(long);
+StrictMath.negateExact(int);
+StrictMath.negateExact(long);
+
+// in Java 15
+Math.absExact(int)
+Math.absExact(long)
+StrictMath.absExact(int)
+StrictMath.absExact(long)
+```
+
+=== A Mixed Bag Of New&nbsp;Methods
+
+*In Java 12:*
+
+* 12: NumberFormat::getCompactNumberInstance
+
+*In Java 15:*
+
+```java
+// instance version of String::format
+String.formatted(Object... args);
 ```
