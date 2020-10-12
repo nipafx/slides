@@ -77,6 +77,7 @@ ask your colleagues first</p></li><li><p>there are no stupid questions!</p></li>
 	<tr><td>Performance Improvements</td></tr>
 </table></section></section>
 <section id="new_language_features"><h2>New Language Features</h2><table class="toc">
+	<tr><td>SealedClasses</td></tr>
 	<tr><td>Records</td></tr>
 	<tr><td>Pattern Matching</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
@@ -85,6 +86,112 @@ ask your colleagues first</p></li><li><p>there are no stupid questions!</p></li>
 	<tr><td>All The Small Things... ⑨</td></tr>
 </table></section>
 <section><section id="new_language_features_2"><h2>New Language Features</h2><table class="toc">
+	<tr class="toc-current"><td>SealedClasses</td></tr>
+	<tr><td>Records</td></tr>
+	<tr><td>Pattern Matching</td></tr>
+	<tr><td>Text Blocks ⑮</td></tr>
+	<tr><td>Switch Expressions ⑭</td></tr>
+	<tr><td>Local-Variable Type Inference ⑩</td></tr>
+	<tr><td>All The Small Things... ⑨</td></tr>
+</table><div class="paragraph"><p>Between <code>final</code> and open classes</p></div></section><section id="modeling_a_domain"><h2>Modeling A Domain</h2><div class="paragraph"><p>Many systems have central abstractions, e.g.:</p></div>
+<div class="ulist"><ul><li><p>staff/customers</p></li><li><p>delivery mechanisms</p></li><li><p>shapes</p></li></ul></div>
+<div class="paragraph"><p>Commonly, polymorphism is used<br>
+to reuse code and attach functionality.</p></div>
+<div class="paragraph"><p>If many subsystems operate on abstractions,<br>
+there&#8217;s the risk of <em>feature creep</em>.</p></div></section><section id="modeling_a_domain_2"><h2>Modeling A Domain</h2><div class="paragraph"><p>Alternatively, subsystems can<br>
+implement their own handling.</p></div>
+<div class="paragraph"><p>Challenge is that subtypes<br>
+are <em>effectively unknown</em>, e.g.:</p></div>
+<div class="ulist"><ul><li><p>what subtypes of <code>Staff</code> exist?</p></li><li><p>what subtypes of <code>Shape</code> exist?</p></li></ul></div>
+<div class="paragraph"><p>OO-solutions are cumbersome.<br>
+(e.g. <a href="https://en.wikipedia.org/wiki/Visitor_pattern">visitor pattern</a>)</p></div></section><section id="modeling_a_closed_domain"><h2>Modeling A Closed Domain</h2><div class="paragraph"><p>In many cases, a type&#8217;s variations<br>
+are finite and known, e.g.:</p></div>
+<div class="ulist"><ul><li><p><code>Employee</code>, <code>Freelancer</code> extend <code>Staff</code></p></li><li><p><code>Circle</code>, <code>Rectangle</code> extend <code>Shape</code></p></li></ul></div>
+<div class="paragraph"><p>If subsystems rely on that,<br>
+their code becomes simpler (<code>instanceof</code>).</p></div>
+<div class="paragraph"><p>But less maintainable?<br>
+⇝ Only because compiler can&#8217;t help!</p></div></section><section id="compiler_inheritance"><h2>Compiler &amp; Inheritance</h2><div class="paragraph"><p>There&#8217;s three options how a class can be extended:</p></div>
+<div class="ulist"><ul><li><p>by no classes (<code>final</code> class)</p></li><li><p>by package classes<br>
+(package-visible constructor)</p></li><li><p>by all class (no keyword)</p></li></ul></div>
+<div class="paragraph"><p>(For interfaces, there&#8217;s no choice at all.)</p></div>
+<div class="paragraph"><p>In all cases:<br>
+<strong>Implementations are <em>unknown</em> to the compiler.</strong></p></div></section><section id="enter_sealed_types"><h2>Enter Sealed Types</h2><div class="paragraph"><p>With <code>sealed</code> types, we can express<br>
+<em>limited extensibility</em>:</p></div>
+<div class="ulist"><ul><li><p>only specific types can extend sealed type</p></li><li><p>those are known to developer and compiler</p></li></ul></div></section><section id="sealed_staff"><h2>Sealed Staff</h2><div class="ulist"><ul><li><p>mark class/interface as <code>sealed</code></p></li><li><p>use <code>permits</code> to list types</p></li></ul></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">sealed interface Staff
+	permits Employee, Freelancer { }
+
+final class Employee implements Staff { }
+
+final class Freelancer implements Staff { }
+
+// compile error
+final class Consultant implements Staff { }</code></pre></div></div></section><section id="handling_sealed_staff"><h2>Handling Sealed Staff</h2><div class="paragraph"><p>Goal is to combine sealed types,<br>
+switch expressions, and pattern matching:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public double cost(Staff staff) {
+	return switch(staff) {
+		// strawman syntax!
+		case Employee employee -&gt;
+			employee.salary() * 2;
+		case Freelancer freelander -&gt;
+			freelancer.averageInvoice() * 1.1;
+		// compiler checks exhaustiveness
+	}
+}</code></pre></div></div></section><section id="handling_sealed_staff_2"><h2>Handling Sealed Staff</h2><div class="paragraph"><p>But we&#8217;re not there yet.</p></div>
+<div class="paragraph"><p>For now:</p></div>
+<div class="ulist"><ul><li><p>sealed classes limit extensibility<br>
+(between <code>final</code> and non-<code>final</code>)</p></li><li><p>prevent extension by users</p></li><li><p>express intention to maintainers</p></li></ul></div></section><section id="sealing_details"><h2>Sealing Details</h2><div class="paragraph"><p>There are a few details to discuss:</p></div>
+<div class="ulist"><ul><li><p>for the sealed type</p></li><li><p>for the premitted types</p></li><li><p>for both of those types</p></li></ul></div></section><section id="sealed_type_details"><h2>Sealed Type Details</h2><div class="paragraph"><p>Sealed types can extend/inherit as usual:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">sealed class Staff
+	extends Person
+	implements Comparable&lt;Staff&gt;
+	permits Employee, Freelancer {
+
+	// ...
+
+}</code></pre></div></div></section><section id="permitted_type_details"><h2>Permitted Type Details</h2><div class="paragraph"><p>Permitted types must use exactly one of these modifiers:</p></div>
+<div class="ulist"><ul><li><p><code>final</code> for no inheritance</p></li><li><p><code>sealed</code> for limited inheritance</p></li><li><p><code>non-sealed</code> for unlimited inheritance</p></li></ul></div>
+<div class="paragraph"><p>With <code>sealed</code> and <code>non-sealed</code>, a type<br>
+can admit further implementations.</p></div></section><section id="permitted_type_details_2"><h2>Permitted Type Details</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">sealed interface Staff
+	permits Employee, Freelancer { }
+
+non-sealed class Employee implements Staff { }
+
+sealed class Freelancer implements Staff
+	permits Consultant { }
+
+class Consultant extends Freelancer { }</code></pre></div></div>
+<div class="paragraph"><p>But what about exhaustiveness?!<br>
+⇝ type pyramid has "exhaustive peak"</p></div></section><section id="permitted_type_details_3"><h2>Permitted Type Details</h2><div class="paragraph"><p>Permitted types must directly extend sealed type:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">sealed interface Staff
+	//                 compile error
+	permits Freelancer, Consultant { }
+
+non-sealed class Freelancer implements Staff { }
+
+class Consultant extends Freelancer { }</code></pre></div></div>
+<div class="paragraph"><p>This keeps type pyramid layered.</p></div></section><section id="permitting_records"><h2>Permitting Records</h2><div class="paragraph"><p>Remember, records are implicitly <code>final</code>.</p></div>
+<div class="paragraph"><p>They make good permitted types.</p></div></section><section id="neighbours"><h2>Neighbours</h2><div class="paragraph"><p>Permitted types must be "close":</p></div>
+<div class="ulist"><ul><li><p>same package for non-modular JAR</p></li><li><p>same module for modular JAR</p></li></ul></div>
+<div class="paragraph"><p>Sealed and each permitted type must be<br>
+visible/accesible to one another.</p></div></section><section id="flat_mates"><h2>Flat Mates</h2><div class="paragraph"><p>If all types are in same source file,<br>
+<code>permits</code> can be omitted:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class Employment {
+
+	sealed interface Staff { }
+
+	final class Employee implements Staff { }
+
+	final class Freelancer implements Staff { }
+
+}</code></pre></div></div></section><section id="summary"><h2>Summary</h2><div class="paragraph"><p>Sealed types make inheritance:</p></div>
+<div class="ulist"><ul><li><p>more flexible between open and <code>final</code></p></li><li><p>analyzable to the compiler</p></li></ul></div>
+<div class="paragraph"><p>Consequences:</p></div>
+<div class="ulist"><ul><li><p>makes type tests more maintainable<br>
+(thanks to exhaustiveness checks).</p></li><li><p>reduces need for complex OO solutions<br>
+(goodbye visitor pattern 👋)</p></li></ul></div></section></section>
+<section><section id="new_language_features_3"><h2>New Language Features</h2><table class="toc">
+	<tr><td>SealedClasses</td></tr>
 	<tr class="toc-current"><td>Records</td></tr>
 	<tr><td>Pattern Matching</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
@@ -216,9 +323,10 @@ public low() {
 		implements Serializable { }</code></pre></div></div>
 <div class="ulist"><ul><li><p>has default <code>serialVersionUID</code> 0</p></li><li><p>uses <code>FileOutputStream</code> and<br>
 <code>FileInputStream</code> as usual</p></li><li><p>deserializaton calls constructor 🙌</p></li><li><p>framework support is growing<br>
-(e.g. <a href="https://johnzon.apache.org/">Apache Johnzon</a> for JSON-B)</p></li></ul></div></section><section id="summary"><h2>Summary</h2><div class="ulist"><ul><li><p>use records to replace data carriers</p></li><li><p>it&#8217;s not anti-boilerplate pixie dust<br>
+(e.g. <a href="https://johnzon.apache.org/">Apache Johnzon</a> for JSON-B)</p></li></ul></div></section><section id="summary_2"><h2>Summary</h2><div class="ulist"><ul><li><p>use records to replace data carriers</p></li><li><p>it&#8217;s not anti-boilerplate pixie dust<br>
 ⇝ use only when "the deal" makes sense</p></li><li><p>beware of limitations</p></li><li><p>beware of class-building facilites</p></li><li><p>observe ecosystem for adoption</p></li></ul></div></section></section>
-<section><section id="new_language_features_3"><h2>New Language Features</h2><table class="toc">
+<section><section id="new_language_features_4"><h2>New Language Features</h2><table class="toc">
+	<tr><td>SealedClasses</td></tr>
 	<tr><td>Records</td></tr>
 	<tr class="toc-current"><td>Pattern Matching</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
@@ -266,14 +374,15 @@ where compiler can prove pattern is <code>true</code>:</p></div>
 			// it's not necessarily a string
 			|| string.length() &gt; 50)
 		System.out.println("Maybe string");
-}</code></pre></div></div></section><section id="summary_2"><h2>Summary</h2><div class="ulist"><ul><li><p><code>$TARGET instanceof $TYPE $VAR</code>:</p><div class="olist arabic"><ol class="arabic"><li><p>checks whether <code>$TARGET</code> is of type <code>$TYPE</code></p></li><li><p>creates variable <code>$TYPE $VAR = $TARGET</code></p></li><li><p>in scope wherever <code>instanceof $TYPE</code> is <code>true</code></p></li></ol></div></li><li><p>first of many (?) match patterns</p></li><li><p>keep an eye out for integration with <code>switch</code></p></li></ul></div></section><section id="preview"><h2>Preview</h2><div class="paragraph"><p><code>switch</code> will be able to use pattern matching:</p></div>
+}</code></pre></div></div></section><section id="summary_3"><h2>Summary</h2><div class="ulist"><ul><li><p><code>$TARGET instanceof $TYPE $VAR</code>:</p><div class="olist arabic"><ol class="arabic"><li><p>checks whether <code>$TARGET</code> is of type <code>$TYPE</code></p></li><li><p>creates variable <code>$TYPE $VAR = $TARGET</code></p></li><li><p>in scope wherever <code>instanceof $TYPE</code> is <code>true</code></p></li></ol></div></li><li><p>first of many (?) match patterns</p></li><li><p>keep an eye out for integration with <code>switch</code></p></li></ul></div></section><section id="preview"><h2>Preview</h2><div class="paragraph"><p><code>switch</code> will be able to use pattern matching:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">switch (animal) {
-	case instanceof Elephant elephant
+	case Elephant elephant
 		-&gt; elephant.eatPlants();
-	case instanceof Tiger tiger
+	case Tiger tiger
 		-&gt; tiger.eatMeat();
 }</code></pre></div></div></section></section>
-<section><section id="new_language_features_4"><h2>New Language Features</h2><table class="toc">
+<section><section id="new_language_features_5"><h2>New Language Features</h2><table class="toc">
+	<tr><td>SealedClasses</td></tr>
 	<tr><td>Records</td></tr>
 	<tr><td>Pattern Matching</td></tr>
 	<tr class="toc-current"><td>Text Blocks ⑮</td></tr>
@@ -334,7 +443,8 @@ String haikuBlock = """
     }
     """;</code></pre></div></div>
 <div class="paragraph"><p>⇝ Way fewer escapes in HTML/JSON/SQL/etc.</p></div></section><section id="more_on_text_blocks"><h2>More on Text Blocks</h2><div class="ulist"><ul><li><p><a href="https://blog.codefx.org/java/text-blocks/">Definitive Guide To Text Blocks</a></p></li><li><p><a href="http://cr.openjdk.java.net/~jlaskey/Strings/TextBlocksGuide_v9.html">Programmer&#8217;s Guide To Text Blocks</a></p></li></ul></div></section></section>
-<section><section id="new_language_features_5"><h2>New Language Features</h2><table class="toc">
+<section><section id="new_language_features_6"><h2>New Language Features</h2><table class="toc">
+	<tr><td>SealedClasses</td></tr>
 	<tr><td>Records</td></tr>
 	<tr><td>Pattern Matching</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
@@ -531,7 +641,8 @@ boolean result = switch (ternaryBool) {
 };</code></pre></div></div>
 <div class="paragraph"><p>Compiler adds in <code>default</code> branch.</p></div></section><section id="more_on_switch"><h2>More on <code>switch</code></h2><div class="paragraph"><p>Definitive Guide To Switch Expressions</p></div>
 <div class="ulist"><ul><li><p>💻 <a href="https://blog.codefx.org/java/switch-expressions/">tiny.cc/java-12-switch</a></p></li><li><p>▶ <a href="https://www.youtube.com/watch?v=1znHEf3oSNI&amp;list=PL_-IO8LOLuNp2stY1qBUtXlfMdJW7wvfT">tiny.cc/java-12-switch-yt</a></p></li></ul></div></section></section>
-<section><section id="new_language_features_6"><h2>New Language Features</h2><table class="toc">
+<section><section id="new_language_features_7"><h2>New Language Features</h2><table class="toc">
+	<tr><td>SealedClasses</td></tr>
 	<tr><td>Records</td></tr>
 	<tr><td>Pattern Matching</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
@@ -657,7 +768,7 @@ short s = 42;
 long l = 42</code></pre></div></div></section><section id="more_on_var"><h2>More on <code>var</code></h2><div class="ulist"><ul><li><p>First Contact With <code>var</code> In Java 10<br>
 💻 <a href="https://blog.codefx.org/java/java-10-var-type-inference/">tiny.cc/java-var</a> /
 ▶ <a href="https://www.youtube.com/watch?v=Le1DbpRZdRQ&amp;index=1&amp;list=PL_-IO8LOLuNp2stY1qBUtXlfMdJW7wvfT">tiny.cc/java-var-yt</a></p></li><li><p><a href="https://snyk.io/blog/local-type-inference-java-cheat-sheet">cheat sheet</a> (<strong>⇜ print when getting started!</strong>)</p></li><li><p><a href="http://openjdk.java.net/projects/amber/LVTIstyle.html">official style guidelines</a></p></li><li><p><code>var</code> and &#8230;&#8203;</p><div class="ulist"><ul><li><p><a href="https://blog.codefx.org/java/intersection-types-var/">intersection types</a></p></li><li><p><a href="https://nipafx.dev/java-var-traits">traits</a></p></li><li><p><a href="https://blog.codefx.org/java/tricks-var-anonymous-classes/">anonymous classes</a></p></li></ul></div></li></ul></div></section></section>
-<section><section id="new_language_features_7"><h2>New Language Features</h2><table class="toc">
+<section><section id="new_language_features_8"><h2>New Language Features</h2><table class="toc">
 	<tr><td>All The Cool Things... ⑩⑭⑮</td></tr>
 	<tr class="toc-current"><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
@@ -687,7 +798,7 @@ long l = 42</code></pre></div></div></section><section id="more_on_var"><h2>More
 }</code></pre></div></div>
 <div class="paragraph"><p>Just like private methods in abstract classes:</p></div>
 <div class="ulist"><ul><li><p>must be implemented</p></li><li><p>can not be overriden</p></li><li><p>can only be called in same source file</p></li></ul></div></section></section>
-<section><section id="new_language_features_8"><h2>New Language Features</h2><table class="toc">
+<section><section id="new_language_features_9"><h2>New Language Features</h2><table class="toc">
 	<tr><td>All The Cool Things... ⑩⑭⑮</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr class="toc-current"><td>Try-With-Resources ⑨</td></tr>
@@ -713,7 +824,7 @@ and can be made implicitly final</p></li></ul></div>
 }</code></pre></div></div>
 <div class="ulist"><ul><li><p>compiler knows that <code>connection</code> is not reassigned</p></li><li><p>developers know what <em>effectively final</em> means</p></li></ul></div>
 <aside class="notes"><div class="paragraph"><p>Q: Can instance be created but not assigned? No.</p></div></aside></section></section>
-<section><section id="new_language_features_9"><h2>New Language Features</h2><table class="toc">
+<section><section id="new_language_features_10"><h2>New Language Features</h2><table class="toc">
 	<tr><td>All The Cool Things... ⑩⑭⑮</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
@@ -739,7 +850,7 @@ for anonymous classes</p></li><li><p>can not be expressed by JVM</p></li></ul></
 	// compile error
 	return new Box&lt;&gt;(innerList) { };
 }</code></pre></div></div></section></section>
-<section><section id="new_language_features_10"><h2>New Language Features</h2><table class="toc">
+<section><section id="new_language_features_11"><h2>New Language Features</h2><table class="toc">
 	<tr><td>All The Cool Things... ⑩⑭⑮</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
@@ -781,7 +892,7 @@ that can not be overriden</p></li></ul></div>
 ⇝ Damn! 😭</p></div></section><section id="safevarargs_on_privatemethods"><h2>@SafeVarargs on Private&nbsp;Methods</h2><div class="paragraph"><p>Looong story, here&#8217;s the point:</p></div>
 <div class="paragraph"><p>In Java 9 <code>@SafeVarargs</code><br>
 can be applied to private methods.</p></div></section></section>
-<section><section id="new_language_features_11"><h2>New Language Features</h2><table class="toc">
+<section><section id="new_language_features_12"><h2>New Language Features</h2><table class="toc">
 	<tr><td>All The Cool Things... ⑩⑭⑮</td></tr>
 	<tr><td>Private Interface Methods ⑨</td></tr>
 	<tr><td>Try-With-Resources ⑨</td></tr>
