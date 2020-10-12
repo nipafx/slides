@@ -2,6 +2,7 @@
 
 ++++
 <table class="toc">
+	<tr><td>SealedClasses</td></tr>
 	<tr><td>Records</td></tr>
 	<tr><td>Pattern Matching</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
@@ -17,6 +18,250 @@
 
 ++++
 <table class="toc">
+	<tr class="toc-current"><td>SealedClasses</td></tr>
+	<tr><td>Records</td></tr>
+	<tr><td>Pattern Matching</td></tr>
+	<tr><td>Text Blocks ⑮</td></tr>
+	<tr><td>Switch Expressions ⑭</td></tr>
+	<tr><td>Local-Variable Type Inference ⑩</td></tr>
+	<tr><td>All The Small Things... ⑨</td></tr>
+</table>
+++++
+
+Between `final` and open classes
+
+=== Modeling A Domain
+
+Many systems have central abstractions, e.g.:
+
+* staff/customers
+* delivery mechanisms
+* shapes
+
+Commonly, polymorphism is used +
+to reuse code and attach functionality.
+
+If many subsystems operate on abstractions, +
+there's the risk of _feature creep_.
+
+=== Modeling A Domain
+
+Alternatively, subsystems can +
+implement their own handling.
+
+Challenge is that subtypes +
+are _effectively unknown_, e.g.:
+
+* what subtypes of `Staff` exist?
+* what subtypes of `Shape` exist?
+
+OO-solutions are cumbersome. +
+(e.g. https://en.wikipedia.org/wiki/Visitor_pattern[visitor pattern])
+
+=== Modeling A Closed Domain
+
+In many cases, a type's variations +
+are finite and known, e.g.:
+
+* `Employee`, `Freelancer` extend `Staff`
+* `Circle`, `Rectangle` extend `Shape`
+
+If subsystems rely on that, +
+their code becomes simpler (`instanceof`).
+
+But less maintainable? +
+⇝ Only because compiler can't help!
+
+=== Compiler & Inheritance
+
+There's three options how a class can be extended:
+
+* by no classes (`final` class)
+* by package classes +
+  (package-visible constructor)
+* by all class (no keyword)
+
+(For interfaces, there's no choice at all.)
+
+In all cases: +
+**Implementations are _unknown_ to the compiler.**
+
+=== Enter Sealed Types
+
+With `sealed` types, we can express +
+_limited extensibility_:
+
+* only specific types can extend sealed type
+* those are known to developer and compiler
+
+=== Sealed Staff
+
+* mark class/interface as `sealed`
+* use `permits` to list types
+
+```java
+sealed interface Staff
+	permits Employee, Freelancer { }
+
+final class Employee implements Staff { }
+
+final class Freelancer implements Staff { }
+
+// compile error
+final class Consultant implements Staff { }
+```
+
+=== Handling Sealed Staff
+
+Goal is to combine sealed types, +
+switch expressions, and pattern matching:
+
+```java
+public double cost(Staff staff) {
+	return switch(staff) {
+		// strawman syntax!
+		case Employee employee ->
+			employee.salary() * 2;
+		case Freelancer freelander ->
+			freelancer.averageInvoice() * 1.1;
+		// compiler checks exhaustiveness
+	}
+}
+```
+
+=== Handling Sealed Staff
+
+But we're not there yet.
+
+For now:
+
+* sealed classes limit extensibility +
+  (between `final` and non-`final`)
+* prevent extension by users
+* express intention to maintainers
+
+=== Sealing Details
+
+There are a few details to discuss:
+
+* for the sealed type
+* for the premitted types
+* for both of those types
+
+=== Sealed Type Details
+
+Sealed types can extend/inherit as usual:
+
+```java
+sealed class Staff
+	extends Person
+	implements Comparable<Staff>
+	permits Employee, Freelancer {
+
+	// ...
+
+}
+```
+
+=== Permitted Type Details
+
+Permitted types must use exactly one of these modifiers:
+
+* `final` for no inheritance
+* `sealed` for limited inheritance
+* `non-sealed` for unlimited inheritance
+
+With `sealed` and `non-sealed`, a type +
+can admit further implementations.
+
+=== Permitted Type Details
+
+```java
+sealed interface Staff
+	permits Employee, Freelancer { }
+
+non-sealed class Employee implements Staff { }
+
+sealed class Freelancer implements Staff
+	permits Consultant { }
+
+class Consultant extends Freelancer { }
+```
+
+But what about exhaustiveness?! +
+⇝ type pyramid has "exhaustive peak"
+
+=== Permitted Type Details
+
+Permitted types must directly extend sealed type:
+
+```java
+sealed interface Staff
+	//                 compile error
+	permits Freelancer, Consultant { }
+
+non-sealed class Freelancer implements Staff { }
+
+class Consultant extends Freelancer { }
+```
+
+This keeps type pyramid layered.
+
+=== Permitting Records
+
+Remember, records are implicitly `final`.
+
+They make good permitted types.
+
+=== Neighbours
+
+Permitted types must be "close":
+
+* same package for non-modular JAR
+* same module for modular JAR
+
+Sealed and each permitted type must be +
+visible/accesible to one another.
+
+=== Flat Mates
+
+If all types are in same source file, +
+`permits` can be omitted:
+
+```java
+public class Employment {
+
+	sealed interface Staff { }
+
+	final class Employee implements Staff { }
+
+	final class Freelancer implements Staff { }
+
+}
+```
+
+=== Summary
+
+Sealed types make inheritance:
+
+* more flexible between open and `final`
+* analyzable to the compiler
+
+Consequences:
+
+* makes type tests more maintainable +
+  (thanks to exhaustiveness checks).
+* reduces need for complex OO solutions +
+  (goodbye visitor pattern 👋)
+
+
+
+
+== New Language Features
+
+++++
+<table class="toc">
+	<tr><td>SealedClasses</td></tr>
 	<tr class="toc-current"><td>Records</td></tr>
 	<tr><td>Pattern Matching</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
@@ -314,6 +559,7 @@ public record Range(int low, int high)
 
 ++++
 <table class="toc">
+	<tr><td>SealedClasses</td></tr>
 	<tr><td>Records</td></tr>
 	<tr class="toc-current"><td>Pattern Matching</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
@@ -424,9 +670,9 @@ public void scoped(Object object) {
 
 ```java
 switch (animal) {
-	case instanceof Elephant elephant
+	case Elephant elephant
 		-> elephant.eatPlants();
-	case instanceof Tiger tiger
+	case Tiger tiger
 		-> tiger.eatMeat();
 }
 ```
@@ -437,6 +683,7 @@ switch (animal) {
 
 ++++
 <table class="toc">
+	<tr><td>SealedClasses</td></tr>
 	<tr><td>Records</td></tr>
 	<tr><td>Pattern Matching</td></tr>
 	<tr class="toc-current"><td>Text Blocks ⑮</td></tr>
@@ -586,6 +833,7 @@ String phrase = """
 
 ++++
 <table class="toc">
+	<tr><td>SealedClasses</td></tr>
 	<tr><td>Records</td></tr>
 	<tr><td>Pattern Matching</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
@@ -986,6 +1234,7 @@ Definitive Guide To Switch Expressions
 
 ++++
 <table class="toc">
+	<tr><td>SealedClasses</td></tr>
 	<tr><td>Records</td></tr>
 	<tr><td>Pattern Matching</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
