@@ -15,12 +15,73 @@ What to do then?
 Command line options to the rescue! +
 (I often call them "escape hatches".)
 
-// TODO: add --illegal-access
+
+=== Permitted Illegal Access
+
+JVM makes an exception +
+from strong encapsulation:
+
+For...
+
+* Java 8 code
+* on the class path
+
+...access to module internals +
+is permitted.
+
+
+=== Illegal Access Warnings
+
+Static access::
+Code compiled against internal API +
+gets accesses without further limitations
+
+Reflective access::
+Code using internal API via reflection +
+gets access, but emits warning +
+
+
+=== Illegal Access Modes
+
+Four modes:
+
+* `permit`: warning on _first_ reflective access to package
+* `warn`: warning on _each_ reflective access
+* `debug`: like `warn` plus stack trace
+* `deny`: illegal access denied (static + reflective)
+
+
+=== Configure Illegal Access
+
+Configuration:
+
+* since Java 9, `permit` is default
+* use `--illegal-access` to override
+
+[source,bash]
+----
+$ java --module-path mods
+    --illegal-access=deny
+    --module advent
+----
+
+
+=== Illegal Access Recommendations
+
+I recommend:
+
+* `--illegal-access=deny` +
+  to prevent unnoticed access +
+  (at least for tests!)
+* `--add-exports`/`--add-opens` +
+  for specific exceptions
+  (see below)
+
 
 === Command Line Options
 
-All command line flags can be applied +
-to `javac` and `java`!
+All following command line flags +
+can be applied to `javac` and `java`!
 
 When used during compilation, +
 they do _not_ change the resulting +
@@ -155,6 +216,7 @@ Often used with `--add-reads` and `--add-exports`.
 
 Edit module graph with:
 
+* `--illegal-access` to configure blanket access
 * `--add-exports` to export packages to modules
 * `--add-opens` to open packages to modules
 * `--add-modules` to add modules
