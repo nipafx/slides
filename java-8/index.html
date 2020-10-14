@@ -527,6 +527,7 @@ List&lt;Order&gt; orders = users.stream()
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;User&gt; users = // ...
 List&lt;Order&gt; orders = users.stream()
 	.flatMap(user -&gt; user.getOrders().stream())
+	// now we have a Stream&lt;Order&gt;
 	.collect(toList());</code></pre></div></div></section><section id="transforming_collections_5"><h2>Transforming Collections</h2><div class="paragraph"><p>Intermediate operations:</p></div>
 <div class="ulist"><ul><li><p><code>map(Function&lt;T, R&gt;)</code></p></li><li><p><code>flatMap(Function&lt;T, Stream&lt;R&gt;&gt;)</code></p></li></ul></div>
 <div class="paragraph"><p>Terminal operations:</p></div>
@@ -899,7 +900,7 @@ All return present value but differ in absence:</p></div>
 <div class="ulist"><ul><li><p><code>orElse(T)</code> returns given default value</p></li><li><p><code>orElseGet(Supplier&lt;T&gt;)</code> computes<br>
 default value and returns it</p></li><li><p><code>orElseThrow()</code> throws<br>
 <code>NoSuchElementException</code> ⑩<br>
-(in ⑧ &amp; ⑨, use <code>get()</code>)</p></li><li><p><code>orElseThrow(Supplier&lt;X&gt;)</code> computes<br>
+(in ⑧ &amp; ⑨, use <code>get()</code>)</p></li><li><p><code>orElseThrow(Supplier&lt;EX&gt;)</code> computes<br>
 exception and throws it</p></li></ul></div></section><section id="getting_a_value_out_2"><h2>Getting A Value Out</h2><div class="paragraph"><p>Canonical example <code>isPresent()</code>/<code>orElseThrow()</code>:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Optional&lt;String&gt; nameOpt = /* stream pipeline */;
 if (nameOpt.isPresent()) {

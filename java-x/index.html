@@ -1027,14 +1027,14 @@ Stream.iterate(
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;T&gt; takeWhile(Predicate&lt;T&gt; predicate);</code></pre></div></div>
 <div class="paragraph"><p>Example:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream.of("a-", "b-", "c-", "", "e-")
-	.takeWhile(s -&gt; !s.isEmpty());
+	.takeWhile(s -&gt; !s.isEmpty())
 	.forEach(System.out::print);
 
 // output: a-b-c-</code></pre></div></div></section><section id="drop_while"><h2>Drop While ⑨</h2><div class="paragraph"><p>Ignore as long as a condition is true:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;T&gt; dropWhile(Predicate&lt;T&gt; predicate);</code></pre></div></div>
 <div class="paragraph"><p>Example:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream.of("a-", "b-", "c-", "de-", "f-")
-	.dropWhile(s -&gt; s.length() &lt;= 2);
+	.dropWhile(s -&gt; s.length() &lt;= 2)
 	.forEach(System.out::print);
 
 // output: de-f-</code></pre></div></div></section><section id="collect_unmodifiable"><h2>Collect Unmodifiable ⑩</h2><div class="paragraph"><p>Create unmodifiable collections<br>
@@ -1138,8 +1138,8 @@ T orElseGet(Supplier&lt;T&gt; supplier)
 T orElseThrow()
 	throws NoSuchElementException
 T orElseThrow(
-	Supplier&lt;X&gt; exceptionSupplier)
-	throws X</code></pre></div></div></section><section id="get_considered_harmful"><h2>Get Considered Harmful</h2><div class="paragraph"><p><a href="https://bugs.openjdk.java.net/browse/JDK-8160606">JDK-8160606</a>
+	Supplier&lt;EX&gt; exceptionSupplier)
+	throws EX</code></pre></div></div></section><section id="get_considered_harmful"><h2>Get Considered Harmful</h2><div class="paragraph"><p><a href="https://bugs.openjdk.java.net/browse/JDK-8160606">JDK-8160606</a>
 will deprecate<br>
 <code>Optional::get</code>.</p></div>
 <div class="ulist"><ul><li><p>when?</p></li><li><p>for removal?</p></li></ul></div>
@@ -1306,7 +1306,7 @@ Map&lt;String, Integer&gt; mapEntries = Map.ofEntries(
 <aside class="notes"><div class="paragraph"><p>Q: Where does <code>entry</code> come from? <code>Map</code>
 Q: Overloads on <code>of</code>? 10
 Q: Overloads on <code>Map::ofEntries</code>? 1</p></div></aside></section><section id="interesting_details"><h2>Interesting Details</h2><div class="ulist"><ul><li><p>collections are immutable<br>
-(no immutability in type system, though)</p></li><li><p>collections are value-based</p></li><li><p><code>null</code> elements/keys/values are forbidden</p></li><li><p>iteration order is random between JVM starts<br>
+(no immutability in type system, though)</p></li><li><p>collections are <a href="https://nipafx.dev/java-value-based-classes">value-based</a></p></li><li><p><code>null</code> elements/keys/values are forbidden</p></li><li><p>iteration order is random between JVM starts<br>
 (except for lists, of course!)</p></li></ul></div></section><section id="immutable_copies"><h2>Immutable Copies ⑩</h2><div class="paragraph"><p>Creating immutable copies:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">/* on List */ List&lt;E&gt; copyOf(Collection&lt;E&gt; coll);
 /* on Set */ Set&lt;E&gt; copyOf(Collection&lt;E&gt; coll);
