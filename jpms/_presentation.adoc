@@ -25,12 +25,12 @@
 
 include::../_shared/highlight.js.adoc[]
 
-:host-name: Manning
-:host-url: https://www.manning.com/
-:host-logo-url: images/logo-manning.png
+:host-name: Accenture
+:host-url: https://www.accenture.de
+:host-logo-url: images/logo-accenture.jpg
 // :host-logo-style: background-color: transparent; border-width: 0;
-:host-twitter-name: @ManningBooks
-:host-twitter-url: https://twitter.com/ManningBooks
+:host-twitter-name: @AccentureDACH
+:host-twitter-url: https://twitter.com/AccentureDACH
 include::../_shared/event-on-title-and-footer.adoc[]
 
 
@@ -47,43 +47,43 @@ include::../_shared/event-on-title-and-footer.adoc[]
 // * if you're shy, tweet questions +
 // with https://twitter.com/search?q=%23vdz17%20%40nipafx[#VDZ17 @nipafx]
 * slides at http://slides.nipafx.dev/jpms[slides.nipafx.dev/jpms]
-// * exercises at // https://gitlab.com/nipafx/course-jpms[gitlab.com/nipafx/course-jpms]
+* exercises at https://gitlab.com/nipafx/course-jpms[gitlab.com/nipafx/course-jpms]
 // * clone it now (please do not fork on GitLab)
 
-// (Please share responsibly)
+(Please share responsibly)
 
 === Table of contents
 
 ++++
 <table class="toc">
-	<!-- <tr><td>Impedance Mismatch</td></tr> -->
-	<!-- <tr><td>Project Jigsaw</td></tr> -->
+	<tr><td>Impedance Mismatch</td></tr>
+	<tr><td>Project Jigsaw</td></tr>
 	<tr><td>Java Module System Basics</td></tr>
 	<tr><td>Beyond The Basics</td></tr>
 	<tr><td>Command Line Options</td></tr>
-	<!-- <tr><td>Dependency Analysis With <code>jdeps</code></td></tr> -->
-	<!-- <tr><td>Runtime Images With <code>jlink</code></td></tr> -->
+	<tr><td>Dependency Analysis With <code>jdeps</code></td></tr>
+	<tr><td>Runtime Images With <code>jlink</code></td></tr>
 	<tr><td>Migration Challenges</td></tr>
 	<tr><td>Incremental Modularization</td></tr>
 </table>
 ++++
 
 
-// include::impedance-mismatch.adoc[]
+include::impedance-mismatch.adoc[]
 
-// include::project-jigsaw.adoc[]
+include::project-jigsaw.adoc[]
 
-// include::basics.adoc[]
+include::basics.adoc[]
 
-include::quick-intro.adoc[]
+// include::quick-intro.adoc[]
 
 include::advanced.adoc[]
 
 include::command-line.adoc[]
 
-// include::jdeps.adoc[]
+include::jdeps.adoc[]
 
-// include::jlink.adoc[]
+include::jlink.adoc[]
 
 include::migration.adoc[]
 
