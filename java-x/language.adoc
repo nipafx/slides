@@ -861,15 +861,13 @@ public enum TernaryBoolean {
 
 === Switch Statement
 
-Before Java 12, you might have done this:
+Before Java 14, you might have done this:
 
 ```java
 boolean result;
 switch (ternaryBool) {
-	case TRUE:
-		result = true; break;
-	case FALSE:
-		result = false; break;
+	case TRUE: result = true; break;
+	case FALSE: result = false; break;
 	case FILE_NOT_FOUND:
 		var ex = new UncheckedIOException(
 			"This is ridiculous!",
@@ -897,10 +895,8 @@ This is better:
 ```java
 public boolean convert(TernaryBoolean ternaryBool) {
 	switch (ternaryBool) {
-		case TRUE:
-			return true;
-		case FALSE:
-			return false;
+		case TRUE: return true;
+		case FALSE: return false;
 		case FILE_NOT_FOUND:
 			throw new UncheckedIOException(
 				"This is ridiculous!",
@@ -1021,7 +1017,6 @@ boolean result = switch(ternaryBool) {
 
 * `switch` is used as an expression
 * `yield result` returns `result`
-* ⑬ introduced `yield` - in ⑫ it was `break`
 
 === Arrow vs Colon
 

@@ -346,7 +346,7 @@ T orElseGet(Supplier<T> supplier)
 T orElseThrow()
 	throws NoSuchElementException
 T orElseThrow(
-	Supplier<X> exceptionSupplier)
+	Supplier<EX> exceptionSupplier)
 	throws X
 ```
 

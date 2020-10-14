@@ -272,6 +272,7 @@ Alternative:
 List<User> users = // ...
 List<Order> orders = users.stream()
 	.flatMap(user -> user.getOrders().stream())
+	// now we have a Stream<Order>
 	.collect(toList());
 ```
 

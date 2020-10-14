@@ -251,7 +251,7 @@ Example:
 
 ```java
 Stream.of("a-", "b-", "c-", "", "e-")
-	.takeWhile(s -> !s.isEmpty());
+	.takeWhile(s -> !s.isEmpty())
 	.forEach(System.out::print);
 
 // output: a-b-c-
@@ -269,7 +269,7 @@ Example:
 
 ```java
 Stream.of("a-", "b-", "c-", "de-", "f-")
-	.dropWhile(s -> s.length() <= 2);
+	.dropWhile(s -> s.length() <= 2)
 	.forEach(System.out::print);
 
 // output: de-f-
@@ -470,8 +470,8 @@ T orElseGet(Supplier<T> supplier)
 T orElseThrow()
 	throws NoSuchElementException
 T orElseThrow(
-	Supplier<X> exceptionSupplier)
-	throws X
+	Supplier<EX> exceptionSupplier)
+	throws EX
 ```
 
 === Get Considered Harmful
