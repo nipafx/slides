@@ -27,6 +27,50 @@ they do _not_ change the resulting +
 module descriptor!
 
 
+=== Add Exports
+
+A common case:
+
+A module needs types that +
+the owning module doesn't export.
+
+**Export them with `--add-exports`:**
+
+[source,bash]
+----
+$ java --module-path mods
+#   --add-exports <module>/<package>=<target>
+    --add-exports factories/factory.quotes=advent
+    --module advent
+----
+
+Use target `ALL-UNNAMED` to export +
+to code on the class path.
+
+
+=== Open Packages
+
+Another common case:
+
+A module reflects on types from a package that +
+the owning module doesn't open.
+
+**Open packages with `add-opens`:**
+
+[source,bash]
+----
+$ java --module-path mods
+#   --add-opens <module>/<package>=<target>
+    --add-opens factories/factory.quotes=advent
+    --module advent
+----
+
+Use target `ALL-UNNAMED` to open +
+to code on the class path.
+
+(It is not possible to open an entire module.)
+
+
 === Add Modules
 
 If a module is not required, +
@@ -75,50 +119,6 @@ $ java --module-path mods
 ----
 
 
-=== Add Exports
-
-A common case:
-
-A module needs types that +
-the owning module doesn't export.
-
-**Export them with `--add-exports`:**
-
-[source,bash]
-----
-$ java --module-path mods
-#   --add-exports <module>/<package>=<target>
-    --add-exports factories/factory.quotes=advent
-    --module advent
-----
-
-Use target `ALL-UNNAMED` to export +
-to code on the class path.
-
-
-=== Open Packages
-
-Another common case:
-
-A module reflects on types from a package that +
-the owning module doesn't open.
-
-**Open packages with `add-opens`:**
-
-[source,bash]
-----
-$ java --module-path mods
-#   --add-opens <module>/<package>=<target>
-    --add-opens factories/factory.quotes=advent
-    --module advent
-----
-
-Use target `ALL-UNNAMED` to open +
-to code on the class path.
-
-(It is not possible to open an entire module.)
-
-
 === Patch Modules
 
 Maybe you have a package split...
@@ -155,11 +155,11 @@ Often used with `--add-reads` and `--add-exports`.
 
 Edit module graph with:
 
+* `--add-exports` to export packages to modules
+* `--add-opens` to open packages to modules
 * `--add-modules` to add modules
 * `--add-reads` to add readability edges
 * `--patch-module` to add classes to module
-* `--add-exports` to export packages to modules
-* `--add-opens` to open packages to modules
 
 The latter two accept `ALL-UNNAMED` as target.
 
