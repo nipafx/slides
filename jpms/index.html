@@ -33,10 +33,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://www.accenture.de"><img src="images/logo-accenture.jpg" class="logo" style="{host-logo-style}"></a>
+		<a href="https://www.provinzial.com/"><img src="images/logo-provinzial.jpg" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://www.accenture.de">Accenture</a></p>
-			<p><a href="https://twitter.com/AccentureDACH" style="{host-twitter-style}">@AccentureDACH</a></p>
+			<p><a href="https://www.provinzial.com/">Provinzial</a></p>
+			<p><a href="https://twitter.com/Provinzial" style="{host-twitter-style}">@Provinzial</a></p>
 		</div>
 	</div>
 </div>
@@ -50,9 +50,9 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://www.accenture.de"><img src="images/logo-accenture.jpg" class="logo" style="{host-logo-style}"></a>
+		<a href="https://www.provinzial.com/"><img src="images/logo-provinzial.jpg" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://www.accenture.de">Accenture</a> / <a href="https://twitter.com/AccentureDACH" style="{host-twitter-style}">@AccentureDACH</a></p>
+			<p><a href="https://www.provinzial.com/">Provinzial</a> / <a href="https://twitter.com/Provinzial" style="{host-twitter-style}">@Provinzial</a></p>
 		</div>
 	</div>
 </footer>
@@ -64,7 +64,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 </script></div></section>
 <section><section id="lets_get_started"><h2>Let&#8217;s get started!</h2><div class="ulist"><ul><li><p>there&#8217;s much to talk about<br>
 ⇝ this can only cover parts of the JPMS<br>
-⇝ we have to skip some details</p></li><li><p>slides at <a href="http://slides.nipafx.dev/jpms">slides.nipafx.dev/jpms</a></p></li><li><p>exercises at <a href="https://gitlab.com/nipafx/course-jpms">gitlab.com/nipafx/course-jpms</a></p></li></ul></div><div class="paragraph"><p>(Please share responsibly)</p></div></section><section id="table_of_contents"><h2>Table of contents</h2><table class="toc">
+⇝ we have to skip some details</p></li><li><p>slides at <a href="http://slides.nipafx.dev/jpms">slides.nipafx.dev/jpms</a></p></li><li><p>exercises at <a href="https://gitlab.com/nipafx/course-j_ms">gitlab.com/nipafx/course-j_ms</a></p></li></ul></div><div class="paragraph"><p>(Please share responsibly)</p></div></section><section id="table_of_contents"><h2>Table of contents</h2><table class="toc">
 	<tr><td>Impedance Mismatch</td></tr>
 	<tr><td>Project Jigsaw</td></tr>
 	<tr><td>Java Module System Basics</td></tr>
@@ -138,7 +138,7 @@ $ jar --create --file jars/advent.jar ${*.class}
 # run
 $ java --class-path 'jars/*' ${main-class}</code></pre></div></div>
 <div class="paragraph"><p>To look up <code>javac</code>, <code>jar</code>, <code>java</code> basics:<br>
-<a href="https://blog.codefx.org/cheat-sheet-build-run-modules-jars.html">tiny.cc/cheat-modules</a></p></div></section><section id="a_single_module"><h2>A single module</h2><h3>Modularization</h3>
+<a href="https://nipafx.dev/build-modules">nipafx.dev/build-modules</a></p></div></section><section id="a_single_module"><h2>A single module</h2><h3>Modularization</h3>
 <div class="imageblock diagram" style=""><img src="images/advent-calendar-module-single.png" alt="advent calendar module single"></div>
 <div class="paragraph"><p>Create <code>module-info.java</code> in sources root:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">module advent {
@@ -456,9 +456,9 @@ gets accesses without further limitations</p></dd><dt class="hdlist1">Reflective
 gets access, but emits warning<br></p></dd></dl></div></section><section id="illegal_access_modes"><h2>Illegal Access Modes</h2><div class="paragraph"><p>Four modes:</p></div>
 <div class="ulist"><ul><li><p><code>permit</code>: warning on <em>first</em> reflective access to package</p></li><li><p><code>warn</code>: warning on <em>each</em> reflective access</p></li><li><p><code>debug</code>: like <code>warn</code> plus stack trace</p></li><li><p><code>deny</code>: illegal access denied (static + reflective)</p></li></ul></div></section><section id="configure_illegal_access"><h2>Configure Illegal Access</h2><div class="paragraph"><p>Configuration:</p></div>
 <div class="ulist"><ul><li><p>since Java 9, <code>permit</code> is default</p></li><li><p>use <code>--illegal-access</code> to override</p></li></ul></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">$ java --module-path mods
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">$ java --class-path 'mods/*'
     --illegal-access=deny
-    --module advent</code></pre></div></div></section><section id="illegal_access_recommendations"><h2>Illegal Access Recommendations</h2><div class="paragraph"><p>I recommend:</p></div>
+    advent.Main</code></pre></div></div></section><section id="illegal_access_recommendations"><h2>Illegal Access Recommendations</h2><div class="paragraph"><p>I recommend:</p></div>
 <div class="ulist"><ul><li><p><code>--illegal-access=deny</code><br>
 to prevent unnoticed access<br>
 (at least for tests!)</p></li><li><p><code>--add-exports</code>/<code>--add-opens</code><br>
@@ -511,8 +511,8 @@ into <em>java.xml.ws.annotation</em>.</p></div></section><section id="patch_modu
 which need to export used packages</p></li><li><p>modules using JAR content need to read <em>A</em><br>
 and <em>A</em> needs to export used packages</p></li></ul></div>
 <div class="paragraph"><p>Often used with <code>--add-reads</code> and <code>--add-exports</code>.</p></div></section><section id="summary_6"><h2>Summary</h2><div class="paragraph"><p>Edit module graph with:</p></div>
-<div class="ulist"><ul><li><p><code>--illegal-access</code> to configure blanket access</p></li><li><p><code>--add-exports</code> to export packages to modules</p></li><li><p><code>--add-opens</code> to open packages to modules</p></li><li><p><code>--add-modules</code> to add modules</p></li><li><p><code>--add-reads</code> to add readability edges</p></li><li><p><code>--patch-module</code> to add classes to module</p></li></ul></div>
-<div class="paragraph"><p>The latter two accept <code>ALL-UNNAMED</code> as target.</p></div>
+<div class="olist arabic"><ol class="arabic"><li><p><code>--illegal-access</code> to configure blanket access</p></li><li><p><code>--add-exports</code> to export packages to modules</p></li><li><p><code>--add-opens</code> to open packages to modules</p></li><li><p><code>--add-modules</code> to add modules</p></li><li><p><code>--add-reads</code> to add readability edges</p></li><li><p><code>--patch-module</code> to add classes to module</p></li></ol></div>
+<div class="paragraph"><p>Numbers 2. to 4. accept <code>ALL-UNNAMED</code> as target.</p></div>
 <div class="paragraph"><p>More at <a href="https://nipafx.dev">nipafx.dev</a>:</p></div>
 <div class="paragraph"><p><a href="https://blog.codefx.org/java/five-command-line-options-to-hack-the-java-9-module-system/">Five Command Line Options To Hack The JPMS</a></p></div></section></section>
 <section><section id="analyzing_dependencies_with_jdeps"><h2>Analyzing Dependencies With JDeps</h2><h3>Helping You Modularize!</h3></section><section id="about_jdeps"><h2>About JDeps</h2><div class="ulist"><ul><li><p>a command line tool</p></li><li><p>analyzes bytecode to<br>
@@ -654,8 +654,8 @@ from two modules</p></li></ul></div>
 <div class="paragraph"><p>The implementation is even stricter:</p></div>
 <div class="ulist"><ul><li><p>no two modules must contain<br>
 the same package (exported or not)</p></li><li><p>split packages on class path<br>
-are inaccessible</p></li></ul></div></section><section id="examples"><h2>Examples</h2><div class="ulist"><ul><li><p>some libraries split <code>java.xml.*</code>, e.g. <a href="http://search.maven.org/#artifactdetails|xml-apis|xml-apis|2.0.2|jar">xml-apis</a></p></li><li><p>some <a href="https://issues.jboss.org/browse/WFLY-6375?_sscc=t">JBoss modules</a> split, e.g.,<br>
-<code>java.transaction</code>, <code>java.xml.ws</code></p></li><li><p><a href="http://mvnrepository.com/artifact/com.google.code.findbugs/jsr305">jsr305</a> splits <code>javax.annotation</code></p></li></ul></div></section><section id="what_to_look_for_3"><h2>What to look for?</h2><div class="paragraph"><p>JDeps reports split packages:</p></div>
+are inaccessible</p></li></ul></div></section><section id="examples"><h2>Examples</h2><div class="ulist"><ul><li><p>some libraries split <code>java.xml.*</code>, e.g. <a href="http://search.maven.org/#artifactdetails|xml-apis|xml-apis|2.0.2|jar">xml-apis</a></p></li><li><p><a href="http://mvnrepository.com/artifact/com.google.code.findbugs/jsr305">jsr305</a> splits <code>javax.annotation</code></p></li><li><p>some <a href="https://issues.jboss.org/browse/WFLY-6375?_sscc=t">JBoss modules</a> split, e.g.,<br>
+<code>java.transaction</code>, <code>java.xml.ws</code></p></li></ul></div></section><section id="what_to_look_for_3"><h2>What to look for?</h2><div class="paragraph"><p>JDeps reports split packages:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">$ jdeps -summary
 	-recursive --class-path 'libs/*'
 	project.jar
@@ -684,7 +684,7 @@ Boot Class Path Override&#8201;&#8212;&#8201;<code>--upgrade-module-path</code><
 (and prevent relapses)</p></li><li><p>check your dependencies and tools</p></li><li><p>if any are suspicious<br>
 (automatically true for IDEs, build tools):</p><div class="ulist"><ul><li><p>make sure they&#8217;re alive</p></li><li><p><strong>get them up to date!</strong></p></li><li><p>or look for alternatives</p></li></ul></div></li><li><p>download Java 11 and <strong>try it!</strong></p></li></ul></div></section></section>
 <section><section id="incremental_modularization"><h2>Incremental Modularization</h2><h3>Moving Into Module Land</h3></section><section id="why_is_it_even_an_option" data-background-image="images/keep-out.jpg" data-background-size="cover"><h2>Why Is It Even An Option?</h2>
-<div class="ulist"><ul><li><p>most module systems are "in or out",<br></p></li><li><p>but modularized JDK and legacy JARs<br>
+<div class="ulist"><ul><li><p>most module systems are "in or out"</p></li><li><p>but modularized JDK and legacy JARs<br>
 have to cooperate!</p></li><li><p>there is a boundary between<br>
 legacy and modules</p></li></ul></div>
 <div class="paragraph"><p>Incremental modularization means<br>
