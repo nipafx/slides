@@ -605,7 +605,7 @@ public void loadWebPage() {
 			.supplyAsync(() -> webRequest(url))
 			.thenApply(html -> new WebPage(url, html));
 	// ... do other stuff
-	future.join();
+	WebPage page = future.join();
 }
 
 private String webRequest(String url) {
@@ -683,7 +683,7 @@ have an `...Async` companion, e.g.:
 
 ```java
 thenApplyAsync(Function<T, U>);
-thenAcceptAsync(Consumer<T>)
+thenAcceptAsync(Consumer<T>);
 ```
 
 They submit each stage as a separate task +
@@ -794,7 +794,7 @@ StrictMath.absExact(long)
 
 *In Java 12:*
 
-* 12: NumberFormat::getCompactNumberInstance
+* `NumberFormat::getCompactNumberInstance`
 
 *In Java 15:*
 

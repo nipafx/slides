@@ -161,9 +161,9 @@ are inaccessible
 === Examples
 
 * some libraries split `java.xml.*`, e.g. http://search.maven.org/#artifactdetails|xml-apis|xml-apis|2.0.2|jar[xml-apis]
+* http://mvnrepository.com/artifact/com.google.code.findbugs/jsr305[jsr305] splits `javax.annotation`
 * some https://issues.jboss.org/browse/WFLY-6375?_sscc=t[JBoss modules] split, e.g., +
 `java.transaction`, `java.xml.ws`
-* http://mvnrepository.com/artifact/com.google.code.findbugs/jsr305[jsr305] splits `javax.annotation`
 
 
 === What to look for?

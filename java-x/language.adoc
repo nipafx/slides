@@ -823,6 +823,8 @@ String phrase = """
 
 ⇝ Way fewer escapes in HTML/JSON/SQL/etc.
 
+// TODO trailing white space
+
 === More on Text Blocks
 
 * https://blog.codefx.org/java/text-blocks/[Definitive Guide To Text Blocks]
@@ -914,11 +916,12 @@ Better:
 
 * `return` prevents fall-through
 * results are created on the spot
-* compiler complains on missing branches
 
 But:
 
-* `default` is not really necessary
+* `default` is not really necessary...
+* ...but prevents compile error +
+  on missing branches
 * creating a method is not always +
   possible or convenient
 
@@ -1517,7 +1520,7 @@ var users = new ArrayList<User>();
 //   variables become `int`
 byte b = 42;
 short s = 42;
-long l = 42
+long l = 42;
 ```
 
 === More on `var`

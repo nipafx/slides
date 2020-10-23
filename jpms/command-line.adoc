@@ -60,9 +60,9 @@ Configuration:
 
 [source,bash]
 ----
-$ java --module-path mods
+$ java --class-path 'mods/*'
     --illegal-access=deny
-    --module advent
+    advent.Main
 ----
 
 
@@ -216,14 +216,14 @@ Often used with `--add-reads` and `--add-exports`.
 
 Edit module graph with:
 
-* `--illegal-access` to configure blanket access
-* `--add-exports` to export packages to modules
-* `--add-opens` to open packages to modules
-* `--add-modules` to add modules
-* `--add-reads` to add readability edges
-* `--patch-module` to add classes to module
+. `--illegal-access` to configure blanket access
+. `--add-exports` to export packages to modules
+. `--add-opens` to open packages to modules
+. `--add-modules` to add modules
+. `--add-reads` to add readability edges
+. `--patch-module` to add classes to module
 
-The latter two accept `ALL-UNNAMED` as target.
+Numbers 2. to 4. accept `ALL-UNNAMED` as target.
 
 More at https://nipafx.dev[nipafx.dev]:
 
