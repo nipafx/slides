@@ -55,7 +55,7 @@ Inside the unnamed module +
 === Internal APIs
 image::images/internals.jpg[background, size=cover]
 
-* internal APIs are:
+* JDK-internal APIs are:
 ** all in `sun.*`
 ** most in `com.sun.*` +
 (unless marked `@jdk.Exported`)
@@ -254,8 +254,8 @@ image::images/sign.jpg[background, size=cover]
 The most relevant for most applications:
 
 * internal APIs
-* split packages
 * JEE modules
+* split packages
 
 
 === General Advice II
