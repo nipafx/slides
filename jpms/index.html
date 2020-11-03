@@ -620,7 +620,7 @@ contains <em>all</em> JARs on the class path<br>
 <div class="paragraph"><p>Inside the unnamed module<br>
 "the chaos of the class path" lives on.</p></div>
 <aside class="notes"><div class="ulist"><ul><li><p>one unnamed module per class loader</p></li></ul></div></aside></section><section id="challenges"><h2>Challenges</h2><div class="ulist"><ul><li><p>internal APIs</p></li><li><p>JEE modules</p></li><li><p>split packages</p></li><li><p>runtime images</p></li></ul></div></section><section id="internal_apis" data-background-image="images/internals.jpg" data-background-size="cover"><h2>Internal APIs</h2>
-<div class="ulist"><ul><li><p>internal APIs are:</p><div class="ulist"><ul><li><p>all in <code>sun.*</code></p></li><li><p>most in <code>com.sun.*</code><br>
+<div class="ulist"><ul><li><p>JDK-internal APIs are:</p><div class="ulist"><ul><li><p>all in <code>sun.*</code></p></li><li><p>most in <code>com.sun.*</code><br>
 (unless marked <code>@jdk.Exported</code>)</p></li></ul></div></li><li><p>encapsulated at compile time</p></li><li><p>accessible at run time<br>
 for some time</p></li><li><p>critical APIs may survive longer<br>
 (e.g. <code>sun.misc.Unsafe</code>)</p></li></ul></div></section><section id="what_to_look_for"><h2>What to look for?</h2><div class="paragraph"><p><a href="https://blog.codefx.org/tools/jdeps-tutorial-analyze-java-project-dependencies/">JDeps</a> can report internal dependencies:</p></div>
@@ -679,7 +679,7 @@ Boot Class Path Override&#8201;&#8212;&#8201;<code>--upgrade-module-path</code><
 <div class="paragraph"><p>And there are new version strings:</p></div>
 <div class="ulist"><ul><li><p>goodbye <code>1.9.0_31</code>, hello <code>9.0.1</code><br></p></li></ul></div></section><section id="general_advice_i" data-background-image="images/sign.jpg" data-background-size="cover"><h2>General Advice I</h2>
 <div class="paragraph"><p>The most relevant for most applications:</p></div>
-<div class="ulist"><ul><li><p>internal APIs</p></li><li><p>split packages</p></li><li><p>JEE modules</p></li></ul></div></section><section id="general_advice_ii" data-background-image="images/sign.jpg" data-background-size="cover"><h2>General Advice II</h2>
+<div class="ulist"><ul><li><p>internal APIs</p></li><li><p>JEE modules</p></li><li><p>split packages</p></li></ul></div></section><section id="general_advice_ii" data-background-image="images/sign.jpg" data-background-size="cover"><h2>General Advice II</h2>
 <div class="ulist"><ul><li><p>get your code in shape<br>
 (and prevent relapses)</p></li><li><p>check your dependencies and tools</p></li><li><p>if any are suspicious<br>
 (automatically true for IDEs, build tools):</p><div class="ulist"><ul><li><p>make sure they&#8217;re alive</p></li><li><p><strong>get them up to date!</strong></p></li><li><p>or look for alternatives</p></li></ul></div></li><li><p>download Java 11 and <strong>try it!</strong></p></li></ul></div></section></section>
