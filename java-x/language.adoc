@@ -2,7 +2,7 @@
 
 ++++
 <table class="toc">
-	<tr><td>SealedClasses</td></tr>
+	<tr><td>Sealed Classes</td></tr>
 	<tr><td>Records</td></tr>
 	<tr><td>Pattern Matching</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
@@ -18,7 +18,7 @@
 
 ++++
 <table class="toc">
-	<tr class="toc-current"><td>SealedClasses</td></tr>
+	<tr class="toc-current"><td>Sealed Classes</td></tr>
 	<tr><td>Records</td></tr>
 	<tr><td>Pattern Matching</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
@@ -79,7 +79,7 @@ There's three options how a class can be extended:
 * by no classes (`final` class)
 * by package classes +
   (package-visible constructor)
-* by all class (no keyword)
+* by all classes (`public` class)
 
 (For interfaces, there's no choice at all.)
 
@@ -185,7 +185,7 @@ non-sealed class Employee implements Staff { }
 sealed class Freelancer implements Staff
 	permits Consultant { }
 
-class Consultant extends Freelancer { }
+final class Consultant extends Freelancer { }
 ```
 
 But what about exhaustiveness?! +
@@ -261,7 +261,7 @@ Consequences:
 
 ++++
 <table class="toc">
-	<tr><td>SealedClasses</td></tr>
+	<tr><td>Sealed Classes</td></tr>
 	<tr class="toc-current"><td>Records</td></tr>
 	<tr><td>Pattern Matching</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
@@ -485,8 +485,7 @@ public Range(int high) {
 Additional static factories work as usual:
 
 ```java
-public Range static open(
-		int low, int high) {
+public Range static open(int low, int high) {
 	return new Range(low, high + 1);
 }
 ```
@@ -559,7 +558,7 @@ public record Range(int low, int high)
 
 ++++
 <table class="toc">
-	<tr><td>SealedClasses</td></tr>
+	<tr><td>Sealed Classes</td></tr>
 	<tr><td>Records</td></tr>
 	<tr class="toc-current"><td>Pattern Matching</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
@@ -626,7 +625,7 @@ We will see more patterns in the future.
 
 === Pattern Variable Scope
 
-Pattern var is in scope +
+Pattern variable is in scope +
 where compiler can prove pattern is `true`:
 
 ```java
@@ -683,7 +682,7 @@ switch (animal) {
 
 ++++
 <table class="toc">
-	<tr><td>SealedClasses</td></tr>
+	<tr><td>Sealed Classes</td></tr>
 	<tr><td>Records</td></tr>
 	<tr><td>Pattern Matching</td></tr>
 	<tr class="toc-current"><td>Text Blocks ⑮</td></tr>
@@ -835,7 +834,7 @@ String phrase = """
 
 ++++
 <table class="toc">
-	<tr><td>SealedClasses</td></tr>
+	<tr><td>Sealed Classes</td></tr>
 	<tr><td>Records</td></tr>
 	<tr><td>Pattern Matching</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
@@ -1232,7 +1231,7 @@ Definitive Guide To Switch Expressions
 
 ++++
 <table class="toc">
-	<tr><td>SealedClasses</td></tr>
+	<tr><td>Sealed Classes</td></tr>
 	<tr><td>Records</td></tr>
 	<tr><td>Pattern Matching</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
