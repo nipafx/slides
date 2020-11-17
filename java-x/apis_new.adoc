@@ -65,7 +65,7 @@ Q: Overloads on `Map::ofEntries`? 1
 === Interesting Details
 
 * collections are immutable +
-(no immutability in type system, though)
+(no immutability in types, though)
 * collections are https://nipafx.dev/java-value-based-classes[value-based]
 * `null` elements/keys/values are forbidden
 * iteration order is random between JVM starts +
@@ -114,7 +114,7 @@ for reactive stream libraries.
 * subscribes to publisher
 * `onNext`, `onError`, `onComplete`
 `Subscription`::
-* connection between publisher and subscriber
+* connection from subscriber to publisher
 * `request`, `cancel`
 
 === Reactive Flow
