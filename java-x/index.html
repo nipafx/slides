@@ -1,8 +1,8 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Java 9 To 15</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="../_reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="../_reveal.js/css/theme/nipa-night.css" id="theme"><link href="../_reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>var link = document.createElement( 'link' );
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Java 9 To 11</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="../_reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="../_reveal.js/css/theme/nipa-night.css" id="theme"><link href="../_reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>var link = document.createElement( 'link' );
 link.rel = 'stylesheet';
 link.type = 'text/css';
 link.href = window.location.search.match( /print-pdf/gi ) ? "../_reveal.js/css/print/pdf.css" : "../_reveal.js/css/print/paper.css";
-document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="../_reveal.js/lib/js/html5shiv.js"></script><![endif]--></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>Java 9 To 15</h1><div class="preamble"><link rel="stylesheet" href="../_highlight.js/styles/monokai-sublime.css">
+document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="../_reveal.js/lib/js/html5shiv.js"></script><![endif]--></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>Java 9 To 11</h1><div class="preamble"><link rel="stylesheet" href="../_highlight.js/styles/monokai-sublime.css">
 <script src="../_highlight.js/highlight.pack.js"></script>
 <script>
 	window.onload = function() {
@@ -1302,7 +1302,7 @@ Map&lt;String, Integer&gt; mapEntries = Map.ofEntries(
 <aside class="notes"><div class="paragraph"><p>Q: Where does <code>entry</code> come from? <code>Map</code>
 Q: Overloads on <code>of</code>? 10
 Q: Overloads on <code>Map::ofEntries</code>? 1</p></div></aside></section><section id="interesting_details"><h2>Interesting Details</h2><div class="ulist"><ul><li><p>collections are immutable<br>
-(no immutability in type system, though)</p></li><li><p>collections are <a href="https://nipafx.dev/java-value-based-classes">value-based</a></p></li><li><p><code>null</code> elements/keys/values are forbidden</p></li><li><p>iteration order is random between JVM starts<br>
+(no immutability in types, though)</p></li><li><p>collections are <a href="https://nipafx.dev/java-value-based-classes">value-based</a></p></li><li><p><code>null</code> elements/keys/values are forbidden</p></li><li><p>iteration order is random between JVM starts<br>
 (except for lists, of course!)</p></li></ul></div></section><section id="immutable_copies"><h2>Immutable Copies ⑩</h2><div class="paragraph"><p>Creating immutable copies:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">/* on List */ List&lt;E&gt; copyOf(Collection&lt;E&gt; coll);
 /* on Set */ Set&lt;E&gt; copyOf(Collection&lt;E&gt; coll);
@@ -1317,7 +1317,7 @@ Q: Overloads on <code>Map::ofEntries</code>? 1</p></div></aside></section><secti
 	<tr><td>Reactive HTTP/2 Client ⑪</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
 </table><div class="paragraph"><p>The JDK as common ground<br>
-for reactive stream libraries.</p></div></section><section id="reactive_types"><h2>Reactive Types</h2><div class="dlist"><dl><dt class="hdlist1"><code>Publisher</code></dt><dd><div class="ulist"><ul><li><p>produces items to consume</p></li><li><p>can be subscribed to</p></li></ul></div></dd><dt class="hdlist1"><code>Subscriber</code></dt><dd><div class="ulist"><ul><li><p>subscribes to publisher</p></li><li><p><code>onNext</code>, <code>onError</code>, <code>onComplete</code></p></li></ul></div></dd><dt class="hdlist1"><code>Subscription</code></dt><dd><div class="ulist"><ul><li><p>connection between publisher and subscriber</p></li><li><p><code>request</code>, <code>cancel</code></p></li></ul></div></dd></dl></div></section><section id="reactive_flow"><h2>Reactive Flow</h2><h3>Subscribing</h3><div class="ulist"><ul><li><p>create <code>Publisher pub</code> and <code>Subscriber sub</code></p></li><li><p>call <code>pub.subscribe(sub)</code></p></li><li><p>pub creates <code>Subscription script</code><br>
+for reactive stream libraries.</p></div></section><section id="reactive_types"><h2>Reactive Types</h2><div class="dlist"><dl><dt class="hdlist1"><code>Publisher</code></dt><dd><div class="ulist"><ul><li><p>produces items to consume</p></li><li><p>can be subscribed to</p></li></ul></div></dd><dt class="hdlist1"><code>Subscriber</code></dt><dd><div class="ulist"><ul><li><p>subscribes to publisher</p></li><li><p><code>onNext</code>, <code>onError</code>, <code>onComplete</code></p></li></ul></div></dd><dt class="hdlist1"><code>Subscription</code></dt><dd><div class="ulist"><ul><li><p>connection from subscriber to publisher</p></li><li><p><code>request</code>, <code>cancel</code></p></li></ul></div></dd></dl></div></section><section id="reactive_flow"><h2>Reactive Flow</h2><h3>Subscribing</h3><div class="ulist"><ul><li><p>create <code>Publisher pub</code> and <code>Subscriber sub</code></p></li><li><p>call <code>pub.subscribe(sub)</code></p></li><li><p>pub creates <code>Subscription script</code><br>
 and calls <code>sub.onSubscription(script)</code></p></li><li><p><code>sub</code> can store <code>script</code></p></li></ul></div></section><section id="reactive_flow_2"><h2>Reactive Flow</h2><h3>Streaming</h3><div class="ulist"><ul><li><p><code>sub</code> calls <code>script.request(10)</code></p></li><li><p><code>pub</code> calls <code>sub.onNext(element)</code> (max 10x)</p></li></ul></div>
 <h3>Canceling</h3><div class="ulist"><ul><li><p><code>pub</code> may call <code>sub.OnError(err)</code><br>
 or <code>sub.onComplete()</code></p></li><li><p><code>sub</code> may call <code>script.cancel()</code></p></li></ul></div></section><section id="reactive_apis"><h2>Reactive APIs?</h2><div class="paragraph"><p>JDK only provides three interfaces<br>
@@ -1522,7 +1522,7 @@ hello-java-11</code></pre></div></div></li></ul></div></section></section>
 <div class="ulist"><ul><li><p><code>$SELECTORS</code> are pairs of tag sets and log levels<br>
 (the docs call this <em>what-expression</em>)</p></li><li><p><code>$OUTPUT</code> is <code>stdout</code>, <code>stderr</code>, or <code>file=&lt;filename&gt;</code></p></li><li><p><code>$DECORATORS</code> define what is shown</p></li><li><p><code>$OUTPUT_OPTS</code> configure file rotation</p></li></ul></div>
 <div class="paragraph"><p>Elements have to be defined from left to right.<br>
-(No skipping!)</p></div></section></section>
+(But can be empty, e.g. <code>-Xlog::stderr</code>.)</p></div></section></section>
 <section><section id="jvm_features_5"><h2>JVM Features</h2><table class="toc">
 	<tr><td>Helpful NPEs ⑭</td></tr>
 	<tr><td>Launch Source File ⑪</td></tr>
