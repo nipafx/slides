@@ -485,7 +485,7 @@ public Range(int high) {
 Additional static factories work as usual:
 
 ```java
-public Range static open(int low, int high) {
+public static Range open(int low, int high) {
 	return new Range(low, high + 1);
 }
 ```
