@@ -1,0 +1,1935 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Java 9 To 15</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="_reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="_reveal.js/css/theme/nipa-night.css" id="theme"><link href="_reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>var link = document.createElement( 'link' );
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = window.location.search.match( /print-pdf/gi ) ? "_reveal.js/css/print/pdf.css" : "_reveal.js/css/print/paper.css";
+document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="_reveal.js/lib/js/html5shiv.js"></script><![endif]--></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>Java 9 To 15</h1><div class="preamble"><link rel="stylesheet" href="_highlight.js/styles/monokai-sublime.css">
+<script src="_highlight.js/highlight.pack.js"></script>
+<script>
+	window.onload = function() {
+		hljs.configure({
+			tabReplace: '    ',
+			languages: [ 'java' ]
+		})
+		var codes = document.getElementsByTagName('code');
+		for(var i = 0; i < codes.length; i++) {
+			hljs.highlightBlock(codes.item(i));
+		}
+		hljs.initHighlightingOnLoad();
+	}
+</script>
+<div class="event">
+	<div class="participant">
+		<a href="https://nipafx.dev/nicolai-parlog"><img src="images/nipa-face.jpg" class="logo"></a>
+		<div class="name">
+			<p><a href="https://nipafx.dev/nicolai-parlog">Nicolai Parlog</a></p>
+			<p><a href="https://nipafx.dev.dev">nipafx.dev</a>
+				/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a></p>
+		</div>
+	</div>
+	<div class="participant">
+		<a href="https://datev.de/"><img src="images/logo-datev.png" class="logo" style="{host-logo-style}"></a>
+		<div class="name">
+			<p><a href="https://datev.de/">Datev</a></p>
+			<p><a href="https://twitter.com/DATEV" style="{host-twitter-style}">@DATEV</a></p>
+		</div>
+	</div>
+</div>
+<footer>
+	<div class="participant">
+		<a href="https://nipafx.dev/nicolai-parlog"><img src="images/nipa-face.jpg" class="logo"></a>
+		<div class="name"><p>
+			<a href="https://nipafx.dev/nicolai-parlog">Nicolai Parlog</a>
+			/ <a href="https://nipafx.dev.dev">nipafx.dev</a>
+			/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a>
+		</p></div>
+	</div>
+	<div class="participant">
+		<a href="https://datev.de/"><img src="images/logo-datev.png" class="logo" style="{host-logo-style}"></a>
+		<div class="name">
+			<p><a href="https://datev.de/">Datev</a> / <a href="https://twitter.com/DATEV" style="{host-twitter-style}">@DATEV</a></p>
+		</div>
+	</div>
+</footer>
+<!-- Just adding a footer does not work because reveal.js puts it into the slides and we couldn't get it out via CSS. So we move it via JavaScript. -->
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		document.body.appendChild(document.querySelector('footer'));
+	})
+</script></div></section>
+<section><section id="hello_java_after_eight"><h2>Hello, Java After Eight</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">return switch (placement) {
+	case WINNER -&gt; """
+			You're
+			Number One!
+			""";
+	case LOOSER -&gt; "Don't feel bad";
+}</code></pre></div></div></section><section id="about_me"><h2>About Me</h2><div class="paragraph"><p>My name is <strong>Nicolai</strong> (Parlog)</p></div>
+<div class="ulist"><ul><li><p>Java since 2005, professionally since 2011</p></li><li><p>blogger since 2014</p></li><li><p>freelancing developer, speaker, trainer since 2016</p></li><li><p>published author since 2019</p></li></ul></div>
+<div class="paragraph"><p>Main topics:</p></div>
+<div class="ulist"><ul><li><p>JDK features (language, APIs, JVM)</p></li><li><p>code quality (clean code and comments)</p></li><li><p>processes (code reviews, knowledge sharing)</p></li></ul></div></section><section id="slides"><h2>Slides</h2><div class="ulist"><ul><li><p>at <a href="http://slides.nipafx.dev/java-x">slides.nipafx.dev/java-x</a></p></li><li><p>press "?" to learn how to navigate</p></li><li><p>there will be a permalink when the course is over</p></li><li><p>version-specific content is marked with ⑨, ⑩, ⑪, etc.</p></li></ul></div>
+<div class="paragraph"><p>(Share freely!)</p></div></section><section id="code"><h2>Code</h2><div class="ulist"><ul><li><p>at <a href="https://github.com/nipafx/java-after-eight">github.com/nipafx/java-after-eight</a></p></li><li><p>clone it now, import with recent IDE</p></li></ul></div>
+<div class="paragraph"><p>(Share freely!)</p></div></section><section id="table_of_contents"><h2>Table of Contents</h2><table class="toc">
+	<tr><td>Module System</td></tr>
+	<tr><td>Language Changes</td></tr>
+	<tr><td>New and Updated APIs</td></tr>
+	<tr><td>New JVM Features</td></tr>
+	<tr><td>Performance Improvements</td></tr>
+</table></section></section>
+<section><section id="java_platform_module_system"><h2>Java Platform Module System</h2><h3>Delaying Java since 2008!</h3></section><section id="jar_hell_is_bad_mkay"><h2>JAR Hell is bad, mkay?</h2><div class="paragraph"><p><strong>JARs have</strong>:</p></div>
+<div class="ulist"><ul><li><p>no name the JVM cares about</p></li><li><p>no explicit dependencies</p></li><li><p>no well-defined API</p></li><li><p>no concept of versions</p></li></ul></div>
+<div class="paragraph"><p><strong>Some consequences</strong>:</p></div>
+<div class="ulist"><ul><li><p><code>NoClassDefFoundError</code></p></li><li><p>no encapsulation across JARs</p></li><li><p>version conflicts</p></li></ul></div></section><section id="modules"><h2>Modules</h2><div class="paragraph"><p><strong>Modules are like JARs but have</strong>:</p></div>
+<div class="ulist"><ul><li><p>proper names</p></li><li><p>explicit dependencies</p></li><li><p>a well-defined API</p></li><li><p>no concept of versions 😭</p></li></ul></div>
+<div class="paragraph"><p><strong>Important goals</strong>:</p></div>
+<div class="ulist"><ul><li><p>reliable configuration</p></li><li><p>strong encapsulation</p></li></ul></div></section><section id="module_declaration"><h2>Module Declaration</h2><div class="paragraph"><p>A file <code>module-info.java</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> java.sql {
+	<span class="hljs-keyword">requires transitive</span> java.logging
+	<span class="hljs-keyword">requires transitive</span> java.xml
+	<span class="hljs-keyword">uses</span> java.sql.Driver
+	<span class="hljs-keyword">exports</span> java.sql
+	<span class="hljs-keyword">exports</span> javax.sql
+	<span class="hljs-keyword">exports</span> javax.transaction.xa
+}</code></pre></div></div></section><section id="reliable_configuration"><h2>Reliable Configuration</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> java.sql {
+	<span class="hljs-keyword">requires transitive</span> java.logging
+	<span class="hljs-keyword">requires transitive</span> java.xml
+}</code></pre></div></div>
+<div class="paragraph"><p>Module system enforces:</p></div>
+<div class="ulist"><ul><li><p>all required modules are present</p></li><li><p>no ambiguity</p></li><li><p>no static dependency cycles</p></li><li><p>no split packages</p></li></ul></div></section><section id="strong_encapsulation"><h2>Strong Encapsulation</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> java.sql {
+	<span class="hljs-keyword">exports</span> java.sql
+	<span class="hljs-keyword">exports</span> javax.sql
+	<span class="hljs-keyword">exports</span> javax.transaction.xa
+}</code></pre></div></div>
+<div class="paragraph"><p>Say you want to access <code>java.sql.ResultSet</code>.</p></div>
+<div class="paragraph"><p>Module system only grants access if:</p></div>
+<div class="ulist"><ul><li><p><code>ResultSet</code> is public</p></li><li><p><code>java.sql</code> is exported by <em>java.sql</em></p></li><li><p>your module reads <em>java.sql</em></p></li></ul></div></section><section data-background-color="white" data-background-image="images/platform-modules.png" data-background-size="contain" data-state="empty"></section><section id="services"><h2>Services</h2><div class="paragraph"><p>The module system as a service registry:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> java.sql {
+	<span class="hljs-keyword">uses</span> java.sql.Driver
+}
+
+<span class="hljs-keyword">module</span> mysql.driver {
+	<span class="hljs-keyword">provides</span> java.sql.Driver
+		<span class="hljs-keyword">with</span> com.mysql.MySQLDriver;
+}
+</code></pre></div></div></section><section id="loading_services"><h2>Loading Services</h2><div class="paragraph"><p>Code in <em>java.sql</em> can do this:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Driver&gt; drivers = new ArrayList&lt;&gt;();
+ServiceLoader
+	.load(Driver.class)
+	.forEach(drivers::add);</code></pre></div></div></section><section id="jlink"><h2>JLink</h2><div class="paragraph"><p>Create your own runtime images:</p></div>
+<div class="ulist"><ul><li><p>with the JDK modules your app needs</p></li><li><p>with all modules (JDK, app, deps)</p></li></ul></div>
+<div class="paragraph"><p>Let&#8217;s look at the latter!</p></div></section><section id="application_image"><h2>Application Image</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash"># create image
+$ jlink
+	--output awesome-app
+	--module-path $JAVA_HOME/jmods:mods
+	--add-modules com.awesome.app
+	--launcher awesome=com.awesome.app
+# [ship image]
+# use image
+awesome-app/bin/awesome</code></pre></div></div></section><section id="more_jlink_features"><h2>More JLink Features</h2><div class="ulist"><ul><li><p>automatic service binding<br>
+(with <code>--bind-services</code>)</p></li><li><p>various optimizations<br>
+(size and launch performance)</p></li><li><p>plugin API (not yet public)</p></li><li><p>cross OS image generation</p></li></ul></div></section><section id="more_jpms_features"><h2>More JPMS Features</h2><div class="ulist"><ul><li><p>finer grained dependencies and exports</p></li><li><p>open packages and modules (for reflection)</p></li><li><p>unnamed and automatic modules (for migration)</p></li><li><p>layers (for containers)</p></li></ul></div></section><section id="more_about_jpms"><h2>More About JPMS</h2><div class="ulist"><ul><li><p><a href="https://blog.codefx.org/java/java-module-system-tutorial/">Code First Java Module System Tutorial</a></p></li><li><p><a href="https://blog.codefx.org/java/java-9-migration-guide/">Java 9 Migration Guide</a></p></li><li><p><a href="https://blog.codefx.org/java/five-command-line-options-to-hack-the-java-9-module-system/">Command Line Options To Hack The JPMS</a></p></li><li><p><a href="https://blog.codefx.org/java/planning-your-java-9-update/">Planning Your Java 9 Update</a></p></li></ul></div></section><section id="even_more_about_jpms"><h2>Even More About JPMS</h2><div style="float: left; width: 45%; margin:0px;">
+	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="images/cover-jms.png" style="margin: 0;"></a>
+	<p style="
+		position: fixed;
+		margin: -160px 0 0 60px;
+		transform: rotate(-8deg);
+		font-size: 28pt;
+		color: #cc0000;
+		text-shadow: 2px 2px 3px #660000;
+		font-weight: bold;
+		border: 5px solid #cc0000;
+		border-radius: 12px;
+		background-color: rgba(255,255,255,0.5);
+		padding: 2px 8px 7px 4px;
+">37% off with<br>code <em>fccparlog</em></p>
+</div>
+<div class="paragraph"><p><strong>I&#8217;ve written a book!</strong><br>
+E-book available ⇝ <a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&amp;a_bid=869915cb">tiny.cc/jms</a></p></div>
+<div class="ulist"><ul><li><p>creating, building,<br>
+running modules</p></li><li><p>migration to Java 9+</p></li><li><p>modularization</p></li><li><p>services and<br>
+advanced features</p></li><li><p>reflection and layers</p></li><li><p>custom runtime images</p></li></ul></div></section></section>
+<section id="new_language_features"><h2>New Language Features</h2><table class="toc">
+	<tr><td>Sealed Classes</td></tr>
+	<tr><td>Records</td></tr>
+	<tr><td>Pattern Matching</td></tr>
+	<tr><td>Text Blocks ⑮</td></tr>
+	<tr><td>Switch Expressions ⑭</td></tr>
+	<tr><td>Local-Variable Type Inference ⑩</td></tr>
+	<tr><td>All The Small Things... ⑨</td></tr>
+</table></section>
+<section><section id="new_language_features_2"><h2>New Language Features</h2><table class="toc">
+	<tr class="toc-current"><td>Sealed Classes</td></tr>
+	<tr><td>Records</td></tr>
+	<tr><td>Pattern Matching</td></tr>
+	<tr><td>Text Blocks ⑮</td></tr>
+	<tr><td>Switch Expressions ⑭</td></tr>
+	<tr><td>Local-Variable Type Inference ⑩</td></tr>
+	<tr><td>All The Small Things... ⑨</td></tr>
+</table><div class="paragraph"><p>Between <code>final</code> and open classes</p></div></section><section id="modeling_a_domain"><h2>Modeling A Domain</h2><div class="paragraph"><p>Many systems have central abstractions, e.g.:</p></div>
+<div class="ulist"><ul><li><p>staff/customers</p></li><li><p>delivery mechanisms</p></li><li><p>shapes</p></li></ul></div>
+<div class="paragraph"><p>Commonly, polymorphism is used<br>
+to reuse code and attach functionality.</p></div>
+<div class="paragraph"><p>If many subsystems operate on abstractions,<br>
+there&#8217;s the risk of <em>feature creep</em>.</p></div></section><section id="modeling_a_domain_2"><h2>Modeling A Domain</h2><div class="paragraph"><p>Alternatively, subsystems can<br>
+implement their own handling.</p></div>
+<div class="paragraph"><p>Challenge is that subtypes<br>
+are <em>effectively unknown</em>, e.g.:</p></div>
+<div class="ulist"><ul><li><p>what subtypes of <code>Staff</code> exist?</p></li><li><p>what subtypes of <code>Shape</code> exist?</p></li></ul></div>
+<div class="paragraph"><p>OO-solutions are cumbersome.<br>
+(e.g. <a href="https://en.wikipedia.org/wiki/Visitor_pattern">visitor pattern</a>)</p></div></section><section id="modeling_a_closed_domain"><h2>Modeling A Closed Domain</h2><div class="paragraph"><p>In many cases, a type&#8217;s variations<br>
+are finite and known, e.g.:</p></div>
+<div class="ulist"><ul><li><p><code>Employee</code>, <code>Freelancer</code> extend <code>Staff</code></p></li><li><p><code>Circle</code>, <code>Rectangle</code> extend <code>Shape</code></p></li></ul></div>
+<div class="paragraph"><p>If subsystems rely on that,<br>
+their code becomes simpler (<code>instanceof</code>).</p></div>
+<div class="paragraph"><p>But less maintainable?<br>
+⇝ Only because compiler can&#8217;t help!</p></div></section><section id="compiler_inheritance"><h2>Compiler &amp; Inheritance</h2><div class="paragraph"><p>There&#8217;s three options how a class can be extended:</p></div>
+<div class="ulist"><ul><li><p>by no classes (<code>final</code> class)</p></li><li><p>by package classes<br>
+(package-visible constructor)</p></li><li><p>by all classes (<code>public</code> class)</p></li></ul></div>
+<div class="paragraph"><p>(For interfaces, there&#8217;s no choice at all.)</p></div>
+<div class="paragraph"><p>In all cases:<br>
+<strong>Implementations are <em>unknown</em> to the compiler.</strong></p></div></section><section id="enter_sealed_types"><h2>Enter Sealed Types</h2><div class="paragraph"><p>With <code>sealed</code> types, we can express<br>
+<em>limited extensibility</em>:</p></div>
+<div class="ulist"><ul><li><p>only specific types can extend sealed type</p></li><li><p>those are known to developer and compiler</p></li></ul></div></section><section id="sealed_staff"><h2>Sealed Staff</h2><div class="ulist"><ul><li><p>mark class/interface as <code>sealed</code></p></li><li><p>use <code>permits</code> to list types</p></li></ul></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">sealed interface Staff
+	permits Employee, Freelancer { }
+
+final class Employee implements Staff { }
+
+final class Freelancer implements Staff { }
+
+// compile error
+final class Consultant implements Staff { }</code></pre></div></div></section><section id="handling_sealed_staff"><h2>Handling Sealed Staff</h2><div class="paragraph"><p>Goal is to combine sealed types,<br>
+switch expressions, and pattern matching:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public double cost(Staff staff) {
+	return switch(staff) {
+		// strawman syntax!
+		case Employee employee -&gt;
+			employee.salary() * 2;
+		case Freelancer freelander -&gt;
+			freelancer.averageInvoice() * 1.1;
+		// compiler checks exhaustiveness
+	}
+}</code></pre></div></div></section><section id="handling_sealed_staff_2"><h2>Handling Sealed Staff</h2><div class="paragraph"><p>But we&#8217;re not there yet.</p></div>
+<div class="paragraph"><p>For now:</p></div>
+<div class="ulist"><ul><li><p>sealed classes limit extensibility<br>
+(between <code>final</code> and non-<code>final</code>)</p></li><li><p>prevent extension by users</p></li><li><p>express intention to maintainers</p></li></ul></div></section><section id="sealing_details"><h2>Sealing Details</h2><div class="paragraph"><p>There are a few details to discuss:</p></div>
+<div class="ulist"><ul><li><p>for the sealed type</p></li><li><p>for the premitted types</p></li><li><p>for both of those types</p></li></ul></div></section><section id="sealed_type_details"><h2>Sealed Type Details</h2><div class="paragraph"><p>Sealed types can extend/inherit as usual:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">sealed class Staff
+	extends Person
+	implements Comparable&lt;Staff&gt;
+	permits Employee, Freelancer {
+
+	// ...
+
+}</code></pre></div></div></section><section id="permitted_type_details"><h2>Permitted Type Details</h2><div class="paragraph"><p>Permitted types must use exactly one of these modifiers:</p></div>
+<div class="ulist"><ul><li><p><code>final</code> for no inheritance</p></li><li><p><code>sealed</code> for limited inheritance</p></li><li><p><code>non-sealed</code> for unlimited inheritance</p></li></ul></div>
+<div class="paragraph"><p>With <code>sealed</code> and <code>non-sealed</code>, a type<br>
+can admit further implementations.</p></div></section><section id="permitted_type_details_2"><h2>Permitted Type Details</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">sealed interface Staff
+	permits Employee, Freelancer { }
+
+non-sealed class Employee implements Staff { }
+
+sealed class Freelancer implements Staff
+	permits Consultant { }
+
+final class Consultant extends Freelancer { }</code></pre></div></div>
+<div class="paragraph"><p>But what about exhaustiveness?!<br>
+⇝ type pyramid has "exhaustive peak"</p></div></section><section id="permitted_type_details_3"><h2>Permitted Type Details</h2><div class="paragraph"><p>Permitted types must directly extend sealed type:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">sealed interface Staff
+	//                 compile error
+	permits Freelancer, Consultant { }
+
+non-sealed class Freelancer implements Staff { }
+
+class Consultant extends Freelancer { }</code></pre></div></div>
+<div class="paragraph"><p>This keeps type pyramid layered.</p></div></section><section id="permitting_records"><h2>Permitting Records</h2><div class="paragraph"><p>Remember, records are implicitly <code>final</code>.</p></div>
+<div class="paragraph"><p>They make good permitted types.</p></div></section><section id="neighbours"><h2>Neighbours</h2><div class="paragraph"><p>Permitted types must be "close":</p></div>
+<div class="ulist"><ul><li><p>same package for non-modular JAR</p></li><li><p>same module for modular JAR</p></li></ul></div>
+<div class="paragraph"><p>Sealed and each permitted type must be<br>
+visible/accesible to one another.</p></div></section><section id="flat_mates"><h2>Flat Mates</h2><div class="paragraph"><p>If all types are in same source file,<br>
+<code>permits</code> can be omitted:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class Employment {
+
+	sealed interface Staff { }
+
+	final class Employee implements Staff { }
+
+	final class Freelancer implements Staff { }
+
+}</code></pre></div></div></section><section id="summary"><h2>Summary</h2><div class="paragraph"><p>Sealed types make inheritance:</p></div>
+<div class="ulist"><ul><li><p>more flexible between open and <code>final</code></p></li><li><p>analyzable to the compiler</p></li></ul></div>
+<div class="paragraph"><p>Consequences:</p></div>
+<div class="ulist"><ul><li><p>makes type tests more maintainable<br>
+(thanks to exhaustiveness checks).</p></li><li><p>reduces need for complex OO solutions<br>
+(goodbye visitor pattern 👋)</p></li></ul></div></section></section>
+<section><section id="new_language_features_3"><h2>New Language Features</h2><table class="toc">
+	<tr><td>Sealed Classes</td></tr>
+	<tr class="toc-current"><td>Records</td></tr>
+	<tr><td>Pattern Matching</td></tr>
+	<tr><td>Text Blocks ⑮</td></tr>
+	<tr><td>Switch Expressions ⑭</td></tr>
+	<tr><td>Local-Variable Type Inference ⑩</td></tr>
+	<tr><td>All The Small Things... ⑨</td></tr>
+</table><div class="paragraph"><p>Simple classes ~&gt; simple code</p></div></section><section id="spilling_beans"><h2>Spilling Beans</h2><div class="paragraph"><p>Typical Java Bean:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class Range {
+
+	// part I 😀
+
+	private final int low;
+	private final int high;
+
+	public Range(int low, int high) {
+		this.low = low;
+		this.high = high;
+	}
+
+}</code></pre></div></div></section><section id="spilling_beans_2"><h2>Spilling Beans</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class Range {
+
+	// part II 🙄
+
+	public int getLow() {
+		return low;
+	}
+
+	public int getHigh() {
+		return high;
+	}
+
+}</code></pre></div></div></section><section id="spilling_beans_3"><h2>Spilling Beans</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class Range {
+
+	// part III 🤨
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Range range = (Range) o;
+		return low == range.low &amp;&amp;
+				high == range.high;
+	}
+
+}</code></pre></div></div></section><section id="spilling_beans_4"><h2>Spilling Beans</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class Range {
+
+	// part IV 🥴
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(low, high);
+	}
+
+}</code></pre></div></div></section><section id="spilling_beans_5"><h2>Spilling Beans</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class Range {
+
+	// part V 😭
+
+	@Override
+	public String toString() {
+		return "[" + low + "; " + high + "]";
+	}
+
+}</code></pre></div></div></section><section id="java_is_verbose"><h2>"Java is Verbose"</h2><div class="paragraph"><p><code>Range.java</code> is simple:</p></div>
+<div class="ulist"><ul><li><p>declares type <code>Range</code></p></li><li><p>declares two components, <code>low</code> and <code>high</code></p></li></ul></div>
+<div class="paragraph"><p>Takes 44 lines!</p></div>
+<div class="ulist"><ul><li><p>verbose</p></li><li><p>room for error</p></li><li><p>unexpressive</p></li></ul></div></section><section id="records"><h2>Records</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">//                these are "components"
+public record Range(int low, int high) {
+
+	// compiler generates:
+	//  * canonical constructor
+	//  * accessors low(), high()
+	//  * equals, hashCode, toString
+
+}</code></pre></div></div></section><section id="records_2"><h2>Records</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>The API for a record models the state, the whole state, and nothing but the state.</p></div></blockquote></div>
+<div class="paragraph"><p>The deal:</p></div>
+<div class="ulist"><ul><li><p>give up encapsulation</p></li><li><p>couple API to internal state</p></li><li><p>get API for free</p></li></ul></div></section><section id="records_3"><h2>Records</h2><div class="paragraph"><p>The benefits:</p></div>
+<div class="ulist"><ul><li><p>no boilerplate for plain "data carriers"</p></li><li><p>no room for error</p></li><li><p>makes Java more expressive</p></li></ul></div>
+<div class="paragraph"><p>On to the details!</p></div></section><section id="limited_records"><h2>Limited Records</h2><div class="paragraph"><p>Records are limited classes:</p></div>
+<div class="ulist"><ul><li><p>no inheritance</p><div class="ulist"><ul><li><p>can&#8217;t use <code>extends</code></p></li><li><p>are <code>final</code></p></li></ul></div></li><li><p>component fields are <code>final</code></p></li><li><p>no additional fields</p></li></ul></div></section><section id="customizable_records"><h2>Customizable Records</h2><div class="paragraph"><p>Records can be customized:</p></div>
+<div class="ulist"><ul><li><p>override constructor</p></li><li><p>add constructors and<br>
+static factory methods</p></li><li><p>override accessors</p></li><li><p>add other methods</p></li><li><p>override <code>Object</code> methods</p></li><li><p>implement interfaces</p></li><li><p>made serializable</p></li></ul></div></section><section id="override_constructors"><h2>Override Constructors</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public Range(int low, int high) {
+	if (high &lt; low)
+		throw new IllegalArgumentException();
+	this.low = low;
+	this.high = high;
+}</code></pre></div></div></section><section id="override_constructors_2"><h2>Override Constructors</h2><div class="paragraph"><p>Compact canonical constructor:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// executed before fields are assigned
+public Range {
+	if (high &lt; low)
+		throw new IllegalArgumentException();
+}
+
+// arguments can be reassigned
+public Range {
+	if (high &lt; low)
+		high = low;
+}</code></pre></div></div></section><section id="override_constructors_3"><h2>Override Constructors</h2><div class="ulist"><ul><li><p>implicit constructor has same visibility as record</p></li><li><p>explicit constructors can&#8217;t reduce visibility</p></li><li><p>can&#8217;t assign fields in compact form<br>
+(happens automatically after its execution)</p></li></ul></div></section><section id="add_constructors"><h2>Add Constructors</h2><div class="paragraph"><p>Additional constructors work as usual:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public Range(int high) {
+	this(0, high);
+}</code></pre></div></div>
+<div class="paragraph"><p>(Compact canonical constructor can&#8217;t delegate.)</p></div></section><section id="add_static_factories"><h2>Add Static Factories</h2><div class="paragraph"><p>Additional static factories work as usual:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public static Range open(int low, int high) {
+	return new Range(low, high + 1);
+}</code></pre></div></div>
+<div class="paragraph"><p>Can&#8217;t reduce constructor visibility, though.</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@Deprecated
+// use static factory method instead
+public Range { }</code></pre></div></div></section><section id="override_accessors"><h2>Override Accessors</h2><div class="paragraph"><p>Accessors can be overridden:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@Override
+public low() {
+	return Math.max(0, low);
+}</code></pre></div></div>
+<div class="paragraph"><p>Not a good example!</p></div>
+<div class="quoteblock"><blockquote><div class="paragraph"><p>The API for a record models the state, the whole state, and nothing but the state.</p></div></blockquote></div></section><section id="implement_interfaces"><h2>Implement Interfaces</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public record Range(int low, int high)
+		implements Comparable&lt;Range&gt; {
+
+	@Override
+	public int compareTo(Range other) {
+		return this.low == other.low
+			? this.high - other.high
+			: this.low - other.low;
+	}
+
+}</code></pre></div></div></section><section id="serializable_records"><h2>Serializable Records</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public record Range(int low, int high)
+		implements Serializable { }</code></pre></div></div>
+<div class="ulist"><ul><li><p>has default <code>serialVersionUID</code> 0</p></li><li><p>uses <code>FileOutputStream</code> and<br>
+<code>FileInputStream</code> as usual</p></li><li><p>deserializaton calls constructor 🙌</p></li><li><p>framework support is growing<br>
+(e.g. <a href="https://johnzon.apache.org/">Apache Johnzon</a> for JSON-B)</p></li></ul></div></section><section id="summary_2"><h2>Summary</h2><div class="ulist"><ul><li><p>use records to replace data carriers</p></li><li><p>it&#8217;s not anti-boilerplate pixie dust<br>
+⇝ use only when "the deal" makes sense</p></li><li><p>beware of limitations</p></li><li><p>beware of class-building facilites</p></li><li><p>observe ecosystem for adoption</p></li></ul></div></section></section>
+<section><section id="new_language_features_4"><h2>New Language Features</h2><table class="toc">
+	<tr><td>Sealed Classes</td></tr>
+	<tr><td>Records</td></tr>
+	<tr class="toc-current"><td>Pattern Matching</td></tr>
+	<tr><td>Text Blocks ⑮</td></tr>
+	<tr><td>Switch Expressions ⑭</td></tr>
+	<tr><td>Local-Variable Type Inference ⑩</td></tr>
+	<tr><td>All The Small Things... ⑨</td></tr>
+</table><div class="paragraph"><p>Type check and cast in one operation.</p></div></section><section id="old_school_instanceof"><h2>Old-school <code>instanceof</code></h2><div class="paragraph"><p><code>instanceof</code> is cumbersome:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public void feed(Animal animal) {
+	if (animal instanceof Elephant)
+		((Elephant) animal).eatPlants();
+	else if (animal instanceof Tiger)
+		((Tiger) animal).eatMeat();
+}</code></pre></div></div>
+<div class="paragraph"><p>Three things are happening:</p></div>
+<div class="olist arabic"><ol class="arabic"><li><p>type test</p></li><li><p>type conversaion</p></li><li><p>variable declaration (implicit)</p></li></ol></div></section><section id="pattern_matching"><h2>Pattern Matching</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public void feed(Animal animal) {
+	if (animal instanceof Elephant elephant)
+		elephant.eatPlants();
+	else if (animal instanceof Tiger tiger)
+		tiger.eatMeat();
+}</code></pre></div></div>
+<div class="paragraph"><p><code>animal instanceof Tiger tiger</code>:</p></div>
+<div class="olist arabic"><ol class="arabic"><li><p>does all three things in one operation</p></li><li><p><code>tiger</code> is scoped to <code>true</code>-branch</p></li></ol></div></section><section id="what_is_a_pattern"><h2>What is a Pattern?</h2><div class="paragraph"><p>A <em>pattern</em> is:</p></div>
+<div class="olist arabic"><ol class="arabic"><li><p>a <em>test</em>/<em>predicate</em><br>
+that is applied to a target</p></li><li><p><em>pattern variables</em> <br>
+that are extracted from the target<br>
+if the test passes</p></li></ol></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">//         |--------- pattern --------|
+//  target |----- test ------| variable
+    animal instanceof Elephant elephant</code></pre></div></div>
+<div class="paragraph"><p>We will see more patterns in the future.</p></div></section><section id="pattern_variable_scope"><h2>Pattern Variable Scope</h2><div class="paragraph"><p>Pattern variable is in scope<br>
+where compiler can prove pattern is <code>true</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public void inverted(Object object) {
+	if (!(object instanceof String string))
+		throw new IllegalArgumentException();
+	// after inverted test
+	System.out.println(string.length());
+}</code></pre></div></div></section><section id="pattern_variable_scope_2"><h2>Pattern Variable Scope</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public void scoped(Object object) {
+	// later in same expression
+	if (object instanceof String string
+			&amp;&amp; string.length() &gt; 50)
+		System.out.println("Long string");
+
+	if (object instanceof String string
+			// compiler error because || means
+			// it's not necessarily a string
+			|| string.length() &gt; 50)
+		System.out.println("Maybe string");
+}</code></pre></div></div></section><section id="summary_3"><h2>Summary</h2><div class="ulist"><ul><li><p><code>$TARGET instanceof $TYPE $VAR</code>:</p><div class="olist arabic"><ol class="arabic"><li><p>checks whether <code>$TARGET</code> is of type <code>$TYPE</code></p></li><li><p>creates variable <code>$TYPE $VAR = $TARGET</code></p></li><li><p>in scope wherever <code>instanceof $TYPE</code> is <code>true</code></p></li></ol></div></li><li><p>first of many (?) match patterns</p></li><li><p>keep an eye out for integration with <code>switch</code></p></li></ul></div></section><section id="preview"><h2>Preview</h2><div class="paragraph"><p><code>switch</code> will be able to use pattern matching:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">switch (animal) {
+	case Elephant elephant
+		-&gt; elephant.eatPlants();
+	case Tiger tiger
+		-&gt; tiger.eatMeat();
+}</code></pre></div></div></section></section>
+<section><section id="new_language_features_5"><h2>New Language Features</h2><table class="toc">
+	<tr><td>Sealed Classes</td></tr>
+	<tr><td>Records</td></tr>
+	<tr><td>Pattern Matching</td></tr>
+	<tr class="toc-current"><td>Text Blocks ⑮</td></tr>
+	<tr><td>Switch Expressions ⑭</td></tr>
+	<tr><td>Local-Variable Type Inference ⑩</td></tr>
+	<tr><td>All The Small Things... ⑨</td></tr>
+</table><div class="paragraph"><p>Multiline strings. Finally.</p></div></section><section id="multiline_strings"><h2>Multiline Strings</h2><div class="paragraph"><p>Text blocks are straightforward:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">String haikuBlock = """
+	worker bees can leave
+	 even drones can fly away
+	  the queen is their slave""";
+System.out.println(haiku);
+// &gt; worker bees can leave
+// &gt;  even drones can fly away
+// &gt;   the queen is their slave</code></pre></div></div>
+<div class="ulist"><ul><li><p>line breaks are normalized to <code>\n</code></p></li><li><p>intentional indentation remains</p></li><li><p>accidental indentation is removed</p></li></ul></div></section><section id="syntax"><h2>Syntax</h2><div class="ulist"><ul><li><p>can be used in same place<br>
+as <code>"string literals"</code></p></li><li><p>start with <code>"""</code> and new line</p></li><li><p>end with <code>"""</code></p><div class="ulist"><ul><li><p>on the last line of content</p></li><li><p>on its own line</p></li></ul></div></li></ul></div>
+<div class="paragraph"><p>Position of closing <code>"""</code> decides<br>
+whether string ends with <code>"\n"</code>.</p></div></section><section id="vs_string_literals"><h2>Vs String Literals</h2><div class="paragraph"><p>Compare to:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">String haikuLiteral = ""
+	+ "worker bees can leave\n"
+	+ " even drones can fly away\n"
+	+ "  the queen is their slave";</code></pre></div></div>
+<div class="ulist"><ul><li><p><code>haikuBlock.equals(haikuLiteral)</code></p></li><li><p>thanks to string interning even<br>
+<code>haikuBlock == haikuLiteral</code></p></li></ul></div>
+<div class="paragraph"><p>⇝ No way to discern source at run time!</p></div></section><section id="line_endings"><h2>Line Endings</h2><div class="paragraph"><p>Line ending depends on configuration.<br>
+Source file properties influence semantics?</p></div>
+<div class="paragraph"><p><strong>Text block lines always end with <code>\n</code>!</strong></p></div>
+<div class="paragraph"><p>Escape sequences are translated afterwards:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">String windows = """
+    Windows\r
+    line\r
+    endings\r
+    """</code></pre></div></div></section><section id="indentation"><h2>Indentation</h2><div class="paragraph"><p>Compiler discerns:</p></div>
+<div class="ulist"><ul><li><p>accidental indentation<br>
+(from code style; gets removed)</p></li><li><p>essential indentation<br>
+(within the string; remains)</p></li></ul></div>
+<div class="paragraph"><p>How?</p></div></section><section id="accidental_indentation"><h2>Accidental Indentation</h2><div class="ulist"><ul><li><p>closing <code>"""</code> are on their own line<br>
+⇝ their indentation is accidental</p></li><li><p>otherwise, line with smallest indentation<br>
+⇝ its indentation is accidental</p></li></ul></div></section><section id="indentation_2"><h2>Indentation</h2><div class="paragraph"><p>Accidental vs intentional indentation<br>
+(separated with <code>|</code>):</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">String haikuBlock = """
+		|worker bees can leave
+		| even drones can fly away
+		|  the queen is their slave""";
+String haikuBlock = """
+	|	worker bees can leave
+	|	 even drones can fly away
+	|	  the queen is their slave
+	""";</code></pre></div></div></section><section id="manual_indentation"><h2>Manual Indentation</h2><div class="paragraph"><p>To manually manage indentation:</p></div>
+<div class="ulist"><ul><li><p><code>String::stripIndent</code></p></li><li><p><code>String::indent</code></p></li></ul></div></section><section id="escape_sequences"><h2>Escape Sequences</h2><div class="paragraph"><p>Text blocks are not <em>raw</em>:</p></div>
+<div class="ulist"><ul><li><p>escape sequences work (e.g. <code>\r</code>)</p></li><li><p>escape sequences are necessary</p></li></ul></div>
+<div class="paragraph"><p>But: <code>"</code> is not special!</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">String phrase = """
+    {
+        greeting: "hello",
+        audience: "text blocks",
+    }
+    """;</code></pre></div></div>
+<div class="paragraph"><p>⇝ Way fewer escapes in HTML/JSON/SQL/etc.</p></div></section><section id="more_on_text_blocks"><h2>More on Text Blocks</h2><div class="ulist"><ul><li><p><a href="https://blog.codefx.org/java/text-blocks/">Definitive Guide To Text Blocks</a></p></li><li><p><a href="http://cr.openjdk.java.net/~jlaskey/Strings/TextBlocksGuide_v9.html">Programmer&#8217;s Guide To Text Blocks</a></p></li></ul></div></section></section>
+<section><section id="new_language_features_6"><h2>New Language Features</h2><table class="toc">
+	<tr><td>Sealed Classes</td></tr>
+	<tr><td>Records</td></tr>
+	<tr><td>Pattern Matching</td></tr>
+	<tr><td>Text Blocks ⑮</td></tr>
+	<tr class="toc-current"><td>Switch Expressions ⑭</td></tr>
+	<tr><td>Local-Variable Type Inference ⑩</td></tr>
+	<tr><td>All The Small Things... ⑨</td></tr>
+</table><div class="paragraph"><p>More powerful <code>switch</code>.</p></div></section><section id="switching"><h2>Switching</h2><div class="paragraph"><p>Say you&#8217;re facing <a href="https://thedailywtf.com/articles/What_Is_Truth_0x3f_">the dreaded ternary Boolean</a> &#8230;&#8203;</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public enum TernaryBoolean {
+	TRUE,
+	FALSE,
+	FILE_NOT_FOUND
+}</code></pre></div></div>
+<div class="paragraph"><p>... and want to convert it to a regular <code>Boolean</code>.</p></div></section><section id="switch_statement"><h2>Switch Statement</h2><div class="paragraph"><p>Before Java 14, you might have done this:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">boolean result;
+switch (ternaryBool) {
+	case TRUE: result = true; break;
+	case FALSE: result = false; break;
+	case FILE_NOT_FOUND:
+		var ex = new UncheckedIOException(
+			"This is ridiculous!",
+			new FileNotFoundException());
+		throw ex;
+	default:
+		var ex2 = new IllegalArgumentException(
+			"Seriously?! 😠");
+		throw ex2;
+}</code></pre></div></div></section><section id="switch_statement_2"><h2>Switch Statement</h2><div class="paragraph"><p>Lots of room for improvements:</p></div>
+<div class="ulist"><ul><li><p>default fall-through is annoying</p></li><li><p><code>result</code> handling is roundabout</p></li><li><p>lacking compiler support is error-prone</p></li></ul></div></section><section id="switch_statement_3"><h2>Switch Statement</h2><div class="paragraph"><p>This is better:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public boolean convert(TernaryBoolean ternaryBool) {
+	switch (ternaryBool) {
+		case TRUE: return true;
+		case FALSE: return false;
+		case FILE_NOT_FOUND:
+			throw new UncheckedIOException(
+				"This is ridiculous!",
+				new FileNotFoundException());
+		default:
+			throw new IllegalArgumentException(
+				"Seriously?! 😠");
+	}
+}</code></pre></div></div></section><section id="switch_statement_4"><h2>Switch Statement</h2><div class="paragraph"><p>Better:</p></div>
+<div class="ulist"><ul><li><p><code>return</code> prevents fall-through</p></li><li><p>results are created on the spot</p></li></ul></div>
+<div class="paragraph"><p>But:</p></div>
+<div class="ulist"><ul><li><p><code>default</code> is not really necessary&#8230;&#8203;</p></li><li><p>&#8230;&#8203;but prevents compile error<br>
+on missing branches</p></li><li><p>creating a method is not always<br>
+possible or convenient</p></li></ul></div></section><section id="switch_expression"><h2>Switch Expression</h2><div class="paragraph"><p>Enter <code>switch</code> expressions:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">boolean result = switch(ternaryBool) {
+    case TRUE -&gt; true;
+    case FALSE -&gt; false;
+    case FILE_NOT_FOUND -&gt;
+		throw new UncheckedIOException(
+			"This is ridiculous!",
+			new FileNotFoundException());
+};</code></pre></div></div>
+<div class="paragraph"><p>Two things to note:</p></div>
+<div class="ulist"><ul><li><p><code>switch</code> "has a result"<br>
+⇝ it&#8217;s an <em>expression</em>, not a <em>statement</em></p></li><li><p>lambda-style arrow syntax</p></li></ul></div></section><section id="preview_feature"><h2>Preview Feature</h2><div class="paragraph"><p><strong>Note</strong>:</p></div>
+<div class="paragraph"><p>In Java 12 &amp; 13, switch expressions are<br>
+a <a href="https://blog.codefx.org/java/enable-preview-language-features/">preview language feature</a>!</p></div>
+<div class="ulist"><ul><li><p>must be enabled with <code>--enable-preview</code><br>
+(on <code>javac</code> and <code>java</code>).</p></li><li><p>in IntelliJ, set the module&#8217;s language level to<br>
+<em>12 (Preview) - &#8230;&#8203;</em> or <em>13 (Preview) - &#8230;&#8203;</em></p></li><li><p>in Eclipse, go to <em>Compiler Settings</em><br>
+and check <em>Enable preview features</em></p></li></ul></div></section><section id="expression_vs_statement"><h2>Expression vs Statement</h2><div class="paragraph"><p>Statement:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">if (condition)
+    result = doThis();
+else
+    result = doThat();</code></pre></div></div>
+<div class="paragraph"><p>Expression:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">result = condition
+	? doThis()
+	: doThat();</code></pre></div></div></section><section id="expression_vs_statement_2"><h2>Expression vs Statement</h2><div class="paragraph"><p>Statement:</p></div>
+<div class="ulist"><ul><li><p>imperative construct</p></li><li><p>guides computation, but has no result</p></li></ul></div>
+<div class="paragraph"><p>Expression:</p></div>
+<div class="ulist"><ul><li><p>is computed to a result</p></li></ul></div></section><section id="expression_vs_statement_3"><h2>Expression vs Statement</h2><div class="paragraph"><p>For <code>switch</code>:</p></div>
+<div class="ulist"><ul><li><p>if used with an assignment,<br>
+<code>switch</code> becomes an expression</p></li><li><p>if used "stand-alone", it&#8217;s<br>
+treated as a statement</p></li></ul></div>
+<div class="paragraph"><p>This results in different behavior<br>
+(more on that later).</p></div></section><section id="arrow_vs_colon"><h2>Arrow vs Colon</h2><div class="paragraph"><p>You can use <code>:</code> and <code>-&gt;</code> with<br>
+expressions and statements, e.g.:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">boolean result = switch(ternaryBool) {
+    case TRUE: yield true;
+    case FALSE: yield false;
+    case FILE_NOT_FOUND:
+		throw new UncheckedIOException(
+			"This is ridiculous!",
+			new FileNotFoundException());
+};</code></pre></div></div>
+<div class="ulist"><ul><li><p><code>switch</code> is used as an expression</p></li><li><p><code>yield result</code> returns <code>result</code></p></li></ul></div></section><section id="arrow_vs_colon_2"><h2>Arrow vs Colon</h2><div class="paragraph"><p>Whether you use arrow or colon<br>
+results in different behavior<br>
+(more on that later).</p></div></section><section id="switch_evolution"><h2>Switch Evolution</h2><div class="ulist"><ul><li><p>general improvements</p><div class="ulist"><ul><li><p>multiple case labels</p></li></ul></div></li><li><p>specifics of arrow form</p><div class="ulist"><ul><li><p>no fall-through</p></li><li><p>statement blocks</p></li></ul></div></li><li><p>specifics of expressions</p><div class="ulist"><ul><li><p>poly expression</p></li><li><p>returning early</p></li><li><p>exhaustiveness</p></li></ul></div></li></ul></div></section><section id="multiple_case_labels"><h2>Multiple Case Labels</h2><div class="paragraph"><p>Statements and expressions,<br>
+in colon and arrow form<br>
+can use multiple case labels:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">String result = switch (ternaryBool) {
+	case TRUE, FALSE -&gt; "sane";
+	// `default, case FILE_NOT_FOUND -&gt; ...`
+	// does not work (neither does other way
+	// around), but that makes sense because
+	// using only `default` suffices
+	default -&gt; "insane";
+};</code></pre></div></div></section><section id="no_fall_through"><h2>No Fall-Through</h2><div class="paragraph"><p>Whether used as statement or expression,<br>
+the arrow form has no fall-through:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">switch (ternaryBool) {
+	case TRUE, FALSE -&gt;
+		System.out.println("Bool was sane");
+	// in colon-form, if `ternaryBool` is `TRUE`
+	// or `FALSE`, we would see both messages;
+	// in arrow-form, only one branch is executed
+	default -&gt;
+		System.out.println("Bool was insane");
+}</code></pre></div></div></section><section id="statement_blocks"><h2>Statement Blocks</h2><div class="paragraph"><p>Whether used as statement or expression,<br>
+the arrow form can use statement blocks:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">boolean result = switch (Bool.random()) {
+    case TRUE -&gt; {
+        System.out.println("Bool true");
+        yield true;
+    }
+    case FALSE -&gt; {
+        System.out.println("Bool false");
+        yield false;
+    }
+	// cases `FILE_NOT_FOUND` and `default`
+};</code></pre></div></div></section><section id="statement_blocks_2"><h2>Statement Blocks</h2><div class="paragraph"><p>Natural way to create scope:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">boolean result = switch (Bool.random()) {
+	// cases `TRUE` and `FALSE`
+    case FILE_NOT_FOUND -&gt; {
+        var ex = new UncheckedIOException(
+            "This is ridiculous!",
+            new FileNotFoundException());
+        throw ex;
+    }
+    default -&gt; {
+        var ex = new IllegalArgumentException(
+            "Seriously?! 🤬");
+        throw ex;
+    }
+};</code></pre></div></div></section><section id="poly_expression"><h2>Poly Expression</h2><div class="paragraph"><p>A <em>poly expression</em></p></div>
+<div class="ulist"><ul><li><p>has no definitive type</p></li><li><p>can be one of several types</p></li></ul></div>
+<div class="paragraph"><p>Lambdas are poly expressions:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Function&lt;String, String&gt; fun = s -&gt; s + " ";
+UnaryOperator&lt;String&gt; op = s -&gt; s + " ";</code></pre></div></div></section><section id="poly_expression_2"><h2>Poly Expression</h2><div class="paragraph"><p>Whether in colon or arrow form,<br>
+a <code>switch</code> expression is a poly expression.</p></div>
+<div class="paragraph"><p>How it&#8217;s type is determined,<br>
+depends on the target type:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// target type known: String
+String result = switch (ternaryBool) { ... }
+// target type unknown
+var result = switch (ternaryBool) { ... }</code></pre></div></div></section><section id="poly_expression_3"><h2>Poly Expression</h2><div class="paragraph"><p>If target type is known, all branches must conform to it:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">String result = switch (ternaryBool) {
+    case TRUE, FALSE -&gt; "sane";
+    default -&gt; "insane";
+};</code></pre></div></div>
+<div class="paragraph"><p>If target type is unknown, the compiler infers a type:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// compiler infers super type of `String` and
+// `IllegalArgumentException` ~&gt; `Serializable`
+var serializableMessage = switch (bool) {
+    case TRUE, FALSE -&gt; "sane";
+    default -&gt; new IllegalArgumentException("insane");
+};</code></pre></div></div></section><section id="returning_early"><h2>Returning Early</h2><div class="paragraph"><p>Whether in colon or arrow form,<br>
+you can&#8217;t return early from a <code>switch</code> expression:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public String sanity(Bool ternaryBool) {
+    String result = switch (ternaryBool) {
+        // compile error:
+		//     "return outside
+		//      of enclosing switch expression"
+        case TRUE, FALSE -&gt; { return "sane"; }
+        default -&gt; { return "This is ridiculous!"; }
+    };
+}</code></pre></div></div></section><section id="exhaustiveness"><h2>Exhaustiveness</h2><div class="paragraph"><p>Whether in colon or arrow form,<br>
+a <code>switch</code> expression checks exhaustiveness:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// compile error:
+//     "the switch expression does not cover
+//      all possible input values"
+boolean result = switch (ternaryBool) {
+    case TRUE -&gt; true;
+    // no case for `FALSE`
+    case FILE_NOT_FOUND -&gt;
+		throw new UncheckedIOException(
+			"This is ridiculous!",
+			new FileNotFoundException());
+};</code></pre></div></div></section><section id="exhaustiveness_2"><h2>Exhaustiveness</h2><div class="paragraph"><p>No compile error for missing <code>default</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// compiles without `default` branch because
+// all cases for `ternaryBool` are covered
+boolean result = switch (ternaryBool) {
+    case TRUE -&gt; true;
+    case FALSE -&gt; false;
+    case FILE_NOT_FOUND -&gt;
+		throw new UncheckedIOException(
+			"This is ridiculous!",
+			new FileNotFoundException());
+};</code></pre></div></div>
+<div class="paragraph"><p>Compiler adds in <code>default</code> branch.</p></div></section><section id="more_on_switch"><h2>More on <code>switch</code></h2><div class="paragraph"><p>Definitive Guide To Switch Expressions</p></div>
+<div class="ulist"><ul><li><p>💻 <a href="https://blog.codefx.org/java/switch-expressions/">tiny.cc/java-12-switch</a></p></li><li><p>▶ <a href="https://www.youtube.com/watch?v=1znHEf3oSNI&amp;list=PL_-IO8LOLuNp2stY1qBUtXlfMdJW7wvfT">tiny.cc/java-12-switch-yt</a></p></li></ul></div></section></section>
+<section><section id="new_language_features_7"><h2>New Language Features</h2><table class="toc">
+	<tr><td>Sealed Classes</td></tr>
+	<tr><td>Records</td></tr>
+	<tr><td>Pattern Matching</td></tr>
+	<tr><td>Text Blocks ⑮</td></tr>
+	<tr><td>Switch Expressions ⑭</td></tr>
+	<tr class="toc-current"><td>Local-Variable Type Inference ⑩</td></tr>
+	<tr><td>All The Small Things... ⑨</td></tr>
+</table><div class="paragraph"><p>Type inference with <code>var</code>.<br>
+Less typing, but still strongly typed.</p></div></section><section id="type_duplication"><h2>Type Duplication</h2><div class="paragraph"><p>We&#8217;re used to duplicating<br>
+type information:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">URL nipafx = new URL("https://nipafx.dev");
+URLConnection connection = nipafx.openConnection();
+Reader reader = new BufferedReader(
+	new InputStreamReader(
+		connection.getInputStream()));</code></pre></div></div>
+<div class="paragraph"><p>Not so bad?</p></div></section><section id="type_duplication_2"><h2>Type Duplication</h2><div class="paragraph"><p>What about this?</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">No no = new No();
+AmountIncrease&lt;BigDecimal&gt; more =
+	new BigDecimalAmountIncrease();
+HorizontalConnection&lt;LinePosition, LinePosition&gt;
+	jumping =
+		new HorizontalLinePositionConnection();
+Variable variable = new Constant(5);
+List&lt;String&gt; names = List.of("Max", "Maria");</code></pre></div></div></section><section id="type_deduplication"><h2>Type Deduplication</h2><div class="paragraph"><p>Can&#8217;t somebody else do that?<br>
+Compiler knows the types!</p></div>
+<div class="paragraph"><p>Enter <code>var</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">var nipafx = new URL("https://nipafx.dev");
+var connection = nipafx.openConnection();
+var reader = new BufferedReader(
+	new InputStreamReader(
+		connection.getInputStream()));</code></pre></div></div></section><section id="locality"><h2>Locality</h2><div class="paragraph"><p>How much information is used for inference?</p></div>
+<div class="ulist"><ul><li><p>type inference can be<br>
+arbitrarily complex/powerful</p></li><li><p>critical resource is not<br>
+compiler but developer</p></li><li><p>code should be readable<br>
+(without compiler/IDE)</p></li></ul></div>
+<div class="paragraph"><p>⇝ Better to keep it simple!</p></div></section><section id="action_at_a_distance"><h2>"Action at a distance"</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// inferred as `int`
+var id = 123;
+if (id &lt; 100) {
+	// very long branch
+} else {
+	// oh boy, much more code...
+}
+
+// now we add this line:
+id = "124";</code></pre></div></div>
+<div class="paragraph"><p>What type should <code>id</code> be?</p></div>
+<div class="paragraph"><p>Where does the error show up?</p></div></section><section id="rules_of_var"><h2>Rules of <code>var</code></h2><div class="paragraph"><p>Hence, <code>var</code> only works in limited scopes:</p></div>
+<div class="ulist"><ul><li class="fragment"><p>compiler infers type from right-hand side<br>
+⇝ rhs has to <strong>exist</strong> and <strong>define a type</strong></p></li><li class="fragment"><p>only works for local variables, <code>for</code>, <code>try</code><br>
+⇝ no <code>var</code> on fields or in method signatures</p></li><li class="fragment"><p>also on lambda parameters ⑪<br>
+⇝ annotate inferred type on lambda parameters</p></li></ul></div></section><section id="rules_of_var_2"><h2>Rules of <code>var</code></h2><div class="paragraph"><p>Two more:</p></div>
+<div class="ulist"><ul><li><p>not a keyword, but a <em>reserved type name</em><br>
+⇝ variables/fields can be named <code>var</code></p></li><li><p>compiler writes type into bytecode<br>
+⇝ no run-time component</p></li></ul></div></section><section id="what_about_readability"><h2>What About Readability?</h2><div class="paragraph"><p>This <strong>is</strong> about readability!</p></div>
+<div class="ulist"><ul><li><p>less redundancy</p></li><li><p>more intermediate variables</p></li><li><p>more focus on variable names</p></li><li><p>aligned variable names</p></li></ul></div></section><section id="aligned_variable_names"><h2>Aligned Variable Names</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">var no = new No();
+var more = new BigDecimalAmountIncrease();
+var jumping = new HorizontalLinePositionConnection();
+var variable = new Constant(5);
+var names = List.of("Max", "Maria");</code></pre></div></div></section><section id="what_about_readability_2"><h2>What About Readability?</h2><div class="paragraph"><p>Still think omitting types is always bad?</p></div>
+<div class="paragraph"><p>Ever wrote a lambda without declaring types?</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">rhetoricalQuestion.answer(yes -&gt; "see my point?");</code></pre></div></div></section><section id="style_guidelines"><h2>Style Guidelines</h2><div class="paragraph"><p>Principles from the
+<a href="http://openjdk.java.net/projects/amber/LVTIstyle.html">official style guidelines</a>:</p></div>
+<div class="olist arabic"><ol class="arabic"><li class="fragment"><p>Reading code is more important than writing it.</p></li><li class="fragment"><p>Code should be clear from local reasoning.</p></li><li class="fragment"><p>Code readability shouldn&#8217;t depend on IDEs.</p></li><li class="fragment"><p>Explicit types are a tradeoff.</p></li></ol></div></section><section id="style_guidelines_2"><h2>Style Guidelines</h2><div class="paragraph"><p>Guidelines:</p></div>
+<div class="olist arabic"><ol class="arabic"><li class="fragment"><p>Choose variable names that provide useful info.</p></li><li class="fragment"><p>Minimize the scope of local variables.</p></li><li class="fragment"><p>Consider <code>var</code> when the initializer provides sufficient information to the reader.</p></li><li class="fragment"><p>Use <code>var</code> to break up chained or nested expressions.</p></li><li class="fragment"><p>Don&#8217;t worry too much about "programming to the interface".</p></li><li class="fragment"><p>Take care when using <code>var</code> with diamonds or generics.</p></li><li class="fragment"><p>Take care when using <code>var</code> with literals.</p></li></ol></div></section><section id="style_guidelines_3"><h2>Style Guidelines</h2><div class="olist arabic"><ol class="arabic"><li><p>Choose variable names that provide useful info.</p></li></ol></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">/* ✘ */ var u = UserRepository.findUser(id);
+/* ✔ */ var user = UserRepository.findUser(id);
+/* 👍*/ var userToLogIn = UserRepository.findUser(id);</code></pre></div></div></section><section id="style_guidelines_4"><h2>Style Guidelines</h2><div class="olist arabic"><ol class="arabic" start="2"><li><p>Minimize the scope of local variables.</p></li></ol></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// ✘
+var id = 123;
+if (id &lt; 100) {
+	// very long branch
+} else {
+	// oh boy, much more code...
+}
+LOGGER.info("... " + id);
+
+// ✔ replace branches with method calls</code></pre></div></div></section><section id="style_guidelines_5"><h2>Style Guidelines</h2><div class="olist arabic"><ol class="arabic" start="3"><li><p>Consider <code>var</code> when the initializer provides<br>
+sufficient information to the reader.</p></li></ol></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">/* ✘ */ var user = Repository.find(id);
+/* ✔ */ var user = UserRepository.findUser(id);
+/* 👍*/ var user = new User(id);</code></pre></div></div></section><section id="style_guidelines_6"><h2>Style Guidelines</h2><div class="olist arabic"><ol class="arabic" start="4"><li><p>Use <code>var</code> to break up chained or nested expressions.</p></li></ol></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// ✘
+return Canvas
+	.activeCanvas()
+	.drawings()
+	.filter(Drawing::isLine)
+	.map(drawing -&gt; (HorizontalConnection) drawing)
+		// now we have lines
+	.filter(line -&gt; length(line) == 7)
+	.map(this::generateSquare)
+		// now we have squares
+	.map(this::createRandomColoredSquare)
+	.map(this::createRandomBorderedSquare)
+	.collect(toList());</code></pre></div></div></section><section id="style_guidelines_7"><h2>Style Guidelines</h2><div class="olist arabic"><ol class="arabic" start="4"><li><p>Use <code>var</code> to break up chained or nested expressions.</p></li></ol></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// ✔
+var lines = Canvas
+	.activeCanvas()
+	.drawings()
+	.filter(Drawing::isLine)
+	.map(drawing -&gt; (HorizontalConnection) drawing)
+var squares = lines
+	.filter(line -&gt; length(line) == 7)
+	.map(this::generateSquare);
+return squares
+	.map(this::createRandomColoredSquare)
+	.map(this::createRandomBorderedSquare)
+	.collect(toList());</code></pre></div></div></section><section id="style_guidelines_8"><h2>Style Guidelines</h2><div class="olist arabic"><ol class="arabic" start="5"><li><p>Don&#8217;t worry too much about<br>
+"programming to the interface".</p></li></ol></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// inferred as `ArrayList` (not `List`),
+// but that's ok
+var users = new ArrayList&lt;User&gt;();</code></pre></div></div>
+<div class="paragraph"><p>Careful when refactoring:</p></div>
+<div class="ulist"><ul><li><p>extracting methods that use <code>var</code>-ed variables<br>
+puts concrete types into method signatures</p></li><li><p>look out and replace with most general type</p></li></ul></div></section><section id="style_guidelines_9"><h2>Style Guidelines</h2><div class="olist arabic"><ol class="arabic" start="6"><li><p>Take care when using <code>var</code> with diamonds or generics.</p></li></ol></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// ✘ infers `ArrayList&lt;Object&gt;`
+var users = new ArrayList&lt;&gt;();
+
+// ✔ infers `ArrayList&lt;User&gt;`
+var users = new ArrayList&lt;User&gt;();</code></pre></div></div></section><section id="style_guidelines_10"><h2>Style Guidelines</h2><div class="olist arabic"><ol class="arabic" start="7"><li><p>Take care when using <code>var</code> with literals.</p></li></ol></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// ✘ when used with `var`, these
+//   variables become `int`
+byte b = 42;
+short s = 42;
+long l = 42;</code></pre></div></div></section><section id="more_on_var"><h2>More on <code>var</code></h2><div class="ulist"><ul><li><p>First Contact With <code>var</code> In Java 10<br>
+💻 <a href="https://blog.codefx.org/java/java-10-var-type-inference/">tiny.cc/java-var</a> /
+▶ <a href="https://www.youtube.com/watch?v=Le1DbpRZdRQ&amp;index=1&amp;list=PL_-IO8LOLuNp2stY1qBUtXlfMdJW7wvfT">tiny.cc/java-var-yt</a></p></li><li><p><a href="https://snyk.io/blog/local-type-inference-java-cheat-sheet">cheat sheet</a> (<strong>⇜ print when getting started!</strong>)</p></li><li><p><a href="http://openjdk.java.net/projects/amber/LVTIstyle.html">official style guidelines</a></p></li><li><p><code>var</code> and &#8230;&#8203;</p><div class="ulist"><ul><li><p><a href="https://blog.codefx.org/java/intersection-types-var/">intersection types</a></p></li><li><p><a href="https://nipafx.dev/java-var-traits">traits</a></p></li><li><p><a href="https://blog.codefx.org/java/tricks-var-anonymous-classes/">anonymous classes</a></p></li></ul></div></li></ul></div></section></section>
+<section><section id="new_language_features_8"><h2>New Language Features</h2><table class="toc">
+	<tr><td>All The Cool Things... ⑩⑭⑮</td></tr>
+	<tr class="toc-current"><td>Private Interface Methods ⑨</td></tr>
+	<tr><td>Try-With-Resources ⑨</td></tr>
+	<tr><td>Diamond Operator ⑨</td></tr>
+	<tr><td>SafeVarargs ⑨</td></tr>
+	<tr><td>Deprecation Warnings ⑨</td></tr>
+</table><div class="paragraph"><p>Enabling reuse between default methods.</p></div></section><section id="no_reuse"><h2>No Reuse</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public interface InJava8 {
+
+	default boolean evenSum(int... numbers) {
+		return sum(numbers) % 2 == 0;
+	}
+
+	default boolean oddSum(int... numbers) {
+		return sum(numbers) % 2 == 1;
+	}
+
+	default int sum(int[] numbers) {
+		return IntStream.of(numbers).sum();
+	}
+
+}</code></pre></div></div></section><section id="private_methods"><h2>Private Methods</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public interface InJava9 {
+
+	private int sum(int[] numbers) {
+		return IntStream.of(numbers).sum();
+	}
+
+}</code></pre></div></div>
+<div class="paragraph"><p>Just like private methods in abstract classes:</p></div>
+<div class="ulist"><ul><li><p>must be implemented</p></li><li><p>can not be overriden</p></li><li><p>can only be called in same source file</p></li></ul></div></section></section>
+<section><section id="new_language_features_9"><h2>New Language Features</h2><table class="toc">
+	<tr><td>All The Cool Things... ⑩⑭⑮</td></tr>
+	<tr><td>Private Interface Methods ⑨</td></tr>
+	<tr class="toc-current"><td>Try-With-Resources ⑨</td></tr>
+	<tr><td>Diamond Operator ⑨</td></tr>
+	<tr><td>SafeVarargs ⑨</td></tr>
+	<tr><td>Deprecation Warnings ⑨</td></tr>
+</table><div class="paragraph"><p>Making <code>try</code>-with-resources blocks cleaner.</p></div></section><section id="useless_variable"><h2>Useless Variable</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">void doSomethingWith(Connection connection)
+		throws Exception {
+	try(Connection c = connection) {
+		c.doSomething();
+	}
+}</code></pre></div></div>
+<div class="paragraph"><p>Why is <code>c</code> necessary?</p></div></section><section id="why_is_c_necessary"><h2>Why is <code>c</code> necessary?</h2><div class="ulist"><ul><li><p>target of <code>close()</code> must be obvious<br>
+⇝ resource should not be reassigned</p></li><li><p>easiest if resource is final</p></li><li><p>easiest if resource must be assigned<br>
+and can be made implicitly final</p></li></ul></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">try(Connection c = connection)</code></pre></div></div></section><section id="effectively_final_resource"><h2>Effectively Final Resource</h2><div class="paragraph"><p>But since Java 8 we have <em>effectively final</em>!</p></div>
+<div class="paragraph"><p>This works in Java 9:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">void doSomethingWith(Connection connection)
+		throws Exception {
+	try(connection) {
+		connection.doSomething();
+	}
+}</code></pre></div></div>
+<div class="ulist"><ul><li><p>compiler knows that <code>connection</code> is not reassigned</p></li><li><p>developers know what <em>effectively final</em> means</p></li></ul></div>
+<aside class="notes"><div class="paragraph"><p>Q: Can instance be created but not assigned? No.</p></div></aside></section></section>
+<section><section id="new_language_features_10"><h2>New Language Features</h2><table class="toc">
+	<tr><td>All The Cool Things... ⑩⑭⑮</td></tr>
+	<tr><td>Private Interface Methods ⑨</td></tr>
+	<tr><td>Try-With-Resources ⑨</td></tr>
+	<tr class="toc-current"><td>Diamond Operator ⑨</td></tr>
+	<tr><td>SafeVarargs ⑨</td></tr>
+	<tr><td>Deprecation Warnings ⑨</td></tr>
+</table><div class="paragraph"><p>A little more type inference.</p></div></section><section id="diamond_operator"><h2>Diamond Operator</h2><div class="paragraph"><p>Maybe the best example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;String&gt; strings = new ArrayList&lt;&gt;();</code></pre></div></div>
+<div class="ulist"><ul><li><p>used at a constructor call</p></li><li><p>tells Java to infer the parametric type</p></li></ul></div></section><section id="anonymous_classes"><h2>Anonymous Classes</h2><div class="paragraph"><p>Diamond did not work with anonymous classes:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">&lt;T&gt; Box&lt;T&gt; createBox(T content) {
+	// we have to put the `T` here :(
+	return new Box&lt;T&gt;(content) { };
+}</code></pre></div></div>
+<div class="paragraph"><p>Reason are non-denotable types:</p></div>
+<div class="ulist"><ul><li><p>might be inferred by compiler<br>
+for anonymous classes</p></li><li><p>can not be expressed by JVM</p></li></ul></div></section><section id="infer_denotable_types"><h2>Infer Denotable Types</h2><div class="paragraph"><p>Java 9 infers denotable types:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">&lt;T&gt; Box&lt;T&gt; createBox(T content) {
+	return new Box&lt;&gt;(content) { };
+}</code></pre></div></div>
+<div class="paragraph"><p>Gives compile error if type is non-denotable:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Box&lt;?&gt; createCrazyBox(Object content) {
+	List&lt;?&gt; innerList = Arrays.asList(content);
+	// compile error
+	return new Box&lt;&gt;(innerList) { };
+}</code></pre></div></div></section></section>
+<section><section id="new_language_features_11"><h2>New Language Features</h2><table class="toc">
+	<tr><td>All The Cool Things... ⑩⑭⑮</td></tr>
+	<tr><td>Private Interface Methods ⑨</td></tr>
+	<tr><td>Try-With-Resources ⑨</td></tr>
+	<tr><td>Diamond Operator ⑨</td></tr>
+	<tr class="toc-current"><td>SafeVarargs ⑨</td></tr>
+	<tr><td>Deprecation Warnings ⑨</td></tr>
+</table><div class="paragraph"><p>One less warning you couldn&#8217;t do anything about.</p></div></section><section id="heap_pollution"><h2>Heap Pollution</h2><div class="paragraph"><p>Innocent looking code&#8230;&#8203;</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">private &lt;T&gt; Optional&lt;T&gt; firstNonNull(T... args) {
+	return stream(args)
+			.filter(Objects::nonNull)
+			.findFirst();
+}</code></pre></div></div>
+<div class="paragraph"><p>Compiler warns (on call site, too):</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code>Possible heap pollution from
+parameterized vararg type</code></pre></div></div></section><section id="heap_pollution_2"><h2>Heap Pollution?</h2><div class="paragraph"><p>For generic varargs argument <code>T&#8230;&#8203; args</code>,<br>
+you <strong>must not</strong> depend on it being a <code>T[]</code>!</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">private &lt;T&gt; T[] replaceTwoNulls(
+		T value, T first, T second) {
+	return replaceAllNulls(value, first, second);
+}
+
+private &lt;T&gt; T[] replaceAllNulls(T value, T... args) {
+	// loop over `args`, replacing `null` with `value`
+	return args;
+}</code></pre></div></div></section><section id="compiler_warning"><h2>Compiler Warning</h2><div class="paragraph"><p>Compiler is aware of the problem and warns you.</p></div>
+<div class="paragraph"><p>If you think, everything&#8217;s under control:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@SafeVarargs
+private &lt;T&gt; Optional&lt;T&gt; firstNonNull(T... args) {
+	return // [...]
+}</code></pre></div></div>
+<div class="paragraph"><p>Or not&#8230;&#8203; In Java 8 this is a compile error!</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code>Invalid SafeVarargs annotation. Instance
+method &lt;T&gt;firstNonNull(T...) is not final.</code></pre></div></div></section><section id="but_why"><h2>But Why?</h2><div class="paragraph"><p>The <code>@SafeVarargs</code> annotation:</p></div>
+<div class="ulist"><ul><li><p>tells <em>the caller</em> that all is fine</p></li><li><p>only makes sense on methods<br>
+that can not be overriden</p></li></ul></div>
+<div class="paragraph"><p>Which methods can&#8217;t be overriden?<br>
+⇝ <code>final</code> methods</p></div>
+<div class="paragraph"><p>What about <code>private</code> methods?<br>
+⇝ Damn! 😭</p></div></section><section id="safevarargs_on_privatemethods"><h2>@SafeVarargs on Private&nbsp;Methods</h2><div class="paragraph"><p>Looong story, here&#8217;s the point:</p></div>
+<div class="paragraph"><p>In Java 9 <code>@SafeVarargs</code><br>
+can be applied to private methods.</p></div></section></section>
+<section><section id="new_language_features_12"><h2>New Language Features</h2><table class="toc">
+	<tr><td>All The Cool Things... ⑩⑭⑮</td></tr>
+	<tr><td>Private Interface Methods ⑨</td></tr>
+	<tr><td>Try-With-Resources ⑨</td></tr>
+	<tr><td>Diamond Operator ⑨</td></tr>
+	<tr><td>SafeVarargs ⑨</td></tr>
+	<tr class="toc-current"><td>Deprecation Warnings ⑨</td></tr>
+</table><div class="paragraph"><p><em>Another</em> warning you couldn&#8217;t do anything about.</p></div></section><section id="deprecation_warnings"><h2>Deprecation Warnings</h2><div class="paragraph"><p>Should this code emit a warning?</p></div>
+<div style="height: 350px;">
+<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">// LineNumberInputStream is deprecated
+<span class="hljs-keyword">import</span> java.io.LineNumberInputStream;
+
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DeprecatedImports</span> </span>{
+
+    LineNumberInputStream stream;
+
+}</code></pre></div></div>
+<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">// LineNumberInputStream is deprecated
+<span class="hljs-keyword">import</span> java.io.LineNumberInputStream;
+
+<span class="hljs-meta">@Deprecated</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DeprecatedImports</span> </span>{
+
+    LineNumberInputStream stream;
+
+}</code></pre></div></div></div></section><section id="not_on_imports"><h2>Not On Imports</h2><div class="paragraph"><p>Java 9 no longer emits warnings<br>
+for importing deprecated members.</p></div>
+<div class="paragraph"><p>Warning free:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">import java.io.LineNumberInputStream;
+
+@Deprecated
+public class DeprecatedImports {
+
+	LineNumberInputStream stream;
+
+}</code></pre></div></div></section></section>
+<section id="updated_apis"><h2>Updated APIs</h2><table class="toc">
+	<tr><td>String ⑪⑫</td></tr>
+	<tr><td>Stream ⑨⑩⑫</td></tr>
+	<tr><td>Optional ⑨⑩⑪</td></tr>
+	<tr><td>OS Processes ⑨</td></tr>
+	<tr><td>Completable Future ⑫</td></tr>
+</table>
+<div class="paragraph"><p>Existing APIs are continuously improved.</p></div></section>
+<section><section id="updated_apis_2"><h2>Updated APIs</h2><table class="toc">
+	<tr class="toc-current"><td>String ⑪⑫</td></tr>
+	<tr><td>Stream ⑨⑩⑫</td></tr>
+	<tr><td>Optional ⑨⑩⑪</td></tr>
+	<tr><td>OS Processes ⑨</td></tr>
+	<tr><td>Completable Future ⑫</td></tr>
+</table><div class="paragraph"><p>Small improvements to <code>String</code>.</p></div></section><section id="strip_white_space"><h2>Strip White Space ⑪</h2><div class="paragraph"><p>Getting rid of white space:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">String strip();
+String stripLeading();
+String stripTrailing();</code></pre></div></div>
+<div class="paragraph"><p>Only at beginning and end of string:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">" foo bar ".strip().equals("foo bar");</code></pre></div></div></section><section id="what_about_trim"><h2>What About Trim?</h2><div class="paragraph"><p>Wait, what about <code>trim()</code>?</p></div>
+<div class="ulist"><ul><li><p><code>trim()</code> defines white space as:</p><div class="quoteblock"><blockquote><div class="paragraph"><p>any character whose codepoint<br>
+is less than or equal to <code>'U+0020'</code><br>
+(the space character)</p></div></blockquote></div></li><li><p><code>strip()</code> relies on <code>Character::isWhitespace</code>,<br>
+which covers many more cases</p></li></ul></div></section><section id="is_blank"><h2>Is Blank? ⑪</h2><div class="paragraph"><p>Is a string only white space?</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">boolean isBlank();</code></pre></div></div>
+<div class="paragraph"><p>Functionally equivalent to:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">string.isBlank() == string.strip().isEmpty();</code></pre></div></div></section><section id="life_hack"><h2>Life Hack</h2><div class="paragraph"><p>As soon as Java APIs get new method,<br>
+scour StackOverflow for easy karma!</p></div>
+<div class="imageblock diagram" style=""><img src="images/so-repeat-string-q.png" alt="so repeat string q"></div></section><section id="life_hack_2"><h2>Life Hack</h2><div class="paragraph"><p>Formerly accepted answer:</p></div>
+<div class="imageblock diagram" style=""><img src="images/so-repeat-string-a-old.png" alt="so repeat string a old"></div>
+<div class="paragraph"><p>😍</p></div></section><section id="life_hack_3"><h2>Life Hack ⑪</h2><div class="paragraph"><p>Ta-da!</p></div>
+<div class="imageblock diagram" style=""><img src="images/so-repeat-string-a.png" alt="so repeat string a"></div></section><section id="streaming_lines"><h2>Streaming Lines ⑪</h2><div class="paragraph"><p>Processing a string&#8217;s lines:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;String&gt; lines();</code></pre></div></div>
+<div class="ulist"><ul><li><p>splits a string on <code>"\n"</code>, <code>"\r"</code>, <code>"\r\n"</code></p></li><li><p>lines do not include terminator</p></li><li><p>more performant than <code>split("\R")</code></p></li><li><p>lazy!</p></li></ul></div></section><section id="changing_indentation"><h2>Changing Indentation ⑫</h2><div class="paragraph"><p>Use <code>String::indent</code> to add or remove<br>
+leading white space:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">String oneTwo = " one\n  two\n";
+oneTwo.indent(0).equals(" one\n  two\n");
+oneTwo.indent(1).equals("  one\n   two\n");
+oneTwo.indent(-1).equals("one\n two\n");
+oneTwo.indent(-2).equals("one\ntwo\n");</code></pre></div></div>
+<div class="paragraph"><p>Would have been nice to pass <em>resulting</em> indentation,<br>
+not <em>change</em> in indentation.</p></div></section><section id="changing_indentation_2"><h2>Changing Indentation ⑫</h2><div class="paragraph"><p><code>String::indent</code> normalizes line endings<br>
+so each line ends in <code>\n</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">"1\n2".indent(0).equals("1\n2\n");
+"1\r\n2".indent(0).equals("1\n2\n");
+"1\r2\n".indent(0).equals("1\n2\n");
+"1\n2\n".indent(0).equals("1\n2\n");</code></pre></div></div></section><section id="transforming_strings"><h2>Transforming Strings ⑫</h2><div class="paragraph"><p>New method on <code>String</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public &lt;R&gt; R transform(Function&lt;String, R&gt; f) {
+	return f.apply(this);
+}</code></pre></div></div>
+<div class="paragraph"><p>Use to chain calls instead of nesting them:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">User newUser = parse(clean(input));
+User newUser = input
+	.transform(this::clean)
+	.transform(this::parse);</code></pre></div></div>
+<div class="paragraph"><p>Makes more sense at end of long call chain<br>
+(stream pipeline?) to chain more calls.</p></div></section><section id="transforming_things"><h2>Transforming things</h2><div class="paragraph"><p>Maybe other classes get <code>transform</code>, too!<br>
+Great for "chain-friendly" APIs like <code>Stream</code>, <code>Optional</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// in a museum...
+tourists.stream()
+	.map(this::letEnter)
+	.transform(this::groupsOfFive)
+	.forEach(this::giveTour)
+
+Stream&lt;TouristGroup&gt; groupsOfFive(
+	Stream&lt;Tourist&gt; tourists) {
+	// this is not trivial,
+	// but at least possible
+}</code></pre></div></div>
+<div class="paragraph"><p>⇝ Practice with <code>String::transform</code>!</p></div></section></section>
+<section><section id="updated_apis_3"><h2>Updated APIs</h2><table class="toc">
+	<tr><td>String ⑪⑫</td></tr>
+	<tr class="toc-current"><td>Stream ⑨⑩⑫</td></tr>
+	<tr><td>Optional ⑨⑩⑪</td></tr>
+	<tr><td>OS Processes ⑨</td></tr>
+	<tr><td>Completable Future ⑫</td></tr>
+</table><div class="paragraph"><p>Small improvements to Java 8 streams.</p></div></section><section id="of_nullable"><h2>Of Nullable ⑨</h2><div class="paragraph"><p>Create a stream of zero or one elements:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">long zero = Stream.ofNullable(null).count();
+long one = Stream.ofNullable("42").count();</code></pre></div></div></section><section id="iterate"><h2>Iterate ⑨</h2><div class="paragraph"><p>To use <code>for</code> even less&#8230;&#8203;</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">iterate(
+	T seed,
+	Predicate&lt;T&gt; hasNext,
+	UnaryOperator&lt;T&gt; next);</code></pre></div></div>
+<div class="paragraph"><p>Example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream
+	.iterate(1, i -&gt; i&lt;=10, i -&gt; 2*i)
+	.forEach(System.out::println);
+// output: 1 2 4 8</code></pre></div></div></section><section id="iterate_2"><h2>Iterate ⑨</h2><div class="paragraph"><p>Counter Example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Enumeration&lt;Integer&gt; en = // ...
+Stream.iterate(
+		en.nextElement(),
+		el -&gt; en.hasMoreElements(),
+		el -&gt; en.nextElement())
+	.forEach(System.out::println);</code></pre></div></div>
+<div class="ulist"><ul><li><p>first <code>nextElement()</code></p></li><li><p>then <code>hasMoreElements()</code></p></li><li><p>⇝ fail</p></li></ul></div></section><section id="take_while"><h2>Take While ⑨</h2><div class="paragraph"><p>Stream as long as a condition is true:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;T&gt; takeWhile(Predicate&lt;T&gt; predicate);</code></pre></div></div>
+<div class="paragraph"><p>Example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream.of("a-", "b-", "c-", "", "e-")
+	.takeWhile(s -&gt; !s.isEmpty())
+	.forEach(System.out::print);
+
+// output: a-b-c-</code></pre></div></div></section><section id="drop_while"><h2>Drop While ⑨</h2><div class="paragraph"><p>Ignore as long as a condition is true:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;T&gt; dropWhile(Predicate&lt;T&gt; predicate);</code></pre></div></div>
+<div class="paragraph"><p>Example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream.of("a-", "b-", "c-", "de-", "f-")
+	.dropWhile(s -&gt; s.length() &lt;= 2)
+	.forEach(System.out::print);
+
+// output: de-f-</code></pre></div></div></section><section id="collect_unmodifiable"><h2>Collect Unmodifiable ⑩</h2><div class="paragraph"><p>Create unmodifiable collections<br>
+(in the sense of <code>List::of</code> et al)<br>
+with <code>Collectors</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Collector&lt;T, ?, List&lt;T&gt;&gt; toUnmodifiableList();
+
+Collector&lt;T, ?, Set&lt;T&gt;&gt; toUnmodifiableSet();
+
+Collector&lt;T, ?, Map&lt;K,U&gt;&gt; toUnmodifiableMap(
+	Function&lt;T, K&gt; keyMapper,
+	Function&lt;T, U&gt; valueMapper);
+// plus overload with merge function</code></pre></div></div></section><section id="teeing_collector"><h2>Teeing Collector ⑫</h2><div class="paragraph"><p>Collect stream elements in two collectors<br>
+and combine their results:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// on Collectors
+Collector&lt;T, ?, R&gt; teeing(
+	Collector&lt;T, ?, R1&gt; downstream1,
+	Collector&lt;T, ?, R2&gt; downstream2,
+	BiFunction&lt;R1, R2, R&gt; merger);</code></pre></div></div></section><section id="teeing_collector_2"><h2>Teeing Collector ⑫</h2><div class="paragraph"><p>Example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Statistics stats = Stream
+	.of(1, 2, 4, 5)
+	.collect(teeing(
+		// Collector&lt;Integer, ?, Integer&gt;
+		summingInt(i -&gt; i),
+		// Collector&lt;Integer, ?, Double&gt;
+		averagingInt(i -&gt; i),
+		// BiFunction&lt;Integer, Double, Statistics&gt;
+		Statistics::of));
+// stats = Statistics {sum=12, average=3.0}</code></pre></div></div></section></section>
+<section><section id="updated_apis_4"><h2>Updated APIs</h2><table class="toc">
+	<tr><td>String ⑪⑫</td></tr>
+	<tr><td>Stream ⑨⑩⑫</td></tr>
+	<tr class="toc-current"><td>Optional ⑨⑩⑪</td></tr>
+	<tr><td>OS Processes ⑨</td></tr>
+	<tr><td>Completable Future ⑫</td></tr>
+</table><div class="paragraph"><p>Small improvements to Java 8 <code>Optional</code>.</p></div></section><section id="or"><h2>Or ⑨</h2><div class="paragraph"><p>Choose a non-empty <code>Optional</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Optional&lt;T&gt; or(Supplier&lt;Optional&lt;T&gt;&gt; supplier);</code></pre></div></div></section><section id="find_in_many_places"><h2>Find in Many Places</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public interface Search {
+	Optional&lt;Customer&gt; inMemory(String id);
+	Optional&lt;Customer&gt; onDisk(String id);
+	Optional&lt;Customer&gt; remotely(String id);
+
+	default Optional&lt;Customer&gt; anywhere(String id) {
+		return inMemory(id)
+			.or(() -&gt; onDisk(id))
+			.or(() -&gt; remotely(id));
+	}
+
+}</code></pre></div></div></section><section id="if_present_or_else"><h2>If Present Or Else ⑨</h2><div class="paragraph"><p>Like <code>ifPresent</code> but do something if empty:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">void ifPresentOrElse(
+	Consumer&lt;T&gt; action,
+	Runnable emptyAction);</code></pre></div></div>
+<div class="paragraph"><p>Example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">void logLogin(String id) {
+	findCustomer(id)
+		.ifPresentOrElse(
+			this::logCustomerLogin,
+			() -&gt; logUnknownLogin(id));
+}</code></pre></div></div></section><section id="stream"><h2>Stream ⑨</h2><div class="paragraph"><p>Turns an <code>Optional</code> into a <code>Stream</code><br>
+of zero or one elements:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;T&gt; stream();</code></pre></div></div></section><section id="filter_map"><h2>Filter-Map &#8230;&#8203;</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">private Optional&lt;Customer&gt; findCustomer(String id) {
+	// ...
+}
+
+Stream&lt;Customer&gt; findCustomers(List&lt;String&gt; ids) {
+	return ids.stream()
+		.map(this::findCustomer)
+		// now we have a Stream&lt;Optional&lt;Customer&gt;&gt;
+		.filter(Optional::isPresent)
+		.map(Optional::get)
+}</code></pre></div></div></section><section id="in_one_step" data-transition="none"><h2>&#8230;&#8203; in one Step</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">private Optional&lt;Customer&gt; findCustomer(String id) {
+	// ...
+}
+
+Stream&lt;Customer&gt; findCustomers(List&lt;String&gt; ids) {
+	return ids.stream()
+		.map(this::findCustomer)
+		// now we have a Stream&lt;Optional&lt;Customer&gt;&gt;
+		// we can now filter-map in one step
+		.flatMap(Optional::stream)
+}</code></pre></div></div></section><section id="from_eager_to_lazy"><h2>From Eager to Lazy</h2><div class="paragraph"><p><code>List&lt;Order&gt; getOrders(Customer c)</code> is expensive:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Order&gt; findOrdersForCustomer(String id) {
+	return findCustomer(id)
+		.map(this::getOrders) // eager
+		.orElse(new ArrayList&lt;&gt;());
+}
+
+Stream&lt;Order&gt; findOrdersForCustomer(String id) {
+	return findCustomer(id)
+		.stream()
+		.map(this::getOrders) // lazy
+		.flatMap(List::stream);
+}</code></pre></div></div></section><section id="or_else_throw"><h2>Or Else Throw ⑩</h2><div class="paragraph"><p><code>Optional::get</code> invites misuse<br>
+by calling it reflexively.</p></div>
+<div class="paragraph"><p>Maybe <code>get</code> wasn&#8217;t the best name?<br>
+New:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">T orElseThrow()</code></pre></div></div>
+<div class="paragraph"><p>Works exactly as <code>get</code>,<br>
+but more self-documenting.</p></div></section><section id="aligned_names"><h2>Aligned Names</h2><div class="paragraph"><p>Name in line with other accessors:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">T orElse(T other)
+T orElseGet(Supplier&lt;T&gt; supplier)
+T orElseThrow()
+	throws NoSuchElementException
+T orElseThrow(
+	Supplier&lt;EX&gt; exceptionSupplier)
+	throws EX</code></pre></div></div></section><section id="get_considered_harmful"><h2>Get Considered Harmful</h2><div class="paragraph"><p><a href="https://bugs.openjdk.java.net/browse/JDK-8160606">JDK-8160606</a>
+will deprecate<br>
+<code>Optional::get</code>.</p></div>
+<div class="ulist"><ul><li><p>when?</p></li><li><p>for removal?</p></li></ul></div>
+<div class="paragraph"><p>We&#8217;ll see&#8230;&#8203;</p></div></section><section id="is_empty"><h2>Is Empty ⑪</h2><div class="paragraph"><p>No more <code>!foo.isPresent()</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">boolean isEmpty()</code></pre></div></div>
+<div class="paragraph"><p>Does exactly what<br>
+you think it does.</p></div></section></section>
+<section><section id="updated_apis_5"><h2>Updated APIs</h2><table class="toc">
+	<tr><td>String ⑪⑫</td></tr>
+	<tr><td>Stream ⑨⑩⑫</td></tr>
+	<tr><td>Optional ⑨⑩⑪</td></tr>
+	<tr class="toc-current"><td>OS Processes ⑨</td></tr>
+	<tr><td>Completable Future ⑫</td></tr>
+</table><div class="paragraph"><p>Improving interaction with OS processes.</p></div></section><section id="simple_example"><h2>Simple Example</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="shell language-shell">ls /home/nipa/tmp | grep pdf</code></pre></div></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Path dir = Paths.get("/home/nipa/tmp");
+ProcessBuilder ls = new ProcessBuilder()
+		.command("ls")
+		.directory(dir.toFile());
+ProcessBuilder grepPdf = new ProcessBuilder()
+		.command("grep", "pdf")
+		.redirectOutput(Redirect.INHERIT);
+List&lt;Process&gt; lsThenGrep = ProcessBuilder
+		.startPipeline(List.of(ls, grepPdf));</code></pre></div></div></section><section id="extended_process"><h2>Extended <code>Process</code></h2><div class="paragraph"><p>Cool new methods on <code>Process</code>:</p></div>
+<div class="ulist"><ul><li><p><code>boolean supportsNormalTermination();</code></p></li><li><p><code>long pid();</code></p></li><li><p><code>CompletableFuture&lt;Process&gt; onExit();</code></p></li><li><p><code>Stream&lt;ProcessHandle&gt; children();</code></p></li><li><p><code>Stream&lt;ProcessHandle&gt; descendants();</code></p></li><li><p><code>ProcessHandle toHandle();</code></p></li></ul></div></section><section id="new_processhandle"><h2>New <code>ProcessHandle</code></h2><div class="paragraph"><p>New functionality actually comes from <code>ProcessHandle</code>.</p></div>
+<div class="paragraph"><p>Interesting <code>static</code> methods:</p></div>
+<div class="ulist"><ul><li><p><code>Stream&lt;ProcessHandle&gt; allProcesses();</code></p></li><li><p><code>Optional&lt;ProcessHandle&gt; of(long pid);</code></p></li><li><p><code>ProcessHandle current();</code></p></li></ul></div></section><section id="more_information"><h2>More Information</h2><div class="paragraph"><p><code>ProcessHandle</code> can return <code>Info</code>:</p></div>
+<div class="ulist"><ul><li><p>command, arguments</p></li><li><p>start time</p></li><li><p>CPU time</p></li></ul></div></section></section>
+<section><section id="updated_apis_6"><h2>Updated APIs</h2><table class="toc">
+	<tr><td>String ⑪⑫</td></tr>
+	<tr><td>Stream ⑨⑩⑫</td></tr>
+	<tr><td>Optional ⑨⑩⑪</td></tr>
+	<tr><td>OS Processes ⑨</td></tr>
+	<tr class="toc-current"><td>Completable Future ⑫</td></tr>
+</table><div class="paragraph"><p>Asynchronous error recovery.</p></div></section><section id="recap_on_api_basics"><h2>Recap on API Basics</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// start an asynchronous computation
+public static CompletableFuture&lt;T&gt; supplyAsync(
+	Supplier&lt;T&gt;);
+
+// attach further steps
+public CompletableFuture&lt;U&gt; thenApply(Function&lt;T, U&gt;);
+public CompletableFuture&lt;U&gt; thenCompose(
+	Function&lt;T, CompletableFuture&lt;U&gt;);
+public CompletableFuture&lt;Void&gt; thenAccept(Consumer&lt;T&gt;);
+
+// wait for the computation to finish and get result
+public T join();</code></pre></div></div></section><section id="recap_on_api_basics_2"><h2>Recap on API Basics</h2><div class="paragraph"><p>Example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public void loadWebPage() {
+	String url = "https://nipafx.dev";
+	CompletableFuture&lt;WebPage&gt; future = CompletableFuture
+			.supplyAsync(() -&gt; webRequest(url))
+			.thenApply(html -&gt; new WebPage(url, html));
+	// ... do other stuff
+	WebPage page = future.join();
+}
+
+private String webRequest(String url) {
+	// make request to URL and return HTML
+	// (this can take a while)
+}</code></pre></div></div></section><section id="recap_on_completion"><h2>Recap on Completion</h2><div class="paragraph"><p>A pipeline or stage <em>completes</em> when<br>
+the underlying computation terminates.</p></div>
+<div class="ulist"><ul><li><p>it <em>completes normally</em> if<br>
+the computation yields a result</p></li><li><p>it <em>completes exceptionally</em> if<br>
+the computation results in an exception</p></li></ul></div></section><section id="recap_on_error_recovery"><h2>Recap on Error Recovery</h2><div class="paragraph"><p>Two methods to recover errors:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// turn the error into a result
+CompletableFuture&lt;T&gt; exceptionally(Function&lt;Throwable, T&gt;);
+// turn the result or error into a new result
+CompletableFuture&lt;U&gt; handle(BiFunction&lt;T, Throwable, U&gt;);</code></pre></div></div>
+<div class="paragraph"><p>They turn <em>exceptional completion</em> of the previous stage<br>
+into <em>normal completion</em> of the new stage.</p></div></section><section id="recap_on_error_recovery_2"><h2>Recap on Error Recovery</h2><div class="paragraph"><p>Example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">loadUser(id)
+	.thenCompose(this::loadUserHistory)
+	.thenCompose(this::createRecommendations)
+	.exceptionally(ex -&gt; {
+		log.warn("Recommendation error", ex)
+		return createDefaultRecommendations();
+	})
+	.thenAccept(this::respondWithRecommendations);</code></pre></div></div></section><section id="composeable_error_recovery"><h2>Composeable Error Recovery ⑫</h2><div class="paragraph"><p>Error recovery accepts functions<br>
+that produce <code>CompletableFuture</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">exceptionallyCompose(
+	Function&lt;Throwable, CompletionStage&lt;T&gt;&gt;)</code></pre></div></div></section><section id="recap_on_asynchronicity"><h2>Recap on (A)Synchronicity</h2><div class="paragraph"><p>Which threads actually compute the stages?</p></div>
+<div class="ulist"><ul><li><p><code>supplyAsync(Supplier&lt;T&gt;)</code> is executed<br>
+in the <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ForkJoinPool.html#commonPool--">common fork/join pool</a></p></li><li><p>for other stages it&#8217;s undefined:</p><div class="ulist"><ul><li><p>could be the same thread as the previous stage</p></li><li><p>could be another thread in the pool</p></li><li><p>could be the thread calling <code>thenAccept</code> et al.</p></li></ul></div></li></ul></div>
+<div class="paragraph"><p>How to force async computation?</p></div></section><section id="recap_on_asynchronicity_2"><h2>Recap on (A)Synchronicity</h2><div class="paragraph"><p>All "composing" methods<br>
+have an <code>&#8230;&#8203;Async</code> companion, e.g.:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">thenApplyAsync(Function&lt;T, U&gt;);
+thenAcceptAsync(Consumer&lt;T&gt;);</code></pre></div></div>
+<div class="paragraph"><p>They submit each stage as a separate task<br>
+to the common fork/join pool.</p></div></section><section id="async_error_recovery"><h2>Async Error Recovery ⑫</h2><div class="paragraph"><p>Error recovery can be asynchronous:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">CompletableFuture&lt;T&gt; exceptionallyAsync(
+	Function&lt;Throwable, T&gt;)
+CompletableFuture&lt;T&gt; exceptionallyComposeAsync(
+	Function&lt;Throwable, CompletableFuture&lt;T&gt;&gt;)</code></pre></div></div>
+<div class="paragraph"><p>There are overloads that accept <code>Executor</code>.</p></div></section></section>
+<section><section id="a_mixed_bag_of_updatedapis"><h2>A Mixed Bag Of Updated&nbsp;APIs</h2><div class="paragraph"><p>Two great sources on<br>
+Java API changes<br>
+between versions:</p></div><div class="ulist"><ul><li><p><a href="https://javaalmanac.io/">Java Version Almanac</a></p></li><li><p><a href="https://github.com/AdoptOpenJDK/jdk-api-diff">JDK API Diff Report Generator</a></p></li></ul></div></section><section id="a_mixed_bag_of_updatedapis_2"><h2>A Mixed Bag Of Updated&nbsp;APIs</h2><div class="paragraph"><p><strong>In Java 9:</strong></p></div>
+<div class="ulist"><ul><li><p>OASIS XML Catalogs 1.1 (<a href="http://openjdk.java.net/jeps/268">JEP 268</a>),<br>
+Xerces 2.11.0 (<a href="http://openjdk.java.net/jeps/255">JEP 255</a>)</p></li><li><p>Unicode support in<br>
+<code>PropertyResourceBundle</code> (<a href="http://openjdk.java.net/jeps/226">JEP 226</a>)</p></li></ul></div>
+<div class="paragraph"><p>Many lower-level APIs.</p></div></section><section id="a_mixed_bag_of_newiomethods"><h2>A Mixed Bag Of New&nbsp;I/O&nbsp;Methods</h2><div class="paragraph"><p><strong>In Java 9 to 11:</strong></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Path.of(String); // ~ Paths.get(String) ⑪
+
+Files.readString(Path); // ⑪
+Files.writeString(Path, CharSequence, ...); // ⑪
+
+Reader.transferTo(Writer); // ⑩
+InputStream.transferTo(OutputStream); // ⑨
+
+Reader.nullReader(); // ⑪
+Writer.nullWriter(); // ⑪
+InputStream.nullInputStream(); // ⑪
+OutputStream.nullOutputStream(); // ⑪</code></pre></div></div></section><section id="a_mixed_bag_of_newiomethods_2"><h2>A Mixed Bag Of New&nbsp;I/O&nbsp;Methods</h2><div class="paragraph"><p><strong>In Java 12 and 13:</strong></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Files.mismatch(Path, Path); // ⑫
+
+FileSystems.newFileSystem(Path, ...); // ⑬
+
+ByteBuffer.get(int, ...) // ⑬
+ByteBuffer.put(int, ...) // ⑬</code></pre></div></div></section><section id="a_mixed_bag_of_newmethods"><h2>A Mixed Bag Of New&nbsp;Methods</h2><div class="paragraph"><p><strong>In Java 10:</strong></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">DateTimeFormatter.localizedBy(Locale);</code></pre></div></div>
+<div class="paragraph"><p><strong>In Java 11:</strong></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Collection.toArray(IntFunction&lt;T[]&gt;);
+Predicate.not(Predicate&lt;T&gt;); // static
+Pattern.asMatchPredicate(); // ⇝ Predicate&lt;String&gt;</code></pre></div></div></section><section id="a_mixed_bag_of_newmathmethods"><h2>A Mixed Bag Of New&nbsp;Math&nbsp;Methods</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// in Java 14
+StrictMath.decrementExact(int);
+StrictMath.decrementExact(long);
+StrictMath.incrementExact(int);
+StrictMath.incrementExact(long);
+StrictMath.negateExact(int);
+StrictMath.negateExact(long);
+
+// in Java 15
+Math.absExact(int)
+Math.absExact(long)
+StrictMath.absExact(int)
+StrictMath.absExact(long)</code></pre></div></div></section><section id="a_mixed_bag_of_newmethods_2"><h2>A Mixed Bag Of New&nbsp;Methods</h2><div class="paragraph"><p><strong>In Java 12:</strong></p></div>
+<div class="ulist"><ul><li><p><code>NumberFormat::getCompactNumberInstance</code></p></li></ul></div>
+<div class="paragraph"><p><strong>In Java 15:</strong></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// instance version of String::format
+String.formatted(Object... args);</code></pre></div></div></section></section>
+<section id="new_apis"><h2>New APIs</h2><table class="toc">
+	<tr><td>Collection Factories ⑨⑩</td></tr>
+	<tr><td>Reactive Streams ⑨</td></tr>
+	<tr><td>Reactive HTTP/2 Client ⑪</td></tr>
+	<tr><td>Stack-Walking ⑨</td></tr>
+</table>
+<div class="paragraph"><p>New APIs are added over time.</p></div></section>
+<section><section id="new_apis_2"><h2>New APIs</h2><table class="toc">
+	<tr class="toc-current"><td>Collection Factories ⑨⑩</td></tr>
+	<tr><td>Reactive Streams ⑨</td></tr>
+	<tr><td>Reactive HTTP/2 Client ⑪</td></tr>
+	<tr><td>Stack-Walking ⑨</td></tr>
+</table><div class="paragraph"><p>Easy creation of ad-hoc collections.</p></div></section><section id="hope_is_pain"><h2>Hope is Pain</h2><div class="paragraph"><p>Wouldn&#8217;t this be awesome?</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;String&gt; list = [ "a", "b", "c" ];
+Map&lt;String, Integer&gt; map = [ "one" = 1, "two" = 2 ];</code></pre></div></div>
+<div class="paragraph"><p>Not gonna happen!</p></div>
+<div class="ulist"><ul><li><p>language change is costly</p></li><li><p>binds language to collection framework</p></li><li><p>strongly favors specific collections</p></li></ul></div></section><section id="next_best_thing"><h2>Next Best Thing ⑨</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;String&gt; list = List.of("a", "b", "c");
+Map&lt;String, Integer&gt; mapImmediate = Map.of(
+		"one", 1,
+		"two", 2,
+		"three", 3);
+Map&lt;String, Integer&gt; mapEntries = Map.ofEntries(
+		Map.entry("one", 1),
+		Map.entry("two", 2),
+		Map.entry("three", 3));</code></pre></div></div>
+<aside class="notes"><div class="paragraph"><p>Q: Where does <code>entry</code> come from? <code>Map</code>
+Q: Overloads on <code>of</code>? 10
+Q: Overloads on <code>Map::ofEntries</code>? 1</p></div></aside></section><section id="interesting_details"><h2>Interesting Details</h2><div class="ulist"><ul><li><p>collections are immutable<br>
+(no immutability in types, though)</p></li><li><p>collections are <a href="https://nipafx.dev/java-value-based-classes">value-based</a></p></li><li><p><code>null</code> elements/keys/values are forbidden</p></li><li><p>iteration order is random between JVM starts<br>
+(except for lists, of course!)</p></li></ul></div></section><section id="immutable_copies"><h2>Immutable Copies ⑩</h2><div class="paragraph"><p>Creating immutable copies:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">/* on List */ List&lt;E&gt; copyOf(Collection&lt;E&gt; coll);
+/* on Set */ Set&lt;E&gt; copyOf(Collection&lt;E&gt; coll);
+/* on Map */ Map&lt;K, V&gt; copyOf(Map&lt;K,V&gt; map);</code></pre></div></div>
+<div class="paragraph"><p>Great for defensive copies:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public Customer(List&lt;Order&gt; orders) {
+	this.orders = List.copyOf(orders);
+}</code></pre></div></div></section></section>
+<section><section id="new_apis_3"><h2>New APIs</h2><table class="toc">
+	<tr><td>Collection Factories ⑨⑩</td></tr>
+	<tr class="toc-current"><td>Reactive Streams ⑨</td></tr>
+	<tr><td>Reactive HTTP/2 Client ⑪</td></tr>
+	<tr><td>Stack-Walking ⑨</td></tr>
+</table><div class="paragraph"><p>The JDK as common ground<br>
+for reactive stream libraries.</p></div></section><section id="reactive_types"><h2>Reactive Types</h2><div class="dlist"><dl><dt class="hdlist1"><code>Publisher</code></dt><dd><div class="ulist"><ul><li><p>produces items to consume</p></li><li><p>can be subscribed to</p></li></ul></div></dd><dt class="hdlist1"><code>Subscriber</code></dt><dd><div class="ulist"><ul><li><p>subscribes to publisher</p></li><li><p><code>onNext</code>, <code>onError</code>, <code>onComplete</code></p></li></ul></div></dd><dt class="hdlist1"><code>Subscription</code></dt><dd><div class="ulist"><ul><li><p>connection from subscriber to publisher</p></li><li><p><code>request</code>, <code>cancel</code></p></li></ul></div></dd></dl></div></section><section id="reactive_flow"><h2>Reactive Flow</h2><h3>Subscribing</h3><div class="ulist"><ul><li><p>create <code>Publisher pub</code> and <code>Subscriber sub</code></p></li><li><p>call <code>pub.subscribe(sub)</code></p></li><li><p>pub creates <code>Subscription script</code><br>
+and calls <code>sub.onSubscription(script)</code></p></li><li><p><code>sub</code> can store <code>script</code></p></li></ul></div></section><section id="reactive_flow_2"><h2>Reactive Flow</h2><h3>Streaming</h3><div class="ulist"><ul><li><p><code>sub</code> calls <code>script.request(10)</code></p></li><li><p><code>pub</code> calls <code>sub.onNext(element)</code> (max 10x)</p></li></ul></div>
+<h3>Canceling</h3><div class="ulist"><ul><li><p><code>pub</code> may call <code>sub.OnError(err)</code><br>
+or <code>sub.onComplete()</code></p></li><li><p><code>sub</code> may call <code>script.cancel()</code></p></li></ul></div></section><section id="reactive_apis"><h2>Reactive APIs?</h2><div class="paragraph"><p>JDK only provides three interfaces<br>
+and one simple implementation.</p></div>
+<div class="paragraph"><p>(Also called <strong>Flow API</strong>.)</p></div>
+<div class="paragraph"><p>So far, only reactive HTTP/2 API ⑪ uses Flow.</p></div></section></section>
+<section><section id="new_apis_4"><h2>New APIs</h2><table class="toc">
+	<tr><td>Collection Factories ⑨⑩</td></tr>
+	<tr><td>Reactive Streams ⑨</td></tr>
+	<tr class="toc-current"><td>Reactive HTTP/2 Client ⑪</td></tr>
+	<tr><td>Stack-Walking ⑨</td></tr>
+</table><div class="paragraph"><p>HTTP/2! And reactive! Woot!</p></div></section><section id="basic_flow"><h2>Basic Flow</h2><div class="paragraph"><p>To send a request and get a response:</p></div>
+<div class="ulist"><ul><li><p>use builder to create immutable <code>HttpClient</code></p></li><li><p>use builder to create immutable <code>HttpRequest</code></p></li><li><p>pass request to client to receive <code>HttpResponse</code></p></li></ul></div></section><section id="building_a_client"><h2>Building a Client</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">HttpClient client = HttpClient.newBuilder()
+	.version(HTTP_2)
+	.connectTimeout(ofSeconds(5))
+	.followRedirects(ALWAYS)
+	.build();</code></pre></div></div>
+<div class="paragraph"><p>More options:</p></div>
+<div class="ulist"><ul><li><p>proxy</p></li><li><p>SSL context/parameters</p></li><li><p>authenticator</p></li><li><p>cookie handler</p></li></ul></div></section><section id="building_a_request"><h2>Building a Request</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">HttpRequest request = HttpRequest.newBuilder()
+	.GET()
+	.uri(URI.create("https://nipafx.dev"))
+	.setHeader("header-name", "header-value")
+	.build();</code></pre></div></div>
+<div class="ulist"><ul><li><p>more HTTP methods (duh!)</p></li><li><p>individual timeout</p></li><li><p>individual HTTP version</p></li><li><p>request <code>"100 CONTINUE"</code> before sending body</p></li></ul></div></section><section id="receiving_a_response"><h2>Receiving a Response</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// the generic `String`...
+HttpResponse&lt;String&gt; response = client.send(
+	request,
+	// ... comes from this body handler ...
+	BodyHandlers.ofString());
+// ... and defines `body()`s return type
+String body = response.body();</code></pre></div></div>
+<div class="ulist"><ul><li><p>status code, headers, SSL session</p></li><li><p>request</p></li><li><p>intermediate responses<br>
+(redirection, authentication)</p></li></ul></div></section><section id="reactive"><h2>Reactive?</h2><div class="paragraph"><p>Great, but where&#8217;s the reactive sauce?</p></div>
+<div class="paragraph"><p>Three places:</p></div>
+<div class="ulist"><ul><li><p>send request asynchronously</p></li><li><p>provide request body with<br>
+<code>Publisher&lt;ByteBuffer&gt;</code></p></li><li><p>receive response body with<br>
+<code>Subscriber&lt;String&gt;</code> or<br>
+<code>Subscriber&lt;List&lt;ByteBuffer&gt;&gt;</code></p></li></ul></div></section><section id="asynchronous_request"><h2>Asynchronous Request</h2><div class="paragraph"><p>Submit request to thread pool until completes:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">CompletableFuture&lt;String&gt; responseBody = client
+	.sendAsync(request, BodyHandlers.ofString())
+	.thenApply(this::logHeaders)
+	.thenApply(HttpResponse::body);</code></pre></div></div>
+<div class="ulist"><ul><li><p>uses "a default executor" to field requests<br></p></li><li><p>pool can be defined when client is built with<br>
+<code>HttpClient.Builder.executor(Executor)</code></p></li></ul></div></section><section id="reactive_request_body"><h2>Reactive Request Body</h2><div class="paragraph"><p>If a request has a long body,<br>
+no need to prepare it in its entirety:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Publisher&lt;ByteBuffer&gt; body = // ...
+HttpRequest post = HttpRequest.newBuilder()
+	.POST(BodyPublishers.fromPublisher(body))
+	.build();
+client.send(post, BodyHandlers.ofString())</code></pre></div></div>
+<div class="ulist"><ul><li><p><code>client</code> subscribes to <code>body</code></p></li><li><p>as <code>body</code> publishes byte buffers,<br>
+<code>client</code> sends them over the wire</p></li></ul></div></section><section id="reactive_response_body"><h2>Reactive Response Body</h2><div class="paragraph"><p>If a response has a long body,<br>
+no need to wait before processing:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Subscriber&lt;String&gt; body = // ...
+HttpResponse&lt;Void&gt; response = client.send(
+	request,
+	BodyHandlers.fromLineSubscriber(subscriber));</code></pre></div></div>
+<div class="ulist"><ul><li><p><code>client</code> subscribes <code>body</code> to itself</p></li><li><p>as <code>client</code> receives response bytes,<br>
+it parses to lines and passes to <code>body</code></p></li></ul></div></section><section id="reactive_benefits"><h2>Reactive Benefits</h2><div class="paragraph"><p>Benefits of reactive<br>
+request/response bodies:</p></div>
+<div class="ulist"><ul><li><p>receiver applies backpressure:</p><div class="ulist"><ul><li><p>on requests, <code>client</code></p></li><li><p>on responses, <code>body</code></p></li></ul></div></li><li><p><code>body</code> controls memory usage</p></li><li><p>early errors lead to partial processing</p></li><li><p>need "reactive tools" to create <code>body</code><br>
+from higher-level Java objects (e.g. <code>File</code>)</p></li></ul></div></section><section id="web_sockets"><h2>Web Sockets</h2><div class="paragraph"><p><strong>Short version:</strong></p></div>
+<div class="ulist"><ul><li><p>there&#8217;s a class <code>WebSocket</code></p></li><li><p><code>send[Text|Binary|&#8230;&#8203;]</code> methods<br>
+return <code>CompletableFuture</code></p></li><li><p>socket calls <code>Listener</code> methods<br>
+<code>on[Text|Binary|&#8230;&#8203;]</code></p></li></ul></div>
+<div class="paragraph"><p>(<code>WebSocket</code> and <code>Listener</code> behave like<br>
+<code>Subscription</code> and <code>Subscriber</code>.)</p></div>
+<div class="paragraph"><p><strong>No long version.</strong> 😛</p></div></section></section>
+<section><section id="new_apis_5"><h2>New APIs</h2><table class="toc">
+	<tr><td>Collection Factories ⑨⑩</td></tr>
+	<tr><td>Reactive Streams ⑨</td></tr>
+	<tr><td>Reactive HTTP/2 Client ⑪</td></tr>
+	<tr class="toc-current"><td>Stack-Walking ⑨</td></tr>
+</table><div class="paragraph"><p>Examining the stack faster and easier.</p></div></section><section id="stackwalkerforeach"><h2><code>StackWalker::forEach</code></h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">void forEach (Consumer&lt;StackFrame&gt;);</code></pre></div></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public static void main(String[] args) { one(); }
+static void one() { two(); }
+static void two() {
+	StackWalker.getInstance()
+		.forEach(System.out::println);
+}
+
+// output
+StackWalkingExample.two(StackWalking.java:14)
+StackWalkingExample.one(StackWalking.java:11)
+StackWalkingExample.main(StackWalking.java:10)</code></pre></div></div></section><section id="stackwalkerwalk"><h2><code>StackWalker::walk</code></h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">T walk (Function&lt;Stream&lt;StackFrame&gt;, T&gt;);</code></pre></div></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">static void three() {
+	String line = StackWalker.getInstance().walk(
+		frames -&gt; frames
+			.filter(f -&gt; f.getMethodName().contains("one"))
+			.findFirst()
+			.map(f -&gt; "Line " + f.getLineNumber())
+			.orElse("Unknown line");
+	);
+	System.out.println(line);
+}
+
+// output
+Line 11</code></pre></div></div></section><section id="options"><h2>Options</h2><div class="paragraph"><p><code>getInstance</code> takes options as arguments:</p></div>
+<div class="ulist"><ul><li><p><code>SHOW_REFLECT_FRAMES</code> for reflection frames</p></li><li><p><code>SHOW_HIDDEN_FRAMES</code> e.g. for lambda frames</p></li><li><p><code>RETAIN_CLASS_REFERENCE</code> for <code>Class&lt;?&gt;</code></p></li></ul></div></section><section id="frames_and_traces"><h2>Frames and Traces</h2><div class="paragraph"><p><code>forEach</code> and <code>walk</code> operate on <code>StackFrame</code>:</p></div>
+<div class="ulist"><ul><li><p>class and method name</p></li><li><p>class as <code>Class&lt;?&gt;</code></p></li><li><p>bytecode index and isNative</p></li></ul></div>
+<div class="paragraph"><p>Can upgrade to <code>StackTraceElement</code> (expensive):</p></div>
+<div class="ulist"><ul><li><p>file name and line number</p></li></ul></div></section><section id="performance_i"><h2>Performance I</h2><div class="imageblock diagram" style=""><img src="images/stack-walker-vs-exception.png" alt="stack walker vs exception"></div></section><section id="performance_ii"><h2>Performance II</h2><div class="imageblock diagram" style=""><img src="images/stack-walker-limit-with-estimated-size.png" alt="stack walker limit with estimated size"></div></section><section id="performance_iii"><h2>Performance III</h2><div class="ulist"><ul><li><p>creating <code>StackTraceElement</code> is expensive<br>
+(for file name and line number)</p></li><li><p>lazy evaluation pays off for partial traversal</p></li></ul></div>
+<div class="paragraph"><p>(Benchmarks performed by <a href="https://twitter.com/arnaudroger">Arnaud Roger</a>)</p></div></section></section>
+<section><section id="a_mixed_bag_of_new_apis"><h2>A Mixed Bag Of New APIs</h2><div class="paragraph"><p><strong>In Java 9:</strong></p></div><div class="ulist"><ul><li><p>multi-resolution images (<a href="http://openjdk.java.net/jeps/251">JEP 251</a>)</p></li><li><p>native desktop integration (<a href="http://openjdk.java.net/jeps/272">JEP 272</a>)</p></li><li><p>deserialization filter (<a href="http://openjdk.java.net/jeps/290">JEP 290</a>)</p></li><li><p>DTLS (<a href="http://openjdk.java.net/jeps/219">JEP 219</a>),<br>
+TLS ALPN and OCSP stapling (<a href="http://openjdk.java.net/jeps/244">JEP 244</a>)</p></li></ul></div></section><section id="a_mixed_bag_of_new_apis_2"><h2>A Mixed Bag Of New APIs</h2><div class="paragraph"><p><strong>In Java 12:</strong></p></div>
+<div class="ulist"><ul><li><p><code>CompactNumberFormat</code> (<a href="https://bugs.openjdk.java.net/browse/JDK-8188147">JDK-8188147</a>)</p></li></ul></div>
+<div class="paragraph"><p><strong>In Java 14:</strong></p></div>
+<div class="ulist"><ul><li><p>foreign-memory access (<a href="http://openjdk.java.net/jeps/370">JEP 370</a>)</p></li><li><p>non-volatile <code>MappedByteBuffer</code> (<a href="http://openjdk.java.net/jeps/352">JEP 352</a>)</p></li></ul></div>
+<div class="paragraph"><p>And often lots of low-level APIs.</p></div></section></section>
+<section id="jvm_features"><h2>JVM Features</h2><table class="toc">
+	<tr><td>Helpful NPEs ⑭</td></tr>
+	<tr><td>Launch Source File ⑪</td></tr>
+	<tr><td>Unified Logging ⑨</td></tr>
+	<tr><td>Multi-Release JARs ⑨</td></tr>
+	<tr><td>Redirected Platform Logging ⑨</td></tr>
+</table></section>
+<section><section id="jvm_features_2"><h2>JVM Features</h2><table class="toc">
+	<tr class="toc-current"><td>Helpful NPEs ⑭</td></tr>
+	<tr><td>Launch Source File ⑪</td></tr>
+	<tr><td>Unified Logging ⑨</td></tr>
+	<tr><td>Multi-Release JARs ⑨</td></tr>
+	<tr><td>Redirected Platform Logging ⑨</td></tr>
+</table><div class="paragraph"><p>Finally can NPEs be helpful!</p></div></section><section id="typical_npes"><h2>Typical NPEs</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="sh language-sh">java.lang.NullPointerException
+		at dev.nipafx.Regular.doing(Regular.java:28)
+		at dev.nipafx.Business.its(Business.java:20)
+		at dev.nipafx.Code.thing(Code.java:11)</code></pre></div></div>
+<div class="paragraph"><p>Ok-ish for coders, but suck for everybody else.</p></div></section><section id="helpful_npes"><h2>Helpful NPEs</h2><div class="paragraph"><p>With <code>-XX:+ShowCodeDetailsInExceptionMessages</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="sh language-sh">java.lang.NullPointerException:
+	Cannot invoke "String.length()" because the return
+	value of "dev.nipafx.Irregular.doing()"
+	is null
+		at dev.nipafx.Regular.doing(Regular.java:28)
+		at dev.nipafx.Business.its(Business.java:20)
+		at dev.nipafx.Code.thing(Code.java:11)</code></pre></div></div></section><section id="why_the_flag"><h2>Why the flag?</h2><div class="paragraph"><p>The command line option<br>
+is needed (for now), because:</p></div>
+<div class="ulist"><ul><li><p>performance</p></li><li><p>security</p></li><li><p>compatibility</p></li></ul></div>
+<div class="paragraph"><p>But:</p></div>
+<div class="quoteblock"><blockquote><div class="paragraph"><p>It is intended to enable code details<br>
+in exception messages by default<br>
+in a later release.</p></div></blockquote></div></section></section>
+<section><section id="jvm_features_3"><h2>JVM Features</h2><table class="toc">
+	<tr><td>Helpful NPEs ⑭</td></tr>
+	<tr class="toc-current"><td>Launch Source File ⑪</td></tr>
+	<tr><td>Unified Logging ⑨</td></tr>
+	<tr><td>Multi-Release JARs ⑨</td></tr>
+	<tr><td>Redirected Platform Logging ⑨</td></tr>
+</table><div class="paragraph"><p>Faster feedback with fewer tools.</p></div></section><section id="launching_a_single_source_file"><h2>Launching A Single Source File</h2><div class="paragraph"><p>Compiling and running<br>
+simple Java programs is verbose.</p></div>
+<div class="paragraph"><p>Not any more!</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code>java HelloJava11.java</code></pre></div></div></section><section id="background"><h2>Background</h2><div class="paragraph"><p>How it works:</p></div>
+<div class="ulist"><ul><li><p>compiles source into memory</p></li><li><p>runs from there</p></li></ul></div>
+<div class="paragraph"><p>Details:</p></div>
+<div class="ulist"><ul><li><p>requires module <em>jdk.compiler</em></p></li><li><p>processes options like class/module path et al.</p></li><li><p>interprets <code>@files</code> for easier option management</p></li></ul></div></section><section id="use_cases"><h2>Use Cases</h2><div class="paragraph"><p>Mostly similar to <code>jshell</code>:</p></div>
+<div class="ulist"><ul><li><p>easier demonstrations</p></li><li><p>more portable examples</p></li><li><p>experimentation with new language features<br>
+(combine with <code>--enable-preview</code>)</p></li></ul></div>
+<div class="paragraph"><p><strong>But also: script files!</strong></p></div></section><section id="scripts"><h2>Scripts</h2><div class="paragraph"><p>Steps towards easier scripting:</p></div>
+<div class="ulist"><ul><li><p>arbitrary file names</p></li><li><p>shebang support</p></li></ul></div></section><section id="arbitrary_file_names"><h2>Arbitrary File Names</h2><div class="paragraph"><p>Use <code>--source</code> if file doesn&#8217;t end in <code>.java</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code>java --source 11 hello-java-11</code></pre></div></div></section><section id="shebang_support"><h2>Shebang Support</h2><div class="paragraph"><p>To create "proper scripts":</p></div>
+<div class="ulist"><ul><li><p>include shebang in source:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="sh language-sh">#!/opt/jdk-11/bin/java --source 11</code></pre></div></div></li><li><p>name script and make it executable</p></li><li><p>execute it as any other script:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="sh language-sh"># from current directory:
+./hello-java-11
+# from PATH:
+hello-java-11</code></pre></div></div></li></ul></div></section></section>
+<section><section id="jvm_features_4"><h2>JVM Features</h2><table class="toc">
+	<tr><td>Helpful NPEs ⑭</td></tr>
+	<tr><td>Launch Source File ⑪</td></tr>
+	<tr class="toc-current"><td>Unified Logging ⑨</td></tr>
+	<tr><td>Multi-Release JARs ⑨</td></tr>
+	<tr><td>Redirected Platform Logging ⑨</td></tr>
+</table><div class="paragraph"><p>Observing the JVM at work.</p></div></section><section id="unified_logging"><h2>Unified Logging</h2><div class="paragraph"><p>New logging infrastructure for the JVM<br>
+(e.g. OS interaction, threading, GC, etc.):</p></div>
+<div class="ulist"><ul><li><p>JVM log messages pass through new mechanism<br></p></li><li><p>works similar to known logging frameworks:</p><div class="ulist"><ul><li><p>textual messages</p></li><li><p>log level</p></li><li><p>time stamps</p></li><li><p>meta information (like subsystem)</p></li></ul></div></li><li><p>output can be configured with <code>-Xlog</code></p></li></ul></div></section><section id="unified_logging_2"><h2>Unified Logging</h2><div class="imageblock diagram" style=""><img src="images/unified-logging.png" alt="unified logging"></div></section><section id="first_try"><h2>First Try</h2><div class="paragraph"><p>Plain use of <code>-Xlog</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="sh language-sh">$ java -Xlog -version
+
+# truncated a few messages
+&gt; [0.002s][info][os       ] HotSpot is running ...
+# truncated a lot of messages</code></pre></div></div>
+<div class="paragraph"><p>You can see:</p></div>
+<div class="ulist"><ul><li><p>JVM uptime (2ms)</p></li><li><p>log level (<code>info</code>)</p></li><li><p>tags (<code>os</code>)</p></li><li><p>message</p></li></ul></div></section><section id="configuring_xlog"><h2>Configuring <code>-Xlog</code></h2><div class="paragraph"><p>This can be configured:</p></div>
+<div class="ulist"><ul><li><p>which messages to show</p></li><li><p>where messages go</p></li><li><p>what messages should say</p></li></ul></div>
+<div class="paragraph"><p>How? <code>-Xlog:help</code> lists all options.</p></div></section><section id="which_messages"><h2>Which Messages?</h2><div class="paragraph"><p>Configure with <em>selectors</em>: <code>$TAG_SET=$LEVEL</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="sh language-sh"># "exactly gc" on "warning"
+-Xlog:gc=warning
+# "including gc" on "warning"
+-Xlog:gc*=warning
+# "exactly gc and os" on "debug"
+-Xlog:gc+os=debug
+# "gc" on "debug" and "os" on warning
+-Xlog:gc=debug,os=warning</code></pre></div></div>
+<div class="paragraph"><p>Defaults:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="sh language-sh">-Xlog       # the same as -Xlog:all
+-Xlog:$TAG  # same as -Xlog:$TAG=info</code></pre></div></div></section><section id="where_do_messages_go"><h2>Where Do Messages Go?</h2><div class="paragraph"><p>Three possible locations:</p></div>
+<div class="ulist"><ul><li><p><code>stdout</code> (default)</p></li><li><p><code>stderr</code></p></li><li><p><code>file=$FILENAME</code><br>
+(file rotation is possible)</p></li></ul></div>
+<div class="paragraph"><p>Example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="sh language-sh"># all debug messages into application.log
+-Xlog:all=debug:file=application.log</code></pre></div></div></section><section id="which_information"><h2>Which Information?</h2><div class="paragraph"><p><em>Decorators</em> define what is shown:</p></div>
+<div class="ulist"><ul><li><p><code>time</code>: time and date (also in ms and ns)</p></li><li><p><code>uptime</code>: time since JVM start (also in ms and ns)</p></li><li><p><code>pid</code>: process identifier</p></li><li><p><code>tid</code>: thread identifier</p></li><li><p><code>level</code>: log level</p></li><li><p><code>tags</code>: tag-set</p></li></ul></div>
+<div class="paragraph"><p>Example:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="sh language-sh"># show uptime in ms and level
+-Xlog:all:stdout:level,uptimemillis</code></pre></div></div></section><section id="put_together"><h2>Put Together</h2><div class="paragraph"><p>Formal syntax:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="sh language-sh">-Xlog:$SELECTORS:$OUTPUT:$DECORATORS:$OUTPUT_OPTS</code></pre></div></div>
+<div class="ulist"><ul><li><p><code>$SELECTORS</code> are pairs of tag sets and log levels<br>
+(the docs call this <em>what-expression</em>)</p></li><li><p><code>$OUTPUT</code> is <code>stdout</code>, <code>stderr</code>, or <code>file=&lt;filename&gt;</code></p></li><li><p><code>$DECORATORS</code> define what is shown</p></li><li><p><code>$OUTPUT_OPTS</code> configure file rotation</p></li></ul></div>
+<div class="paragraph"><p>Elements have to be defined from left to right.<br>
+(But can be empty, e.g. <code>-Xlog::stderr</code>.)</p></div></section></section>
+<section><section id="jvm_features_5"><h2>JVM Features</h2><table class="toc">
+	<tr><td>Helpful NPEs ⑭</td></tr>
+	<tr><td>Launch Source File ⑪</td></tr>
+	<tr><td>Unified Logging ⑨</td></tr>
+	<tr class="toc-current"><td>Multi-Release JARs ⑨</td></tr>
+	<tr><td>Redirected Platform Logging ⑨</td></tr>
+</table><div class="paragraph"><p>"Do this on Java X, do that on Java Y."</p></div></section><section id="version_dependence"><h2>Version Dependence</h2><div class="paragraph"><p><code>Main</code> calls <code>Version</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class Main {
+
+	public static void main(String[] args) {
+		System.out.println(new Version().get());
+	}
+
+}</code></pre></div></div></section><section id="version_dependence_2"><h2>Version Dependence</h2><div class="paragraph"><p><code>Version</code> exists twice:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class Version {
+
+	public String get() { return "Java 8"; }
+
+}
+
+public class Version {
+
+	public String get() { return "Java 9+"; }
+
+}</code></pre></div></div>
+<div class="paragraph"><p>(Btw, IDEs hate this!)</p></div></section><section id="creating_a_multireleasejar"><h2>Creating A Multi&#8209;Release&nbsp;JAR</h2><div class="paragraph"><p>Now, here&#8217;s the magic:</p></div>
+<div class="ulist"><ul><li><p>compile <code>Main</code> and <code>Version[8]</code> to <code>out/java-8</code></p></li><li><p>compile <code>Version[9]</code> to <code>out/java-9</code></p></li><li><p>use new <code>jar</code> flag <code>--release</code>:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">jar --create --file out/mr.jar
+	-C out/java-8 .
+	--release 9 -C out/java-9 .</code></pre></div></div></li></ul></div></section><section id="jar_content"><h2>JAR Content</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">└ dev
+    └ nipafx ... (moar folders)
+        ├ Main.class
+        └ Version.class # 8
+└ META-INF
+    └ versions
+        └ 9
+            └ dev
+                └ nipafx ... (moar folders)
+                    └ Version.class # 9</code></pre></div></div></section><section id="run"><h2>Run!</h2><div class="paragraph"><p>With <code>java -cp out/mr.jar &#8230;&#8203;Main</code>:</p></div>
+<div class="ulist"><ul><li><p>prints <code>"Java 8"</code> on Java 8</p></li><li><p>prints <code>"Java 9+"</code> on Java 9 and later</p></li></ul></div>
+<div class="paragraph"><p>Great Success!</p></div></section></section>
+<section><section id="jvm_features_6"><h2>JVM Features</h2><table class="toc">
+	<tr><td>Helpful NPEs ⑭</td></tr>
+	<tr><td>Launch Source File ⑪</td></tr>
+	<tr><td>Unified Logging ⑨</td></tr>
+	<tr><td>Multi-Release JARs ⑨</td></tr>
+	<tr class="toc-current"><td>Redirected Platform Logging ⑨</td></tr>
+</table><div class="paragraph"><p>Use your logging framework of choice<br>
+as backend for JDK logging.</p></div></section><section id="loggers_and_finders"><h2>Loggers and Finders</h2><div class="paragraph"><p>New logging infrastructure for the core libraries<br>
+(i.e. this does not apply to JVM log messages!)</p></div>
+<div class="ulist"><ul><li><p>new interface <code>System.Logger</code></p></li><li><p>used by JDK classes</p></li><li><p>instances created by <code>System.LoggerFinder</code></p></li></ul></div>
+<div class="paragraph"><p>The interesting bit:</p></div>
+<div class="paragraph"><p><strong><code>LoggerFinder</code> is a service!</strong></p></div></section><section id="creating_a_logger"><h2>Creating a <code>Logger</code></h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class SystemOutLogger implements Logger {
+
+	public String getName() { return "SystemOut"; }
+
+	public boolean isLoggable(Level level) { return true; }
+
+	public void log(
+			Level level, ResourceBundle bundle,
+			String format, Object... params) {
+		System.out.println(/* ...*/);
+	}
+
+	// another, similar `log` method
+
+}</code></pre></div></div></section><section id="creating_a_loggerfinder"><h2>Creating a <code>LoggerFinder</code></h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public class SystemOutLoggerFinder
+		extends LoggerFinder {
+
+	public Logger getLogger(
+			String name, Module module) {
+		return new SystemOutLogger();
+	}
+
+}</code></pre></div></div></section><section id="registering_the_service"><h2>Registering the Service</h2><div class="paragraph"><p>Module descriptor for <em>system.out.logger</em>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> system.out.logger {
+    <span class="hljs-keyword">provides</span> java.lang.System.LoggerFinder
+        <span class="hljs-keyword">with</span> system.out.logger.SystemOutLoggerFinder;
+}</code></pre></div></div>
+<div class="paragraph"><p>Module system and JDK take care of the rest!</p></div></section></section>
+<section><section id="a_mixed_bag_of_newjvmfeatures"><h2>A Mixed Bag Of New&nbsp;JVM&nbsp;Features</h2><div class="paragraph"><p><strong>In Java 9:</strong></p></div><div class="ulist"><ul><li><p>new version strings (<a href="http://openjdk.java.net/jeps/223">JEP 223</a>)</p></li><li><p>GNU-style command line options (<a href="http://openjdk.java.net/jeps/293">JEP 293</a>)</p></li><li><p>command line flag validation (<a href="http://openjdk.java.net/jeps/245">JEP 245</a>)</p></li><li><p>reserved stack areas (<a href="http://openjdk.java.net/jeps/270">JEP 270</a>)</p></li><li><p>Unicode 7 &amp; 8 (JEPS <a href="http://openjdk.java.net/jeps/227">227</a> &amp; <a href="http://openjdk.java.net/jeps/267">267</a>)</p></li></ul></div></section><section id="a_mixed_bag_of_newjvmfeatures_2"><h2>A Mixed Bag Of New&nbsp;JVM&nbsp;Features</h2><div class="paragraph"><p><strong>In Java 10:</strong></p></div>
+<div class="ulist"><ul><li><p>alternative memory device support (<a href="http://openjdk.java.net/jeps/316">JEP 316</a>)</p></li></ul></div>
+<div class="paragraph"><p><strong>In Java 11:</strong></p></div>
+<div class="ulist"><ul><li><p>Unicode 9 &amp; 10 (<a href="http://openjdk.java.net/jeps/327">JEP 327</a>)</p></li><li><p>Curve25519 and Curve448 (<a href="http://openjdk.java.net/jeps/324">JEP 324</a>)</p></li><li><p>ChaCha20 and Poly1305 (<a href="http://openjdk.java.net/jeps/329">JEP 329</a>)</p></li><li><p>partial TLS 1.3 support (<a href="http://openjdk.java.net/jeps/332">JEP 332</a>)</p></li></ul></div></section><section id="a_mixed_bag_of_newjvmfeatures_3"><h2>A Mixed Bag Of New&nbsp;JVM&nbsp;Features</h2><div class="paragraph"><p><strong>In Java 12:</strong></p></div>
+<div class="ulist"><ul><li><p>constants API (<a href="http://openjdk.java.net/jeps/334">JEP 334</a>)</p></li><li><p>HmacPBE (<a href="https://bugs.openjdk.java.net/browse/JDK-8076190">JDK-8215450</a>)</p></li><li><p>finer PKCS12 KeyStore config (<a href="https://bugs.openjdk.java.net/browse/JDK-8076190">JDK-8076190</a>)</p></li></ul></div>
+<div class="paragraph"><p><strong>In Java 14:</strong></p></div>
+<div class="ulist"><ul><li><p>packaging tool (<a href="http://openjdk.java.net/jeps/343">JEP 343</a>)</p></li></ul></div>
+<div class="paragraph"><p><strong>In Java 15:</strong></p></div>
+<div class="ulist"><ul><li><p>Nashorn was removed (<a href="https://openjdk.java.net/jeps/372">JEP 372</a>)</p></li></ul></div></section></section>
+<section id="performance"><h2>Performance</h2><table class="toc">
+	<tr><td>Application Class-Data Sharing ⑩⑫⑬</td></tr>
+	<tr><td>Compact Strings ⑨</td></tr>
+	<tr><td>Indified String Concatenation ⑨</td></tr>
+</table></section>
+<section><section id="performance_2"><h2>Performance</h2><table class="toc">
+	<tr class="toc-current"><td>Application Class-Data Sharing ⑩⑫⑬</td></tr>
+	<tr><td>Compact Strings ⑨</td></tr>
+	<tr><td>Indified String Concatenation ⑨</td></tr>
+</table><div class="paragraph"><p>Improving application launch times.</p></div></section><section id="class_data"><h2>Class-Data</h2><div class="paragraph"><p>JVM steps to execute a class&#8217;s bytecode:</p></div>
+<div class="ulist"><ul><li><p>looks up class in JAR</p></li><li><p>loads bytecode</p></li><li><p>verifies bytecode</p></li><li><p>stores class-data in<br>
+internal data structure</p></li></ul></div>
+<div class="paragraph"><p>This takes quite some time.</p></div>
+<div class="paragraph"><p>If classes don&#8217;t change, the resulting<br>
+class-data is always the same!</p></div></section><section id="class_data_sharing"><h2>Class-Data Sharing</h2><div class="paragraph"><p>Idea behind class-data sharing:</p></div>
+<div class="ulist"><ul><li><p>create class-data once</p></li><li><p>dump it into an archive</p></li><li><p>reuse the archive in future launches<br>
+(file is mapped into memory)</p></li></ul></div></section><section id="effects"><h2>Effects</h2><div class="paragraph"><p>My experiments with a large desktop app<br>
+(focusing on classes required for launch):</p></div>
+<div class="ulist"><ul><li><p>archive has 250 MB for ~24k classes</p></li><li><p>launch time reduced from 15s to 12s</p></li></ul></div>
+<div class="paragraph"><p><strong>Bonus</strong>: Archive can be shared across JVMs.</p></div></section><section id="class_data_sharing_2"><h2>Class-Data Sharing</h2><div class="paragraph"><p>Two variants:</p></div>
+<div class="dlist"><dl><dt class="hdlist1">CDS</dt><dd><p>just for JDK classes</p></dd><dt class="hdlist1">AppCDS</dt><dd><p>JDK + application classes</p></dd></dl></div></section><section id="cds_step_1"><h2>CDS - Step #1</h2><div class="paragraph"><p>Create JDK archive on Java 10/11:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="sh language-sh"># possibly as root
+java -Xshare:dump</code></pre></div></div>
+<div class="paragraph"><p>Java 12+ downloads include<br>
+CDS archive for JDK classes.</p></div></section><section id="cds_step_2"><h2>CDS - Step #2</h2><div class="paragraph"><p>Use the archive:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="sh language-sh">$ java
+	-Xshare:on
+	# [... class path for app and deps ...]
+	org.example.Main</code></pre></div></div>
+<div class="paragraph"><p>If archive is missing or faulty:</p></div>
+<div class="ulist"><ul><li><p><code>-Xshare:on</code> fails fast</p></li><li><p><code>-Xshare:auto</code> (default) ignores archive</p></li></ul></div>
+<div class="paragraph"><p>(Slides rely on default, i.e. no <code>-Xshare</code>.)</p></div></section><section id="appcds"><h2>AppCDS</h2><div class="paragraph"><p>Create an AppCDS archive:</p></div>
+<div class="ulist"><ul><li><p>manually on Java 10+</p></li><li><p>dynamically on Java 13+</p></li></ul></div>
+<div class="paragraph"><p>First manually, then dynamically.</p></div></section><section id="appcds_step_0"><h2>AppCDS - Step #0</h2><div class="paragraph"><p>To manually create an AppCDS archive,<br>
+first create a list of classes</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="sh language-sh">$ java
+	-XX:DumpLoadedClassList=classes.lst
+	# [... class path for app and deps ...]
+	org.example.Main</code></pre></div></div>
+<div class="paragraph"><p>Then, <code>classes.lst</code> contains<br>
+slash-separated names of loaded classes.</p></div></section><section id="appcds_step_1"><h2>AppCDS - Step #1</h2><div class="paragraph"><p>Use the list to create the archive:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="sh language-sh">$ java
+	-Xshare:dump
+	-XX:SharedClassListFile=classes.lst
+	-XX:SharedArchiveFile=app-cds.jsa
+	# [... class path for app and deps ...]</code></pre></div></div>
+<div class="paragraph"><p>Creates archive <code>app-cds.jsa</code>.</p></div></section><section id="appcds_step_2"><h2>AppCDS - Step #2</h2><div class="paragraph"><p>Use the archive:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="sh language-sh">$ java
+	-XX:SharedArchiveFile=app-cds.jsa
+	# [... class path for app and deps ...]
+	org.example.Main</code></pre></div></div></section><section id="dynamic_appcds"><h2>Dynamic AppCDS</h2><div class="paragraph"><p>Java 13 can create archive when<br>
+program exits (without crash):</p></div>
+<div class="ulist"><ul><li><p>steps #0 and #1 are replaced by:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="sh language-sh">$ java
+	-XX:ArchiveClassesAtExit=dyn-cds.jsa
+	# [... class path for app and deps ...]
+	org.example.Main</code></pre></div></div></li><li><p>step #2 as before:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="sh language-sh">$ java
+	-XX:SharedArchiveFile=app-cds.jsa
+	# [... class path for app and deps ...]
+	org.example.Main</code></pre></div></div></li></ul></div></section><section id="dynamic_appcds_2"><h2>Dynamic AppCDS</h2><div class="paragraph"><p>The dynamic archive:</p></div>
+<div class="ulist"><ul><li><p>builds on the JDK-archive</p></li><li><p>contains all loaded app/lib classes</p></li><li><p>including those loaded by<br>
+user-defined class loaders</p></li></ul></div></section><section id="heed_the_class_path"><h2>Heed The Class Path</h2><div class="paragraph"><p>What are the two biggest challenges<br>
+in software development?</p></div>
+<div class="olist arabic"><ol class="arabic"><li class="fragment"><p>naming</p></li><li class="fragment"><p>cache invalidation</p></li><li class="fragment"><p>off-by-one errors</p></li></ol></div></section><section id="heed_the_class_path_2"><h2>Heed The Class Path</h2><div class="paragraph"><p>The archive is a cache!</p></div>
+<div class="paragraph"><p>It&#8217;s invalid when:</p></div>
+<div class="ulist"><ul><li><p>a JAR is updated</p></li><li><p>class path is reordered</p></li><li><p>a JAR is added<br>
+(unless when appended)</p></li></ul></div></section><section id="heed_the_class_path_3"><h2>Heed The Class Path</h2><div class="paragraph"><p>To invalidate the archive:</p></div>
+<div class="ulist"><ul><li><p>during creation:</p><div class="ulist"><ul><li><p>Java stores used class path in archive</p></li><li><p>class path may not contain wild cards</p></li><li><p>class path may not contain exploded JARs</p></li></ul></div></li><li><p>when used:<br></p><div class="ulist"><ul><li><p>Java checks whether stored path<br>
+is prefix of current path</p></li></ul></div></li></ul></div></section><section id="module_path"><h2>Module Path?</h2><div class="paragraph"><p>Class path, class path&#8230;&#8203;<br>
+what about the module path?</p></div>
+<div class="quoteblock"><blockquote><div class="paragraph"><p>In this release, CDS cannot archive classes from user-defined modules (such as those specified in <code>--module-path</code>).
+We plan to add that support in a future release.</p></div></blockquote><div class="attribution">&#8212; <a href="http://openjdk.java.net/jeps/310">JEP 310</a></div></div></section><section id="more_on_appcds"><h2>More On (App)CDS</h2><div class="paragraph"><p>For more, read this article:<br>
+<a href="https://blog.codefx.org/java/application-class-data-sharing/">tiny.cc/app-cds</a></p></div>
+<div class="paragraph"><p>Observe sharing with<br>
+<code>-Xlog:class+load</code><br>
+(<a href="https://blog.codefx.org/java/unified-logging-with-the-xlog-option/">unified logging</a>)</p></div></section></section>
+<section><section id="performance_3"><h2>Performance</h2><table class="toc">
+	<tr><td>Application Class-Data Sharing ⑩⑫⑬</td></tr>
+	<tr class="toc-current"><td>Compact Strings ⑨</td></tr>
+	<tr><td>Indified String Concatenation ⑨</td></tr>
+</table><div class="paragraph"><p>Going from UTF-16 to ISO-8859-1.</p></div></section><section id="strings_and_memory"><h2>Strings and memory</h2><div class="ulist"><ul><li><p>20% - 30% of heap are <code>char[]</code> for <code>String</code></p></li><li><p>a <code>char</code> is UTF-16 code unit ⇝ 2 bytes</p></li><li><p>most strings only require ISO-8859-1 ⇝ 1 byte</p></li></ul></div>
+<div class="paragraph"><p><strong>10% - 15% of memory is wasted!</strong></p></div></section><section id="compact_strings"><h2>Compact Strings</h2><div class="paragraph"><p>For Java 9, <code>String</code> was changed:</p></div>
+<div class="ulist"><ul><li><p>uses <code>byte[]</code> instead of <code>char[]</code></p></li><li><p>bytes per character:</p><div class="ulist"><ul><li><p>1 if <em>all</em> characters are ISO-8859-1</p></li><li><p>2 otherwise</p></li></ul></div></li></ul></div>
+<div class="paragraph"><p>Only possible because <code>String</code> makes<br>
+defensive copies of all arguments.</p></div></section><section id="performance_4"><h2>Performance</h2><div class="paragraph"><p>Simple benchmark:<br>
+(by <a href="https://shipilev.net/">Aleksey Shipilëv</a>)</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">String method = generateString(size);
+
+public String work() {
+	return "Calling method \"" + method + "\"";
+}</code></pre></div></div>
+<div class="paragraph"><p>Depending on circumstances:</p></div>
+<div class="ulist"><ul><li><p>throughput 1.4x</p></li><li><p>garbage less 1.85x</p></li></ul></div></section><section id="more"><h2>More</h2><div class="paragraph"><p>Background on <code>String</code><br>
+performance improvements:</p></div>
+<div class="paragraph"><p><a href="https://www.youtube.com/watch?v=wIyeOaitmWM">Aleksey Shipilëv<br>
+The Lord Of The Strings</a></p></div></section></section>
+<section><section id="performance_5"><h2>Performance</h2><table class="toc">
+	<tr><td>Application Class-Data Sharing ⑩⑫⑬</td></tr>
+	<tr><td>Compact Strings ⑨</td></tr>
+	<tr class="toc-current"><td>Indified String Concatenation ⑨</td></tr>
+</table><div class="paragraph"><p><code>"Improving" + "String" + "Concatenation"</code></p></div></section><section id="string_concatenation"><h2>String Concatenation</h2><div class="paragraph"><p>What happens when you run:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">String s = greeting + ", " + place + "!";</code></pre></div></div>
+<div class="ulist"><ul><li><p>bytecode uses <code>StringBuilder</code></p></li><li><p>JIT may (!) recognize and optimize<br>
+by writing content directly to new <code>byte[]</code></p></li><li><p>breaks down quickly<br>
+(e.g. with <code>long</code> or <code>double</code>)</p></li></ul></div></section><section id="why_not_create_better_bytecode"><h2>Why Not Create Better Bytecode?</h2><div class="ulist"><ul><li><p>new optimizations create new bytecode</p></li><li><p>new optimizations require recompile</p></li><li><p>test matrix <em>JVMs vs bytecodes</em> explodes</p></li></ul></div></section><section id="why_not_call_stringconcat"><h2>Why Not Call <code>String::concat</code>?</h2><div class="paragraph"><p>There is no such method.</p></div>
+<div class="ulist"><ul><li><p><code>concat(String&#8230;&#8203; args)</code> requires <code>toString</code></p></li><li><p><code>concat(Object&#8230;&#8203; args)</code> requires boxing</p></li></ul></div>
+<div class="paragraph"><p>Nothing fancy can be done<br>
+because compiler must use public API.</p></div></section><section id="invokedynamic"><h2>Invokedynamic</h2><div class="paragraph"><p>Invokedynamic came in Java 7:</p></div>
+<div class="ulist"><ul><li><p>compiler creates a recipe</p></li><li><p>runtime has to process it</p></li><li><p>defers decisions from compiler to runtime</p></li></ul></div>
+<div class="paragraph"><p>(Used for lambda expressions and in Nashorn.)</p></div></section><section id="indy_to_the_rescue"><h2>Indy To The Rescue</h2><div class="paragraph"><p>With Indy compiler can express<br>
+<em>"concat these things"</em><br>
+(without boxing!)</p></div>
+<div class="paragraph"><p>JVM executes by writing content<br>
+directly to new <code>byte[]</code>.</p></div></section><section id="performance_6"><h2>Performance</h2><div class="paragraph"><p>Depending on circumstances:</p></div>
+<div class="ulist"><ul><li><p>throughput 2.6x</p></li><li><p>garbage less 3.4x</p></li></ul></div>
+<div class="paragraph"><p>(Benchmarks by <a href="https://shipilev.net/">Aleksey Shipilëv</a>)</p></div></section><section id="performance_of_indified_compact_string_concat"><h2>Performance Of Indified Compact String Concat</h2><div class="paragraph"><p>Depending on circumstances:</p></div>
+<div class="ulist"><ul><li><p>throughput 2.9x</p></li><li><p>garbage less 6.4x</p></li></ul></div>
+<div class="paragraph"><p>(Benchmarks by <a href="https://shipilev.net/">Aleksey Shipilëv</a>)</p></div></section><section id="more_2"><h2>More</h2><div class="paragraph"><p>Background on <code>String</code><br>
+performance improvements:</p></div>
+<div class="paragraph"><p><a href="https://www.youtube.com/watch?v=wIyeOaitmWM">Aleksey Shipilëv<br>
+The Lord Of The Strings</a></p></div></section></section>
+<section><section id="a_mixed_bag_of_performance"><h2>A Mixed Bag Of Performance</h2><div class="paragraph"><p><strong>In Java 9:</strong></p></div><div class="ulist"><ul><li><p>G1 default GC (<a href="http://openjdk.java.net/jeps/248">JEP 248</a>)</p></li><li><p>cgroup-memory limits (<a href="https://bugs.openjdk.java.net/browse/JDK-8170888">JDK-8170888</a>)</p></li><li><p>contended locks (<a href="http://openjdk.java.net/jeps/143">JEP 143</a>)</p></li><li><p>security manager (<a href="http://openjdk.java.net/jeps/232">JEP 232</a>)</p></li><li><p>Java 2D rendering (<a href="http://openjdk.java.net/jeps/265">JEP 265</a>)</p></li><li><p>GHASH/RSA computation (<a href="http://openjdk.java.net/jeps/246">JEP 246</a>)</p></li><li><p>Java-level JVM compiler interface (<a href="http://openjdk.java.net/jeps/243">JEP 243</a>)</p></li></ul></div></section><section id="a_mixed_bag_of_performance_2"><h2>A Mixed Bag Of Performance</h2><div class="paragraph"><p><strong>In Java 10:</strong></p></div>
+<div class="ulist"><ul><li><p>Graal&#8201;&#8212;&#8201;Java-based JIT compiler (<a href="http://openjdk.java.net/jeps/317">JEP 317</a>)</p></li><li><p>parallel full GC for G1 (<a href="http://openjdk.java.net/jeps/307">JEP 307</a>)</p></li><li><p>thread-local handshakes (<a href="http://openjdk.java.net/jeps/312">JEP 312</a>)</p></li></ul></div></section><section id="a_mixed_bag_of_performance_3"><h2>A Mixed Bag Of Performance</h2><div class="paragraph"><p><strong>In Java 11:</strong></p></div>
+<div class="ulist"><ul><li><p>Epsilon GC (<a href="http://openjdk.java.net/jeps/318">JEP 318</a>)</p></li><li><p>ZGC (experimental, <a href="http://openjdk.java.net/jeps/333">JEP 333</a>)</p></li><li><p>low-overhead heap profiling (<a href="http://openjdk.java.net/jeps/331">JEP 331</a>)</p></li><li><p>open-source Flight Recorder (<a href="http://openjdk.java.net/jeps/328">JEP 328</a>)</p></li></ul></div></section><section id="a_mixed_bag_of_performance_4"><h2>A Mixed Bag Of Performance</h2><div class="paragraph"><p><strong>In Java 12:</strong></p></div>
+<div class="ulist"><ul><li><p>Shenandoah (<a href="http://openjdk.java.net/jeps/189">JEP 189</a>)</p></li><li><p>G1 improvements:</p><div class="ulist"><ul><li><p>abortable mixed collections (<a href="http://openjdk.java.net/jeps/344">JEP 344</a>)</p></li><li><p>promptly return unused memory (<a href="http://openjdk.java.net/jeps/346">JEP 346</a>)</p></li></ul></div></li></ul></div></section><section id="a_mixed_bag_of_performance_5"><h2>A Mixed Bag Of Performance</h2><div class="paragraph"><p><strong>In Java 13:</strong></p></div>
+<div class="ulist"><ul><li><p>Shenandoah improvements:</p><div class="ulist"><ul><li><p>internals (<a href="https://bugs.openjdk.java.net/browse/JDK-8221766">JDK-8221766</a>, <a href="https://bugs.openjdk.java.net/browse/JDK-8224584">JDK-8224584</a>)</p></li><li><p>more platforms (<a href="https://bugs.openjdk.java.net/browse/JDK-8225048">JDK-8225048</a>, <a href="https://bugs.openjdk.java.net/browse/JDK-8223767">JDK-8223767</a>)</p></li></ul></div></li><li><p>ZGC improvements:</p><div class="ulist"><ul><li><p>implements <code>-XX:SoftMaxHeapSize</code> (<a href="https://bugs.openjdk.java.net/browse/JDK-8222145">JDK-8222145</a>)</p></li><li><p>max heap size of 16 TB (<a href="https://bugs.openjdk.java.net/browse/JDK-8221786">JDK-8221786</a>)</p></li><li><p>uncommits unused memory (<a href="https://openjdk.java.net/jeps/351">JEP 351</a>)</p></li></ul></div></li></ul></div></section><section id="a_mixed_bag_of_performance_6"><h2>A Mixed Bag Of Performance</h2><div class="paragraph"><p><strong>In Java 14:</strong></p></div>
+<div class="ulist"><ul><li><p>JFR event streaming API (<a href="https://openjdk.java.net/jeps/349">JEP 349</a>)</p></li><li><p>Shenadoah, G1, ZGC improvements</p></li></ul></div></section></section>
+<section id="about_nicolai_parlog" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>About Nicolai Parlog</h2>
+<div style="float: left; width: 45%; margin:0px;">
+	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="images/cover-jms.png" style="margin: 0;"></a>
+	<p style="
+		position: fixed;
+		margin: -160px 0 0 60px;
+		transform: rotate(-8deg);
+		font-size: 28pt;
+		color: #cc0000;
+		text-shadow: 2px 2px 3px #660000;
+		font-weight: bold;
+		border: 5px solid #cc0000;
+		border-radius: 12px;
+		background-color: rgba(255,255,255,0.5);
+		padding: 2px 8px 7px 4px;
+">37% off with<br>code <em>fccparlog</em></p>
+	<p><a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb">tiny.cc/jms</a></p>
+</div>
+<h3 style="margin-top: -0.25em">Follow</h3>
+<div class="paragraph"><p><a href="https://nipafx.dev">nipafx.dev</a></p></div>
+<div class="paragraph"><p><strong>nipafx</strong> on<br>
+<a href="https://twitter.com/nipafx">🐦</a> //
+<a href="https://www.youtube.com/nipafx">▶</a> //
+<a href="https://www.twitch.tv/nipafx">📺</a> //
+<a href="https://github.com/nipafx">🐙🐱</a></p></div>
+<h3 style="margin-top: 0.5em">More</h3>
+<div class="paragraph"><p>Slides at <a href="https://slides.nipafx.dev">slides.nipafx.dev</a></p></div>
+<div class="paragraph"><p>⇜ Get <a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&amp;a_bid=869915cb">my book</a>!</p></div>
+<div class="paragraph"><p><a href="http://nipafx.dev/hire">Hire me</a> as a trainer<br>
+(Java 8+, JUnit 5)</p></div></section>
+<section id="image_credits"><h2>Image Credits</h2><div class="ulist"><ul><li><p><a href="https://unsplash.com/photos/4dnG4q3kxdg">raspberry chocolate</a>:
+<a href="https://unsplash.com/@joannakosinska">Joanna Kosinska</a>,
+<a href="https://unsplash.com/license">Unsplash license</a></p></li><li><p><a href="https://www.flickr.com/photos/21496790@N06/5065834411">question-mark</a>:
+<a href="http://milosevicmilos.com/">Milos Milosevic</a>,
+<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a></p></li></ul></div></section></div></div><script src="_reveal.js/lib/js/head.min.js"></script><script src="_reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+Reveal.initialize({
+  // Display controls in the bottom right corner
+  controls: false,
+  // Display a presentation progress bar
+  progress: false,
+  // Set a per-slide timing for speaker notes, null means none
+  defaultTiming: null,
+  // Display the page number of the current slide
+  slideNumber: false,
+  // Push each slide change to the browser history
+  history: true,
+  // Enable keyboard shortcuts for navigation
+  keyboard: true,
+  // Enable the slide overview mode
+  overview: true,
+  // Vertical centering of slides
+  center: true,
+  // Enables touch navigation on devices with touch input
+  touch: true,
+  // Loop the presentation
+  loop: false,
+  // Change the presentation direction to be RTL
+  rtl: false,
+  // Randomizes the order of slides each time the presentation loads
+  shuffle: false,
+  // Turns fragments on and off globally
+  fragments: true,
+  // Flags if the presentation is running in an embedded mode,
+  // i.e. contained within a limited portion of the screen
+  embedded: false,
+  // Flags if we should show a help overlay when the questionmark
+  // key is pressed
+  help: true,
+  // Flags if speaker notes should be visible to all viewers
+  showNotes: false,
+  // Global override for autolaying embedded media (video/audio/iframe)
+  // - null: Media will only autoplay if data-autoplay is present
+  // - true: All media will autoplay, regardless of individual setting
+  // - false: No media will autoplay, regardless of individual setting
+  autoPlayMedia: null,
+  // Number of milliseconds between automatically proceeding to the
+  // next slide, disabled when set to 0, this value can be overwritten
+  // by using a data-autoslide attribute on your slides
+  autoSlide: 0,
+  // Stop auto-sliding after user input
+  autoSlideStoppable: true,
+  // Enable slide navigation via mouse wheel
+  mouseWheel: false,
+  // Hides the address bar on mobile devices
+  hideAddressBar: true,
+  // Opens links in an iframe preview overlay
+  previewLinks: false,
+  // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
+  // NOTE setting the theme in the config no longer works in reveal.js 3.x
+  //theme: Reveal.getQueryHash().theme || 'nipa-night',
+  // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+  transition: Reveal.getQueryHash().transition || 'fade',
+  // Transition speed (e.g., default, fast, slow)
+  transitionSpeed: 'default',
+  // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+  backgroundTransition: 'fade',
+  // Number of slides away from the current that are visible
+  viewDistance: 3,
+  // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+  parallaxBackgroundImage: 'images/raspberry-and-chocolate.jpg',
+  // Parallax background size in CSS syntax (e.g., "2100px 900px")
+  parallaxBackgroundSize: '2880px 1848px',
+
+  // The "normal" size of the presentation, aspect ratio will be preserved
+  // when the presentation is scaled to fit different resolutions. Can be
+  // specified using percentage units.
+  width: 960,
+  height: 700,
+
+  // Factor of the display size that should remain empty around the content
+  margin: 0.1,
+
+  // Bounds for smallest/largest possible scale to apply to content
+  minScale: 0.2,
+  maxScale: 1.5,
+
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+      { src: '_reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: '_reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '_reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      
+      { src: '_reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: '_reveal.js/plugin/notes/notes.js', async: true }
+  ]
+});</script></body></html>
