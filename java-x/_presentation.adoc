@@ -1,4 +1,4 @@
-= Java 9 To 15
+= Java 16 Is Coming!
 :backend: revealjs
 :revealjs_theme: nipa-night
 :revealjsdir: ../_reveal.js
@@ -16,12 +16,12 @@
 
 include::../_shared/highlight.js.adoc[]
 
-:host-name: Datev
-:host-url: https://datev.de/
-:host-logo-url: images/logo-datev.png
+:host-name: jLove
+:host-url: https://jlove.konfy.care
+:host-logo-url: images/logo-jlove.png
 // :host-logo-style: background-color: transparent; border-width: 0;
-:host-twitter-name: @DATEV
-:host-twitter-url: https://twitter.com/DATEV
+:host-twitter-name: @jloveconf
+:host-twitter-url: https://twitter.com/jloveconf
 include::../_shared/event-on-title-and-footer.adoc[]
 
 
@@ -34,18 +34,18 @@ include::../_shared/event-on-title-and-footer.adoc[]
 
 // include::../_shared/roadmap.adoc[]
 
-////
 == Let's get started!
 
-// * this talk covers Java 9 to 12 without JPMS
+* this talk covers Java 16 +
+  and whatever else we have time for
 // * this is a showcase, not a tutorial
+* ask questions any time or tweet at https://twitter.com/nipafx[@nipafx]
 // * tweet questions with https://twitter.com/search?q=%23jokerconf%20%23java11[#jokerconf #Java11]
 // * some features come with practical exercises, +
 //  others are just showcased
-* slides at http://slides.nipafx.dev/java-x[slides.nipafx.dev/java-x]
-* they cover Java 9 to 15+ without JPMS
-
-(Please share responsibly)
+* slides at http://slides.nipafx.dev/java-x[slides.nipafx.dev/java-x] +
+  (hit "?" to get navigation help)
+* they cover Java 9 to 16+ without module system
 
 === Lots to talk about!
 
@@ -58,15 +58,14 @@ include::../_shared/event-on-title-and-footer.adoc[]
 	<tr><td>Performance Improvements</td></tr>
 </table>
 ++++
-////
 
 // ####################### //
 // P R E S E N T A T I O N //
 // ####################### //
 
-include::intro.adoc[]
+// include::intro.adoc[]
 
-include::jpms.adoc[]
+// include::jpms.adoc[]
 
 include::language.adoc[]
 
