@@ -3,7 +3,7 @@
 ++++
 <table class="toc">
 	<tr><td>Sealed Classes</td></tr>
-	<tr><td>Records</td></tr>
+	<tr><td>Records ⑯</td></tr>
 	<tr><td>Pattern Matching ⑯</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
 	<tr><td>Switch Expressions ⑭</td></tr>
@@ -19,7 +19,7 @@
 ++++
 <table class="toc">
 	<tr class="toc-current"><td>Sealed Classes</td></tr>
-	<tr><td>Records</td></tr>
+	<tr><td>Records ⑯</td></tr>
 	<tr><td>Pattern Matching ⑯</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
 	<tr><td>Switch Expressions ⑭</td></tr>
@@ -262,7 +262,7 @@ Consequences:
 ++++
 <table class="toc">
 	<tr><td>Sealed Classes</td></tr>
-	<tr class="toc-current"><td>Records</td></tr>
+	<tr class="toc-current"><td>Records ⑯</td></tr>
 	<tr><td>Pattern Matching ⑯</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
 	<tr><td>Switch Expressions ⑭</td></tr>
@@ -543,6 +543,13 @@ public record Range(int low, int high)
 * framework support is growing +
   (e.g. https://johnzon.apache.org/[Apache Johnzon] for JSON-B)
 
+////
+TODO
+* method-local classes
+* inner records are effectively static
+* inner classes can now contain static member
+////
+
 === Summary
 
 * use records to replace data carriers
@@ -559,7 +566,7 @@ public record Range(int low, int high)
 ++++
 <table class="toc">
 	<tr><td>Sealed Classes</td></tr>
-	<tr><td>Records</td></tr>
+	<tr><td>Records ⑯</td></tr>
 	<tr class="toc-current"><td>Pattern Matching ⑯</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
 	<tr><td>Switch Expressions ⑭</td></tr>
@@ -684,7 +691,7 @@ switch (animal) {
 ++++
 <table class="toc">
 	<tr><td>Sealed Classes</td></tr>
-	<tr><td>Records</td></tr>
+	<tr><td>Records ⑯</td></tr>
 	<tr><td>Pattern Matching ⑯</td></tr>
 	<tr class="toc-current"><td>Text Blocks ⑮</td></tr>
 	<tr><td>Switch Expressions ⑭</td></tr>
@@ -836,7 +843,7 @@ String phrase = """
 ++++
 <table class="toc">
 	<tr><td>Sealed Classes</td></tr>
-	<tr><td>Records</td></tr>
+	<tr><td>Records ⑯</td></tr>
 	<tr><td>Pattern Matching ⑯</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
 	<tr class="toc-current"><td>Switch Expressions ⑭</td></tr>
@@ -1233,7 +1240,7 @@ Definitive Guide To Switch Expressions
 ++++
 <table class="toc">
 	<tr><td>Sealed Classes</td></tr>
-	<tr><td>Records</td></tr>
+	<tr><td>Records ⑯</td></tr>
 	<tr><td>Pattern Matching ⑯</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
 	<tr><td>Switch Expressions ⑭</td></tr>
