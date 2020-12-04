@@ -55,7 +55,8 @@ Four modes:
 
 Configuration:
 
-* since Java 9, `permit` is default
+* in Java 9-15, `permit` is default
+* in Java 16+, `deny` is default
 * use `--illegal-access` to override
 
 [source,bash]
