@@ -1,8 +1,8 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Java 9 To 15</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="../_reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="../_reveal.js/css/theme/nipa-night.css" id="theme"><link href="../_reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>var link = document.createElement( 'link' );
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Java 16 Is Coming!</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="../_reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="../_reveal.js/css/theme/nipa-night.css" id="theme"><link href="../_reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>var link = document.createElement( 'link' );
 link.rel = 'stylesheet';
 link.type = 'text/css';
 link.href = window.location.search.match( /print-pdf/gi ) ? "../_reveal.js/css/print/pdf.css" : "../_reveal.js/css/print/paper.css";
-document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="../_reveal.js/lib/js/html5shiv.js"></script><![endif]--></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>Java 9 To 15</h1><div class="preamble"><link rel="stylesheet" href="../_highlight.js/styles/monokai-sublime.css">
+document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="../_reveal.js/lib/js/html5shiv.js"></script><![endif]--></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>Java 16 Is Coming!</h1><div class="preamble"><link rel="stylesheet" href="../_highlight.js/styles/monokai-sublime.css">
 <script src="../_highlight.js/highlight.pack.js"></script>
 <script>
 	window.onload = function() {
@@ -27,10 +27,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://datev.de/"><img src="images/logo-datev.png" class="logo" style="{host-logo-style}"></a>
+		<a href="https://jlove.konfy.care"><img src="images/logo-jlove.png" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://datev.de/">Datev</a></p>
-			<p><a href="https://twitter.com/DATEV" style="{host-twitter-style}">@DATEV</a></p>
+			<p><a href="https://jlove.konfy.care">jLove</a></p>
+			<p><a href="https://twitter.com/jloveconf" style="{host-twitter-style}">@jloveconf</a></p>
 		</div>
 	</div>
 </div>
@@ -44,9 +44,9 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://datev.de/"><img src="images/logo-datev.png" class="logo" style="{host-logo-style}"></a>
+		<a href="https://jlove.konfy.care"><img src="images/logo-jlove.png" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://datev.de/">Datev</a> / <a href="https://twitter.com/DATEV" style="{host-twitter-style}">@DATEV</a></p>
+			<p><a href="https://jlove.konfy.care">jLove</a> / <a href="https://twitter.com/jloveconf" style="{host-twitter-style}">@jloveconf</a></p>
 		</div>
 	</div>
 </footer>
@@ -56,100 +56,18 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		document.body.appendChild(document.querySelector('footer'));
 	})
 </script></div></section>
-<section><section id="hello_java_after_eight"><h2>Hello, Java After Eight</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">return switch (placement) {
-	case WINNER -&gt; """
-			You're
-			Number One!
-			""";
-	case LOOSER -&gt; "Don't feel bad";
-}</code></pre></div></div></section><section id="about_me"><h2>About Me</h2><div class="paragraph"><p>My name is <strong>Nicolai</strong> (Parlog)</p></div>
-<div class="ulist"><ul><li><p>Java since 2005, professionally since 2011</p></li><li><p>blogger since 2014</p></li><li><p>freelancing developer, speaker, trainer since 2016</p></li><li><p>published author since 2019</p></li></ul></div>
-<div class="paragraph"><p>Main topics:</p></div>
-<div class="ulist"><ul><li><p>JDK features (language, APIs, JVM)</p></li><li><p>code quality (clean code and comments)</p></li><li><p>processes (code reviews, knowledge sharing)</p></li></ul></div></section><section id="slides"><h2>Slides</h2><div class="ulist"><ul><li><p>at <a href="http://slides.nipafx.dev/java-x">slides.nipafx.dev/java-x</a></p></li><li><p>press "?" to learn how to navigate</p></li><li><p>there will be a permalink when the course is over</p></li><li><p>version-specific content is marked with ⑨, ⑩, ⑪, etc.</p></li></ul></div>
-<div class="paragraph"><p>(Share freely!)</p></div></section><section id="code"><h2>Code</h2><div class="ulist"><ul><li><p>at <a href="https://github.com/nipafx/java-after-eight">github.com/nipafx/java-after-eight</a></p></li><li><p>clone it now, import with recent IDE</p></li></ul></div>
-<div class="paragraph"><p>(Share freely!)</p></div></section><section id="table_of_contents"><h2>Table of Contents</h2><table class="toc">
-	<tr><td>Module System</td></tr>
+<section><section id="lets_get_started"><h2>Let&#8217;s get started!</h2><div class="ulist"><ul><li><p>this talk covers Java 16<br>
+and whatever else we have time for</p></li><li><p>ask questions any time or tweet at <a href="https://twitter.com/nipafx">@nipafx</a></p></li><li><p>slides at <a href="http://slides.nipafx.dev/java-x">slides.nipafx.dev/java-x</a><br>
+(hit "?" to get navigation help)</p></li><li><p>they cover Java 9 to 16+ without module system</p></li></ul></div></section><section id="lots_to_talk_about"><h2>Lots to talk about!</h2><table class="toc">
 	<tr><td>Language Changes</td></tr>
 	<tr><td>New and Updated APIs</td></tr>
 	<tr><td>New JVM Features</td></tr>
 	<tr><td>Performance Improvements</td></tr>
 </table></section></section>
-<section><section id="java_platform_module_system"><h2>Java Platform Module System</h2><h3>Delaying Java since 2008!</h3></section><section id="jar_hell_is_bad_mkay"><h2>JAR Hell is bad, mkay?</h2><div class="paragraph"><p><strong>JARs have</strong>:</p></div>
-<div class="ulist"><ul><li><p>no name the JVM cares about</p></li><li><p>no explicit dependencies</p></li><li><p>no well-defined API</p></li><li><p>no concept of versions</p></li></ul></div>
-<div class="paragraph"><p><strong>Some consequences</strong>:</p></div>
-<div class="ulist"><ul><li><p><code>NoClassDefFoundError</code></p></li><li><p>no encapsulation across JARs</p></li><li><p>version conflicts</p></li></ul></div></section><section id="modules"><h2>Modules</h2><div class="paragraph"><p><strong>Modules are like JARs but have</strong>:</p></div>
-<div class="ulist"><ul><li><p>proper names</p></li><li><p>explicit dependencies</p></li><li><p>a well-defined API</p></li><li><p>no concept of versions 😭</p></li></ul></div>
-<div class="paragraph"><p><strong>Important goals</strong>:</p></div>
-<div class="ulist"><ul><li><p>reliable configuration</p></li><li><p>strong encapsulation</p></li></ul></div></section><section id="module_declaration"><h2>Module Declaration</h2><div class="paragraph"><p>A file <code>module-info.java</code>:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> java.sql {
-	<span class="hljs-keyword">requires transitive</span> java.logging
-	<span class="hljs-keyword">requires transitive</span> java.xml
-	<span class="hljs-keyword">uses</span> java.sql.Driver
-	<span class="hljs-keyword">exports</span> java.sql
-	<span class="hljs-keyword">exports</span> javax.sql
-	<span class="hljs-keyword">exports</span> javax.transaction.xa
-}</code></pre></div></div></section><section id="reliable_configuration"><h2>Reliable Configuration</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> java.sql {
-	<span class="hljs-keyword">requires transitive</span> java.logging
-	<span class="hljs-keyword">requires transitive</span> java.xml
-}</code></pre></div></div>
-<div class="paragraph"><p>Module system enforces:</p></div>
-<div class="ulist"><ul><li><p>all required modules are present</p></li><li><p>no ambiguity</p></li><li><p>no static dependency cycles</p></li><li><p>no split packages</p></li></ul></div></section><section id="strong_encapsulation"><h2>Strong Encapsulation</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> java.sql {
-	<span class="hljs-keyword">exports</span> java.sql
-	<span class="hljs-keyword">exports</span> javax.sql
-	<span class="hljs-keyword">exports</span> javax.transaction.xa
-}</code></pre></div></div>
-<div class="paragraph"><p>Say you want to access <code>java.sql.ResultSet</code>.</p></div>
-<div class="paragraph"><p>Module system only grants access if:</p></div>
-<div class="ulist"><ul><li><p><code>ResultSet</code> is public</p></li><li><p><code>java.sql</code> is exported by <em>java.sql</em></p></li><li><p>your module reads <em>java.sql</em></p></li></ul></div></section><section data-background-color="white" data-background-image="images/platform-modules.png" data-background-size="contain" data-state="empty"></section><section id="services"><h2>Services</h2><div class="paragraph"><p>The module system as a service registry:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> java.sql {
-	<span class="hljs-keyword">uses</span> java.sql.Driver
-}
-
-<span class="hljs-keyword">module</span> mysql.driver {
-	<span class="hljs-keyword">provides</span> java.sql.Driver
-		<span class="hljs-keyword">with</span> com.mysql.MySQLDriver;
-}
-</code></pre></div></div></section><section id="loading_services"><h2>Loading Services</h2><div class="paragraph"><p>Code in <em>java.sql</em> can do this:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;Driver&gt; drivers = new ArrayList&lt;&gt;();
-ServiceLoader
-	.load(Driver.class)
-	.forEach(drivers::add);</code></pre></div></div></section><section id="jlink"><h2>JLink</h2><div class="paragraph"><p>Create your own runtime images:</p></div>
-<div class="ulist"><ul><li><p>with the JDK modules your app needs</p></li><li><p>with all modules (JDK, app, deps)</p></li></ul></div>
-<div class="paragraph"><p>Let&#8217;s look at the latter!</p></div></section><section id="application_image"><h2>Application Image</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash"># create image
-$ jlink
-	--output awesome-app
-	--module-path $JAVA_HOME/jmods:mods
-	--add-modules com.awesome.app
-	--launcher awesome=com.awesome.app
-# [ship image]
-# use image
-awesome-app/bin/awesome</code></pre></div></div></section><section id="more_jlink_features"><h2>More JLink Features</h2><div class="ulist"><ul><li><p>automatic service binding<br>
-(with <code>--bind-services</code>)</p></li><li><p>various optimizations<br>
-(size and launch performance)</p></li><li><p>plugin API (not yet public)</p></li><li><p>cross OS image generation</p></li></ul></div></section><section id="more_jpms_features"><h2>More JPMS Features</h2><div class="ulist"><ul><li><p>finer grained dependencies and exports</p></li><li><p>open packages and modules (for reflection)</p></li><li><p>unnamed and automatic modules (for migration)</p></li><li><p>layers (for containers)</p></li></ul></div></section><section id="more_about_jpms"><h2>More About JPMS</h2><div class="ulist"><ul><li><p><a href="https://blog.codefx.org/java/java-module-system-tutorial/">Code First Java Module System Tutorial</a></p></li><li><p><a href="https://blog.codefx.org/java/java-9-migration-guide/">Java 9 Migration Guide</a></p></li><li><p><a href="https://blog.codefx.org/java/five-command-line-options-to-hack-the-java-9-module-system/">Command Line Options To Hack The JPMS</a></p></li><li><p><a href="https://blog.codefx.org/java/planning-your-java-9-update/">Planning Your Java 9 Update</a></p></li></ul></div></section><section id="even_more_about_jpms"><h2>Even More About JPMS</h2><div style="float: left; width: 45%; margin:0px;">
-	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="images/cover-jms.png" style="margin: 0;"></a>
-	<p style="
-		position: fixed;
-		margin: -160px 0 0 60px;
-		transform: rotate(-8deg);
-		font-size: 28pt;
-		color: #cc0000;
-		text-shadow: 2px 2px 3px #660000;
-		font-weight: bold;
-		border: 5px solid #cc0000;
-		border-radius: 12px;
-		background-color: rgba(255,255,255,0.5);
-		padding: 2px 8px 7px 4px;
-">37% off with<br>code <em>fccparlog</em></p>
-</div>
-<div class="paragraph"><p><strong>I&#8217;ve written a book!</strong><br>
-E-book available ⇝ <a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&amp;a_bid=869915cb">tiny.cc/jms</a></p></div>
-<div class="ulist"><ul><li><p>creating, building,<br>
-running modules</p></li><li><p>migration to Java 9+</p></li><li><p>modularization</p></li><li><p>services and<br>
-advanced features</p></li><li><p>reflection and layers</p></li><li><p>custom runtime images</p></li></ul></div></section></section>
 <section id="new_language_features"><h2>New Language Features</h2><table class="toc">
 	<tr><td>Sealed Classes</td></tr>
-	<tr><td>Records</td></tr>
-	<tr><td>Pattern Matching</td></tr>
+	<tr><td>Records ⑯</td></tr>
+	<tr><td>Pattern Matching ⑯</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
 	<tr><td>Switch Expressions ⑭</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
@@ -157,8 +75,8 @@ advanced features</p></li><li><p>reflection and layers</p></li><li><p>custom run
 </table></section>
 <section><section id="new_language_features_2"><h2>New Language Features</h2><table class="toc">
 	<tr class="toc-current"><td>Sealed Classes</td></tr>
-	<tr><td>Records</td></tr>
-	<tr><td>Pattern Matching</td></tr>
+	<tr><td>Records ⑯</td></tr>
+	<tr><td>Pattern Matching ⑯</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
 	<tr><td>Switch Expressions ⑭</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
@@ -262,8 +180,8 @@ visible/accesible to one another.</p></div></section><section id="flat_mates"><h
 (goodbye visitor pattern 👋)</p></li></ul></div></section></section>
 <section><section id="new_language_features_3"><h2>New Language Features</h2><table class="toc">
 	<tr><td>Sealed Classes</td></tr>
-	<tr class="toc-current"><td>Records</td></tr>
-	<tr><td>Pattern Matching</td></tr>
+	<tr class="toc-current"><td>Records ⑯</td></tr>
+	<tr><td>Pattern Matching ⑯</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
 	<tr><td>Switch Expressions ⑭</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
@@ -396,8 +314,8 @@ public low() {
 ⇝ use only when "the deal" makes sense</p></li><li><p>beware of limitations</p></li><li><p>beware of class-building facilites</p></li><li><p>observe ecosystem for adoption</p></li></ul></div></section></section>
 <section><section id="new_language_features_4"><h2>New Language Features</h2><table class="toc">
 	<tr><td>Sealed Classes</td></tr>
-	<tr><td>Records</td></tr>
-	<tr class="toc-current"><td>Pattern Matching</td></tr>
+	<tr><td>Records ⑯</td></tr>
+	<tr class="toc-current"><td>Pattern Matching ⑯</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
 	<tr><td>Switch Expressions ⑭</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
@@ -449,11 +367,12 @@ where compiler can prove pattern is <code>true</code>:</p></div>
 		-&gt; elephant.eatPlants();
 	case Tiger tiger
 		-&gt; tiger.eatMeat();
-}</code></pre></div></div></section></section>
+}</code></pre></div></div>
+<div class="paragraph"><p>(Strawman syntax!)</p></div></section></section>
 <section><section id="new_language_features_5"><h2>New Language Features</h2><table class="toc">
 	<tr><td>Sealed Classes</td></tr>
-	<tr><td>Records</td></tr>
-	<tr><td>Pattern Matching</td></tr>
+	<tr><td>Records ⑯</td></tr>
+	<tr><td>Pattern Matching ⑯</td></tr>
 	<tr class="toc-current"><td>Text Blocks ⑮</td></tr>
 	<tr><td>Switch Expressions ⑭</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
@@ -514,8 +433,8 @@ String haikuBlock = """
 <div class="paragraph"><p>⇝ Way fewer escapes in HTML/JSON/SQL/etc.</p></div></section><section id="more_on_text_blocks"><h2>More on Text Blocks</h2><div class="ulist"><ul><li><p><a href="https://blog.codefx.org/java/text-blocks/">Definitive Guide To Text Blocks</a></p></li><li><p><a href="http://cr.openjdk.java.net/~jlaskey/Strings/TextBlocksGuide_v9.html">Programmer&#8217;s Guide To Text Blocks</a></p></li></ul></div></section></section>
 <section><section id="new_language_features_6"><h2>New Language Features</h2><table class="toc">
 	<tr><td>Sealed Classes</td></tr>
-	<tr><td>Records</td></tr>
-	<tr><td>Pattern Matching</td></tr>
+	<tr><td>Records ⑯</td></tr>
+	<tr><td>Pattern Matching ⑯</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
 	<tr class="toc-current"><td>Switch Expressions ⑭</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
@@ -709,8 +628,8 @@ boolean result = switch (ternaryBool) {
 <div class="ulist"><ul><li><p>💻 <a href="https://blog.codefx.org/java/switch-expressions/">tiny.cc/java-12-switch</a></p></li><li><p>▶ <a href="https://www.youtube.com/watch?v=1znHEf3oSNI&amp;list=PL_-IO8LOLuNp2stY1qBUtXlfMdJW7wvfT">tiny.cc/java-12-switch-yt</a></p></li></ul></div></section></section>
 <section><section id="new_language_features_7"><h2>New Language Features</h2><table class="toc">
 	<tr><td>Sealed Classes</td></tr>
-	<tr><td>Records</td></tr>
-	<tr><td>Pattern Matching</td></tr>
+	<tr><td>Records ⑯</td></tr>
+	<tr><td>Pattern Matching ⑯</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
 	<tr><td>Switch Expressions ⑭</td></tr>
 	<tr class="toc-current"><td>Local-Variable Type Inference ⑩</td></tr>
@@ -840,7 +759,7 @@ long l = 42;</code></pre></div></div></section><section id="more_on_var"><h2>Mor
 	<tr><td>Try-With-Resources ⑨</td></tr>
 	<tr><td>Diamond Operator ⑨</td></tr>
 	<tr><td>SafeVarargs ⑨</td></tr>
-	<tr><td>Deprecation Warnings ⑨</td></tr>
+	<tr><td>Deprecation Warnings ⑨⑯</td></tr>
 </table><div class="paragraph"><p>Enabling reuse between default methods.</p></div></section><section id="no_reuse"><h2>No Reuse</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public interface InJava8 {
 
 	default boolean evenSum(int... numbers) {
@@ -870,7 +789,7 @@ long l = 42;</code></pre></div></div></section><section id="more_on_var"><h2>Mor
 	<tr class="toc-current"><td>Try-With-Resources ⑨</td></tr>
 	<tr><td>Diamond Operator ⑨</td></tr>
 	<tr><td>SafeVarargs ⑨</td></tr>
-	<tr><td>Deprecation Warnings ⑨</td></tr>
+	<tr><td>Deprecation Warnings ⑨⑯</td></tr>
 </table><div class="paragraph"><p>Making <code>try</code>-with-resources blocks cleaner.</p></div></section><section id="useless_variable"><h2>Useless Variable</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">void doSomethingWith(Connection connection)
 		throws Exception {
 	try(Connection c = connection) {
@@ -896,7 +815,7 @@ and can be made implicitly final</p></li></ul></div>
 	<tr><td>Try-With-Resources ⑨</td></tr>
 	<tr class="toc-current"><td>Diamond Operator ⑨</td></tr>
 	<tr><td>SafeVarargs ⑨</td></tr>
-	<tr><td>Deprecation Warnings ⑨</td></tr>
+	<tr><td>Deprecation Warnings ⑨⑯</td></tr>
 </table><div class="paragraph"><p>A little more type inference.</p></div></section><section id="diamond_operator"><h2>Diamond Operator</h2><div class="paragraph"><p>Maybe the best example:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;String&gt; strings = new ArrayList&lt;&gt;();</code></pre></div></div>
 <div class="ulist"><ul><li><p>used at a constructor call</p></li><li><p>tells Java to infer the parametric type</p></li></ul></div></section><section id="anonymous_classes"><h2>Anonymous Classes</h2><div class="paragraph"><p>Diamond did not work with anonymous classes:</p></div>
@@ -922,7 +841,7 @@ for anonymous classes</p></li><li><p>can not be expressed by JVM</p></li></ul></
 	<tr><td>Try-With-Resources ⑨</td></tr>
 	<tr><td>Diamond Operator ⑨</td></tr>
 	<tr class="toc-current"><td>SafeVarargs ⑨</td></tr>
-	<tr><td>Deprecation Warnings ⑨</td></tr>
+	<tr><td>Deprecation Warnings ⑨⑯</td></tr>
 </table><div class="paragraph"><p>One less warning you couldn&#8217;t do anything about.</p></div></section><section id="heap_pollution"><h2>Heap Pollution</h2><div class="paragraph"><p>Innocent looking code&#8230;&#8203;</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">private &lt;T&gt; Optional&lt;T&gt; firstNonNull(T... args) {
 	return stream(args)
@@ -964,8 +883,21 @@ can be applied to private methods.</p></div></section></section>
 	<tr><td>Try-With-Resources ⑨</td></tr>
 	<tr><td>Diamond Operator ⑨</td></tr>
 	<tr><td>SafeVarargs ⑨</td></tr>
-	<tr class="toc-current"><td>Deprecation Warnings ⑨</td></tr>
-</table><div class="paragraph"><p><em>Another</em> warning you couldn&#8217;t do anything about.</p></div></section><section id="deprecation_warnings"><h2>Deprecation Warnings</h2><div class="paragraph"><p>Should this code emit a warning?</p></div>
+	<tr class="toc-current"><td>Deprecation Warnings ⑨⑯</td></tr>
+</table><div class="paragraph"><p>Some come, some go.</p></div></section><section id="new_deprecation_warnings"><h2>New Deprecation Warnings</h2><div class="paragraph"><p><a href="https://openjdk.java.net/projects/valhalla/">Project Valhalla</a> will bing <em>inline classes</em>:</p></div>
+<div class="ulist"><ul><li><p>code like a class, work like an <code>int</code></p></li><li><p>have no identity</p></li><li><p>allow no identity-based operations</p></li></ul></div>
+<div class="paragraph"><p><a href="https://nipafx.dev/java-value-based-classes/">Value-based classes</a> are their precursors.</p></div></section><section id="identity_based"><h2>Identity-based</h2><div class="paragraph"><p>What is <em>identity-based</em>?</p></div>
+<div class="ulist"><ul><li><p>constructor calls</p></li><li><p>mutability</p></li><li><p>synchronization</p></li><li><p>serialization</p></li></ul></div>
+<div class="paragraph"><p>These need to be prevented<br>
+for inline and value-based classes.</p></div></section><section id="deprecations"><h2>Deprecations</h2><div class="paragraph"><p>Java 16 designates primitive wrapper classes<br>
+(<code>Integer</code>, <code>Long</code>, <code>Float</code>, <code>Double</code>, etc)<br>
+as value-based classes.</p></div>
+<div class="paragraph"><p>Warning on both lines:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// use Integer::valueOf instead
+Integer answer = new Integer(42);
+// don't synchronize on values
+synchronize(answer) { /*... */ }</code></pre></div></div>
+<div class="ulist"><ul><li><p>constructors are deprecated for removal</p></li><li><p>synchronization yields warning</p></li></ul></div></section><section id="deprecation_warnings"><h2>Deprecation Warnings</h2><div class="paragraph"><p>Should this code emit a warning?</p></div>
 <div style="height: 350px;">
 <div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">// LineNumberInputStream is deprecated
 <span class="hljs-keyword">import</span> java.io.LineNumberInputStream;
@@ -997,7 +929,7 @@ public class DeprecatedImports {
 }</code></pre></div></div></section></section>
 <section id="updated_apis"><h2>Updated APIs</h2><table class="toc">
 	<tr><td>String ⑪⑫</td></tr>
-	<tr><td>Stream ⑨⑩⑫</td></tr>
+	<tr><td>Stream ⑨⑩⑫⑯</td></tr>
 	<tr><td>Optional ⑨⑩⑪</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
 	<tr><td>Completable Future ⑫</td></tr>
@@ -1005,7 +937,7 @@ public class DeprecatedImports {
 <div class="paragraph"><p>Existing APIs are continuously improved.</p></div></section>
 <section><section id="updated_apis_2"><h2>Updated APIs</h2><table class="toc">
 	<tr class="toc-current"><td>String ⑪⑫</td></tr>
-	<tr><td>Stream ⑨⑩⑫</td></tr>
+	<tr><td>Stream ⑨⑩⑫⑯</td></tr>
 	<tr><td>Optional ⑨⑩⑪</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
 	<tr><td>Completable Future ⑫</td></tr>
@@ -1067,7 +999,7 @@ Stream&lt;TouristGroup&gt; groupsOfFive(
 <div class="paragraph"><p>⇝ Practice with <code>String::transform</code>!</p></div></section></section>
 <section><section id="updated_apis_3"><h2>Updated APIs</h2><table class="toc">
 	<tr><td>String ⑪⑫</td></tr>
-	<tr class="toc-current"><td>Stream ⑨⑩⑫</td></tr>
+	<tr class="toc-current"><td>Stream ⑨⑩⑫⑯</td></tr>
 	<tr><td>Optional ⑨⑩⑪</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
 	<tr><td>Completable Future ⑫</td></tr>
@@ -1129,10 +1061,48 @@ Collector&lt;T, ?, R&gt; teeing(
 		averagingInt(i -&gt; i),
 		// BiFunction&lt;Integer, Double, Statistics&gt;
 		Statistics::of));
-// stats = Statistics {sum=12, average=3.0}</code></pre></div></div></section></section>
+// stats = Statistics {sum=12, average=3.0}</code></pre></div></div></section><section id="declarative_flat_map"><h2>Declarative Flat Map</h2><div class="paragraph"><p><code>Stream::flatMap</code> is great, but:</p></div>
+<div class="ulist"><ul><li><p>sometimes you can&#8217;t easily<br>
+map to a <code>Stream</code></p></li><li><p>creating small/empty streams<br>
+can harm performance</p></li></ul></div>
+<div class="paragraph"><p>For these niche (!) cases,<br>
+there&#8217;s <code>Stream::mapMulti</code>.</p></div></section><section id="imperative_flat_map"><h2>Imperative Flat Map ⑯</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">&lt;R&gt; Stream&lt;R&gt; mapMulti​(
+	BiConsumer&lt;T, Consumer&lt;R&gt;&gt; mapper)</code></pre></div></div>
+<div class="paragraph"><p><code>BiConsumer</code> is called for each element:</p></div>
+<div class="ulist"><ul><li><p>gets the element <code>T</code></p></li><li><p>gets a <code>Consumer&lt;R&gt;</code></p></li><li><p>can pass arbitrarily many <code>R</code>-s<br>
+to the consumer</p></li><li><p>they show up downstream</p></li></ul></div>
+<div class="paragraph"><p>So like <code>flatMap</code>, but imperative.</p></div></section><section id="map_multi_examples"><h2>Map Multi Examples</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream.of(1, 2, 3, 4)
+	// changes nothing, just passes on elements
+	.mapMulti((el, ds) -&gt; ds.accept(el));
+
+Stream
+	.of(Optional.of("0"), Optional.empty())
+	// unpacks Optionals
+	.mapMulti((el, ds) -&gt; el.ifPresent(ds));
+
+Stream
+	.of(Optional.of("0"), Optional.empty())
+	.mapMulti(Optional::ifPresent);</code></pre></div></div></section><section id="type_witness"><h2>Type Witness</h2><div class="paragraph"><p>Unfortunately, <code>mapMulti</code> confuses<br>
+parametric type inference:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;String&gt; strings = Stream
+	.of(Optional.of("0"), Optional.empty())
+	// without &lt;String&gt;, collect returns List&lt;Object&gt;
+	.&lt;String&gt; mapMulti(Optional::ifPresent)
+	.collect(toList());</code></pre></div></div></section><section id="immediate_to_list"><h2>Immediate To List ⑯</h2><div class="paragraph"><p>How often have you written<br>
+<code>.collect(Collectors.toList())</code>?</p></div>
+<div class="paragraph"><p>Answer: too damn often!</p></div>
+<div class="paragraph"><p>But no more:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;String&gt; strings = Stream
+	.of("A", "B", "C")
+	// some stream stuff
+	.toList()</code></pre></div></div></section><section id="list_properties"><h2>List Properties</h2><div class="paragraph"><p>Like collection factories,<br>
+the returned lists are:</p></div>
+<div class="ulist"><ul><li><p>immutable/unmodifiable</p></li><li><p><a href="https://nipafx.dev/java-value-based-classes">value-based</a></p></li></ul></div>
+<div class="paragraph"><p>Unlike them:</p></div>
+<div class="ulist"><ul><li><p>they can contain <code>null</code></p></li></ul></div></section></section>
 <section><section id="updated_apis_4"><h2>Updated APIs</h2><table class="toc">
 	<tr><td>String ⑪⑫</td></tr>
-	<tr><td>Stream ⑨⑩⑫</td></tr>
+	<tr><td>Stream ⑨⑩⑫⑯</td></tr>
 	<tr class="toc-current"><td>Optional ⑨⑩⑪</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
 	<tr><td>Completable Future ⑫</td></tr>
@@ -1215,7 +1185,7 @@ will deprecate<br>
 you think it does.</p></div></section></section>
 <section><section id="updated_apis_5"><h2>Updated APIs</h2><table class="toc">
 	<tr><td>String ⑪⑫</td></tr>
-	<tr><td>Stream ⑨⑩⑫</td></tr>
+	<tr><td>Stream ⑨⑩⑫⑯</td></tr>
 	<tr><td>Optional ⑨⑩⑪</td></tr>
 	<tr class="toc-current"><td>OS Processes ⑨</td></tr>
 	<tr><td>Completable Future ⑫</td></tr>
@@ -1235,7 +1205,7 @@ List&lt;Process&gt; lsThenGrep = ProcessBuilder
 <div class="ulist"><ul><li><p>command, arguments</p></li><li><p>start time</p></li><li><p>CPU time</p></li></ul></div></section></section>
 <section><section id="updated_apis_6"><h2>Updated APIs</h2><table class="toc">
 	<tr><td>String ⑪⑫</td></tr>
-	<tr><td>Stream ⑨⑩⑫</td></tr>
+	<tr><td>Stream ⑨⑩⑫⑯</td></tr>
 	<tr><td>Optional ⑨⑩⑪</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
 	<tr class="toc-current"><td>Completable Future ⑫</td></tr>
@@ -1322,12 +1292,7 @@ OutputStream.nullOutputStream(); // ⑪</code></pre></div></div></section><secti
 FileSystems.newFileSystem(Path, ...); // ⑬
 
 ByteBuffer.get(int, ...) // ⑬
-ByteBuffer.put(int, ...) // ⑬</code></pre></div></div></section><section id="a_mixed_bag_of_newmethods"><h2>A Mixed Bag Of New&nbsp;Methods</h2><div class="paragraph"><p><strong>In Java 10:</strong></p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">DateTimeFormatter.localizedBy(Locale);</code></pre></div></div>
-<div class="paragraph"><p><strong>In Java 11:</strong></p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Collection.toArray(IntFunction&lt;T[]&gt;);
-Predicate.not(Predicate&lt;T&gt;); // static
-Pattern.asMatchPredicate(); // ⇝ Predicate&lt;String&gt;</code></pre></div></div></section><section id="a_mixed_bag_of_newmathmethods"><h2>A Mixed Bag Of New&nbsp;Math&nbsp;Methods</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// in Java 14
+ByteBuffer.put(int, ...) // ⑬</code></pre></div></div></section><section id="a_mixed_bag_of_newmathmethods"><h2>A Mixed Bag Of New&nbsp;Math&nbsp;Methods</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// in Java 14
 StrictMath.decrementExact(int);
 StrictMath.decrementExact(long);
 StrictMath.incrementExact(int);
@@ -1339,22 +1304,30 @@ StrictMath.negateExact(long);
 Math.absExact(int)
 Math.absExact(long)
 StrictMath.absExact(int)
-StrictMath.absExact(long)</code></pre></div></div></section><section id="a_mixed_bag_of_newmethods_2"><h2>A Mixed Bag Of New&nbsp;Methods</h2><div class="paragraph"><p><strong>In Java 12:</strong></p></div>
+StrictMath.absExact(long)</code></pre></div></div></section><section id="a_mixed_bag_of_newmethods"><h2>A Mixed Bag Of New&nbsp;Methods</h2><div class="paragraph"><p><strong>In Java 10:</strong></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">DateTimeFormatter.localizedBy(Locale);</code></pre></div></div>
+<div class="paragraph"><p><strong>In Java 11:</strong></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Collection.toArray(IntFunction&lt;T[]&gt;);
+Predicate.not(Predicate&lt;T&gt;); // static
+Pattern.asMatchPredicate(); // ⇝ Predicate&lt;String&gt;</code></pre></div></div></section><section id="a_mixed_bag_of_newmethods_2"><h2>A Mixed Bag Of New&nbsp;Methods</h2><div class="paragraph"><p><strong>In Java 12:</strong></p></div>
 <div class="ulist"><ul><li><p><code>NumberFormat::getCompactNumberInstance</code></p></li></ul></div>
 <div class="paragraph"><p><strong>In Java 15:</strong></p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// instance version of String::format
-String.formatted(Object... args);</code></pre></div></div></section></section>
+String.formatted(Object... args);</code></pre></div></div></section><section id="a_mixed_bag_of_newmethods_3"><h2>A Mixed Bag Of New&nbsp;Methods</h2><div class="paragraph"><p><strong>In Java 16:</strong></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Objects.checkIndex(long, long)
+Objects.checkFromToIndex(long, long, long)
+Objects.checkFromIndexSize(long, long, long)</code></pre></div></div></section></section>
 <section id="new_apis"><h2>New APIs</h2><table class="toc">
 	<tr><td>Collection Factories ⑨⑩</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
-	<tr><td>Reactive HTTP/2 Client ⑪</td></tr>
+	<tr><td>Reactive HTTP/2 Client ⑪⑯</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
 </table>
 <div class="paragraph"><p>New APIs are added over time.</p></div></section>
 <section><section id="new_apis_2"><h2>New APIs</h2><table class="toc">
 	<tr class="toc-current"><td>Collection Factories ⑨⑩</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
-	<tr><td>Reactive HTTP/2 Client ⑪</td></tr>
+	<tr><td>Reactive HTTP/2 Client ⑪⑯</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
 </table><div class="paragraph"><p>Easy creation of ad-hoc collections.</p></div></section><section id="hope_is_pain"><h2>Hope is Pain</h2><div class="paragraph"><p>Wouldn&#8217;t this be awesome?</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">List&lt;String&gt; list = [ "a", "b", "c" ];
@@ -1384,7 +1357,7 @@ Q: Overloads on <code>Map::ofEntries</code>? 1</p></div></aside></section><secti
 <section><section id="new_apis_3"><h2>New APIs</h2><table class="toc">
 	<tr><td>Collection Factories ⑨⑩</td></tr>
 	<tr class="toc-current"><td>Reactive Streams ⑨</td></tr>
-	<tr><td>Reactive HTTP/2 Client ⑪</td></tr>
+	<tr><td>Reactive HTTP/2 Client ⑪⑯</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
 </table><div class="paragraph"><p>The JDK as common ground<br>
 for reactive stream libraries.</p></div></section><section id="reactive_types"><h2>Reactive Types</h2><div class="dlist"><dl><dt class="hdlist1"><code>Publisher</code></dt><dd><div class="ulist"><ul><li><p>produces items to consume</p></li><li><p>can be subscribed to</p></li></ul></div></dd><dt class="hdlist1"><code>Subscriber</code></dt><dd><div class="ulist"><ul><li><p>subscribes to publisher</p></li><li><p><code>onNext</code>, <code>onError</code>, <code>onComplete</code></p></li></ul></div></dd><dt class="hdlist1"><code>Subscription</code></dt><dd><div class="ulist"><ul><li><p>connection from subscriber to publisher</p></li><li><p><code>request</code>, <code>cancel</code></p></li></ul></div></dd></dl></div></section><section id="reactive_flow"><h2>Reactive Flow</h2><h3>Subscribing</h3><div class="ulist"><ul><li><p>create <code>Publisher pub</code> and <code>Subscriber sub</code></p></li><li><p>call <code>pub.subscribe(sub)</code></p></li><li><p>pub creates <code>Subscription script</code><br>
@@ -1397,7 +1370,7 @@ and one simple implementation.</p></div>
 <section><section id="new_apis_4"><h2>New APIs</h2><table class="toc">
 	<tr><td>Collection Factories ⑨⑩</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
-	<tr class="toc-current"><td>Reactive HTTP/2 Client ⑪</td></tr>
+	<tr class="toc-current"><td>Reactive HTTP/2 Client ⑪⑯</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
 </table><div class="paragraph"><p>HTTP/2! And reactive! Woot!</p></div></section><section id="basic_flow"><h2>Basic Flow</h2><div class="paragraph"><p>To send a request and get a response:</p></div>
 <div class="ulist"><ul><li><p>use builder to create immutable <code>HttpClient</code></p></li><li><p>use builder to create immutable <code>HttpRequest</code></p></li><li><p>pass request to client to receive <code>HttpResponse</code></p></li></ul></div></section><section id="building_a_client"><h2>Building a Client</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">HttpClient client = HttpClient.newBuilder()
@@ -1411,7 +1384,7 @@ and one simple implementation.</p></div>
 	.uri(URI.create("https://nipafx.dev"))
 	.setHeader("header-name", "header-value")
 	.build();</code></pre></div></div>
-<div class="ulist"><ul><li><p>more HTTP methods (duh!)</p></li><li><p>individual timeout</p></li><li><p>individual HTTP version</p></li><li><p>request <code>"100 CONTINUE"</code> before sending body</p></li></ul></div></section><section id="receiving_a_response"><h2>Receiving a Response</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// the generic `String`...
+<div class="ulist"><ul><li><p>more HTTP methods (duh!)</p></li><li><p>individual timeout</p></li><li><p>individual HTTP version</p></li><li><p>request <code>"100 CONTINUE"</code> before sending body</p></li><li><p>create prefilled builder from existing request ⑯</p></li></ul></div></section><section id="receiving_a_response"><h2>Receiving a Response</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">// the generic `String`...
 HttpResponse&lt;String&gt; response = client.send(
 	request,
 	// ... comes from this body handler ...
@@ -1458,7 +1431,7 @@ return <code>CompletableFuture</code></p></li><li><p>socket calls <code>Listener
 <section><section id="new_apis_5"><h2>New APIs</h2><table class="toc">
 	<tr><td>Collection Factories ⑨⑩</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
-	<tr><td>Reactive HTTP/2 Client ⑪</td></tr>
+	<tr><td>Reactive HTTP/2 Client ⑪⑯</td></tr>
 	<tr class="toc-current"><td>Stack-Walking ⑨</td></tr>
 </table><div class="paragraph"><p>Examining the stack faster and easier.</p></div></section><section id="stackwalkerforeach"><h2><code>StackWalker::forEach</code></h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">void forEach (Consumer&lt;StackFrame&gt;);</code></pre></div></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public static void main(String[] args) { one(); }
