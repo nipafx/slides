@@ -4,13 +4,19 @@
 <table class="toc">
 	<tr><td>Collection Factories ⑨⑩</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
-	<tr><td>Reactive HTTP/2 Client ⑪</td></tr>
+	<tr><td>Reactive HTTP/2 Client ⑪⑯</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
 </table>
 ++++
 
 New APIs are added over time.
 
+////
+TODO:
+ * Vector https://openjdk.java.net/jeps/338 (incubating in 16)
+ * Foreign Linker https://openjdk.java.net/jeps/389 (incubating in 14, 15, 16)
+ * Foreign Memory Access https://openjdk.java.net/jeps/393 (incubating in 14, 15, 16)
+////
 
 
 == New APIs
@@ -19,7 +25,7 @@ New APIs are added over time.
 <table class="toc">
 	<tr class="toc-current"><td>Collection Factories ⑨⑩</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
-	<tr><td>Reactive HTTP/2 Client ⑪</td></tr>
+	<tr><td>Reactive HTTP/2 Client ⑪⑯</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
 </table>
 ++++
@@ -97,7 +103,7 @@ public Customer(List<Order> orders) {
 <table class="toc">
 	<tr><td>Collection Factories ⑨⑩</td></tr>
 	<tr class="toc-current"><td>Reactive Streams ⑨</td></tr>
-	<tr><td>Reactive HTTP/2 Client ⑪</td></tr>
+	<tr><td>Reactive HTTP/2 Client ⑪⑯</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
 </table>
 ++++
@@ -155,7 +161,7 @@ So far, only reactive HTTP/2 API ⑪ uses Flow.
 <table class="toc">
 	<tr><td>Collection Factories ⑨⑩</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
-	<tr class="toc-current"><td>Reactive HTTP/2 Client ⑪</td></tr>
+	<tr class="toc-current"><td>Reactive HTTP/2 Client ⑪⑯</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
 </table>
 ++++
@@ -201,6 +207,7 @@ HttpRequest request = HttpRequest.newBuilder()
 * individual timeout
 * individual HTTP version
 * request `"100 CONTINUE"` before sending body
+* create prefilled builder from existing request ⑯
 
 === Receiving a Response
 
@@ -317,7 +324,7 @@ return `CompletableFuture`
 <table class="toc">
 	<tr><td>Collection Factories ⑨⑩</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
-	<tr><td>Reactive HTTP/2 Client ⑪</td></tr>
+	<tr><td>Reactive HTTP/2 Client ⑪⑯</td></tr>
 	<tr class="toc-current"><td>Stack-Walking ⑨</td></tr>
 </table>
 ++++

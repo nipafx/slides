@@ -3,7 +3,7 @@
 ++++
 <table class="toc">
 	<tr><td>String ⑪⑫</td></tr>
-	<tr><td>Stream ⑨⑩⑫</td></tr>
+	<tr><td>Stream ⑨⑩⑫⑯</td></tr>
 	<tr><td>Optional ⑨⑩⑪</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
 	<tr><td>Completable Future ⑫</td></tr>
@@ -19,7 +19,7 @@ Existing APIs are continuously improved.
 ++++
 <table class="toc">
 	<tr class="toc-current"><td>String ⑪⑫</td></tr>
-	<tr><td>Stream ⑨⑩⑫</td></tr>
+	<tr><td>Stream ⑨⑩⑫⑯</td></tr>
 	<tr><td>Optional ⑨⑩⑪</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
 	<tr><td>Completable Future ⑫</td></tr>
@@ -184,7 +184,7 @@ Stream<TouristGroup> groupsOfFive(
 ++++
 <table class="toc">
 	<tr><td>String ⑪⑫</td></tr>
-	<tr class="toc-current"><td>Stream ⑨⑩⑫</td></tr>
+	<tr class="toc-current"><td>Stream ⑨⑩⑫⑯</td></tr>
 	<tr><td>Optional ⑨⑩⑪</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
 	<tr><td>Completable Future ⑫</td></tr>
@@ -322,6 +322,93 @@ Statistics stats = Stream
 // stats = Statistics {sum=12, average=3.0}
 ```
 
+=== Declarative Flat Map ===
+
+`Stream::flatMap` is great, but:
+
+* sometimes you can't easily +
+  map to a `Stream`
+* creating small/empty streams +
+  can harm performance
+
+For these niche (!) cases, +
+there's `Stream::mapMulti`.
+
+=== Imperative Flat Map ⑯ ===
+
+```java
+<R> Stream<R> mapMulti​(
+	BiConsumer<T, Consumer<R>> mapper)
+```
+
+`BiConsumer` is called for each element:
+
+* gets the element `T`
+* gets a `Consumer<R>`
+* can pass arbitrarily many `R`-s +
+  to the consumer
+* they show up downstream
+
+So like `flatMap`, but imperative.
+
+=== Map Multi Examples ===
+
+```java
+Stream.of(1, 2, 3, 4)
+	// changes nothing, just passes on elements
+	.mapMulti((el, ds) -> ds.accept(el));
+
+Stream
+	.of(Optional.of("0"), Optional.empty())
+	// unpacks Optionals
+	.mapMulti((el, ds) -> el.ifPresent(ds));
+
+Stream
+	.of(Optional.of("0"), Optional.empty())
+	.mapMulti(Optional::ifPresent);
+```
+
+=== Type Witness ===
+
+Unfortunately, `mapMulti` confuses +
+parametric type inference:
+
+```java
+List<String> strings = Stream
+	.of(Optional.of("0"), Optional.empty())
+	// without <String>, collect returns List<Object>
+	.<String> mapMulti(Optional::ifPresent)
+	.collect(toList());
+```
+
+
+=== Immediate To List ⑯ ===
+
+How often have you written +
+`.collect(Collectors.toList())`?
+
+Answer: too damn often!
+
+But no more:
+
+```java
+List<String> strings = Stream
+	.of("A", "B", "C")
+	// some stream stuff
+	.toList()
+```
+
+=== List Properties ===
+
+Like collection factories, +
+the returned lists are:
+
+* immutable/unmodifiable
+* https://nipafx.dev/java-value-based-classes[value-based]
+
+Unlike them:
+
+* they can contain `null`
 
 
 == Updated APIs
@@ -329,7 +416,7 @@ Statistics stats = Stream
 ++++
 <table class="toc">
 	<tr><td>String ⑪⑫</td></tr>
-	<tr><td>Stream ⑨⑩⑫</td></tr>
+	<tr><td>Stream ⑨⑩⑫⑯</td></tr>
 	<tr class="toc-current"><td>Optional ⑨⑩⑪</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
 	<tr><td>Completable Future ⑫</td></tr>
@@ -503,7 +590,7 @@ you think it does.
 ++++
 <table class="toc">
 	<tr><td>String ⑪⑫</td></tr>
-	<tr><td>Stream ⑨⑩⑫</td></tr>
+	<tr><td>Stream ⑨⑩⑫⑯</td></tr>
 	<tr><td>Optional ⑨⑩⑪</td></tr>
 	<tr class="toc-current"><td>OS Processes ⑨</td></tr>
 	<tr><td>Completable Future ⑫</td></tr>
@@ -566,7 +653,7 @@ Interesting `static` methods:
 ++++
 <table class="toc">
 	<tr><td>String ⑪⑫</td></tr>
-	<tr><td>Stream ⑨⑩⑫</td></tr>
+	<tr><td>Stream ⑨⑩⑫⑯</td></tr>
 	<tr><td>Optional ⑨⑩⑪</td></tr>
 	<tr><td>OS Processes ⑨</td></tr>
 	<tr class="toc-current"><td>Completable Future ⑫</td></tr>
@@ -756,22 +843,6 @@ ByteBuffer.get(int, ...) // ⑬
 ByteBuffer.put(int, ...) // ⑬
 ```
 
-=== A Mixed Bag Of New&nbsp;Methods
-
-*In Java 10:*
-
-```java
-DateTimeFormatter.localizedBy(Locale);
-```
-
-*In Java 11:*
-
-```java
-Collection.toArray(IntFunction<T[]>);
-Predicate.not(Predicate<T>); // static
-Pattern.asMatchPredicate(); // ⇝ Predicate<String>
-```
-
 === A Mixed Bag Of New&nbsp;Math&nbsp;Methods
 
 ```java
@@ -792,6 +863,22 @@ StrictMath.absExact(long)
 
 === A Mixed Bag Of New&nbsp;Methods
 
+*In Java 10:*
+
+```java
+DateTimeFormatter.localizedBy(Locale);
+```
+
+*In Java 11:*
+
+```java
+Collection.toArray(IntFunction<T[]>);
+Predicate.not(Predicate<T>); // static
+Pattern.asMatchPredicate(); // ⇝ Predicate<String>
+```
+
+=== A Mixed Bag Of New&nbsp;Methods
+
 *In Java 12:*
 
 * `NumberFormat::getCompactNumberInstance`
@@ -801,4 +888,14 @@ StrictMath.absExact(long)
 ```java
 // instance version of String::format
 String.formatted(Object... args);
+```
+
+=== A Mixed Bag Of New&nbsp;Methods
+
+*In Java 16:*
+
+```java
+Objects.checkIndex(long, long)
+Objects.checkFromToIndex(long, long, long)
+Objects.checkFromIndexSize(long, long, long)
 ```
