@@ -1,0 +1,26 @@
+{
+  "name": "nipafx-slides",
+  "version": "1.0.0",
+  "description": "Slides for various talks I give and have given. They are written with the awesome [Asciidoctor](http://asciidoctor.org/) and visualized with [reveal.js](http://asciidoctor.org/). Thanks to GitHub Pages you can see them on [slides.nipafx.dev](https://slides.nipafx.dev).",
+  "main": "index.js",
+  "scripts": {
+    "start": "node observe.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nipafx/slides.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "CC-BY-NC 4.0",
+  "bugs": {
+    "url": "https://github.com/nipafx/slides/issues"
+  },
+  "homepage": "https://slides.nipafx.dev",
+  "dependencies": {
+    "@asciidoctor/reveal.js": "^4.1.0",
+    "asciidoctor": "^2.2.1",
+    "chokidar": "^3.5.1",
+    "fs-extra": "^9.1.0"
+  }
+}
