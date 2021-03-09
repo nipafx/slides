@@ -20,10 +20,10 @@ const contains = (parent, child) => {
 const processChange = file => {
 	const dir = slideDirs.find(dir => contains(dir, file))
 	if (dir) {
-		console.log(`File ${file} changed - regenerating ${dir}`)
+		console.log(` - file ${file} changed; regenerating ${dir}`)
 		createPresentation(dir)
 	} else
-		console.log(`File ${file} changed - does not belong to a slide dir`)
+		console.log(` - file ${file} changed; does not belong to a slide dir`)
 }
 
 const createPresentation = dir => {
@@ -37,7 +37,15 @@ const createPresentation = dir => {
 	asciidoctor.convertFile(`${dir}/_presentation.adoc`, options)
 }
 
-console.log(`Observing presentations in subfolders ` + slideDirs.map(name => `'${name}'`).join(`, `))
+console.log(`Found presentations ${slideDirs.map(name => `'${name}'`).join(`, `)}.`)
+
+console.log(`\nGenerating all presentations:`)
+slideDirs.forEach(dir => {
+	console.log(` - generating ${dir}`)
+	createPresentation(dir)
+})
+
+console.log(`\nObserving presentations...`)
 chokidar
 	.watch(slideDirs, { ignoreInitial: true })
 	.on(`all`, (event, path) => { processChange(path) })
