@@ -791,7 +791,7 @@ There are overloads that accept `Executor`.
 
 
 
-== A Mixed Bag Of Updated&nbsp;APIs
+== Even More Updated&nbsp;APIs
 
 Two great sources on +
 Java API changes +
@@ -800,7 +800,7 @@ between versions:
 * https://javaalmanac.io/[Java Version Almanac]
 * https://github.com/AdoptOpenJDK/jdk-api-diff[JDK API Diff Report Generator]
 
-=== A Mixed Bag Of Updated&nbsp;APIs
+=== Even More Updated&nbsp;APIs
 
 *In Java 9:*
 
@@ -811,7 +811,7 @@ Xerces 2.11.0 (http://openjdk.java.net/jeps/255[JEP 255])
 
 Many lower-level APIs.
 
-=== A Mixed Bag Of New&nbsp;I/O&nbsp;Methods
+=== Even More New&nbsp;I/O&nbsp;Methods
 
 *In Java 9 to 11:*
 
@@ -830,7 +830,7 @@ InputStream.nullInputStream(); // ⑪
 OutputStream.nullOutputStream(); // ⑪
 ```
 
-=== A Mixed Bag Of New&nbsp;I/O&nbsp;Methods
+=== Even More New&nbsp;I/O&nbsp;Methods
 
 *In Java 12 and 13:*
 
@@ -843,7 +843,7 @@ ByteBuffer.get(int, ...) // ⑬
 ByteBuffer.put(int, ...) // ⑬
 ```
 
-=== A Mixed Bag Of New&nbsp;Math&nbsp;Methods
+=== Even More New&nbsp;Math&nbsp;Methods
 
 ```java
 // in Java 14
@@ -861,7 +861,7 @@ StrictMath.absExact(int)
 StrictMath.absExact(long)
 ```
 
-=== A Mixed Bag Of New&nbsp;Methods
+=== Even More New&nbsp;Methods
 
 *In Java 10:*
 
@@ -877,7 +877,7 @@ Predicate.not(Predicate<T>); // static
 Pattern.asMatchPredicate(); // ⇝ Predicate<String>
 ```
 
-=== A Mixed Bag Of New&nbsp;Methods
+=== Even More New&nbsp;Methods
 
 *In Java 12:*
 
@@ -890,7 +890,7 @@ Pattern.asMatchPredicate(); // ⇝ Predicate<String>
 String.formatted(Object... args);
 ```
 
-=== A Mixed Bag Of New&nbsp;Methods
+=== Even More New&nbsp;Methods
 
 *In Java 16:*
 

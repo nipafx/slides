@@ -633,14 +633,14 @@ CompletableFuture<T> exceptionallyComposeAsync(
 There are overloads that accept `Executor`.
 
 
-=== A Mixed Bag Of New&nbsp;I/O&nbsp;Methods
+=== Even More New&nbsp;I/O&nbsp;Methods
 
 ```java
 Files.mismatch(Path, Path);
 ```
 
 
-=== A Mixed Bag Of New&nbsp;JVM&nbsp;Features
+=== Even More New&nbsp;JVM&nbsp;Features
 
 * constants API (http://openjdk.java.net/jeps/334[JEP 334])
 * HmacPBE (https://bugs.openjdk.java.net/browse/JDK-8076190[JDK-8215450])
@@ -652,7 +652,7 @@ Files.mismatch(Path, Path);
 // TODO: JDK CDS archive included
 
 
-=== A Mixed Bag Of Performance
+=== Even More Performance
 
 * Shenandoah (http://openjdk.java.net/jeps/189[JEP 189])
 * G1 improvements:
