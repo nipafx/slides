@@ -4,7 +4,7 @@
 <table class="toc">
 	<tr><td>Sealed Classes</td></tr>
 	<tr><td>Records ⑯</td></tr>
-	<tr><td>Pattern Matching ⑯</td></tr>
+	<tr><td>Type Pattern Matching ⑯</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
 	<tr><td>Switch Expressions ⑭</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
@@ -20,7 +20,7 @@
 <table class="toc">
 	<tr class="toc-current"><td>Sealed Classes</td></tr>
 	<tr><td>Records ⑯</td></tr>
-	<tr><td>Pattern Matching ⑯</td></tr>
+	<tr><td>Type Pattern Matching ⑯</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
 	<tr><td>Switch Expressions ⑭</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
@@ -114,7 +114,7 @@ final class Consultant implements Staff { }
 === Handling Sealed Staff
 
 Goal is to combine sealed types, +
-switch expressions, and pattern matching:
+switch expressions, and type patterns:
 
 ```java
 public double cost(Staff staff) {
@@ -263,7 +263,7 @@ Consequences:
 <table class="toc">
 	<tr><td>Sealed Classes</td></tr>
 	<tr class="toc-current"><td>Records ⑯</td></tr>
-	<tr><td>Pattern Matching ⑯</td></tr>
+	<tr><td>Type Pattern Matching ⑯</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
 	<tr><td>Switch Expressions ⑭</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
@@ -567,7 +567,7 @@ TODO
 <table class="toc">
 	<tr><td>Sealed Classes</td></tr>
 	<tr><td>Records ⑯</td></tr>
-	<tr class="toc-current"><td>Pattern Matching ⑯</td></tr>
+	<tr class="toc-current"><td>Type Pattern Matching ⑯</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
 	<tr><td>Switch Expressions ⑭</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
@@ -596,7 +596,7 @@ Three things are happening:
 . type conversaion
 . variable declaration (implicit)
 
-=== Pattern Matching
+=== Type Pattern Matching
 
 ```java
 public void feed(Animal animal) {
@@ -661,18 +661,78 @@ public void scoped(Object object) {
 }
 ```
 
-=== Summary
+=== Null Check Included
 
-* `$TARGET instanceof $TYPE $VAR`:
-	. checks whether `$TARGET` is of type `$TYPE`
-	. creates variable `$TYPE $VAR = $TARGET`
-	. in scope wherever `instanceof $TYPE` is `true`
-* first of many (?) match patterns
-* keep an eye out for integration with `switch`
+Just like `instanceof`, +
+type patterns reject `null`:
+
+```java
+public void nullChecked(Object object) {
+	if (object instanceof String string)
+		// never NPEs because `string` is not null
+		System.out.println(string.length());
+}
+```
+
+=== No Upcasting Allowed
+
+Upcasting makes little sense, +
+so it's considered an implementation error:
+
+```java
+public void upcast(String string) {
+	// compile error
+	if (string instanceof CharSequence sequence)
+		System.out.println("Duh");
+}
+```
+
+=== What Are The Use Cases?
+
+General recommendation:
+
+*Consider classic OOP design +
+before type patterns.*
+
+```java
+public void feed(Animal animal) {
+	if (animal instanceof Elephant)
+		((Elephant) animal).eatPlants();
+	else if (animal instanceof Tiger)
+		((Tiger) animal).eatMeat();
+}
+
+public void feed(Animal animal) {
+	// method on interface `Animal`
+	animal.eat();
+}
+```
+
+=== What Are The Use Cases?
+
+But that doesn't always work best:
+
+* handling primitives
+* no control over types
+* OOP solutions can be cumbersome +
+  (visitor pattern)
+
+=== What Are The Use Cases?
+
+Another really neat application:
+
+```java
+@Override
+public final boolean equals(Object o) {
+	return o instanceof Type other
+		&& someField.equals(other.someField)
+		&& anotherField.equals(other.anotherField);
+}
+```
 
 === Preview
 
-`switch` will be able to use pattern matching:
+`switch` will be able to use (type) patterns:
 
 ```java
 switch (animal) {
@@ -684,6 +744,32 @@ switch (animal) {
 ```
 
 (Strawman syntax!)
+
+=== Preview
+
+With sealed types, `switch` can detect exhaustiveness:
+
+```java
+sealed interface Animal permits Elephant, Tiger { }
+
+return switch (animal) {
+	case Elephant elephant -> // ...
+	case Tiger tiger -> // ...
+	// no compile error
+}
+```
+
+(Strawman syntax!)
+
+=== Summary
+
+* `$TARGET instanceof $TYPE $VAR`:
+	. checks whether `$TARGET` is of type `$TYPE`
+	. creates variable `$TYPE $VAR = $TARGET`
+	. in scope wherever `instanceof $TYPE` is `true`
+* first of many patterns
+* don't overuse it - polymorphism still exists
+* will integrate with `switch` and sealed classes
 
 
 == New Language Features
@@ -844,7 +930,7 @@ String phrase = """
 <table class="toc">
 	<tr><td>Sealed Classes</td></tr>
 	<tr><td>Records ⑯</td></tr>
-	<tr><td>Pattern Matching ⑯</td></tr>
+	<tr><td>Type Pattern Matching ⑯</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
 	<tr class="toc-current"><td>Switch Expressions ⑭</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
@@ -1241,7 +1327,7 @@ Definitive Guide To Switch Expressions
 <table class="toc">
 	<tr><td>Sealed Classes</td></tr>
 	<tr><td>Records ⑯</td></tr>
-	<tr><td>Pattern Matching ⑯</td></tr>
+	<tr><td>Type Pattern Matching ⑯</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
 	<tr><td>Switch Expressions ⑭</td></tr>
 	<tr class="toc-current"><td>Local-Variable Type Inference ⑩</td></tr>

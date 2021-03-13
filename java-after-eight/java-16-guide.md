@@ -57,7 +57,7 @@
 	* method-local: `Genealogy::inferTypedRelations`
 	* counterpoint: `Weights` does not expose its fields
 
-* pattern matching in `RepoGenealogist`
+* type pattern in `RepoGenealogist`
 
 ## APIs
 
