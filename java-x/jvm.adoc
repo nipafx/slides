@@ -2,6 +2,7 @@
 
 ++++
 <table class="toc">
+	<tr><td>Packaging Tool ⑯</td></tr>
 	<tr><td>Strong Encapsulation ⑯</td></tr>
 	<tr><td>Helpful NPEs ⑭</td></tr>
 	<tr><td>Launch Source File ⑪</td></tr>
@@ -17,6 +18,34 @@
 
 ++++
 <table class="toc">
+	<tr class="toc-current"><td>Packaging Tool ⑯</td></tr>
+	<tr><td>Strong Encapsulation ⑯</td></tr>
+	<tr><td>Helpful NPEs ⑭</td></tr>
+	<tr><td>Launch Source File ⑪</td></tr>
+	<tr><td>Unified Logging ⑨</td></tr>
+	<tr><td>Multi-Release JARs ⑨</td></tr>
+	<tr><td>Redirected Platform Logging ⑨</td></tr>
+</table>
+++++
+
+Creating self-contained, OS-typical Java apps.
+
+=== Packaging Tool
+
+// TODO
+
+I don't have much on this +
+but others do:
+
+* https://openjdk.java.net/jeps/392[JEP 392: Packaging Tool]
+* https://www.infoq.com/news/2019/03/jep-343-jpackage/[Building Self-Contained, Installable Java Applications]
+
+
+== JVM Features
+
+++++
+<table class="toc">
+	<tr><td>Packaging Tool ⑯</td></tr>
 	<tr class="toc-current"><td>Strong Encapsulation ⑯</td></tr>
 	<tr><td>Helpful NPEs ⑭</td></tr>
 	<tr><td>Launch Source File ⑪</td></tr>
@@ -81,6 +110,7 @@ $ java --class-path 'mods/*'
 
 ++++
 <table class="toc">
+	<tr><td>Packaging Tool ⑯</td></tr>
 	<tr><td>Strong Encapsulation ⑯</td></tr>
 	<tr class="toc-current"><td>Helpful NPEs ⑭</td></tr>
 	<tr><td>Launch Source File ⑪</td></tr>
@@ -138,6 +168,7 @@ But:
 
 ++++
 <table class="toc">
+	<tr><td>Packaging Tool ⑯</td></tr>
 	<tr><td>Strong Encapsulation ⑯</td></tr>
 	<tr><td>Helpful NPEs ⑭</td></tr>
 	<tr class="toc-current"><td>Launch Source File ⑪</td></tr>
@@ -224,6 +255,7 @@ hello-java-11
 
 ++++
 <table class="toc">
+	<tr><td>Packaging Tool ⑯</td></tr>
 	<tr><td>Strong Encapsulation ⑯</td></tr>
 	<tr><td>Helpful NPEs ⑭</td></tr>
 	<tr><td>Launch Source File ⑪</td></tr>
@@ -359,6 +391,7 @@ Elements have to be defined from left to right. +
 
 ++++
 <table class="toc">
+	<tr><td>Packaging Tool ⑯</td></tr>
 	<tr><td>Strong Encapsulation ⑯</td></tr>
 	<tr><td>Helpful NPEs ⑭</td></tr>
 	<tr><td>Launch Source File ⑪</td></tr>
@@ -448,6 +481,7 @@ Great Success!
 
 ++++
 <table class="toc">
+	<tr><td>Packaging Tool ⑯</td></tr>
 	<tr><td>Strong Encapsulation ⑯</td></tr>
 	<tr><td>Helpful NPEs ⑭</td></tr>
 	<tr><td>Launch Source File ⑪</td></tr>
@@ -553,10 +587,6 @@ Module system and JDK take care of the rest!
 * constants API (http://openjdk.java.net/jeps/334[JEP 334])
 * HmacPBE (https://bugs.openjdk.java.net/browse/JDK-8076190[JDK-8215450])
 * finer PKCS12 KeyStore config (https://bugs.openjdk.java.net/browse/JDK-8076190[JDK-8076190])
-
-*In Java 14:*
-
-* packaging tool (http://openjdk.java.net/jeps/343[JEP 343])
 
 *In Java 15:*
 
