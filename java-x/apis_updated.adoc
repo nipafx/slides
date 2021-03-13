@@ -2,6 +2,7 @@
 
 ++++
 <table class="toc">
+	<tr><td>Socket Channels ⑯</td></tr>
 	<tr><td>String ⑪⑫</td></tr>
 	<tr><td>Stream ⑨⑩⑫⑯</td></tr>
 	<tr><td>Optional ⑨⑩⑪</td></tr>
@@ -18,6 +19,87 @@ Existing APIs are continuously improved.
 
 ++++
 <table class="toc">
+	<tr class="toc-current"><td>Socket Channels ⑯</td></tr>
+	<tr><td>String ⑪⑫</td></tr>
+	<tr><td>Stream ⑨⑩⑫⑯</td></tr>
+	<tr><td>Optional ⑨⑩⑪</td></tr>
+	<tr><td>OS Processes ⑨</td></tr>
+	<tr><td>Completable Future ⑫</td></tr>
+</table>
+++++
+
+Now with Unix domain sockets!
+
+=== Socket Channels
+
+NIO API around `SocketChannel`/`ServerSocketChannel`:
+
+* communication via network sockets
+* can be non-blocking
+* allows multiplexing via selector
+
+New in Java 16: Unix domain sockets.
+
+=== Unix Domain Sockets
+
+Unix domain sockets:
+
+* work with filesystem paths
+* only for connections on same host
+* no TCP/IP stack
+
+=== Server and Client
+
+Server connecting to Unix domain socket:
+
+```java
+Path socketFile = Path
+	.of(System.getProperty("user.home"))
+	.resolve("server.socket");
+UnixDomainSocketAddress address =
+	UnixDomainSocketAddress.of(socketFile);
+
+ServerSocketChannel serverChannel = ServerSocketChannel
+	.open(StandardProtocolFamily.UNIX);
+serverChannel.bind(address);
+
+// start sending/receiving messages
+```
+
+=== Server and Client
+
+Client connecting to Unix domain socket:
+
+```java
+Path file = Path
+	.of(System.getProperty("user.home"))
+	.resolve("server.socket");
+UnixDomainSocketAddress address =
+	UnixDomainSocketAddress.of(file);
+
+SocketChannel channel = SocketChannel
+	.open(StandardProtocolFamily.INET6);
+channel.connect(address);
+
+// start sending/receiving messages
+```
+
+=== Unix Domain Sockets Vs TCP/IP
+
+Unix domain socket are safer and faster:
+
+* same host ⇝ no inbound connections
+* filesystem paths +
+  ⇝ detailed, well-understood, OS-enforced permissions
+* no TCP/IP stack ⇝ faster setup, higher throughput
+
+
+
+== Updated APIs
+
+++++
+<table class="toc">
+	<tr><td>Socket Channels ⑯</td></tr>
 	<tr class="toc-current"><td>String ⑪⑫</td></tr>
 	<tr><td>Stream ⑨⑩⑫⑯</td></tr>
 	<tr><td>Optional ⑨⑩⑪</td></tr>
@@ -183,6 +265,7 @@ Stream<TouristGroup> groupsOfFive(
 
 ++++
 <table class="toc">
+	<tr><td>Socket Channels ⑯</td></tr>
 	<tr><td>String ⑪⑫</td></tr>
 	<tr class="toc-current"><td>Stream ⑨⑩⑫⑯</td></tr>
 	<tr><td>Optional ⑨⑩⑪</td></tr>
@@ -415,6 +498,7 @@ Unlike them:
 
 ++++
 <table class="toc">
+	<tr><td>Socket Channels ⑯</td></tr>
 	<tr><td>String ⑪⑫</td></tr>
 	<tr><td>Stream ⑨⑩⑫⑯</td></tr>
 	<tr class="toc-current"><td>Optional ⑨⑩⑪</td></tr>
@@ -589,6 +673,7 @@ you think it does.
 
 ++++
 <table class="toc">
+	<tr><td>Socket Channels ⑯</td></tr>
 	<tr><td>String ⑪⑫</td></tr>
 	<tr><td>Stream ⑨⑩⑫⑯</td></tr>
 	<tr><td>Optional ⑨⑩⑪</td></tr>
@@ -652,6 +737,7 @@ Interesting `static` methods:
 
 ++++
 <table class="toc">
+	<tr><td>Socket Channels ⑯</td></tr>
 	<tr><td>String ⑪⑫</td></tr>
 	<tr><td>Stream ⑨⑩⑫⑯</td></tr>
 	<tr><td>Optional ⑨⑩⑪</td></tr>
