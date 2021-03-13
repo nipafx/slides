@@ -19,17 +19,15 @@ Command line options to the rescue! +
 === Permitted Illegal Access
 
 JVM makes an exception +
-from strong encapsulation:
+from strong encapsulation for:
 
-For...
+* code on the class path
+* that accesses pre-JDK-9 packages
 
-* Java 8 code
-* on the class path
-
-...access to module internals +
-is permitted.
+Can be configured with `--illegal-access`.
 
 
+////
 === Illegal Access Warnings
 
 Static access::
@@ -39,6 +37,7 @@ gets accesses without further limitations
 Reflective access::
 Code using internal API via reflection +
 gets access, but emits warning +
+////
 
 
 === Illegal Access Modes
@@ -49,6 +48,8 @@ Four modes:
 * `warn`: warning on _each_ reflective access
 * `debug`: like `warn` plus stack trace
 * `deny`: illegal access denied (static + reflective)
+
+First three permit static access.
 
 
 === Configure Illegal Access

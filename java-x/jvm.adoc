@@ -2,6 +2,7 @@
 
 ++++
 <table class="toc">
+	<tr><td>Strong Encapsulation ⑯</td></tr>
 	<tr><td>Helpful NPEs ⑭</td></tr>
 	<tr><td>Launch Source File ⑪</td></tr>
 	<tr><td>Unified Logging ⑨</td></tr>
@@ -16,6 +17,71 @@
 
 ++++
 <table class="toc">
+	<tr class="toc-current"><td>Strong Encapsulation ⑯</td></tr>
+	<tr><td>Helpful NPEs ⑭</td></tr>
+	<tr><td>Launch Source File ⑪</td></tr>
+	<tr><td>Unified Logging ⑨</td></tr>
+	<tr><td>Multi-Release JARs ⑨</td></tr>
+	<tr><td>Redirected Platform Logging ⑨</td></tr>
+</table>
+++++
+
+JDK internals - hidden by default.
+
+=== Strong Encapsulation
+
+Recap:
+
+* all JDK code is in modules
+* only public classes/members in +
+  exported packages can be accessed
+* static or reflective access to others is illegal
+
+But...
+
+=== Permitted Illegal Access
+
+But JVM can make an exception for:
+
+* code on the class path
+* that accesses pre-JDK-9 packages
+
+Can be configured with `--illegal-access`.
+
+=== Illegal Access Modes
+
+Four modes:
+
+* `permit`: warning on _first_ reflective access to package
+* `warn`: warning on _each_ reflective access
+* `debug`: like `warn` plus stack trace
+* `deny`: illegal access denied (static + reflective)
+
+First three permit static access.
+
+=== Configure Illegal Access
+
+Configuration:
+
+* in Java 9-15, `permit` is default
+* in Java 16+, `deny` is default
+* can use `--illegal-access` to override +
+  (but don't; instead fix illegal access!)
+
+[source,bash]
+----
+$ java --class-path 'mods/*'
+    --illegal-access=deny
+    advent.Main
+----
+
+
+
+== JVM Features
+
+++++
+<table class="toc">
+	<tr><td>Strong Encapsulation ⑯</td></tr>
 	<tr class="toc-current"><td>Helpful NPEs ⑭</td></tr>
 	<tr><td>Launch Source File ⑪</td></tr>
 	<tr><td>Unified Logging ⑨</td></tr>
@@ -72,6 +138,7 @@ But:
 
 ++++
 <table class="toc">
+	<tr><td>Strong Encapsulation ⑯</td></tr>
 	<tr><td>Helpful NPEs ⑭</td></tr>
 	<tr class="toc-current"><td>Launch Source File ⑪</td></tr>
 	<tr><td>Unified Logging ⑨</td></tr>
@@ -157,6 +224,7 @@ hello-java-11
 
 ++++
 <table class="toc">
+	<tr><td>Strong Encapsulation ⑯</td></tr>
 	<tr><td>Helpful NPEs ⑭</td></tr>
 	<tr><td>Launch Source File ⑪</td></tr>
 	<tr class="toc-current"><td>Unified Logging ⑨</td></tr>
@@ -291,6 +359,7 @@ Elements have to be defined from left to right. +
 
 ++++
 <table class="toc">
+	<tr><td>Strong Encapsulation ⑯</td></tr>
 	<tr><td>Helpful NPEs ⑭</td></tr>
 	<tr><td>Launch Source File ⑪</td></tr>
 	<tr><td>Unified Logging ⑨</td></tr>
@@ -379,6 +448,7 @@ Great Success!
 
 ++++
 <table class="toc">
+	<tr><td>Strong Encapsulation ⑯</td></tr>
 	<tr><td>Helpful NPEs ⑭</td></tr>
 	<tr><td>Launch Source File ⑪</td></tr>
 	<tr><td>Unified Logging ⑨</td></tr>
