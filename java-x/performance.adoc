@@ -379,11 +379,10 @@ The Lord Of The Strings]
 
 *In Java 9:*
 
-* G1 default GC (http://openjdk.java.net/jeps/248[JEP 248])
 * cgroup-memory limits (https://bugs.openjdk.java.net/browse/JDK-8170888[JDK-8170888])
 * contended locks (http://openjdk.java.net/jeps/143[JEP 143])
 * security manager (http://openjdk.java.net/jeps/232[JEP 232])
-// * intern strings in CDS archives (http://openjdk.java.net/jeps/250[JEP 250])
+* intern strings in CDS archives (http://openjdk.java.net/jeps/250[JEP 250])
 * Java 2D rendering (http://openjdk.java.net/jeps/265[JEP 265])
 * GHASH/RSA computation (http://openjdk.java.net/jeps/246[JEP 246])
 * Java-level JVM compiler interface (http://openjdk.java.net/jeps/243[JEP 243])
@@ -392,20 +391,35 @@ The Lord Of The Strings]
 
 *In Java 10:*
 
-* Graal -- Java-based JIT compiler (http://openjdk.java.net/jeps/317[JEP 317])
-* parallel full GC for G1 (http://openjdk.java.net/jeps/307[JEP 307])
 * thread-local handshakes (http://openjdk.java.net/jeps/312[JEP 312])
 
-=== Even More Performance
+*In Java 11:*
+
+* low-overhead heap profiling (http://openjdk.java.net/jeps/331[JEP 331])
+* open-source Flight Recorder (http://openjdk.java.net/jeps/328[JEP 328])
+
+*In Java 14:*
+
+* JFR event streaming API (https://openjdk.java.net/jeps/349[JEP 349])
+
+=== Garbage Collectors
+
+G1, ZGC and Shenandoah are actively developed +
+and become faster in each release.
+
+* ⑨: G1 is default (http://openjdk.java.net/jeps/248[JEP 248])
+* ⑮: ZGC and Shenandoah are production features +
+(http://openjdk.java.net/jeps/377[JEP 377]) and (http://openjdk.java.net/jeps/379[JEP 379])
+
+////
+
+*In Java 10:*
+
+* parallel full GC for G1 (http://openjdk.java.net/jeps/307[JEP 307])
 
 *In Java 11:*
 
 * Epsilon GC (http://openjdk.java.net/jeps/318[JEP 318])
-* ZGC (experimental, http://openjdk.java.net/jeps/333[JEP 333])
-* low-overhead heap profiling (http://openjdk.java.net/jeps/331[JEP 331])
-* open-source Flight Recorder (http://openjdk.java.net/jeps/328[JEP 328])
-
-=== Even More Performance
 
 *In Java 12:*
 
@@ -413,8 +427,6 @@ The Lord Of The Strings]
 * G1 improvements:
 ** abortable mixed collections (http://openjdk.java.net/jeps/344[JEP 344])
 ** promptly return unused memory (http://openjdk.java.net/jeps/346[JEP 346])
-
-=== Even More Performance
 
 *In Java 13:*
 
@@ -427,9 +439,25 @@ The Lord Of The Strings]
 ** max heap size of 16 TB (https://bugs.openjdk.java.net/browse/JDK-8221786[JDK-8221786])
 ** uncommits unused memory (https://openjdk.java.net/jeps/351[JEP 351])
 
-=== Even More Performance
-
 *In Java 14:*
 
-* JFR event streaming API (https://openjdk.java.net/jeps/349[JEP 349])
 * Shenadoah, G1, ZGC improvements
+
+*In Java 15:*
+
+* ZGC becomes a production feature
+* Shenandoah becomes a production feature
+
+////
+
+=== Even More Performance
+
+And many, many smaller changes.
+
+* new releases are generally faster +
+* in the cloud: +
+  less CPU/memory ⇝ lower costs
+
+⇝ Updating saves money!
+
+(And you're doing it anyway sooner or later.)
