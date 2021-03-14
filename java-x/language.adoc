@@ -541,7 +541,7 @@ public record Range(int low, int high)
   `FileInputStream` as usual
 * deserializaton calls constructor 🙌
 * framework support is growing +
-  (e.g. https://johnzon.apache.org/[Apache Johnzon] for JSON-B)
+  (e.g. https://github.com/FasterXML/jackson[Jackson], https://johnzon.apache.org/[Apache Johnzon])
 
 ////
 TODO
