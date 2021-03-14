@@ -122,7 +122,7 @@ public double cost(Staff staff) {
 		// strawman syntax!
 		case Employee employee ->
 			employee.salary() * 2;
-		case Freelancer freelander ->
+		case Freelancer freelancer ->
 			freelancer.averageInvoice() * 1.1;
 		// compiler checks exhaustiveness
 	}
@@ -541,7 +541,7 @@ public record Range(int low, int high)
   `FileInputStream` as usual
 * deserializaton calls constructor 🙌
 * framework support is growing +
-  (e.g. https://johnzon.apache.org/[Apache Johnzon] for JSON-B)
+  (e.g. https://github.com/FasterXML/jackson[Jackson], https://johnzon.apache.org/[Apache Johnzon])
 
 ////
 TODO
