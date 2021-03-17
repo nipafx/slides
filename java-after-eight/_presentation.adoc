@@ -37,7 +37,7 @@ The plan for today:
 
 // * start with a *Java 8* code base
 * start with a *Java 11* code base
-* take it all the way to *Java 15* +
+* take it all the way to *Java 16* +
   (and beyond)
 * be amazed by how much changes
 
@@ -96,7 +96,7 @@ if you're still on Java 8.
 
 * released 09/2018
 * free support by Oracle *ended 01/2019*
-* free support by Red Hat *until 10/2024*
+* free community support *until 10/2024*
 * more free and commercial support available
 
 === It's a great release...
@@ -204,16 +204,15 @@ HttpRequest request = HttpRequest.newBuilder()
 
 == Java 12
 
-* release 03/2019
-* support *ended 07/2019*
-
-=== What we've seen
+*What we've seen:*
 
 * more powerful collections | `Collectors::teeing`
 * better async error handling | ↴ +
   `CompletableFuture::exceptionallyCompose`
 
-=== What we haven't seen
+=== Java 12
+
+*What we haven't seen:*
 
 * transforming Strings | ↴ +
   `String.transform(Function<String, R>)`
@@ -225,21 +224,14 @@ HttpRequest request = HttpRequest.newBuilder()
 
 == Java 13
 
-* released 09/2019
-* free support *ended 01/2020*
-* commercial support available https://www.azul.com/products/azul_support_roadmap/[by Azul]
-
-=== What we haven't seen
+*What we haven't seen:*
 
 * automatic application CDS archive
 
 
 == Java 14
 
-* release 03/2020
-* support *ends 07/2020*
-
-=== What we've seen
+*What we've seen:*
 
 * switch expressions | ↴
 +
@@ -253,19 +245,16 @@ boolean bool = switch (ternaryBool) {
 ```
 * helpful NPE messages
 
-=== What we haven't seen
+=== Java 14
 
-* standardized foreign-memory access
+*What we haven't seen:*
+
 * JFR event streaming
-* OS-specific installers | `jpackage`
 
 
 == Java 15
 
-* released *today*
-* support *ends 01/2021*
-
-=== What we've seen
+*What we've seen:*
 
 * text blocks | ↴
 +
@@ -279,49 +268,56 @@ var recommendation = """
 ```
 * obvious `String` formatting | `String::format`
 
-=== What we haven't seen
+=== Java 15
+
+*What we haven't seen:*
 
 * hidden classes
 
 
-== Java Next
+== Java 16
 
-* some features are already in preview
-* more are on the horizon
-
-=== What we've seen
+*What we've seen:*
 
 * records | `record Title(String text)`
 * type patterns | `o instanceof Article a`
+* `Stream::toList`
+
+=== Java 16
+
+*What we haven't seen:*
+
+* improvements to Stream and HTTP/2 client
+* Unix domain socket support
+* OS-specific installers | `jpackage`
+
+
+== Java Next
+
+*What we've seen:*
+
 * sealed clases | `sealed class ... permits`
 
-=== What we haven't seen
+=== Java Next
 
+*What we haven't seen*
+
+* vector API | http://openjdk.java.net/projects/panama/[Project Panama]
+* foreign code and memory | http://openjdk.java.net/projects/panama/[Project Panama]
 * concise method bodies | http://openjdk.java.net/projects/amber/[Project Amber]
-* inline classes | http://openjdk.java.net/projects/valhalla/[Project Valhalla]
+* primitive classes | http://openjdk.java.net/projects/valhalla/[Project Valhalla]
 * fibers | http://openjdk.java.net/projects/loom/[Project Loom]
 
-////
 
-== Java 8 to 15+
+== Java 11 to 16+
 
-* stronger encapsulation and better services | modules
-* safer code | processes, versions, whitespace, etc.
-* more expressive code | LOC: 2159 📉 1587
-// characters: 72863 📉 58012
-* faster code | run time: ~ 0.8 s 📈 ~ 1.1 s 😞
-* better JVM | MR-JARs, GCs, packaging, monitoring, etc.
-
-*Sure you don't want to upgrade?*
-
-////
-
-== Java 11 to 15+
-
-* more expressive code | LOC: 2058 📉 1587
-// characters: 69003 📉 58012
-* faster code | run time: ~ 1 s 📈 ~ 1.1 s 😞
-* better JVM | MR-JARs, GCs, packaging, monitoring, etc.
+// Java 8 to...
+// * stronger encapsulation and better services | modules
+// * safer code | processes, versions, whitespace, etc.
+* more expressive code | LOC: 2058 📉 1621
+// characters: 69003 📉 58661
+* faster code | run time: ~ 1.1 s 📉 ~ 1 s
+* better JVM | GCs, packaging, monitoring, etc.
 
 *Sure you don't want to upgrade?*
 
