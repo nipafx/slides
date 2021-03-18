@@ -1,0 +1,58 @@
+= To Jupiter And Beyond
+:backend: revealjs
+:revealjs_theme: nipa-night
+:revealjsdir: ../_reveal.js
+:revealjs_controls: false
+:revealjs_progress: false
+:revealjs_slideNumber: false
+:revealjs_history: true
+:revealjs_center: true
+:revealjs_transition: fade
+:revealjs_backgroundTransition: fade
+:revealjs_parallaxBackgroundImage: images/helmet.jpg
+:revealjs_parallaxBackgroundSize: 6000px 4000px
+:docinfo: shared
+:docinfodir: ../_shared
+
+:imagedir: images
+
+include::../_shared/highlight.js.adoc[]
+
+++++
+<style>
+.reveal .title h2 {
+	font-size: 1.75em;
+}
+</style>
+<h2>On An Exploratory Mission With JUnit Pioneer</h2>
+++++
+
+:host-name: Global Summit for Java Devs
+:host-url: https://java.geekle.us/
+:host-logo-url: images/logo-java-summit-2021.png
+// :host-logo-style: background-color: #FFF; border-color: #FFF;
+:host-twitter-name: @GeekleOfficial
+:host-twitter-url: https://twitter.com/GeekleOfficial
+include::../_shared/event-on-title-and-footer.adoc[]
+
+// ######### //
+// I N T R O //
+// ######### //
+
+// ⇝
+
+
+== Lots to talk about!
+
+* JUnit 5 and its extension model
+* Pioneer's extensions
+* Pioneer's mission statement
+* how live-streaming on Twitch grew a community
+* organizational style, contribution guide
+* code style, Git practices, release considerations
+* how we use Shipkit and GitHub actions for one-click releases
+
+
+include::../_shared/about-slide.adoc[]
+
+include::images/sources.adoc[]
