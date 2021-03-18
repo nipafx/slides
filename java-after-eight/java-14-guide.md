@@ -2,7 +2,8 @@
 
 * `switch` expressions in `TypeGenealogist`
 * helpful NPE messages:
-	* let `fromRawConfig` return `null`
+	* in `Config::create` return `CompletableFuture<null>`
+	  (change last line to `.thenApply(__ -> null);`)
 	* add command line flag `-XX:+ShowCodeDetailsInExceptionMessages`
 
 ## Summary
