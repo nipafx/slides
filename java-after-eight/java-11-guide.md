@@ -1,6 +1,7 @@
 # Java 11
 
-* `String::strip` fixes recommendations for _Code-First Java 9 Tutorial_ (compare tags to _Java 9 Resources - Talks, Articles, Repos, Blogs, Books And Courses_):
+* `String::strip` fixes recommendations:
+	* _Pattern Matching in Java_ and _Type Pattern Matching with `instanceof`_ should be related, but aren't because former tags are seperated with \u2001 (" ") - Odyssey in Space
 	* replace all `String::trim` with `strip`
 	* replace `String::isEmpty` with `isBlank`
 * use `Optional::isEmpty` in `RepoGenealogist`

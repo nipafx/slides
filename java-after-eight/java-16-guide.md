@@ -29,34 +29,26 @@
 	```
 
 * records:
-	* static factories, deprecated constructor:
-		* `Config`
-		* `Description`
-		* `RelationType`
+	* override canonical constructor
 		* `Repository`
-		* `Slug`
-		* `Title`
-		* `TypedRelation`
-		* `VideoSlug`
-	* static factories, customized constructor:
-		* `Article`
-		* `Talk`
-		* `Video`
-		* `Relation`
-	* static factories, unsuitable constructor:
-		* `Config`
-	* customized - `Recommendation`:
-		* static factory
-		* getter for `recommendedArticles` to create immutable copy
-	* customized - `Article`:
-		* constructor
-		* getter for `tags` to create immutable copy
-		* custom `equals`/`hashCode`
-	* implements interface
-		* `Slug`
-	* method-local: `Genealogy::inferTypedRelations`
-	* counterpoint: `Weights` does not expose its fields
-
+		* `Description` with reassigning argument
+	* add constructors or static factories
+		* `Tag` has static factory method
+		* `Config` has static factory method and deprecated constructor
+	* add other methods
+		* `Slug` implements `compareTo`
+	* implement interfaces
+		* `Slug` implements `Comparable`
+	* override accessors
+		* `Recommendation` returns shallowly immutable copy
+	* override `Object` methods
+		* `Article` overrides `equals`/`hashCode` to limit to `slug`
+	* limitations (final, no fields, no encapsulation)
+		* `Weights` needs encapsulation
+	* as named tuples
+		* return value of `PostFactory::keyValuePairFrom`
+	* as method-local records
+		* in `Genealogy::inferTypedRelations`
 * type pattern in `RepoGenealogist`
 
 ## APIs
