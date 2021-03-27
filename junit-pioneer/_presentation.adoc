@@ -68,6 +68,124 @@ Why is it interesting?
 * how we use Shipkit and GitHub actions for one-click releases
 * building the website with Jekyll and GitHub actions
 
+== JUnit Extensions
+
+Crash course to JUnit 5 and +
+its extension model.
+
+(This is _very_ incomplete!)
+
+=== JUnit 5
+
+A simple test:
+
+```java
+class JUnit5Test {
+
+	@Test
+	void test() {
+		assertTrue(true);
+	}
+
+}
+```
+
+* need an API to write tests against
+* need an engine that executes them
+
+=== Separation Of Concerns
+
+Separation of concerns in JUnit 5:
+
+. an API to write tests against
+. an API to discover and run tests
+[loweralpha]
+.. specific engine per variant of tests +
+(e.g. JUnit 4 or JUnit 5)
+.. orchestration of engines
+.. API between them
+
+=== Architecture
+
+image::images/architecture-limited-lean.png[style="diagram", width=550]
+
+=== JUnit Jupiter
+
+* defines test API
+* defines extension API
+* contains engine for them
+
+Often referred to as "JUnit 5".
+
+=== Extension Model
+
+Jupiter allows seamless extensions:
+
+```java
+@Test
+@DisabledOnFriday
+void failingTest() {
+	assertTrue(false);
+}
+```
+
+Cornerstones:
+
+* extensions interact with _extension points_
+* extensions must be registered +
+  (possibly with annotations)
+
+=== Extension Points
+
+An incomplete list:
+
+* instance post processor
+* `@BeforeAll` and `@BeforeEach`
+* execution condition
+* exception handling
+* `@AfterEach` and `@AfterAll`
+
+Each represented by an interface, +
+e.g. `ExecutionCondition`.
+
+=== Extension Example
+
+How to disable tests on Friday:
+
+```java
+public class DisabledOnFridayCondition
+		implements ExecutionCondition {
+
+	@Override
+	public ConditionEvaluationResult evaluate(/**/) {
+		if (isFriday())
+			return ConditionEvaluationResult
+				.disabled("Weekend! 🕺🏾💃🏼");
+		else
+			return ConditionEvaluationResult
+				.enabled("Run the test 😬");
+	}
+
+}
+```
+
+=== Registering Annotations
+
+Jupiter is aware of https://en.wikibooks.org/wiki/Java_Programming/Annotations/Meta-Annotations[meta annotations]. +
+⇝ We can create our own annotations!
+
+```java
+// [... more annotations ...]
+@ExtendWith(DisabledOnFridayCondition.class)
+public @interface DisabledOnFriday { }
+
+@Test
+@DisabledOnFriday
+void failingTest() {
+	assertTrue(false);
+}
+```
+
 
 include::../_shared/about-slide.adoc[]
 
