@@ -460,7 +460,88 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		document.body.appendChild(document.querySelector('footer'));
 	})
 </script></div></section>
-<section id="_lots_to_talk_about"><h2>Lots to talk about!</h2><div class="slide-content"><div class="ulist"><ul><li><p>JUnit 5 and its extension model</p></li><li><p>Pioneer&#8217;s extensions</p></li><li><p>Pioneer&#8217;s mission statement</p></li><li><p>how live-streaming on Twitch grew a community</p></li><li><p>organizational style, contribution guide</p></li><li><p>code style, Git practices, release considerations</p></li><li><p>how we use Shipkit and GitHub actions for one-click releases</p></li></ul></div></div></section>
+<section><section id="_junit_pioneer"><h2>JUnit Pioneer</h2><div class="slide-content"><div class="paragraph"><p>JUnit Pioneer&#8201;&#8212;&#8201;<a href="https://junit-pioneer.org">junit-pioneer.org</a>:</p></div><div class="ulist"><ul><li><p>provides extensions for JUnit 5 and its Jupiter API</p></li><li><p>small project (5k lines of code, 4 maintainers)</p></li></ul></div><div class="paragraph"><p>Why is it interesting?</p></div><div class="ulist"><ul><li><p>JUnit 5 is thrilling</p></li><li><p>grew a (small) community on Twitch</p></li><li><p>neat build and Git practices</p></li><li><p>one-click releases</p></li><li><p>automatic website build</p></li></ul></div></div></section><section id="_lots_to_talk_about"><h2>Lots to talk about!</h2><div class="slide-content"><div class="ulist"><ul><li><p>JUnit 5 and its extension model</p></li><li><p>Pioneer&#8217;s extensions</p></li><li><p>Pioneer&#8217;s mission statement</p></li><li><p>how live-streaming on Twitch grew a community</p></li><li><p>organizational style and contribution guide</p></li><li><p>code style, Git practices, release considerations</p></li><li><p>how we use Shipkit and GitHub actions for one-click releases</p></li><li><p>building the website with Jekyll and GitHub actions</p></li></ul></div></div></section></section>
+<section><section id="_junit_extensions"><h2>JUnit Extensions</h2><div class="slide-content"><div class="paragraph"><p>Crash course to JUnit 5 and<br>
+its extension model.</p></div><div class="paragraph"><p>(This is <em>very</em> incomplete!)</p></div></div></section><section id="_junit_5"><h2>JUnit 5</h2><div class="slide-content"><div class="paragraph"><p>A simple test:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">class JUnit5Test {
+
+	@Test
+	void test() {
+		assertTrue(true);
+	}
+
+}</code></pre></div></div>
+<div class="ulist"><ul><li><p>need an API to write tests against</p></li><li><p>need an engine that executes them</p></li></ul></div></div></section><section id="_separation_of_concerns"><h2>Separation Of Concerns</h2><div class="slide-content"><div class="paragraph"><p>Separation of concerns in JUnit 5:</p></div>
+<div class="olist arabic"><ol class="arabic"><li><p>an API to write tests against</p></li><li><p>an API to discover and run tests</p><div class="olist loweralpha"><ol class="loweralpha" type="a"><li><p>specific engine per variant of tests<br>
+(e.g. JUnit 4 or JUnit 5)</p></li><li><p>orchestration of engines</p></li><li><p>API between them</p></li></ol></div></li></ol></div></div></section><section id="_architecture"><h2>Architecture</h2><div class="slide-content"><div class="imageblock"><img src="images/architecture-limited-lean.png" alt="architecture limited lean" width="550"></div></div></section><section id="_junit_jupiter"><h2>JUnit Jupiter</h2><div class="slide-content"><div class="ulist"><ul><li><p>defines test API</p></li><li><p>defines extension API</p></li><li><p>contains engine for them</p></li></ul></div>
+<div class="paragraph"><p>Often referred to as "JUnit 5".</p></div></div></section><section id="_extension_model"><h2>Extension Model</h2><div class="slide-content"><div class="paragraph"><p>Jupiter allows seamless extensions:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">@Test
+@DisabledOnFriday
+void failingTest() {
+	assertTrue(false);
+}</code></pre></div></div>
+<div class="paragraph"><p>Cornerstones:</p></div>
+<div class="ulist"><ul><li><p>extensions interact with <em>extension points</em></p></li><li><p>extensions must be registered<br>
+(possibly with annotations)</p></li></ul></div></div></section><section id="_extension_points"><h2>Extension Points</h2><div class="slide-content"><div class="paragraph"><p>An incomplete list:</p></div>
+<div class="ulist"><ul><li><p>instance post processor</p></li><li><p><code>@BeforeAll</code> and <code>@BeforeEach</code></p></li><li><p>execution condition</p></li><li><p>exception handling</p></li><li><p><code>@AfterEach</code> and <code>@AfterAll</code></p></li></ul></div>
+<div class="paragraph"><p>Each represented by an interface,<br>
+e.g. <code>ExecutionCondition</code>.</p></div></div></section><section id="_extension_example"><h2>Extension Example</h2><div class="slide-content"><div class="paragraph"><p>How to disable tests on Friday:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public class DisabledOnFridayCondition
+		implements ExecutionCondition {
+
+	@Override
+	public ConditionEvaluationResult evaluate(/**/) {
+		if (isFriday())
+			return ConditionEvaluationResult
+				.disabled("Weekend! 🕺🏾💃🏼");
+		else
+			return ConditionEvaluationResult
+				.enabled("Run the test 😬");
+	}
+
+}</code></pre></div></div></div></section><section id="_registering_annotations"><h2>Registering Annotations</h2><div class="slide-content"><div class="paragraph"><p>Jupiter is aware of <a href="https://en.wikibooks.org/wiki/Java_Programming/Annotations/Meta-Annotations">meta annotations</a>.<br>
+⇝ We can create our own annotations!</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// [... more annotations ...]
+@ExtendWith(DisabledOnFridayCondition.class)
+public @interface DisabledOnFriday { }
+
+@Test
+@DisabledOnFriday
+void failingTest() {
+	assertTrue(false);
+}</code></pre></div></div></div></section></section>
+<section><section id="_pioneer_extensions"><h2>Pioneer Extensions</h2><div class="slide-content"><div class="paragraph"><p>An incomplete list:</p></div><div class="ulist"><ul><li><p>Cartesian products for parameters</p></li><li><p>set default locale and time zone</p></li><li><p>set environment variables<br>
+and system properties</p></li><li><p>publish issue information</p></li><li><p>retry failed tests</p></li></ul></div><div class="paragraph"><p>Let&#8217;s see some incomplete examples!</p></div></div></section><section id="_cartesian_prodict"><h2>Cartesian Prodict</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">@CartesianProductTest
+@CartesianValueSource(ints = { 1, 2 })
+@CartesianValueSource(strings = { "A", "B" })
+void test(int number, String character) {
+    // called four times - with:
+	// (1, "A") (1, "B") (2, "A") (2, "B")
+}</code></pre></div></div></div></section><section id="_default_locale"><h2>Default Locale</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">@Test
+@DefaultLocale(language = "en")
+void test() {
+    assertThat(Locale.getDefault())
+        .isEqualTo(new Locale("en"));
+}</code></pre></div></div></div></section><section id="_system_properties"><h2>System Properties</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">@Test
+@ClearSystemProperty(key = "user.name")
+@SetSystemProperty(key = "user.dir", value = "...")
+void test() {
+    assertThat(System.getProperty("user.name"))
+		.isNull();
+    assertThat(System.getProperty("user.dir"))
+		.isEqualTo("...");
+}</code></pre></div></div></div></section><section id="_issue_information"><h2>Issue Information</h2><div class="slide-content"><div class="paragraph"><p>Mark tests that belong to issues:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">@Test
+@Issue("REQ-123")
+void test() {
+    // a test for the issue "REQ-123"
+}</code></pre></div></div>
+<div class="paragraph"><p>Process information after execution:</p></div>
+<div class="imageblock diagram"><img src="images/issue-test-suite.png" alt="issue test suite"></div></div></section><section id="_retrying_tests"><h2>Retrying tests</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">@RetryingTest(3)
+void test() {
+    // if 1st, 2nd, or 3rd execution passes,
+	// the test passes; otherwise fails
+}</code></pre></div></div></div></section></section>
 <section id="_so_long" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>So long&#8230;&#8203;</h2><div class="slide-content">
 <div style="float: left; width: 45%; margin: 0;">
 	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="images/cover-jms.png" style="margin: 0;"></a>
