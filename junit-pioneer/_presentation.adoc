@@ -46,7 +46,7 @@ include::../_shared/event-on-title-and-footer.adoc[]
 
 JUnit Pioneer -- https://junit-pioneer.org[junit-pioneer.org]:
 
-* provides extensions for JUnit 5 and its Jupiter API
+* provides extensions for https://github.com/junit-team/junit5/[JUnit 5] and its https://junit.org/junit5/docs/current/user-guide/[Jupiter API]
 * small project (5k lines of code, 4 maintainers)
 
 Why is it interesting?
@@ -61,7 +61,7 @@ Why is it interesting?
 
 * JUnit 5 and its extension model
 * Pioneer's extensions
-* Pioneer's mission statement
+* Pioneer's mission statement and history
 * how live-streaming on Twitch grew a community
 * organizational style and contribution guide
 * code style, Git practices, release considerations
@@ -192,15 +192,14 @@ void failingTest() {
 An incomplete list:
 
 * Cartesian products for parameters
-* set default locale and time zone
-* set environment variables +
-  and system properties
+* set default locale
+* set system properties
 * publish issue information
 * retry failed tests
 
 Let's see some incomplete examples!
 
-=== Cartesian Prodict
+=== Cartesian Product
 
 ```java
 @CartesianProductTest
@@ -254,7 +253,7 @@ Process information after execution:
 // https://yuml.me/nipafx/edit/junit-pioneer-issue-test-suite
 image::images/issue-test-suite.png[role="diagram"]
 
-=== Retrying tests
+=== Retrying Tests
 
 ```java
 @RetryingTest(3)
