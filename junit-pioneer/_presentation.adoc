@@ -298,10 +298,20 @@ We want to:
 
 === JUnit Pioneer
 
-We are/have:
+We are:
 
-* four maintainers
-* a dozen contributors
+* Matthias Bünger -- Bishuemaster
+* Mihály Verhás -- Chief Developer
+* Nicolai Parlog -- Benevolent Dictator
+* Simon Schottner -- Build Engineer
+
+Plus about a dozen contribtors, +
+some of them recurring.
+
+=== JUnit Pioneer
+
+We have:
+
 * 4.7k lines of production code
 * 5.9k lines of test code
 * 26 releases, 5 since 1.0.0
@@ -452,12 +462,128 @@ Unexpected effects:
 * gives viewers insight into project
 * viewers help in their areas of expertise
 ** in Twitch chat
-** in GitHub
+** on GitHub
 * viewers pick up small issues
 * viewers become contributors
 * contributors become maintainers
 
-// TODO Twitch summary?
+=== Twitch
+
+Thanks to live-streaming this one-man show, +
+became a real project:
+
+* in April 2020, Simon and Matthias +
+  became maintainers
+* in November 2020, Mihaly joined
+
+A few contributors also stop by the stream +
+(and always enjoy when Nicolai reviews their PRs).
+
+
+== Project Management
+
+* fostering contributions
+* doing the dirty work
+* communication & prioritization
+* managing expectations
+
+=== Contributing Without Coding
+
+* creating, labeling, commenting, prioritizing, organizing issues (Nicolai can "just stream")
+* reviewing changes for technical merits and completeness
+* following up with other projects
+* remembering/updating configuration
+
+=== Issues - Preparing 1.0
+
+* no cohesive feature set ~> no good point for 1.0
+* instead prepare everything for users and contributors:
+** build pipeline
+** website
+** documentation
+** etc.
+* place "clean-up issues" in milestone "Cleaner Pioneer", eventually "1.0"
+
+=== Issues - Since Then
+
+• Kanban board
+
+=== Pull Requests
+
+* not from main
+* checklist, e.g. tests, documentation, contribution, etc.
+* squashing commits
+
+=== Squashing Commits
+
+* allows contributors to use Git however they like it
+* keeps commit history very clean
+* allows for very informative commit messages (part of the PR)
+
+=== Contribution Guide
+
+* CONTRIBUTING.md
+* describes all process steps in detail
+* for contributors
+* for maintainers
+
+=== Fostering Contributions
+
+* open source contribution guide
+* code style (packages, naming, `Optional`)
+* consistency is king, simplicity is king kong
+** always use AssertJ
+** always use `Optional`
+** always squash commits
+* Git configuration
+* documentation guide
+* appreciation
+** tone
+** quick replies
+** thank for contributions
+** code of conduct (not yet)
+** list of contributors
+
+=== Doing The Dirty Work
+
+* leave features to others
+* fix bugs
+* set up build, website, etc.
+* tackle hard issues (annotation, threading)
+
+=== Communcation Guide
+
+=== Protecting Maintaiers
+
+* what/when do maintainers do
+* the buck stops
+
+
+== Architecture
+
+* dependency management
+* service provider
+* our own AssertJ-style assertions
+* internal utilities
+* modules
+* package structure
+* `Optional`
+* thread-safety
+
+
+== Build Pipeline
+
+* Gradle, Shipkit, Bintray, GitHub Actions
+* Spotless, SonarQube, test coverage
+* one-click release
+* versioning
+* website
+
+
+== Challenges
+
+* Bintray
+* available time
 
 
 include::../_shared/about-slide.adoc[]
