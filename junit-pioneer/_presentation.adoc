@@ -480,83 +480,227 @@ A few contributors also stop by the stream +
 (and always enjoy when Nicolai reviews their PRs).
 
 
-== Project Management
+== Projecting
 
-* fostering contributions
-* doing the dirty work
 * communication & prioritization
+* doing the dirty work
+* fostering contributions
 * managing expectations
 
 === Contributing Without Coding
 
-* creating, labeling, commenting, prioritizing, organizing issues (Nicolai can "just stream")
-* reviewing changes for technical merits and completeness
-* following up with other projects
-* remembering/updating configuration
+Once a repo turns into a project, +
+project management becomes essential.
 
-=== Issues - Preparing 1.0
+There's plenty of ways of +
+*contributing without coding*.
 
-* no cohesive feature set ~> no good point for 1.0
-* instead prepare everything for users and contributors:
-** build pipeline
-** website
-** documentation
-** etc.
-* place "clean-up issues" in milestone "Cleaner Pioneer", eventually "1.0"
+These contributions are often +
+more important than code.
 
-=== Issues - Since Then
+=== Contributing Without Coding
 
-• Kanban board
+* curating issues
+** creating, labeling, replying, closings
+** prioritizing, organizing
+* reviewing PRs
+** technical merits
+** completeness
+* following up on uncomfortable tasks
+* remembering/updating documentation
+
+=== Dirty work
+
+Coding is fun! Cleaning up (often) isn't.
+
+As a maintainer:
+
+* fix bugs first
+* tackle the hard issues +
+  (annotations, threading, merge conflicts)
+* set up build pipeline, releases, +
+  documentation, website, etc.
+
+We created milestone _Cleaner Pioneers_ for that.
+
+=== Preparing 1.0
+
+Spring 2020 we started thinking about 1.0, +
+but Pioneer has no cohesive feature set.
+
+⇝ there's no good point for 1.0
+
+Instead, prepare everything for users and contributors.
+
+⇝ _Cleaner Pioneers_ became _1.0_
+
+[state="empty",background-color="#0D1117"]
+=== !
+image::images/cleaner-pioneers.png[background, size=contain]
+
+=== Since Then
+
+* Pioneer still has no cohesive feature set
+* all must-dos are done (for the time being)
+
+⇝ Milestone is wrong concept.
+
+So now we use a Kanban board +
+(via GitHub's _Projects_ feature).
+
+[state="empty",background-color="#0D1117"]
+=== !
+image::images/exploring-io.png[background, size=contain]
 
 === Pull Requests
 
-* not from main
-* checklist, e.g. tests, documentation, contribution, etc.
-* squashing commits
+Noteworthy details about PRs:
+
+* checklist
+* approval
+* squash & merge
+
+[state="empty",background-color="#0D1117"]
+=== !
+image::images/pr-checklist.png[background, size=contain]
+
+=== Approving Pull Requests
+
+Two maintainers need to approve a PR.
+
+Lack of trust? +
+No, sharing responsibility.
+
+(More on that later.)
 
 === Squashing Commits
 
-* allows contributors to use Git however they like it
-* keeps commit history very clean
-* allows for very informative commit messages (part of the PR)
+When a PR is ready to be merged:
 
-=== Contribution Guide
+* all commits are squashed into one
+* commit message is carefully crafted
+* that commit goes onto `main`
 
-* CONTRIBUTING.md
-* describes all process steps in detail
-* for contributors
-* for maintainers
+image::images/squash-merge.png[]
+
+=== Squashing Commits
+
+"But don't you loose the history?"
+
+Yes!
+
+* lets contributors use Git however they like
+* keeps commit history clean
+* leads to really good commit messages +
+  (prepared as part of the PR)
+
+[state="empty",background-color="#0D1117"]
+=== !
+image::images/commit-history.png[background, size=contain]
 
 === Fostering Contributions
 
-* open source contribution guide
-* code style (packages, naming, `Optional`)
-* consistency is king, simplicity is king kong
-** always use AssertJ
-** always use `Optional`
-** always squash commits
-* Git configuration
-* documentation guide
-* appreciation
-** tone
-** quick replies
-** thank for contributions
-** code of conduct (not yet)
-** list of contributors
+[start=0]
+. appreciation
+. contribution guide
+. explicit rules +
+  (preferably simple)
 
-=== Doing The Dirty Work
+=== Appreciation
 
-* leave features to others
-* fix bugs
-* set up build, website, etc.
-* tackle hard issues (annotation, threading)
+We're appreciative:
 
-=== Communcation Guide
+* positive tone
+* prioritize replies
+* thank for contributions, +
+  excuse delays
+// * have a code of conduct
+* list contributions
 
-=== Protecting Maintaiers
+[state="empty",background-color="#0D1117"]
+=== !
+image::images/contributions-thanks.png[background, size=contain]
 
-* what/when do maintainers do
-* the buck stops
+=== Contribution Guide
+
+We have a (very long) `CONTRIBUTING.md`:
+
+* describes all aspects in detail
+* binds maintainers and contributors
+* grew organically over time +
+  (more in a few slides)
+
+=== Contribution Guide
+
+A partial table of contents:
+
+* open source crash course (mosty links)
+* code organization and style (more in next section)
+* how to document: what goes where, style, etc.
+* contribution workflow: branching, PRs, merging, etc.
+* dependencies
+* versioning
+* communication
+
+=== Simplicity
+
+Some rules are intenionally strict +
+to keep them simple and avoid discussions:
+
+* always use AssertJ
+* always use `Optional`
+* always squash commits
+
+_Consistency is king, simplicity is King Kong._
+
+=== Communication Guide
+
+Various channels by decreasing importance:
+
+. project website
+. files (e.g. `CONTRIBUTING.md`)
+. Git commit messages
+. issues/PRs on GitHub
+. _#junit-pioneer_ in Discord
+. team calls
+. Twitch streams
+
+=== Protecting Maintainers
+
+> There's no expectation of availability!
+> This applies to users opening issues, contributors providing PRs, and other maintainers - none of them can expect a maintainer to have time to reply to their request.
+
+=== Sharing Responsibility
+
+Struggle for newest maintainers:
+
+* first open source project
+* project pre-existed
+* worried to break things
+
+Solution:
+
+* two maintainers sign off PRs
+* Nicolai is the benevolent dictator
+
+=== Benevolent Dictator
+
+Nicolai has special...
+
+* privilege -- can overrule anything
+* duty -- should've prevented all mistakes
+
+Writes Nicolai:
+
+> I bare responsibility for all mistakes.
+> (Moral responsibility, that is - legally, nobody has any responsibility. 😉)
+
+=== Projecting
+
+As you can see, quite a lof of +
+project and team management.
+
+Many ways to contribute without coding.
 
 
 == Coding
