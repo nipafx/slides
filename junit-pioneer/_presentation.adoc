@@ -47,7 +47,7 @@ include::../_shared/event-on-title-and-footer.adoc[]
 JUnit Pioneer -- https://junit-pioneer.org[junit-pioneer.org]:
 
 * provides extensions for https://github.com/junit-team/junit5/[JUnit 5] and its https://junit.org/junit5/docs/current/user-guide/[Jupiter API]
-* small project (5k lines of code, 4 maintainers)
+* small project (10.6k lines of code, 4 maintainers)
 
 Why is it interesting?
 
@@ -57,17 +57,17 @@ Why is it interesting?
 * one-click releases
 * automatic website build
 
-=== Lots to talk about!
+=== Table of Contents
 
 * JUnit 5 and its extension model
-* Pioneer's extensions
-* Pioneer's mission statement and history
-* how live-streaming on Twitch grew a community
+* Pioneer's extensions, mission, and history
+* how live-streaming grew a community
 * organizational style and contribution guide
-* code style, Git practices, release considerations
-* how we use Shipkit and GitHub actions for one-click releases
-* building the website with Jekyll and GitHub actions
-* building against mutliple Java/JUnit versions
+* architecture and dependency management
+* building with quality control and +
+  on multiple Java/JUnit versions and OS
+* one-click releases
+* website build
 
 
 == JUnit Extensions
@@ -75,7 +75,8 @@ Why is it interesting?
 Crash course to JUnit 5 and +
 its extension model.
 
-(This is _very_ incomplete!)
+(This is _very_ incomplete! +
+More in https://junit.org/junit5/docs/current/user-guide/#extensions[the user guide] or https://nipafx.dev/junit-5-extension-model/[this article].)
 
 === JUnit 5
 
@@ -109,7 +110,7 @@ Separation of concerns in JUnit 5:
 
 === Architecture
 
-image::images/architecture-limited-lean.png[style="diagram", width=550]
+image::images/architecture-limited-lean.png[role="diagram", width=550]
 
 === JUnit Jupiter
 
@@ -267,7 +268,7 @@ void test() {
 
 === Others
 
-We have a few more:
+We have https://junit-pioneer.org/docs/[a few more]:
 
 * ranges for parameters
 * set default time zone
@@ -443,8 +444,8 @@ image::images/stream-garland.png[background, size=contain]
 
 2019::
 * Nicolai discovers Twitch
-* does a few live streams in spring
-* decides to stream regularly in December
+* does a few https://twitch.tv/nipafx[live streams] in spring
+* decides to https://nipafx.dev/schedule/[stream regularly] in December
 
 2020::
 * 30 JUnit Pioneer streams
@@ -471,7 +472,21 @@ Unexpected effects:
 
 === Twitch
 
-Thanks to live-streaming this one-man show, +
+Thanks to live-streaming, we became a small community.
+
+In November 2020, we got together for donations:
+
+* Twitch sub money + individual donations
+* 570 EUR to Climate Action Fund and DKMS
+
+When the pandemic is over, +
+we'll finally meet for drinks.
+
+🍺🍹🥛🥃
+
+=== Twitch
+
+Thanks to live-streaming, this one-man show, +
 became a real project:
 
 * in April 2020, Simon and Matthias +
@@ -482,7 +497,7 @@ A few contributors also stop by the stream +
 (and always enjoy when Nicolai reviews their PRs).
 
 
-== Projecting
+== Project Management
 
 * communication & prioritization
 * doing the dirty work
@@ -511,6 +526,10 @@ more important than code.
 * following up on uncomfortable tasks
 * remembering/updating documentation
 
+[state="empty",background-color="#0D1117"]
+=== !
+image::images/issue-update-docs.png[background, size=contain]
+
 === Dirty work
 
 Coding is fun! Cleaning up (often) isn't.
@@ -523,7 +542,7 @@ As a maintainer:
 * set up build pipeline, releases, +
   documentation, website, etc.
 
-We created milestone _Cleaner Pioneers_ for that.
+We created milestone https://github.com/junit-pioneer/junit-pioneer/milestone/6?closed=1[_Cleaner Pioneers_] for that.
 
 === Preparing 1.0
 
@@ -547,7 +566,7 @@ image::images/cleaner-pioneers.png[background, size=contain]
 
 ⇝ Milestone is wrong concept.
 
-So now we use a Kanban board +
+So now we use https://github.com/junit-pioneer/junit-pioneer/projects/3[a Kanban board] +
 (via GitHub's _Projects_ feature).
 
 [state="empty",background-color="#0D1117"]
@@ -668,6 +687,8 @@ Various channels by decreasing importance:
 . team calls
 . Twitch streams
 
+We always push communication up the list as far as possible.
+
 === Protecting Maintainers
 
 > There's no expectation of availability!
@@ -698,7 +719,7 @@ Writes Nicolai:
 > I bare responsibility for all mistakes.
 > (Moral responsibility, that is - legally, nobody has any responsibility. 😉)
 
-=== Projecting
+=== Project Management
 
 As you can see, quite a lof of +
 project and team management.
@@ -741,7 +762,7 @@ How?
 
 * ⚠️ one package is called `internal`
 * ⚠️ package info says it's internal
-* 🛑 we ship modular JAR that +
+* 🛑 we ship https://nipafx.dev/java-module-system-tutorial/[modular JAR] that +
   doesn't export these packages
 
 === More Architecture
@@ -838,8 +859,8 @@ We're mostly sure, we got this. 😬
 
 === Build Pipeline
 
-* build project with Gradle (Kotlin style)
-* trigger build on commit with GitHub Actions
+* build project with https://gradle.org/[Gradle] (https://gradle.org/kotlin/[Kotlin style])
+* trigger build on commit with https://github.com/features/actions[GitHub Actions]
 * kick off release build on GitHub
 * trigger website build
 
@@ -855,20 +876,24 @@ So we let https://github.com/diffplug/spotless[Spotless]
 and https://github.com/checkstyle/checkstyle[Checkstyle] +
 break the build on violations.
 
-// TODO Spotless collage
+[state="empty",background-color="#0D1117"]
+=== !
+image::images/spotless-comments.jpg[background, size=contain]
 
 === Quality Control
 
 Code quality:
 
-* we want to avoid pitfalls
+* we want to avoid pitfalls and gotchas
 * we want high test coverage
 * we know better than any tool 😁
 
 We use https://www.sonarqube.org/[SonarQube] +
 to analyze and report.
 
-// TODO Sonar collage
+[state="empty",background-color="#0D1117"]
+=== !
+image::images/sonarqube-comments.jpg[background, size=contain]
 
 === Version Control
 
@@ -883,12 +908,23 @@ All with GitHub Actions.
 
 === Version Control
 
-// TODO show config
+```sh
+# main-build.yml
+strategy:
+  matrix:
+    java: [ 8, 11, 15 ]
+    os: [ubuntu, macos]
+
+# junit5-build.yml
+strategy:
+  matrix:
+    junit-version: [ '5.5.0', '5.6.0', ... ]
+```
 
 === One-Click Releases
 
-Configure manually dispatched +
-workflow on GitHub Actions:
+https://github.blog/changelog/2020-07-06-github-actions-manual-triggers-with-workflow_dispatch/[Manually dispatched workflow] +
+on GitHub Actions:
 
 image::images/trigger-release.png[]
 
@@ -915,6 +951,7 @@ Last step triggers website build:
 * pulls in all projects
 * builds website with docs
 * pulls version(s) from files
+* builds website with Jekyll
 
 [state="empty",background-color="black"]
 === !
@@ -925,11 +962,18 @@ image::images/website-landing.jpg[background, size=contain]
 image::images/website-docs.jpg[background, size=contain]
 
 
-== Challenges
+== That was JUnit Pioneer
 
-* Bintray
-* available time
+From code to community, from planning to building +
+we hope you saw something interesting!
 
+To follow up:
+
+* visit https://junit-pioneer.org[junit-pioneer.org]
+* come to https://github.com/junit-pioneer/junit-pioneer[github.com/junit-pioneer]
+* watch https://twitch.tv/nipafx[nipafx on Twitch]
+* tweet https://twitter.com/nipafx[@nipafx] (DMs open)
+* join https://discord.gg/rHfJeCF[our Discord]
 
 include::../_shared/about-slide.adoc[]
 
