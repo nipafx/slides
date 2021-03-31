@@ -67,6 +67,8 @@ Why is it interesting?
 * code style, Git practices, release considerations
 * how we use Shipkit and GitHub actions for one-click releases
 * building the website with Jekyll and GitHub actions
+* building against mutliple Java/JUnit versions
+
 
 == JUnit Extensions
 
@@ -315,8 +317,8 @@ We have:
 * 4.7k lines of production code
 * 5.9k lines of test code
 * 26 releases, 5 since 1.0.0
-
-// TODO: more meaningful stats?
+* Java 8 as requirement
+* Java 9-15 supported
 
 === How did we get here?
 
@@ -650,6 +652,7 @@ to keep them simple and avoid discussions:
 * always use AssertJ
 * always use `Optional`
 * always squash commits
+* always apply naming rules
 
 _Consistency is king, simplicity is King Kong._
 
@@ -826,13 +829,100 @@ Thread safety:
 We're mostly sure, we got this. 😬
 
 
-== Build Pipeline
+== Building
 
-* Gradle, Shipkit, Bintray, GitHub Actions
-* Spotless, SonarQube, test coverage
-* one-click release
-* versioning
-* website
+* quality control
+* compatibility
+* one-click releases
+* website build
+
+=== Build Pipeline
+
+* build project with Gradle (Kotlin style)
+* trigger build on commit with GitHub Actions
+* kick off release build on GitHub
+* trigger website build
+
+=== Quality Control
+
+Code style:
+
+* we want a uniform code style
+* we don't want to manually +
+  discuss or enforce it
+
+So we let https://github.com/diffplug/spotless[Spotless]
+and https://github.com/checkstyle/checkstyle[Checkstyle] +
+break the build on violations.
+
+// TODO Spotless collage
+
+=== Quality Control
+
+Code quality:
+
+* we want to avoid pitfalls
+* we want high test coverage
+* we know better than any tool 😁
+
+We use https://www.sonarqube.org/[SonarQube] +
+to analyze and report.
+
+// TODO Sonar collage
+
+=== Version Control
+
+Build against:
+
+* range of operating systems
+* range of Java versions
+* as module and not
+* range of JUnit versions
+
+All with GitHub Actions.
+
+=== Version Control
+
+// TODO show config
+
+=== One-Click Releases
+
+Configure manually dispatched +
+workflow on GitHub Actions:
+
+image::images/trigger-release.png[]
+
+Kicks of Gradle release build.
+
+=== One-Click Releases
+
+In release build, Gradle uses https://github.com/shipkit[Shipkit] to:
+
+* detect next version
+* build artifacts
+* upload to Bintray (with https://github.com/bintray/gradle-bintray-plugin[Bintray plugin])
+* create Git tag
+* create GitHub release with changelog
+
+[state="empty",background-color="#0D1117"]
+=== !
+image::images/latest-release.png[background, size=contain]
+
+=== Website build
+
+Last step triggers website build:
+
+* pulls in all projects
+* builds website with docs
+* pulls version(s) from files
+
+[state="empty",background-color="black"]
+=== !
+image::images/website-landing.jpg[background, size=contain]
+
+[state="empty",background-color="black"]
+=== !
+image::images/website-docs.jpg[background, size=contain]
 
 
 == Challenges
