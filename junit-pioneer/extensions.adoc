@@ -1,0 +1,90 @@
+== Pioneer Extensions
+
+An incomplete list:
+
+* Cartesian products for parameters
+* set default locale
+* set system properties
+* publish issue information
+* retry failed tests
+
+Let's see some incomplete examples!
+
+=== Cartesian Product
+
+```java
+@CartesianProductTest
+@CartesianValueSource(ints = { 1, 2 })
+@CartesianValueSource(strings = { "A", "B" })
+void test(int number, String character) {
+    // called four times - with:
+	// (1, "A") (1, "B") (2, "A") (2, "B")
+}
+```
+
+=== Default Locale
+
+```java
+@Test
+@DefaultLocale(language = "en")
+void test() {
+    assertThat(Locale.getDefault())
+        .isEqualTo(new Locale("en"));
+}
+```
+
+=== System Properties
+
+```java
+@Test
+@ClearSystemProperty(key = "user.name")
+@SetSystemProperty(key = "user.dir", value = "...")
+void test() {
+    assertThat(System.getProperty("user.name"))
+		.isNull();
+    assertThat(System.getProperty("user.dir"))
+		.isEqualTo("...");
+}
+```
+
+=== Issue Information
+
+Mark tests that belong to issues:
+
+```java
+@Test
+@Issue("REQ-123")
+void test() {
+    // a test for the issue "REQ-123"
+}
+```
+
+Process information after execution:
+
+// https://yuml.me/nipafx/edit/junit-pioneer-issue-test-suite
+image::images/issue-test-suite.png[role="diagram"]
+
+=== Retrying Tests
+
+```java
+@RetryingTest(3)
+void test() {
+    // if 1st, 2nd, or 3rd execution passes,
+	// the test passes; otherwise fails
+}
+```
+
+=== Others
+
+We have https://junit-pioneer.org/docs/[a few more]:
+
+* ranges for parameters
+* set default time zone
+* set environment variables
+* disable specific parameterized tests
+* publish report entries
+* mocking standard I/O
+
+Isn't this all a bit random?
+
+⇝ Yes!
