@@ -60,13 +60,13 @@ All with GitHub Actions.
 # main-build.yml
 strategy:
   matrix:
-    java: [ 8, 11, 15 ]
+    java: [ 8, 11, 16 ]
     os: [ubuntu, macos]
 
 # junit5-build.yml
 strategy:
   matrix:
-    junit-version: [ '5.5.0', '5.6.0', ... ]
+    junit-version: [ '5.7.0', '5.7.1', '5.8.0', ... ]
 ```
 
 === One-Click Releases
