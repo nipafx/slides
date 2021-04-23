@@ -215,6 +215,9 @@ image::images/cells.jpg[background, size=cover]
 in the JDK / JRE folder?
 * are URLs to JDK classes / resources handcrafted?
 * search for casts to `URLClassLoader`
+** read class path from system property `java.class.path`
+** no way to append class path at run time
+** to load new classes, create new `ClassLoader`
 
 
 === Obsolete
@@ -226,8 +229,7 @@ Extension Mechanism, +
 Boot Class Path Override -- `--upgrade-module-path`
 * JRE selection `-version:N` -- `jlink`?
 * Web Start -- https://openwebstart.com/[openwebstart.com]
-* JavaFX -- https://openjfx.io/[openjfx.io/]
-
+* JavaFX in JDK -- https://openjfx.io/[openjfx.io]
 
 
 === But wait, there's more!
@@ -240,7 +242,8 @@ https://blog.codefx.org/java/java-11-migration-guide/[*Java 11 Migration Guide*]
 Background:
 
 * https://blog.codefx.org/java/planning-your-java-9-update/[Planning Your Java 9 Update]
-* https://blog.codefx.org/java/five-command-line-options-to-hack-the-java-9-module-system/[Five Command Line Options To Hack The Java Module System]
+* https://blog.codefx.org/java/five-command-line-options-to-hack-the-java-9-module-system/[Five Command Line Options To  +
+Hack The Java Module System]
 * https://blog.codefx.org/tools/jdeps-tutorial-analyze-java-project-dependencies/[JDeps Tutorial]
 
 And there are new version strings:
