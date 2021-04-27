@@ -667,7 +667,7 @@ runtime dependency.</p></div></div></section><section id="_in_practice"><h2>In P
 <div class="ulist"><ul><li><p>want to verify error behavior</p></li><li><p>want to test behavior outside of tests<br>
 (e.g. report entry publication)</p></li></ul></div>
 <div class="paragraph"><p>We often write tests that run <em>other</em> tests<br>
-and then evaluate their results.</p></div></div></section><section id="_tests_2"><h2>Tests²</h2><div class="slide-content"><div class="paragraph"><p>JUnit 5 has good support for that:</p></div>
+and then evaluate their results.</p></div></div></section><section id="_tests_2"><h2>Tests²</h2><div class="slide-content"><div class="paragraph"><p>JUnit Jupiter has good support for that:</p></div>
 <div class="ulist"><ul><li><p>we added a few usability methods</p></li><li><p>we created our own assertions</p></li></ul></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">ExecutionResults results = executeTestMethod(
 	MethodLevelInitializationFailureTestCase.class,
