@@ -1,0 +1,73 @@
+= Why Don't They Just...?!
+:backend: revealjs
+:revealjs_theme: nipa-night
+:revealjsdir: ../_reveal.js
+:revealjs_controls: false
+:revealjs_progress: false
+:revealjs_slideNumber: false
+:revealjs_history: true
+:revealjs_center: true
+:revealjs_transition: fade
+:revealjs_backgroundTransition: fade
+:revealjs_parallaxBackgroundImage: images/smoke.jpg
+:revealjs_parallaxBackgroundSize: 4088px 2725px
+:docinfo: shared
+:docinfodir: ../_shared
+
+:imagedir: images
+
+include::../_shared/highlight.js.adoc[]
+
+++++
+<h2>The Deliberations Behind Evolving Java</h2>
+++++
+
+include::../_shared/stream-on-title-and-footer.adoc[]
+
+// ######### //
+// I N T R O //
+// ######### //
+
+// ⇝
+
+
+== Let's get started!
+
+Slides at https://slides.nipafx.dev/just[slides.nipafx.dev/just]
+
+////
+Talk that explains why certain features are the way they are:
+
+* null-safe member selection operator ?.
+	~> https://nipafx.dev/why-elvis-should-not-visit-java/
+* immutable collections
+	~> https://nipafx.dev/immutable-collections-in-java/
+* streams and exceptions
+	~> lazy evaluation and limited generics
+* Optional as Monad
+	~> requires `null` handling in `map`/`flatMap`
+* add fields to records
+	~> records are a semantic entity
+	~> thanks to "state = API", they also work well with serialization and deconstruction patterns
+* remove semicolons
+	~> multi-language-expert-years project ~> aren't there better things to do
+	~> lets to lots of churn and discussions without much value
+
+"not a bad feature" is not enough
+	~> takes time +> priorities
+	~> there must a good migration path from a world without to a world with that feature
+
+Extension methods: yes, there are numerous arguments why we considered and rejected them, including:
+
+    API owners should own their APIs.  Extension methods undermine that.
+    APIs have documentation.  A code reader should be able to look at a call foo.bar() and discover, given only the static type of foo, the specification for the bar() method being called.  Extension methods undermine that.
+    Discoverability.  An author should be able to look at the specifcation for Foo and discover what methods they can call on it.  Extension methods undermine that.
+    Transparency.  If the meaning of foo.bar() is contextual, then foo.bar() in two different places may mean two different things.  This creates sharp edges for refactoring.
+    Traditional use-site extension methods are static, which means they have all the defects of static methods.
+
+Essentially, extension methods undermine the core values of the platform -- readability, specification, discoverability, transparency -- for the sake of "I would rather write foo.bar() instead of bar(foo) .  What a terrible tradeoff.
+////
+
+include::../_shared/about-slide.adoc[]
+
+include::images/sources.adoc[]
