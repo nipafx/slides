@@ -1,0 +1,178 @@
+== Why Don't They Just... Introduce Immutable Collections?!
+
+=== What We Want
+
+Immutable collections:
+
+* collection interfaces without mutating methods _and_
+* a guarantee that they won't be mutated by anybody else
+
+As opposed to unmodifiable collections:
+
+* collection interfaces without mutating methods _or_
+* mutating methods that throw exceptions
+
+
+=== Let's think this through
+
+(On the example of lists.
+Applies to other types of collections.)
+
+Assume we had `ImmutableList`:
+
+Question is, how is it related to `List`?
+
+=== ImmutableList <~ List
+
+image::images/immutable-collections-mutable-extends-immutable.png[role="diagram"]
+
+Good:
+
+* `ImmutableList` has no mutating methods
+
+=== ImmutableList <~ List
+
+Bad:
+
+[source,java]
+----
+List<Agent> agents = new ArrayList<>();
+// compiles because `List` extends `ImmutableList`
+ImmutableList<Agent> section4 = agents;
+// prints nothing
+section4.forEach(System.out::println);
+
+// now lets mutate `section4`
+agents.add(new Agent("Motoko"));
+// prints "Motoko" - how did she get in here?!
+section4.forEach(System.out::println);
+----
+
+=== List <~ ImmutableList
+
+image::images/immutable-collections-immutable-extends-mutable.png[role="diagram"]
+
+Good:
+
+* `ImmutableList` isn't extended +
+  and thus actually immutable
+
+=== List <~ ImmutableList
+
+Bad:
+
+* `ImmutableList` has mutating methods that throw
+* `ImmutableList` can be passed as `List` +
+  ~> it's reasonable to assume that mutation is allowed +
+  ~> runtime exceptions
+
+Only really work well locally, i.e. ot across API boundaries.
+
+=== How is this supposed to work at all?!
+
+Easy to mistake immutability as an absence:
+
+* take a `List`
+* remove mutating methods
+* profit
+
+No!
+
+This just gives you `UnmodifiableList`!
+
+=== How is this supposed to work at all?!
+
+An `UnmodifiableList` offers no mutating methods, without making immutability guarantees.
+
+There are two things to add:
+
+* make it mutable by adding the according methods
+* make it immutable by adding the according guarantees
+
+=== How is this supposed to work at all?!
+
+[quote,Your's truly]
+____
+Immutability is not an absence of mutation, it's a guarantee there won't be mutation
+____
+
+* (im)mutability is inherited by subtypes
+* if one of two types extends the other +
+  one of them contains both properties
+* 💣
+
+=== How is this supposed to work at all?!
+
+Solution:
+
+* don't make the two lists inherit one another
+* instead, introduce a new supertype for both
+
+image::images/immutable-collections-both-extend-unmodifiable.png[role="diagram"]
+
+=== In Practice
+
+[source,java]
+----
+interface SecretService {
+
+	void payAgents(UnmodifiableList<Agent> agents);
+	void sendOnMission(ImmutableList<Agent> agents);
+	void downtime(List<Agent> agents);
+
+	UnmodifiableList<Agent> teamRoster();
+	ImmutableList<Agent> teamOnMission();
+	List<Agent> team();
+
+}
+----
+
+=== In Practice
+
+But such code already exists +
+and often looks like this:
+
+[source,java]
+----
+interface SecretService {
+
+	void payAgents(List<Agent> agents);
+	void sendOnMission(List<Agent> agents);
+	void downtime(List<Agent> agents);
+
+	List<Agent> teamRoster();
+	List<Agent> teamOnMission();
+	List<Agent> team();
+
+}
+----
+
+=== Retrofit new hierarchy
+
+To benefit from new types, we need to use them (duh!).
+
+But:
+
+* replacing `List` with `ImmutableList` is source incompatible ~> rewrite code
+* replacing return type `List` with `UnmodifiableList` is source incompatible ~> rewrite code
+* replacing parameter type `List` with `UnmodifiableList` is bytecode incompatible ~> recompile code
+
+Imagine this for the JDK, all libraries, frameworks, and your code!
+
+=== Retrofit new hierarchy
+
+Alternative:
+
+* duplicate existing methods with a new name and new types
+* deprecate old variants
+
+Huge task that takes forever!
+
+=== Summary
+
+* immutable collection types are a great thing to have
+* proper implementations of `List` and `ImmutableList` can never extend one another
+* this complicates their introduction into existing APIs
+* requires rewriting and recompilinf code across the entire Java ecosystem
+
+That's not gonna happen - not now, not ever.
