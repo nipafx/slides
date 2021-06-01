@@ -1,0 +1,119 @@
+== Why Don't They Just... Introduce .? aka Null-Safe Memeber Selection ?!
+
+=== What We Want
+
+The ability to easily chain method calls on possibly `null` instances:
+
+[source,java]
+----
+// argh!
+String street = null;
+if (customer != null && customer.address() != null)
+	street = customer?.address()?.street();
+
+// ugh
+Oprtional<String> streetOpt = customerOpt
+	.map(Customer::address)
+	.map(Address::street);
+
+// yay (?)
+String street = customer?.address()?.street();
+----
+
+
+=== Let's think this through
+
+First, how does `null` come into the world?
+
+* *intentional*: allowed absence of a value
+* *accidental*:
+** forbidden absense of a value
+** uninitialized variable
+** botched error handling
+
+=== Intentional vs Accidental
+
+So how do you fix a `null`-related bug +
+(e.g. `NullPointerException`)?
+
+Bad:: add a `null` check and move on
+
+Good::
+* follow `null` back to its source
+* determine whether its intentional or accidental
+* fix code accordingly
+
+=== Intentional vs Accidental
+
+The problem with `null`:
+
+* is not avoiding the exception
+* it's figuring out what `null` means
+
+What's more work? +
+What would `?.` make easier?
+
+=== Sidenote: Optional
+
+That's why I like `Optional` so much:
+
+* use `Optional` whereever absence is allowed
+* make `null` always illegal
+
+~> Bake *intentional* vs *accidental* into the code.
+
+=== ?. Elsewhere
+
+But doesn't `?.` work elsewhere?
+
+Indeed! E.g. Kotlin:
+
+[source,kotlin]
+----
+val street = customer?.address?.street
+----
+
+Why does this work here?
+
+=== ?. Elsewhere
+
+Kotlin has more than `?.`:
+
+[source,kotlin]
+----
+// this is a compile error
+val street: String = customer?.address?.street
+// need to declare `street` as nullable
+val street: String? = customer?.address?.street
+----
+
+~> Type system needs to know about `null`!
+
+=== ?. Elsewhere
+
+Together:
+
+* `?.`:
+** makes `null` handling easier
+** proliferates `null`
+* nullable types:
+** require `null` handling
+** prevent accidental `null`
+
+
+=== Summary
+
+* the challenge with `null` is determining its meaning
+* `?.` doesn't help with that
+* instead it makes the wrong choice easier
+* unless nullable types hem it in
+
+=== Higher-Level Summary
+
+It doesn't make sense to introduce someting that:
+
+* makes the wrong action easier
+* requires non-existent features to work well
+
+Just because something works well in other languages +
+doesn't mean it'll work well in Java.
