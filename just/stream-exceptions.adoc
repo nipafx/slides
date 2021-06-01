@@ -1,19 +1,31 @@
-== Why Don't They Just... Make Streams Handle Checked EXceptions?!
+== Why don't they just...
+
+++++
+<table class="toc">
+	<tr class="toc-current"><td>... Let Streams Handle Checked Exceptions?!</td></tr>
+	<tr><td>... Introduce Immutable Collections?!</td></tr>
+	<tr><td>... Introduce <code>?.</code> For <code>null</code>-safe Member Selection?!</td></tr>
+</table>
+++++
 
 === What We Want
 
-Stream pipelines that work well with checked exceptions:
+Streams that work well with checked exceptions:
 
 [source,java]
 ----
 int compute(String word) throws IOException;
-int supercharge(int value) throws InterruptedException;
+int supercharge(int val) throws InterruptedException;
 
-List<Integer> supercharged = Stream
-	.of("foo", "bar")
-	.map(this::compute)
-	.map(this::supercharge)
-	.toList();
+try {
+	List<Integer> supercharged = Stream
+		.of("foo", "bar")
+		.map(this::compute)
+		.map(this::supercharge)
+		.toList();
+} catch (IOException | InterruptedException ex) {
+	// ...
+}
 ----
 
 === Let's think this through
@@ -21,13 +33,13 @@ List<Integer> supercharged = Stream
 We need:
 
 * an exception throwing `Function`
-* changes to `Stream` methods,
+* changes to `Stream` methods, +
   so they throw exceptions
 
 
 === Attempt #1
 
-Let `map` throw `Exception`.
+Let `map` throw `Exception`:
 
 [source,java]
 ----
@@ -35,8 +47,11 @@ interface Function<IN, OUT> {
 	OUT apply(IN input) throws Exception;
 }
 
-interface Stream<ELEMENT> {
-	<OUT> Stream<OUT> map(Function<ELEMENT, OUT> f) throws Exception;
+interface Stream<E> {
+	<OUT> Stream<OUT> map(Function<E, OUT> f)
+	throws Exception;
+
+	List<E> toList();
 }
 ----
 
@@ -48,12 +63,12 @@ That's not correct:
 * `map` does not apply the function
 * the terminal operation does
 
-~> Terminal ops have to declare `throws`.
+⇝ Terminal ops have to declare `throws`.
 
 
 === Attempt #2
 
-Let terminal operation throw `Exception`.
+Let terminal operation throw `Exception`:
 
 [source,java]
 ----
@@ -61,8 +76,10 @@ interface Function<IN, OUT> {
 	OUT apply(IN input) throws Exception;
 }
 
-interface Stream<ELEMENT> {
-	List<ELEMENT> toList() throws Exception;
+interface Stream<E> {
+	<OUT> Stream<OUT> map(Function<E, OUT> f)
+
+	List<E> toList() throws Exception;
 }
 ----
 
@@ -83,7 +100,7 @@ try {
 List<Integer> supercharged = Stream
 	.of("foo", "bar")
 	.map(word -> word)
-	// compiler error: unhandled exception
+	// compile error: unhandled exception
 	.toList();
 ----
 
@@ -91,17 +108,18 @@ List<Integer> supercharged = Stream
 
 That's awful:
 
-* compiler doesn't know which exception is thrown
-* we have to catch `Exception` and figure the rest out ourselves
+* compiler doesn't know exception type
+* we have to catch `Exception` and +
+  figure the rest out ourselves
 * we _always_ have to catch `Exception`
 
-~> Need more specific type than `Exception`
+⇝ Need more specific type than `Exception`
 
 
 === Attempt #3
 
 Capture exception in generic parameter, +
-and let terminal operation throw that.
+and let terminal operation throw that:
 
 [source,java]
 ----
@@ -109,11 +127,11 @@ interface Function<IN, OUT, EX extends Exception> {
 	OUT apply(IN input) throws EX;
 }
 
-interface Stream<ELEMENT, EX extends Exception> {
+interface Stream<E, EX extends Exception> {
 	<OUT, F_EX extends Exception>
-	Stream<OUT, F_EX> map(Function<ELEMENT, OUT, F_EX> f);
+	Stream<OUT, F_EX> map(Function<E, OUT, F_EX> f);
 
-	List<ELEMENT> toList() throws EX;
+	List<E> toList() throws EX;
 }
 ----
 
@@ -124,16 +142,16 @@ interface Stream<ELEMENT, EX extends Exception> {
 try {
 	List<Integer> supercharged = Stream
 		.of("foo", "bar")
-		// returns `Stream<Integer, IOException>`
+		// ⇝ Stream<Integer, IOException>
 		.map(this::compute)
-		// returns `Stream<Integer, InterruptedException>`
+		// ⇝ Stream<Integer, InterruptedException>
 		.map(this::supercharge)
 		.toList();
 } catch (InterruptedException ex) {
 	// good
 } catch (IOException ex) {
 	// isn't declared, so can't be caught
-	// ~> compile error
+	// ⇝ compile error
 }
 ----
 
@@ -144,18 +162,24 @@ That's not correct:
 * only last function's exception type is captured
 * other checked exceptions can't be caught
 
-~> Need to capture all exception types,
+⇝ Need to capture all exception types.
 
 
 === Attempt #4
 
 Merge exceptions in generic parameter, +
-and let terminal operation throw that.
+and let terminal operation throw that:
 
 [source,java]
 ----
-static <IN, OUT, NEW_EX extends Exception, STREAM_EX extends NEW_EX, F_EX extends NEW_EX>
-Stream<OUT, NEW_EX> map(Stream<IN, STREAM_EX> stream, Function<IN, OUT, F_EX> f) {
+static <
+	IN, OUT,
+	NEW_EX extends Exception,
+	STREAM_EX extends NEW_EX,
+	F_EX extends NEW_EX>
+Stream<OUT, NEW_EX> map(
+		Stream<IN, STREAM_EX> stream,
+		Function<IN, OUT, F_EX> f) {
 	// ...
 }
 ----
@@ -166,11 +190,11 @@ Stream<OUT, NEW_EX> map(Stream<IN, STREAM_EX> stream, Function<IN, OUT, F_EX> f)
 ----
 try {
 	List<Integer> supercharged = Stream
-		// Stream<Integer, IOException>
+		// ⇝ Stream<Integer, IOException>
 		.map(
-			// Stream<Integer, FileNotFoundException>
+			// ⇝ Stream<Integer, FileNotFoundException>
 			Stream.map(
-				// Stream<String, RuntimeException>
+				// ⇝ Stream<String, RuntimeException>
 				Stream.of("foo", "bar"),
 				this::throwsFileNotFoundException),
 			this::throwsZipException)
@@ -186,8 +210,11 @@ try {
 ----
 try {
 	List<Integer> supercharged = Stream
+		// ⇝ Stream<Integer, Exception>
 		.map(
+			// ⇝ Stream<Integer, IOException>
 			Stream.map(
+				// ⇝ Stream<String, RuntimeException>
 				Stream.of("foo", "bar"),
 				this::compute),
 			this::supercharge)
@@ -201,46 +228,71 @@ try {
 
 That's not good:
 
+* common case sucks: +
+  `Stream<SomeThing, RuntimeException>`
 * `map` as static methods sucks
-* exceptions don't generalize well +
-  ~> catching `Exception` would be common
+* catching `Exception` sucks +
+  (exceptions don't generalize well)
 
-~> Need to keep exception types distinct.
+⇝ Need to keep exception types distinct.
 
 
 === Attempt #5
 
 Create multiple `Stream` interfaces +
-that differ by number of thrown exceptions
+that differ by number of exceptions:
 
 [source,java]
 ----
-interface Stream<ELEMENT> {
-	<OUT, F_EX extends Exception>
-	StreamEx1<OUT, F_EX> map(FunctionEx<ELEMENT, OUT, F_EX> f);
+interface Stream<E> {
 
-	List<ELEMENT> toList();
+	<OUT, F_EX extends Exception>
+	StreamEx1<OUT, F_EX>
+	map(Function<E, OUT, F_EX> f);
+
+	List<E> toList();
 }
+----
 
-interface StreamEx1<ELEMENT, EX extends Exception> {
+=== Attempt #5
+
+[source,java]
+----
+interface StreamEx1<E, EX extends Exception> {
+
 	<OUT, F_EX extends Exception>
-	StreamEx2<OUT, EX, F_EX> map(FunctionEx<ELEMENT, OUT, F_EX> f);
+	StreamEx2<OUT, EX, F_EX>
+	map(Function<E, OUT, F_EX> f);
 
-	List<ELEMENT> toList() throws EX;
+	List<E> toList() throws EX;
 }
+----
 
-interface StreamEx2<ELEMENT, EX0 extends Exception, EX1 extends Exception> {
+=== Attempt #5
+
+[source,java]
+----
+interface StreamEx2<E,
+		EX0 extends Exception,
+		EX1 extends Exception> {
+
 	<OUT, F_EX extends Exception>
-	StreamExN<OUT> map(FunctionEx<ELEMENT, OUT, F_EX> f);
+	StreamExN<OUT> map(Function<E, OUT, F_EX> f);
 
-	List<ELEMENT> toList() throws EX0, EX1;
+	List<E> toList() throws EX0, EX1;
 }
+----
 
-interface StreamExN<ELEMENT> {
+=== Attempt #5
+
+[source,java]
+----
+interface StreamExN<E> {
+
 	<OUT, F_EX extends Exception>
-	StreamExN<OUT> map(FunctionEx<ELEMENT, OUT, F_EX> f);
+	StreamExN<OUT> map(Function<E, OUT, F_EX> f);
 
-	List<ELEMENT> toList() throws Exception;
+	List<E> toList() throws Exception;
 }
 ----
 
@@ -250,16 +302,17 @@ interface StreamExN<ELEMENT> {
 ----
 try {
 	List<Integer> supercharged = Stream
-		// returns `Stream<Integer>`
+		// ⇝ Stream<Integer>
 		.of("foo", "bar")
-		// returns `StreamEx1<Integer, IOException>`
+		// ⇝ StreamEx1<Integer, IOException>
 		.map(this::compute)
-		// returns `StreamEx2<Integer, IOException, InterruptedException>`
+		// ⇝ StreamEx2<Integer, IOException,
+		//             InterruptedException>
 		.map(this::supercharge)
 		.toList();
-} catch (InterruptedException ex) {
-	// good
 } catch (IOException ex) {
+	// good
+} catch (InterruptedException ex) {
 	// great
 }
 ----
@@ -271,27 +324,31 @@ That's correct and usable! +
 
 * but it leads to many additional interfaces
 * together with primitive specializations +
-  ~> combinatorial explision
-* extra: functions may declare multiple exceptions
+  ⇝ combinatorial explosion 💣²
+* functions may declare multiple exceptions +
+  ⇝ need multiple overloads for all operations +
+  ⇝ combinatorial explosion 💣³
 
-~> Need variadic generics.
+⇝ Need variadic generics.
 
 
 === Attempt #6
 
-Put all exceptions into one type parameters.
+Put all exceptions into one type parameter:
 
 [source,java]
 ----
-interface Function<IN, OUT, EXs... extends Exception> {
+interface Function<
+		IN, OUT, EXs... extends Exception> {
 	OUT apply(IN input) throws EX;
 }
 
-interface Stream<ELEMENT, EXs... extends Exception> {
+interface Stream<E, EXs... extends Exception> {
 	<OUT, F_EX extends Exception>
-	Stream<OUT, EXs | F_EX> map(FunctionEx<ELEMENT, OUT, F_EX> f);
+	Stream<OUT, EXs | F_EX>
+	map(Function<E, OUT, F_EX> f);
 
-	List<ELEMENT> toList() throws EXs;
+	List<E> toList() throws EXs;
 }
 ----
 
@@ -301,11 +358,12 @@ interface Stream<ELEMENT, EXs... extends Exception> {
 ----
 try {
 	List<Integer> supercharged = Stream
-		// returns `Stream<Integer>`
+		// ⇝ Stream<Integer>
 		.of("foo", "bar")
-		// returns `Stream<Integer, IOException>`
+		// ⇝ Stream<Integer, IOException>
 		.map(this::compute)
-		// returns `Stream<Integer, IOException, InterruptedException>`
+		// ⇝ Stream<Integer, IOException,
+		//          InterruptedException>
 		.map(this::supercharge)
 		.toList();
 } catch (InterruptedException ex) {
@@ -322,7 +380,7 @@ All around great with one downside:
 * Java doesn't allow that
 * neither `Function` nor `Stream` compiles
 
-Not great.
+😕
 
 
 === Attempt #7
@@ -333,13 +391,14 @@ Screw everything, just handle errors via return type:
 ----
 List<Integer> supercharged = Stream
 	.of("foo", "bar")
-	// returns `Stream<Try<Integer>>`
+	// ⇝ Stream<Try<Integer>>
 	.map(this::compute)
-	// returns `Stream<Try<Integer>>`
+	// ⇝ Stream<Try<Integer>>
 	.map(this::supercharge)
 	.toList();
 ----
 
+Already works today. +
 https://slides.nipafx.dev/expert-java-8/index.html#/_setting_the_scene[More on that.]
 
 
@@ -349,8 +408,8 @@ https://slides.nipafx.dev/expert-java-8/index.html#/_setting_the_scene[More on t
 ** passing a throwing funtion (intermediate op)
 ** handling the exception (terminal op)
 * for classic try-catch:
-** it needs generics to carry exception type(s) forward
-** there's no good solution with current language support
+** needs generics to carry exception type(s) forward
+** there's no good solution in today's Java
 * but there are acceptable alternatives
 
 === Higher-Level Summary
@@ -358,5 +417,8 @@ https://slides.nipafx.dev/expert-java-8/index.html#/_setting_the_scene[More on t
 It doesn't make sense to introduce someting that:
 
 * has serious shortcomings in practice
-* prevents an optimnal solution down the road
-* particuarly if an acceptable solution exists
+* prevents a much better solution down the road
+* particuarly if an acceptable alternative exists
+
+Just because something isn't perfect, +
+doesn't mean every (partial) fix should be implemented.

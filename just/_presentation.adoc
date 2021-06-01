@@ -1,4 +1,4 @@
-= Why Don't They Just...?!
+= Why Don't They Just... ?!
 :backend: revealjs
 :revealjs_theme: nipa-night
 :revealjsdir: ../_reveal.js
@@ -31,25 +31,37 @@ include::../_shared/stream-on-title-and-footer.adoc[]
 // ⇝
 
 
-== Let's get started!
+== Why don't they just...
+
+++++
+<table class="toc">
+	<tr><td>... Let Streams Handle Checked Exceptions?!</td></tr>
+	<tr><td>... Introduce Immutable Collections?!</td></tr>
+	<tr><td>... Introduce <code>?.</code> For <code>null</code>-safe Member Selection?!</td></tr>
+</table>
+++++
 
 Slides at https://slides.nipafx.dev/just[slides.nipafx.dev/just]
 
-include::immutables.adoc[]
-
 include::stream-exceptions.adoc[]
 
+include::immutables.adoc[]
+
 include::pirate-elvis.adoc[]
+
+include::summary.adoc[]
 
 ////
 Talk that explains why certain features are the way they are:
 
-* null-safe member selection operator ?.
-	~> https://nipafx.dev/why-elvis-should-not-visit-java/
-* immutable collections
-	~> https://nipafx.dev/immutable-collections-in-java/
-* streams and exceptions
-	~> lazy evaluation and limited generics
+* nullable types
+
+ the challenge here is a lot like generics, but worse.  Nullable types in the type system is "easy", but there are two problems: (a) the zillions of lines of Java libraries out there would have to be treated as "raw" with respect to nullability, until every use of X is replaced by X! or X?, which could be decades.  And (b) people would find this intrusive.
+
+<nd at the boundary between strict and loose code, you'd get warnings.
+Which means users would be flooded with warnings all the time.
+Like many forms of improved type checking, nullable types is one of those things you can do at the beginning, but is very hard to graft onto an existing ecosystem.
+
 * Optional as Monad
 	~> requires `null` handling in `map`/`flatMap`
 * add fields to records

@@ -1,28 +1,38 @@
-== Why Don't They Just... Introduce Immutable Collections?!
+== Why don't they just...
+
+++++
+<table class="toc">
+	<tr><td>... Let Streams Handle Checked Exceptions?!</td></tr>
+	<tr class="toc-current"><td>... Introduce Immutable Collections?!</td></tr>
+	<tr><td>... Introduce <code>?.</code> For <code>null</code>-safe Member Selection?!</td></tr>
+</table>
+++++
 
 === What We Want
 
 Immutable collections:
 
-* collection interfaces without mutating methods _and_
-* a guarantee that they won't be mutated by anybody else
+* interfaces without mutating methods _and_
+* a guarantee that no mutations occur
 
 As opposed to unmodifiable collections:
 
-* collection interfaces without mutating methods _or_
+* interfaces without mutating methods _or_
 * mutating methods that throw exceptions
 
 
 === Let's think this through
 
-(On the example of lists.
-Applies to other types of collections.)
+(On the example of lists.)
 
 Assume we had `ImmutableList`:
 
-Question is, how is it related to `List`?
+* like `List` today
+* but without any mutation
 
-=== ImmutableList <~ List
+⇝ How is it related to `List`?
+
+=== ImmutableList super List
 
 image::images/immutable-collections-mutable-extends-immutable.png[role="diagram"]
 
@@ -30,7 +40,7 @@ Good:
 
 * `ImmutableList` has no mutating methods
 
-=== ImmutableList <~ List
+=== ImmutableList super List
 
 Bad:
 
@@ -48,7 +58,7 @@ agents.add(new Agent("Motoko"));
 section4.forEach(System.out::println);
 ----
 
-=== List <~ ImmutableList
+=== List super ImmutableList
 
 image::images/immutable-collections-immutable-extends-mutable.png[role="diagram"]
 
@@ -57,18 +67,19 @@ Good:
 * `ImmutableList` isn't extended +
   and thus actually immutable
 
-=== List <~ ImmutableList
+=== List super ImmutableList
 
 Bad:
 
 * `ImmutableList` has mutating methods that throw
 * `ImmutableList` can be passed as `List` +
-  ~> it's reasonable to assume that mutation is allowed +
-  ~> runtime exceptions
+  ⇝ it's reasonable to assume that mutation is allowed +
+  ⇝ runtime exceptions
 
-Only really work well locally, i.e. ot across API boundaries.
+Only really work well locally, +
+i.e. not across API boundaries.
 
-=== How is this supposed to work at all?!
+=== Immutability as Absence
 
 Easy to mistake immutability as an absence:
 
@@ -78,35 +89,37 @@ Easy to mistake immutability as an absence:
 
 No!
 
-This just gives you `UnmodifiableList`!
+That just gives you `UnmodifiableList`!
 
-=== How is this supposed to work at all?!
+=== Immutability as a Feature
 
-An `UnmodifiableList` offers no mutating methods, without making immutability guarantees.
+An `UnmodifiableList` offers no mutating methods, +
+without making immutability guarantees.
 
 There are two things to add:
 
 * make it mutable by adding the according methods
 * make it immutable by adding the according guarantees
 
-=== How is this supposed to work at all?!
+=== (Im)Mutability Clash
 
 [quote,Your's truly]
 ____
 Immutability is not an absence of mutation, it's a guarantee there won't be mutation
 ____
 
-* (im)mutability is inherited by subtypes
-* if one of two types extends the other +
-  one of them contains both properties
-* 💣
+(Im)mutability is inherited by subtypes!
 
-=== How is this supposed to work at all?!
+If one of two types extends the other, +
+one of them contains both properties. +
+⇝ 💣
+
+=== How to make this work
 
 Solution:
 
 * don't make the two lists inherit one another
-* instead, introduce a new supertype for both
+* instead, have a new supertype for both
 
 image::images/immutable-collections-both-extend-unmodifiable.png[role="diagram"]
 
@@ -149,21 +162,25 @@ interface SecretService {
 
 === Retrofit new hierarchy
 
-To benefit from new types, we need to use them (duh!).
+To benefit from new types, +
+we need to use them (duh!), but:
 
-But:
+* `List` to `ImmutableList` +
+  is source-incompatible ⇝ rewrite
+* return type `List` to `UnmodifiableList` +
+  is source-incompatible ⇝ rewrite
+* parameter type `List` to `UnmodifiableList` +
+  is bytecode-incompatible ⇝ recompile
 
-* replacing `List` with `ImmutableList` is source incompatible ~> rewrite code
-* replacing return type `List` with `UnmodifiableList` is source incompatible ~> rewrite code
-* replacing parameter type `List` with `UnmodifiableList` is bytecode incompatible ~> recompile code
-
-Imagine this for the JDK, all libraries, frameworks, and your code!
+Imagine this for the JDK, +
+all libraries, frameworks, and your code!
 
 === Retrofit new hierarchy
 
 Alternative:
 
-* duplicate existing methods with a new name and new types
+* duplicate existing methods +
+  with a new name and new types
 * deprecate old variants
 
 Huge task that takes forever!
@@ -171,8 +188,18 @@ Huge task that takes forever!
 === Summary
 
 * immutable collection types are a great thing to have
-* proper implementations of `List` and `ImmutableList` can never extend one another
+* proper implementations of `List` and `ImmutableList` +
+  can never extend one another
 * this complicates their introduction into existing APIs
-* requires rewriting and recompilinf code across the entire Java ecosystem
+* requires rewriting and recompiling code +
+  across the entire Java ecosystem
 
-That's not gonna happen - not now, not ever.
+=== Higher-Level Summary
+
+It doesn't make sense to introduce someting that:
+
+* requires rewriting/recompiling the world
+* splits the ecosystem into *old* and *new*
+
+Just because something would be *nice to have* +
+doesn't mean it's *nice to get*.

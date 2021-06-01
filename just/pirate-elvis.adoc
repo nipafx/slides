@@ -1,15 +1,24 @@
-== Why Don't They Just... Introduce .? aka Null-Safe Memeber Selection ?!
+== Why don't they just...
+
+++++
+<table class="toc">
+	<tr><td>... Let Streams Handle Checked Exceptions?!</td></tr>
+	<tr><td>... Introduce Immutable Collections?!</td></tr>
+	<tr class="toc-current"><td>... Introduce <code>?.</code> For <code>null</code>-safe Member Selection?!</td></tr>
+</table>
+++++
 
 === What We Want
 
-The ability to easily chain method calls on possibly `null` instances:
+The ability to easily chain method calls +
+on possibly `null` instances:
 
 [source,java]
 ----
 // argh!
 String street = null;
 if (customer != null && customer.address() != null)
-	street = customer?.address()?.street();
+	street = customer.address().street();
 
 // ugh
 Oprtional<String> streetOpt = customerOpt
@@ -23,17 +32,18 @@ String street = customer?.address()?.street();
 
 === Let's think this through
 
-First, how does `null` come into the world?
+How does `null` come into the world?
 
 * *intentional*: allowed absence of a value
 * *accidental*:
 ** forbidden absense of a value
 ** uninitialized variable
 ** botched error handling
+** etc.
 
 === Intentional vs Accidental
 
-So how do you fix a `null`-related bug +
+How to fix a `null`-related bug +
 (e.g. `NullPointerException`)?
 
 Bad:: add a `null` check and move on
@@ -57,10 +67,10 @@ What would `?.` make easier?
 
 That's why I like `Optional` so much:
 
-* use `Optional` whereever absence is allowed
+* use `Optional` where absence is allowed
 * make `null` always illegal
 
-~> Bake *intentional* vs *accidental* into the code.
+⇝ Bake *intentional* vs *accidental* into the code.
 
 === ?. Elsewhere
 
@@ -73,7 +83,7 @@ Indeed! E.g. Kotlin:
 val street = customer?.address?.street
 ----
 
-Why does this work here?
+Why does it work there?
 
 === ?. Elsewhere
 
@@ -87,7 +97,7 @@ val street: String = customer?.address?.street
 val street: String? = customer?.address?.street
 ----
 
-~> Type system needs to know about `null`!
+⇝ Type system needs to know about `null`!
 
 === ?. Elsewhere
 
@@ -98,7 +108,7 @@ Together:
 ** proliferates `null`
 * nullable types:
 ** require `null` handling
-** prevent accidental `null`
+** minimize accidental `null`
 
 
 === Summary
@@ -106,7 +116,7 @@ Together:
 * the challenge with `null` is determining its meaning
 * `?.` doesn't help with that
 * instead it makes the wrong choice easier
-* unless nullable types hem it in
+* unless nullable types hem them in
 
 === Higher-Level Summary
 
@@ -115,5 +125,5 @@ It doesn't make sense to introduce someting that:
 * makes the wrong action easier
 * requires non-existent features to work well
 
-Just because something works well in other languages +
-doesn't mean it'll work well in Java.
+Just because something works well in one language +
+doesn't mean it'll work well in another.
