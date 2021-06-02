@@ -510,7 +510,7 @@ Range newRange = range with {
 }
 // range: [5; 10]
 // newRange: [0; 10]</code></pre></div></div>
-<div class="paragraph"><p>Transparency ⇝ no hidden state was lost.</p></div></div></section><section id="_serialization"><h2>Serialization</h2><div class="slide-content"><div class="paragraph"><p>Transparency makes record (de)serialization:kr</p></div>
+<div class="paragraph"><p>Transparency ⇝ no hidden state was lost.</p></div></div></section><section id="_serialization"><h2>Serialization</h2><div class="slide-content"><div class="paragraph"><p>Transparency makes record (de)serialization:</p></div>
 <div class="ulist"><ul><li><p>easier to implement and maintain in JDK</p></li><li><p>easier to use and maintain in your code</p></li><li><p>safer</p></li><li><p>faster</p></li></ul></div>
 <div class="paragraph"><p>(More in <a href="https://inside.java/2021/03/08/podcast-014/">Inside Java Podcast, episode 14</a>.)</p></div></div></section><section id="_summary"><h2>Summary</h2><div class="slide-content"><div class="ulist"><ul><li><p>records want to be (nominal) tuples</p></li><li><p>that requires transparency</p></li><li><p>transparency requires no additional fields</p></li><li><p>transparency affords additional features<br>
 like destructuring, <code>with</code> blocks, better serialization</p></li></ul></div></div></section><section id="_higher_level_summary"><h2>Higher-Level Summary</h2><div class="slide-content"><div class="paragraph"><p>It makes sense to introduce someting that has restricions<br>
@@ -573,7 +573,7 @@ List&lt;Integer&gt; supercharged = Stream
 	.toList();</code></pre></div></div></div></section><section id="_attempt_2_3"><h2>Attempt #2</h2><div class="slide-content"><div class="paragraph"><p>That&#8217;s awful:</p></div>
 <div class="ulist"><ul><li><p>compiler doesn&#8217;t know exception type</p></li><li><p>we have to catch <code>Exception</code> and<br>
 figure the rest out ourselves</p></li><li><p>we <em>always</em> have to catch <code>Exception</code></p></li></ul></div>
-<div class="paragraph"><p>⇝ Need more specific type than <code>Exception</code></p></div></div></section><section id="_attempt_3"><h2>Attempt #3</h2><div class="slide-content"><div class="paragraph"><p>Capture exception in generic parameter,<br>
+<div class="paragraph"><p>⇝ Need more specific type than <code>Exception</code>.</p></div></div></section><section id="_attempt_3"><h2>Attempt #3</h2><div class="slide-content"><div class="paragraph"><p>Capture exception in generic parameter,<br>
 and let terminal operation throw that:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">interface Function&lt;IN, OUT, EX extends Exception&gt; {
 	OUT apply(IN input) throws EX;
@@ -672,7 +672,7 @@ that differ by number of exceptions:</p></div>
 	List&lt;E&gt; toList() throws Exception;
 }</code></pre></div></div></div></section><section id="_attempt_5_5"><h2>Attempt #5</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">try {
 	List&lt;Integer&gt; supercharged = Stream
-		// ⇝ Stream&lt;Integer&gt;
+		// ⇝ Stream&lt;String&gt;
 		.of("foo", "bar")
 		// ⇝ StreamEx1&lt;Integer, IOException&gt;
 		.map(this::compute)
@@ -704,7 +704,7 @@ interface Stream&lt;E, EXs... extends Exception&gt; {
 	List&lt;E&gt; toList() throws EXs;
 }</code></pre></div></div></div></section><section id="_attempt_6_2"><h2>Attempt #6</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">try {
 	List&lt;Integer&gt; supercharged = Stream
-		// ⇝ Stream&lt;Integer&gt;
+		// ⇝ Stream&lt;String&gt;
 		.of("foo", "bar")
 		// ⇝ Stream&lt;Integer, IOException&gt;
 		.map(this::compute)
@@ -727,7 +727,7 @@ interface Stream&lt;E, EXs... extends Exception&gt; {
 	.map(this::supercharge)
 	.toList();</code></pre></div></div>
 <div class="paragraph"><p>Already works today.<br>
-<a href="https://slides.nipafx.dev/expert-java-8/index.html#/_setting_the_scene">More on that.</a></p></div></div></section><section id="_summary_2"><h2>Summary</h2><div class="slide-content"><div class="ulist"><ul><li><p>streams' laziness split in two:</p><div class="ulist"><ul><li><p>passing a throwing funtion (intermediate op)</p></li><li><p>handling the exception (terminal op)</p></li></ul></div></li><li><p>for classic try-catch:</p><div class="ulist"><ul><li><p>needs generics to carry exception type(s) forward</p></li><li><p>there&#8217;s no good solution in today&#8217;s Java</p></li></ul></div></li><li><p>but there are acceptable alternatives</p></li></ul></div></div></section><section id="_higher_level_summary_2"><h2>Higher-Level Summary</h2><div class="slide-content"><div class="paragraph"><p>It doesn&#8217;t make sense to introduce someting that:</p></div>
+<a href="https://slides.nipafx.dev/expert-java-8/index.html#/_setting_the_scene">More on that.</a></p></div></div></section><section id="_summary_2"><h2>Summary</h2><div class="slide-content"><div class="ulist"><ul><li><p>streams' laziness split in two:</p><div class="ulist"><ul><li><p>passing a throwing function (intermediate op)</p></li><li><p>handling the exception (terminal op)</p></li></ul></div></li><li><p>for classic try-catch:</p><div class="ulist"><ul><li><p>needs generics to carry exception type(s) forward</p></li><li><p>there&#8217;s no good solution in today&#8217;s Java</p></li></ul></div></li><li><p>but there are acceptable alternatives</p></li></ul></div></div></section><section id="_higher_level_summary_2"><h2>Higher-Level Summary</h2><div class="slide-content"><div class="paragraph"><p>It doesn&#8217;t make sense to introduce someting that:</p></div>
 <div class="ulist"><ul><li><p>has serious shortcomings in practice</p></li><li><p>prevents a much better solution down the road</p></li><li><p>particuarly if an acceptable alternative exists</p></li></ul></div>
 <div class="paragraph"><p>Just because something isn&#8217;t perfect,<br>
 doesn&#8217;t mean every (partial) fix should be implemented.</p></div></div></section></section>
