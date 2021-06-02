@@ -38,6 +38,7 @@ include::../_shared/stream-on-title-and-footer.adoc[]
 	<tr><td>... Let Streams Handle Checked Exceptions?!</td></tr>
 	<tr><td>... Introduce Immutable Collections?!</td></tr>
 	<tr><td>... Introduce <code>?.</code> For <code>null</code>-safe Member Selection?!</td></tr>
+	<tr><td>... Introduce Nullable Types?!</td></tr>
 </table>
 ++++
 
@@ -49,18 +50,12 @@ include::immutables.adoc[]
 
 include::pirate-elvis.adoc[]
 
+include::nullable-types.adoc[]
+
 include::summary.adoc[]
 
 ////
 Talk that explains why certain features are the way they are:
-
-* nullable types
-
- the challenge here is a lot like generics, but worse.  Nullable types in the type system is "easy", but there are two problems: (a) the zillions of lines of Java libraries out there would have to be treated as "raw" with respect to nullability, until every use of X is replaced by X! or X?, which could be decades.  And (b) people would find this intrusive.
-
-<nd at the boundary between strict and loose code, you'd get warnings.
-Which means users would be flooded with warnings all the time.
-Like many forms of improved type checking, nullable types is one of those things you can do at the beginning, but is very hard to graft onto an existing ecosystem.
 
 * Optional as Monad
 	~> requires `null` handling in `map`/`flatMap`

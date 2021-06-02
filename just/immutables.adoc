@@ -5,6 +5,7 @@
 	<tr><td>... Let Streams Handle Checked Exceptions?!</td></tr>
 	<tr class="toc-current"><td>... Introduce Immutable Collections?!</td></tr>
 	<tr><td>... Introduce <code>?.</code> For <code>null</code>-safe Member Selection?!</td></tr>
+	<tr><td>... Introduce Nullable Types?!</td></tr>
 </table>
 ++++
 
@@ -200,6 +201,7 @@ It doesn't make sense to introduce someting that:
 
 * requires rewriting/recompiling the world
 * splits the ecosystem into *old* and *new*
+* for incremental benefits
 
 Just because something would be *nice to have* +
 doesn't mean it's *nice to get*.

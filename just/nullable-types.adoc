@@ -1,0 +1,87 @@
+== Why don't they just...
+
+++++
+<table class="toc">
+	<tr><td>... Let Streams Handle Checked Exceptions?!</td></tr>
+	<tr><td>... Introduce Immutable Collections?!</td></tr>
+	<tr><td>... Introduce <code>?.</code> For <code>null</code>-safe Member Selection?!</td></tr>
+	<tr class="toc-current"><td>... Introduce Nullable Types?!</td></tr>
+</table>
+++++
+
+=== What We Want
+
+A way to explicitly (dis)allow `null`.
+
+Given a type `Foo`:
+
+* `Foo!` excludes `null`
+* `Foo?` allows `null`
+
+=== What We Want
+
+[source,java]
+----
+String? print(String! message) {
+	// [...]
+}
+
+// compile errors
+String! message = null;
+print(null);
+String! printed = print("foo");
+----
+
+=== News
+
+Good::
+Creating nullable types is relatively easy.
+
+Bad::
+Adopting them is _a lot_ of work.
+
+=== Adopting Nullable Types
+
+Third case:
+
+* `Foo!` excludes `null`
+* `Foo?` allows `null`
+* `Foo`:
+** legacy type
+** makes no assertion re `null`
+** must be treated like `Foo?`
+
+All existing declarations use legacy types.
+
+=== Adopting Nullable Types
+
+All existing declarations need to be updated.
+
+This is like the introduction of generics, but:
+
+* order of magnitude more warnings
+* order of magnitude more work
+* harder work
+** heterogeneous are very rare
+** `null` isn't
+
+=== Summary
+
+* creating nullable types is relatively easy
+* adopting them is _a lot_ of work
+
+[quote,Brian Goetz]
+____
+Like many forms of improved type checking, nullable types is one of those things you can do at the beginning, but is very hard to graft onto an existing ecosystem.
+____
+
+=== Higher-Level Summary
+
+It doesn't make sense to introduce someting that:
+
+* requires rewriting/recompiling the world
+* splits the ecosystem into *old* and *new*
+* for incremental benefits
+
+Just because something would be *nice to have* +
+doesn't mean it's *nice to get*.
