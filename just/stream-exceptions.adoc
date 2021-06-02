@@ -115,7 +115,7 @@ That's awful:
   figure the rest out ourselves
 * we _always_ have to catch `Exception`
 
-⇝ Need more specific type than `Exception`
+⇝ Need more specific type than `Exception`.
 
 
 === Attempt #3
@@ -304,7 +304,7 @@ interface StreamExN<E> {
 ----
 try {
 	List<Integer> supercharged = Stream
-		// ⇝ Stream<Integer>
+		// ⇝ Stream<String>
 		.of("foo", "bar")
 		// ⇝ StreamEx1<Integer, IOException>
 		.map(this::compute)
@@ -360,7 +360,7 @@ interface Stream<E, EXs... extends Exception> {
 ----
 try {
 	List<Integer> supercharged = Stream
-		// ⇝ Stream<Integer>
+		// ⇝ Stream<String>
 		.of("foo", "bar")
 		// ⇝ Stream<Integer, IOException>
 		.map(this::compute)
@@ -407,7 +407,7 @@ https://slides.nipafx.dev/expert-java-8/index.html#/_setting_the_scene[More on t
 === Summary
 
 * streams' laziness split in two:
-** passing a throwing funtion (intermediate op)
+** passing a throwing function (intermediate op)
 ** handling the exception (terminal op)
 * for classic try-catch:
 ** needs generics to carry exception type(s) forward
