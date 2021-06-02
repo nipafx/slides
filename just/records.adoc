@@ -1,0 +1,144 @@
+== Why don't they just...
+
+++++
+<table class="toc">
+	<tr class="toc-current"><td>... Let Us Add Fields To Records?!</td></tr>
+	<tr><td>... Let Streams Handle Checked Exceptions?!</td></tr>
+	<tr><td>... Introduce Immutable Collections?!</td></tr>
+	<tr><td>... Introduce <code>?.</code> For <code>null</code>-safe Member Selection?!</td></tr>
+	<tr><td>... Introduce Nullable Types?!</td></tr>
+</table>
+++++
+
+=== What We Want
+
+Being able to add fields to records:
+
+[source,java]
+----
+record Customer(String name) {
+
+	// no accessor
+	private final String id;
+
+	// [...]
+
+}
+----
+
+=== Why Do We Want That?
+
+To benefit from encapsulation _and_ +
+boilerplate reduction?
+
+The thing is: +
+Records are about neither.
+
+=== Record Semantics
+
+Core semantics (https://openjdk.java.net/jeps/395[source]):
+
+[quote]
+____
+[Records] are classes that act as transparent carriers for immutable data.
+____
+
+Transparency inspires this motto for records (https://cr.openjdk.java.net/~briangoetz/amber/datum.html[source]):
+
+[quote]
+____
+The API for a record models the state, the whole state, and nothing but the state.
+____
+
+=== Restrictions
+
+Transparency implies restrictions:
+
+* an accessor for each component +
+  (or the API doesn't model the state)
+* an accessible constructor with +
+  one parameter per component +
+  (or the API doesn't model the state)
+* **no additional fields** +
+  (or the API doesn't model the whole state)
+* no class inheritance +
+  (or the API doesn't model the whole state)
+
+=== Ok, But Why?
+
+Records were designed to be _nominal tuples_:
+
+* _nominal_ means they have names +
+  (as all types in Java do)
+* _tuples_ are a mathematical concept +
+  (pairs, triples, etc. are tuples)
+
+For a type to be a tuple, +
+it must conform to the restrictions.
+
+(https://nipafx.dev/java-record-semantics/#math-sorry[A bit more on the math.])
+
+=== Ok, But Why?!
+
+If records are tuples, +
+their deconstruction becomes:
+
+* easy
+* lossless
+
+⇝ We can do a few cool things!
+
+=== Destructuring
+
+https://openjdk.java.net/jeps/405[JEP 405] proposes _record patterns_ +
+that deconstruct records:
+
+[source,java]
+----
+if (range instanceof Range(int low, int high)
+		&& high < low)
+	return new Range(high, low);
+----
+
+Transparency ⇝ no hidden state was lost.
+
+=== With Blocks
+
+Future Java may (!) introduce `with` blocks:
+
+[source,java]
+----
+Range range = new Range(5, 10);
+// SYNTAX IS MADE UP!
+Range newRange = range with {
+	low = 0;
+}
+// range: [5; 10]
+// newRange: [0; 10]
+----
+
+Transparency ⇝ no hidden state was lost.
+
+=== Serialization
+
+Transparency makes record (de)serialization:kr
+
+* easier to implement and maintain in JDK
+* easier to use and maintain in your code
+* safer
+* faster
+
+(More in https://inside.java/2021/03/08/podcast-014/[Inside Java Podcast, episode 14].)
+
+=== Summary
+
+* records want to be (nominal) tuples
+* that requires transparency
+* transparency requires no additional fields
+* transparency affords additional features +
+  like destructuring, `with` blocks, better serialization
+
+=== Higher-Level Summary
+
+It makes sense to introduce someting that has restricions +
+if those restrictions enable other features.
