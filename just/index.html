@@ -693,13 +693,13 @@ that differ by number of exceptions:</p></div>
 <div class="paragraph"><p>⇝ Need variadic generics.</p></div></div></section><section id="_attempt_6"><h2>Attempt #6</h2><div class="slide-content"><div class="paragraph"><p>Put all exceptions into one type parameter:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">interface Function&lt;
 		IN, OUT, EXs... extends Exception&gt; {
-	OUT apply(IN input) throws EX;
+	OUT apply(IN input) throws EXs;
 }
 
 interface Stream&lt;E, EXs... extends Exception&gt; {
-	&lt;OUT, F_EX extends Exception&gt;
+	&lt;OUT, F_EXs... extends Exception&gt;
 	Stream&lt;OUT, EXs | F_EX&gt;
-	map(Function&lt;E, OUT, F_EX&gt; f);
+	map(Function&lt;E, OUT, F_EXs&gt; f);
 
 	List&lt;E&gt; toList() throws EXs;
 }</code></pre></div></div></div></section><section id="_attempt_6_2"><h2>Attempt #6</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">try {
@@ -827,9 +827,9 @@ if (customer != null &amp;&amp; customer.address() != null)
 	street = customer.address().street();
 
 // ugh
-Oprtional&lt;String&gt; streetOpt = customerOpt
-	.map(Customer::address)
-	.map(Address::street);
+Optional&lt;String&gt; streetOpt = customerOpt
+	.flatMap(Customer::address)
+	.flatMap(Address::street);
 
 // yay (?)
 String street = customer?.address()?.street();</code></pre></div></div></div></section><section id="_lets_think_this_through_3"><h2>Let&#8217;s think this through</h2><div class="slide-content"><div class="paragraph"><p>How does <code>null</code> come into the world?</p></div>
@@ -842,12 +842,12 @@ What would <code>?.</code> make easier?</p></div></div></section><section id="_s
 <div class="ulist"><ul><li><p>use <code>Optional</code> where absence is allowed</p></li><li><p>make <code>null</code> always illegal</p></li></ul></div>
 <div class="paragraph"><p>⇝ Bake <strong>intentional</strong> vs <strong>accidental</strong> into the code.</p></div></div></section><section id="_elsewhere"><h2>?. Elsewhere</h2><div class="slide-content"><div class="paragraph"><p>But doesn&#8217;t <code>?.</code> work elsewhere?</p></div>
 <div class="paragraph"><p>Indeed! E.g. Kotlin:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-kotlin" data-lang="kotlin">val street = customer?.address?.street</code></pre></div></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">var street = customer?.address?.street</code></pre></div></div>
 <div class="paragraph"><p>Why does it work there?</p></div></div></section><section id="_elsewhere_2"><h2>?. Elsewhere</h2><div class="slide-content"><div class="paragraph"><p>Kotlin has more than <code>?.</code>:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-kotlin" data-lang="kotlin">// this is a compile error
-val street: String = customer?.address?.street
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// this is a compile error
+var street: String = customer?.address?.street
 // need to declare `street` as nullable
-val street: String? = customer?.address?.street</code></pre></div></div>
+var street: String? = customer?.address?.street</code></pre></div></div>
 <div class="paragraph"><p>⇝ Type system needs to know about <code>null</code>!</p></div></div></section><section id="_elsewhere_3"><h2>?. Elsewhere</h2><div class="slide-content"><div class="paragraph"><p>Together:</p></div>
 <div class="ulist"><ul><li><p><code>?.</code>:</p><div class="ulist"><ul><li><p>makes <code>null</code> handling easier</p></li><li><p>proliferates <code>null</code></p></li></ul></div></li><li><p>nullable types:</p><div class="ulist"><ul><li><p>require <code>null</code> handling</p></li><li><p>minimize accidental <code>null</code></p></li></ul></div></li></ul></div></div></section><section id="_summary_4"><h2>Summary</h2><div class="slide-content"><div class="ulist"><ul><li><p>the challenge with <code>null</code> is determining its meaning</p></li><li><p><code>?.</code> doesn&#8217;t help with that</p></li><li><p>instead it makes the wrong choice easier</p></li><li><p>unless nullable types hem them in</p></li></ul></div></div></section><section id="_higher_level_summary_4"><h2>Higher-Level Summary</h2><div class="slide-content"><div class="paragraph"><p>It doesn&#8217;t make sense to introduce someting that:</p></div>
 <div class="ulist"><ul><li><p>makes the wrong action easier</p></li><li><p>requires non-existent features to work well</p></li></ul></div>
@@ -872,7 +872,7 @@ String! printed = print("foo");</code></pre></div></div></div></section><section
 <div class="ulist"><ul><li><p><code>Foo!</code> excludes <code>null</code></p></li><li><p><code>Foo?</code> allows <code>null</code></p></li><li><p><code>Foo</code>:</p><div class="ulist"><ul><li><p>legacy type</p></li><li><p>makes no assertion re <code>null</code></p></li><li><p>must be treated like <code>Foo?</code></p></li></ul></div></li></ul></div>
 <div class="paragraph"><p>All existing declarations use legacy types.</p></div></div></section><section id="_adopting_nullable_types_2"><h2>Adopting Nullable Types</h2><div class="slide-content"><div class="paragraph"><p>All existing declarations need to be updated.</p></div>
 <div class="paragraph"><p>This is like the introduction of generics, but:</p></div>
-<div class="ulist"><ul><li><p>order of magnitude more warnings</p></li><li><p>order of magnitude more work</p></li><li><p>harder work</p><div class="ulist"><ul><li><p>heterogeneous are very rare</p></li><li><p><code>null</code> isn&#8217;t</p></li></ul></div></li></ul></div></div></section><section id="_summary_5"><h2>Summary</h2><div class="slide-content"><div class="ulist"><ul><li><p>creating nullable types is relatively easy</p></li><li><p>adopting them is <em>a lot</em> of work</p></li></ul></div>
+<div class="ulist"><ul><li><p>order of magnitude more warnings</p></li><li><p>order of magnitude more work</p></li><li><p>harder work</p><div class="ulist"><ul><li><p>heterogeneous containers are very rare</p></li><li><p><code>null</code> isn&#8217;t</p></li></ul></div></li></ul></div></div></section><section id="_summary_5"><h2>Summary</h2><div class="slide-content"><div class="ulist"><ul><li><p>creating nullable types is relatively easy</p></li><li><p>adopting them is <em>a lot</em> of work</p></li></ul></div>
 <div class="quoteblock"><blockquote><div class="paragraph"><p>Like many forms of improved type checking, nullable types is one of those things you can do at the beginning, but is very hard to graft onto an existing ecosystem.</p></div></blockquote><div class="attribution">&#8212; Brian Goetz</div></div></div></section><section id="_higher_level_summary_5"><h2>Higher-Level Summary</h2><div class="slide-content"><div class="paragraph"><p>It doesn&#8217;t make sense to introduce someting that:</p></div>
 <div class="ulist"><ul><li><p>requires rewriting/recompiling the world</p></li><li><p>splits the ecosystem into <strong>old</strong> and <strong>new</strong></p></li><li><p>for incremental benefits</p></li></ul></div>
 <div class="paragraph"><p>Just because something would be <strong>nice to have</strong><br>
