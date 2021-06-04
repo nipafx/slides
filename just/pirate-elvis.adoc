@@ -23,9 +23,9 @@ if (customer != null && customer.address() != null)
 	street = customer.address().street();
 
 // ugh
-Oprtional<String> streetOpt = customerOpt
-	.map(Customer::address)
-	.map(Address::street);
+Optional<String> streetOpt = customerOpt
+	.flatMap(Customer::address)
+	.flatMap(Address::street);
 
 // yay (?)
 String street = customer?.address()?.street();
@@ -80,9 +80,9 @@ But doesn't `?.` work elsewhere?
 
 Indeed! E.g. Kotlin:
 
-[source,kotlin]
+[source,java]
 ----
-val street = customer?.address?.street
+var street = customer?.address?.street
 ----
 
 Why does it work there?
@@ -91,12 +91,12 @@ Why does it work there?
 
 Kotlin has more than `?.`:
 
-[source,kotlin]
+[source,java]
 ----
 // this is a compile error
-val street: String = customer?.address?.street
+var street: String = customer?.address?.street
 // need to declare `street` as nullable
-val street: String? = customer?.address?.street
+var street: String? = customer?.address?.street
 ----
 
 ⇝ Type system needs to know about `null`!

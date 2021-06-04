@@ -342,13 +342,13 @@ Put all exceptions into one type parameter:
 ----
 interface Function<
 		IN, OUT, EXs... extends Exception> {
-	OUT apply(IN input) throws EX;
+	OUT apply(IN input) throws EXs;
 }
 
 interface Stream<E, EXs... extends Exception> {
-	<OUT, F_EX extends Exception>
+	<OUT, F_EXs... extends Exception>
 	Stream<OUT, EXs | F_EX>
-	map(Function<E, OUT, F_EX> f);
+	map(Function<E, OUT, F_EXs> f);
 
 	List<E> toList() throws EXs;
 }
