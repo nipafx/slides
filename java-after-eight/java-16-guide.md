@@ -1,8 +1,10 @@
-# Java 15
+# Java 16
 
 ## Language
 
-* record intro - replace `Map.Entry` in `ArticleFactory::createArticle`
+* type pattern in `RepoGenealogist`
+
+* record intro - replace `Map.Entry` in `PostFactory::createArticle`
 
 	```java
 	private static class FrontMatterLine {
@@ -49,9 +51,8 @@
 		* return value of `PostFactory::keyValuePairFrom`
 	* as method-local records
 		* in `Genealogy::inferTypedRelations`
-* type pattern in `RepoGenealogist`
 
 ## APIs
 
 * `Stream::toList` instead of `collect(toUnmodifiableList())`
-	* beware of generics in `Main::creategenealogy` - add `<Post>` to one of the concatenated streams
+	* beware of generics in `Main::createGenealogy` - add `<Post>` to one of the concatenated streams
