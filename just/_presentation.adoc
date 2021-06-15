@@ -63,23 +63,48 @@ include::nullable-types.adoc[]
 include::summary.adoc[]
 
 ////
-Talk that explains why certain features are the way they are:
+## Optional as Monad
 
-* Optional as Monad
 	~> requires `null` handling in `map`/`flatMap`
-* remove semicolons
+
+
+## Remove Semicolons
+
 	~> multi-language-expert-years project ~> aren't there better things to do
 	~> lets to lots of churn and discussions without much value
 
-Extension methods: yes, there are numerous arguments why we considered and rejected them, including:
 
-    API owners should own their APIs.  Extension methods undermine that.
-    APIs have documentation.  A code reader should be able to look at a call foo.bar() and discover, given only the static type of foo, the specification for the bar() method being called.  Extension methods undermine that.
-    Discoverability.  An author should be able to look at the specifcation for Foo and discover what methods they can call on it.  Extension methods undermine that.
-    Transparency.  If the meaning of foo.bar() is contextual, then foo.bar() in two different places may mean two different things.  This creates sharp edges for refactoring.
-    Traditional use-site extension methods are static, which means they have all the defects of static methods.
+## Remove Checked Exceptions
 
-Essentially, extension methods undermine the core values of the platform -- readability, specification, discoverability, transparency -- for the sake of "I would rather write foo.bar() instead of bar(foo) .  What a terrible tradeoff.
+
+## Extension Methods
+
+> yes, there are numerous arguments why we considered and rejected them, including:
+>
+> API owners should own their APIs.  Extension methods undermine that.
+> APIs have documentation.  A code reader should be able to look at a call foo.bar() and discover, given only the static type of foo, the specification for the bar() method being called.  Extension methods undermine that.
+> Discoverability.  An author should be able to look at the specifcation for Foo and discover what methods they can call on it.  Extension methods undermine that.
+> Transparency.  If the meaning of foo.bar() is contextual, then foo.bar() in two different places may mean two different things.  This creates sharp edges for refactoring.
+> Traditional use-site extension methods are static, which means they have all the defects of static methods.
+>
+> Essentially, extension methods undermine the core values of the platform -- readability, specification, discoverability, transparency -- for the sake of "I would rather write foo.bar() instead of bar(foo) .  What a terrible tradeoff.
+
+
+## Template Strings
+
+"why ${not}"
+
+////
+
+
+
+////
+if a feature is "not worth it" because e.g. retrofitting it is "not possible" in all existing solutions, how are you ever going to get features for new projects that would be able to make use of such features and profit?
+RSB
+Raphael Schober
+1 second ago
+just because a feature is added, it does not mean you HAVE to use it in existing software.
+it seems like thats where you end up in a circle of stagnation, how do you overcome that in the future?
 ////
 
 include::../_shared/about-slide.adoc[]
