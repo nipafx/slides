@@ -1,0 +1,51 @@
+= Java Modules In Real Life
+:backend: revealjs
+:revealjs_theme: nipa-night
+:revealjsdir: ../_reveal.js
+:revealjs_controls: false
+:revealjs_progress: false
+:revealjs_slideNumber: false
+:revealjs_history: true
+:revealjs_center: true
+:revealjs_transition: fade
+:revealjs_backgroundTransition: fade
+:revealjs_parallaxBackgroundImage: images/puzzle.jpg
+:revealjs_parallaxBackgroundSize: 4088px 2725px
+:docinfo: shared
+:docinfodir: ../_shared
+
+:imagedir: images
+
+include::../_shared/highlight.js.adoc[]
+
+:host-name: IntelliJ Live
+:host-url: https://blog.jetbrains.com/idea/category/livestream/
+:host-logo-url: images/logo-intellij-idea-stream.png
+// :host-logo-style: background-color: #212121; border-width: 0;
+:host-twitter-name: @intellijidea
+:host-twitter-url: https://twitter.com/@intellijidea
+include::../_shared/event-on-title-and-footer.adoc[]
+
+// ######### //
+// I N T R O //
+// ######### //
+
+// ⇝
+
+== Java Modules In Real Life
+
+++++
+<table class="toc">
+	<tr><td>Why use modules?</td></tr>
+	<tr><td>What are common or tricky roadblocks?</td></tr>
+	<tr><td>Partial modularization</td></tr>
+	<tr><td>When (not) to use modules?</td></tr>
+	<tr><td>Where's the exit?!</td></tr>
+</table>
+++++
+
+Slides at https://slides.nipafx.dev/modules-irl[slides.nipafx.dev/modules-irl]
+
+include::../_shared/about-slide.adoc[]
+
+include::images/sources.adoc[]
