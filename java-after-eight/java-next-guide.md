@@ -12,4 +12,22 @@
 	* add `--enable-preview` to Surefire in genealogy
 	* add `--enable-preview` to scripts
 
-* turn `Post` into sealed type with `permits Article, Talk, Video`
+* use `switch` pattern matching in `RepoGenealogist::getRepository`:
+
+	```java
+	return switch (post) {
+		case Article article -> article.repository();
+		case Video video -> video.repository();
+		default -> Optional.empty();
+	};
+	```
+
+* use `switch` pattern matching in `TypeGenealogist::infer`:
+
+	```java
+	long score = switch (post2) {
+		case Article __ -> 50;
+		case Video __ -> 90;
+		case Talk __ -> 20;
+	};
+	```

@@ -37,7 +37,7 @@ The plan for today:
 
 // * start with a *Java 8* code base
 * start with a *Java 11* code base
-* take it all the way to *Java 16* +
+* take it all the way to *Java 17* +
   (and beyond)
 * be amazed by how much changes
 
@@ -292,11 +292,33 @@ var recommendation = """
 * OS-specific installers | `jpackage`
 
 
-== Java Next
+== Java 17
 
 *What we've seen:*
 
 * sealed clases | `sealed class ... permits`
+
+=== Java 17
+
+*What we haven't seen:*
+
+* always-strict floating-point semantics
+* enhanced pseudo-random number generators
+
+
+== Java Next
+
+*What we've seen:*
+
+* pattern matching in `switch` | ↴
++
+```java
+return switch (post) {
+	case Article article -> article.repository();
+	case Video video -> video.repository();
+	default -> Optional.empty();
+};
+```
 
 === Java Next
 
@@ -304,9 +326,8 @@ var recommendation = """
 
 * vector API | http://openjdk.java.net/projects/panama/[Project Panama]
 * foreign code and memory | http://openjdk.java.net/projects/panama/[Project Panama]
-* concise method bodies | http://openjdk.java.net/projects/amber/[Project Amber]
-* primitive classes | http://openjdk.java.net/projects/valhalla/[Project Valhalla]
-* fibers | http://openjdk.java.net/projects/loom/[Project Loom]
+* inline classes | http://openjdk.java.net/projects/valhalla/[Project Valhalla]
+* virtual threads | http://openjdk.java.net/projects/loom/[Project Loom]
 
 
 == Java 11 to 16+
@@ -314,9 +335,9 @@ var recommendation = """
 // Java 8 to...
 // * stronger encapsulation and better services | modules
 // * safer code | processes, versions, whitespace, etc.
-* more expressive code | LOC: 2058 📉 1621
-// characters: 69003 📉 58661
-* faster code | run time: ~ 1.1 s 📉 ~ 1 s
+* more expressive code | LOC: 2020 📉 1594
+// characters: 67880 📉 57574
+* faster code | run time: ~ 1.2 s 📉 ~ 1 s
 * better JVM | GCs, packaging, monitoring, etc.
 
 *Sure you don't want to upgrade?*
