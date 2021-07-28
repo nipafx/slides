@@ -545,7 +545,7 @@ awesome-app/bin/awesome</code></pre></div></div></div></section><section id="_mo
 running modules</p></li><li><p>migration to Java 9+</p></li><li><p>modularization</p></li><li><p>services and<br>
 advanced features</p></li><li><p>reflection and layers</p></li><li><p>custom runtime images</p></li></ul></div></div></section></section>
 <section id="_new_language_features"><h2>New Language Features</h2><div class="slide-content"><table class="toc">
-	<tr><td>Sealed Classes</td></tr>
+	<tr><td>Sealed Classes ⑰</td></tr>
 	<tr><td>Records ⑯</td></tr>
 	<tr><td>Type Pattern Matching ⑯</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
@@ -554,7 +554,7 @@ advanced features</p></li><li><p>reflection and layers</p></li><li><p>custom run
 	<tr><td>All The Small Things... ⑨⑯</td></tr>
 </table></div></section>
 <section><section id="_new_language_features_2"><h2>New Language Features</h2><div class="slide-content"><table class="toc">
-	<tr class="toc-current"><td>Sealed Classes</td></tr>
+	<tr class="toc-current"><td>Sealed Classes ⑰</td></tr>
 	<tr><td>Records ⑯</td></tr>
 	<tr><td>Type Pattern Matching ⑯</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
@@ -659,7 +659,7 @@ visible/accesible to one another.</p></div></div></section><section id="_flat_ma
 (thanks to exhaustiveness checks).</p></li><li><p>reduces need for complex OO solutions<br>
 (goodbye visitor pattern 👋)</p></li></ul></div></div></section></section>
 <section><section id="_new_language_features_3"><h2>New Language Features</h2><div class="slide-content"><table class="toc">
-	<tr><td>Sealed Classes</td></tr>
+	<tr><td>Sealed Classes ⑰</td></tr>
 	<tr class="toc-current"><td>Records ⑯</td></tr>
 	<tr><td>Type Pattern Matching ⑯</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
@@ -731,6 +731,7 @@ visible/accesible to one another.</p></div></div></section><section id="_flat_ma
 public record Range(int low, int high) {
 
 	// compiler generates:
+	//  * (final) fields
 	//  * canonical constructor
 	//  * accessors low(), high()
 	//  * equals, hashCode, toString
@@ -793,7 +794,7 @@ public low() {
 (e.g. <a href="https://github.com/FasterXML/jackson">Jackson</a>, <a href="https://johnzon.apache.org/">Apache Johnzon</a>)</p></li></ul></div></div></section><section id="_summary_2"><h2>Summary</h2><div class="slide-content"><div class="ulist"><ul><li><p>use records to replace data carriers</p></li><li><p>it&#8217;s not anti-boilerplate pixie dust<br>
 ⇝ use only when "the deal" makes sense</p></li><li><p>beware of limitations</p></li><li><p>beware of class-building facilites</p></li><li><p>observe ecosystem for adoption</p></li></ul></div></div></section></section>
 <section><section id="_new_language_features_4"><h2>New Language Features</h2><div class="slide-content"><table class="toc">
-	<tr><td>Sealed Classes</td></tr>
+	<tr><td>Sealed Classes ⑰</td></tr>
 	<tr><td>Records ⑯</td></tr>
 	<tr class="toc-current"><td>Type Pattern Matching ⑯</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
@@ -891,9 +892,9 @@ return switch (animal) {
 }</code></pre></div></div>
 <div class="paragraph"><p>(Strawman syntax!)</p></div></div></section><section id="_summary_3"><h2>Summary</h2><div class="slide-content"><div class="ulist"><ul><li><p><code>$TARGET instanceof $TYPE $VAR</code>:</p><div class="olist arabic"><ol class="arabic"><li><p>checks whether <code>$TARGET</code> is of type <code>$TYPE</code></p></li><li><p>creates variable <code>$TYPE $VAR = $TARGET</code></p></li><li><p>in scope wherever <code>instanceof $TYPE</code> is <code>true</code></p></li></ol></div></li><li><p>first of many patterns</p></li><li><p>don&#8217;t overuse it - polymorphism still exists</p></li><li><p>will integrate with <code>switch</code> and sealed classes</p></li></ul></div></div></section></section>
 <section><section id="_new_language_features_5"><h2>New Language Features</h2><div class="slide-content"><table class="toc">
-	<tr><td>Sealed Classes</td></tr>
+	<tr><td>Sealed Classes ⑰</td></tr>
 	<tr><td>Records ⑯</td></tr>
-	<tr><td>Pattern Matching ⑯</td></tr>
+	<tr><td>Type Pattern Matching ⑯</td></tr>
 	<tr class="toc-current"><td>Text Blocks ⑮</td></tr>
 	<tr><td>Switch Expressions ⑭</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
@@ -953,7 +954,7 @@ String haikuBlock = """
     """;</code></pre></div></div>
 <div class="paragraph"><p>⇝ Way fewer escapes in HTML/JSON/SQL/etc.</p></div></div></section><section id="_more_on_text_blocks"><h2>More on Text Blocks</h2><div class="slide-content"><div class="ulist"><ul><li><p><a href="https://blog.codefx.org/java/text-blocks/">Definitive Guide To Text Blocks</a></p></li><li><p><a href="http://cr.openjdk.java.net/~jlaskey/Strings/TextBlocksGuide_v9.html">Programmer&#8217;s Guide To Text Blocks</a></p></li></ul></div></div></section></section>
 <section><section id="_new_language_features_6"><h2>New Language Features</h2><div class="slide-content"><table class="toc">
-	<tr><td>Sealed Classes</td></tr>
+	<tr><td>Sealed Classes ⑰</td></tr>
 	<tr><td>Records ⑯</td></tr>
 	<tr><td>Type Pattern Matching ⑯</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
@@ -1148,7 +1149,7 @@ boolean result = switch (ternaryBool) {
 <div class="paragraph"><p>Compiler adds in <code>default</code> branch.</p></div></div></section><section id="_more_on_switch"><h2>More on <code>switch</code></h2><div class="slide-content"><div class="paragraph"><p>Definitive Guide To Switch Expressions</p></div>
 <div class="ulist"><ul><li><p>💻 <a href="https://blog.codefx.org/java/switch-expressions/">tiny.cc/java-12-switch</a></p></li><li><p>▶ <a href="https://www.youtube.com/watch?v=1znHEf3oSNI&amp;list=PL_-IO8LOLuNp2stY1qBUtXlfMdJW7wvfT">tiny.cc/java-12-switch-yt</a></p></li></ul></div></div></section></section>
 <section><section id="_new_language_features_7"><h2>New Language Features</h2><div class="slide-content"><table class="toc">
-	<tr><td>Sealed Classes</td></tr>
+	<tr><td>Sealed Classes ⑰</td></tr>
 	<tr><td>Records ⑯</td></tr>
 	<tr><td>Type Pattern Matching ⑯</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
