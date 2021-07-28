@@ -2,11 +2,11 @@
 
 ```java
 return switch (placement) {
-	case WINNER -> """
+	case FIRST -> """
 			You're
 			Number One!
 			""";
-	case LOOSER -> "Don't feel bad";
+	case SECOND -> "Don't feel bad";
 }
 ```
 
@@ -18,12 +18,13 @@ My name is *Nicolai* (Parlog)
 * blogger since 2014
 * freelancing developer, speaker, trainer since 2016
 * published author since 2019
+* Java Developer Advocate since 2021
 
 Main topics:
 
 * JDK features (language, APIs, JVM)
 * code quality (clean code and comments)
-* processes (code reviews, knowledge sharing)
+// * processes (code reviews, knowledge sharing)
 
 ////
 === About You
