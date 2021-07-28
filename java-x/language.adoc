@@ -2,7 +2,7 @@
 
 ++++
 <table class="toc">
-	<tr><td>Sealed Classes</td></tr>
+	<tr><td>Sealed Classes ⑰</td></tr>
 	<tr><td>Records ⑯</td></tr>
 	<tr><td>Type Pattern Matching ⑯</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
@@ -18,7 +18,7 @@
 
 ++++
 <table class="toc">
-	<tr class="toc-current"><td>Sealed Classes</td></tr>
+	<tr class="toc-current"><td>Sealed Classes ⑰</td></tr>
 	<tr><td>Records ⑯</td></tr>
 	<tr><td>Type Pattern Matching ⑯</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
@@ -261,7 +261,7 @@ Consequences:
 
 ++++
 <table class="toc">
-	<tr><td>Sealed Classes</td></tr>
+	<tr><td>Sealed Classes ⑰</td></tr>
 	<tr class="toc-current"><td>Records ⑯</td></tr>
 	<tr><td>Type Pattern Matching ⑯</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
@@ -382,6 +382,7 @@ Takes 44 lines!
 public record Range(int low, int high) {
 
 	// compiler generates:
+	//  * (final) fields
 	//  * canonical constructor
 	//  * accessors low(), high()
 	//  * equals, hashCode, toString
@@ -565,7 +566,7 @@ TODO
 
 ++++
 <table class="toc">
-	<tr><td>Sealed Classes</td></tr>
+	<tr><td>Sealed Classes ⑰</td></tr>
 	<tr><td>Records ⑯</td></tr>
 	<tr class="toc-current"><td>Type Pattern Matching ⑯</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
@@ -776,9 +777,9 @@ return switch (animal) {
 
 ++++
 <table class="toc">
-	<tr><td>Sealed Classes</td></tr>
+	<tr><td>Sealed Classes ⑰</td></tr>
 	<tr><td>Records ⑯</td></tr>
-	<tr><td>Pattern Matching ⑯</td></tr>
+	<tr><td>Type Pattern Matching ⑯</td></tr>
 	<tr class="toc-current"><td>Text Blocks ⑮</td></tr>
 	<tr><td>Switch Expressions ⑭</td></tr>
 	<tr><td>Local-Variable Type Inference ⑩</td></tr>
@@ -928,7 +929,7 @@ String phrase = """
 
 ++++
 <table class="toc">
-	<tr><td>Sealed Classes</td></tr>
+	<tr><td>Sealed Classes ⑰</td></tr>
 	<tr><td>Records ⑯</td></tr>
 	<tr><td>Type Pattern Matching ⑯</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
@@ -1325,7 +1326,7 @@ Definitive Guide To Switch Expressions
 
 ++++
 <table class="toc">
-	<tr><td>Sealed Classes</td></tr>
+	<tr><td>Sealed Classes ⑰</td></tr>
 	<tr><td>Records ⑯</td></tr>
 	<tr><td>Type Pattern Matching ⑯</td></tr>
 	<tr><td>Text Blocks ⑮</td></tr>
