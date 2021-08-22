@@ -1,0 +1,60 @@
+== Resolution
+
+When should you use this?
+
+=== Domain Overload
+
+Should you add `evaluate` this way? +
+Probably not.
+
+But what about:
+
+* `Resources estimateResourceUsage()`
+* `Strategy createComputationStrategy()`
+* `Invoice createInvoice(User u)`
+* `String prettyPrint()` (like https://github.com/Thihup/joel/commit/b49c9e7636ce409f9f875c4652fcaa905022dd62#diff-6a9248b7be98141e7c76af3955e11eb074d9cd88211aaf4be0d85c1453cc7649[here])
+* `void draw(Direction d, Style s, Canvas c)`
+
+⇝ Central abstractions can be overburdened +
+with diverse requirements.
+
+=== Visitor Pattern
+
+Separating a hierarchy from operations +
+is a case for https://nipafx.dev/java-visitor-pattern-pointless/[the visitor pattern].
+
+👾👾👾
+
+Using pattern matching over sealed type:
+
+* will often achieve same results
+* leads to much simpler code
+
+=== Edge of Space
+
+When parsing outside data, +
+types are often general +
+(think `JsonNode`).
+
+Consider pattern matching +
+to tease apart the data.
+
+=== Conclusion
+
+* polymorphism remains default approach +
+  to adding operations to types
+* where that's not ideal or where types are general +
+  consider pattern matching (and sealed classes)
+* together, they make it **easy** and **safe** +
+  to branch based on type and other properties
+
+=== Sequels
+
+* 📜 https://nipafx.dev/java-pattern-matching/[Pattern Matching in Java]
+* 📜 https://nipafx.dev/java-type-pattern-matching/[Type Pattern Matching with `instanceof`]
+* 📜 https://nipafx.dev/java-visitor-pattern-pointless/[Visitor Pattern Considered Pointless]
+* 📜 https://openjdk.java.net/jeps/405[Record Patterns & Array Patterns -  JEP 405]
+* 🎧 https://inside.java/2021/06/13/podcast-017/["Pattern Matching for switch" - Inside Java Podcast #17]
+* 📺 https://www.youtube.com/watch?v=anQq-R6AWOY&list=PLX8CzqL3ArzX8ZzPNjBgji7rznFFiOr58&index=3[Pattern Switches - Inside Java Newscast #8]
+* 📺 https://www.youtube.com/watch?v=652kheEraHQ&list=PLX8CzqL3ArzV4BpOzLanxd4bZr46x5e87&index=2[Sealed Classes - JEP Café #2]
+* 📺 https://www.youtube.com/watch?v=uNJTkppQEZQ&list=PLX8CzqL3ArzV4BpOzLanxd4bZr46x5e87&index=1[Switch Expressions - JEP Café #3]

@@ -1,0 +1,130 @@
+[state="gallery bottom right"]
+== Salvation
+image::images/salvation.jpg[background, size=cover]
+
+_Salvation_ by Peter F. Hamilton
+
+[NOTE.speaker]
+--
+* a few different storylines on or near Earth across the years 2050 to 2200
+* another storyline that seems to be far away in time and space
+* for the longest time, all they have in common are the main characters
+* only after at least three quartes of the book does it come together and I finally understood why I was being told these stories
+* as with every SciFi story, there's a decent ammount of suspenction of disbeliev
+--
+
+=== The Back Story
+
+We want to evaluate simple arithemtic computations, +
+for example:
+
+`1 + (-2) + |3 + (-4)|`
+
+++++
+<div class="r-stack">
+	<p class="fragment fade-in-then-out"><code>Add(1, (-2), |3 + (-4)|)</code></p>
+	<p class="fragment fade-in-then-out"><code>Add(1, Negate(2), |3 + (-4)|)</code></p>
+	<p class="fragment fade-in-then-out"><code>Add(1, Negate(2), Absolute(3 + (-4)))</code></p>
+	<p class="fragment fade-in-then-out"><code>Add(1, Negate(2), Absolute(Add(3, (-4))))</code></p>
+	<p class="fragment fade-in-then-out"><code>Add(1, Negate(2), Absolute(Add(3, Negate(4))))</code></p>
+</div>
+++++
+
+=== The Back Story
+
+`1 + (-2) + |3 + (-4)|`
+
+`Add(1, Negate(2), Absolute(Add(3, Negate(4))))`
+
+image::images/arithmetic-tree.png[]
+
+////
+Plant UML:
+
+@startmindmap
+scale 1.5
+skinparam backgroundcolor transparent
+* Add
+** Number
+*** 1
+** Negate
+*** Number
+**** 2
+** Absolute
+*** Add
+**** Number
+***** 3
+**** Negate
+***** Number
+****** 4
+@endmindmap
+////
+
+=== The Main Characters
+
+```java
+interface Node { }
+
+record Number(long number) implements Node { }
+
+record Negate(Node node) implements Node { }
+
+record Absolute(Node node) implements Node { }
+
+record Add(List<Node> summands) implements Node {
+
+	Add(Node... summands) {
+		this(List.of(summands));
+	}
+
+}
+```
+
+=== The Main Characters
+
+image::images/arithmetic-tree.png[width=650]
+
+```java
+new Add(
+	new Number(1),
+	new Negate(new Number(2)),
+	new Absolute(new Add(
+		new Number(3),
+		new Negate(new Number(4)))));
+```
+
+=== The Complication
+
+[quote]
+____
+Given a `Node`, evaluate the computation.
+____
+
+Easy:
+
+```java
+interface Node { long evaluate(); }
+
+record Number(long number) implements Node {
+	public long evalute() { return number; }
+}
+
+record Negate(Node node) implements Node {
+	public long evalute() { return -node.evalute(); }
+}
+```
+
+=== The Crisis
+
+[quote, 👾👾👾]
+____
+If you change `Node`, we annihilate Earth!
+____
+
+We need to evaluate "from the outside":
+
+```java
+static long evaluate(Node node) {
+	// ...
+}
+```

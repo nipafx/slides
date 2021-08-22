@@ -1,0 +1,300 @@
+== The Plot Thickens
+
+Evaluate `Node` without changing the interface.
+
+=== Flashback
+
+```java
+interface Node { }
+
+record Number(long number) implements Node { }
+record Negate(Node node) implements Node { }
+record Absolute(Node node) implements Node { }
+record Add(List<Node> summands) implements Node { }
+```
+
+=== Type Checking and Casting
+
+```java
+static long evaluate(Node node) {
+	if (node instanceof Number)
+		return ((Number) node).number();
+	if (node instanceof Negate)
+		return -evaluate(((Negate) node).node());
+	if (node instanceof Absolute) {
+		long r = evaluate(((Absolute) node).node());
+		return r >= 0 ? r : -r;
+	}
+	if (node instanceof Add)
+		return ((Add) node)
+			.summands().stream()
+			.mapToLong(Nodes::evaluate)
+			.sum();
+	throw new IllegalStateException();
+}
+```
+
+=== Type Checking and Casting
+
+Showdown:
+
+* hard to write and read
+* casting is error-prone
+* new/forgotten `Node` implementations +
+  lead to run-time errors
+
+=== Type Patterns
+
+A _pattern_ is:
+
+. a _test_/_predicate_ that is applied to a target
+. _pattern variables_  that are extracted from +
+  the target if the test passes
+
+This is a type pattern:
+
+```java
+//       |---- pattern -----|
+//target |---- test -----| variable
+if (node instanceof Number no)
+	// ... use `Number no`
+```
+
+(Type pattern were finalized in Java 16. +
+ We will see more patterns in the future.)
+
+=== Type Patterns
+
+```java
+static long evaluate(Node node) {
+	if (node instanceof Number no)
+		return no.number();
+	if (node instanceof Negate neg)
+		return -evaluate(neg.node());
+	if (node instanceof Absolute abs) {
+		long result = evaluate(abs.node());
+		return result >= 0 ? result : -result;
+	}
+	if (node instanceof Add add)
+		return add
+			.summands().stream()
+			.mapToLong(Nodes::evaluate)
+			.sum();
+	throw new IllegalStateException();
+}
+```
+
+=== Type Patterns
+
+Better:
+
+* makes writing and reading easier
+* removes error-prone casting
+
+=== Pattern Matching in Switch
+
+Allows us to also use patterns in `switch`:
+
+```java
+// makes `node` the target
+switch (node) {
+//  |- test --| variable
+	case Number no -> // ... use `Number no`
+	// other cases
+}
+```
+
+(This is a https://nipafx.dev/enable-preview-language-features/[preview feature] in Java 17.)
+
+=== Pattern Matching in Switch
+
+```java
+static long evaluate(Node node) {
+	return switch (node) {
+		case Number no -> no.number();
+		case Negate neg -> -evaluate(neg.node());
+		case Absolute abs -> {
+			long result = evaluate(abs.node());
+			yield result >= 0 ? result : -result;
+		}
+		case Add add -> add
+			.summands().stream()
+			.mapToLong(Nodes::evaluate)
+			.sum();
+		default ->
+			throw new IllegalArgumentException();
+	};
+}
+```
+
+=== Pattern Matching in Switch
+
+Better:
+
+* makes writing and reading even easier
+
+=== Deconstruction Patterns
+
+Allows us to deconstruct records +
+into their components:
+
+```java
+// flashback
+record Number(long number) implements Node { }
+
+if (node instanceof Number(long no))
+	// ... use `long no`
+switch (node) {
+	case Number(long no) -> // ... use `long no`
+	// other cases
+}
+```
+
+(Candidate for preview in Java 18.)
+
+=== Deconstruction Patterns
+
+```java
+static long evaluate(Node node) {
+	return switch (node) {
+		case Number(long no) -> no;
+		case Negate(var n) -> -evaluate(n);
+		case Absolute(var n) {
+			long result = evaluate(n);
+			yield result >= 0 ? result : -result;
+		};
+		case Add(var summands) -> summands.stream()
+			.mapToLong(Nodes::evaluate)
+			.sum();
+		default ->
+			throw new IllegalArgumentException();
+	};
+}
+```
+
+=== Deconstruction Patterns
+
+Better:
+
+* reduces number of variables/calls
+
+=== Guarded Patterns
+
+Allows us to add boolean checks to patterns:
+
+```java
+Node node = // ...
+switch (node) {
+	case Number(long no && no > 0) ->
+		// ... use `long no`, which is positive
+	case Number(long no && no < 0) ->
+		// ... use `long no`, which is negative
+	case Number(long __) ->
+		// we know the number is 0
+	// other cases
+}
+```
+
+(This is a preview feature in Java 17.)
+
+=== Guarded Patterns
+
+```java
+static long evaluate(Node node) {
+	return switch (node) {
+		case Number(long no) -> no;
+		case Negate(var n) -> -evaluate(n);
+		case Absolute(var n) && evaluate(n) < 0 ->
+			-evaluate(n);
+		case Absolute(var n) -> evaluate(n);
+		case Add(var summands) -> summands.stream()
+			.mapToLong(Nodes::evaluate)
+			.sum();
+		default ->
+			throw new IllegalArgumentException();
+	};
+}
+```
+
+=== Guarded Patterns
+
+Better:
+
+* elevates checks into `case`
+
+=== Sealed Classes
+
+Controls inheritance and +
+makes inheriting types known:
+
+```java
+// 👾👾👾: 🤨
+sealed interface Node
+	permits Number, Negate, Absolute, Add { }
+// ⇝ no other type can implement `Node`
+```
+
+(Sealed classes were finalized in Java 17.)
+
+=== Sealed Classes
+
+```java
+static long evaluate(Node node) {
+	return switch (node) {
+		case Number(long no) -> no;
+		case Negate(var n) -> -evaluate(n);
+		case Absolute(var n) && evaluate(n) < 0
+			-> -evaluate(n);
+		case Absolute(var n) -> evaluate(n);
+		case Add(var summands) -> summands.stream()
+			.mapToLong(Nodes::evaluate)
+			.sum();
+		// no default branch needed
+	};
+}
+```
+
+=== Sealed Classes
+
+Better:
+
+* turns new/forgotten `Node` implementations +
+  into _compile_ errors
+
+=== Timeline
+
+Java 16::
+* type patterns
+
+Java 17::
+* sealed classes
+* patterns in `switch` (preview)
+* guarded patterns (preview)
+
+Java ??::
+* deconstruction patterns +
+   (candidate for preview in 18)
+
+=== Plot Holes
+
+* pattern variable scope
+* dominance of pattern labels
+* completeness of pattern labels
+* `null` handling in `switch`
+* rules for sealed types
+* deconstruction of arrays
+
+=== Happy End
+
+`if`-`else` chains over types and conditions are:
+
+* hard to write and read
+* error-prone due to casting
+* hard to maintain when type hierarchy expands
+
+Compare to pattern matching:
+
+* easy to write and read (after getting used to them)
+* safe casting and easy deconstructing out of the box
+* sealed types allow use-site opt-in compiler +
+  support for expanding type hierarchy
