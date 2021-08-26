@@ -2,6 +2,7 @@
 
 ++++
 <table class="toc">
+	<tr><td>Pattern Matching in Switch</td></tr>
 	<tr><td>Sealed Classes ⑰</td></tr>
 	<tr><td>Records ⑯</td></tr>
 	<tr><td>Type Pattern Matching ⑯</td></tr>
@@ -18,6 +19,249 @@
 
 ++++
 <table class="toc">
+	<tr class="toc-current"><td>Pattern Matching in Switch</td></tr>
+	<tr><td>Sealed Classes ⑰</td></tr>
+	<tr><td>Records ⑯</td></tr>
+	<tr><td>Type Pattern Matching ⑯</td></tr>
+	<tr><td>Text Blocks ⑮</td></tr>
+	<tr><td>Switch Expressions ⑭</td></tr>
+	<tr><td>Local-Variable Type Inference ⑩</td></tr>
+	<tr><td>All The Small Things... ⑨⑯</td></tr>
+</table>
+++++
+
+Standing on three pillars.
+
+=== Preview Feature
+
+*Note*:
+
+This is https://blog.codefx.org/java/enable-preview-language-features/[a preview language feature]!
+
+* must be enabled with `--enable-preview` +
+  (on `javac` and `java`).
+* in IntelliJ, set the module's language level to +
+  _17 (Preview) - ..._
+* in Eclipse, go to _Compiler Settings_ +
+  and check _Enable preview features_
+
+=== Patterns in Switch
+
+Patterns and `switch` evolution +
+are coming together:
+
+```java
+// tired
+if (staff instanceof Employee employee)
+	employee.paySalary();
+else if (staff instanceof Freelancer freelancer)
+	freelancer.payBill();
+
+// wired
+switch (staff) {
+	case Employee emp -> emp.paySalary();
+	case Freelancer free -> free.payBill();
+	default -> { }
+}
+```
+
+=== Patterns in Switch
+
+When using patterns in switch:
+
+* switched-over variable becomes target
+* pattern goes after `case`
+
+```java
+//      target
+switch (staff) {
+	//   |- pattern -|
+	case Employee emp -> emp.paySalary();
+	//   |- pattern ---|
+	case Freelancer free -> free.payBill();
+	default -> { }
+}
+```
+
+=== Patterns in Switch
+
+Things to discuss:
+
+* `null` handling
+* guarded patterns
+* completeness
+
+=== Null Handling
+
+Explicit with `null` label:
+
+```java
+switch (staff) {
+	case Employee emp -> emp.paySalary();
+	case Freelancer free -> free.payBill();
+	case null -> { }
+	default -> { }
+}
+```
+
+=== Null Handling
+
+Default branch does not handle `null` +
+but branches can be merged:
+
+```java
+switch (staff) {
+	case Employee emp -> emp.paySalary();
+	case Freelancer free -> free.payBill();
+	case null, default -> { }
+}
+```
+
+=== Null Handling
+
+A pattern is _total_ +
+if it covers all possible inputs:
+
+```java
+switch (staff) {
+	// this is a "total" pattern
+	case Staff s -> { }
+}
+```
+
+Total patterns _include_ `null`!
+
+=== Null Handling
+
+If switching over `null`, +
+these branches can handle it:
+
+* `case null`
+* total pattern
+
+Whatever comes first.
+
+=== Guarded Patterns
+
+Extending patterns with boolean checks:
+
+```java
+//  |---------- GUARDED PATTERN -----------|
+//              | PATTERN |   | BOOL EXPR -|
+if (o instanceof (String s && s.length() > 1))
+	return "long string";
+```
+
+Equivalent:
+
+```java
+//  |----- PATTERN -----|    | BOOL EXPR -|
+if (o instanceof String s && s.length() > 1)
+	return "long string";
+```
+
+=== Guarded Patterns
+
+Why?
+
+⇝ Future developments!
+
+```java
+//                                    boolean
+if (shape instanceof Point(var x, var y) && x > 0)
+	// ...
+
+//                         guarded pattern
+if (shape instanceof Point(var x && x > 0, var y))
+	// ...
+```
+
+🤷🏾‍♂️
+
+=== Garded Patterns
+
+Also works in `switch`!
+
+```java
+String result = switch (object) {
+	case String s && s.length() > 1 -> "string";
+	case String s -> "character";
+	default -> "";
+}
+```
+
+=== Completeness
+
+Like switch expressions,
+pattern switches need to be complete:
+
+```java
+// compile error
+switch (staff) {
+	case Employee emp -> emp.paySalary();
+	case Freelancer free -> free.payBill();
+}
+```
+
+Or is it?!
+
+=== Completeness and Sealed Classes
+
+Third pillar comes into play:
+
+```java
+sealed interface Staff
+	permits Employee, Freelancer { }
+
+switch (staff) {
+	case Employee emp -> emp.paySalary();
+	case Freelancer free -> free.payBill();
+	// no default branch needed!
+}
+```
+
+This is big!
+
+=== Adding Operations
+
+Best way to add functionality:
+
+. as methods to interfaces / classes 👍🏾
+. visitor pattern 😕
+
+Third option: patterns over sealed classes!
+
+* leaves types untouched
+* simple to branch based +
+  on types and conditions
+* compile errors for new types
+
+=== Teasing Apart Data
+
+Pattens also help on boundary.
+
+Consider parsed JSON:
+
+* mostly subtypes of `JsonNode`
+* if that's sealed, switch over:
+** `StringJsonNode`
+** `ArrayJsonNode`
+** etc.
+
+=== Summary
+
+* merges pattern matching, switch evolution +
+  and sealed types
+* makes it easy and safe to branch +
+  based on types and conditions
+* improves `null` handling
+
+
+== New Language Features
+
+++++
+<table class="toc">
+	<tr><td>Pattern Matching in Switch</td></tr>
 	<tr class="toc-current"><td>Sealed Classes ⑰</td></tr>
 	<tr><td>Records ⑯</td></tr>
 	<tr><td>Type Pattern Matching ⑯</td></tr>
@@ -114,26 +358,9 @@ final class Consultant implements Staff { }
 === Handling Sealed Staff
 
 Goal is to combine sealed types, +
-switch expressions, and type patterns:
+switch expressions, and type patterns.
 
-```java
-public double cost(Staff staff) {
-	return switch(staff) {
-		// strawman syntax!
-		case Employee employee ->
-			employee.salary() * 2;
-		case Freelancer freelancer ->
-			freelancer.averageInvoice() * 1.1;
-		// compiler checks exhaustiveness
-	}
-}
-```
-
-=== Handling Sealed Staff
-
-But we're not there yet.
-
-For now:
+But we're not there yet - for now:
 
 * sealed classes limit extensibility +
   (between `final` and non-`final`)
@@ -188,8 +415,8 @@ sealed class Freelancer implements Staff
 final class Consultant extends Freelancer { }
 ```
 
-But what about exhaustiveness?! +
-⇝ type pyramid has "exhaustive peak"
+But what about completeness?! +
+⇝ type pyramid has "complete peak"
 
 === Permitted Type Details
 
@@ -247,13 +474,8 @@ Sealed types make inheritance:
 * more flexible between open and `final`
 * analyzable to the compiler
 
-Consequences:
-
-* makes type tests more maintainable +
-  (thanks to exhaustiveness checks).
-* reduces need for complex OO solutions +
-  (goodbye visitor pattern 👋)
-
+Limited inheritance is +
+one pillar for pattern matching.
 
 
 
@@ -261,6 +483,7 @@ Consequences:
 
 ++++
 <table class="toc">
+	<tr><td>Pattern Matching in Switch</td></tr>
 	<tr><td>Sealed Classes ⑰</td></tr>
 	<tr class="toc-current"><td>Records ⑯</td></tr>
 	<tr><td>Type Pattern Matching ⑯</td></tr>
@@ -566,6 +789,7 @@ TODO
 
 ++++
 <table class="toc">
+	<tr><td>Pattern Matching in Switch</td></tr>
 	<tr><td>Sealed Classes ⑰</td></tr>
 	<tr><td>Records ⑯</td></tr>
 	<tr class="toc-current"><td>Type Pattern Matching ⑯</td></tr>
@@ -583,11 +807,11 @@ Type check and cast in one operation.
 `instanceof` is cumbersome:
 
 ```java
-public void feed(Animal animal) {
-	if (animal instanceof Elephant)
-		((Elephant) animal).eatPlants();
-	else if (animal instanceof Tiger)
-		((Tiger) animal).eatMeat();
+public void pay(Staff staff) {
+	if (staff instanceof Employee)
+		((Employee) staff).paySalary();
+	else if (staff instanceof Freelancer)
+		((Freelancer) staff).payBill();
 }
 ```
 
@@ -600,18 +824,18 @@ Three things are happening:
 === Type Pattern Matching
 
 ```java
-public void feed(Animal animal) {
-	if (animal instanceof Elephant elephant)
-		elephant.eatPlants();
-	else if (animal instanceof Tiger tiger)
-		tiger.eatMeat();
+public void pay(Staff staff) {
+	if (staff instanceof Employee employee)
+		employee.paySalary();
+	else if (staff instanceof Freelancer freelancer)
+		freelancer.payBill();
 }
 ```
 
-`animal instanceof Tiger tiger`:
+`staff instanceof Employee employee`:
 
 . does all three things in one operation
-. `tiger` is scoped to `true`-branch
+. `employee` is scoped to `true`-branch
 
 === What is a Pattern?
 
@@ -624,9 +848,9 @@ A _pattern_ is:
   if the test passes
 
 ```java
-//         |--------- pattern --------|
-//  target |----- test ------| variable
-    animal instanceof Elephant elephant
+//        |--------- pattern --------|
+// target |----- test ------| variable
+    staff instanceof Employee employee
 ```
 
 We will see more patterns in the future.
@@ -662,7 +886,7 @@ public void scoped(Object object) {
 }
 ```
 
-=== Null Check Included
+=== Null-Check Included
 
 Just like `instanceof`, +
 type patterns reject `null`:
@@ -696,16 +920,16 @@ General recommendation:
 before type patterns.*
 
 ```java
-public void feed(Animal animal) {
-	if (animal instanceof Elephant)
-		((Elephant) animal).eatPlants();
-	else if (animal instanceof Tiger)
-		((Tiger) animal).eatMeat();
+public void pay(Staff staff) {
+	if (staff instanceof Employee employee)
+		employee.paySalary();
+	else if (staff instanceof Freelancer freelancer)
+		freelancer.payBill();
 }
 
-public void feed(Animal animal) {
-	// method on interface `Animal`
-	animal.eat();
+public void pay(Staff staff) {
+	// method on interface `Staff`
+	staff.pay();
 }
 ```
 
@@ -731,36 +955,7 @@ public final boolean equals(Object o) {
 }
 ```
 
-=== Preview
-
-`switch` will be able to use (type) patterns:
-
-```java
-switch (animal) {
-	case Elephant elephant
-		-> elephant.eatPlants();
-	case Tiger tiger
-		-> tiger.eatMeat();
-}
-```
-
-(Strawman syntax!)
-
-=== Preview
-
-With sealed types, `switch` can detect exhaustiveness:
-
-```java
-sealed interface Animal permits Elephant, Tiger { }
-
-return switch (animal) {
-	case Elephant elephant -> // ...
-	case Tiger tiger -> // ...
-	// no compile error
-}
-```
-
-(Strawman syntax!)
+More use cases in later versions.
 
 === Summary
 
@@ -770,13 +965,15 @@ return switch (animal) {
 	. in scope wherever `instanceof $TYPE` is `true`
 * first of many patterns
 * don't overuse it - polymorphism still exists
-* will integrate with `switch` and sealed classes
+* one pillar of full pattern matching support
+
 
 
 == New Language Features
 
 ++++
 <table class="toc">
+	<tr><td>Pattern Matching in Switch</td></tr>
 	<tr><td>Sealed Classes ⑰</td></tr>
 	<tr><td>Records ⑯</td></tr>
 	<tr><td>Type Pattern Matching ⑯</td></tr>
@@ -925,10 +1122,12 @@ String phrase = """
 * http://cr.openjdk.java.net/~jlaskey/Strings/TextBlocksGuide_v9.html[Programmer's Guide To Text Blocks]
 
 
+
 == New Language Features
 
 ++++
 <table class="toc">
+	<tr><td>Pattern Matching in Switch</td></tr>
 	<tr><td>Sealed Classes ⑰</td></tr>
 	<tr><td>Records ⑯</td></tr>
 	<tr><td>Type Pattern Matching ⑯</td></tr>
@@ -1040,20 +1239,6 @@ Two things to note:
   ⇝ it's an _expression_, not a _statement_
 * lambda-style arrow syntax
 
-=== Preview Feature
-
-*Note*:
-
-In Java 12 & 13, switch expressions are +
-a https://blog.codefx.org/java/enable-preview-language-features/[preview language feature]!
-
-* must be enabled with `--enable-preview` +
-  (on `javac` and `java`).
-* in IntelliJ, set the module's language level to +
-  _12 (Preview) - ..._ or _13 (Preview) - ..._
-* in Eclipse, go to _Compiler Settings_ +
-  and check _Enable preview features_
-
 === Expression vs Statement
 
 Statement:
@@ -1131,7 +1316,7 @@ results in different behavior +
 * specifics of expressions
 ** poly expression
 ** returning early
-** exhaustiveness
+** completeness
 
 === Multiple Case Labels
 
@@ -1275,10 +1460,10 @@ public String sanity(Bool ternaryBool) {
 }
 ```
 
-=== Exhaustiveness
+=== Completeness
 
 Whether in colon or arrow form, +
-a `switch` expression checks exhaustiveness:
+a `switch` expression checks completeness:
 
 ```java
 // compile error:
@@ -1294,7 +1479,7 @@ boolean result = switch (ternaryBool) {
 };
 ```
 
-=== Exhaustiveness
+=== Completeness
 
 No compile error for missing `default`:
 
@@ -1320,12 +1505,16 @@ Definitive Guide To Switch Expressions
 * 💻 https://blog.codefx.org/java/switch-expressions/[tiny.cc/java-12-switch]
 * ▶ https://www.youtube.com/watch?v=1znHEf3oSNI&list=PL_-IO8LOLuNp2stY1qBUtXlfMdJW7wvfT[tiny.cc/java-12-switch-yt]
 
+More powerful and usable switch is +
+one pillar of pattern matching.
+
 
 
 == New Language Features
 
 ++++
 <table class="toc">
+	<tr><td>Pattern Matching in Switch</td></tr>
 	<tr><td>Sealed Classes ⑰</td></tr>
 	<tr><td>Records ⑯</td></tr>
 	<tr><td>Type Pattern Matching ⑯</td></tr>
