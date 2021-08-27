@@ -523,7 +523,10 @@ but branches can be merged:</p></div>
 	case null, default -&gt; { }
 }</code></pre></div></div></div></section><section id="_null_handling_3"><h2>Null Handling</h2><div class="slide-content"><div class="paragraph"><p>A pattern is <em>total</em><br>
 if it covers all possible inputs:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">switch (staff) {
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">Staff staff = //...
+switch (staff) {
+	case Employee emp -&gt; //...
+	case Freelancer free -&gt; //...
 	// this is a "total" pattern
 	case Staff s -&gt; { }
 }</code></pre></div></div>
@@ -547,7 +550,7 @@ if (shape instanceof Point(var x, var y) &amp;&amp; x &gt; 0)
 //                         guarded pattern
 if (shape instanceof Point(var x &amp;&amp; x &gt; 0, var y))
 	// ...</code></pre></div></div>
-<div class="paragraph"><p>🤷🏾‍♂️</p></div></div></section><section id="_garded_patterns"><h2>Garded Patterns</h2><div class="slide-content"><div class="paragraph"><p>Also works in <code>switch</code>!</p></div>
+<div class="paragraph"><p>🤷🏾‍♂️</p></div></div></section><section id="_guarded_patterns_3"><h2>Guarded Patterns</h2><div class="slide-content"><div class="paragraph"><p>Also works in <code>switch</code>!</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">String result = switch (object) {
 	case String s &amp;&amp; s.length() &gt; 1 -&gt; "string";
 	case String s -&gt; "character";
@@ -624,7 +627,7 @@ switch expressions, and type patterns.</p></div>
 <div class="paragraph"><p>But we&#8217;re not there yet - for now:</p></div>
 <div class="ulist"><ul><li><p>sealed classes limit extensibility<br>
 (between <code>final</code> and non-<code>final</code>)</p></li><li><p>prevent extension by users</p></li><li><p>express intention to maintainers</p></li></ul></div></div></section><section id="_sealing_details"><h2>Sealing Details</h2><div class="slide-content"><div class="paragraph"><p>There are a few details to discuss:</p></div>
-<div class="ulist"><ul><li><p>for the sealed type</p></li><li><p>for the premitted types</p></li><li><p>for both of those types</p></li></ul></div></div></section><section id="_sealed_type_details"><h2>Sealed Type Details</h2><div class="slide-content"><div class="paragraph"><p>Sealed types can extend/inherit as usual:</p></div>
+<div class="ulist"><ul><li><p>for the sealed type</p></li><li><p>for the permitted types</p></li><li><p>for both of those types</p></li></ul></div></div></section><section id="_sealed_type_details"><h2>Sealed Type Details</h2><div class="slide-content"><div class="paragraph"><p>Sealed types can extend/inherit as usual:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">sealed class Staff
 	extends Person
 	implements Comparable&lt;Staff&gt;
@@ -1064,7 +1067,7 @@ the arrow form has no fall-through:</p></div>
 		System.out.println("Bool was insane");
 }</code></pre></div></div></div></section><section id="_statement_blocks"><h2>Statement Blocks</h2><div class="slide-content"><div class="paragraph"><p>Whether used as statement or expression,<br>
 the arrow form can use statement blocks:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">boolean result = switch (Bool.random()) {
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">boolean result = switch (ternaryBoolean) {
     case TRUE -&gt; {
         System.out.println("Bool true");
         yield true;
@@ -1075,7 +1078,7 @@ the arrow form can use statement blocks:</p></div>
     }
 	// cases `FILE_NOT_FOUND` and `default`
 };</code></pre></div></div></div></section><section id="_statement_blocks_2"><h2>Statement Blocks</h2><div class="slide-content"><div class="paragraph"><p>Natural way to create scope:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">boolean result = switch (Bool.random()) {
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">boolean result = switch (ternaryBoolean) {
 	// cases `TRUE` and `FALSE`
     case FILE_NOT_FOUND -&gt; {
         var ex = new UncheckedIOException(
