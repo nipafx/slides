@@ -12,6 +12,15 @@ body {
 	text-shadow: none;
 }
 
+a {
+	color: inherit;
+	text-decoration: none;
+}
+a:hover {
+	color: #69ea7d;
+}
+
+
 #text-box {
 	color: white;
 	height: 100%;
@@ -65,31 +74,33 @@ body {
 }
 
 h1 {
-	margin: 1em 0;
-	font-size: 4em;
+	font-size: 3em;
+	font-weight: bold;
+	margin: 1em 0 0;
 }
-
-.talk-list {
-	list-style: none;
-}
-.talk-list a {
-	color: inherit;
-	text-decoration: none;
-}
-.talk-list a:hover {
-	color: #69ea7d;
-}
-.talk-list .talk-title {
+h2 {
 	font-size: 2em;
 	font-weight: bold;
 	margin: 1em 0 0;
 }
-.talk-list .talk-subtitle {
+h3 {
 	font-size: 1.5em;
 	font-weight: bold;
 	margin: 0 0 0.5em;
 }
 
+.intro a {
+	color: #69ea7d;
+}
+.intro a:hover {
+	color: inherit;
+}
+
+
+.talk-list {
+	list-style: none;
+	padding: 0;
+}
 .event-list {
 	display: inline;
 	list-style: none;
@@ -112,10 +123,12 @@ h1 {
 <body>
 	<title>Slides // nipafx</title>
 	<div id="text-box">
+		<h1>Slides // nipafx</h1>
+		<p class="intro">For videos, abstracts, and more Java, go to <a href="https://nipafx.dev/past-talks/">nipafx.dev/past-talks</a>.</p>
 		<ul class="talk-list">
 			<li><a href="just/index.html">
-				<p class="talk-title">Why Don't They Just... ?!</p>
-				<p class="talk-subtitle">The Deliberations Behind Evolving Java</p></a>
+				<h2>Why Don't They Just... ?!</h2>
+				<h3>The Deliberations Behind Evolving Java</h3></a>
 				<dl>
 					<dt>2021</dt>
 					<dd><ul class="event-list">
@@ -128,7 +141,7 @@ h1 {
 				</dl>
 			</li>
 			<li><a href="patterns/index.html">
-				<p class="talk-title">Pattern Matching in Java</p></a>
+				<h2>Pattern Matching in Java</h2></a>
 				<dl>
 					<dt>2021</dt>
 					<dd><ul class="event-list">
@@ -136,7 +149,7 @@ h1 {
 					</ul></dd>
 				</dl>
 			<li><a href="java-after-eight/index.html">
-				<p class="talk-title">Java After Eleven</p></a>
+				<h2>Java After Eleven</h2></a>
 				<dl>
 					<dt>2021</dt>
 					<dd><ul class="event-list">
@@ -161,8 +174,8 @@ h1 {
 				</dl>
 			</li>
 			<li><a href="junit-pioneer/index.html">
-				<p class="talk-title">To Jupiter And Beyond</p>
-				<p class="talk-subtitle">On An Exploratory Mission With JUnit Pioneer</p></a>
+				<h2>To Jupiter And Beyond</h2>
+				<h3>On An Exploratory Mission With JUnit Pioneer</h3></a>
 				<dl>
 					<dt>2021</dt>
 					<dd><ul class="event-list">
@@ -173,12 +186,12 @@ h1 {
 			</li>
 			<!--
 			<li><a href="openjdk/index.html">
-				<p class="talk-title">One Step Closer</p></a>
-				<p class="talk-subtitle">Cloning, Coding, And Building The JDK</p></a>
+				<h2>One Step Closer</h2></a>
+				<h3>Cloning, Coding, And Building The JDK</h3></a>
 			</li>
 			-->
 			<li><a href="java-x/index.html">
-				<p class="talk-title">Java ... Is Here!</p></a>
+				<h2>Java ... Is Here!</h2></a>
 				<dl>
 					<dt>2021</dt>
 					<dd><ul class="event-list">
@@ -217,8 +230,8 @@ h1 {
 				</dl>
 			</li>
 			<li><a href="java-next/index.html">
-				<p class="talk-title">Java Next</p>
-				<p class="talk-subtitle">New Releases, Valhalla, Amber, and More Goodies</p></a>
+				<h2>Java Next</h2>
+				<h3>New Releases, Valhalla, Amber, and More Goodies</h3></a>
 				<dl>
 					<dt>2019</dt>
 					<dd><ul class="event-list">
@@ -244,7 +257,7 @@ h1 {
 				</dl>
 			</li>
 			<li><a href="java-var/index.html">
-				<p class="talk-title">Fun with <code>var</code></p></a>
+				<h2>Fun with <code>var</code></h2></a>
 				<dl>
 					<dt>2019</dt>
 					<dd><ul class="event-list">
@@ -261,8 +274,8 @@ h1 {
 				</dl>
 			</li>
 			<li><a href="java-9-migration/index.html">
-				<p class="talk-title">To JAR Hell And Back</p>
-				<p class="talk-subtitle">A Live Migration To Java 11</p></a>
+				<h2>To JAR Hell And Back</h2>
+				<h3>A Live Migration To Java 11</h3></a>
 				<dl>
 					<dt>2019</dt>
 					<dd><ul class="event-list">
@@ -290,7 +303,7 @@ h1 {
 				</dl>
 			</li>
 			<li><a href="jpms/index.html">
-				<p class="talk-title">The Java Module System</p></a>
+				<h2>The Java Module System</h2></a>
 				<dl>
 					<dt>2020</dt>
 					<dd><ul class="event-list">
@@ -331,8 +344,8 @@ h1 {
 				</dl>
 			</li>
 			<li><a href="junit-5/index.html">
-				<p class="talk-title">JUnit 5</p>
-				<p class="talk-subtitle">Next Generation Testing On The JVM</p></a>
+				<h2>JUnit 5</h2>
+				<h3>Next Generation Testing On The JVM</h3></a>
 				<dl>
 					<dt>2019</dt>
 					<dd><ul class="event-list">
@@ -364,8 +377,8 @@ h1 {
 				</dl>
 			</li>
 			<li><a href="expert-java-8/index.html">
-				<p class="talk-title">Expert Java 8</p>
-				<p class="talk-subtitle">Lambdas, Optionals, Streams for Afficionados</p></a>
+				<h2>Expert Java 8</h2>
+				<h3>Lambdas, Optionals, Streams for Afficionados</h3></a>
 				<dl>
 					<dt>2019</dt>
 					<dd><ul class="event-list">
@@ -382,7 +395,7 @@ h1 {
 				</dl>
 			</li>
 			<li><a href="best-practices/index.html">
-				<p class="talk-title">Best Practices Considered Harmful</p></a>
+				<h2>Best Practices Considered Harmful</h2></a>
 				<dl>
 					<dt>2019</dt>
 					<dd><ul class="event-list">
@@ -392,7 +405,7 @@ h1 {
 				</dl>
 			</li>
 			<li><a href="comment-your-code/index.html">
-				<p class="talk-title">Comment Your &*☠# Code!</p></a>
+				<h2>Comment Your &*☠# Code!</h2></a>
 				<dl>
 					<dt>2019</dt>
 					<dd><ul class="event-list">
