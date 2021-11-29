@@ -297,13 +297,14 @@ var recommendation = """
 *What we've seen:*
 
 * sealed clases | `sealed class ... permits`
+* enhanced pseudo-random number generator API | ↴ +
+  `RandomGenerator` and `RandomGeneratorFactory`
 
 === Java 17
 
 *What we haven't seen:*
 
 * always-strict floating-point semantics
-* enhanced pseudo-random number generators
 
 
 == Java Next
@@ -335,7 +336,7 @@ return switch (post) {
 // Java 8 to...
 // * stronger encapsulation and better services | modules
 // * safer code | processes, versions, whitespace, etc.
-* more expressive code | LOC: 2020 📉 1594
+* more expressive code | LOC: 2051 📉 1626
 // characters: 67880 📉 57574
 * faster code | run time: ~ 1.2 s 📉 ~ 1 s
 * better JVM | GCs, packaging, monitoring, etc.
