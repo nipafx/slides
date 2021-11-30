@@ -306,6 +306,36 @@ var recommendation = """
 
 * always-strict floating-point semantics
 
+=== Java 17
+
+*What we've seen a bit:*
+
+* better performance characteristics
+
+All following diagrams come +
+from https://twitter.com/kstefanj[Stefan Johansson]'s post +
+https://kstefanj.github.io/2021/11/24/gc-progress-8-17.html[_GC progress from JDK 8 to JDK 17_].
+
+[state="empty",background-color=white,background-transition=none]
+=== !
+image::images/gc-pause-avg.png[background, size=contain]
+
+[state="empty",background-color=white,background-transition=none]
+=== !
+image::images/gc-pause-p99.png[background, size=contain]
+
+[state="empty",background-color=white,background-transition=none]
+=== !
+image::images/gc-latency.png[background, size=contain]
+
+[state="empty",background-color=white,background-transition=none]
+=== !
+image::images/gc-throughput.png[background, size=contain]
+
+[state="empty",background-color=white,background-transition=none]
+=== !
+image::images/gc-footprint.png[background, size=contain]
+
 
 == Java Next
 
@@ -338,7 +368,7 @@ return switch (post) {
 // * safer code | processes, versions, whitespace, etc.
 * more expressive code | LOC: 2051 📉 1626
 // characters: 67880 📉 57574
-* faster code | run time: ~ 1.2 s 📉 ~ 1 s
+* faster code | run time: ~ 1.1 s 📉 ~ 1 s
 * better JVM | GCs, packaging, monitoring, etc.
 
 *Sure you don't want to upgrade?*
