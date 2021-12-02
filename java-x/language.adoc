@@ -144,6 +144,8 @@ these branches can handle it:
 
 Whatever comes first.
 
+(But: `case null` after total pattern is an error.)
+
 === Guarded Patterns
 
 Extending patterns with boolean checks:
@@ -152,7 +154,7 @@ Extending patterns with boolean checks:
 //  |---------- GUARDED PATTERN -----------|
 //              | PATTERN |   | BOOL EXPR -|
 if (o instanceof (String s && s.length() > 1))
-	return "long string";
+	return "non-trivial string";
 ```
 
 Equivalent:
@@ -160,7 +162,7 @@ Equivalent:
 ```java
 //  |----- PATTERN -----|    | BOOL EXPR -|
 if (o instanceof String s && s.length() > 1)
-	return "long string";
+	return "non-trivial string";
 ```
 
 === Guarded Patterns
