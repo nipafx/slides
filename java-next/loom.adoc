@@ -17,7 +17,6 @@ http://jdk.java.net/loom[official early access builds]
 * launched January 2018
 
 === Motivation
-image::images/loom.jpg[background, size=cover]
 
 Imagine a hypothetical request:
 
@@ -33,7 +32,6 @@ JVM resource utilization:
 How to implement that request?
 
 === Motivation
-image::images/loom.jpg[background, size=cover]
 
 Synchronous (simple)::
 * thread per request
@@ -50,7 +48,6 @@ Asynchronous (not so simple)::
 --
 
 === Enter fibers!
-image::images/loom.jpg[background, size=cover]
 
 A fiber:
 
@@ -60,7 +57,6 @@ A fiber:
 * *scheduled by the JVM*
 
 === Fiber management
-image::images/loom.jpg[background, size=cover]
 
 The JVM manages fibers:
 
@@ -70,7 +66,6 @@ The JVM manages fibers:
 * _continues_ fibers when calls return
 
 === Fiber example
-image::images/loom.jpg[background, size=cover]
 
 Remember the hypothetical request:
 
@@ -88,7 +83,6 @@ In a fiber:
 * fiber continues with 3. (how?)
 
 === Fibers
-image::images/loom.jpg[background, size=cover]
 
 *Yeah:*
 
@@ -97,7 +91,6 @@ image::images/loom.jpg[background, size=cover]
 * legacy code _may_ be forward compatible
 
 === Continuations
-image::images/loom.jpg[background, size=cover]
 
 How do fibers _continue_?
 
@@ -105,7 +98,6 @@ How do fibers _continue_?
 * JVM stores and restores call stack
 
 === Project Loom
-image::images/loom.jpg[background, size=cover]
 
 Makes threading more pleasant:
 

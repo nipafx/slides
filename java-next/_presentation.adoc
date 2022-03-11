@@ -9,8 +9,8 @@
 :revealjs_center: true
 :revealjs_transition: fade
 :revealjs_backgroundTransition: fade
-:revealjs_parallaxBackgroundImage: images/merry-go-round.jpg
-:revealjs_parallaxBackgroundSize: 2560px 1440px
+:revealjs_parallaxBackgroundImage: images/super-tree.jpg
+:revealjs_parallaxBackgroundSize: 2677px 4011px
 :docinfo: shared
 :docinfodir: ../_shared
 
@@ -22,7 +22,7 @@ include::../_shared/highlight.js.adoc[]
 	font-size: 1.75em;
 }
 </style>
-<h2>New Releases, Amber, Valhalla, and More Goodies</h2>
+<h2>From Amber to Loom, from Panama to Valhalla</h2>
 ++++
 
 :host-name: Accenture
@@ -44,9 +44,10 @@ include::../_shared/event-on-title-and-footer.adoc[]
 
 ++++
 <table class="toc">
-	<tr><td>Versions and Features</td></tr>
-	<tr><td>The New World</td></tr>
-	<tr><td>Projects To Look Out For</td></tr>
+	<tr><td>Project Amber</td></tr>
+	<tr><td>Project Loom</td></tr>
+	<tr><td>Project Panama</td></tr>
+	<tr><td>Project Valhalla</td></tr>
 </table>
 ++++
 
@@ -59,11 +60,13 @@ Slides at https://slides.nipafx.dev/[slides.nipafx.dev].
 // P R E S E N T A T I O N //
 // ####################### //
 
-include::_versions.adoc[]
+include::amber.adoc[]
 
-include::new-world.adoc[]
+include::loom.adoc[]
 
-include::_projects.adoc[]
+include::panama.adoc[]
+
+include::valhalla.adoc[]
 
 // ######### //
 // O U T R O //

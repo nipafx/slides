@@ -18,7 +18,6 @@ https://builds.shipilev.net/openjdk-amber/[inofficial early access builds]
 * launched March 2017
 
 === Motivation
-image::images/amber.jpg[background, size=cover]
 
 Java compared to more modern languages:
 
@@ -29,7 +28,6 @@ Java compared to more modern languages:
 Amber wants to improve that situation!
 
 === Delivered
-image::images/amber.jpg[background, size=cover]
 
 * local-variable type inference with `var` +
   (https://openjdk.java.net/jeps/286[JEP 286]; in Java 10)
@@ -39,7 +37,6 @@ image::images/amber.jpg[background, size=cover]
   (https://openjdk.java.net/jeps/355[JEP 355]; preview in Java 13)
 
 === Endeavors
-image::images/amber.jpg[background, size=cover]
 
 * pattern matching (http://openjdk.java.net/jeps/305[JEP 305])
 * records (https://openjdk.java.net/jeps/359[JEP 359])
@@ -49,7 +46,6 @@ image::images/amber.jpg[background, size=cover]
 * raw string literals (maybe)
 
 === Pattern matching
-image::images/amber.jpg[background, size=cover]
 
 [source,java]
 ----
@@ -70,7 +66,6 @@ String formatted = switch (value) {
 * no repetition between condition and block
 
 === Pattern matching
-image::images/amber.jpg[background, size=cover]
 
 [source,java]
 ----
@@ -90,7 +85,6 @@ public int eval(Node n) {
 * goodbye visitor pattern!
 
 === Records
-image::images/amber.jpg[background, size=cover]
 
 [source,java]
 ----
@@ -111,7 +105,6 @@ public record Range(int low, int high) {
 * makes Java more expressive
 
 === Records
-image::images/amber.jpg[background, size=cover]
 
 > The API for a record models the state, the whole state, and nothing but the state.
 
@@ -122,7 +115,6 @@ The deal:
 * get API for free
 
 === Customized records
-image::images/amber.jpg[background, size=cover]
 
 [source,java]
 ----
@@ -144,7 +136,6 @@ public record Range(int low, int high) {
 ----
 
 === Sealed types
-image::images/amber.jpg[background, size=cover]
 
 Have a closer look at the cases:
 
@@ -162,7 +153,6 @@ public int eval(Node n) {
 Why is there no `default` branch?
 
 === Sealed types
-image::images/amber.jpg[background, size=cover]
 
 [source,java]
 ----
@@ -180,7 +170,6 @@ public sealed interface Node
 * pattern matching can check completeness
 
 === Death to serialization!
-image::images/amber.jpg[background, size=cover]
 
 Serialization is hell:
 
@@ -191,7 +180,6 @@ Serialization is hell:
 The JDK team wants to get rid of it!
 
 === Serializing records
-image::images/amber.jpg[background, size=cover]
 
 Replacement may look as follows:
 
@@ -202,7 +190,6 @@ Replacement may look as follows:
   XML, JSON, YAML, ...
 
 === New serialization
-image::images/amber.jpg[background, size=cover]
 
 *Yeah:*
 
@@ -211,7 +198,6 @@ image::images/amber.jpg[background, size=cover]
 * superior maintainability
 
 === Concise method bodies
-image::images/amber.jpg[background, size=cover]
 
 [source,java]
 ----
@@ -232,7 +218,6 @@ class ListWrapper<E> implements List<E> {
 * fewer (empty) lines
 
 === Raw string literals
-image::images/amber.jpg[background, size=cover]
 
 [source,java]
 ----
@@ -251,7 +236,6 @@ String regex = \"\+(\d*[.])?\d"
 Turns out, it's complicated. 😁
 
 === Raw multi-line strings
-image::images/amber.jpg[background, size=cover]
 
 Maybe?
 
@@ -264,7 +248,6 @@ String yaml = \"""
 ----
 
 === Project Amber
-image::images/amber.jpg[background, size=cover]
 
 Makes Java more expressive:
 
