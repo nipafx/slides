@@ -1,24 +1,20 @@
 == Project Loom
 image::images/loom.jpg[background, size=cover]
 
-> Fibers, delimited continuations, explicit tail-call
+> JVM features and APIs for supporting easy-to-use, high-throughput, lightweight concurrency and new programming models
 
 Profile:
 
-* led by Ron Pressler
 * http://openjdk.java.net/projects/loom/[project] /
 https://wiki.openjdk.java.net/display/loom/Main[wiki] /
 http://mail.openjdk.java.net/mailman/listinfo/loom-dev[mailing list] /
-talks:
-https://www.youtube.com/watch?v=fpyub8fbrVE[0],
-https://www.youtube.com/watch?v=J31o0ZMQEnI[1],
-https://www.youtube.com/watch?v=NV46KFV1m-4[2] / +
-http://jdk.java.net/loom[official early access builds]
+http://jdk.java.net/loom[early access builds]
 * launched January 2018
+* led by Ron Pressler
 
 === Motivation
 
-Imagine a hypothetical request:
+Imagine a hypothetical HTTP request:
 
 . interpret request
 . query database (_blocks_)
@@ -26,46 +22,66 @@ Imagine a hypothetical request:
 
 JVM resource utilization:
 
-* good for tasks 1., 3.
-* really bad for task 2.
+* good for 1. and 3.
+* really bad for 2.
 
 How to implement that request?
 
-=== Motivation
+=== Synchronous
 
-Synchronous (simple)::
-* thread per request
-* blocks on certain calls
-* bad thread utilization
-Asynchronous (not so simple)::
-* use non-blocking APIs with futures
-* incompatible with synchronous code
-* great thread utilization (scalable!)
+Align application's unit of concurrency (request)  +
+with Java's unit of concurrency (thread):
+
+* use thread per request
+* simple to write, debug, profile
+* blocks threads on certain calls
+* limited number of _platform_ threads +
+  ⇝ bad resource utilization +
+  ⇝ low throughput
 
 [NOTE.speaker]
 --
 * common CPU load: 5-30%
 --
 
-=== Enter fibers!
+=== Asynchronous
 
-A fiber:
+Only use threads for actual computations:
 
-* looks like a thread to devs
+* use non-blocking APIs +
+  (with futures / reactive streams)
+* harder to write, challenging to debug/profile
+* incompatible with synchronous code
+* shares platform threads +
+  ⇝ great resource utilization +
+  ⇝ high throughput
+
+=== Motivation
+
+Resolve the conflict between:
+
+* simplicity
+* throughput
+
+=== Enter virtual threads!
+
+A _virtual_ thread:
+
+* appears to be a platform thread
 * low memory footprint ([k]bytes)
 * small switching cost
 * *scheduled by the JVM*
 
-=== Fiber management
+=== Virtual thread management
 
-The JVM manages fibers:
+The JVM manages virtual threads:
 
-* runs them in a pool of _carrier threads_
-* makes fibers _yield_ on blocking calls +
+* runs them on a pool of _carrier threads_
+* makes them _yield_ on blocking calls +
 (*frees the carrier thread!*)
-* _continues_ fibers when calls return
+* _continues_ them when calls return
 
-=== Fiber example
+=== Virtual thread example
 
 Remember the hypothetical request:
 
@@ -73,33 +89,207 @@ Remember the hypothetical request:
 . query database (_blocks_)
 . process data for response
 
-In a fiber:
+In a virtual thread:
 
 [%step]
-* JVM submits fiber to thread pool
-* when 2. blocks, fiber yields
-* JVM hands thread back to pool +
-* when 2. unblocks, JVM resubmits fiber
-* fiber continues with 3. (how?)
+* JVM submits task to carrier thread pool
+* when 2. blocks, virtual thread yields
+* JVM hands carrier thread back to pool
+* when 2. unblocks, JVM resubmits task
+* virtual thread continues with 3.
 
-=== Fibers
+=== Example
 
-*Yeah:*
+```java
+try (var executor = Executors
+		.newVirtualThreadPerTaskExecutor()) {
+	IntStream
+		.range(0, 10_000)
+		.forEach(number -> {
+			executor.submit(() -> {
+				Thread.sleep(Duration.ofSeconds(1));
+				return number;
+			});
+		});
+} // executor.close() is called implicitly, and waits
+```
 
-* great thread utilization
-* code is written/debugged as if synchronous
-* legacy code _may_ be forward compatible
 
-=== Continuations
+[NOTE.speaker]
+--
+* all APIs are in flux
+--
 
-How do fibers _continue_?
+=== Example
 
-* use continuations (low-level API)
-* JVM stores and restores call stack
+```java
+void handle(Request request, Response response)
+		throws InterruptedException {
+    try (var executor = Executors
+			.newVirtualThreadPerTaskExecutor()) {
+        var futureA = executor.submit(this::taskA);
+        var futureB = executor.submit(this::taskB);
+        response.send(futureA.get() + futureB.get());
+    } catch (ExecutionException ex) {
+        response.fail(ex);
+    }
+}
+```
+
+=== Characteristics
+
+Virtual threads aren't "faster threads": +
+Each task takes the same time (same _latency_).
+
+But:
+
+* when number of concurrent tasks is high
+* when workload is not CPU-bound
+
+Then _throughput_ increases.
+
+[NOTE.speaker]
+--
+* "high": more than a few thousand
+--
+
+=== Parallelism vs concurrency
+
+[options="header"]
+|============================================
+|                | Parallelism  | Concurrency
+| *Task origin*  | solution     | problem
+| *Control*      | developer    | environment
+| *Resource use* | coordinated  | competitive
+| *Metric*       | latency      | throughput
+| *Abstraction*  | CPU cores    | tasks
+| *# of threads* | # of cores   | # of tasks
+|============================================
+
+=== Use Cases
+
+Virtual threads are cheap and plentiful:
+
+* no pooling necessary
+* allows thread per task
+* allows liberal creation +
+  of threads for subtasks
+
+⇝ Enables new concurrency programming models.
+
+[NOTE.speaker]
+--
+* "thread per task" covers earlier example
+* "thread per subtask" comes next
+--
+
+=== Structured concurrency
+
+Structured programming:
+
+* prescribes single entry point +
+  and clearly defined exit points
+* influenced languages and runtimes
+
+Simlarly, structured concurrency prescribes:
+
+> When the flow of execution splits into multiple concurrent flows, they rejoin in the same code block.
+
+=== Structured concurrency
+
+> When the flow of execution splits into multiple concurrent flows, they rejoin in the same code block.
+
+⇝ Threads are short-lived:
+
+* start when task begins
+* end on completion
+
+⇝ Enables parent-child/sibling relationships +
+  and logical grouping of threads.
+
+=== Unstructured concurrency
+
+```java
+void handle(Request request, Response response)
+		throws InterruptedException {
+    try (var executor = Executors
+			.newVirtualThreadPerTaskExecutor()) {
+		// what's the relationship between
+		// this and the two spawned threads?
+		// what happens when one of them fails?
+        var futureA = executor.submit(this::taskA);
+        var futureB = executor.submit(this::taskB);
+		// what if we only need the faster one?
+        response.send(futureA.get() + futureB.get());
+    } catch (ExecutionException ex) {
+        response.fail(ex);
+    }
+}
+```
+
+=== Structured concurrency
+
+```java
+void handle(Request request, Response response)
+		throws InterruptedException {
+	// define explicit success/error handling
+    try (var scope = new StructuredTaskScope
+							.ShutdownOnFailure()) {
+        var futureA = scope.fork(this::taskA);
+        var futureB = scope.fork(this::taskB);
+		// wait explicitly until success criteria met
+		scope.join();
+		scope.throwIfFailed();
+
+        response.send(futureA.get() + futureB.get());
+    } catch (ExecutionException ex) {
+        response.fail(ex);
+    }
+}
+```
+
+=== Structured concurrency
+
+* forked tasks are children of the scope
+* creates relationship between threads
+* success/failure policy can be defined +
+  across all children
+
+[state=empty,background-color=white]
+=== !
+image::images/thread-dump.png[background, size=contain]
 
 === Project Loom
 
-Makes threading more pleasant:
+Virtual threads:
 
-* simple programming model
-* great thread utilization
+* code is simple to write, debug, profile
+* high throughput
+* new programing model
+
+Structured concurrency:
+
+* clearer concurrency code
+* simpler failure/success policies
+* better debugging
+
+=== Timeline
+
+My personal (!) guesses (!!):
+
+* JDK 19/20:
+** virtual threads preview
+** structured concurrency API preview
+* 2024:
+** more structured concurrency APIs (?)
+
+=== Deeper Dives
+
+* 📝 https://openjdk.java.net/jeps/8277131[JEP Draft: Virtual Threads]
+* 📝 https://openjdk.java.net/jeps/8277129[JEP Draft: Structured Concurrency]
+* 📝 https://inside.java/2021/11/30/on-parallelism-and-concurrency/[On Parallelism and Concurrency]
+* 📝 https://250bpm.com/blog:71/[Structured Concurrency]
+* 📝 https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/[Notes on structured concurrency, or: ...]
+* 🎥 https://www.youtube.com/watch?v=fq0OEX0XYR8[Modern, Scalable Concurrency for the Java Platform] +
+  (Sep 2021)
+* 🎥 https://www.youtube.com/watch?v=KG24inClY2M[State of Project Loom with Ron Pressler] (Jun 2021)

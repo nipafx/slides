@@ -5,169 +5,218 @@ image::images/amber.jpg[background, size=cover]
 
 Profile:
 
-* led by Brian Goetz
-* http://openjdk.java.net/projects/amber/[project] /
+* https://openjdk.java.net/projects/amber/[project] /
 https://wiki.openjdk.java.net/display/amber/Main[wiki] /
-http://mail.openjdk.java.net/mailman/listinfo/amber-dev[mailing list] /
-talks:
-https://www.youtube.com/watch?v=A-mxj2vhVAA&t=13m58s[0],
-https://www.youtube.com/watch?v=qul2B8iPC-o[1],
-https://www.youtube.com/watch?v=n3_8YcYKScw[2] / +
-https://builds.shipilev.net/openjdk-amber/[inofficial early access builds]
-
+https://mail.openjdk.java.net/mailman/listinfo/amber-dev[mailing list]
 * launched March 2017
+* led by Brian Goetz
 
 === Motivation
 
-Java compared to more modern languages:
+Some downsides of Java:
 
 * can be cumbersome
-* lacks expressiveness
 * tends to require boilerplate
+* due to situational lack of expressiveness
 
 Amber wants to improve that situation!
 
 === Delivered
 
-* local-variable type inference with `var` +
-  (https://openjdk.java.net/jeps/286[JEP 286]; in Java 10)
-* switch expressions +
-  (http://openjdk.java.net/jeps/325[JEP 325]; preview in Java 12 and 13)
-* text blocks +
-  (https://openjdk.java.net/jeps/355[JEP 355]; preview in Java 13)
+* local-variable type inference with `var`
+  https://openjdk.java.net/jeps/286[⑩]
+* switch expressions
+  https://openjdk.java.net/jeps/361[⑭]
+* text blocks
+  https://openjdk.java.net/jeps/378[⑮]
+* type pattern matching
+  https://openjdk.java.net/jeps/394[⑯]
+* records
+  https://openjdk.java.net/jeps/395[⑯]
+* sealed classes
+  https://openjdk.java.net/jeps/409[⑰]
 
-=== Endeavors
+=== Delivered
 
-* pattern matching (http://openjdk.java.net/jeps/305[JEP 305])
-* records (https://openjdk.java.net/jeps/359[JEP 359])
-* sealed types (https://openjdk.java.net/jeps/360[JEP 360])
-* serialization revamp (http://cr.openjdk.java.net/~briangoetz/amber/serialization.html[white paper])
-* concise method bodies (http://openjdk.java.net/jeps/8209434[JEP draft])
-* raw string literals (maybe)
+Pattern matching:
 
-=== Pattern matching
+* switch expressions
+* type pattern matching
+* sealed classes
 
-[source,java]
-----
-Object value = // ...
-String formatted = switch (value) {
-	case Integer i -> String.format("int %d", i);
-	case Byte b    -> String.format("byte %d", b);
-	case Long l    -> String.format("long %d", l);
-	case Double d  -> String.format("double %f", d);
-	case String s  -> String.format("String %s", s);
-	default        -> "unknown " + value.toString();
-};
-----
+Misc:
 
-*Yeah:*
+* `var`
+* text blocks
+* records
 
-* more powerful conditions
-* no repetition between condition and block
+=== Pattern matching example
 
-=== Pattern matching
+Evaluating simple arithmetic expressions.
 
-[source,java]
-----
-public int eval(Node n) {
-	return switch(n) {
-		case IntNode(int i) -> i;
-		case NegNode(Node nn) -> -eval(nn);
-		case AddNode(Node left, Node right) ->
-			eval(left) + eval(right);
+`1 + (-2) + |3 + (-4)|`
+
+```java
+interface Node { }
+record Number(long number) implements Node { }
+record Negate(Node node) implements Node { }
+record Absolute(Node node) implements Node { }
+record Add(List<Node> summands) implements Node { }
+```
+
+=== Pattern matching example
+
+Evaluating simple arithmetic expressions.
+
+`1 + (-2) + |3 + (-4)|`
+
+image::images/arithmetic-tree.png[]
+
+=== Polymorphism
+
+Canonical way to apply operations +
+to a type hierarchy:
+
+Polymorphism
+
+=== Polymorphic solution
+
+
+```java
+interface Node {
+	long evaluate();
+}
+
+record Number(long number) implements Node {
+	long evaluate() {
+		return number;
+	}
+}
+
+record Negate(Node node) implements Node {
+	long evaluate() {
+		return -node.evaluate();
+	}
+}
+```
+
+=== Polymorphic solution
+
+
+```java
+record Absolute(Node node) implements Node {
+	long evaluate() {
+		long result = node.evaluate();
+		return result < 0 ? -result : result;
+	}
+}
+
+record Add(List<Node> summands) implements Node {
+	long evaluate() {
+		return summands.stream()
+			.mapToLong(Node::evaluate)
+			.sum();
+	}
+}
+```
+
+=== Domain overload
+
+Should you implement `evaluate` this way? +
+Probably.
+
+But what about:
+
+* `Resources estimateResourceUsage()`
+* `Strategy createComputationStrategy()`
+* `Invoice createInvoice(User user)`
+* `String prettyPrint()` (like https://github.com/Thihup/joel/commit/b49c9e7636ce409f9f875c4652fcaa905022dd62#diff-6a9248b7be98141e7c76af3955e11eb074d9cd88211aaf4be0d85c1453cc7649[here])
+* `void draw(Direction d, Style s, Canvas c)`
+
+⇝ Central abstractions can be overburdened.
+
+=== Visitor pattern
+
+Separating a hierarchy from operations +
+is a case for https://nipafx.dev/java-visitor-pattern-pointless/[the visitor pattern].
+
+Alternative: pattern matching over sealed types.
+
+=== Pattern matching solution
+
+Seal type hierarchy:
+
+```java
+interface Node
+	permits Number, Negate, Absolute, Add { }
+
+record Number(long number) implements Node { }
+record Negate(Node node) implements Node { }
+record Absolute(Node node) implements Node { }
+record Add(List<Node> summands) implements Node { }
+```
+
+=== Pattern matching solution
+
+* use type patterns in switch (https://openjdk.java.net/jeps/420[JEP 420] / 2nd preview in 18)
+* use deconstruction patterns (https://openjdk.java.net/jeps/405[JEP 405] / not targeted)
+
+```java
+long evaluate(Node node) {
+	return switch (node) {
+		case Number(long no) -> no;
+		case Negate(var n) -> -evaluate(n);
+		case Absolute(var n) && evaluate(n) < 0
+			-> -evaluate(n);
+		case Absolute(var n) -> evaluate(n);
+		case Add(var summands) -> summands.stream()
+			.mapToLong(this::evaluate)
+			.sum();
 	};
 }
-----
+```
 
-*Yeah:*
+=== Another use case
 
-* deconstructing complex objects
-* goodbye visitor pattern!
+When parsing outside data, +
+types are often general +
+(think `JsonNode`).
 
-=== Records
+Consider pattern matching +
+to tease apart the data.
+
+=== Other Amber endeavors
+
+Possible future changes:
+
+* template strings (https://openjdk.java.net/projects/amber/design-notes/templated-strings[white paper])
+* concise method bodies (https://openjdk.java.net/jeps/8209434[JEP draft])
+* serialization revamp (https://openjdk.java.net/projects/amber/design-notes/towards-better-serialization[white paper])
+
+////
+=== Template strings
+
+TODO
+
+=== Concise method bodies
 
 [source,java]
 ----
-public record Range(int low, int high) {
+class ListWrapper<E> implements List<E> {
 
-	// compiler generates:
-	//  * constructor, deconstructor
-	//  * equals/hashCode/toString
-	//  * accessors low(), high()
+    private List<E> list;
+
+    public int size() -> list.size();
+    public T get(int index) -> list.get(index);
+	public int indexOf(E el) = list::indexOf;
 
 }
 ----
 
 *Yeah:*
 
-* no boilerplate for plain "data carriers"
-* no room for error in `equals`/`hashCode`
-* makes Java more expressive
-
-=== Records
-
-> The API for a record models the state, the whole state, and nothing but the state.
-
-The deal:
-
-* give up encapsulation
-* couple API to internal state
-* get API for free
-
-=== Customized records
-
-[source,java]
-----
-public record Range(int low, int high) {
-
-	// compiler knows signature and assigns to fields
-	public Range {
-		if (low > high)
-			throw new IllegalArgumentException();
-	}
-
-	public void setLow(int low) {
-		if (low > this.high)
-			throw new IllegalArgumentException();
-		this.low = low;
-	}
-
-}
-----
-
-=== Sealed types
-
-Have a closer look at the cases:
-
-[source,java]
-----
-public int eval(Node n) {
-	return switch(n) {
-		case IntNode(int i) -> // ...
-		case NegNode(Node n) -> // ...
-		case AddNode(Node left, Node right) -> // ...
-	};
-}
-----
-
-Why is there no `default` branch?
-
-=== Sealed types
-
-[source,java]
-----
-public sealed interface Node
-	permits IntNode, NegNode, AddNode {
-
-	// interface declaration
-
-}
-----
-
-*Yeah:*
-
-* code expresses intended subtypes
-* pattern matching can check completeness
+* simple methods get simple code
+* fewer (empty) lines
 
 === Death to serialization!
 
@@ -196,67 +245,30 @@ Replacement may look as follows:
 * records are a great fit for serialization
 * new mechanism uses (de)constructors
 * superior maintainability
-
-=== Concise method bodies
-
-[source,java]
-----
-class ListWrapper<E> implements List<E> {
-
-    private List<E> list;
-
-    public int size() -> list.size();
-    public T get(int index) -> list.get(index);
-	public int indexOf(E el) = list::indexOf;
-
-}
-----
-
-*Yeah:*
-
-* simple methods get simple code
-* fewer (empty) lines
-
-=== Raw string literals
-
-[source,java]
-----
-String regex = \"\+(\d*[.])?\d"
-----
-
-*Yeah:*
-
-* no escaping of special characters
-
-*But:*
-
-* was planned http://openjdk.java.net/jeps/326[as preview in Java 12] +
-* removed last minute
-
-Turns out, it's complicated. 😁
-
-=== Raw multi-line strings
-
-Maybe?
-
-[source,java]
-----
-String yaml = \"""
-	name: "Positive number"
-	regex: "\+(\d*[.])?\d"
-	""";
-----
+////
 
 === Project Amber
 
-Makes Java more expressive:
+* makes Java more expressive
+* reduces amount of code
+* makes us more productive
 
-* type inference with `var` ⑩
-* switch expressions ⑫
-* text blocks ⑬
-* pattern matching
-* records
-* sealed types
-* serialization revamp
-* concise method bodies
-* raw string literals
+=== Timeline
+
+My personal (!) guesses (!!):
+
+* 2023:
+** patterns in switch finalized
+** deconstruction patterns preview
+** template strings preview
+* 2024:
+** more patterns preview
+
+=== Deeper Dives
+
+* 📝 https://openjdk.java.net/projects/amber/design-notes/patterns/pattern-match-object-model[Pattern Matching in the Java Object Model]
+* 🎥 https://www.youtube.com/watch?v=qul2B8iPC-o[Java Language Futures: All Aboard Project Amber] +
+  (Nov 2017)
+* 🎥 https://www.youtube.com/watch?v=hDV6G1MbUH8[Java Language Futures: Late 2021 Edition] (Sep 2021)
+* 🎥 https://www.youtube.com/watch?v=UlFFKkq6fyU[Pattern Matching in Java (17)] (Sep 2021)
+* 🎥 https://www.youtube.com/watch?v=a8OdwUiSnXw[State of Pattern Matching with Brian Goetz] (Feb 2022)
