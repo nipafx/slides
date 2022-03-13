@@ -467,127 +467,188 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 	<tr><td>Project Valhalla</td></tr>
 </table>
 <div class="paragraph"><p>Slides at <a href="https://slides.nipafx.dev/">slides.nipafx.dev</a>.</p></div></div></section>
-<section><section id="_project_amber" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Project Amber</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>Smaller, productivity-oriented Java language features</p></div></blockquote></div><div class="paragraph"><p>Profile:</p></div><div class="ulist"><ul><li><p>led by Brian Goetz</p></li><li><p><a href="http://openjdk.java.net/projects/amber/">project</a> /
+<section><section id="_project_amber" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Project Amber</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>Smaller, productivity-oriented Java language features</p></div></blockquote></div><div class="paragraph"><p>Profile:</p></div><div class="ulist"><ul><li><p><a href="https://openjdk.java.net/projects/amber/">project</a> /
 <a href="https://wiki.openjdk.java.net/display/amber/Main">wiki</a> /
-<a href="http://mail.openjdk.java.net/mailman/listinfo/amber-dev">mailing list</a> /
-talks:
-<a href="https://www.youtube.com/watch?v=A-mxj2vhVAA&amp;t=13m58s">0</a>,
-<a href="https://www.youtube.com/watch?v=qul2B8iPC-o">1</a>,
-<a href="https://www.youtube.com/watch?v=n3_8YcYKScw">2</a> /<br>
-<a href="https://builds.shipilev.net/openjdk-amber/">inofficial early access builds</a></p></li><li><p>launched March 2017</p></li></ul></div></div></section><section id="_motivation"><h2>Motivation</h2><div class="slide-content"><div class="paragraph"><p>Java compared to more modern languages:</p></div>
-<div class="ulist"><ul><li><p>can be cumbersome</p></li><li><p>lacks expressiveness</p></li><li><p>tends to require boilerplate</p></li></ul></div>
-<div class="paragraph"><p>Amber wants to improve that situation!</p></div></div></section><section id="_delivered"><h2>Delivered</h2><div class="slide-content"><div class="ulist"><ul><li><p>local-variable type inference with <code>var</code><br>
-(<a href="https://openjdk.java.net/jeps/286">JEP 286</a>; in Java 10)</p></li><li><p>switch expressions<br>
-(<a href="http://openjdk.java.net/jeps/325">JEP 325</a>; preview in Java 12 and 13)</p></li><li><p>text blocks<br>
-(<a href="https://openjdk.java.net/jeps/355">JEP 355</a>; preview in Java 13)</p></li></ul></div></div></section><section id="_endeavors"><h2>Endeavors</h2><div class="slide-content"><div class="ulist"><ul><li><p>pattern matching (<a href="http://openjdk.java.net/jeps/305">JEP 305</a>)</p></li><li><p>records (<a href="https://openjdk.java.net/jeps/359">JEP 359</a>)</p></li><li><p>sealed types (<a href="https://openjdk.java.net/jeps/360">JEP 360</a>)</p></li><li><p>serialization revamp (<a href="http://cr.openjdk.java.net/~briangoetz/amber/serialization.html">white paper</a>)</p></li><li><p>concise method bodies (<a href="http://openjdk.java.net/jeps/8209434">JEP draft</a>)</p></li><li><p>raw string literals (maybe)</p></li></ul></div></div></section><section id="_pattern_matching"><h2>Pattern matching</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">Object value = // ...
-String formatted = switch (value) {
-	case Integer i -&gt; String.format("int %d", i);
-	case Byte b    -&gt; String.format("byte %d", b);
-	case Long l    -&gt; String.format("long %d", l);
-	case Double d  -&gt; String.format("double %f", d);
-	case String s  -&gt; String.format("String %s", s);
-	default        -&gt; "unknown " + value.toString();
-};</code></pre></div></div>
-<div class="paragraph"><p><strong>Yeah:</strong></p></div>
-<div class="ulist"><ul><li><p>more powerful conditions</p></li><li><p>no repetition between condition and block</p></li></ul></div></div></section><section id="_pattern_matching_2"><h2>Pattern matching</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public int eval(Node n) {
-	return switch(n) {
-		case IntNode(int i) -&gt; i;
-		case NegNode(Node nn) -&gt; -eval(nn);
-		case AddNode(Node left, Node right) -&gt;
-			eval(left) + eval(right);
-	};
-}</code></pre></div></div>
-<div class="paragraph"><p><strong>Yeah:</strong></p></div>
-<div class="ulist"><ul><li><p>deconstructing complex objects</p></li><li><p>goodbye visitor pattern!</p></li></ul></div></div></section><section id="_records"><h2>Records</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public record Range(int low, int high) {
+<a href="https://mail.openjdk.java.net/mailman/listinfo/amber-dev">mailing list</a></p></li><li><p>launched March 2017</p></li><li><p>led by Brian Goetz</p></li></ul></div></div></section><section id="_motivation"><h2>Motivation</h2><div class="slide-content"><div class="paragraph"><p>Some downsides of Java:</p></div>
+<div class="ulist"><ul><li><p>can be cumbersome</p></li><li><p>tends to require boilerplate</p></li><li><p>due to situational lack of expressiveness</p></li></ul></div>
+<div class="paragraph"><p>Amber wants to improve that situation!</p></div></div></section><section id="_delivered"><h2>Delivered</h2><div class="slide-content"><div class="ulist"><ul><li><p>local-variable type inference with <code>var</code>
+<a href="https://openjdk.java.net/jeps/286">⑩</a></p></li><li><p>switch expressions
+<a href="https://openjdk.java.net/jeps/361">⑭</a></p></li><li><p>text blocks
+<a href="https://openjdk.java.net/jeps/378">⑮</a></p></li><li><p>type pattern matching
+<a href="https://openjdk.java.net/jeps/394">⑯</a></p></li><li><p>records
+<a href="https://openjdk.java.net/jeps/395">⑯</a></p></li><li><p>sealed classes
+<a href="https://openjdk.java.net/jeps/409">⑰</a></p></li></ul></div></div></section><section id="_delivered_2"><h2>Delivered</h2><div class="slide-content"><div class="paragraph"><p>Pattern matching:</p></div>
+<div class="ulist"><ul><li><p>switch expressions</p></li><li><p>type pattern matching</p></li><li><p>sealed classes</p></li></ul></div>
+<div class="paragraph"><p>Misc:</p></div>
+<div class="ulist"><ul><li><p><code>var</code></p></li><li><p>text blocks</p></li><li><p>records</p></li></ul></div></div></section><section id="_pattern_matching_example"><h2>Pattern matching example</h2><div class="slide-content"><div class="paragraph"><p>Evaluating simple arithmetic expressions.</p></div>
+<div class="paragraph"><p><code>1 + (-2) + |3 + (-4)|</code></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">interface Node { }
+record Number(long number) implements Node { }
+record Negate(Node node) implements Node { }
+record Absolute(Node node) implements Node { }
+record Add(List&lt;Node&gt; summands) implements Node { }</code></pre></div></div></div></section><section id="_pattern_matching_example_2"><h2>Pattern matching example</h2><div class="slide-content"><div class="paragraph"><p>Evaluating simple arithmetic expressions.</p></div>
+<div class="paragraph"><p><code>1 + (-2) + |3 + (-4)|</code></p></div>
+<div class="imageblock"><img src="images/arithmetic-tree.png" alt="arithmetic tree"></div></div></section><section id="_polymorphism"><h2>Polymorphism</h2><div class="slide-content"><div class="paragraph"><p>Canonical way to apply operations<br>
+to a type hierarchy:</p></div>
+<div class="paragraph"><p>Polymorphism</p></div></div></section><section id="_polymorphic_solution"><h2>Polymorphic solution</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">interface Node {
+	long evaluate();
+}
 
-	// compiler generates:
-	//  * constructor, deconstructor
-	//  * equals/hashCode/toString
-	//  * accessors low(), high()
-
-}</code></pre></div></div>
-<div class="paragraph"><p><strong>Yeah:</strong></p></div>
-<div class="ulist"><ul><li><p>no boilerplate for plain "data carriers"</p></li><li><p>no room for error in <code>equals</code>/<code>hashCode</code></p></li><li><p>makes Java more expressive</p></li></ul></div></div></section><section id="_records_2"><h2>Records</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>The API for a record models the state, the whole state, and nothing but the state.</p></div></blockquote></div>
-<div class="paragraph"><p>The deal:</p></div>
-<div class="ulist"><ul><li><p>give up encapsulation</p></li><li><p>couple API to internal state</p></li><li><p>get API for free</p></li></ul></div></div></section><section id="_customized_records"><h2>Customized records</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public record Range(int low, int high) {
-
-	// compiler knows signature and assigns to fields
-	public Range {
-		if (low &gt; high)
-			throw new IllegalArgumentException();
+record Number(long number) implements Node {
+	long evaluate() {
+		return number;
 	}
+}
 
-	public void setLow(int low) {
-		if (low &gt; this.high)
-			throw new IllegalArgumentException();
-		this.low = low;
+record Negate(Node node) implements Node {
+	long evaluate() {
+		return -node.evaluate();
 	}
+}</code></pre></div></div></div></section><section id="_polymorphic_solution_2"><h2>Polymorphic solution</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">record Absolute(Node node) implements Node {
+	long evaluate() {
+		long result = node.evaluate();
+		return result &lt; 0 ? -result : result;
+	}
+}
 
-}</code></pre></div></div></div></section><section id="_sealed_types"><h2>Sealed types</h2><div class="slide-content"><div class="paragraph"><p>Have a closer look at the cases:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public int eval(Node n) {
-	return switch(n) {
-		case IntNode(int i) -&gt; // ...
-		case NegNode(Node n) -&gt; // ...
-		case AddNode(Node left, Node right) -&gt; // ...
+record Add(List&lt;Node&gt; summands) implements Node {
+	long evaluate() {
+		return summands.stream()
+			.mapToLong(Node::evaluate)
+			.sum();
+	}
+}</code></pre></div></div></div></section><section id="_domain_overload"><h2>Domain overload</h2><div class="slide-content"><div class="paragraph"><p>Should you implement <code>evaluate</code> this way?<br>
+Probably.</p></div>
+<div class="paragraph"><p>But what about:</p></div>
+<div class="ulist"><ul><li><p><code>Resources estimateResourceUsage()</code></p></li><li><p><code>Strategy createComputationStrategy()</code></p></li><li><p><code>Invoice createInvoice(User user)</code></p></li><li><p><code>String prettyPrint()</code> (like <a href="https://github.com/Thihup/joel/commit/b49c9e7636ce409f9f875c4652fcaa905022dd62#diff-6a9248b7be98141e7c76af3955e11eb074d9cd88211aaf4be0d85c1453cc7649">here</a>)</p></li><li><p><code>void draw(Direction d, Style s, Canvas c)</code></p></li></ul></div>
+<div class="paragraph"><p>⇝ Central abstractions can be overburdened.</p></div></div></section><section id="_visitor_pattern"><h2>Visitor pattern</h2><div class="slide-content"><div class="paragraph"><p>Separating a hierarchy from operations<br>
+is a case for <a href="https://nipafx.dev/java-visitor-pattern-pointless/">the visitor pattern</a>.</p></div>
+<div class="paragraph"><p>Alternative: pattern matching over sealed types.</p></div></div></section><section id="_pattern_matching_solution"><h2>Pattern matching solution</h2><div class="slide-content"><div class="paragraph"><p>Seal type hierarchy:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">interface Node
+	permits Number, Negate, Absolute, Add { }
+
+record Number(long number) implements Node { }
+record Negate(Node node) implements Node { }
+record Absolute(Node node) implements Node { }
+record Add(List&lt;Node&gt; summands) implements Node { }</code></pre></div></div></div></section><section id="_pattern_matching_solution_2"><h2>Pattern matching solution</h2><div class="slide-content"><div class="ulist"><ul><li><p>use type patterns in switch (<a href="https://openjdk.java.net/jeps/420">JEP 420</a> / 2nd preview in 18)</p></li><li><p>use deconstruction patterns (<a href="https://openjdk.java.net/jeps/405">JEP 405</a> / not targeted)</p></li></ul></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">long evaluate(Node node) {
+	return switch (node) {
+		case Number(long no) -&gt; no;
+		case Negate(var n) -&gt; -evaluate(n);
+		case Absolute(var n) &amp;&amp; evaluate(n) &lt; 0
+			-&gt; -evaluate(n);
+		case Absolute(var n) -&gt; evaluate(n);
+		case Add(var summands) -&gt; summands.stream()
+			.mapToLong(this::evaluate)
+			.sum();
 	};
-}</code></pre></div></div>
-<div class="paragraph"><p>Why is there no <code>default</code> branch?</p></div></div></section><section id="_sealed_types_2"><h2>Sealed types</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public sealed interface Node
-	permits IntNode, NegNode, AddNode {
-
-	// interface declaration
-
-}</code></pre></div></div>
-<div class="paragraph"><p><strong>Yeah:</strong></p></div>
-<div class="ulist"><ul><li><p>code expresses intended subtypes</p></li><li><p>pattern matching can check completeness</p></li></ul></div></div></section><section id="_death_to_serialization"><h2>Death to serialization!</h2><div class="slide-content"><div class="paragraph"><p>Serialization is hell:</p></div>
-<div class="ulist"><ul><li><p>complicates every JDK feature</p></li><li><p>repeated security vulnerabilities</p></li><li><p>uses "invisible" mechanisms</p></li></ul></div>
-<div class="paragraph"><p>The JDK team wants to get rid of it!</p></div></div></section><section id="_serializing_records"><h2>Serializing records</h2><div class="slide-content"><div class="paragraph"><p>Replacement may look as follows:</p></div>
-<div class="ulist"><ul><li><p>only works with records</p></li><li><p>deconstructs a record graph</p></li><li><p>passes data to serialization engine</p></li><li><p>one engine per format:<br>
-XML, JSON, YAML, &#8230;&#8203;</p></li></ul></div></div></section><section id="_new_serialization"><h2>New serialization</h2><div class="slide-content"><div class="paragraph"><p><strong>Yeah:</strong></p></div>
-<div class="ulist"><ul><li><p>records are a great fit for serialization</p></li><li><p>new mechanism uses (de)constructors</p></li><li><p>superior maintainability</p></li></ul></div></div></section><section id="_concise_method_bodies"><h2>Concise method bodies</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">class ListWrapper&lt;E&gt; implements List&lt;E&gt; {
-
-    private List&lt;E&gt; list;
-
-    public int size() -&gt; list.size();
-    public T get(int index) -&gt; list.get(index);
-	public int indexOf(E el) = list::indexOf;
-
-}</code></pre></div></div>
-<div class="paragraph"><p><strong>Yeah:</strong></p></div>
-<div class="ulist"><ul><li><p>simple methods get simple code</p></li><li><p>fewer (empty) lines</p></li></ul></div></div></section><section id="_raw_string_literals"><h2>Raw string literals</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">String regex = \"\+(\d*[.])?\d"</code></pre></div></div>
-<div class="paragraph"><p><strong>Yeah:</strong></p></div>
-<div class="ulist"><ul><li><p>no escaping of special characters</p></li></ul></div>
-<div class="paragraph"><p><strong>But:</strong></p></div>
-<div class="ulist"><ul><li><p>was planned <a href="http://openjdk.java.net/jeps/326">as preview in Java 12</a><br></p></li><li><p>removed last minute</p></li></ul></div>
-<div class="paragraph"><p>Turns out, it&#8217;s complicated. 😁</p></div></div></section><section id="_raw_multi_line_strings"><h2>Raw multi-line strings</h2><div class="slide-content"><div class="paragraph"><p>Maybe?</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">String yaml = \"""
-	name: "Positive number"
-	regex: "\+(\d*[.])?\d"
-	""";</code></pre></div></div></div></section><section id="_project_amber_2"><h2>Project Amber</h2><div class="slide-content"><div class="paragraph"><p>Makes Java more expressive:</p></div>
-<div class="ulist"><ul><li><p>type inference with <code>var</code> ⑩</p></li><li><p>switch expressions ⑫</p></li><li><p>text blocks ⑬</p></li><li><p>pattern matching</p></li><li><p>records</p></li><li><p>sealed types</p></li><li><p>serialization revamp</p></li><li><p>concise method bodies</p></li><li><p>raw string literals</p></li></ul></div></div></section></section>
-<section><section id="_project_loom" data-background-image="images/loom.jpg" data-background-size="cover"><h2>Project Loom</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>Fibers, delimited continuations, explicit tail-call</p></div></blockquote></div><div class="paragraph"><p>Profile:</p></div><div class="ulist"><ul><li><p>led by Ron Pressler</p></li><li><p><a href="http://openjdk.java.net/projects/loom/">project</a> /
+}</code></pre></div></div></div></section><section id="_another_use_case"><h2>Another use case</h2><div class="slide-content"><div class="paragraph"><p>When parsing outside data,<br>
+types are often general<br>
+(think <code>JsonNode</code>).</p></div>
+<div class="paragraph"><p>Consider pattern matching<br>
+to tease apart the data.</p></div></div></section><section id="_other_amber_endeavors"><h2>Other Amber endeavors</h2><div class="slide-content"><div class="paragraph"><p>Possible future changes:</p></div>
+<div class="ulist"><ul><li><p>template strings (<a href="https://openjdk.java.net/projects/amber/design-notes/templated-strings">white paper</a>)</p></li><li><p>concise method bodies (<a href="https://openjdk.java.net/jeps/8209434">JEP draft</a>)</p></li><li><p>serialization revamp (<a href="https://openjdk.java.net/projects/amber/design-notes/towards-better-serialization">white paper</a>)</p></li></ul></div></div></section><section id="_project_amber_2"><h2>Project Amber</h2><div class="slide-content"><div class="ulist"><ul><li><p>makes Java more expressive</p></li><li><p>reduces amount of code</p></li><li><p>makes us more productive</p></li></ul></div></div></section><section id="_timeline"><h2>Timeline</h2><div class="slide-content"><div class="paragraph"><p>My personal (!) guesses (!!):</p></div>
+<div class="ulist"><ul><li><p>2023:</p><div class="ulist"><ul><li><p>patterns in switch finalized</p></li><li><p>deconstruction patterns preview</p></li><li><p>template strings preview</p></li></ul></div></li><li><p>2024:</p><div class="ulist"><ul><li><p>more patterns preview</p></li></ul></div></li></ul></div></div></section><section id="_deeper_dives"><h2>Deeper Dives</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.java.net/projects/amber/design-notes/patterns/pattern-match-object-model">Pattern Matching in the Java Object Model</a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=qul2B8iPC-o">Java Language Futures: All Aboard Project Amber</a><br>
+(Nov 2017)</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=hDV6G1MbUH8">Java Language Futures: Late 2021 Edition</a> (Sep 2021)</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=UlFFKkq6fyU">Pattern Matching in Java (17)</a> (Sep 2021)</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=a8OdwUiSnXw">State of Pattern Matching with Brian Goetz</a> (Feb 2022)</p></li></ul></div></div></section></section>
+<section><section id="_project_loom" data-background-image="images/loom.jpg" data-background-size="cover"><h2>Project Loom</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>JVM features and APIs for supporting easy-to-use, high-throughput, lightweight concurrency and new programming models</p></div></blockquote></div><div class="paragraph"><p>Profile:</p></div><div class="ulist"><ul><li><p><a href="http://openjdk.java.net/projects/loom/">project</a> /
 <a href="https://wiki.openjdk.java.net/display/loom/Main">wiki</a> /
 <a href="http://mail.openjdk.java.net/mailman/listinfo/loom-dev">mailing list</a> /
-talks:
-<a href="https://www.youtube.com/watch?v=fpyub8fbrVE">0</a>,
-<a href="https://www.youtube.com/watch?v=J31o0ZMQEnI">1</a>,
-<a href="https://www.youtube.com/watch?v=NV46KFV1m-4">2</a> /<br>
-<a href="http://jdk.java.net/loom">official early access builds</a></p></li><li><p>launched January 2018</p></li></ul></div></div></section><section id="_motivation_2"><h2>Motivation</h2><div class="slide-content"><div class="paragraph"><p>Imagine a hypothetical request:</p></div>
+<a href="http://jdk.java.net/loom">early access builds</a></p></li><li><p>launched January 2018</p></li><li><p>led by Ron Pressler</p></li></ul></div></div></section><section id="_motivation_2"><h2>Motivation</h2><div class="slide-content"><div class="paragraph"><p>Imagine a hypothetical HTTP request:</p></div>
 <div class="olist arabic"><ol class="arabic"><li><p>interpret request</p></li><li><p>query database (<em>blocks</em>)</p></li><li><p>process data for response</p></li></ol></div>
 <div class="paragraph"><p>JVM resource utilization:</p></div>
-<div class="ulist"><ul><li><p>good for tasks 1., 3.</p></li><li><p>really bad for task 2.</p></li></ul></div>
-<div class="paragraph"><p>How to implement that request?</p></div></div></section><section id="_motivation_3"><h2>Motivation</h2><div class="slide-content"><div class="dlist"><dl><dt class="hdlist1">Synchronous (simple)</dt><dd><div class="ulist"><ul><li><p>thread per request</p></li><li><p>blocks on certain calls</p></li><li><p>bad thread utilization</p></li></ul></div></dd><dt class="hdlist1">Asynchronous (not so simple)</dt><dd><div class="ulist"><ul><li><p>use non-blocking APIs with futures</p></li><li><p>incompatible with synchronous code</p></li><li><p>great thread utilization (scalable!)</p></li></ul></div></dd></dl></div>
-<aside class="notes"><div class="ulist"><ul><li><p>common CPU load: 5-30%</p></li></ul></div></aside></div></section><section id="_enter_fibers"><h2>Enter fibers!</h2><div class="slide-content"><div class="paragraph"><p>A fiber:</p></div>
-<div class="ulist"><ul><li><p>looks like a thread to devs</p></li><li><p>low memory footprint ([k]bytes)</p></li><li><p>small switching cost</p></li><li><p><strong>scheduled by the JVM</strong></p></li></ul></div></div></section><section id="_fiber_management"><h2>Fiber management</h2><div class="slide-content"><div class="paragraph"><p>The JVM manages fibers:</p></div>
-<div class="ulist"><ul><li><p>runs them in a pool of <em>carrier threads</em></p></li><li><p>makes fibers <em>yield</em> on blocking calls<br>
-(<strong>frees the carrier thread!</strong>)</p></li><li><p><em>continues</em> fibers when calls return</p></li></ul></div></div></section><section id="_fiber_example"><h2>Fiber example</h2><div class="slide-content"><div class="paragraph"><p>Remember the hypothetical request:</p></div>
+<div class="ulist"><ul><li><p>good for 1. and 3.</p></li><li><p>really bad for 2.</p></li></ul></div>
+<div class="paragraph"><p>How to implement that request?</p></div></div></section><section id="_synchronous"><h2>Synchronous</h2><div class="slide-content"><div class="paragraph"><p>Align application&#8217;s unit of concurrency (request) <br>
+with Java&#8217;s unit of concurrency (thread):</p></div>
+<div class="ulist"><ul><li><p>use thread per request</p></li><li><p>simple to write, debug, profile</p></li><li><p>blocks threads on certain calls</p></li><li><p>limited number of <em>platform</em> threads<br>
+⇝ bad resource utilization<br>
+⇝ low throughput</p></li></ul></div>
+<aside class="notes"><div class="ulist"><ul><li><p>common CPU load: 5-30%</p></li></ul></div></aside></div></section><section id="_asynchronous"><h2>Asynchronous</h2><div class="slide-content"><div class="paragraph"><p>Only use threads for actual computations:</p></div>
+<div class="ulist"><ul><li><p>use non-blocking APIs<br>
+(with futures / reactive streams)</p></li><li><p>harder to write, challenging to debug/profile</p></li><li><p>incompatible with synchronous code</p></li><li><p>shares platform threads<br>
+⇝ great resource utilization<br>
+⇝ high throughput</p></li></ul></div></div></section><section id="_motivation_3"><h2>Motivation</h2><div class="slide-content"><div class="paragraph"><p>Resolve the conflict between:</p></div>
+<div class="ulist"><ul><li><p>simplicity</p></li><li><p>throughput</p></li></ul></div></div></section><section id="_enter_virtual_threads"><h2>Enter virtual threads!</h2><div class="slide-content"><div class="paragraph"><p>A <em>virtual</em> thread:</p></div>
+<div class="ulist"><ul><li><p>appears to be a platform thread</p></li><li><p>low memory footprint ([k]bytes)</p></li><li><p>small switching cost</p></li><li><p><strong>scheduled by the JVM</strong></p></li></ul></div></div></section><section id="_virtual_thread_management"><h2>Virtual thread management</h2><div class="slide-content"><div class="paragraph"><p>The JVM manages virtual threads:</p></div>
+<div class="ulist"><ul><li><p>runs them on a pool of <em>carrier threads</em></p></li><li><p>makes them <em>yield</em> on blocking calls<br>
+(<strong>frees the carrier thread!</strong>)</p></li><li><p><em>continues</em> them when calls return</p></li></ul></div></div></section><section id="_virtual_thread_example"><h2>Virtual thread example</h2><div class="slide-content"><div class="paragraph"><p>Remember the hypothetical request:</p></div>
 <div class="olist arabic"><ol class="arabic"><li><p>interpret request</p></li><li><p>query database (<em>blocks</em>)</p></li><li><p>process data for response</p></li></ol></div>
-<div class="paragraph"><p>In a fiber:</p></div>
-<div class="ulist"><ul><li class="fragment"><p>JVM submits fiber to thread pool</p></li><li class="fragment"><p>when 2. blocks, fiber yields</p></li><li class="fragment"><p>JVM hands thread back to pool<br></p></li><li class="fragment"><p>when 2. unblocks, JVM resubmits fiber</p></li><li class="fragment"><p>fiber continues with 3. (how?)</p></li></ul></div></div></section><section id="_fibers"><h2>Fibers</h2><div class="slide-content"><div class="paragraph"><p><strong>Yeah:</strong></p></div>
-<div class="ulist"><ul><li><p>great thread utilization</p></li><li><p>code is written/debugged as if synchronous</p></li><li><p>legacy code <em>may</em> be forward compatible</p></li></ul></div></div></section><section id="_continuations"><h2>Continuations</h2><div class="slide-content"><div class="paragraph"><p>How do fibers <em>continue</em>?</p></div>
-<div class="ulist"><ul><li><p>use continuations (low-level API)</p></li><li><p>JVM stores and restores call stack</p></li></ul></div></div></section><section id="_project_loom_2"><h2>Project Loom</h2><div class="slide-content"><div class="paragraph"><p>Makes threading more pleasant:</p></div>
-<div class="ulist"><ul><li><p>simple programming model</p></li><li><p>great thread utilization</p></li></ul></div></div></section></section>
+<div class="paragraph"><p>In a virtual thread:</p></div>
+<div class="ulist"><ul><li class="fragment"><p>JVM submits task to carrier thread pool</p></li><li class="fragment"><p>when 2. blocks, virtual thread yields</p></li><li class="fragment"><p>JVM hands carrier thread back to pool</p></li><li class="fragment"><p>when 2. unblocks, JVM resubmits task</p></li><li class="fragment"><p>virtual thread continues with 3.</p></li></ul></div></div></section><section id="_example"><h2>Example</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">try (var executor = Executors
+		.newVirtualThreadPerTaskExecutor()) {
+	IntStream
+		.range(0, 10_000)
+		.forEach(number -&gt; {
+			executor.submit(() -&gt; {
+				Thread.sleep(Duration.ofSeconds(1));
+				return number;
+			});
+		});
+} // executor.close() is called implicitly, and waits</code></pre></div></div>
+<aside class="notes"><div class="ulist"><ul><li><p>all APIs are in flux</p></li></ul></div></aside></div></section><section id="_example_2"><h2>Example</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">void handle(Request request, Response response)
+		throws InterruptedException {
+    try (var executor = Executors
+			.newVirtualThreadPerTaskExecutor()) {
+        var futureA = executor.submit(this::taskA);
+        var futureB = executor.submit(this::taskB);
+        response.send(futureA.get() + futureB.get());
+    } catch (ExecutionException ex) {
+        response.fail(ex);
+    }
+}</code></pre></div></div></div></section><section id="_characteristics"><h2>Characteristics</h2><div class="slide-content"><div class="paragraph"><p>Virtual threads aren&#8217;t "faster threads":<br>
+Each task takes the same time (same <em>latency</em>).</p></div>
+<div class="paragraph"><p>But:</p></div>
+<div class="ulist"><ul><li><p>when number of concurrent tasks is high</p></li><li><p>when workload is not CPU-bound</p></li></ul></div>
+<div class="paragraph"><p>Then <em>throughput</em> increases.</p></div>
+<aside class="notes"><div class="ulist"><ul><li><p>"high": more than a few thousand</p></li></ul></div></aside></div></section><section id="_parallelism_vs_concurrency"><h2>Parallelism vs concurrency</h2><div class="slide-content"><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:33.3333%"><col style="width:33.3333%"><col style="width:33.3334%"></colgroup><thead><tr><th class="tableblock halign-left valign-top"></th><th class="tableblock halign-left valign-top">Parallelism</th><th class="tableblock halign-left valign-top">Concurrency</th></tr><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Task origin</strong></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">solution</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">problem</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Control</strong></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">developer</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">environment</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Resource use</strong></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">coordinated</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">competitive</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Metric</strong></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">latency</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">throughput</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Abstraction</strong></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">CPU cores</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">tasks</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><strong># of threads</strong></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"># of cores</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"># of tasks</p></td></tr></table></div></section><section id="_use_cases"><h2>Use Cases</h2><div class="slide-content"><div class="paragraph"><p>Virtual threads are cheap and plentiful:</p></div>
+<div class="ulist"><ul><li><p>no pooling necessary</p></li><li><p>allows thread per task</p></li><li><p>allows liberal creation<br>
+of threads for subtasks</p></li></ul></div>
+<div class="paragraph"><p>⇝ Enables new concurrency programming models.</p></div>
+<aside class="notes"><div class="ulist"><ul><li><p>"thread per task" covers earlier example</p></li><li><p>"thread per subtask" comes next</p></li></ul></div></aside></div></section><section id="_structured_concurrency"><h2>Structured concurrency</h2><div class="slide-content"><div class="paragraph"><p>Structured programming:</p></div>
+<div class="ulist"><ul><li><p>prescribes single entry point<br>
+and clearly defined exit points</p></li><li><p>influenced languages and runtimes</p></li></ul></div>
+<div class="paragraph"><p>Simlarly, structured concurrency prescribes:</p></div>
+<div class="quoteblock"><blockquote><div class="paragraph"><p>When the flow of execution splits into multiple concurrent flows, they rejoin in the same code block.</p></div></blockquote></div></div></section><section id="_structured_concurrency_2"><h2>Structured concurrency</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>When the flow of execution splits into multiple concurrent flows, they rejoin in the same code block.</p></div></blockquote></div>
+<div class="paragraph"><p>⇝ Threads are short-lived:</p></div>
+<div class="ulist"><ul><li><p>start when task begins</p></li><li><p>end on completion</p></li></ul></div>
+<div class="paragraph"><p>⇝ Enables parent-child/sibling relationships<br>
+  and logical grouping of threads.</p></div></div></section><section id="_unstructured_concurrency"><h2>Unstructured concurrency</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">void handle(Request request, Response response)
+		throws InterruptedException {
+    try (var executor = Executors
+			.newVirtualThreadPerTaskExecutor()) {
+		// what's the relationship between
+		// this and the two spawned threads?
+		// what happens when one of them fails?
+        var futureA = executor.submit(this::taskA);
+        var futureB = executor.submit(this::taskB);
+		// what if we only need the faster one?
+        response.send(futureA.get() + futureB.get());
+    } catch (ExecutionException ex) {
+        response.fail(ex);
+    }
+}</code></pre></div></div></div></section><section id="_structured_concurrency_3"><h2>Structured concurrency</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">void handle(Request request, Response response)
+		throws InterruptedException {
+	// define explicit success/error handling
+    try (var scope = new StructuredTaskScope
+							.ShutdownOnFailure()) {
+        var futureA = scope.fork(this::taskA);
+        var futureB = scope.fork(this::taskB);
+		// wait explicitly until success criteria met
+		scope.join();
+		scope.throwIfFailed();
+
+        response.send(futureA.get() + futureB.get());
+    } catch (ExecutionException ex) {
+        response.fail(ex);
+    }
+}</code></pre></div></div></div></section><section id="_structured_concurrency_4"><h2>Structured concurrency</h2><div class="slide-content"><div class="ulist"><ul><li><p>forked tasks are children of the scope</p></li><li><p>creates relationship between threads</p></li><li><p>success/failure policy can be defined<br>
+across all children</p></li></ul></div></div></section><section data-background-color="white" data-background-image="images/thread-dump.png" data-background-size="contain" data-state="empty"></section><section id="_project_loom_2"><h2>Project Loom</h2><div class="slide-content"><div class="paragraph"><p>Virtual threads:</p></div>
+<div class="ulist"><ul><li><p>code is simple to write, debug, profile</p></li><li><p>high throughput</p></li><li><p>new programing model</p></li></ul></div>
+<div class="paragraph"><p>Structured concurrency:</p></div>
+<div class="ulist"><ul><li><p>clearer concurrency code</p></li><li><p>simpler failure/success policies</p></li><li><p>better debugging</p></li></ul></div></div></section><section id="_timeline_2"><h2>Timeline</h2><div class="slide-content"><div class="paragraph"><p>My personal (!) guesses (!!):</p></div>
+<div class="ulist"><ul><li><p>JDK 19/20:</p><div class="ulist"><ul><li><p>virtual threads preview</p></li><li><p>structured concurrency API preview</p></li></ul></div></li><li><p>2024:</p><div class="ulist"><ul><li><p>more structured concurrency APIs (?)</p></li></ul></div></li></ul></div></div></section><section id="_deeper_dives_2"><h2>Deeper Dives</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.java.net/jeps/8277131">JEP Draft: Virtual Threads</a></p></li><li><p>📝 <a href="https://openjdk.java.net/jeps/8277129">JEP Draft: Structured Concurrency</a></p></li><li><p>📝 <a href="https://inside.java/2021/11/30/on-parallelism-and-concurrency/">On Parallelism and Concurrency</a></p></li><li><p>📝 <a href="https://250bpm.com/blog:71/">Structured Concurrency</a></p></li><li><p>📝 <a href="https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/">Notes on structured concurrency, or: &#8230;&#8203;</a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=fq0OEX0XYR8">Modern, Scalable Concurrency for the Java Platform</a><br>
+(Sep 2021)</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=KG24inClY2M">State of Project Loom with Ron Pressler</a> (Jun 2021)</p></li></ul></div></div></section></section>
 <section id="_project_panama" data-background-image="images/panama-canal.jpg" data-background-size="cover"><h2>Project Panama</h2></section>
-<section><section id="_project_valhalla" data-background-image="images/valhalla.jpg" data-background-size="cover"><h2>Project Valhalla</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>Advanced Java VM and Language feature candidates</p></div></blockquote></div></div></section><section id="_profile"><h2>Profile</h2><div class="slide-content"><div class="ulist"><ul><li><p>led by Brian Goetz and John Rose</p></li><li><p><a href="http://openjdk.java.net/projects/valhalla/">project</a> /
+<section><section id="_project_valhalla" data-background-image="images/valhalla.jpg" data-background-size="cover"><h2>Project Valhalla</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>Advanced Java VM and Language feature candidates</p></div></blockquote></div><div class="paragraph"><p>Profile:</p></div><div class="ulist"><ul><li><p>led by Brian Goetz and John Rose</p></li><li><p><a href="http://openjdk.java.net/projects/valhalla/">project</a> /
 <a href="https://wiki.openjdk.java.net/display/valhalla/Main">wiki</a> /
 <a href="http://mail.openjdk.java.net/mailman/listinfo/valhalla-dev">mailing list</a> /
 talks:
