@@ -19,22 +19,16 @@ Some downsides of Java:
 * tends to require boilerplate
 * due to situational lack of expressiveness
 
-Amber wants to improve that situation!
+Amber continuously improves that situation.
 
 === Delivered
 
-* local-variable type inference with `var`
-  https://openjdk.java.net/jeps/286[⑩]
-* switch expressions
-  https://openjdk.java.net/jeps/361[⑭]
-* text blocks
-  https://openjdk.java.net/jeps/378[⑮]
-* type pattern matching
-  https://openjdk.java.net/jeps/394[⑯]
-* records
-  https://openjdk.java.net/jeps/395[⑯]
-* sealed classes
-  https://openjdk.java.net/jeps/409[⑰]
+* sealed types ⑰ (https://openjdk.java.net/jeps/409[JEP 409])
+* records ⑯ (https://openjdk.java.net/jeps/395[JEP 395])
+* type pattern matching ⑯ (https://openjdk.java.net/jeps/394[JEP 394])
+* text blocks ⑮ (https://openjdk.java.net/jeps/378[JEP 378])
+* switch expressions ⑭ (https://openjdk.java.net/jeps/361[JEP 361])
+* local-variable type inference with `var` ⑩ (https://openjdk.java.net/jeps/286[JEP 286])
 
 === Delivered
 
@@ -42,7 +36,7 @@ Pattern matching:
 
 * switch expressions
 * type pattern matching
-* sealed classes
+* sealed types
 
 Misc:
 
@@ -147,7 +141,7 @@ Alternative: pattern matching over sealed types.
 Seal type hierarchy:
 
 ```java
-interface Node
+sealed interface Node
 	permits Number, Negate, Absolute, Add { }
 
 record Number(long number) implements Node { }
@@ -156,10 +150,29 @@ record Absolute(Node node) implements Node { }
 record Add(List<Node> summands) implements Node { }
 ```
 
-=== Pattern matching solution
+=== Pattern matching now
 
-* use type patterns in switch (https://openjdk.java.net/jeps/420[JEP 420] / 2nd preview in 18)
-* use deconstruction patterns (https://openjdk.java.net/jeps/405[JEP 405] / not targeted)
+Use type patterns in switch (https://openjdk.java.net/jeps/420[JEP 420] / 2nd preview in 18):
+
+```java
+long evaluate(Node node) {
+	return switch (node) {
+		case Number no -> no.number();
+		case Negate neg -> -evaluate(neg.node());
+		case Absolute abs && evaluate(abs.node()) < 0
+			-> -evaluate(abs.node());
+		case Absolute abs -> evaluate(abs.node());
+		case Add add -> add
+			.summands().stream()
+			.mapToLong(this::evaluate)
+			.sum();
+	};
+}
+```
+
+=== Pattern matching later
+
+Also use deconstruction patterns (https://openjdk.java.net/jeps/405[JEP 405] / not targeted):
 
 ```java
 long evaluate(Node node) {
@@ -175,6 +188,17 @@ long evaluate(Node node) {
 	};
 }
 ```
+
+=== Data-oriented programming
+
+records + sealed types + patterns = data-oriented programming
+
+[quote, Yehonathan Sharvit, 'https://blog.klipse.tech/databook/2020/09/25/data-book-chap0.html[What is Data Oriented Programming?]']
+____
+In Data Oriented programming, we model our domain using data collections, that consist of immutable data.
+We manipulate the data via functions that could work with any data collection.
+We say that the functions are generic: they work for any data, no matter what the data represent.
+____
 
 === Another use case
 
@@ -257,11 +281,11 @@ Replacement may look as follows:
 
 My personal (!) guesses (!!):
 
-* 2023:
-** patterns in switch finalized
-** deconstruction patterns preview
-** template strings preview
-* 2024:
+2023::
+* patterns in switch finalized
+* deconstruction patterns preview
+* template strings preview
+2024::
 ** more patterns preview
 
 === Deeper Dives

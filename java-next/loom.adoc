@@ -67,10 +67,10 @@ Resolve the conflict between:
 
 A _virtual_ thread:
 
-* appears to be a platform thread
+* is a regular `Thread``
 * low memory footprint ([k]bytes)
 * small switching cost
-* *scheduled by the JVM*
+* *scheduled by the Java runtime*
 
 === Virtual thread management
 
@@ -136,22 +136,12 @@ void handle(Request request, Response response)
 }
 ```
 
-=== Characteristics
+=== Performance
 
 Virtual threads aren't "faster threads": +
 Each task takes the same time (same _latency_).
 
-But:
-
-* when number of concurrent tasks is high
-* when workload is not CPU-bound
-
-Then _throughput_ increases.
-
-[NOTE.speaker]
---
-* "high": more than a few thousand
---
+So why bother?
 
 === Parallelism vs concurrency
 
@@ -165,6 +155,24 @@ Then _throughput_ increases.
 | *Abstraction*  | CPU cores    | tasks
 | *# of threads* | # of cores   | # of tasks
 |============================================
+
+=== Performance
+
+When workload is not CPU-bound:
+
+* start waiting as early as possible
+* for as many tasks as possible
+
+⇝ Virtual threads increase _throughput_:
+
+* when number of concurrent tasks is high
+* when workload is not CPU-bound
+
+[NOTE.speaker]
+--
+* maximize progress other systems can make.
+* "high": more than a few thousand
+--
 
 === Use Cases
 
@@ -277,11 +285,11 @@ Structured concurrency:
 
 My personal (!) guesses (!!):
 
-* JDK 19/20:
-** virtual threads preview
-** structured concurrency API preview
-* 2024:
-** more structured concurrency APIs (?)
+JDK 19 (2022) / JDK 20 (2023)::
+* virtual threads preview
+* structured concurrency API preview
+2024::
+* more structured concurrency APIs (?)
 
 === Deeper Dives
 
