@@ -1,0 +1,89 @@
+== Ad break
+
+There's much more going on!
+
+=== APIs
+
+Lots of API additions and changes:
+
+* IP address resolution SPI ⑱ (https://openjdk.java.net/jeps/418[JEP 418])
+* new random generator API ⑰ (https://openjdk.java.net/jeps/356[JEP 356])
+* Unix domain sockets ⑯ (https://openjdk.java.net/jeps/380[JEP 380])
+* small additions to +
+  `String`, `Stream`, `Math`, +
+  `CompletableFuture`, HTTP/2 API
+
+As well as lots of internal refactorings.
+
+=== Continuous improvements
+
+Usability:
+
+* UTF-8 by default ⑱ (https://openjdk.java.net/jeps/400[JEP 400])
+* simple web server ⑱ (https://openjdk.java.net/jeps/408[JEP 408])
+* helpful NPEs ⑭ (https://openjdk.java.net/jeps/358[JEP 358])
+
+Tooling:
+
+* code snippets in Javadoc ⑱ (https://openjdk.java.net/jeps/413[JEP 413])
+* packaging tool ⑯ (https://openjdk.java.net/jeps/392[JEP 392])
+* JFR event streaming ⑭ (https://openjdk.java.net/jeps/349[JEP 349])
+
+=== Continuous improvements
+
+Performance:
+
+* dynamic CDS archives ⑬ (https://openjdk.java.net/jeps/350[JEP 350])
+* default CDS archives ⑫ (https://openjdk.java.net/jeps/341[JEP 341])
+* continuous improvements in all garbage collectors
+
+Security:
+
+* context-specific deserialization filters ⑰ (https://openjdk.java.net/jeps/415[JEP 415])
+* Edwards-Curve Digital Signature Algorithm ⑮ (https://openjdk.java.net/jeps/339[JEP 339])
+* ongoing enhancements (https://seanjmullan.org/blog/[Sean Mullan's blog])
+
+
+=== Cleaning house
+
+Deprecations (for removal):
+
+* finalization ⑱ (https://openjdk.java.net/jeps/421[JEP 421])
+* security manager ⑰ (https://openjdk.java.net/jeps/411[JEP 411])
+* applet API ⑰ (https://openjdk.java.net/jeps/398[JEP 398])
+* biased locking ⑮ (https://openjdk.java.net/jeps/374[JEP 374])
+
+Already removed:
+
+* RMI ⑰ (https://openjdk.java.net/jeps/407[JEP 407])
+* Nashorn ⑮ (https://openjdk.java.net/jeps/372[JEP 372])
+* concurrent mark sweep GC ⑭ (https://openjdk.java.net/jeps/363[JEP 363])
+
+=== Adoption
+
+* Java 11 is slowly but resolutely overtakes Java 8
+* adoption of 17 (from 11) looks good
+* always using latest is uncommon but persistent
+
+=== Migrations
+
+To ease migrations:
+
+* stick to supported APIs
+* stick to standardized behavior
+* stick to well-maintained projects
+* keep dependencies and tools up to date
+* stay ahead of removals (`jdeprscan`)
+* build on each release (including EA)
+
+Then you, too, can enjoy these projects ASAP!
+
+////
+
+Draft JEPs
+
+* http://openjdk.java.net/jeps/8158765[isolated methods]: JVM learns about methods that are not related to a class, which improves performance and reduces memory footprint of method handle infrastructure (great for Java, but also for dynamic JVM languages)
+* http://openjdk.java.net/jeps/8201271[vector API]: creates an API that allows the definition of Single Instruction Multiple Data (SIMD) instructions that reliably compile at runtime to optimal vector hardware instructions on supported CPU architectures and thus achieve superior performance than equivalent scalar computations
+* http://openjdk.java.net/jeps/8201462[better hash codes]: adds better hash functions (general, 64bit, well-mixing bits, faster for more fields, saltable) that can be used as alternative backends for `Object::hashCode` (opt-in). Will reduce excessive hash collisions, poor use of CPU cycles, excessive memory footprint in hashed structures
+
+////
