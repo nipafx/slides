@@ -5,130 +5,247 @@ image::images/valhalla.jpg[background, size=cover]
 
 Profile:
 
-* led by Brian Goetz and John Rose
 * http://openjdk.java.net/projects/valhalla/[project] /
 https://wiki.openjdk.java.net/display/valhalla/Main[wiki] /
 http://mail.openjdk.java.net/mailman/listinfo/valhalla-dev[mailing list] /
-talks:
-https://www.youtube.com/watch?v=Tc9vs_HFHVo[0],
-https://www.youtube.com/watch?v=A-mxj2vhVAA&t=35m10s[1],
-https://www.youtube.com/watch?v=_26KZAegYRM[2],
-https://www.youtube.com/watch?v=1H4vmT-Va4o[3] / +
-http://jdk.java.net/valhalla/[official early access builds]
+http://jdk.java.net/valhalla/[early access builds]
 * launched July 2014
+* led by Brian Goetz and John Rose
 
 === Motivation
 
-In Java, (almost) everything is a class:
+Java has a split type system:
+
+* primitives
+* classes
+
+=== Primitives
+
+Potential downsides:
+
+* no class-building techniques
+* no custom primitives
+* can't use with generics
+
+Forced move in 90s to allow for +
+acceptable numeric performance.
+
+[NOTE.speaker]
+--
+* caused by need for numerical performance
+* got worse with generics
+* got weird with (auto-)boxing
+* got worse again with lambdas/streams
+--
+
+=== Classes
+
+Potential downsides:
 
 * mutable by default
 * memory access indirection
-* requires extra memory for header
-* allows locking and other +
+* extra memory for header
+* allow locking and other +
 identity-based operations
 
-Wouldn't it be nice to create a custom `int`?
+=== Root cause
+
+All custom types come with _identity_:
+
+* mutability
+* layout polymorphism
+* `equal` but `!=`
+* synchronization
+* etc.
+
+All custom types come as _references_:
+
+* nullability
+* protect from tearing
+
+But not all custom types need that!
+
+=== Project Valhalla
+
+Valhalla's goals is to unify the type system:
+
+* _value types_ (disavow identity)
+* _primitive types_ (disavow references), +
+  which current primitives are instances of
+* _universal generics_ (`ArrayList<int>`)
+* _specialized generics_ (backed by `int[]`)
 
 === Value types
 
 [source,java]
 ----
-public value Range {
+value class RationalNumber {
+	private long nominator;
+	private long denominator;
 
-	// implicitly final
-	private int low;
-	private int high;
-
-	// you write:
-	//  * constructor, static factories
-	//  * equals/hashCode/toString
-	//  * accessors, etc.
-
+	// constructor, etc.
 }
 ----
 
-=== Value types
+Codes (almost) like a class - exceptions:
 
-[source,java]
-----
-public value Range {
-	private int low;
-	private int high;
+* class and fields are implcitly final
+* superclasses are limited
+
+[NOTE.speaker]
+--
+* can be records
+* fields, methods, constructors
+* use generics, implement interfaces
+* nested classes, class literals
+--
+
+=== Value type behavior
+
+No identity:
+
+* some runtime operations +
+  (e.g. synchronization) +
+  throw exceptions
+* `==` compares by state
+
+References:
+
+* `null` is default value
+* no tearing
+
+=== Value type benefits
+
+* guaranteed immutability
+* more expressiveness
+* more optimizations
+
+=== Migration to value types
+
+> The JDK (as well as other libraries) has many value-based classes, such as `Optional` and `LocalDateTime`. [...]
+> We plan to migrate many value-based classes in the JDK to value classes.
+
+=== Primitive types
+
+```java
+primitive class ComplexNumber {
+	private long rational;
+	private long irratoinal;
+
+	// constructor, etc.
 }
-----
+```
 
-*Yeah:*
+Codes (almost) like a value class - exception:
 
-* enforced immutability
-* no memory indirection! (_flat_)
-* no `Object` header! (_dense_)
-* makes Java more expressive
+* no field of own type +
+  (i.e. no circularity)
 
-=== Value types
+=== Primitive type behavior
 
-> Codes like a class, works like an `int`.
+No identity (like value types).
 
-The deal:
+No references:
 
-* give up identity / mutability +
-(and self references)
-* get flat and dense memory layout
+* default value has all fields set to their defaults
+* can tear under concurrent assignment
 
-=== Values vs Records
+Benefit:
 
-==== Values
+* performance comparable to that of today's primitives!
 
-no identity / mutability +
-⇝ flat and dense memory layout
+=== Primitive "boxes"
 
-==== Records
+Sometimes, even `int` needs to be a reference:
 
-no encapsulation +
-⇝ less boilerplate
+* nullability
+* non-tearability
+* self-reference
 
-Might be combinable to "value records".
+So we box to `Integer`.
 
-=== Generic specialization
+What about `ComplexNumber`?
 
-When everybody creates their own "primitives", +
+=== Primitive "boxes"
+
+Each primitive class `P` declares two types:
+
+* `P`: as discussed so far
+* `P.ref`: behaves like a value type
+
+```java
+primitive class Node<T> {
+    T value;
+    Node.ref<T> nextNode;
+}
+```
+
+=== Migration to primitive types
+
+> [W]e want to adjust the basic primitives (`int`, `double`, etc.) to behave as consistently with new primitives as possible.
+
+On the example of `int`/`Integer`:
+
+* declare `int` as primitive class
+* alias `Integer` with `int.ref`
+* remove `Integer`
+
+=== Universal generics
+
+When everybody creates their own values and primitives, +
 boxing becomes omni-present and very painful!
 
+Universal generics allow value/primitive +
+classes as type parameters:
+
 [source,java]
 ----
-List<int> ids = new ArrayList<>();
+List<long> ids = new ArrayList<>();
+List<RationalNumber> numbers = new ArrayList<>();
 ----
 
-*Yeah:*
+=== Specialized generics
 
-* backed by an actual `int[]`
-* great performance
-* works with your value types
+Healing the rift in the type system is great!
 
-=== Put together
+But if `ArrayList<int>` is backed by `Object[]`, +
+it will still be avoided in many cases.
 
-Value types and generic specialization together, +
-have immense effects inside the JDK!
+Specialized generics will fix that: +
+Generics over primitives will avoid references!
 
-* no more manual specializations:
-** functional interfaces
-** stream API
-** `Optional` API
-* better performance
+=== Project Valhalla
 
-=== Put together
-
-Value types and generic specialization together, +
-have immense effects on your code!
+Value and primitive types plus +
+universal and specialized generics:
 
 * fewer trade-offs between +
-design and performance
+  design and performance
+* no more manual specializations
 * better performance
 * can express design more clearly
 * more robust APIs
 
-=== Project Valhalla
+Makes Java more expressive and performant.
 
-Makes Java more expressive and performant:
+=== Timeline
 
-* value types
-* primitive specialization
+My personal (!) guesses (!!):
+
+JDK 20 (2023)::
+* value classes preview (https://openjdk.java.net/jeps/8277163[JEP draft])
+JDK 21 (2023)::
+* primitive classes preview (https://openjdk.java.net/jeps/401[JEP 401])
+* primitives as classes preview (https://openjdk.java.net/jeps/402[JEP 402])
+* universal generics preview (https://openjdk.java.net/jeps/8261529[JEP draft])
+2025::
+* specialized generics preview
+
+=== Deeper Dives
+
+* 📝 State of Valhalla
+** https://openjdk.java.net/projects/valhalla/design-notes/state-of-valhalla/01-background[Part 1: The Road to Valhalla]
+** https://openjdk.java.net/projects/valhalla/design-notes/state-of-valhalla/02-object-model[Part 2: The Language Model]
+** https://openjdk.java.net/projects/valhalla/design-notes/state-of-valhalla/03-vm-model[Part 3: The JVM Model]
+* 🎥 https://www.youtube.com/watch?v=x1_DBqJrykM[The State of Project Valhalla with Brian Goetz] (Aug 2021)
+* 🎥 https://www.youtube.com/watch?v=1H4vmT-Va4o[Valhalla Update with Brian Goetz] (Jul 2019)
