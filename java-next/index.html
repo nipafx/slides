@@ -462,9 +462,9 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 </script></div></section>
 <section id="_lots_to_talk_about"><h2>Lots to talk about!</h2><div class="slide-content"><table class="toc">
 	<tr><td>Project Amber</td></tr>
-	<tr><td>Project Loom</td></tr>
 	<tr><td>Project Panama</td></tr>
 	<tr><td>Project Valhalla</td></tr>
+	<tr><td>Project Loom</td></tr>
 </table>
 <div class="paragraph"><p>Slides at <a href="https://slides.nipafx.dev/">slides.nipafx.dev</a>.</p></div></div></section>
 <section><section id="_project_amber" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Project Amber</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>Smaller, productivity-oriented Java language features</p></div></blockquote></div><div class="paragraph"><p>Profile:</p></div><div class="ulist"><ul><li><p><a href="https://openjdk.java.net/projects/amber/">project</a> /
@@ -587,49 +587,16 @@ void compute(float[] a, float[] b, float[] c) {
 		vc.intoArray(c, i);
 	}
 }</code></pre></div></div></div></section><section id="_vector_api_2"><h2>Vector API</h2><div class="slide-content"><div class="paragraph"><p>Properties:</p></div>
-<div class="ulist"><ul><li><p>clear and concise API (given the requirements)</p></li><li><p>platform agnostic</p></li><li><p>reliable runtime compilation and performance</p></li><li><p>graceful degradation</p></li></ul></div></div></section><section id="_foreign_memory_api"><h2>Foreign-memory API</h2><div class="slide-content"><div class="paragraph"><p>Storing data off-heap is tough:</p></div>
-<div class="ulist"><ul><li><p><code>ByteBuffer</code> is limited (2GB) and inefficient</p></li><li><p><code>Unsafe</code> is&#8230;&#8203; unsafe and not supported</p></li></ul></div></div></section><section id="_foreign_memory_api_2"><h2>Foreign-memory API</h2><div class="slide-content"><div class="paragraph"><p>Panama introduces safe and performant API:</p></div>
-<div class="ulist"><ul><li><p>to allocate:<br>
-<code>MemorySegment</code>, <code>MemoryAddress</code>, <code>SegmentAllocator</code></p></li><li><p>to access/manipulate: <code>MemoryLayout</code>, <code>VarHandle</code></p></li><li><p>control (de)allocation: <code>MemorySession</code></p></li></ul></div></div></section><section id="_foreign_memory_api_3"><h2>Foreign-memory API</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">String[] javaStrings = { "mouse", "cat", "dog" };
-// allocate off-heap memory to store pointers
-MemorySegment offHeap  = MemorySegment
-	.allocateNative(
-		MemoryLayout.sequenceLayout(
-			javaStrings.length,
-			ValueLayout.ADDRESS),
-		...);
-for (int i = 0; i &lt; javaStrings.length; i++) {
-    // allocate off-heap &amp; store a pointer
-    MemorySegment cString = SegmentAllocator
-		.implicitAllocator()
-		.allocateUtf8String(javaStrings[i]);
-    offHeap
-		.setAtIndex(ValueLayout.ADDRESS, i, cString);
-}</code></pre></div></div></div></section><section id="_foreign_function_api"><h2>Foreign-function API</h2><div class="slide-content"><div class="paragraph"><p>JNI isn&#8217;t ideal:</p></div>
+<div class="ulist"><ul><li><p>clear and concise API (given the requirements)</p></li><li><p>platform agnostic</p></li><li><p>reliable runtime compilation and performance</p></li><li><p>graceful degradation</p></li></ul></div></div></section><section id="_foreign_apis"><h2>Foreign APIs</h2><div class="slide-content"><div class="paragraph"><p>Storing data off-heap is tough:</p></div>
+<div class="ulist"><ul><li><p><code>ByteBuffer</code> is limited (2GB) and inefficient</p></li><li><p><code>Unsafe</code> is&#8230;&#8203; unsafe and not supported</p></li></ul></div>
+<div class="paragraph"><p>JNI isn&#8217;t ideal:</p></div>
 <div class="ulist"><ul><li><p>involves several tedious artifacts (header file, impl, &#8230;&#8203;)</p></li><li><p>can only interoperate with languages that align<br>
-with OS/architecture the JVM was built for</p></li><li><p>doesn&#8217;t reconcile Java/C type systems</p></li></ul></div></div></section><section id="_foreign_function_api_2"><h2>Foreign-function API</h2><div class="slide-content"><div class="paragraph"><p>Panama introduces streamlined tooling/API<br>
+with OS/architecture the JVM was built for</p></li><li><p>doesn&#8217;t reconcile Java/C type systems</p></li></ul></div></div></section><section id="_foreign_memory_api"><h2>Foreign-memory API</h2><div class="slide-content"><div class="paragraph"><p>Safe and performant foreign-memory API:</p></div>
+<div class="ulist"><ul><li><p>to allocate:<br>
+<code>MemorySegment</code>, <code>MemoryAddress</code>, <code>SegmentAllocator</code></p></li><li><p>to access/manipulate: <code>MemoryLayout</code>, <code>VarHandle</code></p></li><li><p>control (de)allocation: <code>MemorySession</code></p></li></ul></div></div></section><section id="_foreign_function_api"><h2>Foreign-function API</h2><div class="slide-content"><div class="paragraph"><p>Streamlined tooling/API for foreign functions<br>
 based on method handles:</p></div>
 <div class="ulist"><ul><li><p><code>jextract</code>: generates method handles from header file</p></li><li><p>classes to call foreign functions<br>
-<code>CLinker</code>, <code>FunctionDescriptor</code>, <code>NativeSymbol</code></p></li></ul></div></div></section><section id="_foreign_function_api_3"><h2>Foreign-function API</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// find foreign function on the C library path
-CLinker linker = CLinker.systemCLinker();
-MethodHandle radixSort = linker.downcallHandle(
-	linker.lookup("radixsort"),
-	...);
-
-// move Java strings off heap
-String[] javaStrings = { "mouse", "cat", "dog" };
-MemorySegment offHeap = // ...
-
-// invoke foreign function
-radixSort.invoke(
-	offHeap, javaStrings.length,
-	MemoryAddress.NULL, '\0');</code></pre></div></div></div></section><section id="_foreign_memory_api_4"><h2>Foreign-memory API</h2><div class="slide-content"><div class="paragraph"><p>Now get the results back:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// copy the (reordered) strings back to heap
-for (int i = 0; i &lt; javaStrings.length; i++) {
-    MemoryAddress cStringPtr = offHeap
-		.getAtIndex(ValueLayout.ADDRESS, i);
-    javaStrings[i] = cStringPtr.getUtf8String(0);
-}</code></pre></div></div></div></section><section id="_timeline_2"><h2>Timeline</h2><div class="slide-content"><div class="paragraph"><p>Official plans:</p></div>
+<code>CLinker</code>, <code>FunctionDescriptor</code>, <code>NativeSymbol</code></p></li></ul></div></div></section><section id="_timeline_2"><h2>Timeline</h2><div class="slide-content"><div class="paragraph"><p>Official plans:</p></div>
 <div class="dlist"><dl><dt class="hdlist1">JDK 19 (2022)</dt><dd><div class="ulist"><ul><li><p>foreign function/memory API previews (<a href="https://openjdk.java.net/jeps/424">JEP 424</a>)</p></li></ul></div></dd></dl></div>
 <div class="paragraph"><p>Vector API needs to wait for Valhalla&#8217;s<br>
 primitive types and universal generics.</p></div></div></section><section id="_deeper_dives_2"><h2>Deeper Dives</h2><div class="slide-content"><div class="paragraph"><p>Vector APIs:</p></div>
