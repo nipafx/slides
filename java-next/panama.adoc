@@ -1,5 +1,191 @@
 == Project Panama
 image::images/panama-canal.jpg[background, size=cover]
 
-// https://mail.openjdk.java.net/pipermail/panama-dev/2021-December/015895.html
+> Interconnecting JVM and native code
 
+Profile:
+
+* https://openjdk.java.net/projects/panama/[project] /
+https://mail.openjdk.java.net/mailman/listinfo/panama-dev[mailing list] /
+https://jdk.java.net/panama/[early access builds]
+* launched July 2014
+* led by Maurizio Cimadamore
+
+=== Subprojects
+
+* vector API
+* foreign memory API
+* foreign function API
+
+=== Vectorization
+
+Given two `float` arrays `a` and `b`, +
+compute `c = - (a² + b²)`:
+
+```java
+void compute(float[] a, float[] b, float[] c) {
+   for (int i = 0; i < a.length; i++) {
+        c[i] = (a[i] * a[i] + b[i] * b[i]) * -1.0f;
+   }
+}
+```
+
+=== Auto-vectorization
+
+Vectorization - modern CPUs:
+
+* have multi-word registers (e.g. 512 bit)
+* can store several numbers (e.g. 16 `float`​s)
+* can execute several computations at once
+
+⇝ _Single Instruction, multiple data_ (SIMD)
+
+Just-in-time compiler tries to vectorize loops. +
+⇝ _Auto-vectorization_
+
+Works but isn't reliable.
+
+=== Vector API
+
+```java
+static final VectorSpecies<Float> VS =
+	FloatVector.SPECIES_PREFERRED;
+
+void compute(float[] a, float[] b, float[] c) {
+	int upperBound = VS.loopBound(a.length);
+	for (i = 0; i < upperBound; i += VS.length()) {
+		var va = FloatVector.fromArray(VS, a, i);
+		var vb = FloatVector.fromArray(VS, b, i);
+		var vc = va.mul(va)
+			.add(vb.mul(vb))
+			.neg();
+		vc.intoArray(c, i);
+	}
+}
+```
+
+=== Vector API
+
+Properties:
+
+* clear and concise API (given the requirements)
+* platform agnostic
+* reliable runtime compilation and performance
+* graceful degradation
+
+=== Foreign-memory API
+
+Storing data off-heap is tough:
+
+* `ByteBuffer` is limited (2GB) and inefficient
+* `Unsafe` is... unsafe and not supported
+
+=== Foreign-memory API
+
+Panama introduces safe and performant API:
+
+* to allocate: +
+  `MemorySegment`, `MemoryAddress`, `SegmentAllocator`
+* to access/manipulate: `MemoryLayout`, `VarHandle`
+* control (de)allocation: `MemorySession`
+
+=== Foreign-memory API
+
+```java
+String[] javaStrings = { "mouse", "cat", "dog" };
+// allocate off-heap memory to store pointers
+MemorySegment offHeap  = MemorySegment
+	.allocateNative(
+		MemoryLayout.sequenceLayout(
+			javaStrings.length,
+			ValueLayout.ADDRESS),
+		...);
+for (int i = 0; i < javaStrings.length; i++) {
+    // allocate off-heap & store a pointer
+    MemorySegment cString = SegmentAllocator
+		.implicitAllocator()
+		.allocateUtf8String(javaStrings[i]);
+    offHeap
+		.setAtIndex(ValueLayout.ADDRESS, i, cString);
+}
+```
+
+=== Foreign-function API
+
+JNI isn't ideal:
+
+* involves several tedious artifacts (header file, impl, ...)
+* can only interoperate with languages that align +
+  with OS/architecture the JVM was built for
+* doesn't reconcile Java/C type systems
+
+=== Foreign-function API
+
+Panama introduces streamlined tooling/API +
+based on method handles:
+
+* `jextract`: generates method handles from header file
+* classes to call foreign functions +
+`CLinker`, `FunctionDescriptor`, `NativeSymbol`
+
+=== Foreign-function API
+
+```java
+// find foreign function on the C library path
+CLinker linker = CLinker.systemCLinker();
+MethodHandle radixSort = linker.downcallHandle(
+	linker.lookup("radixsort"),
+	...);
+
+// move Java strings off heap
+String[] javaStrings = { "mouse", "cat", "dog" };
+MemorySegment offHeap = // ...
+
+// invoke foreign function
+radixSort.invoke(
+	offHeap, javaStrings.length,
+	MemoryAddress.NULL, '\0');
+```
+
+=== Foreign-memory API
+
+Now get the results back:
+
+```java
+// copy the (reordered) strings back to heap
+for (int i = 0; i < javaStrings.length; i++) {
+    MemoryAddress cStringPtr = offHeap
+		.getAtIndex(ValueLayout.ADDRESS, i);
+    javaStrings[i] = cStringPtr.getUtf8String(0);
+}
+```
+
+=== Timeline
+
+Official plans:
+
+JDK 19 (2022)::
+* foreign function/memory API previews (https://openjdk.java.net/jeps/424[JEP 424])
+
+Vector API needs to wait for Valhalla's +
+primitive types and universal generics.
+
+=== Deeper Dives
+
+Vector APIs:
+
+* 📝 https://openjdk.java.net/jeps/414[JEP 414: Vector API (Second Incubator)]
+* 📝 https://www.morling.dev/blog/fizzbuzz-simd-style/[FizzBuzz – SIMD Style!]
+* 🎥 https://www.youtube.com/watch?v=1JeoNr6-pZw&list=PLX8CzqL3ArzWe2uQhE-TeAayRtjvBNyNn&index=8[The Vector API in JDK 17] (Sep 2021)
+
+=== Deeper Dives
+
+Foreign APIs:
+
+* 📝 design documents
+** https://github.com/openjdk/panama-foreign/blob/foreign-jextract/doc/panama_memaccess.md[State of foreign memory support]
+** https://github.com/openjdk/panama-foreign/blob/foreign-jextract/doc/panama_ffi.md[State of foreign function support]
+** https://github.com/openjdk/panama-foreign/blob/foreign-jextract/doc/panama_jextract.md[Using the jextract tool]
+* 🎥 https://www.youtube.com/watch?v=r4dNRVWYaZI[Panama Update with Maurizio Cimadamore] (Jul 2019)
+* 🎥 https://archive.fosdem.org/2020/schedule/event/bytebuffers/[ByteBuffers are dead, long live ByteBuffers!] (Feb 2020)
+* 🎥 https://www.youtube.com/watch?v=B8k9QGvPxC0[The State of Project Panama with Maurizio Cimadamore] (Jun 2021)
