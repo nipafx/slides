@@ -73,6 +73,40 @@ Properties:
 * reliable runtime compilation and performance
 * graceful degradation
 
+=== Foreign APIs
+
+Storing data off-heap is tough:
+
+* `ByteBuffer` is limited (2GB) and inefficient
+* `Unsafe` is... unsafe and not supported
+
+JNI isn't ideal:
+
+* involves several tedious artifacts (header file, impl, ...)
+* can only interoperate with languages that align +
+  with OS/architecture the JVM was built for
+* doesn't reconcile Java/C type systems
+
+=== Foreign-memory API
+
+Safe and performant foreign-memory API:
+
+* to allocate: +
+  `MemorySegment`, `MemoryAddress`, `SegmentAllocator`
+* to access/manipulate: `MemoryLayout`, `VarHandle`
+* control (de)allocation: `MemorySession`
+
+=== Foreign-function API
+
+Streamlined tooling/API for foreign functions +
+based on method handles:
+
+* `jextract`: generates method handles from header file
+* classes to call foreign functions +
+`CLinker`, `FunctionDescriptor`, `NativeSymbol`
+
+////
+
 === Foreign-memory API
 
 Storing data off-heap is tough:
@@ -159,6 +193,8 @@ for (int i = 0; i < javaStrings.length; i++) {
     javaStrings[i] = cStringPtr.getUtf8String(0);
 }
 ```
+
+////
 
 === Timeline
 
