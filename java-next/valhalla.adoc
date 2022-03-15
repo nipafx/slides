@@ -46,7 +46,7 @@ Potential downsides:
 * memory access indirection
 * extra memory for header
 * allow locking and other +
-identity-based operations
+  identity-based operations
 
 === Root cause
 
@@ -70,8 +70,7 @@ But not all custom types need that!
 Valhalla's goals is to unify the type system:
 
 * _value types_ (disavow identity)
-* _primitive types_ (disavow references), +
-  which current primitives are instances of
+* _primitive types_ (disavow references)
 * _universal generics_ (`ArrayList<int>`)
 * _specialized generics_ (backed by `int[]`)
 

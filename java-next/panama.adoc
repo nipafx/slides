@@ -70,7 +70,7 @@ Properties:
 
 * clear and concise API (given the requirements)
 * platform agnostic
-* reliable runtime compilation and performance
+* reliable run-time compilation and performance
 * graceful degradation
 
 === Foreign APIs
@@ -101,9 +101,9 @@ Safe and performant foreign-memory API:
 Streamlined tooling/API for foreign functions +
 based on method handles:
 
-* `jextract`: generates method handles from header file
 * classes to call foreign functions +
-`CLinker`, `FunctionDescriptor`, `NativeSymbol`
+  `CLinker`, `FunctionDescriptor`, `NativeSymbol`
+* `jextract`: generates method handles from header file
 
 ////
 

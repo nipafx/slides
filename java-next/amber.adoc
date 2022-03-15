@@ -17,7 +17,7 @@ Some downsides of Java:
 
 * can be cumbersome
 * tends to require boilerplate
-* due to situational lack of expressiveness
+* situational lack of expressiveness
 
 Amber continuously improves that situation.
 
@@ -37,12 +37,12 @@ Pattern matching:
 * switch expressions
 * type pattern matching
 * sealed types
+* records
 
 Misc:
 
 * `var`
 * text blocks
-* records
 
 === Pattern matching example
 
@@ -64,7 +64,7 @@ Evaluating simple arithmetic expressions.
 
 `1 + (-2) + |3 + (-4)|`
 
-image::images/arithmetic-tree.png[]
+image::images/arithmetic-tree.png[role="diagram"]
 
 === Polymorphism
 
@@ -166,6 +166,7 @@ long evaluate(Node node) {
 			.summands().stream()
 			.mapToLong(this::evaluate)
 			.sum();
+		// no default branch needed
 	};
 }
 ```
@@ -185,6 +186,7 @@ long evaluate(Node node) {
 		case Add(var summands) -> summands.stream()
 			.mapToLong(this::evaluate)
 			.sum();
+		// no default branch needed
 	};
 }
 ```
@@ -197,7 +199,6 @@ records + sealed types + patterns = data-oriented programming
 ____
 In Data Oriented programming, we model our domain using data collections, that consist of immutable data.
 We manipulate the data via functions that could work with any data collection.
-We say that the functions are generic: they work for any data, no matter what the data represent.
 ____
 
 === Another use case
