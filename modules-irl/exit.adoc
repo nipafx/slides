@@ -1,0 +1,40 @@
+== Java Modules In Real Life
+image::images/exit.jpg[background]
+
+{toc}
+
+=== Getting out
+
+If roadblocks are insurmountable, +
+getting out is easy:
+
+```bash
+find . -name module-info.java -type f -delete
+```
+
+=== Preparations
+
+But first:
+
+* move documentation elsewhere
+* declare services the old way
+* update command line options +
+  (e.g. `--add-exports` and paths)
+* from from jlink to jpackage
+
+=== Lost work
+
+What about all the work?!
+
+Some benefits remain:
+
+* good while it lasted
+* cleaner architecture
+* documentation
+
+=== Getting out
+
+Not a great step, +
+but at least it's possible!
+
+Makes it feasible to try out.

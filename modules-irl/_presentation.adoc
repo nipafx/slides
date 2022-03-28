@@ -39,8 +39,8 @@ include::../_shared/event-on-title-and-footer.adoc[]
 	<tr><td>Why use modules?</td></tr>
 	<tr><td>Incremental modularization</td></tr>
 	<tr><td>What are common or tricky roadblocks?</td></tr>
-	<tr><td>When (not) to use modules?</td></tr>
 	<tr><td>Where's the exit?!</td></tr>
+	<tr><td>When (not) to use modules?</td></tr>
 </table>
 ++++
 
@@ -51,8 +51,8 @@ Slides at https://slides.nipafx.dev/modules-irl[slides.nipafx.dev/modules-irl]
 	<tr class="toc-current"><td>Why use modules?</td></tr> \
 	<tr><td>Incremental modularization</td></tr> \
 	<tr><td>What are common or tricky roadblocks?</td></tr> \
-	<tr><td>When (not) to use modules?</td></tr> \
 	<tr><td>Where's the exit?!</td></tr> \
+	<tr><td>When (not) to use modules?</td></tr> \
 </table> \
 ]
 include::reasons.adoc[]
@@ -63,11 +63,22 @@ include::reasons.adoc[]
 	<tr><td>Why use modules?</td></tr> \
 	<tr class="toc-current"><td>Incremental modularization</td></tr> \
 	<tr><td>What are common or tricky roadblocks?</td></tr> \
-	<tr><td>When (not) to use modules?</td></tr> \
 	<tr><td>Where's the exit?!</td></tr> \
+	<tr><td>When (not) to use modules?</td></tr> \
 </table> \
 ]
 include::modularization.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>Why use modules?</td></tr> \
+	<tr><td>Incremental modularization</td></tr> \
+	<tr><td>What are common or tricky roadblocks?</td></tr> \
+	<tr class="toc-current"s><td>Where's the exit?!</td></tr> \
+	<tr><td>When (not) to use modules?</td></tr> \
+</table> \
+]
+include::exit.adoc[]
 
 include::../_shared/about-slide.adoc[]
 
