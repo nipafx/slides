@@ -42,6 +42,7 @@ a troublesome automatic module:
 Some common or tricky roadblocks:
 
 * split packages
+* broken module descriptors
 * reflective access
 * unsupported media type
 
@@ -56,16 +57,16 @@ to belong to exactly one module.
 ```bash
 # compiler
 error: package exists in another module: ...
-    package ...;
+	package ...;
 
-#runtime - between two modules
+#run time - between two modules
 Error occurred during initialization of boot layer
 java.lang.reflect.LayerInstantiationException:
-    Package ... in both module ... and module ...
+	Package ... in both module ... and module ...
 
-#runtime - between module and class path
+#run time - between module and class path
 Exception in thread "main" NoClassDefFoundError: ...
-    at ...
+	at ...
 ```
 
 === Split package solution
@@ -123,9 +124,95 @@ The other workarounds (not shown here):
 
 Work best for transitive dependencies.
 
+=== Broken module descriptors
+
+```java
+// TODO
+```
+
 === Reflective access
 
-// TODO
+Reflection no longer "just works".
+
+```bash
+Exception in thread "main" InaccessibleObjectException:
+	Unable to make ... accessible:
+	module ... does not "opens ..." to module ...
+```
+
+=== Reflective access
+
+Solution: ::
+Open packages for reflection +
+in module declaration.
+
+Workaround: ::
+Open packages for reflection +
+at launch with `--add-opens`.
+
+=== In module declaration
+
+Analyze which parts of your code +
+need to be reflected over, e.g.:
+
+* Spring controllers
+* JPA entities
+* classes for JSON or XML
+
+Open packages in module declaration:
+
+```java
+module com.example.app {
+	opens com.example.app.controllers;
+	opens com.example.app.json;
+}
+```
+
+=== In module declaration
+
+Consider only opening packages +
+to the modules that reflect:
+
+```java
+module com.example.app {
+	opens com.example.app.controllers
+		to spring.beans, spring.core, spring.context;
+	opens com.example.app.json
+		 to com.fasterxml.jackson.databind;
+}
+```
+
+* better security
+* better documentation
+
+=== At launch
+
+For access to modules you don't create:
+
+```bash
+java --add-opens
+	com.example.lib/com.example.lib.values=$MODULE
+```
+
+Where `$MODULE` is;
+
+* the name of the reflecting module
+* `ALL-UNNAMED` to open to reflection +
+  from class path
+
+=== Guesswork
+
+Dependencies may not report errors from reflection.
+
+For quick experiments, open your modules:
+
+```java
+open module com.example.app {
+	// no more `opens` directives
+}
+```
+
+If error vanishes, it was an issue with reflection.
 
 [state=empty,background-color=black,background-transition=none]
 === !
@@ -144,7 +231,7 @@ image::images/roadblocks-umt-open.jpg[background, size=contain]
 
 Projects that aren't prepared for modules:
 
-* can have various runtime issues
+* can have various run-time issues
 * sometimes react poorly by +
   hiding the underlying cause
 
