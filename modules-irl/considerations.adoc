@@ -1,0 +1,140 @@
+== Java Modules In Real Life
+
+{toc}
+
+=== Observations & Assumptions
+
+Observations:
+
+* modules require & enforce a decent architecture
+* (re)factoring modules << (re)factoring code
+* most problems originate in dependencies
+
+Assumption:
+
+* barring problematic dependencies, +
+  modules are a net-positive
+
+=== Those damn dependencies!
+
+Why are dependencies so often the problem?
+
+* almost all still baseline against JDK ≤ 8
+* makes creating/maintaining modules tougher
+* number of modularized apps is small +
+  and thus demand is small (but growing)
+
+[%step]
+But more and more ship as modules: +
+https://github.com/sormuras/modules[sormuras/modules] tracks 4128 unique modules +
+(as of March 29th).
+
+=== Project size
+
+What impact does project size have?
+
+Simplified:
+
+[cols="^1,^1,^1", width=50%, options="header"]
+|===
+|Size
+|Effort
+|Benefit
+
+|small
+|📉
+|📉
+
+|large
+|📈
+|📈
+|===
+
+⇝ Project size doesn't matter (much).
+
+=== Project type
+
+General benefits for all kinds of projects:
+
+* managing dependencies
+* preventing (accidental) use +
+  of internal (JDK) APIs
+* new abstraction
+* etc.
+
+=== Project type
+
+Frameworks and libraries...
+
+* benefit from strong encapsulation
+* shouldn't limit users
+
+Applications benefit from...
+
+* strong encapsulation (!)
+* self-contained images (possibly)
+
+⇝ Project type has little practical impact, +
+  but reused code should consider users.
+
+=== Project age
+
+New projects: ::
+* module declarations and architecture +
+  evolve side by side
+* new dependencies can be vetted
+
+Existing projects: ::
+* modules must be retrofitted
+* architecture may require updating +
+  (which can be the goal!)
+* existing dependencies must work
+
+⇝ New projects are a better fit.
+
+=== Domain (knowledge)
+
+Impact of domain (knowledge) on dependencies:
+
+* maintenance of domain-specific dependencies
+* choice of domain-specific dependencies
+* understanding of domain to evaluate that +
+  and to analyze unexpected problems
+
+⇝ Easier if domain isn't niche +
+  and you understand it well.
+
+=== When (not)?
+
+Best place to start:
+
+* new projects
+* in well-understood, +
+  well-maintained domain
+* particularly if reused
+
+Next best place: your current project! +
+(Unless it has lots of outdated dependencies.)
+
+=== How to
+
+Do: ::
+* Accept that partial modularization brings +
+  partial benefits. Then start small.
+* Use module declarations to analyze, guide, +
+  document, and review architecture.
+
+Don't: ::
+* Get stuck trying to fix dependencies: +
+  identify root cause, open an issue, +
+  put on class path, wait for (or contribute) fix.
+* Forget that modules are seat belt, not a rocket.
+
+=== !
+
+[quote, John Lennon]
+____
+Everything will be okay in the end. If it's not okay, it's not the end.
+____
+
+
