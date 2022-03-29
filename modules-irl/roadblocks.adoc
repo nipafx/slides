@@ -59,12 +59,12 @@ to belong to exactly one module.
 error: package exists in another module: ...
 	package ...;
 
-#run time - between two modules
+#run time — between two modules
 Error occurred during initialization of boot layer
 java.lang.reflect.LayerInstantiationException:
 	Package ... in both module ... and module ...
 
-#run time - between module and class path
+#run time — between module and class path
 Exception in thread "main" NoClassDefFoundError: ...
 	at ...
 ```
@@ -108,10 +108,11 @@ can make that a bridge:
 
 * create a subproject that...
 ** depends on the splitting JARs
-** contains all code that use them
-** becomes an automatic module
-* put splitting JARs on class path
+** contains all code that uses them
+** becomes an automatic module +
+   (i.e. no module descriptor!)
 * modular code depends on that subproject
+* put splitting JARs on class path
 
 === More workarounds
 
@@ -194,11 +195,10 @@ java --add-opens
 	com.example.lib/com.example.lib.values=$MODULE
 ```
 
-Where `$MODULE` is;
+Where `$MODULE` is:
 
 * the name of the reflecting module
-* `ALL-UNNAMED` to open to reflection +
-  from class path
+* `ALL-UNNAMED` for reflection from class path
 
 === Guesswork
 
@@ -276,4 +276,5 @@ Two categories of problems in dependencies:
 
 Such cases need to be fixed on their end!
 
+[%step]
 ⇝ Makes the Java ecosystem more reliable for everybody.

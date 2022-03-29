@@ -63,13 +63,20 @@ $ app-image/bin/java --list-modules
 
 Which packages can I use?
 
-// TODO
+image::images/junit-pioneer-packages.png[height=400px]
 
 === Defining APIs
 
 Exactly these:
 
-// TODO
+```java
+module org.junitpioneer {
+	exports org.junitpioneer.jupiter;
+	exports org.junitpioneer.jupiter.cartesian;
+	exports org.junitpioneer.jupiter.params;
+	exports org.junitpioneer.vintage;
+}
+```
 
 ⇝ Modules clarify APIs.
 
@@ -143,11 +150,11 @@ module java.sql {
 ```
 
 [step=1]
-⇝ Modules makes consuming services explicit.
+⇝ Modules make consuming services explicit.
 
 === Simple services
 
-No more files in `META-INF/services/` - instead:
+No more files in `META-INF/services/` — instead:
 
 ```java
 module com.example.sql {
@@ -190,5 +197,6 @@ Module declarations:
 * can be evaluated by other tools
 * are obvious to review
 
+[%step]
 ⇝ Modules are a living representation +
 of a project's architecture.

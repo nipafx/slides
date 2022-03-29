@@ -32,8 +32,8 @@ image::images/modularization-migrating-boundary.png[background, size=contain]
 
 Incremental modularization is enabled by two features:
 
-* Unnamed Module(s)
-* Automatic Modules
+* unnamed module(s)
+* automatic modules
 
 And the fact that module and class path coexist:
 
@@ -68,7 +68,7 @@ and your dependencies were not?
 +
 [source,java]
 ----
-module calendar {
+module com.example.app {
 	requires unnamed;
 }
 ----
@@ -93,7 +93,7 @@ image::images/modularization-automatic.png[background, size=contain]
 === What goes where?
 image::images/confusion.jpg[background, size=cover]
 
-[cols="s,d,d", options="header"]
+[cols="3s,^4d,^4d", width=90%, options="header"]
 |===
 |
 |Class Path
@@ -124,7 +124,7 @@ Three strategies emerge:
 Works best for projects *without* +
 unmodularized dependencies.
 
-* pick JAR at bottom of dependency tree
+* pick a JAR at bottom of dependency tree
 * turn it into a module
 * put it and all dependencies on module path
 * continue with siblings or parent
@@ -142,7 +142,8 @@ Good approach for projects *with* +
 unmodularized dependencies +
 
 * pick JAR at top of dependency tree
-* turn it into a module
+* turn it into a module +
+  (require explicit and auto modules)
 * put it on the module path
 * continue with children
 
@@ -152,13 +153,11 @@ Where to put dependencies?
 
 Where to put dependencies?
 
-* modularized dependencies:
-** require direct ones
-** put all on the module path
-* unmodularized dependencies:
-** require direct ones with automatic name
-** put direct ones on the module path
-** put others on the class path
+Direct dependencies: ::
+Put all on the module path.
+Transitive dependencies: ::
+Put only those required by explicit modules +
+on the module path (transitively).
 
 [state=empty,background-color=white]
 === !
@@ -168,10 +167,10 @@ image::images/modularization-top-down.png[background, size=contain]
 
 When dependencies get modularized:
 
-* hopefully the name didn't change
-* if they are already on the module path, +
-nothing changes
-* otherwise move them there
+* if the name changed, update declarations
+* were they already on the module path?
+** yes ⇝ nothing changes for them
+** no ⇝ move them there
 * check their dependencies
 
 === Top down
@@ -192,8 +191,8 @@ with automatic module names:
 
 Manifest entry:
 
-* projects can publish module name +
-  as manifest entry
+* projects can publish module name with +
+  manifest entry `AUTOMATIC-MODULE-NAME`
 * assumption is that it won't change +
   when project gets modularized
 * that makes these names stable

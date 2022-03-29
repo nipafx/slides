@@ -64,13 +64,11 @@ General benefits for all kinds of projects:
 
 === Project type
 
-Frameworks and libraries...
-
+Frameworks and libraries: ::
 * benefit from strong encapsulation
 * shouldn't limit users
 
-Applications benefit from...
-
+Applications benefit from: ::
 * strong encapsulation (!)
 * self-contained images (possibly)
 
@@ -96,9 +94,9 @@ Existing projects: ::
 
 Impact of domain (knowledge) on dependencies:
 
-* maintenance of domain-specific dependencies
-* choice of domain-specific dependencies
-* understanding of domain to evaluate that +
+* maintenance of domain-specific dependencies?
+* choice of domain-specific dependencies?
+* understanding of domain to evaluate 👆🏾 +
   and to analyze unexpected problems
 
 ⇝ Easier if domain isn't niche +
@@ -128,7 +126,7 @@ Don't: ::
 * Get stuck trying to fix dependencies: +
   identify root cause, open an issue, +
   put on class path, wait for (or contribute) fix.
-* Forget that modules are seat belt, not a rocket.
+* Forget that modules are a seat belt, not a rocket.
 
 === !
 
