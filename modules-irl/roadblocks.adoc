@@ -1,0 +1,192 @@
+== Java Modules In Real Life
+
+{toc}
+
+=== Roadblocks
+
+Before we look at specific situations:
+
+* most problems originate in dependencies
+* often stem from automatic modules
+* can often be fixed by demoting them to class path
+
+=== Automatic Culprits
+
+Many problems come from JARs on the module path +
+that aren't ready to be modules.
+
+> Minimize number of automatic modules!
+
+Only put on module path:
+
+* your modular JARs
+* the JARs they depend on
+
+That deals with most transitive dependencies.
+
+=== Automatic Culprits
+
+If your code directly depends on +
+a troublesome automatic module:
+
+* put problematic JARs on class path
+* subprojects that depend on them:
+** do not modularize
+** define automatic module name
+** put on module path
+
+⇝ Modularize elsewhere.
+
+=== Roadblocks
+
+Some common or tricky roadblocks:
+
+* split packages
+* reflective access
+* unsupported media type
+
+More details on GitHub: +
+https://github.com/nipafx/module-system-woes/[nipafx/module-system-woes]
+
+=== Split packages
+
+The module system requires each package +
+to belong to exactly one module.
+
+```bash
+# compiler
+error: package exists in another module: ...
+    package ...;
+
+#runtime - between two modules
+Error occurred during initialization of boot layer
+java.lang.reflect.LayerInstantiationException:
+    Package ... in both module ... and module ...
+
+#runtime - between module and class path
+Exception in thread "main" NoClassDefFoundError: ...
+    at ...
+```
+
+=== Split package solution
+
+The (only) solution: +
+Ask maintainers to...
+
+* reorganize packages across JARs/modules, or
+* provide uber JAR that contains all code
+
+=== Split package workarounds
+
+Workarounds exist:
+
+* merge the modules
+* create a _bridge module_
+* use the unnamed module
+* patch the module
+
+=== Merging modules
+
+Projects that don't publish artifacts +
+can merge the splitting JARs:
+
+* create a subproject that...
+** depends on the splitting JARs
+** merges them (e.g. shading in Maven)
+** maybe contains a module descriptor
+* modular code depends on that subproject
+
+Alternatively, set the subproject up separately +
+and install the JAR in your local Nexus.
+
+=== Creating a bridge
+
+Projects that can encapsulate their use +
+of splitting JARs in one subproject, +
+can make that a bridge:
+
+* create a subproject that...
+** depends on the splitting JARs
+** contains all code that use them
+** becomes an automatic module
+* put splitting JARs on class path
+* modular code depends on that subproject
+
+=== More workarounds
+
+The other workarounds (not shown here):
+
+* manipulate dependencies +
+  with command line flags
+* lead to IDE errors in projects +
+  that directly depend on them
+
+Work best for transitive dependencies.
+
+=== Reflective access
+
+// TODO
+
+[state=empty,background-color=black,background-transition=none]
+=== !
+image::images/roadblocks-umt.jpg[background, size=contain]
+
+[NOTE.speaker]
+--
+Jaap Cooman
+--
+
+[state=empty,background-color=black,background-transition=none]
+=== !
+image::images/roadblocks-umt-open.jpg[background, size=contain]
+
+=== Unsupported media type
+
+Projects that aren't prepared for modules:
+
+* can have various runtime issues
+* sometimes react poorly by +
+  hiding the underlying cause
+
+⇝ Search the log for module-related errors.
+
+=== Searching the log
+
+Search terms for module system errors:
+
+* "module", "lang.module", "module path"
+* "layer", "boot layer"
+* "visible", "exported", "public", "illegal", "access"
+
+Sometimes, projects just swallow errors. 😔
+
+⇝ Take the module system out of the equation.
+
+=== Suspending modules
+
+> Everything* that works on the module path +
+> also works on the class path.
+>
+> (* except services in `module-info.java`)
+
+When debugging a weird error:
+
+* create https://stackoverflow.com/help/minimal-reproducible-example[minimal reproducible example]
+* launch on class path
+* if error vanishes, debug harder
+
+[state=empty,background-color=#4F405D,background-transition=none]
+=== !
+image::images/hug.gif[background, size=contain]
+
+=== Healing the world
+
+Two categories of problems in dependencies:
+
+* they do something they shouldn't
+* they don't tell you that +
+  you need to do something
+
+Such cases need to be fixed on their end!
+
+⇝ Makes the Java ecosystem more reliable for everybody.
