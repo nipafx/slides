@@ -25,7 +25,7 @@ String query =
 ```
 
 [step=1]
-Comes with free SQL Injection! 😳
+Comes with free SQL injection! 😳
 
 === String interpolation
 
@@ -39,7 +39,7 @@ String query =
 ```
 
 [step=1]
-Also comes with free SQL Injection! 😳
+Also comes with free SQL injection! 😳
 
 === String interpolation
 
@@ -87,13 +87,13 @@ Ingredients:
 
 ```java
 String form = STR."""
-Desc     Unit   Qty   Amount
-\{description} $\{price} \{quantity} $\{price * quantity}
+	Desc     Unit   Qty   Amount
+	\{desc} $\{price} \{qty} $\{price * qty}
 
-Subtotal  $\{price * quantity}
-Tax       $\{price * quantity * tax}
-Total     $\{price * quantity * (1.0 + tax)}
-""";
+	Subtotal  $\{price * qty}
+	Tax       $\{price * qty * tax}
+	Total     $\{price * qty * (1.0 + tax)}
+	""";
 ```
 ```
 Desc     Unit   Qty   Amount
@@ -108,13 +108,13 @@ Total     $27.186
 
 ```java
 String form = FMTR."""
-Desc        Unit      Qty   Amount
-%-10s\{description} $%5.2f\{price} %5d\{quantity} $%5.2f\{price * quantity}
+	Desc        Unit      Qty   Amount
+	%-10s\{desc} $%5.2f\{price} %5d\{qty} $%5.2f\{price * qty}
 
-Subtotal  $%5.2f\{price * quantity}
-Tax       $%5.2f\{price * quantity * tax}
-Total     $%5.2f\{price * quantity * (1.0 + tax)}
-""";
+	Subtotal  $%5.2f\{price * qty}
+	Tax       $%5.2f\{price * qty * tax}
+	Total     $%5.2f\{price * qty * (1.0 + tax)}
+	""";
 ```
 ```
 Desc        Unit      Qty   Amount
