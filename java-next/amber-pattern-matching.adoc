@@ -1,0 +1,187 @@
+=== Delivered
+
+Pattern matching:
+
+* switch expressions
+* type pattern matching
+* sealed types
+* records
+
+Misc:
+
+* `var`
+* text blocks
+
+=== Pattern matching example
+
+Evaluating simple arithmetic expressions.
+
+`1 + (-2) + |3 + (-4)|`
+
+```java
+interface Node { }
+record Number(long number) implements Node { }
+record Negate(Node node) implements Node { }
+record Absolute(Node node) implements Node { }
+record Add(List<Node> summands) implements Node { }
+```
+
+=== Pattern matching example
+
+Evaluating simple arithmetic expressions.
+
+`1 + (-2) + |3 + (-4)|`
+
+image::images/arithmetic-tree.png[role="diagram"]
+
+=== Polymorphism
+
+Canonical way to apply operations +
+to a type hierarchy:
+
+Polymorphism
+
+=== Polymorphic solution
+
+
+```java
+interface Node {
+	long evaluate();
+}
+
+record Number(long number) implements Node {
+	long evaluate() {
+		return number;
+	}
+}
+
+record Negate(Node node) implements Node {
+	long evaluate() {
+		return -node.evaluate();
+	}
+}
+```
+
+=== Polymorphic solution
+
+
+```java
+record Absolute(Node node) implements Node {
+	long evaluate() {
+		long result = node.evaluate();
+		return result < 0 ? -result : result;
+	}
+}
+
+record Add(List<Node> summands) implements Node {
+	long evaluate() {
+		return summands.stream()
+			.mapToLong(Node::evaluate)
+			.sum();
+	}
+}
+```
+
+=== Domain overload
+
+Should you implement `evaluate` this way? +
+Probably.
+
+But what about:
+
+* `Resources estimateResourceUsage()`
+* `Strategy createComputationStrategy()`
+* `Invoice createInvoice(User user)`
+* `String prettyPrint()` (like https://github.com/Thihup/joel/commit/b49c9e7636ce409f9f875c4652fcaa905022dd62#diff-6a9248b7be98141e7c76af3955e11eb074d9cd88211aaf4be0d85c1453cc7649[here])
+* `void draw(Direction d, Style s, Canvas c)`
+
+⇝ Central abstractions can be overburdened.
+
+=== Visitor pattern
+
+Separating a hierarchy from operations +
+is a case for https://nipafx.dev/java-visitor-pattern-pointless/[the visitor pattern].
+
+Alternative: pattern matching over sealed types.
+
+=== Pattern matching solution
+
+Seal type hierarchy:
+
+```java
+sealed interface Node
+	permits Number, Negate, Absolute, Add { }
+
+record Number(long number) implements Node { }
+record Negate(Node node) implements Node { }
+record Absolute(Node node) implements Node { }
+record Add(List<Node> summands) implements Node { }
+```
+
+=== Pattern matching now
+
+Use type patterns in switch (https://openjdk.java.net/jeps/420[JEP 420] / 2nd preview in 18):
+
+```java
+long evaluate(Node node) {
+	return switch (node) {
+		case Number no -> no.number();
+		case Negate neg -> -evaluate(neg.node());
+		case Absolute abs && evaluate(abs.node()) < 0
+			-> -evaluate(abs.node());
+		case Absolute abs -> evaluate(abs.node());
+		case Add add -> add
+			.summands().stream()
+			.mapToLong(this::evaluate)
+			.sum();
+		// no default branch needed
+	};
+}
+```
+
+=== Pattern matching later
+
+Also use deconstruction patterns (https://openjdk.java.net/jeps/405[JEP 405] / not targeted):
+
+```java
+long evaluate(Node node) {
+	return switch (node) {
+		case Number(long no) -> no;
+		case Negate(var n) -> -evaluate(n);
+		case Absolute(var n) && evaluate(n) < 0
+			-> -evaluate(n);
+		case Absolute(var n) -> evaluate(n);
+		case Add(var summands) -> summands.stream()
+			.mapToLong(this::evaluate)
+			.sum();
+		// no default branch needed
+	};
+}
+```
+
+=== Data-oriented programming
+
+records + sealed types + patterns = data-oriented programming
+
+[quote, Yehonathan Sharvit, 'https://blog.klipse.tech/databook/2020/09/25/data-book-chap0.html[What is Data Oriented Programming?]']
+____
+In Data Oriented programming, we model our domain using data collections, that consist of immutable data.
+We manipulate the data via functions that could work with any data collection.
+____
+
+=== Another use case
+
+When parsing outside data, +
+types are often general +
+(think `JsonNode`).
+
+Consider pattern matching +
+to tease apart the data.
+
+=== Other Amber endeavors
+
+Possible future changes:
+
+* template strings (https://openjdk.java.net/jeps/8273943[JEP draft])
+* concise method bodies (https://openjdk.java.net/jeps/8209434[JEP draft])
+* serialization revamp (https://openjdk.java.net/projects/amber/design-notes/towards-better-serialization[white paper])

@@ -1,0 +1,49 @@
+// TODO: add intro and outro
+
+=== Concise method bodies
+
+[source,java]
+----
+class ListWrapper<E> implements List<E> {
+
+    private List<E> list;
+
+    public int size() -> list.size();
+    public T get(int index) -> list.get(index);
+	public int indexOf(E el) = list::indexOf;
+
+}
+----
+
+*Yeah:*
+
+* simple methods get simple code
+* fewer (empty) lines
+
+=== Death to serialization!
+
+Serialization is hell:
+
+* complicates every JDK feature
+* repeated security vulnerabilities
+* uses "invisible" mechanisms
+
+The JDK team wants to get rid of it!
+
+=== Serializing records
+
+Replacement may look as follows:
+
+* only works with records
+* deconstructs a record graph
+* passes data to serialization engine
+* one engine per format: +
+  XML, JSON, YAML, ...
+
+=== New serialization
+
+*Yeah:*
+
+* records are a great fit for serialization
+* new mechanism uses (de)constructors
+* superior maintainability
