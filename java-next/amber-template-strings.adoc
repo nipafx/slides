@@ -1,0 +1,171 @@
+=== Pattern Matching
+
+_The Art of Java Type Patterns_ +
+by Simon Ritter
+
+* Friday, 1045-1130
+* Room #241
+
+=== String composition
+
+Composing strings in Java is cumbersome:
+
+```java
+String property = "last_name";
+String name = "Doe";
+
+// concatenation
+String query =
+	"SELECT * FROM Person p WHERE p."
+		+ property + " = '" + value + "'";
+// formatting
+String query =
+	"SELECT * FROM Person p WHERE p.%s = '%s'"
+		.formatted(property, value);
+```
+
+[step=1]
+Comes with free SQL Injection! 😳
+
+=== String interpolation
+
+Why not?
+
+```java
+// (fictional syntax!)
+String query =
+	"SELECT * FROM Person p "
+		+ "WHERE p.\{property} = '\{value}'";
+```
+
+[step=1]
+Also comes with free SQL Injection! 😳
+
+=== String interpolation
+
+SQL injections aren't the only concern.
+
+These also need validation and sanitization:
+
+* HTML/XML
+* JSON
+* YAML
+* ...
+
+All follow format-specific rules.
+
+=== String interpolation
+
+Why strings?
+
+Often, they're just exchange format, e.g.:
+
+* _start with_: `String` + values
+* _validate / sanitize to_: `String`
+* _parse to_: `Statement`, `JSONObject`, ...
+
+Why the detour?
+
+=== String templating
+
+Enter _String Templates_ (https://openjdk.java.net/jeps/8273943[JEP draft]):
+
+```java
+String query =
+	STR."SELECT * FROM Person p "
+		+ "WHERE p.\{property} = '\{value}'";
+```
+
+Ingredients:
+
+* _template_ with embedded expressions +
+  ~> `TemplatedString`
+* _template policy_ (e.g. `STR`): +
+  transforms `TemplatedString` into `String`*
+
+=== Template policy STR
+
+```java
+String form = STR."""
+Desc     Unit   Qty   Amount
+\{description} $\{price} \{quantity} $\{price * quantity}
+
+Subtotal  $\{price * quantity}
+Tax       $\{price * quantity * tax}
+Total     $\{price * quantity * (1.0 + tax)}
+""";
+```
+```
+Desc     Unit   Qty   Amount
+hammer   $7.88  3     $23.64
+
+Subtotal  $23.64
+Tax       $3.546
+Total     $27.186
+```
+
+=== Template policy FMTR
+
+```java
+String form = FMTR."""
+Desc        Unit      Qty   Amount
+%-10s\{description} $%5.2f\{price} %5d\{quantity} $%5.2f\{price * quantity}
+
+Subtotal  $%5.2f\{price * quantity}
+Tax       $%5.2f\{price * quantity * tax}
+Total     $%5.2f\{price * quantity * (1.0 + tax)}
+""";
+```
+```
+Desc        Unit      Qty   Amount
+hammer      $ 7.88      3   $23.64
+
+Subtotal  $23.64
+Tax       $ 3.55
+Total     $27.19
+```
+
+=== Custom templating
+
+`interface TemplatedString`:
+
+* `stencil()`: string with placeholders for expressions
+* `fragments()`: result of splitting stencil at placeholders
+* `values()`: expression values
+
+```java
+interface TemplatePolicy<RESULT, EXCEPTION> {
+	RESULT apply(TemplatedString s)
+		throws EXCEPTION;
+}
+```
+
+=== Custom templating
+
+```java
+Statement query = SQL."""
+	SELECT * FROM Person p
+	WHERE p.\{property} = '\{value}'
+	""";
+
+JSONObject doc = JSON."""
+    {
+        "name":    "\{name}",
+        "phone":   "\{phone}",
+        "address": "\{address}"
+    };
+    """;
+```
+
+=== Amber endeavors
+
+Template strings are in an early stage! +
+(https://openjdk.java.net/jeps/8273943[JEP draft])
+
+Other endeavors
+
+* finish pattern matching (https://openjdk.java.net/jeps/8282272[JEP draft] for 3rd preview in JDK 19)
+* add more patterns (https://openjdk.java.net/jeps/405[JEP 405] and more)
+* concise method bodies (https://openjdk.java.net/jeps/8209434[JEP draft])
+* serialization revamp (https://openjdk.java.net/projects/amber/design-notes/towards-better-serialization[white paper])
+
