@@ -20,7 +20,7 @@ Imagine a hypothetical HTTP request:
 . query database (_blocks_)
 . process data for response
 
-JVM resource utilization:
+Resource utilization:
 
 * good for 1. and 3.
 * really bad for 2.
@@ -74,7 +74,7 @@ A _virtual_ thread:
 
 === Virtual thread management
 
-The JVM manages virtual threads:
+The runtime manages virtual threads:
 
 * runs them on a pool of _carrier threads_
 * makes them _yield_ on blocking calls +
@@ -92,10 +92,10 @@ Remember the hypothetical request:
 In a virtual thread:
 
 [%step]
-* JVM submits task to carrier thread pool
+* runtime submits task to carrier thread pool
 * when 2. blocks, virtual thread yields
-* JVM hands carrier thread back to pool
-* when 2. unblocks, JVM resubmits task
+* runtime hands carrier thread back to pool
+* when 2. unblocks, runtime resubmits task
 * virtual thread continues with 3.
 
 === Example
