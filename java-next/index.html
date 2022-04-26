@@ -423,10 +423,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://www.devoxx.fr/"><img src="images/logo-devoxx-fr.png" class="logo" style="{host-logo-style}"></a>
+		<a href="https://www.meetup.com/de-DE/Java-User-Group-Karlsruhe/"><img src="images/logo-jug-ka.png" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://www.devoxx.fr/">Devoxx FR</a></p>
-			<p><a href="https://twitter.com/DevoxxFR" style="{host-twitter-style}">@DevoxxFR</a></p>
+			<p><a href="https://www.meetup.com/de-DE/Java-User-Group-Karlsruhe/">JUG Karlsruhe</a></p>
+			<p><a href="https://twitter.com/jugka" style="{host-twitter-style}">@jugka</a></p>
 		</div>
 	</div>
 	<div class="participant">
@@ -448,9 +448,9 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://www.devoxx.fr/"><img src="images/logo-devoxx-fr.png" class="logo" style="{host-logo-style}"></a>
+		<a href="https://www.meetup.com/de-DE/Java-User-Group-Karlsruhe/"><img src="images/logo-jug-ka.png" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://www.devoxx.fr/">Devoxx FR</a> / <a href="https://twitter.com/DevoxxFR" style="{host-twitter-style}">@DevoxxFR</a></p>
+			<p><a href="https://www.meetup.com/de-DE/Java-User-Group-Karlsruhe/">JUG Karlsruhe</a> / <a href="https://twitter.com/jugka" style="{host-twitter-style}">@jugka</a></p>
 		</div>
 	</div>
 </footer>
@@ -471,9 +471,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 <a href="https://wiki.openjdk.java.net/display/amber/Main">wiki</a> /
 <a href="https://mail.openjdk.java.net/mailman/listinfo/amber-dev">mailing list</a></p></li><li><p>launched March 2017</p></li><li><p>led by Brian Goetz</p></li></ul></div></div></section><section id="_motivation"><h2>Motivation</h2><div class="slide-content"><div class="paragraph"><p>Some downsides of Java:</p></div>
 <div class="ulist"><ul><li><p>can be cumbersome</p></li><li><p>tends to require boilerplate</p></li><li><p>situational lack of expressiveness</p></li></ul></div>
-<div class="paragraph"><p>Amber continuously improves that situation.</p></div></div></section><section id="_delivered"><h2>Delivered</h2><div class="slide-content"><div class="ulist"><ul><li><p>sealed types ⑰ (<a href="https://openjdk.java.net/jeps/409">JEP 409</a>)</p></li><li><p>records ⑯ (<a href="https://openjdk.java.net/jeps/395">JEP 395</a>)</p></li><li><p>type pattern matching ⑯ (<a href="https://openjdk.java.net/jeps/394">JEP 394</a>)</p></li><li><p>text blocks ⑮ (<a href="https://openjdk.java.net/jeps/378">JEP 378</a>)</p></li><li><p>switch expressions ⑭ (<a href="https://openjdk.java.net/jeps/361">JEP 361</a>)</p></li><li><p>local-variable type inference with <code>var</code> ⑩ (<a href="https://openjdk.java.net/jeps/286">JEP 286</a>)</p></li></ul></div></div></section><section id="_pattern_matching"><h2>Pattern Matching</h2><div class="slide-content"><div class="paragraph"><p><em>The Art of Java Type Patterns</em><br>
-by Simon Ritter</p></div>
-<div class="ulist"><ul><li><p>Friday, 1045-1130</p></li><li><p>Room #241</p></li></ul></div></div></section><section id="_string_composition"><h2>String composition</h2><div class="slide-content"><div class="paragraph"><p>Composing strings in Java is cumbersome:</p></div>
+<div class="paragraph"><p>Amber continuously improves that situation.</p></div></div></section><section id="_delivered"><h2>Delivered</h2><div class="slide-content"><div class="ulist"><ul><li><p>sealed types ⑰ (<a href="https://openjdk.java.net/jeps/409">JEP 409</a>)</p></li><li><p>records ⑯ (<a href="https://openjdk.java.net/jeps/395">JEP 395</a>)</p></li><li><p>type pattern matching ⑯ (<a href="https://openjdk.java.net/jeps/394">JEP 394</a>)</p></li><li><p>text blocks ⑮ (<a href="https://openjdk.java.net/jeps/378">JEP 378</a>)</p></li><li><p>switch expressions ⑭ (<a href="https://openjdk.java.net/jeps/361">JEP 361</a>)</p></li><li><p>local-variable type inference with <code>var</code> ⑩ (<a href="https://openjdk.java.net/jeps/286">JEP 286</a>)</p></li></ul></div></div></section><section id="_string_composition"><h2>String composition</h2><div class="slide-content"><div class="paragraph"><p>Composing strings in Java is cumbersome:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">String property = "last_name";
 String name = "Doe";
 
@@ -493,13 +491,11 @@ String query =
 <div class="paragraph fragment" data-fragment-index="1"><p>Also comes with free SQL injection! 😳</p></div></div></section><section id="_string_interpolation_2"><h2>String interpolation</h2><div class="slide-content"><div class="paragraph"><p>SQL injections aren&#8217;t the only concern.</p></div>
 <div class="paragraph"><p>These also need validation and sanitization:</p></div>
 <div class="ulist"><ul><li><p>HTML/XML</p></li><li><p>JSON</p></li><li><p>YAML</p></li><li><p>&#8230;&#8203;</p></li></ul></div>
-<div class="paragraph"><p>All follow format-specific rules.</p></div></div></section><section id="_string_interpolation_3"><h2>String interpolation</h2><div class="slide-content"><div class="paragraph"><p>Why strings?</p></div>
-<div class="paragraph"><p>Often, they&#8217;re just exchange format, e.g.:</p></div>
-<div class="ulist"><ul><li><p><em>start with</em>: <code>String</code> + values</p></li><li><p><em>validate / sanitize to</em>: <code>String</code></p></li><li><p><em>parse to</em>: <code>Statement</code>, <code>JSONObject</code>, &#8230;&#8203;</p></li></ul></div>
-<div class="paragraph"><p>Why the detour?</p></div></div></section><section id="_string_templating"><h2>String templating</h2><div class="slide-content"><div class="paragraph"><p>Enter <em>String Templates</em> (<a href="https://openjdk.java.net/jeps/8273943">JEP draft</a>):</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">String query =
-	STR."SELECT * FROM Person p "
-		+ "WHERE p.\{property} = '\{value}'";</code></pre></div></div>
+<div class="paragraph"><p>All follow format-specific rules.</p></div></div></section><section id="_string_templating"><h2>String templating</h2><div class="slide-content"><div class="paragraph"><p>Enter <em>String Templates</em> (<a href="https://openjdk.java.net/jeps/8273943">JEP draft</a>):</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">String query = STR."""
+	SELECT * FROM Person p
+	WHERE p.\{property} = '\{value}'
+	""";</code></pre></div></div>
 <div class="paragraph"><p>Ingredients:</p></div>
 <div class="ulist"><ul><li><p><em>template</em> with embedded expressions<br>
 ~&gt; <code>TemplatedString</code></p></li><li><p><em>template policy</em> (e.g. <code>STR</code>):<br>
@@ -529,12 +525,13 @@ hammer      $ 7.88      3   $23.64
 
 Subtotal  $23.64
 Tax       $ 3.55
-Total     $27.19</code></pre></div></div></div></section><section id="_custom_templating"><h2>Custom templating</h2><div class="slide-content"><div class="paragraph"><p><code>interface TemplatedString</code>:</p></div>
-<div class="ulist"><ul><li><p><code>stencil()</code>: string with placeholders for expressions</p></li><li><p><code>fragments()</code>: result of splitting stencil at placeholders</p></li><li><p><code>values()</code>: expression values</p></li></ul></div>
+Total     $27.19</code></pre></div></div></div></section><section id="_why_strings"><h2>Why strings?</h2><div class="slide-content"><div class="paragraph"><p>Often, strings are just exchange format, e.g.:</p></div>
+<div class="ulist"><ul><li><p><em>start with</em>: <code>String</code> + values</p></li><li><p><em>validate / sanitize to</em>: <code>String</code></p></li><li><p><em>parse to</em>: <code>Statement</code>, <code>JSONObject</code>, &#8230;&#8203;</p></li></ul></div>
+<div class="paragraph"><p>Why the detour?</p></div></div></section><section id="_custom_templating"><h2>Custom templating</h2><div class="slide-content"><div class="paragraph"><p>The <code>TemplatePolicy</code> interface:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">interface TemplatePolicy&lt;RESULT, EXCEPTION&gt; {
-	RESULT apply(TemplatedString s)
-		throws EXCEPTION;
-}</code></pre></div></div></div></section><section id="_custom_templating_2"><h2>Custom templating</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">Statement query = SQL."""
+	RESULT apply(TemplatedString s) throws EXCEPTION;
+}</code></pre></div></div>
+<div class="paragraph"><p><code>RESULT</code> can be of any type!</p></div></div></section><section id="_custom_templating_2"><h2>Custom templating</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">Statement query = SQL."""
 	SELECT * FROM Person p
 	WHERE p.\{property} = '\{value}'
 	""";
@@ -547,7 +544,7 @@ JSONObject doc = JSON."""
     };
     """;</code></pre></div></div></div></section><section id="_amber_endeavors"><h2>Amber endeavors</h2><div class="slide-content"><div class="paragraph"><p>Template strings are in an early stage!<br>
 (<a href="https://openjdk.java.net/jeps/8273943">JEP draft</a>)</p></div>
-<div class="paragraph"><p>Other endeavors</p></div>
+<div class="paragraph"><p>Other endeavors:</p></div>
 <div class="ulist"><ul><li><p>finish pattern matching (<a href="https://openjdk.java.net/jeps/8282272">JEP draft</a> for 3rd preview in JDK 19)</p></li><li><p>add more patterns (<a href="https://openjdk.java.net/jeps/405">JEP 405</a> and more)</p></li><li><p>concise method bodies (<a href="https://openjdk.java.net/jeps/8209434">JEP draft</a>)</p></li><li><p>serialization revamp (<a href="https://openjdk.java.net/projects/amber/design-notes/towards-better-serialization">white paper</a>)</p></li></ul></div></div></section><section id="_project_amber_2"><h2>Project Amber</h2><div class="slide-content"><div class="ulist"><ul><li><p>makes Java more expressive</p></li><li><p>reduces amount of code</p></li><li><p>makes us more productive</p></li></ul></div></div></section><section id="_timeline"><h2>Timeline</h2><div class="slide-content"><div class="paragraph"><p>My personal (!) guesses (!!):</p></div>
 <div class="dlist"><dl><dt class="hdlist1">2023</dt><dd><div class="ulist"><ul><li><p>patterns in switch finalized</p></li><li><p>deconstruction patterns preview</p></li><li><p>template strings preview</p></li></ul></div></dd><dt class="hdlist1">2024</dt><dd><div class="ulist"><ul><li><p>more patterns preview</p></li></ul></div></dd></dl></div></div></section><section id="_deeper_dives"><h2>Deeper Dives</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.java.net/projects/amber/design-notes/patterns/pattern-match-object-model">Pattern Matching in the Java Object Model</a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=qul2B8iPC-o">Java Language Futures: All Aboard Project Amber</a><br>
 (Nov 2017)</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=hDV6G1MbUH8">Java Language Futures: Late 2021 Edition</a> (Sep 2021)</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=UlFFKkq6fyU">Pattern Matching in Java (17)</a> (Sep 2021)</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=a8OdwUiSnXw">State of Pattern Matching with Brian Goetz</a> (Feb 2022)</p></li></ul></div></div></section></section>
@@ -592,7 +589,7 @@ based on method handles:</p></div>
 <code>CLinker</code>, <code>FunctionDescriptor</code>, <code>NativeSymbol</code></p></li><li><p><code>jextract</code>: generates method handles from header file</p></li></ul></div></div></section><section id="_timeline_2"><h2>Timeline</h2><div class="slide-content"><div class="paragraph"><p>Official plans:</p></div>
 <div class="dlist"><dl><dt class="hdlist1">JDK 19 (2022)</dt><dd><div class="ulist"><ul><li><p>foreign function/memory API previews (<a href="https://openjdk.java.net/jeps/424">JEP 424</a>)</p></li></ul></div></dd></dl></div>
 <div class="paragraph"><p>Vector API needs to wait for Valhalla&#8217;s<br>
-primitive types and universal generics.</p></div></div></section><section id="_deeper_dives_2"><h2>Deeper Dives</h2><div class="slide-content"><div class="paragraph"><p>Vector APIs:</p></div>
+primitive types and universal generics.</p></div></div></section><section id="_deeper_dives_2"><h2>Deeper Dives</h2><div class="slide-content"><div class="paragraph"><p>Vector API:</p></div>
 <div class="ulist"><ul><li><p>📝 <a href="https://openjdk.java.net/jeps/414">JEP 414: Vector API (Second Incubator)</a></p></li><li><p>📝 <a href="https://www.morling.dev/blog/fizzbuzz-simd-style/">FizzBuzz – SIMD Style!</a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=1JeoNr6-pZw&amp;list=PLX8CzqL3ArzWe2uQhE-TeAayRtjvBNyNn&amp;index=8">The Vector API in JDK 17</a> (Sep 2021)</p></li></ul></div></div></section><section id="_deeper_dives_3"><h2>Deeper Dives</h2><div class="slide-content"><div class="paragraph"><p>Foreign APIs:</p></div>
 <div class="ulist"><ul><li><p>📝 design documents</p><div class="ulist"><ul><li><p><a href="https://github.com/openjdk/panama-foreign/blob/foreign-jextract/doc/panama_memaccess.md">State of foreign memory support</a></p></li><li><p><a href="https://github.com/openjdk/panama-foreign/blob/foreign-jextract/doc/panama_ffi.md">State of foreign function support</a></p></li><li><p><a href="https://github.com/openjdk/panama-foreign/blob/foreign-jextract/doc/panama_jextract.md">Using the jextract tool</a></p></li></ul></div></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=r4dNRVWYaZI">Panama Update with Maurizio Cimadamore</a> (Jul 2019)</p></li><li><p>🎥 <a href="https://archive.fosdem.org/2020/schedule/event/bytebuffers/">ByteBuffers are dead, long live ByteBuffers!</a> (Feb 2020)</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=B8k9QGvPxC0">The State of Project Panama with Maurizio Cimadamore</a> (Jun 2021)</p></li></ul></div></div></section></section>
 <section><section id="_project_valhalla" data-background-image="images/valhalla.jpg" data-background-size="cover"><h2>Project Valhalla</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>Advanced Java VM and Language feature candidates</p></div></blockquote></div><div class="paragraph"><p>Profile:</p></div><div class="ulist"><ul><li><p><a href="http://openjdk.java.net/projects/valhalla/">project</a> /
@@ -619,9 +616,7 @@ identity-based operations</p></li></ul></div></div></section><section id="_root_
 <div class="paragraph"><p>Codes (almost) like a class - exceptions:</p></div>
 <div class="ulist"><ul><li><p>class and fields are implcitly final</p></li><li><p>superclasses are limited</p></li></ul></div>
 <aside class="notes"><div class="ulist"><ul><li><p>can be records</p></li><li><p>fields, methods, constructors</p></li><li><p>use generics, implement interfaces</p></li><li><p>nested classes, class literals</p></li></ul></div></aside></div></section><section id="_value_type_behavior"><h2>Value type behavior</h2><div class="slide-content"><div class="paragraph"><p>No identity:</p></div>
-<div class="ulist"><ul><li><p>some runtime operations<br>
-(e.g. synchronization)<br>
-throw exceptions</p></li><li><p><code>==</code> compares by state</p></li></ul></div>
+<div class="ulist"><ul><li><p>some runtime operations throw exceptions</p></li><li><p>"identity" check <code>==</code> compares by state</p></li></ul></div>
 <div class="paragraph"><p>References:</p></div>
 <div class="ulist"><ul><li><p><code>null</code> is default value</p></li><li><p>no tearing</p></li></ul></div></div></section><section id="_value_type_benefits"><h2>Value type benefits</h2><div class="slide-content"><div class="ulist"><ul><li><p>guaranteed immutability</p></li><li><p>more expressiveness</p></li><li><p>more optimizations</p></li></ul></div></div></section><section id="_migration_to_value_types"><h2>Migration to value types</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>The JDK (as well as other libraries) has many value-based classes, such as <code>Optional</code> and <code>LocalDateTime</code>. [&#8230;&#8203;]
 We plan to migrate many value-based classes in the JDK to value classes.</p></div></blockquote></div></div></section><section id="_primitive_types"><h2>Primitive types</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">primitive class ComplexNumber {
@@ -631,8 +626,7 @@ We plan to migrate many value-based classes in the JDK to value classes.</p></di
 	// constructor, etc.
 }</code></pre></div></div>
 <div class="paragraph"><p>Codes (almost) like a value class - exception:</p></div>
-<div class="ulist"><ul><li><p>no field of own type<br>
-(i.e. no circularity)</p></li></ul></div></div></section><section id="_primitive_type_behavior"><h2>Primitive type behavior</h2><div class="slide-content"><div class="paragraph"><p>No identity (like value types).</p></div>
+<div class="ulist"><ul><li><p>no field of own type (i.e. no circularity)</p></li></ul></div></div></section><section id="_primitive_type_behavior"><h2>Primitive type behavior</h2><div class="slide-content"><div class="paragraph"><p>No identity (like value types).</p></div>
 <div class="paragraph"><p>No references:</p></div>
 <div class="ulist"><ul><li><p>default value has all fields set to their defaults</p></li><li><p>can tear under concurrent assignment</p></li></ul></div>
 <div class="paragraph"><p>Benefit:</p></div>
@@ -703,7 +697,7 @@ with Java&#8217;s unit of concurrency (thread):</p></div>
 <div class="ulist"><ul><li class="fragment"><p>runtime submits task to carrier thread pool</p></li><li class="fragment"><p>when 2. blocks, virtual thread yields</p></li><li class="fragment"><p>runtime hands carrier thread back to pool</p></li><li class="fragment"><p>when 2. unblocks, runtime resubmits task</p></li><li class="fragment"><p>virtual thread continues with 3.</p></li></ul></div></div></section><section id="_example"><h2>Example</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">try (var executor = Executors
 		.newVirtualThreadPerTaskExecutor()) {
 	IntStream
-		.range(0, 10_000)
+		.range(0, 1_000_000)
 		.forEach(number -&gt; {
 			executor.submit(() -&gt; {
 				Thread.sleep(Duration.ofSeconds(1));
