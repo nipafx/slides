@@ -54,26 +54,15 @@ These also need validation and sanitization:
 
 All follow format-specific rules.
 
-=== String interpolation
-
-Why strings?
-
-Often, they're just exchange format, e.g.:
-
-* _start with_: `String` + values
-* _validate / sanitize to_: `String`
-* _parse to_: `Statement`, `JSONObject`, ...
-
-Why the detour?
-
 === String templating
 
 Enter _String Templates_ (https://openjdk.java.net/jeps/8273943[JEP draft]):
 
 ```java
-String query =
-	STR."SELECT * FROM Person p "
-		+ "WHERE p.\{property} = '\{value}'";
+String query = STR."""
+	SELECT * FROM Person p
+	WHERE p.\{property} = '\{value}'
+	""";
 ```
 
 Ingredients:
@@ -125,20 +114,44 @@ Tax       $ 3.55
 Total     $27.19
 ```
 
+=== Why strings?
+
+Often, strings are just exchange format, e.g.:
+
+* _start with_: `String` + values
+* _validate / sanitize to_: `String`
+* _parse to_: `Statement`, `JSONObject`, ...
+
+Why the detour?
+
 === Custom templating
 
+The `TemplatePolicy` interface:
+
+```java
+interface TemplatePolicy<RESULT, EXCEPTION> {
+	RESULT apply(TemplatedString s) throws EXCEPTION;
+}
+```
+
+`RESULT` can be of any type!
+
+////
+// text variant:
 `interface TemplatedString`:
 
 * `stencil()`: string with placeholders for expressions
 * `fragments()`: result of splitting stencil at placeholders
 * `values()`: expression values
 
+// code variant:
 ```java
-interface TemplatePolicy<RESULT, EXCEPTION> {
-	RESULT apply(TemplatedString s)
-		throws EXCEPTION;
+// represents strings like "Name: \{name}"
+interface TemplatedString {
+	// methods to access fragments and values
 }
 ```
+////
 
 === Custom templating
 
@@ -162,7 +175,7 @@ JSONObject doc = JSON."""
 Template strings are in an early stage! +
 (https://openjdk.java.net/jeps/8273943[JEP draft])
 
-Other endeavors
+Other endeavors:
 
 * finish pattern matching (https://openjdk.java.net/jeps/8282272[JEP draft] for 3rd preview in JDK 19)
 * add more patterns (https://openjdk.java.net/jeps/405[JEP 405] and more)

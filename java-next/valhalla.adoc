@@ -103,10 +103,8 @@ Codes (almost) like a class - exceptions:
 
 No identity:
 
-* some runtime operations +
-  (e.g. synchronization) +
-  throw exceptions
-* `==` compares by state
+* some runtime operations throw exceptions
+* "identity" check `==` compares by state
 
 References:
 
@@ -137,8 +135,7 @@ primitive class ComplexNumber {
 
 Codes (almost) like a value class - exception:
 
-* no field of own type +
-  (i.e. no circularity)
+* no field of own type (i.e. no circularity)
 
 === Primitive type behavior
 

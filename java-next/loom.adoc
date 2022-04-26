@@ -104,7 +104,7 @@ In a virtual thread:
 try (var executor = Executors
 		.newVirtualThreadPerTaskExecutor()) {
 	IntStream
-		.range(0, 10_000)
+		.range(0, 1_000_000)
 		.forEach(number -> {
 			executor.submit(() -> {
 				Thread.sleep(Duration.ofSeconds(1));
