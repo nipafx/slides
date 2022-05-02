@@ -70,7 +70,8 @@ A _virtual_ thread:
 * is a regular `Thread`
 * low memory footprint ([k]bytes)
 * small switching cost
-* *scheduled by the Java runtime*
+* scheduled by the Java runtime
+* requires no OS thread when waiting
 
 === Virtual thread management
 

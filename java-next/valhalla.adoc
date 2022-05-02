@@ -19,47 +19,34 @@ Java has a split type system:
 * primitives
 * classes
 
-=== Primitives
+We can only create classes, but:
 
-Potential downsides:
-
-* no class-building techniques
-* no custom primitives
-* can't use with generics
-
-Forced move in 90s to allow for +
-acceptable numeric performance.
+* have identity
+* are references
 
 [NOTE.speaker]
 --
-* caused by need for numerical performance
+* split caused by need for numerical performance
 * got worse with generics
 * got weird with (auto-)boxing
 * got worse again with lambdas/streams
 --
 
-=== Classes
+=== Identity
 
-Potential downsides:
+All classes come with _identity_:
 
-* mutable by default
-* memory access indirection
 * extra memory for header
-* allow locking and other +
-  identity-based operations
-
-=== Root cause
-
-All custom types come with _identity_:
-
 * mutability
-* layout polymorphism
-* `equal` but `!=`
-* synchronization
-* etc.
+* locking, synchronization, etc.
 
-All custom types come as _references_:
+But not all custom types need that!
 
+=== References
+
+All classes come as _references_:
+
+* memory access indirection
 * nullability
 * protect from tearing
 
@@ -106,16 +93,18 @@ No identity:
 * some runtime operations throw exceptions
 * "identity" check `==` compares by state
 
-References:
-
-* `null` is default value
-* no tearing
-
-=== Value type benefits
+Benefits:
 
 * guaranteed immutability
 * more expressiveness
 * more optimizations
+
+=== Value type behavior
+
+Value types are references:
+
+* `null` is default value
+* no tearing
 
 === Migration to value types
 
