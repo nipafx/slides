@@ -423,10 +423,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://www.devoxx.co.uk/"><img src="images/logo-devoxx-uk.png" class="logo" style="{host-logo-style}"></a>
+		<a href="https://jprime.io/"><img src="images/logo-jprime.png" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://www.devoxx.co.uk/">Devoxx UK</a></p>
-			<p><a href="https://twitter.com/DevoxxUK" style="{host-twitter-style}">@DevoxxUK</a></p>
+			<p><a href="https://jprime.io/">jPrime</a></p>
+			<p><a href="https://twitter.com/hashtag/jPrime" style="{host-twitter-style}">#jPrime</a></p>
 		</div>
 	</div>
 	<div class="participant">
@@ -448,9 +448,9 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://www.devoxx.co.uk/"><img src="images/logo-devoxx-uk.png" class="logo" style="{host-logo-style}"></a>
+		<a href="https://jprime.io/"><img src="images/logo-jprime.png" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://www.devoxx.co.uk/">Devoxx UK</a> / <a href="https://twitter.com/DevoxxUK" style="{host-twitter-style}">@DevoxxUK</a></p>
+			<p><a href="https://jprime.io/">jPrime</a> / <a href="https://twitter.com/hashtag/jPrime" style="{host-twitter-style}">#jPrime</a></p>
 		</div>
 	</div>
 </footer>
@@ -673,7 +673,7 @@ design and performance</p></li><li><p>no more manual specializations</p></li><li
 <div class="paragraph"><p>Already removed:</p></div>
 <div class="ulist"><ul><li><p>RMI activation⑰ (<a href="https://openjdk.java.net/jeps/407">JEP 407</a>)</p></li><li><p>Nashorn ⑮ (<a href="https://openjdk.java.net/jeps/372">JEP 372</a>)</p></li><li><p>concurrent mark sweep GC ⑭ (<a href="https://openjdk.java.net/jeps/363">JEP 363</a>)</p></li></ul></div></div></section><section id="_migrations"><h2>Migrations</h2><div class="slide-content"><div class="paragraph"><p>To ease migrations:</p></div>
 <div class="ulist"><ul><li><p>stick to supported APIs</p></li><li><p>stick to standardized behavior</p></li><li><p>stick to well-maintained projects</p></li><li><p>keep dependencies and tools up to date</p></li><li><p>stay ahead of removals (<code>jdeprscan</code>)</p></li><li><p>build on each release (including EA)</p></li></ul></div>
-<div class="paragraph"><p>Then you, too, can enjoy these projects ASAP!</p></div></div></section><section id="_adoption"><h2>Adoption</h2><div class="slide-content"><div class="ulist"><ul><li><p>Java 11 is slowly but resolutely overtaking Java 8</p></li><li><p>adoption of 17 (from 11) looks good</p></li><li><p>always using latest is uncommon but persistent</p></li></ul></div></div></section></section>
+<div class="paragraph"><p>Then you, too, can enjoy these projects ASAP!</p></div></div></section><section id="_adoption"><h2>Adoption</h2><div class="slide-content"><div class="ulist"><ul><li class="fragment"><p>Java 11 is slowly but resolutely overtaking Java 8</p></li><li class="fragment"><p>adoption of 17 (from 11) looks good</p></li><li class="fragment"><p>always using latest is uncommon but persistent</p></li></ul></div></div></section></section>
 <section><section id="_project_loom" data-background-image="images/loom.jpg" data-background-size="cover"><h2>Project Loom</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>JVM features and APIs for supporting easy-to-use, high-throughput, lightweight concurrency and new programming models</p></div></blockquote></div><div class="paragraph"><p>Profile:</p></div><div class="ulist"><ul><li><p><a href="http://openjdk.java.net/projects/loom/">project</a> /
 <a href="https://wiki.openjdk.java.net/display/loom/Main">wiki</a> /
 <a href="http://mail.openjdk.java.net/mailman/listinfo/loom-dev">mailing list</a> /
@@ -772,7 +772,7 @@ across all children</p></li></ul></div></div></section><section data-background-
 <div class="ulist"><ul><li><p>clearer concurrency code</p></li><li><p>simpler failure/success policies</p></li><li><p>better debugging</p></li></ul></div></div></section><section id="_timeline_4"><h2>Timeline</h2><div class="slide-content"><div class="paragraph"><p>Decided:</p></div>
 <div class="ulist"><ul><li><p>virtual threads preview ⑲</p></li></ul></div>
 <div class="paragraph"><p>My personal (!) guesses (!!):</p></div>
-<div class="dlist"><dl><dt class="hdlist1">JDK 19 (2022) / JDK 20 (2023)</dt><dd><div class="ulist"><ul><li><p>structured concurrency API preview</p></li></ul></div></dd><dt class="hdlist1">2024</dt><dd><div class="ulist"><ul><li><p>more structured concurrency APIs (?)</p></li></ul></div></dd></dl></div></div></section><section id="_deeper_dives_5"><h2>Deeper Dives</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.java.net/jeps/8277131">JEP Draft: Virtual Threads</a></p></li><li><p>📝 <a href="https://openjdk.java.net/jeps/8277129">JEP Draft: Structured Concurrency</a></p></li><li><p>📝 <a href="https://inside.java/2021/11/30/on-parallelism-and-concurrency/">On Parallelism and Concurrency</a></p></li><li><p>📝 <a href="https://250bpm.com/blog:71/">Structured Concurrency</a></p></li><li><p>📝 <a href="https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/">Notes on structured concurrency, or: &#8230;&#8203;</a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=fq0OEX0XYR8">Modern, Scalable Concurrency for the Java Platform</a><br>
+<div class="dlist"><dl><dt class="hdlist1">JDK 19 (2022) / JDK 20 (2023)</dt><dd><div class="ulist"><ul><li><p>structured concurrency API preview</p></li></ul></div></dd><dt class="hdlist1">2024</dt><dd><div class="ulist"><ul><li><p>more structured concurrency APIs (?)</p></li></ul></div></dd></dl></div></div></section><section id="_deeper_dives_5"><h2>Deeper Dives</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.java.net/jeps/425">JEP 425: Virtual Threads</a></p></li><li><p>📝 <a href="https://openjdk.java.net/jeps/428">JEP 428: Structured Concurrency</a></p></li><li><p>📝 <a href="https://inside.java/2021/11/30/on-parallelism-and-concurrency/">On Parallelism and Concurrency</a></p></li><li><p>📝 <a href="https://250bpm.com/blog:71/">Structured Concurrency</a></p></li><li><p>📝 <a href="https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/">Notes on structured concurrency, or: &#8230;&#8203;</a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=fq0OEX0XYR8">Modern, Scalable Concurrency for the Java Platform</a><br>
 (Sep 2021)</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=KG24inClY2M">State of Project Loom with Ron Pressler</a> (Jun 2021)</p></li></ul></div></div></section></section>
 <section id="_so_long" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>So long&#8230;&#8203;</h2><div class="slide-content">
 <div style="float: left; width: 45%; margin: 0;">
