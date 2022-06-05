@@ -104,7 +104,7 @@ Streamlined tooling/API for foreign functions +
 based on method handles:
 
 * classes to call foreign functions +
-  `CLinker`, `FunctionDescriptor`, `NativeSymbol`
+  `Linker`, `FunctionDescriptor`, `NativeSymbol`
 * `jextract`: generates method handles from header file
 
 ////
@@ -162,15 +162,16 @@ based on method handles:
 
 * `jextract`: generates method handles from header file
 * classes to call foreign functions +
-`CLinker`, `FunctionDescriptor`, `NativeSymbol`
+`Linker`, `FunctionDescriptor`, `NativeSymbol`
 
 === Foreign-function API
 
 ```java
 // find foreign function on the C library path
-CLinker linker = CLinker.systemCLinker();
+Linker linker = Linker.nativeLinker();
+SymbolLookup stdlib = linker.defaultLookup();
 MethodHandle radixSort = linker.downcallHandle(
-	linker.lookup("radixsort"),
+	stdlib.lookup("radixsort"),
 	...);
 
 // move Java strings off heap
@@ -185,7 +186,27 @@ radixSort.invoke(
 
 === Foreign-memory API
 
-Now get the results back:
+Moving `javaStrings` off heap:
+
+```java
+SegmentAllocator allocator = implicitAllocator();
+MemorySegment offHeap  = allocator
+	.allocateArray(
+		ValueLayout.ADDRESS,
+		javaStrings.length);
+for (int i = 0; i < javaStrings.length; i++) {
+    // llocate a string off-heap,
+	// then store a pointer to it
+    MemorySegment cStr = allocator
+		.allocateUtf8String(javaStrings[i]);
+    offHeap
+		.setAtIndex(ValueLayout.ADDRESS, i, cStr);
+}
+```
+
+=== Foreign-memory API
+
+Getting the results back:
 
 ```java
 // copy the (reordered) strings back to heap
