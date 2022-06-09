@@ -57,7 +57,7 @@ But not all custom types need that!
 Valhalla's goals is to unify the type system:
 
 * _value types_ (disavow identity)
-* _primitive types_ (disavow references)
+* _primitive types_ (disavow identity + references)
 * _universal generics_ (`ArrayList<int>`)
 * _specialized generics_ (backed by `int[]`)
 

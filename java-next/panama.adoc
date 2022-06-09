@@ -104,7 +104,7 @@ Streamlined tooling/API for foreign functions +
 based on method handles:
 
 * classes to call foreign functions +
-  `Linker`, `FunctionDescriptor`, `NativeSymbol`
+  `Linker`, `FunctionDescriptor`, `SymbolLookup`
 * `jextract`: generates method handles from header file
 
 ////
@@ -162,7 +162,7 @@ based on method handles:
 
 * `jextract`: generates method handles from header file
 * classes to call foreign functions +
-`Linker`, `FunctionDescriptor`, `NativeSymbol`
+`Linker`, `FunctionDescriptor`, `SymbolLookup`
 
 === Foreign-function API
 
