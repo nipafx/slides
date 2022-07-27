@@ -20,7 +20,8 @@ that aren't ready to be modules.
 Only put on module path:
 
 * your modular JARs
-* the JARs they depend on
+* the JARs required by modular +
+  JARs on the module path
 
 That deals with most transitive dependencies.
 
@@ -125,11 +126,13 @@ The other workarounds (not shown here):
 
 Work best for transitive dependencies.
 
+////
 === Broken module descriptors
 
 ```java
 // TODO
 ```
+////
 
 === Reflective access
 
