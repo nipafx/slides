@@ -417,10 +417,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://www.meetup.com/stockholm-jvm-jug/"><img src="images/logo-jug-stockholm.png" class="logo" style="{host-logo-style}"></a>
+		<a href="https://blog.jetbrains.com/idea/category/livestream/"><img src="images/logo-intellij-idea-stream.png" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://www.meetup.com/stockholm-jvm-jug/">Stockholm JVM JUG</a></p>
-			<p><a href="https://twitter.com/stockholm-jug" style="{host-twitter-style}">{host-twitter-name}</a></p>
+			<p><a href="https://blog.jetbrains.com/idea/category/livestream/">IntelliJ LiveStream</a></p>
+			<p><a href="https://twitter.com/intellijidea" style="{host-twitter-style}">@intellijidea</a></p>
 		</div>
 	</div>
 	<div class="participant">
@@ -442,9 +442,9 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://www.meetup.com/stockholm-jvm-jug/"><img src="images/logo-jug-stockholm.png" class="logo" style="{host-logo-style}"></a>
+		<a href="https://blog.jetbrains.com/idea/category/livestream/"><img src="images/logo-intellij-idea-stream.png" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://www.meetup.com/stockholm-jvm-jug/">Stockholm JVM JUG</a> / <a href="https://twitter.com/stockholm-jug" style="{host-twitter-style}">{host-twitter-name}</a></p>
+			<p><a href="https://blog.jetbrains.com/idea/category/livestream/">IntelliJ LiveStream</a> / <a href="https://twitter.com/intellijidea" style="{host-twitter-style}">@intellijidea</a></p>
 		</div>
 	</div>
 </footer>
@@ -593,7 +593,8 @@ whose names are <strong>based on manifest entry</strong>.</p></div></div></secti
 that aren&#8217;t ready to be modules.</p></div>
 <div class="quoteblock"><blockquote><div class="paragraph"><p>Minimize number of automatic modules!</p></div></blockquote></div>
 <div class="paragraph"><p>Only put on module path:</p></div>
-<div class="ulist"><ul><li><p>your modular JARs</p></li><li><p>the JARs they depend on</p></li></ul></div>
+<div class="ulist"><ul><li><p>your modular JARs</p></li><li><p>the JARs required by modular<br>
+JARs on the module path</p></li></ul></div>
 <div class="paragraph"><p>That deals with most transitive dependencies.</p></div></div></section><section id="_automatic_culprits_2"><h2>Automatic Culprits</h2><div class="slide-content"><div class="paragraph"><p>If your code directly depends on<br>
 a troublesome automatic module:</p></div>
 <div class="ulist"><ul><li><p>put problematic JARs on class path</p></li><li><p>subprojects that depend on them:</p><div class="ulist"><ul><li><p>do not modularize</p></li><li><p>define automatic module name</p></li><li><p>put on module path</p></li></ul></div></li></ul></div>
@@ -628,7 +629,7 @@ can make that a bridge:</p></div>
 <div class="ulist"><ul><li><p>manipulate dependencies<br>
 with command line flags</p></li><li><p>lead to IDE errors in projects<br>
 that directly depend on them</p></li></ul></div>
-<div class="paragraph"><p>Work best for transitive dependencies.</p></div></div></section><section id="_broken_module_descriptors"><h2>Broken module descriptors</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// TODO</code></pre></div></div></div></section><section id="_reflective_access"><h2>Reflective access</h2><div class="slide-content"><div class="paragraph"><p>Reflection no longer "just works".</p></div>
+<div class="paragraph"><p>Work best for transitive dependencies.</p></div></div></section><section id="_reflective_access"><h2>Reflective access</h2><div class="slide-content"><div class="paragraph"><p>Reflection no longer "just works".</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-bash" data-lang="bash">Exception in thread "main" InaccessibleObjectException:
 	Unable to make ... accessible:
 	module ... does not "opens ..." to module ...</code></pre></div></div></div></section><section id="_reflective_access_2"><h2>Reflective access</h2><div class="slide-content"><div class="dlist"><dl><dt class="hdlist1">Solution: </dt><dd><p>Open packages for reflection<br>
@@ -690,8 +691,8 @@ modules are a net-positive</p></li></ul></div></div></section><section id="_thos
 <div class="ulist"><ul><li><p>almost all still baseline against JDK ≤ 8</p></li><li><p>makes creating/maintaining modules tougher</p></li><li><p>number of modularized apps is small<br>
 and thus demand is small (but growing)</p></li></ul></div>
 <div class="paragraph fragment"><p>But more and more ship as modules:<br>
-<a href="https://github.com/sormuras/modules">sormuras/modules</a> tracks 4128 unique modules<br>
-(as of March 29th).</p></div></div></section><section id="_project_size"><h2>Project size</h2><div class="slide-content"><div class="paragraph"><p>What impact does project size have?</p></div>
+<a href="https://github.com/sormuras/modules">sormuras/modules</a> tracks 4294 unique modules<br>
+(as of July 27th, 2022).</p></div></div></section><section id="_project_size"><h2>Project size</h2><div class="slide-content"><div class="paragraph"><p>What impact does project size have?</p></div>
 <div class="paragraph"><p>Simplified:</p></div>
 <table class="tableblock frame-all grid-all" style="width:50%"><colgroup><col style="width:33.3333%"><col style="width:33.3333%"><col style="width:33.3334%"></colgroup><thead><tr><th class="tableblock halign-center valign-top">Size</th><th class="tableblock halign-center valign-top">Effort</th><th class="tableblock halign-center valign-top">Benefit</th></tr><tbody><tr><td class="tableblock halign-center valign-top"><p class="tableblock">small</p></td><td class="tableblock halign-center valign-top"><p class="tableblock">📉</p></td><td class="tableblock halign-center valign-top"><p class="tableblock">📉</p></td></tr><tr><td class="tableblock halign-center valign-top"><p class="tableblock">large</p></td><td class="tableblock halign-center valign-top"><p class="tableblock">📈</p></td><td class="tableblock halign-center valign-top"><p class="tableblock">📈</p></td></tr></table>
 <div class="paragraph"><p>⇝ Project size doesn&#8217;t matter (much).</p></div></div></section><section id="_project_type"><h2>Project type</h2><div class="slide-content"><div class="paragraph"><p>General benefits for all kinds of projects:</p></div>
