@@ -10,11 +10,13 @@ JUnit Pioneer has high-end architecture:
 
 ```sh
 📦 org.junitpioneer
-├─ 📦 internal  # our utilities - internal
-├─ 📦 jupiter   # most of our extensions
-│  ├─ 📦 issue  # issue impl - internal
-│  └─ 📦 params # ext. re parameterized tests
-└─ 📦 vintage   # ext. re to JUnit 4
+├─ 📦 internal     # our utilities - internal
+├─ 📦 jupiter      # most of our extensions
+│  ├─ 📦 cartesian # cartesian extensions
+│  ├─ 📦 issue     # issue impl - internal
+│  ├─ 📦 json      # JSON-related extenions
+│  └─ 📦 params    # parameterized tests ext.s
+└─ 📦 vintage      # JUnit 4 extensions
 ```
 
 We mirror Jupiter's packages:

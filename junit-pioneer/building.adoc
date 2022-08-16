@@ -57,16 +57,12 @@ All with GitHub Actions.
 === Version Control
 
 ```sh
-# main-build.yml
 strategy:
   matrix:
-    java: [ 8, 11, 16 ]
-    os: [ubuntu, macos]
-
-# junit5-build.yml
-strategy:
-  matrix:
-    junit-version: [ '5.7.0', '5.7.1', '5.8.0', ... ]
+    java: [ 11, 17, 18 ]
+    junit-version: [ '5.8.2' ]
+    modular: [true, false]
+    os: [ubuntu, macos, windows]
 ```
 
 === One-Click Releases
@@ -80,13 +76,14 @@ Kicks of Gradle release build.
 
 === One-Click Releases
 
-In release build, Gradle uses https://github.com/shipkit[Shipkit] to:
+The release build:
 
-* detect next version
-* build artifacts
-* upload to Bintray (with https://github.com/bintray/gradle-bintray-plugin[Bintray plugin])
-* create Git tag
-* create GitHub release with changelog
+* takes manually entered version as input
+* builds artifacts with Gradle
+* publishes with `maven-publish` plugin
+* uses https://github.com/shipkit[Shipkit] to:
+** create Git tag
+** create GitHub release with changelog
 
 [state="empty",background-color="#0D1117"]
 === !
