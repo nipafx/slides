@@ -37,7 +37,7 @@ The plan for today:
 
 // * start with a *Java 8* code base
 * start with a *Java 11* code base
-* take it all the way to *Java 17* +
+* take it all the way to *Java 19* +
   (and beyond)
 * be amazed by how much changes
 
@@ -338,6 +338,33 @@ image::images/gc-throughput.png[background, size=contain]
 image::images/gc-footprint.png[background, size=contain]
 
 
+== Java 18
+
+*What we've seen:*
+
+* JavaDoc code snippets (https://nipafx.dev/javadoc-snippets-maven/[better])
+* jwebserver
+* UTF-8 by default
+
+=== Java 18
+
+*What we haven't seen:*
+
+* Internet resolution SPI
+
+
+== Java 19
+
+Previews galore!
+
+////
+* pattern matching for `switch` & record patterns
+* virtual threads & structured concurrency
+* foreign function & memory API
+* vector API
+////
+
+
 == Java Next
 
 *What we've seen:*
@@ -351,6 +378,11 @@ return switch (post) {
 	default -> Optional.empty();
 };
 ```
+* record patterns | ↴
++
+```java
+case Article(var repository) -> repository;
+```
 
 === Java Next
 
@@ -358,19 +390,20 @@ return switch (post) {
 
 * vector API | http://openjdk.java.net/projects/panama/[Project Panama]
 * foreign code and memory | http://openjdk.java.net/projects/panama/[Project Panama]
-* inline classes | http://openjdk.java.net/projects/valhalla/[Project Valhalla]
+* value and primitive classes | http://openjdk.java.net/projects/valhalla/[Project Valhalla]
 * virtual threads | http://openjdk.java.net/projects/loom/[Project Loom]
 
 
-== Java 11 to 17+
+== Java 11 to 19+
 
 // Java 8 to...
 // * stronger encapsulation and better services | modules
 // * safer code | processes, versions, whitespace, etc.
-* more expressive code | LOC: 2051 📉 1626
-// characters: 67880 📉 57574
+* more expressive code | LOC: 2058 📉 1646
+// characters: 69376 📉 59865
 * faster code | run time: ~ 1.1 s 📉 ~ 1 s
 * better JVM | GCs, packaging, monitoring, etc.
+* better tooling | JFR, JavaDoc, jwebserver, etc.
 
 *Sure you don't want to upgrade?*
 
