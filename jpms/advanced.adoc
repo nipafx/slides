@@ -345,7 +345,7 @@ module uber.lib {
 Assumptions:
 
 * nobody calls into Guava part without using Guava
-* no runtime checks necessary
+* no run-time checks necessary
 
 
 === Summary
@@ -353,7 +353,7 @@ Assumptions:
 With `A requires static B`:
 
 * at compile time: _A_ requires _B_ as usual
-* at runtime: _B_ may be absent
+* at run time: _B_ may be absent
 
 Two kinds of applications:
 

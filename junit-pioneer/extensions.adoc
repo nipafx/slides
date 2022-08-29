@@ -17,7 +17,7 @@ Let's see some incomplete examples!
 void testIntChars(
 	@Values(ints = { 1, 2, 4 }) int number,
 	@Values(strings = { "A", "B" }) String character) {
-	// (1, "A") (1, "B") (2, "A") (2, "B")
+	// (1, "A") (1, "B") (2, "A") (2, "B") (4, "A") (4, "B")
 }
 ```
 
