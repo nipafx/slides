@@ -516,7 +516,7 @@ void failingTest() {
 void testIntChars(
 	@Values(ints = { 1, 2, 4 }) int number,
 	@Values(strings = { "A", "B" }) String character) {
-	// (1, "A") (1, "B") (2, "A") (2, "B")
+	// (1, "A") (1, "B") (2, "A") (2, "B") (4, "A") (4, "B")
 }</code></pre></div></div></div></section><section id="_default_locale"><h2>Default Locale</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">@Test
 @DefaultLocale(language = "en")
 void test() {
@@ -656,7 +656,7 @@ we also have rules for:</p></div>
 with dependencies.</p></div>
 <div class="paragraph"><p>We don&#8217;t want to add to that.</p></div>
 <div class="paragraph"><p>⇝ JUnit 5 should be our only<br>
-runtime dependency.</p></div></div></section><section id="_in_practice"><h2>In Practice</h2><div class="slide-content"><div class="paragraph"><p>The <code>@Issue</code> extension:</p></div>
+run-time dependency.</p></div></div></section><section id="_in_practice"><h2>In Practice</h2><div class="slide-content"><div class="paragraph"><p>The <code>@Issue</code> extension:</p></div>
 <div class="ulist"><ul><li><p>collects information about tests</p></li><li><p>wants to create a report</p></li></ul></div>
 <div class="paragraph"><p>But reports could be XML, JSON, etc.</p></div>
 <div class="ulist"><ul><li><p>"need" dependencies for that</p></li><li><p>probably not many users use <code>@Issue</code></p></li></ul></div>
