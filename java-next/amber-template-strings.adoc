@@ -61,10 +61,10 @@ Ingredients:
 
 * _template_ with embedded expressions +
   ~> `TemplatedString`
-* _template policy_ (e.g. `STR`): +
+* _template processor_ (e.g. `STR`): +
   transforms `TemplatedString` into `String`*
 
-=== Template policy STR
+=== Template procesor STR
 
 ```java
 String form = STR."""
@@ -85,7 +85,7 @@ Tax       $3.546
 Total     $27.186
 ```
 
-=== Template policy FMTR
+=== Template processor FMTR
 
 ```java
 String form = FMTR."""
@@ -118,10 +118,10 @@ Why the detour?
 
 === Custom templating
 
-The `TemplatePolicy` interface:
+The `TemplateProcessor` interface:
 
 ```java
-interface TemplatePolicy<RESULT, EXCEPTION> {
+interface TemplateProcessor<RESULT, EXCEPTION> {
 	RESULT apply(TemplatedString s) throws EXCEPTION;
 }
 ```
@@ -164,8 +164,8 @@ JSONObject doc = JSON."""
 
 === Amber endeavors
 
-Template strings are in an early stage! +
-(https://openjdk.java.net/jeps/8273943[JEP draft])
+Template strings just came out of draft: https://openjdk.org/jeps/430[JEP 430] +
+🥳🎉
 
 Other endeavors:
 
