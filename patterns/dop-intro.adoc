@@ -4,26 +4,28 @@
 <table class="toc">
 	<tr class="toc-current"><td>What is DOP?</td></tr>
 	<tr><td>A Lengthy Example</td></tr>
-	<tr><td>Review</td></tr>
+	<tr><td>That was DOP!</td></tr>
 </table>
 ++++
 
 === Programming Paradigms
+
+Paradigms often come with an +
+"Everything is a ..." sentence.
 
 > The goal of any programming paradigm is to manage complexity.
 
 * complexity comes in many forms
 * not all paradigms handle all forms equally well
 
-Paradigms also often come with an +
-"Everything is a ..." sentence.
+⇝ "It depends"
 
 === Object-Oriented Programming
 
 > Everything is an object
 
 * combines state and behavior
-* works best when defining and upholding boundaries
+* works best when defining/upholding boundaries
 
 Great use cases:
 
@@ -50,6 +52,7 @@ Use Java's strong typing to model data as data:
 ** data as data with records
 ** alternatives with sealed classes
 * use methods (separately) to model behavior, particularly:
+** exhaustive `switch` without `default`
 ** pattern matching to destructure polymorphic data
 
 === Guiding Principles
