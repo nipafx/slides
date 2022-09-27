@@ -1,4 +1,4 @@
-= Pattern Matching in Java (17)
+= Data-Oriented Programming
 :backend: revealjs
 :revealjs_theme: nipa-night
 :revealjsdir: ../_reveal.js
@@ -9,14 +9,18 @@
 :revealjs_center: true
 :revealjs_transition: fade
 :revealjs_backgroundTransition: fade
-:revealjs_parallaxBackgroundImage: images/pattern.jpg
-:revealjs_parallaxBackgroundSize: 6670px 4447px
+:revealjs_parallaxBackgroundImage: images/heart.jpg
+:revealjs_parallaxBackgroundSize: 6024px 4023px
 :docinfo: shared
 :docinfodir: ../_shared
 
 :imagedir: images
 
 include::../_shared/highlight.js.adoc[]
+
+++++
+<h2>In Java 19</h2>
+++++
 
 :host-name: Oracle Dev Live
 :host-url: https://developer.oracle.com/de/developer-live/
@@ -32,11 +36,18 @@ include::../_shared/event-on-title-and-footer.adoc[]
 
 // ⇝
 
-include::intro.adoc[]
+== Data-Oriented Programming
 
-include::pattern-matching.adoc[]
+++++
+<table class="toc">
+	<tr><td>What is DOP?</td></tr>
+	<tr><td>A Lengthy Example</td></tr>
+	<tr><td>Review</td></tr>
+</table>
+++++
 
-include::outro.adoc[]
+Slides at https://slides.nipafx.dev/[slides.nipafx.dev].
+
 
 include::../_shared/about-slide.adoc[]
 
