@@ -1,0 +1,61 @@
+== Data-Oriented Programming
+
+++++
+<table class="toc">
+	<tr class="toc-current"><td>What is DOP?</td></tr>
+	<tr><td>A Lengthy Example</td></tr>
+	<tr><td>Review</td></tr>
+</table>
+++++
+
+=== Programming Paradigms
+
+> The goal of any programming paradigm is to manage complexity.
+
+* complexity comes in many forms
+* not all paradigms handle all forms equally well
+
+Paradigms also often come with an +
+"Everything is a ..." sentence.
+
+=== Object-Oriented Programming
+
+> Everything is an object
+
+* combines state and behavior
+* works best when defining and upholding boundaries
+
+Great use cases:
+
+* boundaries between libraries and clients
+* in large programs to enable modular reasoning
+
+Smaller programs/subsystems have less need for boundaries.
+
+[NOTE.speaker]
+--
+* maintenance boundaries
+* versioning boundaries
+* encapsulation boundaries
+* compilation boundaries
+* compatibility boundaries
+* security boundaries
+--
+
+=== Data-Oriented Programming
+
+Use Java's strong typing to model data as data:
+
+* use classes to represent data, particularly:
+** data as data with records
+** alternatives with sealed classes
+* use methods (separately) to model behavior, particularly:
+** pattern matching to destructure polymorphic data
+
+=== Guiding Principles
+
+* model the data, the whole data, +
+  and nothing but the data
+* data is immutable
+* validate at the boundary
+* make illegal states unrepresentable

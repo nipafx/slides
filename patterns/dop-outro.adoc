@@ -1,0 +1,133 @@
+== Data-Oriented Programming
+
+++++
+<table class="toc">
+	<tr><td>What is DOP?</td></tr>
+	<tr><td>A Lengthy Example</td></tr>
+	<tr class="toc-current"><td>Review</td></tr>
+</table>
+++++
+
+=== Algebraic Data-Types
+
+* records are _product types_
+* sealed types are _sum types_
+
+> This simple combination of mechanisms -- aggregation and choice -- is deceptively powerful
+
+=== Applications
+
+* ad-hoc data structures
+* complex return types
+* complex domains
+
+=== Ad-hoc Data Structures
+
+Often local, throw-away types used in one class or package.
+
+```java
+record PageWithLinks(Page page, Set<URI> links) {
+
+	PageWithLinks {
+		requireNonNull(page);
+		requireNonNull(links);
+		links = new HashSet<>(links);
+	}
+
+	public PageWithLinks(Page page) {
+		this(page, Set.of());
+	}
+
+}
+```
+
+=== Complex Return Types
+
+Return values that are deconstructed immediately:
+
+```java
+sealed interface MatchResult<T> {
+    record NoMatch<T>() implements MatchResult<T> { }
+    record ExactMatch<T>(T entity)
+		implements MatchResult<T> { }
+    record FuzzyMatches<T>(
+			Collection<FuzzyMatch<T>> entities)
+        implements MatchResult<T> { }
+
+    record FuzzyMatch<T>(T entity, int distance) { }
+}
+
+MatchResult<User> findUser(String userName) { ... }
+```
+
+=== Complex Domains
+
+Long-living objects that are part +
+of the program's domain.
+
+For example `Page`.
+
+
+=== Functional Programming?!
+
+* immutable data structures
+* methods (functions?) that operate on them
+
+Isn't this just functional programming?!
+
+[step = 1]
+Kind of.
+
+=== FP vs DOP
+
+Functional programming:
+
+> Everything is a function
+
+⇝ Focus on creating and composing functions.
+
+---
+
+Data-oriented programming:
+
+> Model data as data.
+
+⇝ Focus on correctly modeling the data.
+
+////
+Brian:
+
+At a superficial level, X-oriented programming says "everything is an X"
+So functional programming focuses on functions, composing functions, etc.  Everything is a function.
+No real distinction between "data" and functions, they're all values.
+
+DOP says "its all about the data".  The programming model is driven by the data; the business logic is secondary.
+obviously you can program without either behavior or data
+
+but its where you put the programmers attention
+is it object modeling?  is it factoring the computation so it can be composed functionally?  is it data modeling?
+////
+
+=== OOP vs DOP
+
+OOP is not dead (again):
+
+* valuable for complex entities +
+   or rich libraries
+* use whenever encapsulation is needed
+* still a good default on high level
+
+DOP --  consider when:
+
+* handling outside data (like JSON)
+* working with simple or ad-hoc data
+* data and behavior should be separated
+
+=== Guiding Principles
+
+* model the data, the whole data, +
+  and nothing but the data
+* data is immutable
+* validate at the boundary
+* make illegal states unrepresentable
+

@@ -1,0 +1,368 @@
+== Data-Oriented Programming
+
+++++
+<table class="toc">
+	<tr><td>What is DOP?</td></tr>
+	<tr class="toc-current"><td>A Lengthy Example</td></tr>
+	<tr><td>Review</td></tr>
+</table>
+++++
+
+=== Crawling GitHub
+
+Starting with a seed URL:
+
+. connect to URL
+. identify kind of page
+. identify interesting section
+. identify outgoing links
+. for each link, start at 1.
+
+=== Crawling GitHub
+
+That logic is implemented in:
+
+```java
+public class PageTreeFactory {
+
+	public static Page loadPageTree(/*...*/) {
+		// [...]
+	}
+
+}
+```
+
+What does `Page` look like?
+
+=== `Page` Requirements
+
+* all pages have a `url`
+* pages that couldn't be resolved, have an `error`
+* pages that could be resolved have `content`
+* GitHub pages have:
+** outgoing `links`
+** `issueNumber` or `prNumber`
+
+=== Requirements
+
+Operations on pages and their subtree:
+
+* pretty print
+* collect statistics
+
+=== A Possible Implementation
+
+A single `Page` class with this API:
+
+```java
+public URL url();
+public Exception error();
+public String content();
+public int issueNumber();
+public int prNumber();
+public Set<Page> links();
+public Stream<Page> subtree();
+
+public Stats evaluateStatistics();
+public String printPageList();
+```
+
+=== A Possible Implementation
+
+Problems:
+
+* page "type" is implicit
+* legal combination of fields is unclear
+* clients must "divine" the type
+* disparate operations on same class
+
+=== Applying DOP
+
+> Model the data, the whole data, and nothing but the data.
+
+There are four kinds of pages:
+
+* error page
+* external page
+* GitHub issue page
+* GitHub PR page
+
+⇝ Use four records to model them!
+
+=== Modeling The Data
+
+```java
+public record ErrorPage(
+	URI url, Exception ex) { }
+
+public record ExternalPage(
+	URI url, String content) { }
+
+public record GitHubIssuePage(
+	URI url, int issueNumber,
+	String content, Set<Page> links) { }
+
+public record GitHubPrPage(
+	URI url, int prNumber,
+	String content, Set<Page> links) { }
+```
+
+=== Applying DOP
+
+> Model the data, the whole data, and nothing but the data.
+
+There are additional relations between them:
+
+* a page (load) is either successful or not
+* a successful page is either external or GitHub
+* a GitHub page is either for a PR or an issue
+
+⇝ Use sealed types to model the alternatives!
+
+=== Modeling Alternatives
+
+```java
+public sealed interface Page
+		permits ErrorPage, SuccessfulPage {
+	URI url();
+}
+
+public sealed interface SuccessfulPage
+		extends Page permits ExternalPage, GitHubPage {
+	String content();
+}
+
+public sealed interface GitHubPage
+		extends SuccessfulPage
+		permits GitHubIssuePage, GitHubPrPage {
+	Set<Page> links();
+	default Stream<Page> subtree() { ... }
+}
+```
+
+[state=empty,background-color=white]
+=== !
+image::images/github-crawler-types.png[background, size=contain]
+
+////
+yuml.me - https://yuml.me/nipafx/edit/github-crawler
+
+[Page|URI url() {bg:dodgerblue}]
+[ErrorPage|Exception error() {bg:orange}]
+[SuccessfulPage|String content() {bg:dodgerblue}]
+[GitHubPage|Set〈Page〉 links() {bg:dodgerblue}]
+[GitHubIssuePage|int issueNumber() {bg:orange}]
+[GitHubPrPage|int prNumber() {bg:orange}]
+
+[Page]<-[ErrorPage]
+[Page]<-[SuccessfulPage]
+[SuccessfulPage]<-[GitHubPage]
+[GitHubPage]<-[GitHubIssuePage]
+[GitHubPage]<-[GitHubPrPage]
+////
+
+=== Applying DOP
+
+> Make illegal states unrepresentable.
+
+Many are already, e.g.:
+
+* with `error` and with `content`
+* with `issueNumber` and `prNumber`
+* with `isseNumber` or `prNumber` +
+  but no `links`
+
+=== Validation
+
+> Validate at the boundary.
+
+⇝ Reject other illegal states in constructors.
+
+```java
+public ExternalPage {
+	Objects.requireNonNull(url);
+	Objects.requireNonNull(content);
+	if (content.isBlank())
+		throw new IllegalArgumentException();
+}
+```
+
+=== Applying DOP
+
+> Data is immutable.
+
+Records are shallowly immutable, +
+but field types may not be.
+
+⇝ Fix that during construction.
+
+```java
+public GitHubPrPage {
+	// [...]
+	links = Set.copyOf(links);
+}
+```
+
+=== Where Are We?
+
+* page "type" is explicit in Java's type
+* only legal combination of fields are possible
+* API is more self-documenting
+* code is easier to test
+
+But where did the operations go?
+
+=== Operations On Data
+
+> Model the data, the whole data, and nothing but the data.
+
+⇝ Operations should be limited to derived quantities.
+
+```java
+public Stats evaluateStatistics();
+public String printPageList();
+```
+
+This actually applies to our operations.
+
+[step=1]
+But what if it didn't? 😁
+
+=== Operations On Data
+
+Pattern matching on sealed types is perfect +
+to apply polymorphic operations to data!
+
+And records eschew encapsulation, +
+so everything is accessible.
+
+=== Printing A Page List
+
+In class `Pretty`:
+
+```java
+public static String printPageList(Page rootPage) {
+	if (!(rootPage instanceof GitHubPage ghPage))
+		return createPageName(rootPage);
+
+	return ghPage
+			.subtree()
+			.map(Pretty::createPageName)
+			.collect(joining("\n"));
+}
+```
+
+=== Printing A Page List
+
+In class `Pretty`:
+
+```java
+private static String createPageName(Page page) {
+	return switch (page) {
+		case ErrorPage err
+			-> "💥 ERROR: " + err.url().getHost();
+		case ExternalPage ext
+			-> "💤 EXTERNAL: " + ext.url().getHost();
+		case GitHubIssuePage issue
+			-> "🐈 ISSUE #" + issue.issueNumber();
+		case GitHubPrPage pr
+			-> "🐙 PR #" + pr.prNumber();
+	};
+}
+```
+
+=== Gathering Statistics
+
+In class `Statistician`:
+
+```java
+public static Stats evaluate(Page rootPage) {
+	Statistician statistician = new Statistician();
+	statistician.evaluateTree(rootPage);
+	return statistician.result();
+}
+
+private void evaluateTree(Page page) {
+	if (page instanceof GitHubPage ghPage)
+		ghPage.subtree().forEach(this::evaluatePage);
+	else
+		evaluatePage(page);
+}
+```
+
+=== Gathering Statistics
+
+In class `Statistician`:
+
+```java
+private void evaluatePage(Page page) {
+	// `numberOf...` are fields
+	switch (page) {
+		case ErrorPage __ -> numberOfErrors++;
+		case ExternalPage __ -> numberOfExternalLinks++;
+		case GitHubIssuePage __ -> numberOfIssues++;
+		case GitHubPrPage __ -> numberOfPrs++;
+	}
+}
+```
+
+=== Operations On Data
+
+Yes, switching over types is icky.
+
+But switching over _sealed_ types is safe.
+
+What happens when we add:
+
+```java
+public record GitHubCommitPage(
+		URI url, String hash,
+		String content, Set<Page> links)
+	implements GitHubPage {
+
+	// [...]
+
+}
+```
+
+Follow the compile errors!
+
+=== Extending Operations On Data
+
+First stop: the sealed supertype.
+
+⇝ Permit the new subtype!
+
+```java
+public sealed interface GitHubPage
+		extends SuccessfulPage
+		permits GitHubIssuePage, GitHubPrPage,
+			GitHubCommitPage {
+	// [...]
+}
+```
+
+=== Extending Operations On Data
+
+Next stop: all `switch` without `default`.
+
+⇝ Handle the new subtype!
+
+```java
+switch (page) {
+	case ErrorPage __ -> numberOfErrors++;
+	case ExternalPage __ -> numberOfExternalLinks++;
+	case GitHubIssuePage __ -> numberOfIssues++;
+	case GitHubPrPage __ -> numberOfPrs++;
+	case GitHubCommitPage __ -> numberOfCommits++;
+}
+```
+
+=== Where Are We?
+
+* operations separate from data
+* adding new operations is easy
+* adding new data types is more work, +
+  but supported by the compiler
+
+⇝ Like the visitor pattern, but less painful.
