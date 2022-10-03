@@ -254,16 +254,15 @@ Sometimes, projects just swallow errors. 😔
 
 === Suspending modules
 
-> Everything* that works on the module path +
-> also works on the class path.
+> Everything* that works on the module path also works on the class path.
 >
 > (* except services in `module-info.java`)
 
 When debugging a weird error:
 
-* create https://stackoverflow.com/help/minimal-reproducible-example[minimal reproducible example]
-* launch on class path
-* if error vanishes, debug harder
+* create a https://stackoverflow.com/help/minimal-reproducible-example[minimal reproducible example]
+* launch on the class path
+* if the error vanishes, debug harder
 
 [state=empty,background-color=#4F405D,background-transition=none]
 === !
