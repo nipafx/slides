@@ -50,6 +50,7 @@ Some common or tricky roadblocks:
 More details on GitHub: +
 https://github.com/nipafx/module-system-woes/[nipafx/module-system-woes]
 
+////
 === Split packages
 
 The module system requires each package +
@@ -126,13 +127,11 @@ The other workarounds (not shown here):
 
 Work best for transitive dependencies.
 
-////
 === Broken module descriptors
 
 ```java
 // TODO
 ```
-////
 
 === Reflective access
 
@@ -216,6 +215,7 @@ open module com.example.app {
 ```
 
 If error vanishes, it was an issue with reflection.
+////
 
 [state=empty,background-color=black,background-transition=none]
 === !
