@@ -107,6 +107,20 @@ public record GitHubPrPage(
 	String content, Set<Page> links) { }
 ```
 
+=== Detour: Records
+
+Records are transparent data carriers.
+
+`record ExternalPage(URI url, String content) { }`:
+
+* private final fields: `URI url` and `String content`
+* constructor: `ExternalPage(URI url, String content)`
+* accessors: `URI url()` and `String content()`
+* `equals()`, `hashCode()`, `toString()` that use the two fields
+* `ExternalPage` is final
+
+All method/constructor bodies can be customized!
+
 === Applying DOP
 
 > Model the data, the whole data, and nothing but the data.
@@ -139,6 +153,38 @@ public sealed interface GitHubPage
 	default Stream<Page> subtree() { ... }
 }
 ```
+
+=== Detour: Sealed Types
+
+Use sealed types to limit inheritance.
+
+```java
+public sealed interface Page
+		permits ErrorPage, SuccessfulPage {
+	// ...
+}
+```
+
+Only `ErrorPage` and `SuccessfulPage` +
+can implement/extend `Page`.
+
+⇝ `interface MyPage extends Page` doesn't compile
+
+=== Detour: Sealed Types
+
+```java
+public sealed interface Page
+		permits ErrorPage, SuccessfulPage {
+	// ...
+}
+```
+
+Inheriting types must be:
+
+* in the same module (package) as sealed type
+* directly inherit from sealed type
+* `final`, `sealed`, or `non-sealed`
+
 
 [state=empty,background-color=white]
 === !
@@ -270,6 +316,40 @@ private static String createPageName(Page page) {
 	};
 }
 ```
+
+=== Detour: Type Patterns
+
+Typecheck, cast, and declaration all in one.
+
+```java
+if (rootPage instanceof GitHubPage ghPage)
+	// do something with `ghPage`
+```
+
+* checks `rootPage instanceof GitHubPage`
+* declares variable `GitHubPage ghPage`
+
+Only where the check is passed, +
+is `ghPage` in scope.
+
+(Flow-scoping)
+
+=== Detour: Patterns in Switch
+
+All patterns can be used in switches (soon):
+
+```java
+return switch (page) {
+	case ErrorPage err -> // use `ErrorPage err`
+	case ExternalPage ext -> // use `ext`
+	case GitHubIssuePage issue -> // use `issue`
+	case GitHubPrPage pr -> // use `pr`
+};
+```
+
+* checks `page` against all listed types
+* executes matching branch with respective variable
+* requires no default branch if exhaustive
 
 === Gathering Statistics
 
