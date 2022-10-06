@@ -1,0 +1,127 @@
+/**
+ * Dark-on-bright theme for reveal.js adopted to Oracle's slide requirements.
+ *
+ * Based on Hakim El Hattab's theme "night".
+ */
+
+
+// Default mixins and settings -----------------
+@import "../template/mixins";
+@import "../template/settings";
+// ---------------------------------------------
+
+// Override theme settings (see ../template/settings.scss)
+$backgroundColor: white;
+$slideBackgroundColor: rgba(255, 255, 255, 0.9);
+
+$headingColor: #262429;
+$mainColor: #262429;
+$dimColor: #606060;
+$linkColor: #00758f;
+$linkColorHover: $linkColor;
+$linkFontweight: regular;
+$selectionBackgroundColor: #aaa;
+
+$blockCodeColor: #262429;
+$inlineCodeColor: #262429;
+
+$quoteColor: darken($backgroundColor, 10%);
+$quoteEmColor: lighten($quoteColor, 20%);
+$quoteBackgroundColor: $mainColor;
+
+// configure fonts to use Oracle font ----------
+@font-face {
+	font-family: "Oracle Sans";
+	font-style: normal;
+	font-weight: normal;
+	src: url("../../lib/font/oracle-sans/OracleSans_Rg.ttf") format("truetype");
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Oracle Sans";
+	font-style: normal;
+	font-weight: bold;
+	src: url("../../lib/font/oracle-sans/OracleSans_Bd.ttf") format("truetype");
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Oracle Sans";
+	font-style: italic;
+	font-weight: normal;
+	src: url("../../lib/font/oracle-sans/OracleSans_It.ttf") format("truetype");
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Oracle Sans";
+	font-style: italic;
+	font-weight: bold;
+	src: url("../../lib/font/oracle-sans/OracleSans_BdIt.ttf") format("truetype");
+	font-display: swap;
+}
+@font-face {
+	font-family: "Consolas";
+	font-style: normal;
+	font-weight: normal;
+	src: url("../../lib/font/consolas/consolas.ttf") format("truetype");
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Consolas";
+	font-style: normal;
+	font-weight: bold;
+	src: url("../../lib/font/consolas/consolas-bold.ttf") format("truetype");
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Consolas";
+	font-style: italic;
+	font-weight: normal;
+	src: url("../../lib/font/consolas/consolas-italic.ttf") format("truetype");
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Consolas";
+	font-style: italic;
+	font-weight: bold;
+	src: url("../../lib/font/consolas/consolas-italic-bold.ttf") format("truetype");
+	font-display: swap;
+}
+
+// set fonts
+$mainFont: 'Oracle Sans', sans-serif;
+$mainFontSize: 35px;
+$headingFont: 'Oracle Sans', sans-serif;
+$headingLetterSpacing: 0em;
+$headingTextTransform: capitalize;
+$codeFont: 'Consolas', monospace;
+$codeFontSize: 32px;
+
+$headingMargin: 0 0 20px 0;
+$blockMargin: 10px;
+// ---------------------------------------------
+
+// my template ---------------------------------
+@import "../template/nipa-day-and-night";
+// ---------------------------------------------
+
+// customizing the template --------------------
+// day blockquotes are dark and so is code highlighting
+.reveal blockquote code.hljs {
+	color: $backgroundColor !important;
+}
+.title .logo,
+footer .logo {
+	background-color: $backgroundColor;
+	border-color: $backgroundColor !important;
+}
+// ---------------------------------------------
+
+// Theme template ------------------------------
+@import "../template/theme";
+// ---------------------------------------------

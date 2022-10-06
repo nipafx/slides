@@ -1,0 +1,593 @@
+/**
+ * Dark-on-bright theme for reveal.js adopted to Oracle's slide requirements.
+ *
+ * Based on Hakim El Hattab's theme "night".
+ */
+@font-face {
+  font-family: "Oracle Sans";
+  font-style: normal;
+  font-weight: normal;
+  src: url("../../lib/font/oracle-sans/OracleSans_Rg.ttf") format("truetype");
+  font-display: swap; }
+
+@font-face {
+  font-family: "Oracle Sans";
+  font-style: normal;
+  font-weight: bold;
+  src: url("../../lib/font/oracle-sans/OracleSans_Bd.ttf") format("truetype");
+  font-display: swap; }
+
+@font-face {
+  font-family: "Oracle Sans";
+  font-style: italic;
+  font-weight: normal;
+  src: url("../../lib/font/oracle-sans/OracleSans_It.ttf") format("truetype");
+  font-display: swap; }
+
+@font-face {
+  font-family: "Oracle Sans";
+  font-style: italic;
+  font-weight: bold;
+  src: url("../../lib/font/oracle-sans/OracleSans_BdIt.ttf") format("truetype");
+  font-display: swap; }
+
+@font-face {
+  font-family: "Consolas";
+  font-style: normal;
+  font-weight: normal;
+  src: url("../../lib/font/consolas/consolas.ttf") format("truetype");
+  font-display: swap; }
+
+@font-face {
+  font-family: "Consolas";
+  font-style: normal;
+  font-weight: bold;
+  src: url("../../lib/font/consolas/consolas-bold.ttf") format("truetype");
+  font-display: swap; }
+
+@font-face {
+  font-family: "Consolas";
+  font-style: italic;
+  font-weight: normal;
+  src: url("../../lib/font/consolas/consolas-italic.ttf") format("truetype");
+  font-display: swap; }
+
+@font-face {
+  font-family: "Consolas";
+  font-style: italic;
+  font-weight: bold;
+  src: url("../../lib/font/consolas/consolas-italic-bold.ttf") format("truetype");
+  font-display: swap; }
+
+.reveal .slides {
+  bottom: 30px; }
+
+.reveal .slides > section:not(.stack),
+.reveal .slides > section > section {
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.9); }
+
+.transparent-slide .reveal .slides section,
+.empty .reveal .slides section {
+  background-color: inherit; }
+
+.empty footer {
+  display: none; }
+
+div.reveal section h1,
+div.reveal section h2,
+div.reveal section h3,
+div.reveal section h4,
+div.reveal section h5 {
+  font-weight: bold; }
+
+div.reveal h1 {
+  font-size: 3.5em; }
+
+div.reveal h2 {
+  font-size: 2em; }
+
+.title {
+  box-sizing: border-box;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.9); }
+  .title h1::before {
+    content: "You. Me.";
+    display: block;
+    font-size: 0.57em; }
+  .title .event {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    grid-gap: 10px;
+    margin: 20px 30px; }
+  .title .logo {
+    height: 70px;
+    margin: 0 10px 0 0;
+    float: left;
+    background-color: #262429;
+    border-radius: 2px;
+    border: 2px solid #262429 !important; }
+  .title .name {
+    margin: 5px; }
+    .title .name p {
+      padding: 0;
+      margin: 0;
+      font-family: "Oracle Sans", sans-serif;
+      font-size: 25px;
+      font-weight: normal;
+      color: #262429;
+      text-align: left; }
+      .title .name p a {
+        color: #262429;
+        text-decoration: inherit;
+        font-weight: inherit; }
+
+.title footer {
+  display: none; }
+
+.reveal .toc {
+  font-weight: bold;
+  border: none; }
+  .reveal .toc td {
+    padding: 0.15em 0.5em; }
+  .reveal .toc .toc-current td {
+    color: #00758f;
+    border-color: #262429; }
+
+.no-title h2 {
+  display: none; }
+
+div.reveal a:hover {
+  text-decoration: underline; }
+  div.reveal a:hover img {
+    box-shadow: 0 0 10px #00758f; }
+
+.reveal .quoteblock {
+  width: 90%;
+  padding: 10px;
+  margin: 0 auto;
+  border-radius: 10px;
+  background-color: #262429; }
+  .reveal .quoteblock blockquote::before {
+    content: "\201c";
+    float: left;
+    font-family: Montserrat;
+    font-size: 2.75em;
+    font-weight: bold;
+    line-height: 0.8em;
+    margin-left: -0.7em;
+    color: #e6e5e5; }
+  .reveal .quoteblock blockquote {
+    width: 75%;
+    background-color: inherit;
+    box-shadow: none; }
+    .reveal .quoteblock blockquote p {
+      text-align: left;
+      color: #e6e5e5; }
+      .reveal .quoteblock blockquote p em {
+        color: white;
+        font-weight: bold; }
+  .reveal .quoteblock .attribution {
+    color: #e6e5e5; }
+
+div.reveal section img {
+  background: none;
+  border: none;
+  box-shadow: none; }
+
+.reveal .listingblock .content {
+  display: flex;
+  align-items: center;
+  flex-direction: column; }
+  .reveal .listingblock .content pre {
+    width: inherit;
+    box-shadow: none; }
+    .reveal .listingblock .content pre code {
+      padding: 10px;
+      max-height: none;
+      line-height: 120%; }
+
+.reveal pre code.hljs {
+  display: block; }
+
+.reveal code.hljs {
+  display: inline;
+  font-family: "Consolas", monospace;
+  font-size: 32px;
+  padding: 0;
+  color: #262429;
+  background-color: transparent; }
+  .reveal code.hljs .hljs-code, .reveal code.hljs .hljs-title, .reveal code.hljs .hljs-keyword, .reveal code.hljs .hljs-name, .reveal code.hljs .hljs-section, .reveal code.hljs .hljs-selector-class, .reveal code.hljs .hljs-selector-tag, .reveal code.hljs .hljs-attr {
+    color: #00758f; }
+  .reveal code.hljs .hljs, .reveal code.hljs .hljs-comment, .reveal code.hljs .hljs-string, .reveal code.hljs .hljs-type, .reveal code.hljs .hljs-built_in, .reveal code.hljs .hljs-builtin-name, .reveal code.hljs .hljs-selector-id, .reveal code.hljs .hljs-selector-attr, .reveal code.hljs .hljs-selector-pseudo, .reveal code.hljs .hljs-addition, .reveal code.hljs .hljs-variable, .reveal code.hljs .hljs-template-variable, .reveal code.hljs .hljs-tag, .reveal code.hljs .hljs-subst, .reveal code.hljs .hljs-params {
+    color: #606060; }
+
+.reveal :not(pre) > code.hljs {
+  color: #262429; }
+
+.reveal .loweralpha {
+  list-style-type: lower-alpha; }
+
+.reveal .conversation {
+  margin: 0 auto;
+  width: 80%;
+  text-align: inherit; }
+  .reveal .conversation p {
+    margin: 5px 0px; }
+  .reveal .conversation .left {
+    text-align: left; }
+  .reveal .conversation .right {
+    text-align: right; }
+
+.fragment.dim:not(.visible) {
+  color: inherit;
+  visibility: inherit !important;
+  opacity: inherit !important; }
+
+.fragment.dim {
+  color: #606060; }
+
+.fragment.current-display.current-fragment {
+  display: inherit; }
+
+.fragment.current-display {
+  display: none; }
+
+.reveal .small-note {
+  font-size: 0.70em; }
+
+.gallery .reveal .slides > section,
+.gallery .reveal .slides > section > section {
+  padding: 0;
+  font-size: 1.1em; }
+  .gallery .reveal .slides > section h2,
+  .gallery .reveal .slides > section > section h2 {
+    display: none; }
+
+.gallery.bg-bottom-left .slide-background > div {
+  background-position: bottom left; }
+
+.gallery.media .slide-background-content {
+  filter: blur(30px); }
+
+.gallery.media .reveal .slides > section,
+.gallery.media .reveal .slides > section section {
+  background-color: transparent; }
+  .gallery.media .reveal .slides > section video,
+  .gallery.media .reveal .slides > section section video {
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.9); }
+
+.gallery.top .reveal .slides > section,
+.gallery.top .reveal .slides > section > section {
+  margin-top: -10%; }
+
+.gallery.bottom .reveal .slides > section,
+.gallery.bottom .reveal .slides > section > section {
+  margin-top: 10%; }
+
+.gallery.wide .reveal .slides > section,
+.gallery.wide .reveal .slides > section > section {
+  width: 110%; }
+
+.gallery.left .reveal .slides > section,
+.gallery.left .reveal .slides > section > section {
+  width: 75%;
+  margin-left: -5%; }
+
+.gallery.right .reveal .slides > section,
+.gallery.right .reveal .slides > section > section {
+  width: 75%;
+  margin-left: 30%; }
+
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 5px 30px; }
+  footer .participant {
+    width: 450px;
+    margin: 0px 30px; }
+  footer .logo {
+    height: 30px;
+    margin: 0px 10px 0 0;
+    float: left;
+    background-color: #262429;
+    border: 1px solid #262429;
+    border-radius: 2px; }
+  footer .name {
+    margin: 5px; }
+    footer .name p {
+      padding: 0;
+      margin: 0;
+      font-family: "Oracle Sans", sans-serif;
+      font-size: 20px;
+      font-weight: normal;
+      color: #262429;
+      text-align: left; }
+      footer .name p a {
+        color: #262429;
+        text-decoration: inherit;
+        font-weight: inherit; }
+
+.reveal blockquote code.hljs {
+  color: white !important; }
+
+.title .logo,
+footer .logo {
+  background-color: white;
+  border-color: white !important; }
+
+/*********************************************
+ * GLOBAL STYLES
+ *********************************************/
+body {
+  background: white;
+  background-color: white; }
+
+.reveal {
+  font-family: "Oracle Sans", sans-serif;
+  font-size: 35px;
+  font-weight: normal;
+  color: #262429; }
+
+::selection {
+  color: #fff;
+  background: #aaa;
+  text-shadow: none; }
+
+::-moz-selection {
+  color: #fff;
+  background: #aaa;
+  text-shadow: none; }
+
+.reveal .slides section,
+.reveal .slides section > section {
+  line-height: 1.3;
+  font-weight: inherit; }
+
+/*********************************************
+ * HEADERS
+ *********************************************/
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+  margin: 0 0 20px 0;
+  color: #262429;
+  font-family: "Oracle Sans", sans-serif;
+  font-weight: normal;
+  line-height: 1.2;
+  letter-spacing: 0em;
+  text-transform: capitalize;
+  text-shadow: none;
+  word-wrap: break-word; }
+
+.reveal h1 {
+  font-size: 3.77em; }
+
+.reveal h2 {
+  font-size: 2.11em; }
+
+.reveal h3 {
+  font-size: 1.55em; }
+
+.reveal h4 {
+  font-size: 1em; }
+
+.reveal h1 {
+  text-shadow: none; }
+
+/*********************************************
+ * OTHER
+ *********************************************/
+.reveal p {
+  margin: 10px 0;
+  line-height: 1.3; }
+
+/* Ensure certain elements are never larger than the slide itself */
+.reveal img,
+.reveal video,
+.reveal iframe {
+  max-width: 95%;
+  max-height: 95%; }
+
+.reveal strong,
+.reveal b {
+  font-weight: bold; }
+
+.reveal em {
+  font-style: italic; }
+
+.reveal ol,
+.reveal dl,
+.reveal ul {
+  display: inline-block;
+  text-align: left;
+  margin: 0 0 0 1em; }
+
+.reveal ol {
+  list-style-type: decimal; }
+
+.reveal ul {
+  list-style-type: disc; }
+
+.reveal ul ul {
+  list-style-type: square; }
+
+.reveal ul ul ul {
+  list-style-type: circle; }
+
+.reveal ul ul,
+.reveal ul ol,
+.reveal ol ol,
+.reveal ol ul {
+  display: block;
+  margin-left: 40px; }
+
+.reveal dt {
+  font-weight: bold; }
+
+.reveal dd {
+  margin-left: 40px; }
+
+.reveal blockquote {
+  display: block;
+  position: relative;
+  width: 70%;
+  margin: 10px auto;
+  padding: 5px;
+  font-style: italic;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2); }
+
+.reveal blockquote p:first-child,
+.reveal blockquote p:last-child {
+  display: inline-block; }
+
+.reveal q {
+  font-style: italic; }
+
+.reveal pre {
+  display: block;
+  position: relative;
+  width: 90%;
+  margin: 10px auto;
+  text-align: left;
+  font-size: 32px;
+  font-family: "Consolas", monospace;
+  line-height: 1.2em;
+  word-wrap: break-word;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15); }
+
+.reveal code {
+  font-family: "Consolas", monospace;
+  text-transform: none; }
+
+.reveal pre code {
+  display: block;
+  padding: 5px;
+  overflow: auto;
+  max-height: 400px;
+  word-wrap: normal; }
+
+.reveal table {
+  margin: auto;
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+.reveal table th {
+  font-weight: bold; }
+
+.reveal table th,
+.reveal table td {
+  text-align: left;
+  padding: 0.2em 0.5em 0.2em 0.5em;
+  border-bottom: 1px solid; }
+
+.reveal table th[align="center"],
+.reveal table td[align="center"] {
+  text-align: center; }
+
+.reveal table th[align="right"],
+.reveal table td[align="right"] {
+  text-align: right; }
+
+.reveal table tbody tr:last-child th,
+.reveal table tbody tr:last-child td {
+  border-bottom: none; }
+
+.reveal sup {
+  vertical-align: super;
+  font-size: smaller; }
+
+.reveal sub {
+  vertical-align: sub;
+  font-size: smaller; }
+
+.reveal small {
+  display: inline-block;
+  font-size: 0.6em;
+  line-height: 1.2em;
+  vertical-align: top; }
+
+.reveal small * {
+  vertical-align: top; }
+
+/*********************************************
+ * LINKS
+ *********************************************/
+.reveal a {
+  color: #00758f;
+  font-weight: regular;
+  text-decoration: none;
+  -webkit-transition: color .15s ease;
+  -moz-transition: color .15s ease;
+  transition: color .15s ease; }
+
+.reveal a:hover {
+  color: #00758f;
+  text-shadow: none;
+  border: none; }
+
+.reveal .roll span:after {
+  color: #fff;
+  background: #003643; }
+
+/*********************************************
+ * IMAGES
+ *********************************************/
+.reveal section img {
+  margin: 15px 0px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 4px solid #262429;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); }
+
+.reveal section img.plain {
+  border: 0;
+  box-shadow: none; }
+
+.reveal a img {
+  -webkit-transition: all .15s linear;
+  -moz-transition: all .15s linear;
+  transition: all .15s linear; }
+
+.reveal a:hover img {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: #00758f;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.55); }
+
+/*********************************************
+ * NAVIGATION CONTROLS
+ *********************************************/
+.reveal .controls {
+  color: #00758f; }
+
+/*********************************************
+ * PROGRESS BAR
+ *********************************************/
+.reveal .progress {
+  background: rgba(0, 0, 0, 0.2);
+  color: #00758f; }
+
+.reveal .progress span {
+  -webkit-transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
+  -moz-transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
+  transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985); }
+
+/*********************************************
+ * PRINT BACKGROUND
+ *********************************************/
+@media print {
+  .backgrounds {
+    background-color: white; } }
