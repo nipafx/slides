@@ -4,14 +4,15 @@
 <table class="toc">
 	<tr><td>Vector</td></tr>
 	<tr><td>Address Resolution SPI ⑱</td></tr>
+	<tr><td>Reactive HTTP/2 Client ⑪⑯</td></tr>
 	<tr><td>Collection Factories ⑨⑩</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
-	<tr><td>Reactive HTTP/2 Client ⑪⑯</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
 </table>
 ++++
 
 New APIs are added over time.
+
 
 
 == New APIs
@@ -20,9 +21,9 @@ New APIs are added over time.
 <table class="toc">
 	<tr class="toc-current"><td>Vector</td></tr>
 	<tr><td>Address Resolution SPI ⑱</td></tr>
+	<tr><td>Reactive HTTP/2 Client ⑪⑯</td></tr>
 	<tr><td>Collection Factories ⑨⑩</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
-	<tr><td>Reactive HTTP/2 Client ⑪⑯</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
 </table>
 ++++
@@ -55,9 +56,9 @@ but others do:
 <table class="toc">
 	<tr><td>Vector</td></tr>
 	<tr class="toc-current"><td>Address Resolution SPI ⑱</td></tr>
+	<tr><td>Reactive HTTP/2 Client ⑪⑯</td></tr>
 	<tr><td>Collection Factories ⑨⑩</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
-	<tr><td>Reactive HTTP/2 Client ⑪⑯</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
 </table>
 ++++
@@ -164,156 +165,15 @@ public String lookupByAddress(byte[] addr) {
 
 
 
-
 == New APIs
 
 ++++
 <table class="toc">
 	<tr><td>Vector</td></tr>
 	<tr><td>Address Resolution SPI ⑱</td></tr>
-	<tr class="toc-current"><td>Collection Factories ⑨⑩</td></tr>
-	<tr><td>Reactive Streams ⑨</td></tr>
-	<tr><td>Reactive HTTP/2 Client ⑪⑯</td></tr>
-	<tr><td>Stack-Walking ⑨</td></tr>
-</table>
-++++
-
-Easy creation of ad-hoc collections.
-
-=== Hope is Pain
-
-Wouldn't this be awesome?
-
-```java
-List<String> list = [ "a", "b", "c" ];
-Map<String, Integer> map = [ "one" = 1, "two" = 2 ];
-```
-
-Not gonna happen!
-
-* language change is costly
-* binds language to collection framework
-* strongly favors specific collections
-
-=== Next Best Thing ⑨
-
-```java
-List<String> list = List.of("a", "b", "c");
-Map<String, Integer> mapImmediate = Map.of(
-		"one", 1,
-		"two", 2,
-		"three", 3);
-Map<String, Integer> mapEntries = Map.ofEntries(
-		Map.entry("one", 1),
-		Map.entry("two", 2),
-		Map.entry("three", 3));
-```
-
-[NOTE.speaker]
---
-Q: Where does `entry` come from? `Map`
-Q: Overloads on `of`? 10
-Q: Overloads on `Map::ofEntries`? 1
---
-
-=== Interesting Details
-
-* collections are immutable +
-(no immutability in types, though)
-* collections are https://nipafx.dev/java-value-based-classes[value-based]
-* `null` elements/keys/values are forbidden
-* iteration order is random between JVM starts +
-(except for lists, of course!)
-
-=== Immutable Copies ⑩
-
-Creating immutable copies:
-
-```java
-/* on List */ List<E> copyOf(Collection<E> coll);
-/* on Set */ Set<E> copyOf(Collection<E> coll);
-/* on Map */ Map<K, V> copyOf(Map<K,V> map);
-```
-
-Great for defensive copies:
-
-```java
-public Customer(List<Order> orders) {
-	this.orders = List.copyOf(orders);
-}
-```
-
-
-
-== New APIs
-
-++++
-<table class="toc">
-	<tr><td>Vector</td></tr>
-	<tr><td>Address Resolution SPI ⑱</td></tr>
-	<tr><td>Collection Factories ⑨⑩</td></tr>
-	<tr class="toc-current"><td>Reactive Streams ⑨</td></tr>
-	<tr><td>Reactive HTTP/2 Client ⑪⑯</td></tr>
-	<tr><td>Stack-Walking ⑨</td></tr>
-</table>
-++++
-
-The JDK as common ground +
-for reactive stream libraries.
-
-=== Reactive Types
-
-`Publisher`::
-* produces items to consume
-* can be subscribed to
-`Subscriber`::
-* subscribes to publisher
-* `onNext`, `onError`, `onComplete`
-`Subscription`::
-* connection from subscriber to publisher
-* `request`, `cancel`
-
-=== Reactive Flow
-==== Subscribing
-
-* create `Publisher pub` and `Subscriber sub`
-* call `pub.subscribe(sub)`
-* pub creates `Subscription script` +
-and calls `sub.onSubscription(script)`
-* `sub` can store `script`
-
-=== Reactive Flow
-==== Streaming
-
-* `sub` calls `script.request(10)`
-* `pub` calls `sub.onNext(element)` (max 10x)
-
-==== Canceling
-
-* `pub` may call `sub.OnError(err)` +
-or `sub.onComplete()`
-* `sub` may call `script.cancel()`
-
-=== Reactive APIs?
-
-JDK only provides three interfaces +
-and one simple implementation.
-
-(Also called *Flow API*.)
-
-So far, only reactive HTTP/2 API ⑪ uses Flow.
-
-
-
-== New APIs
-
-++++
-<table class="toc">
-	<tr><td>Vector</td></tr>
-	<tr><td>Address Resolution SPI ⑱</td></tr>
-	<tr><td>Collection Factories ⑨⑩</td></tr>
-	<tr><td>Reactive Streams ⑨</td></tr>
 	<tr class="toc-current"><td>Reactive HTTP/2 Client ⑪⑯</td></tr>
+	<tr><td>Collection Factories ⑨⑩</td></tr>
+	<tr><td>Reactive Streams ⑨</td></tr>
 	<tr><td>Stack-Walking ⑨</td></tr>
 </table>
 ++++
@@ -476,9 +336,148 @@ return `CompletableFuture`
 <table class="toc">
 	<tr><td>Vector</td></tr>
 	<tr><td>Address Resolution SPI ⑱</td></tr>
+	<tr><td>Reactive HTTP/2 Client ⑪⑯</td></tr>
+	<tr class="toc-current"><td>Collection Factories ⑨⑩</td></tr>
+	<tr><td>Reactive Streams ⑨</td></tr>
+	<tr><td>Stack-Walking ⑨</td></tr>
+</table>
+++++
+
+Easy creation of ad-hoc collections.
+
+=== Hope is Pain
+
+Wouldn't this be awesome?
+
+```java
+List<String> list = [ "a", "b", "c" ];
+Map<String, Integer> map = [ "one" = 1, "two" = 2 ];
+```
+
+Not gonna happen!
+
+* language change is costly
+* binds language to collection framework
+* strongly favors specific collections
+
+=== Next Best Thing ⑨
+
+```java
+List<String> list = List.of("a", "b", "c");
+Map<String, Integer> mapImmediate = Map.of(
+		"one", 1,
+		"two", 2,
+		"three", 3);
+Map<String, Integer> mapEntries = Map.ofEntries(
+		Map.entry("one", 1),
+		Map.entry("two", 2),
+		Map.entry("three", 3));
+```
+
+[NOTE.speaker]
+--
+Q: Where does `entry` come from? `Map`
+Q: Overloads on `of`? 10
+Q: Overloads on `Map::ofEntries`? 1
+--
+
+=== Interesting Details
+
+* collections are immutable +
+(no immutability in types, though)
+* collections are https://nipafx.dev/java-value-based-classes[value-based]
+* `null` elements/keys/values are forbidden
+* iteration order is random between JVM starts +
+(except for lists, of course!)
+
+=== Immutable Copies ⑩
+
+Creating immutable copies:
+
+```java
+/* on List */ List<E> copyOf(Collection<E> coll);
+/* on Set */ Set<E> copyOf(Collection<E> coll);
+/* on Map */ Map<K, V> copyOf(Map<K,V> map);
+```
+
+Great for defensive copies:
+
+```java
+public Customer(List<Order> orders) {
+	this.orders = List.copyOf(orders);
+}
+```
+
+
+
+== New APIs
+
+++++
+<table class="toc">
+	<tr><td>Vector</td></tr>
+	<tr><td>Address Resolution SPI ⑱</td></tr>
+	<tr><td>Reactive HTTP/2 Client ⑪⑯</td></tr>
+	<tr><td>Collection Factories ⑨⑩</td></tr>
+	<tr class="toc-current"><td>Reactive Streams ⑨</td></tr>
+	<tr><td>Stack-Walking ⑨</td></tr>
+</table>
+++++
+
+The JDK as common ground for reactive stream libraries.
+
+=== Reactive Types
+
+`Publisher`::
+* produces items to consume
+* can be subscribed to
+`Subscriber`::
+* subscribes to publisher
+* `onNext`, `onError`, `onComplete`
+`Subscription`::
+* connection from subscriber to publisher
+* `request`, `cancel`
+
+=== Reactive Flow
+==== Subscribing
+
+* create `Publisher pub` and `Subscriber sub`
+* call `pub.subscribe(sub)`
+* pub creates `Subscription script` +
+and calls `sub.onSubscription(script)`
+* `sub` can store `script`
+
+=== Reactive Flow
+==== Streaming
+
+* `sub` calls `script.request(10)`
+* `pub` calls `sub.onNext(element)` (max 10x)
+
+==== Canceling
+
+* `pub` may call `sub.OnError(err)` +
+or `sub.onComplete()`
+* `sub` may call `script.cancel()`
+
+=== Reactive APIs?
+
+JDK only provides three interfaces +
+and one simple implementation.
+
+(Also called *Flow API*.)
+
+So far, only reactive HTTP/2 API ⑪ uses Flow.
+
+
+
+== New APIs
+
+++++
+<table class="toc">
+	<tr><td>Vector</td></tr>
+	<tr><td>Address Resolution SPI ⑱</td></tr>
+	<tr><td>Reactive HTTP/2 Client ⑪⑯</td></tr>
 	<tr><td>Collection Factories ⑨⑩</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
-	<tr><td>Reactive HTTP/2 Client ⑪⑯</td></tr>
 	<tr class="toc-current"><td>Stack-Walking ⑨</td></tr>
 </table>
 ++++
