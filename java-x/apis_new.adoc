@@ -3,6 +3,7 @@
 ++++
 <table class="toc">
 	<tr><td>Vector</td></tr>
+	<tr><td>Address Resolution SPI ⑱</td></tr>
 	<tr><td>Collection Factories ⑨⑩</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
 	<tr><td>Reactive HTTP/2 Client ⑪⑯</td></tr>
@@ -25,6 +26,7 @@ TODO:
 ++++
 <table class="toc">
 	<tr class="toc-current"><td>Vector</td></tr>
+	<tr><td>Address Resolution SPI ⑱</td></tr>
 	<tr><td>Collection Factories ⑨⑩</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
 	<tr><td>Reactive HTTP/2 Client ⑪⑯</td></tr>
@@ -61,6 +63,123 @@ but others do:
 ++++
 <table class="toc">
 	<tr><td>Vector</td></tr>
+	<tr class="toc-current"><td>Address Resolution SPI ⑱</td></tr>
+	<tr><td>Collection Factories ⑨⑩</td></tr>
+	<tr><td>Reactive Streams ⑨</td></tr>
+	<tr><td>Reactive HTTP/2 Client ⑪⑯</td></tr>
+	<tr><td>Stack-Walking ⑨</td></tr>
+</table>
+++++
+
+Plug in host name and address resolution.
+
+=== Built-in Resolver
+
+The JDK has a built-in resolver for host names:
+
+* relies on OS's native resolver
+* typically uses `hosts` file and DNS
+
+Desirable improvements:
+
+* better interaction with virtual threads
+* support for alternative protocols
+* support for testing/mocking
+
+(While being backwards compatible.)
+
+=== Pluggable Resolver
+
+*Solution*: Allow plugging in a custom resolver.
+
+Two new types:
+
+* `InetAddressResolverProvider`
+* `InetAddressResolver`
+
+Old resolver implements these, +
+and acts as default.
+
+=== Pluggable Resolver
+
+```java
+// registered as a service
+public abstract class InetAddressResolverProvider {
+	InetAddressResolver get(Configuration config);
+	String name();
+}
+
+public interface InetAddressResolver {
+	Stream<InetAddress> lookupByName(
+		String host, LookupPolicy lookupPolicy);
+	String lookupByAddress(byte[] addr);
+}
+```
+
+=== A Transparent Custom Resolver
+
+```java
+public class TransparentInetAddressResolverProvider
+		extends InetAddressResolverProvider {
+
+	@Override
+	public InetAddressResolver get(
+			Configuration config) {
+		return new TransparentInetAddressResolver(
+			config.builtinResolver());
+	}
+
+	// name()
+}
+
+// in module declaration
+provides InetAddressResolverProvider
+	with TransparentInetAddressResolverProvider;
+```
+
+=== A Transparent Custom Resolver
+
+```java
+public class TransparentInetAddressResolver
+		implements InetAddressResolver {
+
+	private InetAddressResolver builtinResolver;
+
+	public TransparentInetAddressResolver(
+			InetAddressResolver builtinResolver) {
+		this.builtinResolver = builtinResolver;
+	}
+
+	// ...
+
+}
+```
+
+=== A Transparent Custom Resolver
+
+```java
+@Override
+public Stream<InetAddress> lookupByName(
+		String host, LookupPolicy lookupPolicy) {
+	return builtinResolver
+		.lookupByName(host, lookupPolicy);
+}
+
+@Override
+public String lookupByAddress(byte[] addr) {
+	return builtinResolver.lookupByAddress(addr);
+}
+```
+
+
+
+
+== New APIs
+
+++++
+<table class="toc">
+	<tr><td>Vector</td></tr>
+	<tr><td>Address Resolution SPI ⑱</td></tr>
 	<tr class="toc-current"><td>Collection Factories ⑨⑩</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
 	<tr><td>Reactive HTTP/2 Client ⑪⑯</td></tr>
@@ -140,6 +259,7 @@ public Customer(List<Order> orders) {
 ++++
 <table class="toc">
 	<tr><td>Vector</td></tr>
+	<tr><td>Address Resolution SPI ⑱</td></tr>
 	<tr><td>Collection Factories ⑨⑩</td></tr>
 	<tr class="toc-current"><td>Reactive Streams ⑨</td></tr>
 	<tr><td>Reactive HTTP/2 Client ⑪⑯</td></tr>
@@ -199,6 +319,7 @@ So far, only reactive HTTP/2 API ⑪ uses Flow.
 ++++
 <table class="toc">
 	<tr><td>Vector</td></tr>
+	<tr><td>Address Resolution SPI ⑱</td></tr>
 	<tr><td>Collection Factories ⑨⑩</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
 	<tr class="toc-current"><td>Reactive HTTP/2 Client ⑪⑯</td></tr>
@@ -363,6 +484,7 @@ return `CompletableFuture`
 ++++
 <table class="toc">
 	<tr><td>Vector</td></tr>
+	<tr><td>Address Resolution SPI ⑱</td></tr>
 	<tr><td>Collection Factories ⑨⑩</td></tr>
 	<tr><td>Reactive Streams ⑨</td></tr>
 	<tr><td>Reactive HTTP/2 Client ⑪⑯</td></tr>
