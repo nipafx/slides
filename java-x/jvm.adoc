@@ -93,10 +93,9 @@ First three permit static access.
 Configuration:
 
 * in Java 9-15, `permit` is default
-* in Java 16+, `deny` is default
+* in Java 16, `deny` is default
+* in Java 17, `--illegal-access` is no-op
 * in Java _??_, the option will be removed
-* can use `--illegal-access` to override +
-  (but don't; instead fix illegal access!)
 
 [source,bash]
 ----

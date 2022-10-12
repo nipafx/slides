@@ -41,7 +41,7 @@ This is https://blog.codefx.org/java/enable-preview-language-features/[a preview
 * must be enabled with `--enable-preview` +
   (on `javac` and `java`).
 * in IntelliJ, set the module's language level to +
-  _17 (Preview) - ..._
+  _19 (Preview) - ..._
 * in Eclipse, go to _Compiler Settings_ +
   and check _Enable preview features_
 
@@ -88,7 +88,7 @@ switch (staff) {
 Things to discuss:
 
 * `null` handling
-* guarded patterns
+* `when` clauses
 * completeness
 
 === Null Handling
@@ -117,79 +117,11 @@ switch (staff) {
 }
 ```
 
-=== Null Handling
-
-A pattern is _total_ +
-if it covers all possible inputs:
-
-```java
-Staff staff = //...
-switch (staff) {
-	case Employee emp -> //...
-	case Freelancer free -> //...
-	// this is a "total" pattern
-	case Staff s -> { }
-}
-```
-
-Total patterns _include_ `null`!
-
-=== Null Handling
-
-If switching over `null`, +
-these branches can handle it:
-
-* `case null`
-* total pattern
-
-Whatever comes first.
-
-(But: `case null` after total pattern is an error.)
-
-=== Guarded Patterns
-
-Extending patterns with boolean checks:
-
-```java
-//  |---------- GUARDED PATTERN -----------|
-//              | PATTERN |   | BOOL EXPR -|
-if (o instanceof (String s && s.length() > 1))
-	return "non-trivial string";
-```
-
-Equivalent:
-
-```java
-//  |----- PATTERN -----|    | BOOL EXPR -|
-if (o instanceof String s && s.length() > 1)
-	return "non-trivial string";
-```
-
-=== Guarded Patterns
-
-Why?
-
-⇝ Future developments!
-
-```java
-//                                    boolean
-if (shape instanceof Point(var x, var y) && x > 0)
-	// ...
-
-//                         guarded pattern
-if (shape instanceof Point(var x && x > 0, var y))
-	// ...
-```
-
-🤷🏾‍♂️
-
-=== Guarded Patterns
-
-Also works in `switch`!
+=== When Clauses
 
 ```java
 String result = switch (object) {
-	case String s && s.length() > 1 -> "string";
+	case String s when s.length() > 1 -> "string";
 	case String s -> "character";
 	default -> "";
 }
