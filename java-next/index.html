@@ -423,10 +423,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://www.jug-da.de/"><img src="images/logo-jug-da.png" class="logo" style="{host-logo-style}"></a>
+		<a href="https://gsjug.org/"><img src="images/logo-gsjug.png" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://www.jug-da.de/">JUG Darmstadt</a></p>
-			<p><a href="https://twitter.com/JUG_DA" style="{host-twitter-style}">@JUG_DA</a></p>
+			<p><a href="https://gsjug.org/">Garden State JUG</a></p>
+			<p><a href="https://twitter.com/GardenStateJUG" style="{host-twitter-style}">@GardenStateJUG</a></p>
 		</div>
 	</div>
 	<div class="participant">
@@ -448,9 +448,9 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://www.jug-da.de/"><img src="images/logo-jug-da.png" class="logo" style="{host-logo-style}"></a>
+		<a href="https://gsjug.org/"><img src="images/logo-gsjug.png" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://www.jug-da.de/">JUG Darmstadt</a> / <a href="https://twitter.com/JUG_DA" style="{host-twitter-style}">@JUG_DA</a></p>
+			<p><a href="https://gsjug.org/">Garden State JUG</a> / <a href="https://twitter.com/GardenStateJUG" style="{host-twitter-style}">@GardenStateJUG</a></p>
 		</div>
 	</div>
 </footer>
@@ -460,12 +460,13 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		document.body.appendChild(document.querySelector('footer'));
 	})
 </script></div></section>
-<section><section id="_lots_to_talk_about"><h2>Lots to talk about!</h2><div class="slide-content"><table class="toc">
+<section id="_lots_to_talk_about"><h2>Lots to talk about!</h2><div class="slide-content"><table class="toc">
 	<tr><td>Project Amber</td></tr>
 	<tr><td>Project Panama</td></tr>
 	<tr><td>Project Valhalla</td></tr>
 	<tr><td>Project Loom</td></tr>
-</table><div class="paragraph"><p>Slides at <a href="https://slides.nipafx.dev/">slides.nipafx.dev</a>.</p></div></div></section><section data-background-image="images/accento-save-2023.jpg" data-background-size="cover" data-state="empty"></section></section>
+</table>
+<div class="paragraph"><p>Slides at <a href="https://slides.nipafx.dev/">slides.nipafx.dev</a>.</p></div></div></section>
 <section><section id="_project_amber" data-background-image="images/amber.jpg" data-background-size="cover"><h2>Project Amber</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>Smaller, productivity-oriented Java language features</p></div></blockquote></div><div class="paragraph"><p>Profile:</p></div><div class="ulist"><ul><li><p><a href="https://openjdk.java.net/projects/amber/">project</a> /
 <a href="https://wiki.openjdk.java.net/display/amber/Main">wiki</a> /
 <a href="https://mail.openjdk.java.net/mailman/listinfo/amber-dev">mailing list</a></p></li><li><p>launched March 2017</p></li><li><p>led by Brian Goetz</p></li></ul></div></div></section><section id="_motivation"><h2>Motivation</h2><div class="slide-content"><div class="paragraph"><p>Some downsides of Java:</p></div>
@@ -491,7 +492,7 @@ String query =
 <div class="paragraph fragment" data-fragment-index="1"><p>Also comes with free SQL injection! 😳</p></div></div></section><section id="_string_interpolation_2"><h2>String interpolation</h2><div class="slide-content"><div class="paragraph"><p>SQL injections aren&#8217;t the only concern.</p></div>
 <div class="paragraph"><p>These also need validation and sanitization:</p></div>
 <div class="ulist"><ul><li><p>HTML/XML</p></li><li><p>JSON</p></li><li><p>YAML</p></li><li><p>&#8230;&#8203;</p></li></ul></div>
-<div class="paragraph"><p>All follow format-specific rules.</p></div></div></section><section id="_string_templating"><h2>String templating</h2><div class="slide-content"><div class="paragraph"><p>Enter <em>String Templates</em> (<a href="https://openjdk.java.net/jeps/8273943">JEP draft</a>):</p></div>
+<div class="paragraph"><p>All follow format-specific rules.</p></div></div></section><section id="_string_templating"><h2>String templating</h2><div class="slide-content"><div class="paragraph"><p>Enter <em>String Templates</em> (<a href="https://openjdk.org/jeps/430">JEP 403</a>):</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">String query = STR."""
 	SELECT * FROM Person p
 	WHERE p.\{property} = '\{value}'
@@ -660,7 +661,7 @@ design and performance</p></li><li><p>no more manual specializations</p></li><li
 <div class="paragraph"><p>As well as lots of internal refactorings.</p></div></div></section><section id="_continuous_improvements"><h2>Continuous improvements</h2><div class="slide-content"><div class="paragraph"><p>Usability:</p></div>
 <div class="ulist"><ul><li><p>UTF-8 by default ⑱ (<a href="https://openjdk.java.net/jeps/400">JEP 400</a>)</p></li><li><p>simple web server ⑱ (<a href="https://openjdk.java.net/jeps/408">JEP 408</a>)</p></li><li><p>helpful NPEs ⑭ (<a href="https://openjdk.java.net/jeps/358">JEP 358</a>)</p></li></ul></div>
 <div class="paragraph"><p>Tooling:</p></div>
-<div class="ulist"><ul><li><p>JFR scrubbing ⑭ (<a href="https://bugs.openjdk.org/browse/JDK-8271585">JDK-8271585</a>)</p></li><li><p>code snippets in Javadoc ⑱ (<a href="https://openjdk.java.net/jeps/413">JEP 413</a>)</p></li><li><p>packaging tool ⑯ (<a href="https://openjdk.java.net/jeps/392">JEP 392</a>)</p></li><li><p>JFR event streaming ⑭ (<a href="https://openjdk.java.net/jeps/349">JEP 349</a>)</p></li></ul></div></div></section><section id="_continuous_improvements_2"><h2>Continuous improvements</h2><div class="slide-content"><div class="paragraph"><p>Performance:</p></div>
+<div class="ulist"><ul><li><p>JFR scrubbing ⑲ (<a href="https://bugs.openjdk.org/browse/JDK-8271585">JDK-8271585</a>)</p></li><li><p>code snippets in Javadoc ⑱ (<a href="https://openjdk.java.net/jeps/413">JEP 413</a>)</p></li><li><p>packaging tool ⑯ (<a href="https://openjdk.java.net/jeps/392">JEP 392</a>)</p></li><li><p>JFR event streaming ⑭ (<a href="https://openjdk.java.net/jeps/349">JEP 349</a>)</p></li></ul></div></div></section><section id="_continuous_improvements_2"><h2>Continuous improvements</h2><div class="slide-content"><div class="paragraph"><p>Performance:</p></div>
 <div class="ulist"><ul><li><p>auto-generated CDS ⑲ (<a href="https://bugs.openjdk.org/browse/JDK-8261455">JDK-8261455</a>)</p></li><li><p>dynamic CDS archives ⑬ (<a href="https://openjdk.java.net/jeps/350">JEP 350</a>)</p></li><li><p>default CDS archives ⑫ (<a href="https://openjdk.java.net/jeps/341">JEP 341</a>)</p></li><li><p>continuous improvements in all garbage collectors</p></li></ul></div>
 <div class="paragraph"><p>Security:</p></div>
 <div class="ulist"><ul><li><p>context-specific deserialization filters ⑰ (<a href="https://openjdk.java.net/jeps/415">JEP 415</a>)</p></li><li><p>Edwards-Curve Digital Signature Algorithm ⑮ (<a href="https://openjdk.java.net/jeps/339">JEP 339</a>)</p></li><li><p>ongoing enhancements (<a href="https://seanjmullan.org/blog/">Sean Mullan&#8217;s blog</a>)</p></li></ul></div></div></section><section id="_cleaning_house"><h2>Cleaning house</h2><div class="slide-content"><div class="paragraph"><p>Deprecations (for removal):</p></div>
