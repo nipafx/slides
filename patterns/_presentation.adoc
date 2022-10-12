@@ -1,6 +1,6 @@
 = Pattern Matching
 :backend: revealjs
-:revealjs_theme: nipa-night
+:revealjs_theme: nipa-oracle
 :revealjsdir: ../_reveal.js
 :revealjs_controls: false
 :revealjs_progress: false
@@ -9,8 +9,8 @@
 :revealjs_center: true
 :revealjs_transition: fade
 :revealjs_backgroundTransition: fade
-:revealjs_parallaxBackgroundImage: images/heart.jpg
-:revealjs_parallaxBackgroundSize: 6024px 4023px
+:revealjs_parallaxBackgroundImage: images/bg-javaone-2022.jpg
+:revealjs_parallaxBackgroundSize: 4000px 2250px
 :docinfo: shared
 :docinfodir: ../_shared
 
@@ -22,12 +22,12 @@ include::../_shared/highlight.js.adoc[]
 <h2>In Java (19)</h2>
 ++++
 
-:host-name: Infoshare
-:host-url: https://infoshare.pl/conference/
-:host-logo-url: images/logo-infoshare.png
+:host-name: JavaOne
+:host-url: https://oracle.com/javaone
+:host-logo-url: images/logo-javaone.png
 // :host-logo-style: background-color: #212121; border-width: 0;
-:host-twitter-name: @infosharepl
-:host-twitter-url: https://twitter.com/infosharepl
+:host-twitter-name: @JavaOne
+:host-twitter-url: https://twitter.com/javaone
 include::../_shared/event-on-title-and-footer.adoc[]
 
 // ######### //
@@ -36,9 +36,9 @@ include::../_shared/event-on-title-and-footer.adoc[]
 
 // ⇝
 
-// [state=empty,background-color=white]
-// === !
-// image::images/title-javaone.jpg[background, size=contain]
+[state=empty,background-color=white]
+== !
+image::images/title-javaone.jpg[background, size=contain]
 
 == Data-Oriented Programming
 
