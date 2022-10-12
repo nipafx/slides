@@ -84,6 +84,59 @@ Create tool section:
 </table>
 ++++
 
+=== Why upgrade?
+
+Costs of running on old versions:
+
+* support contract for Java
+* waning support in libraries / frameworks
+
+=== Why upgrade?
+
+Costs of not running on new versions:
+
+* lower productivity
+* less observability and performance +
+  (more on that later)
+* worse access to talent
+* bigger upgrade costs
+
+=== Why upgrade?
+
+> Resistence is futile.
+
+=== How to upgrade?
+
+Preparations:
+
+* stick to supported APIs
+* stick to standardized behavior
+* stick to well-maintained projects
+* keep dependencies and tools up to date
+* stay ahead of removals (`jdeprscan`)
+* build on each release (including EA)
+
+=== How to upgrade?
+
+If you're on...
+
+* *Java 8*: upgrade ASAP to 11
+* *Java 11*: prepare upgrade to 17
+* *Java 17*: consider upgrading to 19
+
+=== What about LTS?
+
+Within OpenJDK, there is no LTS.
+
+⇝ has no impact on features, reliability, etc.
+
+It's a vendor-centric concept +
+to offer continuous fixes +
+(usually for money).
+
+> You're paying not to get new features.
+
+
 // ####################### //
 // P R E S E N T A T I O N //
 // ####################### //
