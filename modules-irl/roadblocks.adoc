@@ -50,7 +50,6 @@ Some common or tricky roadblocks:
 More details on GitHub: +
 https://github.com/nipafx/module-system-woes/[nipafx/module-system-woes]
 
-////
 === Split packages
 
 The module system requires each package +
@@ -87,6 +86,7 @@ Workarounds exist:
 * create a _bridge module_
 * use the unnamed module
 * patch the module
+////
 
 === Merging modules
 
@@ -133,6 +133,7 @@ Work best for transitive dependencies.
 // TODO
 ```
 
+////
 === Reflective access
 
 Reflection no longer "just works".
@@ -215,7 +216,6 @@ open module com.example.app {
 ```
 
 If error vanishes, it was an issue with reflection.
-////
 
 [state=empty,background-color=black,background-transition=none]
 === !
