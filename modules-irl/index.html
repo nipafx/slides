@@ -578,7 +578,52 @@ a troublesome automatic module:</p></div>
 <div class="paragraph"><p>⇝ Modularize elsewhere.</p></div></div></section><section id="_roadblocks_2"><h2>Roadblocks</h2><div class="slide-content"><div class="paragraph"><p>Some common or tricky roadblocks:</p></div>
 <div class="ulist"><ul><li><p>split packages</p></li><li><p>broken module descriptors</p></li><li><p>reflective access</p></li><li><p>unsupported media type</p></li></ul></div>
 <div class="paragraph"><p>More details on GitHub:<br>
-<a href="https://github.com/nipafx/module-system-woes/">nipafx/module-system-woes</a></p></div></div></section><section data-background-color="black" data-background-image="images/roadblocks-umt.jpg" data-background-size="contain" data-background-transition="none" data-state="empty"><div class="slide-content">
+<a href="https://github.com/nipafx/module-system-woes/">nipafx/module-system-woes</a></p></div></div></section><section id="_split_packages"><h2>Split packages</h2><div class="slide-content"><div class="paragraph"><p>The module system requires each package<br>
+to belong to exactly one module.</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-bash" data-lang="bash"># compiler
+error: package exists in another module: ...
+	package ...;
+
+#run time — between two modules
+Error occurred during initialization of boot layer
+java.lang.reflect.LayerInstantiationException:
+	Package ... in both module ... and module ...
+
+#run time — between module and class path
+Exception in thread "main" NoClassDefFoundError: ...
+	at ...</code></pre></div></div></div></section><section id="_split_package_solution"><h2>Split package solution</h2><div class="slide-content"><div class="paragraph"><p>The (only) solution:<br>
+Ask maintainers to&#8230;&#8203;</p></div>
+<div class="ulist"><ul><li><p>reorganize packages across JARs/modules, or</p></li><li><p>provide uber JAR that contains all code</p></li></ul></div></div></section><section id="_split_package_workarounds"><h2>Split package workarounds</h2><div class="slide-content"><div class="paragraph"><p>Workarounds exist:</p></div>
+<div class="ulist"><ul><li><p>merge the modules</p></li><li><p>create a <em>bridge module</em></p></li><li><p>use the unnamed module</p></li><li><p>patch the module</p></li></ul></div></div></section><section id="_reflective_access"><h2>Reflective access</h2><div class="slide-content"><div class="paragraph"><p>Reflection no longer "just works".</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-bash" data-lang="bash">Exception in thread "main" InaccessibleObjectException:
+	Unable to make ... accessible:
+	module ... does not "opens ..." to module ...</code></pre></div></div></div></section><section id="_reflective_access_2"><h2>Reflective access</h2><div class="slide-content"><div class="dlist"><dl><dt class="hdlist1">Solution: </dt><dd><p>Open packages for reflection<br>
+in module declaration.</p></dd><dt class="hdlist1">Workaround: </dt><dd><p>Open packages for reflection<br>
+at launch with <code>--add-opens</code>.</p></dd></dl></div></div></section><section id="_in_module_declaration"><h2>In module declaration</h2><div class="slide-content"><div class="paragraph"><p>Analyze which parts of your code<br>
+need to be reflected over, e.g.:</p></div>
+<div class="ulist"><ul><li><p>Spring controllers</p></li><li><p>JPA entities</p></li><li><p>classes for JSON or XML</p></li></ul></div>
+<div class="paragraph"><p>Open packages in module declaration:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">module com.example.app {
+	opens com.example.app.controllers;
+	opens com.example.app.json;
+}</code></pre></div></div></div></section><section id="_in_module_declaration_2"><h2>In module declaration</h2><div class="slide-content"><div class="paragraph"><p>Consider only opening packages<br>
+to the modules that reflect:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">module com.example.app {
+	opens com.example.app.controllers
+		to spring.beans, spring.core, spring.context;
+	opens com.example.app.json
+		 to com.fasterxml.jackson.databind;
+}</code></pre></div></div>
+<div class="ulist"><ul><li><p>better security</p></li><li><p>better documentation</p></li></ul></div></div></section><section id="_at_launch"><h2>At launch</h2><div class="slide-content"><div class="paragraph"><p>For access to modules you don&#8217;t create:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-bash" data-lang="bash">java --add-opens
+	com.example.lib/com.example.lib.values=$MODULE</code></pre></div></div>
+<div class="paragraph"><p>Where <code>$MODULE</code> is:</p></div>
+<div class="ulist"><ul><li><p>the name of the reflecting module</p></li><li><p><code>ALL-UNNAMED</code> for reflection from class path</p></li></ul></div></div></section><section id="_guesswork"><h2>Guesswork</h2><div class="slide-content"><div class="paragraph"><p>Dependencies may not report errors from reflection.</p></div>
+<div class="paragraph"><p>For quick experiments, open your modules:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">open module com.example.app {
+	// no more `opens` directives
+}</code></pre></div></div>
+<div class="paragraph"><p>If error vanishes, it was an issue with reflection.</p></div></div></section><section data-background-color="black" data-background-image="images/roadblocks-umt.jpg" data-background-size="contain" data-background-transition="none" data-state="empty"><div class="slide-content">
 <aside class="notes"><div class="paragraph"><p>Jaap Cooman</p></div></aside></div></section><section data-background-color="black" data-background-image="images/roadblocks-umt-open.jpg" data-background-size="contain" data-background-transition="none" data-state="empty"></section><section id="_unsupported_media_type"><h2>Unsupported media type</h2><div class="slide-content"><div class="paragraph"><p>Projects that aren&#8217;t prepared for modules:</p></div>
 <div class="ulist"><ul><li><p>can have various run-time issues</p></li><li><p>sometimes react poorly by<br>
 hiding the underlying cause</p></li></ul></div>
