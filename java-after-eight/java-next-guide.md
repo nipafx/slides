@@ -31,3 +31,13 @@
 		case Talk __ -> 20;
 	};
 	```
+
+* use record patterns in `RepoGenealogist::getRepository`:
+
+	```java
+	return switch (post) {
+		case Article(var t, var ts, var d, var desc, var s, var repository, var c) -> repository;
+		case Video(var t, var ts, var d, var desc, var s, var v, var repository) -> repository;
+		default -> Optional.empty();
+	};
+	```
