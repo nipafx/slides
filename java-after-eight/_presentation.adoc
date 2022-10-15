@@ -59,8 +59,8 @@ This talk is:
 ** demo code base: https://github.com/nipafx/java-after-eight[/java-after-eight]
 ** more Java 9+ features: https://github.com/nipafx/demo-java-x[/demo-java-x]
 
-Tweet questions with https://twitter.com/hashtag/JavaNext?src=hash[#JavaNext].
-I'll answer—live!
+// Tweet questions with https://twitter.com/hashtag/JavaNext?src=hash[#JavaNext].
+// I'll answer—live!
 
 ////
 
@@ -420,9 +420,8 @@ try (var scope = new StructuredTaskScope
 // Java 8 to...
 // * stronger encapsulation and better services | modules
 // * safer code | processes, versions, whitespace, etc.
-* more expressive code | LOC: 2058 📉 1646
-// characters: 69376 📉 59865
-* faster code | run time: ~ 1.1 s 📉 ~ 1 s
+* more expressive code | LOC: 2061 📉 1663
+* faster code | run time: ~ 1.1 s 📉 ~ 0.9 s
 * better JVM | GCs, packaging, monitoring, etc.
 * better tooling | JFR, JavaDoc, jwebserver, etc.
 
