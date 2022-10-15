@@ -41,3 +41,32 @@
 		default -> Optional.empty();
 	};
 	```
+
+* use virtual threads and structured concurrency in `Main::createGenealogy`:
+	```java
+	List<Future<? extends Post>> futurePosts = new ArrayList<>();
+
+	try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
+		markdownFilesIn(articleFolder)
+				.map(file -> scope.fork(() -> ArticleFactory.createArticle(file)))
+				.forEach(futurePosts::add);
+		markdownFilesIn(talkFolder)
+				.map(file -> scope.fork(() -> TalkFactory.createTalk(file)))
+				.forEach(futurePosts::add);
+		markdownFilesIn(videoFolder)
+				.map(file -> scope.fork(() -> VideoFactory.createVideo(file)))
+				.forEach(futurePosts::add);
+
+		scope.join();
+		scope.throwIfFailed();
+	} catch (ExecutionException | InterruptedException ex) {
+		// this is horrible error handling
+		throw new RuntimeException(ex);
+	}
+
+	List<Post> posts = futurePosts.stream()
+			.<Post>map(Future::resultNow)
+			.toList();
+	Collection<Genealogist> genealogists = getGenealogists(posts);
+	return new Genealogy(posts, genealogists, Weights.allEqual());
+	```

@@ -388,6 +388,24 @@ return switch (post) {
 case Article(var repository) -> repository;
 ```
 
+== Java Next
+
+*What we've seen:*
+
+* virtual threads + structured concurrency | ↴
++
+```java
+try (var scope = new StructuredTaskScope
+		.ShutdownOnFailure()) {
+	// ...
+
+	scope.join();
+	scope.throwIfFailed();
+} catch (/* ... */) {
+	// ...
+}
+```
+
 === Java Next
 
 *What we haven't seen*
@@ -395,7 +413,6 @@ case Article(var repository) -> repository;
 * vector API | http://openjdk.java.net/projects/panama/[Project Panama]
 * foreign code and memory | http://openjdk.java.net/projects/panama/[Project Panama]
 * value and primitive classes | http://openjdk.java.net/projects/valhalla/[Project Valhalla]
-* virtual threads | http://openjdk.java.net/projects/loom/[Project Loom]
 
 
 == Java 11 to 19+
