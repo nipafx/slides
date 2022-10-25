@@ -1,15 +1,15 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>The Java Module System</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="_reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="_reveal.js/css/theme/nipa-night.css" id="theme"><link href="_reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>var link = document.createElement( 'link' );
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>The Java Module System</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="../../_reveal.js/d713baab/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="../../_reveal.js/d713baab/css/theme/nipa-night.css" id="theme"><link href="../../_reveal.js/d713baab/lib/css/zenburn.css" rel="stylesheet"><script>var link = document.createElement( 'link' );
 link.rel = 'stylesheet';
 link.type = 'text/css';
-link.href = window.location.search.match( /print-pdf/gi ) ? "_reveal.js/css/print/pdf.css" : "_reveal.js/css/print/paper.css";
-document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="_reveal.js/lib/js/html5shiv.js"></script><![endif]--></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>The Java Module System</h1><div class="preamble"><style>
+link.href = window.location.search.match( /print-pdf/gi ) ? "../../_reveal.js/d713baab/css/print/pdf.css" : "../../_reveal.js/d713baab/css/print/paper.css";
+document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="../../_reveal.js/d713baab/lib/js/html5shiv.js"></script><![endif]--></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>The Java Module System</h1><div class="preamble"><style>
 .reveal .title h1 {
 	font-size: 3.5em;
 }
 </style>
 <!--<h2>Getting Started</h2>-->
-<link rel="stylesheet" href="_highlight.js/styles/monokai-sublime.css">
-<script src="_highlight.js/highlight.pack.js"></script>
+<link rel="stylesheet" href="../../_highlight.js/77851f8c/styles/monokai-sublime.css">
+<script src="../../_highlight.js/77851f8c/highlight.pack.js"></script>
 <script>
 	window.onload = function() {
 		hljs.configure({
@@ -25,7 +25,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 </script>
 <div class="event">
 	<div class="participant">
-		<a href="https://nipafx.dev/nicolai-parlog"><img src="images/nipa-face.jpg" class="logo"></a>
+		<a href="https://nipafx.dev/nicolai-parlog"><img src="../../_images/nipa-face-c9e3bd71.jpg" class="logo"></a>
 		<div class="name">
 			<p><a href="https://nipafx.dev/nicolai-parlog">Nicolai Parlog</a></p>
 			<p><a href="https://nipafx.dev">nipafx.dev</a>
@@ -33,7 +33,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://www.accenture.de"><img src="images/logo-accenture.jpg" class="logo" style="{host-logo-style}"></a>
+		<a href="https://www.accenture.de"><img src="../../_images/logo-accenture-09a3fcac.jpg" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
 			<p><a href="https://www.accenture.de">Accenture</a></p>
 			<p><a href="https://twitter.com/AccentureDACH" style="{host-twitter-style}">@AccentureDACH</a></p>
@@ -42,7 +42,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 </div>
 <footer>
 	<div class="participant">
-		<a href="https://nipafx.dev/nicolai-parlog"><img src="images/nipa-face.jpg" class="logo"></a>
+		<a href="https://nipafx.dev/nicolai-parlog"><img src="../../_images/nipa-face-c9e3bd71.jpg" class="logo"></a>
 		<div class="name"><p>
 			<a href="https://nipafx.dev/nicolai-parlog">Nicolai Parlog</a>
 			/ <a href="https://nipafx.dev">nipafx.dev</a>
@@ -50,7 +50,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://www.accenture.de"><img src="images/logo-accenture.jpg" class="logo" style="{host-logo-style}"></a>
+		<a href="https://www.accenture.de"><img src="../../_images/logo-accenture-09a3fcac.jpg" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
 			<p><a href="https://www.accenture.de">Accenture</a> / <a href="https://twitter.com/AccentureDACH" style="{host-twitter-style}">@AccentureDACH</a></p>
 		</div>
@@ -75,23 +75,23 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 	<tr><td>Migration Challenges</td></tr>
 	<tr><td>Incremental Modularization</td></tr>
 </table></section></section>
-<section><section id="impedance_mismatch"><h2>Impedance Mismatch</h2><h3>Where the JVM disagrees with us</h3></section><section id="how_do_you_think_about_software" data-background-image="images/binary-code.jpg" data-background-size="cover"><h2>How do you think about Software?</h2>
+<section><section id="impedance_mismatch"><h2>Impedance Mismatch</h2><h3>Where the JVM disagrees with us</h3></section><section id="how_do_you_think_about_software" data-background-image="../../_images/binary-code-63510c8b.jpg" data-background-size="cover"><h2>How do you think about Software?</h2>
 <h3>What is it made of?</h3>
-<aside class="notes"><div class="ulist"><ul><li><p>"think about your favorite project"</p></li><li><p>"or about one you&#8217;re being paid for"</p></li></ul></div></aside></section><section id="how_i_think_about_software" data-background-image="images/graph.png" data-background-size="cover"><h2>How I think about Software</h2>
+<aside class="notes"><div class="ulist"><ul><li><p>"think about your favorite project"</p></li><li><p>"or about one you&#8217;re being paid for"</p></li></ul></div></aside></section><section id="how_i_think_about_software" data-background-image="../../_images/graph-11524579.png" data-background-size="cover"><h2>How I think about Software</h2>
 <div class="ulist"><ul><li><p>interacting parts</p></li><li><p>parts have</p><div class="ulist"><ul><li><p>names</p></li><li><p>dependencies</p></li><li><p>capabilities</p></li></ul></div></li><li><p>creates a graph</p></li></ul></div>
-<aside class="notes"><div class="ulist"><ul><li><p>helps tools and devs to</p><div class="ulist"><ul><li><p>dissect</p></li><li><p>analyze</p></li><li><p>reason about</p></li><li><p>work with</p></li></ul></div></li><li><p>Maven, jdeps</p></li></ul></div></aside></section><section id="how_the_jvm_thinks_about_it" data-transition="slide-in none-out" data-background-image="images/ball-of-mud-2.jpg" data-background-size="cover"><h2>How the JVM thinks about it</h2>
+<aside class="notes"><div class="ulist"><ul><li><p>helps tools and devs to</p><div class="ulist"><ul><li><p>dissect</p></li><li><p>analyze</p></li><li><p>reason about</p></li><li><p>work with</p></li></ul></div></li><li><p>Maven, jdeps</p></li></ul></div></aside></section><section id="how_the_jvm_thinks_about_it" data-transition="slide-in none-out" data-background-image="../../_images/ball-of-mud-2-ee8b60fd.jpg" data-background-size="cover"><h2>How the JVM thinks about it</h2>
 <div class="ulist"><ul><li><p>parts are packaged as JARs</p></li><li><p>to the JVM JARs</p><div class="ulist"><ul><li><p>have no names</p></li><li><p>dependencies are unexpressed</p></li><li><p>have no coherent surface</p></li></ul></div></li><li><p>JVM rolls them into one big ball of mud</p></li></ul></div>
-<aside class="notes"><div class="ulist"><ul><li><p>graph is gone</p></li><li><p>"modularity erasure"</p></li></ul></div></aside></section><section data-background-image="images/ball-of-mud-2.jpg" data-background-size="cover" data-state="empty"></section><section id="consequences" data-background-image="images/jar-hell.jpg" data-background-size="cover"><h2>Consequences</h2>
+<aside class="notes"><div class="ulist"><ul><li><p>graph is gone</p></li><li><p>"modularity erasure"</p></li></ul></div></aside></section><section data-background-image="../../_images/ball-of-mud-2-ee8b60fd.jpg" data-background-size="cover" data-state="empty"></section><section id="consequences" data-background-image="../../_images/jar-hell-6a33bbef.jpg" data-background-size="cover"><h2>Consequences</h2>
 <div class="ulist"><ul><li><p><a href="http://blog.codefx.org/java/jar-hell/">JAR hell</a></p><div class="ulist"><ul><li><p>unexpressed, transitive dependencies</p></li><li><p>shadowing, version conflicts</p></li><li><p>complex class loading</p></li></ul></div></li><li><p>slow</p></li><li><p>unsecure</p></li><li><p>maintenance nightmare</p></li></ul></div></section></section>
 <section><section id="project_jigsaw"><h2>Project Jigsaw</h2><h3>Teaching the JVM<br/>about that graph</h3><aside class="notes"><div class="ulist"><ul><li><p>modularity is the keyword</p></li></ul></div></aside></section><section id="quick_history"><h2>Quick History</h2><div class="dlist"><dl><dt class="hdlist1">2005</dt><dd><p>first discussions about modularity in JDK</p></dd><dt class="hdlist1">2008</dt><dd><p>Project Jigsaw is created</p></dd><dt class="hdlist1">2011-2014</dt><dd><p>exploratory phase;
 ends with <a href="https://www.jcp.org/en/jsr/detail?id=376">JSR 376</a></p></dd><dt class="hdlist1">2015</dt><dd><p>prototype is released</p></dd><dt class="hdlist1">2017</dt><dd><p>Java 9 gets released with module system</p></dd></dl></div>
 <aside class="notes"><div class="ulist"><ul><li><p>2006: Java 6</p></li><li><p>2008:</p><div class="ulist"><ul><li><p>to create a simple module system</p></li><li><p>just for the JDK</p></li><li><p>for Java 7</p></li><li><p>"in the next year or so" (<a href="http://mreinhold.org/blog/jigsaw">Reinhold</a>)</p></li></ul></div></li><li><p>2010: Oracle aquires Sun, Jigsaw is halted</p></li><li><p>2011: Jigsaw gets fully staffed</p></li><li><p>2011: Java 7</p></li><li><p>2014: Java 8</p></li><li><p>JSR 376: Java Platform Module System</p></li></ul></div></aside></section><section id="goals"><h2>Goals</h2><div class="ulist"><ul><li><p><strong>Reliable Configuration</strong></p></li><li><p><strong>Strong Encapsulation</strong></p></li><li><p>Scalable Systems (esp. the JDK)</p></li><li><p>Security, Performance, Maintainability</p></li></ul></div>
 <div class="paragraph"><p><h3>Non-Goals</h3></p></div>
-<div class="ulist"><ul><li><p>Version Selection</p></li><li><p>Multiple Versions</p></li><li><p>Package Isolation</p></li></ul></div></section><section id="means" data-background-image="images/puzzle-cubed.jpg" data-background-size="cover"><h2>Means</h2>
+<div class="ulist"><ul><li><p>Version Selection</p></li><li><p>Multiple Versions</p></li><li><p>Package Isolation</p></li></ul></div></section><section id="means" data-background-image="../../_images/puzzle-cubed-08438e9e.jpg" data-background-size="cover"><h2>Means</h2>
 <div class="paragraph"><p>Introducing modules, which</p></div>
 <div class="ulist"><ul><li><p>have a name</p></li><li><p>express dependencies</p></li><li><p>encapsulate internals</p></li></ul></div>
 <div class="paragraph"><p>Everything else follows from here!</p></div></section><section id="concepts_features"><h2>Concepts &amp; Features</h2><div class="ulist"><ul><li><p>Modules, Readability, Accessibility</p></li><li><p>Implied Readability, Qualified Exports</p></li><li><p>Modular JARs, Module Path, Module Graph</p></li><li><p>Services</p></li><li><p>Unnamed Modules, Automatic Modules</p></li><li><p>Reflection, Layers</p></li><li><p>Run-time Images</p></li></ul></div></section></section>
-<section><section id="java_module_system_basics"><h2>Java Module System Basics</h2><h3>Getting started...</h3></section><section id="modules" data-background-image="images/puzzle-piece-green.jpg" data-background-size="cover"><h2>Modules</h2>
+<section><section id="java_module_system_basics"><h2>Java Module System Basics</h2><h3>Getting started...</h3></section><section id="modules" data-background-image="../../_images/puzzle-piece-green-ed10e311.jpg" data-background-size="cover"><h2>Modules</h2>
 <h3>Pieces of a puzzle</h3>
 <div class="paragraph"><p>These are the nodes in our graph.</p></div></section><section id="definition"><h2>Definition</h2><div class="paragraph"><p>Modules</p></div>
 <div class="ulist"><ul><li><p>have a unique name</p></li><li><p>express their dependencies</p></li><li><p>export specific packages<br>
@@ -101,7 +101,7 @@ ends with <a href="https://www.jcp.org/en/jsr/detail?id=376">JSR 376</a></p></dd
 	requires $other_module;
 	exports $api_package;
 }</code></pre></div></div></li><li><p>this is called a <strong>Module Declaration</strong> or a<br>
-<strong>Module Descriptor</strong></p></li></ul></div></section><section id="readability" data-background-image="images/puzzle-pieces-put-together.jpg" data-background-size="cover"><h2>Readability</h2>
+<strong>Module Descriptor</strong></p></li></ul></div></section><section id="readability" data-background-image="../../_images/puzzle-pieces-put-together-eea71b80.jpg" data-background-size="cover"><h2>Readability</h2>
 <h3>Putting the pieces together</h3>
 <div class="paragraph"><p>Readability brings edges into our graph.</p></div>
 <div class="paragraph"><p>It is the basis for <strong>Reliable Configuration</strong>.</p></div></section><section id="definition_2"><h2>Definition</h2><div class="paragraph"><p>For two modules <code>A</code> and <code>B</code> with<br></p></div>
@@ -111,7 +111,7 @@ ends with <a href="https://www.jcp.org/en/jsr/detail?id=376">JSR 376</a></p></dd
 <div class="paragraph"><p>we say</p></div>
 <div class="ulist"><ul><li><p><em>A</em> requires <em>B</em></p></li><li><p><em>A</em> depends on <em>B</em></p></li><li><p><em>A</em> reads <em>B</em></p></li><li><p><em>B</em> is readable by <em>A</em></p></li></ul></div></section><section id="reliable_configuration"><h2>Reliable Configuration</h2><div class="paragraph"><p>Java will only compile/launch when</p></div>
 <div class="ulist"><ul><li><p>every dependency is fulfilled</p></li><li><p>there are no cycles</p></li><li><p>there is no ambiguity</p></li></ul></div></section><section id="consequences_2"><h2>Consequences</h2><div class="ulist"><ul><li><p>boost for reliability</p></li><li><p>module system is strict <em>and</em> rigid<br>
-(no way to easily alter dependencies)</p></li><li><p>module name changes are not supported</p></li><li><p>accidental long cycles will cause problems</p></li></ul></div></section><section id="accessibility" data-background-image="images/iceberg.jpg" data-background-size="cover"><h2>Accessibility</h2>
+(no way to easily alter dependencies)</p></li><li><p>module name changes are not supported</p></li><li><p>accidental long cycles will cause problems</p></li></ul></div></section><section id="accessibility" data-background-image="../../_images/iceberg-50ce73f2.jpg" data-background-size="cover"><h2>Accessibility</h2>
 <h3>Hiding internals</h3>
 <div class="paragraph"><p>Accessibility governs which types a module can see.</p></div>
 <div class="paragraph"><p>It builds on top of Readability.</p></div>
@@ -119,14 +119,14 @@ ends with <a href="https://www.jcp.org/en/jsr/detail?id=376">JSR 376</a></p></dd
 by code in another module if</p></div>
 <div class="ulist"><ul><li><p>the type is public</p></li><li><p>the package is exported</p></li><li><p>the second module reads the first</p></li></ul></div></section><section id="strong_encapsulation"><h2>Strong Encapsulation</h2><div class="ulist"><ul><li><p><code>public</code> is no longer public</p></li><li><p>even reflection doesn&#8217;t work</p></li><li><p>more fine-grained mechanisms exist:</p><div class="ulist"><ul><li><p>for module authors in module declaration</p></li><li><p>for module users as command line arguments</p></li></ul></div></li></ul></div></section><section id="consequences_3"><h2>Consequences</h2><div class="ulist"><ul><li><p>great boost for maintainability</p></li><li><p>major reason for community unrest</p></li><li><p>critical APIs survive longer<br>
 (e.g. <code>sun.misc.Unsafe</code>&#8201;&#8212;&#8201;see <a href="http://openjdk.java.net/jeps/260">JEP 260</a>)</p></li><li><p>life gets tougher for reflection-based<br>
-libraries and frameworks</p></li></ul></div></section><section data-background-color="white" data-background-image="images/platform-modules.png" data-background-size="contain" data-state="empty"></section><section id="jigsaw_advent_calendar" data-background-image="images/advent-calendar.jpg" data-background-size="cover"><h2>Jigsaw Advent Calendar</h2>
-<h3>A simple example</h3></section><section id="structure"><h2>Structure</h2><div class="imageblock diagram" style=""><img src="images/advent-calendar-structure.png" alt="advent calendar structure"></div></section><section id="code"><h2>Code</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public static void main(String[] args) {
+libraries and frameworks</p></li></ul></div></section><section data-background-color="white" data-background-image="../../_images/platform-modules-059926a2.png" data-background-size="contain" data-state="empty"></section><section id="jigsaw_advent_calendar" data-background-image="../../_images/advent-calendar-70698bac.jpg" data-background-size="cover"><h2>Jigsaw Advent Calendar</h2>
+<h3>A simple example</h3></section><section id="structure"><h2>Structure</h2><div class="imageblock diagram" style=""><img src="../../_images/advent-calendar-structure-ad9168aa.png" alt="advent calendar structure"></div></section><section id="code"><h2>Code</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public static void main(String[] args) {
 	List&lt;SurpriseFactory&gt; factories = List.of(
 		new ChocolateFactory(), new QuoteFactory());
 	Calendar cal = Calendar.create(factories);
 	System.out.println(cal.asText());
 }</code></pre></div></div>
-<div class="imageblock diagram" style=""><img src="images/advent-calendar-structure.png" alt="_" width="75%"></div></section><section id="no_module"><h2>No Module</h2><div class="ulist"><ul><li><p>modularization is not required</p></li><li><p>JARs continue to work as today!</p></li></ul></div>
+<div class="imageblock diagram" style=""><img src="../../_images/advent-calendar-structure-ad9168aa.png" alt="_" width="75%"></div></section><section id="no_module"><h2>No Module</h2><div class="ulist"><ul><li><p>modularization is not required</p></li><li><p>JARs continue to work as today!</p></li></ul></div>
 <div class="paragraph"><p>(Unless you do forbidden things, more on that <a href="#/_compatibility">later</a>.)</p></div>
 <div class="ulist"><ul><li><p>we can just put the application<br>
 on the class path as before</p></li></ul></div>
@@ -139,7 +139,7 @@ $ jar --create --file jars/advent.jar ${*.class}
 $ java --class-path 'jars/*' ${main-class}</code></pre></div></div>
 <div class="paragraph"><p>To look up <code>javac</code>, <code>jar</code>, <code>java</code> basics:<br>
 <a href="https://blog.codefx.org/cheat-sheet-build-run-modules-jars.html">tiny.cc/cheat-modules</a></p></div></section><section id="a_single_module"><h2>A single module</h2><h3>Modularization</h3>
-<div class="imageblock diagram" style=""><img src="images/advent-calendar-module-single.png" alt="advent calendar module single"></div>
+<div class="imageblock diagram" style=""><img src="../../_images/advent-calendar-module-single-27c4ddae.png" alt="advent calendar module single"></div>
 <div class="paragraph"><p>Create <code>module-info.java</code> in sources root:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">module advent {
 	// java.base is implicitly required
@@ -163,16 +163,16 @@ to look up dependencies</p></li><li><p>accepts a list of artifacts or folders</p
 <div class="paragraph"><p>Example use:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash"># `mods` is a directory with JARs
 $ java --module-path mods # ...</code></pre></div></div></section><section id="a_single_module_4"><h2>A single module</h2><h3>Readability & Accessibility</h3>
-<div class="imageblock diagram" style=""><img src="images/advent-calendar-readability-accessibility.png" alt="advent calendar readability accessibility"></div></section><section id="multiple_modules"><h2>Multiple Modules</h2><div class="imageblock" style="">
+<div class="imageblock diagram" style=""><img src="../../_images/advent-calendar-readability-accessibility-9942c5c6.png" alt="advent calendar readability accessibility"></div></section><section id="multiple_modules"><h2>Multiple Modules</h2><div class="imageblock" style="">
 	<div class="content diagram">
-		<img src="images/advent-calendar-structure.png" style="margin: 25px; width:75%;">
+		<img src="../../_images/advent-calendar-structure-ad9168aa.png" style="margin: 25px; width:75%;">
 	</div>
 </div>
 <div class="imageblock fragment current-visible" data-fragment-index="0">
 	<div class="content diagram">
-		<img src="images/advent-calendar-module-multi.png" alt="b2e21fbf" style="margin: 0;">
+		<img src="../../_images/advent-calendar-module-multi-f1b09b68.png" alt="b2e21fbf" style="margin: 0;">
 	</div>
-</div></section><section id="multiple_modules_2"><h2>Multiple Modules</h2><div class="imageblock diagram" style=""><img src="images/advent-calendar-module-multi.png" alt="advent calendar module multi"></div>
+</div></section><section id="multiple_modules_2"><h2>Multiple Modules</h2><div class="imageblock diagram" style=""><img src="../../_images/advent-calendar-module-multi-f1b09b68.png" alt="advent calendar module multi"></div>
 <div style="height: 210px;">
 <div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">module surprise {
 	<span class="hljs-comment">// requires no other modules</span>
@@ -229,7 +229,7 @@ between modules</p></li></ul></div>
 		List&lt;SurpriseFactory&gt; factories) {
 	// ...
 }</code></pre></div></div>
-<div class="imageblock diagram" style=""><img src="images/advent-requires-transitive-problem.png" alt="advent requires transitive problem"></div>
+<div class="imageblock diagram" style=""><img src="../../_images/advent-requires-transitive-problem-bbbf82b5.png" alt="advent requires transitive problem"></div>
 <div class="paragraph"><p>⇝ Module <em>calendar</em> is unusable without <em>surprise</em>!</p></div></section><section id="try_and_error"><h2>Try and Error?</h2><div class="paragraph"><p>How can users of exposing module<br>
 determine required dependencies?</p></div>
 <div class="paragraph"><p>Try and error?</p></div>
@@ -246,7 +246,7 @@ without having to require it</p></li></ul></div>
 	requires transitive surprise;
 	// ...
 }</code></pre></div></div>
-<div class="imageblock diagram" style=""><img src="images/advent-requires-transitive-solution.png" alt="advent requires transitive solution"></div></section><section id="further_applications"><h2>Further Applications</h2><div class="paragraph"><p>Implied readability is surprisingly versatile</p></div>
+<div class="imageblock diagram" style=""><img src="../../_images/advent-requires-transitive-solution-cdf82cae.png" alt="advent requires transitive solution"></div></section><section id="further_applications"><h2>Further Applications</h2><div class="paragraph"><p>Implied readability is surprisingly versatile</p></div>
 <div class="ulist"><ul><li><p>aggregator modules</p></li><li><p>splitting modules up</p></li><li><p>even merging modules</p></li><li><p>renaming modules</p></li></ul></div></section><section id="aggregator_modules"><h2>Aggregator Modules</h2><div class="paragraph"><p>Making it easier to consume<br>
 <em>calendar</em>, <em>factories</em>, <em>surprise</em>:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">module adventcalendar {
@@ -294,12 +294,12 @@ another module&#8217;s features</p></li></ul></div>
 <div class="ulist"><ul><li><p>a library may be absent from some deployments</p></li><li><p>code is aware and does not call absent modules</p></li></ul></div>
 <div class="paragraph"><p>Example:</p></div>
 <div class="ulist"><ul><li><p>each <code>SurpriseFactory</code> implementation<br>
-has its own module</p></li><li><p><em>advent</em> works without any specific factory</p></li></ul></div></section><section id="adapting_code_2"><h2>Adapting Code</h2><div class="imageblock diagram" style=""><img src="images/advent-requires-static.png" alt="advent requires static"></div></section><section id="enhancing_a_module"><h2>Enhancing A Module</h2><div class="paragraph"><p>Use case:</p></div>
+has its own module</p></li><li><p><em>advent</em> works without any specific factory</p></li></ul></div></section><section id="adapting_code_2"><h2>Adapting Code</h2><div class="imageblock diagram" style=""><img src="../../_images/advent-requires-static-a2904bf8.png" alt="advent requires static"></div></section><section id="enhancing_a_module"><h2>Enhancing A Module</h2><div class="paragraph"><p>Use case:</p></div>
 <div class="ulist"><ul><li><p>a project may provide usability functions<br>
 for other libraries</p></li><li><p>such code will not be called if library modules<br>
 are absent</p></li></ul></div>
 <div class="paragraph"><p>Example:</p></div>
-<div class="ulist"><ul><li><p>hypothetical library <em>uber-lib</em></p></li><li><p>provides usability functions for various libraries</p></li></ul></div></section><section id="enhancing_a_module_2"><h2>Enhancing A Module</h2><div class="imageblock diagram" style=""><img src="images/uber-lib-requires-static.png" alt="uber lib requires static"></div></section><section id="conundrum"><h2>Conundrum</h2><div class="paragraph"><p>With what we know so far:</p></div>
+<div class="ulist"><ul><li><p>hypothetical library <em>uber-lib</em></p></li><li><p>provides usability functions for various libraries</p></li></ul></div></section><section id="enhancing_a_module_2"><h2>Enhancing A Module</h2><div class="imageblock diagram" style=""><img src="../../_images/uber-lib-requires-static-c92f1dc9.png" alt="uber lib requires static"></div></section><section id="conundrum"><h2>Conundrum</h2><div class="paragraph"><p>With what we know so far:</p></div>
 <div class="ulist"><ul><li><p>for code to compile against another module<br>
 that module has to be required</p></li><li><p>a required module has to be present<br>
 at launch time</p></li></ul></div>
@@ -343,7 +343,7 @@ without that dependency</p></li></ul></div>
 	<tr class="toc-current"><td>Services</td></tr>
 	<tr><td>Qualified Exports</td></tr>
 	<tr><td>Reflective Access</td></tr>
-</table></section><section id="dependency_inversion"><h2>Dependency Inversion?</h2><div class="imageblock diagram" style=""><img src="images/advent-dependency-inversion.png" alt="advent dependency inversion"></div></section><section id="service_locator_pattern"><h2>Service Locator Pattern</h2><div class="paragraph"><p><strong>Consumers</strong> and <strong>implementations</strong><br>
+</table></section><section id="dependency_inversion"><h2>Dependency Inversion?</h2><div class="imageblock diagram" style=""><img src="../../_images/advent-dependency-inversion-c8466393.png" alt="advent dependency inversion"></div></section><section id="service_locator_pattern"><h2>Service Locator Pattern</h2><div class="paragraph"><p><strong>Consumers</strong> and <strong>implementations</strong><br>
 of an API should be decoupled.</p></div>
 <div class="paragraph"><p>Service locator pattern:</p></div>
 <div class="ulist"><ul><li><p>service registry as central arbiter</p></li><li><p>implementors inform registry</p></li><li><p>consumers call registry to get implementations</p></li></ul></div></section><section id="services_in_jpms"><h2>Services in JPMS</h2><div class="paragraph"><p>In the JPMS:</p></div>
@@ -374,7 +374,7 @@ module factory.quote {
 	requires surprise;
 	provides surprise.SurpriseFactory
 		with factory.quote.QuoteFactory;
-}</code></pre></div></div></section><section id="factory_services_2"><h2>Factory Services</h2><div class="imageblock diagram" style=""><img src="images/advent-services.png" alt="advent services"></div></section><section id="factory_services_3"><h2>Factory Services</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public static void main(String[] args) {
+}</code></pre></div></div></section><section id="factory_services_2"><h2>Factory Services</h2><div class="imageblock diagram" style=""><img src="../../_images/advent-services-2de83240.png" alt="advent services"></div></section><section id="factory_services_3"><h2>Factory Services</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public static void main(String[] args) {
 	List&lt;SurpriseFactory&gt; factories = ServiceLoader
 		.load(SurpriseFactory.class).stream()
 		.map(Provider::get)
@@ -548,7 +548,7 @@ detect dependencies</p></li><li><p>exists since Java 8</p></li><li><p>really shi
 	sh-2.6.3.jar
 # sed -i 's/-1.0-SNAPSHOT.jar//g' summary.dot
 # sed -i '/java.base/d' summary.dot
-$ dot -Tpng -O dots/summary.dot</code></pre></div></div></section><section data-background-color="white" data-background-image="images/jdeps-scaffoldhunter-jars.png" data-background-size="contain" data-state="empty"></section><section id="jdk_internal_apis"><h2>JDK-Internal APIs</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">$ jdeps --jdk-internals
+$ dot -Tpng -O dots/summary.dot</code></pre></div></div></section><section data-background-color="white" data-background-image="../../_images/jdeps-scaffoldhunter-jars-4a8b7225.png" data-background-size="contain" data-state="empty"></section><section id="jdk_internal_apis"><h2>JDK-Internal APIs</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">$ jdeps --jdk-internals
 	-recursive --class-path 'libs/*'
 	sh-2.6.3.jar
 
@@ -558,7 +558,7 @@ $ dot -Tpng -O dots/summary.dot</code></pre></div></div></section><section data-
 &gt;     Striped64 -&gt; Unsafe
 &gt; sh-2.6.3.jar -&gt; java.desktop
 &gt;     SteppedComboBox -&gt; WindowsComboBoxUI</code></pre></div></div></section></section>
-<section><section id="creating_runtime_images_with_jlink"><h2>Creating Runtime Images With JLink</h2><h3>Custom-Made For Your Application</h3></section><section id="remember_this" data-background-color="white" data-background-image="images/platform-modules.png" data-background-size="contain"><h2>Remember This?</h2></section><section id="benefiting_from_jdk_modularization"><h2>Benefiting From JDK Modularization</h2><div class="paragraph"><p>Create a JDK install with just the code you need:</p></div>
+<section><section id="creating_runtime_images_with_jlink"><h2>Creating Runtime Images With JLink</h2><h3>Custom-Made For Your Application</h3></section><section id="remember_this" data-background-color="white" data-background-image="../../_images/platform-modules-059926a2.png" data-background-size="contain"><h2>Remember This?</h2></section><section id="benefiting_from_jdk_modularization"><h2>Benefiting From JDK Modularization</h2><div class="paragraph"><p>Create a JDK install with just the code you need:</p></div>
 <div class="ulist"><ul><li><p>know which modules your app uses (⇝ <code>jdeps</code>)</p></li><li><p>create an image with those modules (⇝ <code>jlink</code>)</p></li></ul></div>
 <div class="paragraph"><p>This is about <code>jlink</code>.</p></div></section><section id="a_minimal_jdk_image"><h2>A Minimal JDK Image</h2><div class="paragraph"><p>Create with <code>jlink</code>:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">$ jlink
@@ -606,7 +606,7 @@ with just the right modules</p></li><li><p>create an application image<br>
 including your code</p></li></ul></div>
 <div class="paragraph"><p>This should make certain kinds of deploys<br>
 smaller and easier.</p></div></section></section>
-<section><section id="migration_challenges"><h2>Migration Challenges</h2><h3>What to look out for<br>when running on JDK 11</h3></section><section id="break_stuff" data-background-image="images/broken-glass.jpg" data-background-size="cover"><h2>Break Stuff</h2>
+<section><section id="migration_challenges"><h2>Migration Challenges</h2><h3>What to look out for<br>when running on JDK 11</h3></section><section id="break_stuff" data-background-image="../../_images/broken-glass-55da6a71.jpg" data-background-size="cover"><h2>Break Stuff</h2>
 <div class="paragraph"><p>Some internal changes <a href="https://blog.codefx.org/java/java-11-migration-guide/">break existing code</a>!</p></div>
 <div class="paragraph"><p>Just by running on JDK 11<br>
 (even without modularizing the application).</p></div></section><section id="of_modules_and_jars"><h2>Of Modules And JARs</h2><div class="paragraph"><p>Modularized JDK and legacy JARs have to cooperate.</p></div>
@@ -619,7 +619,7 @@ contains <em>all</em> JARs on the class path<br>
 <div class="ulist"><ul><li><p>has no name (surprise!)</p></li><li><p>can read all modules</p></li><li><p>exports all packages</p></li></ul></div>
 <div class="paragraph"><p>Inside the unnamed module<br>
 "the chaos of the class path" lives on.</p></div>
-<aside class="notes"><div class="ulist"><ul><li><p>one unnamed module per class loader</p></li></ul></div></aside></section><section id="challenges"><h2>Challenges</h2><div class="ulist"><ul><li><p>internal APIs</p></li><li><p>JEE modules</p></li><li><p>split packages</p></li><li><p>runtime images</p></li></ul></div></section><section id="internal_apis" data-background-image="images/internals.jpg" data-background-size="cover"><h2>Internal APIs</h2>
+<aside class="notes"><div class="ulist"><ul><li><p>one unnamed module per class loader</p></li></ul></div></aside></section><section id="challenges"><h2>Challenges</h2><div class="ulist"><ul><li><p>internal APIs</p></li><li><p>JEE modules</p></li><li><p>split packages</p></li><li><p>runtime images</p></li></ul></div></section><section id="internal_apis" data-background-image="../../_images/internals-12191ee5.jpg" data-background-size="cover"><h2>Internal APIs</h2>
 <div class="ulist"><ul><li><p>internal APIs are:</p><div class="ulist"><ul><li><p>all in <code>sun.*</code></p></li><li><p>most in <code>com.sun.*</code><br>
 (unless marked <code>@jdk.Exported</code>)</p></li></ul></div></li><li><p>encapsulated at compile time</p></li><li><p>accessible at run time<br>
 for some time</p></li><li><p>critical APIs may survive longer<br>
@@ -636,7 +636,7 @@ for some time</p></li><li><p>critical APIs may survive longer<br>
 &gt;     SteppedComboBox -&gt; WindowsComboBoxUI</code></pre></div></div></section><section id="what_else_to_look_for"><h2>What else to look for?</h2><div class="ulist"><ul><li><p>look for reflection, especially</p><div class="ulist"><ul><li><p><code>Class::forName</code></p></li><li><p><code>AccessibleObject::setAccessible</code></p></li></ul></div></li><li><p>recursively check your dependencies!</p></li></ul></div></section><section id="what_to_do"><h2>What to do?</h2><div class="olist arabic"><ol class="arabic"><li><p>fix your code</p></li><li><p>contact library developers</p></li><li><p>look for alternatives<br>
 (in the JDK or other libraries)</p></li><li><p>consider command line flags<br>
 <code>--add-exports</code>, <code>--add-opens</code>, or<br>
-<code>--illegal-access</code></p></li></ol></div></section><section id="jee_modules" data-background-image="images/java-ee.jpg" data-background-size="cover"><h2>JEE Modules</h2>
+<code>--illegal-access</code></p></li></ol></div></section><section id="jee_modules" data-background-image="../../_images/java-ee-2b02ad00.jpg" data-background-size="cover"><h2>JEE Modules</h2>
 <div class="ulist"><ul><li><p><em>java.activation</em> (<code>javax.activation</code>)</p></li><li><p><em>java.corba</em> (CORBA packages)</p></li><li><p><em>java.transaction</em> (<code>javax.transaction</code>)</p></li><li><p><em>java.xml.bind</em> (<code>javax.xml.bind.*</code>)</p></li><li><p><em>java.xml.ws</em> (JAX-WS packages)</p></li><li><p><em>java.xml.ws.annotation</em> (<code>javax.annotation</code>)</p></li></ul></div>
 <div class="paragraph"><p>These were</p></div>
 <div class="ulist"><ul><li><p>deprecated for removal in ⑨</p></li><li><p>removed in ⑪</p></li></ul></div></section><section id="what_to_look_for_2"><h2>What to look for?</h2><div class="paragraph"><p>JDeps shows dependencies on platform modules:</p></div>
@@ -648,7 +648,7 @@ for some time</p></li><li><p>critical APIs may survive longer<br>
 &gt; sh-2.6.3.jar -&gt; java.logging
 &gt; sh-2.6.3.jar -&gt; java.prefs
 &gt; sh-2.6.3.jar -&gt; java.sql
-&gt; sh-2.6.3.jar -&gt; java.xml</code></pre></div></div></section><section id="what_to_do_2"><h2>What to do?</h2><div class="paragraph"><p>Pick <a href="https://stackoverflow.com/a/48204154/2525313">a third-party implementation</a>.</p></div></section><section id="split_packages" data-background-image="images/cut.jpg" data-background-size="cover"><h2>Split Packages</h2>
+&gt; sh-2.6.3.jar -&gt; java.xml</code></pre></div></div></section><section id="what_to_do_2"><h2>What to do?</h2><div class="paragraph"><p>Pick <a href="https://stackoverflow.com/a/48204154/2525313">a third-party implementation</a>.</p></div></section><section id="split_packages" data-background-image="../../_images/cut-6c5af5d7.jpg" data-background-size="cover"><h2>Split Packages</h2>
 <div class="ulist"><ul><li><p>packages should have a unique origin</p></li><li><p>no module must read the same package<br>
 from two modules</p></li></ul></div>
 <div class="paragraph"><p>The implementation is even stricter:</p></div>
@@ -665,10 +665,10 @@ are inaccessible</p></li></ul></div></section><section id="examples"><h2>Example
 &gt;         libs/jsr305-3.0.2.jar]</code></pre></div></div></section><section id="what_to_do_3"><h2>What to do?</h2><div class="paragraph"><p>Your artifacts:</p></div>
 <div class="olist arabic"><ol class="arabic"><li><p>rename one of the packages</p></li><li><p>merge package into the same artifact</p></li><li><p>merge the artifacts</p></li><li><p>place both artifacts on the class path</p></li></ol></div>
 <div class="paragraph"><p>Otherwise:</p></div>
-<div class="olist arabic"><ol class="arabic" start="5"><li><p>upgrade the JDK module with the artifact</p></li><li><p><code>--patch-module</code> with the artifact&#8217;s content</p></li></ol></div></section><section id="run_time_images" data-background-image="images/cells.jpg" data-background-size="cover"><h2>Run-Time Images</h2>
+<div class="olist arabic"><ol class="arabic" start="5"><li><p>upgrade the JDK module with the artifact</p></li><li><p><code>--patch-module</code> with the artifact&#8217;s content</p></li></ol></div></section><section id="run_time_images" data-background-image="../../_images/cells-ef2bc30c.jpg" data-background-size="cover"><h2>Run-Time Images</h2>
 <div class="ulist"><ul><li><p>new JDK/JRE layout</p></li><li><p>internal JARs are gone (e.g. <code>rt.jar</code>, <code>tools.jar</code>)</p></li><li><p>JARs are now JMODs</p></li><li><p>application class loader is no <code>URLClassLoader</code><br>
 (no way to append to its class path)</p></li><li><p>new URL schema for run-time image content</p></li></ul></div></section><section id="what_to_look_for_4"><h2>What to look for?</h2><div class="ulist"><ul><li><p>does the code rummage around<br>
-in the JDK / JRE folder?</p></li><li><p>are URLs to JDK classes / resources handcrafted?</p></li><li><p>search for casts to <code>URLClassLoader</code></p></li></ul></div></section><section id="obsolete" data-background-image="images/obsolete.jpg" data-background-size="cover"><h2>Obsolete</h2>
+in the JDK / JRE folder?</p></li><li><p>are URLs to JDK classes / resources handcrafted?</p></li><li><p>search for casts to <code>URLClassLoader</code></p></li></ul></div></section><section id="obsolete" data-background-image="../../_images/obsolete-89df249f.jpg" data-background-size="cover"><h2>Obsolete</h2>
 <div class="ulist"><ul><li><p>Compact Profiles&#8201;&#8212;&#8201;<code>jlink</code></p></li><li><p>Endorsed Standards Override Mechanism,<br>
 Extension Mechanism,<br>
 Boot Class Path Override&#8201;&#8212;&#8201;<code>--upgrade-module-path</code></p></li><li><p>JRE selection <code>-version:N</code>&#8201;&#8212;&#8201;<code>jlink</code>?</p></li><li><p>Web Start&#8201;&#8212;&#8201;<a href="https://openwebstart.com/">openwebstart.com</a></p></li><li><p>JavaFX&#8201;&#8212;&#8201;<a href="https://openjfx.io/">openjfx.io/</a></p></li></ul></div></section><section id="but_wait_theres_more" data-background-image="images/shibuya-night.jpg" data-background-size="cover"><h2>But wait, there&#8217;s more!</h2>
@@ -677,13 +677,13 @@ Boot Class Path Override&#8201;&#8212;&#8201;<code>--upgrade-module-path</code><
 <div class="paragraph"><p>Background:</p></div>
 <div class="ulist"><ul><li><p><a href="https://blog.codefx.org/java/planning-your-java-9-update/">Planning Your Java 9 Update</a></p></li><li><p><a href="https://blog.codefx.org/java/five-command-line-options-to-hack-the-java-9-module-system/">JPMS Command Line Options</a></p></li><li><p><a href="https://blog.codefx.org/tools/jdeps-tutorial-analyze-java-project-dependencies/">JDeps Tutorial</a></p></li></ul></div>
 <div class="paragraph"><p>And there are new version strings:</p></div>
-<div class="ulist"><ul><li><p>goodbye <code>1.9.0_31</code>, hello <code>9.0.1</code><br></p></li></ul></div></section><section id="general_advice_i" data-background-image="images/sign.jpg" data-background-size="cover"><h2>General Advice I</h2>
+<div class="ulist"><ul><li><p>goodbye <code>1.9.0_31</code>, hello <code>9.0.1</code><br></p></li></ul></div></section><section id="general_advice_i" data-background-image="../../_images/sign-8b617629.jpg" data-background-size="cover"><h2>General Advice I</h2>
 <div class="paragraph"><p>The most relevant for most applications:</p></div>
-<div class="ulist"><ul><li><p>internal APIs</p></li><li><p>split packages</p></li><li><p>JEE modules</p></li></ul></div></section><section id="general_advice_ii" data-background-image="images/sign.jpg" data-background-size="cover"><h2>General Advice II</h2>
+<div class="ulist"><ul><li><p>internal APIs</p></li><li><p>split packages</p></li><li><p>JEE modules</p></li></ul></div></section><section id="general_advice_ii" data-background-image="../../_images/sign-8b617629.jpg" data-background-size="cover"><h2>General Advice II</h2>
 <div class="ulist"><ul><li><p>get your code in shape<br>
 (and prevent relapses)</p></li><li><p>check your dependencies and tools</p></li><li><p>if any are suspicious<br>
 (automatically true for IDEs, build tools):</p><div class="ulist"><ul><li><p>make sure they&#8217;re alive</p></li><li><p><strong>get them up to date!</strong></p></li><li><p>or look for alternatives</p></li></ul></div></li><li><p>download Java 11 and <strong>try it!</strong></p></li></ul></div></section></section>
-<section><section id="incremental_modularization"><h2>Incremental Modularization</h2><h3>Moving Into Module Land</h3></section><section id="why_is_it_even_an_option" data-background-image="images/keep-out.jpg" data-background-size="cover"><h2>Why Is It Even An Option?</h2>
+<section><section id="incremental_modularization"><h2>Incremental Modularization</h2><h3>Moving Into Module Land</h3></section><section id="why_is_it_even_an_option" data-background-image="../../_images/keep-out-09c44f93.jpg" data-background-size="cover"><h2>Why Is It Even An Option?</h2>
 <div class="ulist"><ul><li><p>most module systems are "in or out"</p></li><li><p>but modularized JDK and legacy JARs<br>
 have to cooperate!</p></li><li><p>there is a boundary between<br>
 legacy and modules</p></li></ul></div>
@@ -691,7 +691,7 @@ legacy and modules</p></li></ul></div>
 moving that boundary.</p></div></section><section id="enablers"><h2>Enablers</h2><div class="paragraph"><p>Incremental modularization is enabled by two features:</p></div>
 <div class="ulist"><ul><li><p>Unnamed Module(s)</p></li><li><p>Automatic Modules</p></li></ul></div>
 <div class="paragraph"><p>And the fact that module and class path coexist:</p></div>
-<div class="ulist"><ul><li><p>modular JARs can be put on either</p></li><li><p>"regular" JARs can be put on either</p></li></ul></div></section><section id="the_unnamed_module_2" data-background-image="images/garbage-only.jpg" data-background-size="cover"><h2>The Unnamed Module</h2>
+<div class="ulist"><ul><li><p>modular JARs can be put on either</p></li><li><p>"regular" JARs can be put on either</p></li></ul></div></section><section id="the_unnamed_module_2" data-background-image="../../_images/garbage-only-54a57c13.jpg" data-background-size="cover"><h2>The Unnamed Module</h2>
 <h3>Why The Class Path "Just Works"</h3></section><section id="definition_4"><h2>Definition</h2><div class="paragraph"><p>The <strong>Unnamed Module</strong><br>
 contains <em>all</em> JARs on the class path<br>
 (including modular JARs).</p></div>
@@ -699,11 +699,11 @@ contains <em>all</em> JARs on the class path<br>
 <div class="paragraph"><p>Inside the unnamed module<br>
 "the chaos of the class path" lives on.</p></div>
 <aside class="notes"><div class="ulist"><ul><li><p>one unnamed module per class loader</p></li></ul></div></aside></section><section id="example"><h2>Example</h2><div class="paragraph"><p>Put all your JARs on the class path.</p></div>
-<div class="imageblock diagram" style=""><img src="images/modularization-unnamed.png" alt="modularization unnamed"></div></section><section id="no_access"><h2>No Access</h2><div class="ulist"><ul><li><p>what if your code was modularized<br>
+<div class="imageblock diagram" style=""><img src="../../_images/modularization-unnamed-bc5e43da.png" alt="modularization unnamed"></div></section><section id="no_access"><h2>No Access</h2><div class="ulist"><ul><li><p>what if your code was modularized<br>
 and your dependencies were not?</p></li><li><p>proper modules can not depend on<br>
 "the chaos on the class path"</p></li><li><p>this is not possible:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">module calendar {
 	requires unnamed;
-}</code></pre></div></div></li></ul></div></section><section id="no_access_2"><h2>No Access</h2><div class="imageblock diagram" style=""><img src="images/modularization-unnamed-dependency.png" alt="modularization unnamed dependency"></div></section><section id="automatic_modules" data-background-image="images/golden-gate.jpg" data-background-size="cover"><h2>Automatic Modules</h2>
+}</code></pre></div></div></li></ul></div></section><section id="no_access_2"><h2>No Access</h2><div class="imageblock diagram" style=""><img src="../../_images/modularization-unnamed-dependency-1a8c5c62.png" alt="modularization unnamed dependency"></div></section><section id="automatic_modules" data-background-image="../../_images/golden-gate-f453a0f9.jpg" data-background-size="cover"><h2>Automatic Modules</h2>
 <h3>From Modules To The Class Path</h3></section><section id="definition_5"><h2>Definition</h2><div class="paragraph"><p>An <strong>Automatic Module</strong><br>
 is created <em>for each</em> "regular" JAR<br>
 on the module path.</p></div>
@@ -712,7 +712,7 @@ on the module path.</p></div>
 derived from JAR name</p></li><li><p>can read all modules<br>
 (including the Unnamed Module)</p></li><li><p>exports all packages</p></li></ul></div></section><section id="example_2"><h2>Example</h2><div class="ulist"><ul><li><p>put <code>guava-19.0.jar</code> on the module path</p></li><li><p>then this works:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">module calendar {
 	requires guava;
-}</code></pre></div></div></li></ul></div></section><section id="example_3"><h2>Example</h2><div class="imageblock diagram" style=""><img src="images/modularization-automatic.png" alt="modularization automatic"></div></section><section id="what_goes_where" data-background-image="images/confusion.jpg" data-background-size="cover"><h2>What Goes Where?</h2>
+}</code></pre></div></div></li></ul></div></section><section id="example_3"><h2>Example</h2><div class="imageblock diagram" style=""><img src="../../_images/modularization-automatic-d1ec0581.png" alt="modularization automatic"></div></section><section id="what_goes_where" data-background-image="../../_images/confusion-c6c2d6ec.jpg" data-background-size="cover"><h2>What Goes Where?</h2>
 <table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:33.3333%"><col style="width:33.3333%"><col style="width:33.3334%"></colgroup><thead><tr><th class="tableblock halign-left valign-top"></th><th class="tableblock halign-left valign-top">Class Path</th><th class="tableblock halign-left valign-top">Module Path</th></tr><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Regular JAR</strong></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Unnamed Module</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Automatic Module</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Modular JAR</strong></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Unnamed Module</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Explicit Module</p></td></tr></table>
 <div class="paragraph"><p>Unnamed or named module?<br>
 The user decides, not the maintainer!</p></div></section><section id="modularization_strategies"><h2>Modularization Strategies</h2><div class="paragraph"><p>Three strategies emerge:</p></div>
@@ -747,9 +747,9 @@ when project gets modularized</p></li><li><p>that makes these names stable</p></
 <div class="paragraph"><p>⇝ It is <strong>ok to publish</strong> modules<br>
 that depend on automatic modules<br>
 whose names are <strong>based on manifest entry</strong>.</p></div></section></section>
-<section id="about_nicolai_parlog" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>About Nicolai Parlog</h2>
+<section id="about_nicolai_parlog" data-background-image="../../_images/question-mark-9644fc1f.jpg" data-background-size="cover"><h2>About Nicolai Parlog</h2>
 <div style="float: left; width: 45%; margin:0px;">
-	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="images/cover-jms.png" style="margin: 0;"></a>
+	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="../../_images/cover-jms-4e5e400d.png" style="margin: 0;"></a>
 	<p style="
 		position: fixed;
 		margin: -160px 0 0 60px;
@@ -827,7 +827,7 @@ whose names are <strong>based on manifest entry</strong>.</p></div></section></s
 <a href="http://milosevicmilos.com/">Milos Milosevic</a>
 (<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a>)</p></li><li><p>bundles:
 <a href="https://www.flickr.com/photos/dmahendra/">Danumurthi Mahendra</a>
-(<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a>)</p></li></ul></div></section></section></div></div><script src="_reveal.js/lib/js/head.min.js"></script><script src="_reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+(<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a>)</p></li></ul></div></section></section></div></div><script src="../../_reveal.js/d713baab/lib/js/head.min.js"></script><script src="../../_reveal.js/d713baab/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
 Reveal.initialize({
   // Display controls in the bottom right corner
   controls: false,
@@ -892,7 +892,7 @@ Reveal.initialize({
   // Number of slides away from the current that are visible
   viewDistance: 3,
   // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
-  parallaxBackgroundImage: 'images/puzzle-people.jpg',
+  parallaxBackgroundImage: '../../_images/puzzle-people-732c26eb.jpg',
   // Parallax background size in CSS syntax (e.g., "2100px 900px")
   parallaxBackgroundSize: '3246px 1237px',
 
@@ -911,11 +911,11 @@ Reveal.initialize({
 
   // Optional libraries used to extend on reveal.js
   dependencies: [
-      { src: '_reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-      { src: '_reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-      { src: '_reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../../_reveal.js/d713baab/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: '../../_reveal.js/d713baab/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../../_reveal.js/d713baab/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
       
-      { src: '_reveal.js/plugin/zoom-js/zoom.js', async: true },
-      { src: '_reveal.js/plugin/notes/notes.js', async: true }
+      { src: '../../_reveal.js/d713baab/plugin/zoom-js/zoom.js', async: true },
+      { src: '../../_reveal.js/d713baab/plugin/notes/notes.js', async: true }
   ]
 });</script></body></html>

@@ -1,9 +1,9 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Fun with var</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="_reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="_reveal.js/css/theme/nipa-night.css" id="theme"><link href="_reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>var link = document.createElement( 'link' );
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Fun with var</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="../../_reveal.js/d713baab/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="../../_reveal.js/d713baab/css/theme/nipa-night.css" id="theme"><link href="../../_reveal.js/d713baab/lib/css/zenburn.css" rel="stylesheet"><script>var link = document.createElement( 'link' );
 link.rel = 'stylesheet';
 link.type = 'text/css';
-link.href = window.location.search.match( /print-pdf/gi ) ? "_reveal.js/css/print/pdf.css" : "_reveal.js/css/print/paper.css";
-document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="_reveal.js/lib/js/html5shiv.js"></script><![endif]--></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>Fun with <code>var</code></h1><div class="preamble"><link rel="stylesheet" href="_highlight.js/styles/monokai-sublime.css">
-<script src="_highlight.js/highlight.pack.js"></script>
+link.href = window.location.search.match( /print-pdf/gi ) ? "../../_reveal.js/d713baab/css/print/pdf.css" : "../../_reveal.js/d713baab/css/print/paper.css";
+document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="../../_reveal.js/d713baab/lib/js/html5shiv.js"></script><![endif]--></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>Fun with <code>var</code></h1><div class="preamble"><link rel="stylesheet" href="../../_highlight.js/77851f8c/styles/monokai-sublime.css">
+<script src="../../_highlight.js/77851f8c/highlight.pack.js"></script>
 <script>
 	window.onload = function() {
 		hljs.configure({
@@ -19,7 +19,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 </script>
 <div class="event">
 	<div class="participant">
-		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
+		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="../../_images/logo-nipa-face-ed83f892.png" class="logo"></a>
 		<div class="name">
 			<p><a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a></p>
 			<p><a href="http://codefx.org">codefx.org</a>
@@ -27,7 +27,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://jug-da.de/"><img src="images/logo-jug-da.png" class="logo" style="background-color: #FFF; border-color: #FFF;"></a>
+		<a href="https://jug-da.de/"><img src="../../_images/logo-jug-da-396d70f9.png" class="logo" style="background-color: #FFF; border-color: #FFF;"></a>
 		<div class="name">
 			<p><a href="https://jug-da.de/">JUG Darmstadt</a></p>
 			<p><a href="https://twitter.com/JUG_DA" style="{host-twitter-style}">@JUG_DA</a></p>
@@ -36,7 +36,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 </div>
 <footer>
 	<div class="participant">
-		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
+		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="../../_images/logo-nipa-face-ed83f892.png" class="logo"></a>
 		<div class="name"><p>
 			<a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a>
 			/ <a href="http://codefx.org">codefx.org</a>
@@ -44,7 +44,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://jug-da.de/"><img src="images/logo-jug-da.png" class="logo" style="background-color: #FFF; border-color: #FFF;"></a>
+		<a href="https://jug-da.de/"><img src="../../_images/logo-jug-da-396d70f9.png" class="logo" style="background-color: #FFF; border-color: #FFF;"></a>
 		<div class="name">
 			<p><a href="https://jug-da.de/">JUG Darmstadt</a> / <a href="https://twitter.com/JUG_DA" style="{host-twitter-style}">@JUG_DA</a></p>
 		</div>
@@ -87,7 +87,7 @@ without creating a new interface.</p></div>
 <div class="paragraph"><p><strong>For example:</strong></p></div>
 <div class="paragraph"><p>You need something<br>
 that is <code>Closeable</code> and an <code>Iterator</code><br>
-without creating <code>CloseableIterator</code>.</p></div></section><section data-background-image="images/intersection-venn.png" data-background-size="cover" data-state="empty"></section><section id="intersection_types"><h2>Intersection types</h2><div class="paragraph"><p>Given two types, the <strong>intersection type</strong><br>
+without creating <code>CloseableIterator</code>.</p></div></section><section data-background-image="../../_images/intersection-venn-6ff3b520.png" data-background-size="cover" data-state="empty"></section><section id="intersection_types"><h2>Intersection types</h2><div class="paragraph"><p>Given two types, the <strong>intersection type</strong><br>
 is the set of variables that are of both types.</p></div>
 <div class="paragraph"><p>An intersection type has the API of both types!</p></div>
 <div class="paragraph"><p><strong>For example:</strong></p></div>
@@ -200,8 +200,8 @@ Upcoming Java language feature!</p></div>
 not in 2019, likely not in 2020.</p></div></section><section id="more_on_ad_hoc_fieldsandmethods"><h2>More on ad-hoc fields&nbsp;and&nbsp;methods</h2><div class="paragraph"><p>I&#8217;ve written a blog post:<br>
 <a href="https://blog.codefx.org/java/tricks-var-anonymous-classes/">blog.codefx.org/java/tricks-var-anonymous-classes</a></p></div></section></section>
 <section id="summary"><h2>Summary</h2><div class="ulist"><ul><li><p>use <code>var</code> to improve readability:</p><div class="ulist"><ul><li><p>right-hand side should be informative</p></li><li><p>variable name should be well-chosen</p></li><li><p>add more intermediate variables</p></li></ul></div></li><li><p>tricks with <code>var</code> are usually complex:</p><div class="ulist"><ul><li><p>may be worth it for intersection types</p></li><li><p>break <code>equals</code>/<code>hashCode</code> for traits</p></li><li><p>not worth it for ad-hoc fields and methods</p></li></ul></div></li></ul></div></section>
-<section><section id="about_nicolai_parlog" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>About Nicolai Parlog</h2><div style="float: left; width: 45%; margin:0px;">
-	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="images/cover-jms.png" style="margin: 0;"></a>
+<section><section id="about_nicolai_parlog" data-background-image="../../_images/question-mark-9644fc1f.jpg" data-background-size="cover"><h2>About Nicolai Parlog</h2><div style="float: left; width: 45%; margin:0px;">
+	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="../../_images/cover-jms-4e5e400d.png" style="margin: 0;"></a>
 	<p style="
 		position: fixed;
 		margin: -160px 0 0 60px;
@@ -217,14 +217,14 @@ not in 2019, likely not in 2020.</p></div></section><section id="more_on_ad_hoc_
 ">37% off with<br>code <em>fccparlog</em></p>
 	<p><a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb">tiny.cc/jms</a></p>
 </div><h3>Follow</h3><div class="paragraph"><p>💻 <a href="http://codefx.org">codefx.org</a><br>
-🐦 <a href="https://twitter.com/nipafx">@nipafx</a></p></div><h3>Want More?</h3><div class="paragraph"><p>Slides at <a href="https://slides.codefx.org">slides.codefx.org</a></p></div><div class="paragraph"><p>⇜ Get <a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&amp;a_bid=869915cb">my book</a>!</p></div><div class="paragraph"><p>You can <a href="http://blog.codefx.org/hire-nicolai-parlog/">hire me</a>:</p></div><div class="ulist"><ul><li><p>training (Java 8-12, JUnit 5)</p></li><li><p>consulting (Java 8-12)</p></li></ul></div></section><section data-background-image="images/accento-save.jpg" data-background-size="cover" data-state="empty"></section></section>
+🐦 <a href="https://twitter.com/nipafx">@nipafx</a></p></div><h3>Want More?</h3><div class="paragraph"><p>Slides at <a href="https://slides.codefx.org">slides.codefx.org</a></p></div><div class="paragraph"><p>⇜ Get <a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&amp;a_bid=869915cb">my book</a>!</p></div><div class="paragraph"><p>You can <a href="http://blog.codefx.org/hire-nicolai-parlog/">hire me</a>:</p></div><div class="ulist"><ul><li><p>training (Java 8-12, JUnit 5)</p></li><li><p>consulting (Java 8-12)</p></li></ul></div></section><section data-background-image="../../_images/accento-save-f779bcf8.jpg" data-background-size="cover" data-state="empty"></section></section>
 <section id="image_credits"><h2>Image Credits</h2><div class="ulist"><ul><li><p><a href="https://unsplash.com/photos/qWlkCwBnwOE">pineapple party</a>:
 <a href="https://unsplash.com/@pineapple">Pineapple Supply Co.</a>,
 <a href="https://unsplash.com/license">Unsplash license</a></p></li><li><p><a href="https://pixabay.com/en/new-year-s-eve-fireworks-beacon-1953253/">fireworks</a>:
 <a href="https://pixabay.com/en/users/nickgesell-3554748/">nickgesell</a>,
 <a href="https://wiki.creativecommons.org/wiki/CC0">CC0</a></p></li><li><p><a href="https://www.flickr.com/photos/21496790@N06/5065834411">question-mark</a>:
 <a href="http://milosevicmilos.com/">Milos Milosevic</a>,
-<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a></p></li></ul></div></section></div></div><script src="_reveal.js/lib/js/head.min.js"></script><script src="_reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a></p></li></ul></div></section></div></div><script src="../../_reveal.js/d713baab/lib/js/head.min.js"></script><script src="../../_reveal.js/d713baab/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
 Reveal.initialize({
   // Display controls in the bottom right corner
   controls: false,
@@ -289,7 +289,7 @@ Reveal.initialize({
   // Number of slides away from the current that are visible
   viewDistance: 3,
   // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
-  parallaxBackgroundImage: 'images/pineapple-party.jpg',
+  parallaxBackgroundImage: '../../_images/pineapple-party-098af61f.jpg',
   // Parallax background size in CSS syntax (e.g., "2100px 900px")
   parallaxBackgroundSize: '4892px 3261px',
 
@@ -308,11 +308,11 @@ Reveal.initialize({
 
   // Optional libraries used to extend on reveal.js
   dependencies: [
-      { src: '_reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-      { src: '_reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-      { src: '_reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../../_reveal.js/d713baab/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: '../../_reveal.js/d713baab/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../../_reveal.js/d713baab/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
       
-      { src: '_reveal.js/plugin/zoom-js/zoom.js', async: true },
-      { src: '_reveal.js/plugin/notes/notes.js', async: true }
+      { src: '../../_reveal.js/d713baab/plugin/zoom-js/zoom.js', async: true },
+      { src: '../../_reveal.js/d713baab/plugin/notes/notes.js', async: true }
   ]
 });</script></body></html>

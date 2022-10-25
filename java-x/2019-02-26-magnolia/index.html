@@ -1,9 +1,9 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Java 9 To 12</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="_reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="_reveal.js/css/theme/nipa-night.css" id="theme"><link href="_reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>var link = document.createElement( 'link' );
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Java 9 To 12</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="../../_reveal.js/4cc7dbcc/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="../../_reveal.js/4cc7dbcc/css/theme/nipa-night.css" id="theme"><link href="../../_reveal.js/4cc7dbcc/lib/css/zenburn.css" rel="stylesheet"><script>var link = document.createElement( 'link' );
 link.rel = 'stylesheet';
 link.type = 'text/css';
-link.href = window.location.search.match( /print-pdf/gi ) ? "_reveal.js/css/print/pdf.css" : "_reveal.js/css/print/paper.css";
-document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="_reveal.js/lib/js/html5shiv.js"></script><![endif]--></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>Java 9 To 12</h1><div class="preamble"><link rel="stylesheet" href="_highlight.js/styles/monokai-sublime.css">
-<script src="_highlight.js/highlight.pack.js"></script>
+link.href = window.location.search.match( /print-pdf/gi ) ? "../../_reveal.js/4cc7dbcc/css/print/pdf.css" : "../../_reveal.js/4cc7dbcc/css/print/paper.css";
+document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="../../_reveal.js/4cc7dbcc/lib/js/html5shiv.js"></script><![endif]--></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>Java 9 To 12</h1><div class="preamble"><link rel="stylesheet" href="../../_highlight.js/77851f8c/styles/monokai-sublime.css">
+<script src="../../_highlight.js/77851f8c/highlight.pack.js"></script>
 <script>
 	window.onload = function() {
 		hljs.configure({
@@ -19,7 +19,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 </script>
 <div class="event">
 	<div class="participant">
-		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
+		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="../../_images/logo-nipa-face-ed83f892.png" class="logo"></a>
 		<div class="name">
 			<p><a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a></p>
 			<p><a href="http://codefx.org">codefx.org</a>
@@ -27,7 +27,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://www.magnolia-cms.com/"><img src="images/logo-magnolia.jpg" class="logo" style="{host-logo-style}"></a>
+		<a href="https://www.magnolia-cms.com/"><img src="../../_images/logo-magnolia-fdc5bf41.jpg" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
 			<p><a href="https://www.magnolia-cms.com/">Magnolia CMS</a></p>
 			<p><a href="https://twitter.com/magnolia_cms">@magnolia_cms</a></p>
@@ -37,7 +37,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 <!-- Just adding a footer does not work because reveal.js puts it into the slides and we couldn't get it out via CSS. So we move it via JavaScript. -->
 <footer>
 	<div class="participant">
-		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
+		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="../../_images/logo-nipa-face-ed83f892.png" class="logo"></a>
 		<div class="name"><p>
 			<a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a>
 			/ <a href="http://codefx.org">codefx.org</a>
@@ -45,7 +45,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://www.magnolia-cms.com/"><img src="images/logo-magnolia.jpg" class="logo" style="{host-logo-style}"></a>
+		<a href="https://www.magnolia-cms.com/"><img src="../../_images/logo-magnolia-fdc5bf41.jpg" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
 			<p><a href="https://www.magnolia-cms.com/">Magnolia CMS</a> / <a href="https://twitter.com/magnolia_cms">@magnolia_cms</a></p>
 		</div>
@@ -593,10 +593,10 @@ which covers many more cases</p></li></ul></div></section><section id="is_blank"
 <div class="paragraph"><p>Functionally equivalent to:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">string.isBlank() == string.strip().isEmpty();</code></pre></div></div></section><section id="life_hack"><h2>Life Hack</h2><div class="paragraph"><p>As soon as Java APIs get new method,<br>
 scour StackOverflow for easy karma!</p></div>
-<div class="imageblock diagram" style=""><img src="images/so-repeat-string-q.png" alt="so repeat string q"></div></section><section id="life_hack_2"><h2>Life Hack</h2><div class="paragraph"><p>Formerly accepted answer:</p></div>
-<div class="imageblock diagram" style=""><img src="images/so-repeat-string-a-old.png" alt="so repeat string a old"></div>
+<div class="imageblock diagram" style=""><img src="../../_images/so-repeat-string-q-3c8de6f0.png" alt="so repeat string q"></div></section><section id="life_hack_2"><h2>Life Hack</h2><div class="paragraph"><p>Formerly accepted answer:</p></div>
+<div class="imageblock diagram" style=""><img src="../../_images/so-repeat-string-a-old-d4e06570.png" alt="so repeat string a old"></div>
 <div class="paragraph"><p>😍</p></div></section><section id="life_hack_3"><h2>Life Hack ⑪</h2><div class="paragraph"><p>Ta-da!</p></div>
-<div class="imageblock diagram" style=""><img src="images/so-repeat-string-a.png" alt="so repeat string a"></div></section><section id="streaming_lines"><h2>Streaming Lines ⑪</h2><div class="paragraph"><p>Processing a string&#8217;s lines:</p></div>
+<div class="imageblock diagram" style=""><img src="../../_images/so-repeat-string-a-b1863f42.png" alt="so repeat string a"></div></section><section id="streaming_lines"><h2>Streaming Lines ⑪</h2><div class="paragraph"><p>Processing a string&#8217;s lines:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">Stream&lt;String&gt; lines();</code></pre></div></div>
 <div class="ulist"><ul><li><p>splits a string on <code>"\n"</code>, <code>"\r"</code>, <code>"\r\n"</code></p></li><li><p>lines do not include terminator</p></li><li><p>more performant than <code>split("\R")</code></p></li><li><p>lazy!</p></li></ul></div></section></section>
 <section><section id="updated_apis_3"><h2>Updated APIs</h2><table class="toc">
@@ -998,7 +998,7 @@ Line 11</code></pre></div></div></section><section id="options"><h2>Options</h2>
 <div class="ulist"><ul><li><p><code>SHOW_REFLECT_FRAMES</code> for reflection frames</p></li><li><p><code>SHOW_HIDDEN_FRAMES</code> e.g. for lambda frames</p></li><li><p><code>RETAIN_CLASS_REFERENCE</code> for <code>Class&lt;?&gt;</code></p></li></ul></div></section><section id="frames_and_traces"><h2>Frames and Traces</h2><div class="paragraph"><p><code>forEach</code> and <code>walk</code> operate on <code>StackFrame</code>:</p></div>
 <div class="ulist"><ul><li><p>class and method name</p></li><li><p>class as <code>Class&lt;?&gt;</code></p></li><li><p>bytecode index and isNative</p></li></ul></div>
 <div class="paragraph"><p>Can upgrade to <code>StackTraceElement</code> (expensive):</p></div>
-<div class="ulist"><ul><li><p>file name and line number</p></li></ul></div></section><section id="performance_i"><h2>Performance I</h2><div class="imageblock diagram" style=""><img src="images/stack-walker-vs-exception.png" alt="stack walker vs exception"></div></section><section id="performance_ii"><h2>Performance II</h2><div class="imageblock diagram" style=""><img src="images/stack-walker-limit-with-estimated-size.png" alt="stack walker limit with estimated size"></div></section><section id="performance_iii"><h2>Performance III</h2><div class="ulist"><ul><li><p>creating <code>StackTraceElement</code> is expensive<br>
+<div class="ulist"><ul><li><p>file name and line number</p></li></ul></div></section><section id="performance_i"><h2>Performance I</h2><div class="imageblock diagram" style=""><img src="../../_images/stack-walker-vs-exception-d1b3a260.png" alt="stack walker vs exception"></div></section><section id="performance_ii"><h2>Performance II</h2><div class="imageblock diagram" style=""><img src="../../_images/stack-walker-limit-with-estimated-size-b413296c.png" alt="stack walker limit with estimated size"></div></section><section id="performance_iii"><h2>Performance III</h2><div class="ulist"><ul><li><p>creating <code>StackTraceElement</code> is expensive<br>
 (for file name and line number)</p></li><li><p>lazy evaluation pays off for partial traversal</p></li></ul></div>
 <div class="paragraph"><p>(Benchmarks performed by <a href="https://twitter.com/arnaudroger">Arnaud Roger</a>)</p></div></section></section>
 <section id="a_mixed_bag_of_new_apis"><h2>A Mixed Bag Of New APIs</h2><div class="paragraph"><p><strong>In Java 9:</strong></p></div>
@@ -1039,7 +1039,7 @@ hello-java-11</code></pre></div></div></li></ul></div></section></section>
 	<tr><td>Redirected Platform Logging ⑨</td></tr>
 </table><div class="paragraph"><p>Observing the JVM at work.</p></div></section><section id="unified_logging"><h2>Unified Logging</h2><div class="paragraph"><p>New logging infrastructure for the JVM<br>
 (e.g. OS interaction, threading, GC, etc.):</p></div>
-<div class="ulist"><ul><li><p>JVM log messages pass through new mechanism<br></p></li><li><p>works similar to known logging frameworks:</p><div class="ulist"><ul><li><p>textual messages</p></li><li><p>log level</p></li><li><p>time stamps</p></li><li><p>meta information (like subsystem)</p></li></ul></div></li><li><p>output can be configured with <code>-Xlog</code></p></li></ul></div></section><section id="unified_logging_2"><h2>Unified Logging</h2><div class="imageblock diagram" style=""><img src="images/unified-logging.png" alt="unified logging"></div></section><section id="first_try"><h2>First Try</h2><div class="paragraph"><p>Plain use of <code>-Xlog</code>:</p></div>
+<div class="ulist"><ul><li><p>JVM log messages pass through new mechanism<br></p></li><li><p>works similar to known logging frameworks:</p><div class="ulist"><ul><li><p>textual messages</p></li><li><p>log level</p></li><li><p>time stamps</p></li><li><p>meta information (like subsystem)</p></li></ul></div></li><li><p>output can be configured with <code>-Xlog</code></p></li></ul></div></section><section id="unified_logging_2"><h2>Unified Logging</h2><div class="imageblock diagram" style=""><img src="../../_images/unified-logging-6c9a9604.png" alt="unified logging"></div></section><section id="first_try"><h2>First Try</h2><div class="paragraph"><p>Plain use of <code>-Xlog</code>:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="sh language-sh">$ java -Xlog -version
 
 # truncated a few messages
@@ -1254,16 +1254,16 @@ directly to new <code>byte[]</code>.</p></div></section><section id="performance
 <div class="paragraph"><p><strong>In Java 11:</strong></p></div>
 <div class="ulist"><ul><li><p>Epsilon GC (<a href="http://openjdk.java.net/jeps/318">JEP 318</a>)</p></li><li><p>ZGC (experimental, <a href="http://openjdk.java.net/jeps/333">JEP 333</a>)</p></li><li><p>low-overhead heap profiling (<a href="http://openjdk.java.net/jeps/331">JEP 331</a>)</p></li></ul></div></section><section id="a_mixed_bag_of_performance_3"><h2>A Mixed Bag Of Performance</h2><div class="paragraph"><p><strong>In Java 12:</strong></p></div>
 <div class="ulist"><ul><li><p>Shenandoah (<a href="http://openjdk.java.net/jeps/189">JEP 189</a>)</p></li><li><p>G1 improvements:</p><div class="ulist"><ul><li><p>abortable mixed collections (<a href="http://openjdk.java.net/jeps/344">JEP 344</a>)</p></li><li><p>promptly return unused memory (<a href="http://openjdk.java.net/jeps/346">JEP 346</a>)</p></li></ul></div></li></ul></div></section></section>
-<section id="full_picture" data-background-image="images/shibuya-night.jpg" data-background-size="cover"><h2>Full Picture</h2>
+<section id="full_picture" data-background-image="../../_images/shibuya-night-ced6aaa0.jpg" data-background-size="cover"><h2>Full Picture</h2>
 <div class="paragraph"><p>If you want the full picture:</p></div>
 <div class="paragraph"><p><strong>All You Need To Know For<br>
 Migrating To Java 11</strong><br>
 <a href="https://blog.codefx.org/java/java-11-migration-guide/">tiny.cc/java-11</a></p></div>
 <div class="paragraph"><p><strong>Code First Java 9 Tutorial</strong><br>
 <a href="https://blog.codefx.org/java/java-9-tutorial">tiny.cc/java-9-tutorial</a></p></div></section>
-<section id="about_nicolai_parlog" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>About Nicolai Parlog</h2>
+<section id="about_nicolai_parlog" data-background-image="../../_images/question-mark-9644fc1f.jpg" data-background-size="cover"><h2>About Nicolai Parlog</h2>
 <div style="float: left; width: 45%; margin:0px;">
-	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="images/cover-jms.png" style="margin: 0;"></a>
+	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="../../_images/cover-jms-4e5e400d.png" style="margin: 0;"></a>
 	<p style="
 		position: fixed;
 		margin: -160px 0 0 60px;
@@ -1289,7 +1289,7 @@ Migrating To Java 11</strong><br>
 <div class="ulist"><ul><li><p>training (Java 8-11, JUnit 5)</p></li><li><p>consulting (Java 8-11)</p></li></ul></div></section>
 <section id="image_credits"><h2>Image Credits</h2><div class="ulist"><ul><li><p>Eleven: © Netflix</p></li><li><p><a href="https://www.flickr.com/photos/21496790@N06/5065834411">question-mark</a>:
 <a href="http://milosevicmilos.com/">Milos Milosevic</a>,
-<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a></p></li></ul></div></section></div></div><script src="_reveal.js/lib/js/head.min.js"></script><script src="_reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a></p></li></ul></div></section></div></div><script src="../../_reveal.js/4cc7dbcc/lib/js/head.min.js"></script><script src="../../_reveal.js/4cc7dbcc/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
 Reveal.initialize({
   // Display controls in the bottom right corner
   controls: false,
@@ -1354,7 +1354,7 @@ Reveal.initialize({
   // Number of slides away from the current that are visible
   viewDistance: 3,
   // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
-  parallaxBackgroundImage: 'images/11.jpg',
+  parallaxBackgroundImage: '../../_images/11-36ebd730.jpg',
   // Parallax background size in CSS syntax (e.g., "2100px 900px")
   parallaxBackgroundSize: '3840px 1920px',
 
@@ -1373,11 +1373,11 @@ Reveal.initialize({
 
   // Optional libraries used to extend on reveal.js
   dependencies: [
-      { src: '_reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-      { src: '_reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-      { src: '_reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../../_reveal.js/4cc7dbcc/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: '../../_reveal.js/4cc7dbcc/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../../_reveal.js/4cc7dbcc/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
       
-      { src: '_reveal.js/plugin/zoom-js/zoom.js', async: true },
-      { src: '_reveal.js/plugin/notes/notes.js', async: true }
+      { src: '../../_reveal.js/4cc7dbcc/plugin/zoom-js/zoom.js', async: true },
+      { src: '../../_reveal.js/4cc7dbcc/plugin/notes/notes.js', async: true }
   ]
 });</script></body></html>

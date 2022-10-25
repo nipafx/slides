@@ -1,9 +1,9 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>JUnit 5</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="_reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="_reveal.js/css/theme/nipa-night.css" id="theme"><link href="_reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>var link = document.createElement( 'link' );
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>JUnit 5</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="../../_reveal.js/179bb096/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="../../_reveal.js/179bb096/css/theme/nipa-night.css" id="theme"><link href="../../_reveal.js/179bb096/lib/css/zenburn.css" rel="stylesheet"><script>var link = document.createElement( 'link' );
 link.rel = 'stylesheet';
 link.type = 'text/css';
-link.href = window.location.search.match( /print-pdf/gi ) ? "_reveal.js/css/print/pdf.css" : "_reveal.js/css/print/paper.css";
-document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="_reveal.js/lib/js/html5shiv.js"></script><![endif]--></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>JUnit 5</h1><div class="preamble"><link rel="stylesheet" href="_highlight.js/styles/monokai-sublime.css">
-<script src="_highlight.js/highlight.pack.js"></script>
+link.href = window.location.search.match( /print-pdf/gi ) ? "../../_reveal.js/179bb096/css/print/pdf.css" : "../../_reveal.js/179bb096/css/print/paper.css";
+document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="../../_reveal.js/179bb096/lib/js/html5shiv.js"></script><![endif]--></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>JUnit 5</h1><div class="preamble"><link rel="stylesheet" href="../../_highlight.js/8fbb4352/styles/monokai-sublime.css">
+<script src="../../_highlight.js/8fbb4352/highlight.pack.js"></script>
 <script>
 	window.onload = function() {
 		hljs.configure({
@@ -20,7 +20,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 <h2>Next Generation Testing<br>on the JVM</h2>
 <div class="event">
 	<div class="participant">
-		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
+		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="../../_images/logo-nipa-face-ed83f892.png" class="logo"></a>
 		<div class="name">
 			<p><a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a></p>
 			<p><a href="http://codefx.org">codefx.org</a>
@@ -28,7 +28,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://www.1und1.de"><img src="images/logo-1-und-1.png" class="logo" style="{host-logo-style}"></a>
+		<a href="https://www.1und1.de"><img src="../../_images/logo-1-und-1-8e691afb.png" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
 			<p><a href="https://www.1und1.de">1&amp;1</a></p>
 			<p><a href="https://twitter.com/1and1">@1and1</a></p>
@@ -38,7 +38,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 <!-- Just adding a footer does not work because reveal.js puts it into the slides and we couldn't get it out via CSS. So we move it via JavaScript. -->
 <footer>
 	<div class="participant">
-		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
+		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="../../_images/logo-nipa-face-ed83f892.png" class="logo"></a>
 		<div class="name"><p>
 			<a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a>
 			/ <a href="http://codefx.org">codefx.org</a>
@@ -46,7 +46,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://www.1und1.de"><img src="images/logo-1-und-1.png" class="logo" style="{host-logo-style}"></a>
+		<a href="https://www.1und1.de"><img src="../../_images/logo-1-und-1-8e691afb.png" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
 			<p><a href="https://www.1und1.de">1&amp;1</a> / <a href="https://twitter.com/1and1">@1and1</a></p>
 		</div>
@@ -162,7 +162,7 @@ class StackTest {
 	void throwsExceptionWhenPopped() { /*...*/ }
 
 }</code></pre></div></div></section><section id="whats_new_9"><h2>What&#8217;s new?</h2><div class="paragraph"><p>Effects of using <code>@DisplayName</code>:</p></div>
-<div class="imageblock" style=""><img src="images/testing-a-stack.png" alt="DisplayName" width="900"></div>
+<div class="imageblock" style=""><img src="../../_images/testing-a-stack-20d61561.png" alt="DisplayName" width="900"></div>
 <p class="fragment current-visible">⇝ Human-readable names!</p></section><section id="whats_new_10"><h2>What&#8217;s new?</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">class CountTest {
 	// lifecycle and tests
 	@Nested
@@ -175,7 +175,7 @@ class StackTest {
 	}
 }</code></pre></div></div>
 <p class="fragment current-visible">⇝ <code>@Nested</code> to organize tests in inner classes!</p></section><section id="whats_new_11"><h2>What&#8217;s new?</h2><div class="paragraph"><p><code>@Nested</code> works great with <code>@DisplayName</code>:</p></div>
-<div class="imageblock" style=""><img src="images/testing-a-stack-nested.png" alt="Nested and named tests" width="900"></div></section><section id="whats_new_12"><h2>What&#8217;s new?</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@Test
+<div class="imageblock" style=""><img src="../../_images/testing-a-stack-nested-d7d159fb.png" alt="Nested and named tests" width="900"></div></section><section id="whats_new_12"><h2>What&#8217;s new?</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@Test
 void someTest(MyServer server) {
 	// do something with `server`
 }</code></pre></div></div>
@@ -484,7 +484,7 @@ class StackTest {
 
 	}
 }</code></pre></div></div></section><section id="nested_and_named_2"><h2>Nested and named</h2><div class="paragraph"><p>The effects of <code>@Nested</code> and <code>@DisplayName</code>:</p></div>
-<div class="imageblock" style=""><img src="images/testing-a-stack-nested.png" alt="Nested and DisplayName" width="900"></div></section><section id="nested_tests_3"><h2>Nested tests</h2><h3>Summary</h3><div class="ulist"><ul><li><p>look out for groups of tests<br>
+<div class="imageblock" style=""><img src="../../_images/testing-a-stack-nested-d7d159fb.png" alt="Nested and DisplayName" width="900"></div></section><section id="nested_tests_3"><h2>Nested tests</h2><h3>Summary</h3><div class="ulist"><ul><li><p>look out for groups of tests<br>
 with same initial state</p></li><li><p>give each group a non-static<br>
 inner class with <code>@Nested</code></p></li><li><p>nest inner classes if state is incremental</p></li><li><p>rely on outside-in calls to <code>@BeforeEach</code><br>
 to build state incrementally</p></li></ul></div></section></section>
@@ -517,7 +517,7 @@ each test&#8217;s name</p><div class="ulist"><ul><li><p><code>{displayName}</cod
 	void repeated(RepetitionInfo reps) { /*...*/ }
 
 }</code></pre></div></div></section><section id="repeated_tests_4"><h2>Repeated tests</h2><div class="paragraph"><p>Et voilà:</p></div>
-<div class="imageblock" style=""><img src="images/repeated-test.png" alt="Parameterized tests" width="900"></div></section><section id="repetition_info"><h2>Repetition Info</h2><div class="paragraph"><p>To access information about repetitions:</p></div>
+<div class="imageblock" style=""><img src="../../_images/repeated-test-50b09ae0.png" alt="Parameterized tests" width="900"></div></section><section id="repetition_info"><h2>Repetition Info</h2><div class="paragraph"><p>To access information about repetitions:</p></div>
 <div class="ulist"><ul><li><p>declare parameter <code>RepetitionInfo</code><br>
 (injected by JUnit)</p></li><li><p>query for current and total repetition count</p></li></ul></div></section><section id="repeated_tests_5"><h2>Repeated tests</h2><h3>Summary</h3><div class="ulist"><ul><li><p>use <code>@RepeatedTest(n)</code> to repeat test <code>n</code> times</p></li><li><p>configure test names with <code>name</code> attribute</p></li><li><p>use <code>RepetitionInfo</code> to access repetition counts</p></li></ul></div></section></section>
 <section><section id="parameterized_tests"><h2>Parameterized tests</h2><div class="paragraph"><p> <table class="toc"> <tr><td>First Steps</td></tr> <tr><td>Mechanisms</td></tr> <tr><td>Sophisticated Tests</td></tr> <tr><td><ul><li>Nested Tests</li></ul></td></tr> <tr><td><ul><li>Repeated Tests</li></ul></td></tr> <tr class="toc-current"><td><ul><li>Parameterized Tests</li></ul></td></tr> <tr><td><ul><li>Dynamic Tests</li></ul></td></tr> <tr><td>From 4 To 5</td></tr> <tr><td>Extensions</td></tr> </table> </p></div></section><section id="parameterizing_tests"><h2>Parameterizing tests</h2><div class="paragraph"><p>Dominant use case for parameterizing tests:</p></div>
@@ -530,7 +530,7 @@ junit-jupiter-params
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@ParameterizedTest
 @ValueSource(strings = { " Hello", "JUnit" })
 void testValues(String word) { /*...*/ }</code></pre></div></div>
-<div class="imageblock" style=""><img src="images/parameterized-test.png" alt="Parameterized tests" width="600"></div></section><section id="parameterized_tests_2"><h2>Parameterized tests</h2><div class="paragraph"><p>Details to look into:</p></div>
+<div class="imageblock" style=""><img src="../../_images/parameterized-test-c47fb920.png" alt="Parameterized tests" width="600"></div></section><section id="parameterized_tests_2"><h2>Parameterized tests</h2><div class="paragraph"><p>Details to look into:</p></div>
 <div class="ulist"><ul><li><p>argument sources</p></li><li><p>argument converters</p></li><li><p>argument aggregators</p></li><li><p>lifecycle integration</p></li><li><p>naming tests</p></li></ul></div></section><section id="argument_sources"><h2>Argument sources</h2><div class="paragraph"><p>Parameterized tests need sources for arguments.</p></div>
 <div class="paragraph"><p>These are included:</p></div>
 <div class="ulist"><ul><li><p><code>@ValueSource</code> is very simple,<br>
@@ -683,7 +683,7 @@ each test&#8217;s name:</p><div class="ulist"><ul><li><p><code>{index}</code>: c
 @ParameterizedTest(name = "\"{0}\" should be {1}")
 @CsvSource({ "I, 1", "II, 2", "V, 5" })
 void numeral(String word, int number) { /*...*/ }</code></pre></div></div>
-<div class="imageblock" style=""><img src="images/parameterized-fancy-name.png" alt="Parameterized tests with proper names" width="900"></div></section><section id="parameterized_tests_3"><h2>Parameterized tests</h2><h3>Summary</h3><div class="paragraph"><p>JUnit 5 has native support for<br>
+<div class="imageblock" style=""><img src="../../_images/parameterized-fancy-name-0161b9e9.png" alt="Parameterized tests with proper names" width="900"></div></section><section id="parameterized_tests_3"><h2>Parameterized tests</h2><h3>Summary</h3><div class="paragraph"><p>JUnit 5 has native support for<br>
 (one variant of) parameterized tests:</p></div>
 <div class="ulist"><ul><li><p>declare with <code>@ParameterizedTest</code>:</p><div class="ulist"><ul><li><p>can be properly named</p></li><li><p>fully integrated into lifecycle</p></li></ul></div></li><li><p>then worry about arguments</p></li></ul></div></section><section id="parameterized_tests_4"><h2>Parameterized tests</h2><h3>Summary</h3><div class="paragraph"><p>Parameters need arguments:</p></div>
 <div class="ulist"><ul><li><p>define input with different sources, e.g.<br>
@@ -722,7 +722,7 @@ List&lt;DynamicTest&gt; createPointTests() {
 	}
 }</code></pre></div></div></section><section id="implementation"><h2>Implementation</h2><div class="paragraph"><p>The rest is straight-forward:</p></div>
 <div class="olist arabic"><ol class="arabic"><li><p>JUnit detects <code>@TestFactory</code> methods</p></li><li><p>calls them to generate containers and tests</p></li><li><p>adds tests to the test tree</p></li><li><p>eventually runs them</p></li></ol></div></section><section id="running_dynamic_tests"><h2>Running dynamic tests</h2><div class="paragraph"><p>Viewed by tools as separate tests:</p></div>
-<div class="imageblock" style=""><img src="images/dynamic-containers.png" alt="Dynamic containers and tests" width="900"></div></section><section id="lifecycle"><h2>Lifecycle</h2><div class="paragraph"><p>Not integrated into the lifecycle
+<div class="imageblock" style=""><img src="../../_images/dynamic-containers-d9db5699.png" alt="Dynamic containers and tests" width="900"></div></section><section id="lifecycle"><h2>Lifecycle</h2><div class="paragraph"><p>Not integrated into the lifecycle
 (<a href="https://github.com/junit-team/junit5/issues/378">#378</a>):</p></div>
 <div class="ulist"><ul><li><p><code>@Before-</code>/<code>@AfterEach</code> only called<br>
 once per <code>@TestFactory</code></p></li><li><p>dynamic tests use shared state</p></li></ul></div></section><section id="lambda_tests"><h2>Lambda tests</h2><div class="paragraph"><p>This would be great:</p></div>
@@ -792,13 +792,13 @@ of <code>DynamicTest</code>/<code>DynamicContainer</code></p></li><li><p>annotat
 <div class="olist arabic"><ol class="arabic"><li><p>an API to write tests against</p></li><li><p>a mechanism to discover and run tests</p></li><li><p>an API for tools to run tests</p></li></ol></div></section><section id="approach_in_junit_5_2"><h2>Approach in JUnit 5</h2><div class="paragraph"><p>Separation of concerns V 2.0:</p></div>
 <div class="olist arabic"><ol class="arabic"><li><p>an API to write tests against</p></li><li><p>a mechanism to discover and run tests</p><div class="olist loweralpha"><ol class="loweralpha" type="a"><li><p>specific engine per variant of tests<br>
 (e.g. JUnit 4 or JUnit 5)</p></li><li><p>orchestration of engines</p></li><li><p>API between them</p></li></ol></div></li><li><p>an API for tools to run tests</p></li></ol></div></section><section id="subprojects_modules"><h2>Subprojects &amp; modules</h2><div class="dlist"><dl><dt class="hdlist1">JUnit Jupiter 5.2.0</dt><dd><div class="ulist"><ul><li><p><code>junit-jupiter-api</code></p></li><li><p><code>junit-jupiter-params</code></p></li><li><p><code>junit-jupiter-engine</code></p></li></ul></div></dd><dt class="hdlist1">JUnit Vintage 5.2.0</dt><dd><div class="ulist"><ul><li><p><code>junit-vintage-engine</code></p></li></ul></div></dd><dt class="hdlist1">JUnit Platform 1.2.0</dt><dd><div class="ulist"><ul><li><p><code>junit-platform-engine</code></p></li><li><p><code>junit-platform-runner</code></p></li></ul></div></dd></dl></div>
-<div class="paragraph"><p>And a lot more&#8230;&#8203;</p></div></section><section id="junit_5_modules"><h2>JUnit 5 modules</h2><div class="imageblock" style=""><img src="images/architecture-limited-lean.png" alt="architecture limited lean" width="550"></div></section><section id="architecture_2"><h2>Architecture</h2><h3>Summary</h3><div class="ulist"><ul><li><p>clear separation of concerns</p></li><li><p>API for developers</p></li><li><p>API for tools</p></li></ul></div>
+<div class="paragraph"><p>And a lot more&#8230;&#8203;</p></div></section><section id="junit_5_modules"><h2>JUnit 5 modules</h2><div class="imageblock" style=""><img src="../../_images/architecture-limited-lean-7343e023.png" alt="architecture limited lean" width="550"></div></section><section id="architecture_2"><h2>Architecture</h2><h3>Summary</h3><div class="ulist"><ul><li><p>clear separation of concerns</p></li><li><p>API for developers</p></li><li><p>API for tools</p></li></ul></div>
 <p class="fragment" data-fragment-index="0">
 <strong>This opens up the platform!</strong>
 </p></section><section id="moar_engines"><h2>Moar engines!</h2><div class="ulist"><ul><li><p>want to run JUnit 4 tests?<br>
 ⇝ create an engine for it!</p></li><li><p>want TestNG to have support like JUnit?<br>
 ⇝ create an engine for it!</p></li><li><p>want to write tests in natural language?<br>
-⇝ create an engine for it!</p></li></ul></div></section><section id="moar_engines_2"><h2>Moar engines!</h2><div class="imageblock" style=""><img src="images/architecture-lean.png" alt="architecture lean" width="550"></div></section><section id="open_platform"><h2>Open platform</h2><div class="paragraph"><p>Now that JUnit 5 adoption sets in:</p></div>
+⇝ create an engine for it!</p></li></ul></div></section><section id="moar_engines_2"><h2>Moar engines!</h2><div class="imageblock" style=""><img src="../../_images/architecture-lean-d03416ff.png" alt="architecture lean" width="550"></div></section><section id="open_platform"><h2>Open platform</h2><div class="paragraph"><p>Now that JUnit 5 adoption sets in:</p></div>
 <div class="ulist"><ul><li><p>tools are decoupled from implementation details</p></li><li><p>tools can support all frameworks (almost) equally well</p></li><li><p>new frameworks start with full tool support</p></li><li><p>developers can try out new things</p></li></ul></div>
 <div class="paragraph"><p>A new generation of test frameworks might arise!</p></div></section><section id="open_platform_2"><h2>Open platform</h2><div class="paragraph"><p>JUnit&#8217;s success as a platform<br>
 becomes <strong>available to everybody</strong>.</p></div>
@@ -837,7 +837,7 @@ package names, so no conflicts!</p></li><li><p><code>@Category(Type.class)</code
 <div class="ulist"><ul><li><p>Is JUnit 4 still supported?</p></li><li><p>Do I have to migrate old tests?</p></li><li><p>Will I use Jupiter for all new tests?</p></li></ul></div>
 <div class="paragraph"><p>The answers will surprise you!</p></div></section><section id="is_junit_4_supported"><h2>Is JUnit 4 supported?</h2><div class="paragraph"><p>Officially, yes:</p></div>
 <div class="quoteblock"><blockquote><div class="paragraph"><p>[T]he JUnit team will continue to provide maintenance and bug fix releases for the JUnit 4.x baseline</p></div></blockquote><div class="attribution">&#8212; <a href="https://junit.org/junit5/docs/current/user-guide/#migrating-from-junit4">JUnit 5 user guide</a></div></div></section><section id="is_junit_4_supported_2"><h2>Is JUnit 4 supported?</h2><div class="paragraph"><p>But:</p></div>
-<div class="imageblock diagram" style=""><img src="images/junit-4-commits.png" alt="junit 4 commits" width="900"></div>
+<div class="imageblock diagram" style=""><img src="../../_images/junit-4-commits-50774a6e.png" alt="junit 4 commits" width="900"></div>
 <div class="paragraph"><p>(Commits 07/2017-07/2018&#8201;&#8212;&#8201;note the y-axis!)</p></div>
 <div class="paragraph"><p>Last release: 12/2014.</p></div></section><section id="is_junit_4_supported_3"><h2>Is JUnit 4 supported?</h2><div class="paragraph"><p>¯\_(ツ)_/¯</p></div>
 <div class="paragraph"><p>Doesn&#8217;t matter, though:</p></div>
@@ -1107,9 +1107,9 @@ nested, parameterized (👍), dynamic<br>
 (soon: parallelized)</p></li><li><p>extension model is very powerful<br>
 (give <a href="https://junit-pioneer.org/">JUnit Pioneer</a> a spin)</p></li><li><p>architecture opens up the platform</p></li></ul></div>
 <div class="paragraph"><p>⇝ <a href="http://blog.codefx.org/tag/junit-5/">More about JUnit 5</a>.</p></div></section>
-<section id="about_nicolai_parlog" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>About Nicolai Parlog</h2>
+<section id="about_nicolai_parlog" data-background-image="../../_images/question-mark-9644fc1f.jpg" data-background-size="cover"><h2>About Nicolai Parlog</h2>
 <div style="float: left; width: 45%; margin:0px;">
-	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="images/cover-jms.png" style="margin: 0;"></a>
+	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="../../_images/cover-jms-4e5e400d.png" style="margin: 0;"></a>
 	<p style="
 		position: fixed;
 		margin: -160px 0 0 60px;
@@ -1141,7 +1141,7 @@ Ukstillalive,
 <a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a>,
 <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC 4.0</a></p></li><li><p><a href="https://www.flickr.com/photos/21496790@N06/5065834411">question-mark</a>:
 <a href="http://milosevicmilos.com/">Milos Milosevic</a>,
-<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a></p></li></ul></div></section></div></div><script src="_reveal.js/lib/js/head.min.js"></script><script src="_reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a></p></li></ul></div></section></div></div><script src="../../_reveal.js/179bb096/lib/js/head.min.js"></script><script src="../../_reveal.js/179bb096/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
 Reveal.initialize({
   // Display controls in the bottom right corner
   controls: false,
@@ -1206,7 +1206,7 @@ Reveal.initialize({
   // Number of slides away from the current that are visible
   viewDistance: 3,
   // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
-  parallaxBackgroundImage: 'images/jupiter-south.png',
+  parallaxBackgroundImage: '../../_images/jupiter-south-e614c83f.png',
   // Parallax background size in CSS syntax (e.g., "2100px 900px")
   parallaxBackgroundSize: '3200px 2000px',
 
@@ -1225,11 +1225,11 @@ Reveal.initialize({
 
   // Optional libraries used to extend on reveal.js
   dependencies: [
-      { src: '_reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-      { src: '_reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-      { src: '_reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../../_reveal.js/179bb096/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: '../../_reveal.js/179bb096/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../../_reveal.js/179bb096/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
       
-      { src: '_reveal.js/plugin/zoom-js/zoom.js', async: true },
-      { src: '_reveal.js/plugin/notes/notes.js', async: true }
+      { src: '../../_reveal.js/179bb096/plugin/zoom-js/zoom.js', async: true },
+      { src: '../../_reveal.js/179bb096/plugin/notes/notes.js', async: true }
   ]
 });</script></body></html>

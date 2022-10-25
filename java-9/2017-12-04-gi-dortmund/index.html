@@ -1,5 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Java 9 Is Here!</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="_reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="_reveal.js/css/theme/nipa-night.css" id="theme"><link href="_reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>document.write( '<link rel="stylesheet" href="_reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>Java 9 Is Here!</h1><div class="preamble"><link rel="stylesheet" href="_highlight.js/styles/monokai-sublime.css">
-<script src="_highlight.js/highlight.pack.js"></script>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Java 9 Is Here!</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="../../_reveal.js/179bb096/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="../../_reveal.js/179bb096/css/theme/nipa-night.css" id="theme"><link href="../../_reveal.js/179bb096/lib/css/zenburn.css" rel="stylesheet"><script>document.write( '<link rel="stylesheet" href="../../_reveal.js/179bb096/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>Java 9 Is Here!</h1><div class="preamble"><link rel="stylesheet" href="../../_highlight.js/8fbb4352/styles/monokai-sublime.css">
+<script src="../../_highlight.js/8fbb4352/highlight.pack.js"></script>
 <script>
 	window.onload = function() {
 		hljs.configure({
@@ -15,7 +15,7 @@
 </script>
 <div class="event">
 	<div class="participant">
-		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
+		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="../../_images/logo-nipa-face-ed83f892.png" class="logo"></a>
 		<div class="name">
 			<p><a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a></p>
 			<p><a href="http://codefx.org">codefx.org</a>
@@ -23,7 +23,7 @@
 		</div>
 	</div>
 	<div class="participant">
-		<a href="http://rg-dortmund.gi.de/startseite.html"><img src="images/logo-gesellschaft-informatik.png" class="logo" style="background-color: transparent; border-width: 0;"></a>
+		<a href="http://rg-dortmund.gi.de/startseite.html"><img src="../../_images/logo-gesellschaft-informatik-c8a44720.png" class="logo" style="background-color: transparent; border-width: 0;"></a>
 		<div class="name">
 			<p><a href="http://rg-dortmund.gi.de/startseite.html">Gesellschaft für Informatik</a></p>
 			<p><a href=""></a></p>
@@ -33,7 +33,7 @@
 <!-- Just adding a footer does not work because reveal.js puts it into the slides and we couldn't get it out via CSS. So we move it via JavaScript. -->
 <footer>
 	<div class="participant">
-		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
+		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="../../_images/logo-nipa-face-ed83f892.png" class="logo"></a>
 		<div class="name"><p>
 			<a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a>
 			/ <a href="http://codefx.org">codefx.org</a>
@@ -41,7 +41,7 @@
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="http://rg-dortmund.gi.de/startseite.html"><img src="images/logo-gesellschaft-informatik.png" class="logo" style="background-color: transparent; border-width: 0;"></a>
+		<a href="http://rg-dortmund.gi.de/startseite.html"><img src="../../_images/logo-gesellschaft-informatik-c8a44720.png" class="logo" style="background-color: transparent; border-width: 0;"></a>
 		<div class="name">
 			<p><a href="http://rg-dortmund.gi.de/startseite.html">Gesellschaft für Informatik</a> / <a href=""></a></p>
 		</div>
@@ -85,7 +85,7 @@
 }</code></pre></div></div>
 <div class="paragraph"><p>Say you want to access <code>java.sql.ResultSet</code>.</p></div>
 <div class="paragraph"><p>Module system only grants access if:</p></div>
-<div class="ulist"><ul><li><p><code>ResultSet</code> is public</p></li><li><p><code>java.sql</code> is exported by <em>java.sql</em></p></li><li><p>your module reads <em>java.sql</em></p></li></ul></div></section><section data-background-color="white" data-background-image="images/platform-modules.png" data-background-size="contain" data-state="empty"></section><section id="_services"><h2>Services</h2><div class="paragraph"><p>The module system as a service registry:</p></div>
+<div class="ulist"><ul><li><p><code>ResultSet</code> is public</p></li><li><p><code>java.sql</code> is exported by <em>java.sql</em></p></li><li><p>your module reads <em>java.sql</em></p></li></ul></div></section><section data-background-color="white" data-background-image="../../_images/platform-modules-ee5a3d40.png" data-background-size="contain" data-state="empty"></section><section id="_services"><h2>Services</h2><div class="paragraph"><p>The module system as a service registry:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> java.sql {
 	<span class="hljs-keyword">uses</span> java.sql.Driver
 }
@@ -99,7 +99,7 @@
 ServiceLoader
 	.load(Driver.class)
 	.forEach(drivers::add);</code></pre></div></div></section><section id="_other_features"><h2>Other Features</h2><div class="ulist"><ul><li><p>finer grained dependencies and exports</p></li><li><p>open packages and modules (for reflection)</p></li><li><p>unnamed and automatic modules (for migration)</p></li><li><p>layers (for containers)</p></li><li><p><code>jlink</code> to create runtime images</p></li></ul></div></section><section id="_more_about_jpms"><h2>More About JPMS</h2><div class="ulist"><ul><li><p><a href="https://blog.codefx.org/java/java-module-system-tutorial/">Code First Java Module System Tutorial</a></p></li><li><p><a href="https://blog.codefx.org/java/java-9-migration-guide/">Java 9 Migration Guide</a></p></li><li><p><a href="https://blog.codefx.org/java/five-command-line-options-to-hack-the-java-9-module-system/">Command Line Options To Hack The JPMS</a></p></li><li><p><a href="https://blog.codefx.org/java/planning-your-java-9-update/">Planning Your Java 9 Update</a></p></li></ul></div></section><section id="_even_more_about_jpms"><h2>Even More About JPMS</h2><div style="float: left; width: 45%; margin:0px;">
-	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="images/cover-jms.png" style="margin: 0;"></a>
+	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="../../_images/cover-jms-4e5e400d.png" style="margin: 0;"></a>
 	<p style="
 		position: fixed;
 		margin: -160px 0 0 60px;
@@ -469,7 +469,7 @@ Line 11</code></pre></div></div></section><section id="_options"><h2>Options</h2
 <div class="ulist"><ul><li><p><code>SHOW_REFLECT_FRAMES</code> for reflection frames</p></li><li><p><code>SHOW_HIDDEN_FRAMES</code> e.g. for lambda frames</p></li><li><p><code>RETAIN_CLASS_REFERENCE</code> for <code>Class&lt;?&gt;</code></p></li></ul></div></section><section id="_frames_and_traces"><h2>Frames and Traces</h2><div class="paragraph"><p><code>forEach</code> and <code>walk</code> operate on <code>StackFrame</code>:</p></div>
 <div class="ulist"><ul><li><p>class and method name</p></li><li><p>class as <code>Class&lt;?&gt;</code></p></li><li><p>bytecode index and isNative</p></li></ul></div>
 <div class="paragraph"><p>Can upgrade to <code>StackTraceElement</code> (expensive):</p></div>
-<div class="ulist"><ul><li><p>file name and line number</p></li></ul></div></section><section id="_performance_i"><h2>Performance I</h2><div class="imageblock diagram" style=""><img src="images/stack-walker-vs-exception.png" alt="stack walker vs exception"></div></section><section id="_performance_ii"><h2>Performance II</h2><div class="imageblock diagram" style=""><img src="images/stack-walker-limit-with-estimated-size.png" alt="stack walker limit with estimated size"></div></section><section id="_performance_iii"><h2>Performance III</h2><div class="ulist"><ul><li><p>creating <code>StackTraceElement</code> is expensive<br>
+<div class="ulist"><ul><li><p>file name and line number</p></li></ul></div></section><section id="_performance_i"><h2>Performance I</h2><div class="imageblock diagram" style=""><img src="../../_images/stack-walker-vs-exception-d1b3a260.png" alt="stack walker vs exception"></div></section><section id="_performance_ii"><h2>Performance II</h2><div class="imageblock diagram" style=""><img src="../../_images/stack-walker-limit-with-estimated-size-b413296c.png" alt="stack walker limit with estimated size"></div></section><section id="_performance_iii"><h2>Performance III</h2><div class="ulist"><ul><li><p>creating <code>StackTraceElement</code> is expensive<br>
 (for file name and line number)</p></li><li><p>lazy evaluation pays off for partial traversal</p></li></ul></div>
 <div class="paragraph"><p>(Benchmarks performed by <a href="https://twitter.com/arnaudroger">Arnaud Roger</a>)</p></div></section></section>
 <section><section id="_os_processes"><h2>OS Processes</h2><table class="toc">
@@ -617,15 +617,15 @@ directly to new <code>byte[]</code>.</p></div></section><section id="_performanc
 <div class="paragraph"><p>(Benchmarks by <a href="https://twitter.com/shipilev">Aleksey Shipilëv</a>)</p></div></section></section>
 <section id="_a_mixed_bag_of_performance_improvements"><h2>A Mixed Bag Of Performance Improvements</h2><div class="ulist"><ul><li><p>cgroup-memory limits</p></li><li><p>something with interned strings<br>
 and class data sharing (<a href="http://openjdk.java.net/jeps/250">JEP 250</a>)</p></li><li><p>contended locks (<a href="http://openjdk.java.net/jeps/143">JEP 143</a>)</p></li><li><p>security manager (<a href="http://openjdk.java.net/jeps/232">JEP 232</a>)</p></li><li><p>GHASH/RSA computation (<a href="http://openjdk.java.net/jeps/246">JEP 246</a>)</p></li><li><p>Java 2D rendering (<a href="http://openjdk.java.net/jeps/265">JEP 265</a>)</p></li></ul></div></section>
-<section id="_full_picture" data-background-image="images/shibuya-night.jpg" data-background-size="cover"><h2>Full Picture</h2>
+<section id="_full_picture" data-background-image="../../_images/shibuya-night-ced6aaa0.jpg" data-background-size="cover"><h2>Full Picture</h2>
 <div class="paragraph"><p>If you want the full picture:</p></div>
 <div class="paragraph"><p><strong>The Ultimate Guide To Java 9</strong><br>
 (<a href="https://www.sitepoint.com/ultimate-guide-to-java-9/">tiny.cc/java-9</a>)</p></div>
 <div class="paragraph"><p>If you run into problems:</p></div>
 <div class="paragraph"><p><strong><a href="http://java9.wtf">java9.wtf</a></strong></p></div></section>
-<section id="_about_nicolai_parlog" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>About Nicolai Parlog</h2>
+<section id="_about_nicolai_parlog" data-background-image="../../_images/question-mark-9644fc1f.jpg" data-background-size="cover"><h2>About Nicolai Parlog</h2>
 <div style="float: left; width: 45%; margin:0px;">
-	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="images/cover-jms.png" style="margin: 0;"></a>
+	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="../../_images/cover-jms-4e5e400d.png" style="margin: 0;"></a>
 	<p style="
 		position: fixed;
 		margin: -160px 0 0 60px;
@@ -654,7 +654,7 @@ and class data sharing (<a href="http://openjdk.java.net/jeps/250">JEP 250</a>)<
 <a href="https://pixabay.com/en/users/PIRO4D-2707530/">PIRO4D</a>,
 <a href="https://wiki.creativecommons.org/wiki/CC0">CC0</a></p></li><li><p><a href="https://www.flickr.com/photos/21496790@N06/5065834411">question-mark</a>:
 <a href="http://milosevicmilos.com/">Milos Milosevic</a>,
-<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a></p></li></ul></div></section></div></div><script src="_reveal.js/lib/js/head.min.js"></script><script src="_reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a></p></li></ul></div></section></div></div><script src="../../_reveal.js/179bb096/lib/js/head.min.js"></script><script src="../../_reveal.js/179bb096/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
 Reveal.initialize({
   // Display controls in the bottom right corner
   controls: false,
@@ -705,7 +705,7 @@ Reveal.initialize({
   // Number of slides away from the current that are visible
   viewDistance: 3,
   // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
-  parallaxBackgroundImage: 'images/9-dark.jpg',
+  parallaxBackgroundImage: '../../_images/9-dark-381d1100.jpg',
   // Parallax background size in CSS syntax (e.g., "2100px 900px")
   parallaxBackgroundSize: '2560px 1440px',
 
@@ -724,11 +724,11 @@ Reveal.initialize({
 
   // Optional libraries used to extend on reveal.js
   dependencies: [
-      { src: '_reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-      { src: '_reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-      { src: '_reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../../_reveal.js/179bb096/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: '../../_reveal.js/179bb096/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../../_reveal.js/179bb096/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
       
-      { src: '_reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-      { src: '_reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+      { src: '../../_reveal.js/179bb096/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+      { src: '../../_reveal.js/179bb096/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
   ]
 });</script></body></html>

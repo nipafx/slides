@@ -1,11 +1,11 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>The Java 9 Module System</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="_reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="_reveal.js/css/theme/nipa-night.css" id="theme"><link href="_reveal.js/lib/css/zenburn.css" rel="stylesheet"><script type="text/javascript">document.write( '<link rel="stylesheet" href="_reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>The Java 9 Module System</h1><div class="preamble"><style>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>The Java 9 Module System</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="../../_reveal.js/c7ffc242/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="../../_reveal.js/c7ffc242/css/theme/nipa-night.css" id="theme"><link href="../../_reveal.js/c7ffc242/lib/css/zenburn.css" rel="stylesheet"><script type="text/javascript">document.write( '<link rel="stylesheet" href="../../_reveal.js/c7ffc242/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>The Java 9 Module System</h1><div class="preamble"><style>
 .reveal .title h1 {
 	font-size: 3.5em;
 }
 </style>
 <h2>Beyond the Basics</h2>
-<link rel="stylesheet" href="_highlight.js/styles/monokai-sublime.css">
-<script src="_highlight.js/highlight.pack.js"></script>
+<link rel="stylesheet" href="../../_highlight.js/8fbb4352/styles/monokai-sublime.css">
+<script src="../../_highlight.js/8fbb4352/highlight.pack.js"></script>
 <script>
 	window.onload = function() {
 		hljs.configure({
@@ -21,7 +21,7 @@
 </script>
 <div class="event">
 	<div class="participant">
-		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
+		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="../../_images/logo-nipa-face-ed83f892.png" class="logo"></a>
 		<div class="name">
 			<p><a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a></p>
 			<p><a href="http://codefx.org">codefx.org</a>
@@ -29,7 +29,7 @@
 		</div>
 	</div>
 	<div class="participant">
-		<a href="http://javaday.org.ua/"><img src="images/logo-javaday-2017.jpg" class="logo" style="{host-logo-style}"></a>
+		<a href="http://javaday.org.ua/"><img src="../../_images/logo-javaday-2017-1024b003.jpg" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
 			<p><a href="http://javaday.org.ua/">JavaDay</a></p>
 			<p><a href="https://twitter.com/JavaDayUA">@JavaDayUA</a></p>
@@ -39,7 +39,7 @@
 <!-- Just adding a footer does not work because reveal.js puts it into the slides and we couldn't get it out via CSS. So we move it via JavaScript. -->
 <footer>
 	<div class="participant">
-		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="images/logo-nipa-face.png" class="logo"></a>
+		<a href="http://blog.codefx.org/about-nicolai-parlog/"><img src="../../_images/logo-nipa-face-ed83f892.png" class="logo"></a>
 		<div class="name"><p>
 			<a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a>
 			/ <a href="http://codefx.org">codefx.org</a>
@@ -47,7 +47,7 @@
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="http://javaday.org.ua/"><img src="images/logo-javaday-2017.jpg" class="logo" style="{host-logo-style}"></a>
+		<a href="http://javaday.org.ua/"><img src="../../_images/logo-javaday-2017-1024b003.jpg" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
 			<p><a href="http://javaday.org.ua/">JavaDay</a> / <a href="https://twitter.com/JavaDayUA">@JavaDayUA</a></p>
 		</div>
@@ -77,25 +77,25 @@ with <code>exports</code> clauses</p></div>
 }</code></pre></div></div>
 <div class="paragraph"><p>Code in module <em>A</em> can only access <code>Type</code> in module <em>B</em> if:</p></div>
 <div class="ulist"><ul><li><p><code>Type</code> is public</p></li><li><p><code>Type</code> is in an exported package</p></li><li><p><em>A</em> reads <em>B</em></p></li></ul></div>
-<div class="paragraph"><p>(⇝ <em>strong encapsulation</em>)</p></div></section><section data-background-image="images/platform-modules.png" data-background-size="cover" data-state="empty"></section><section id="_jigsaw_advent_calendar" data-background-image="images/advent-calendar.jpg" data-background-size="cover"><h2>Jigsaw Advent Calendar</h2>
+<div class="paragraph"><p>(⇝ <em>strong encapsulation</em>)</p></div></section><section data-background-image="../../_images/platform-modules-ee5a3d40.png" data-background-size="cover" data-state="empty"></section><section id="_jigsaw_advent_calendar" data-background-image="../../_images/advent-calendar-70698bac.jpg" data-background-size="cover"><h2>Jigsaw Advent Calendar</h2>
 <h3>A simple example</h3>
-<div class="paragraph"><p>Find it <a href="https://github.com/CodeFX-org/demo-jigsaw-advent-calendar">on GitHub</a>!</p></div></section><section id="_structure"><h2>Structure</h2><div class="imageblock diagram" style=""><img src="images/advent-calendar-structure.png" alt="advent calendar structure"></div></section><section id="_code"><h2>Code</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public static void main(String[] args) {
+<div class="paragraph"><p>Find it <a href="https://github.com/CodeFX-org/demo-jigsaw-advent-calendar">on GitHub</a>!</p></div></section><section id="_structure"><h2>Structure</h2><div class="imageblock diagram" style=""><img src="../../_images/advent-calendar-structure-ad9168aa.png" alt="advent calendar structure"></div></section><section id="_code"><h2>Code</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public static void main(String[] args) {
 	List&lt;SurpriseFactory&gt; factories = asList(
 		new ChocolateFactory(), new QuoteFactory());
 	Calendar cal = Calendar.create(factories);
 	println(cal.asText());
 }</code></pre></div></div>
-<div class="imageblock diagram" style=""><img src="images/advent-calendar-structure.png" alt="_" width="75%"></div></section><section id="_module_structure"><h2>Module Structure</h2><div class="imageblock" style="">
+<div class="imageblock diagram" style=""><img src="../../_images/advent-calendar-structure-ad9168aa.png" alt="_" width="75%"></div></section><section id="_module_structure"><h2>Module Structure</h2><div class="imageblock" style="">
 	<div class="content diagram">
-		<img src="images/advent-calendar-structure.png" style="margin: 25px; width:75%;">
+		<img src="../../_images/advent-calendar-structure-ad9168aa.png" style="margin: 25px; width:75%;">
 	</div>
 </div>
 <div class="imageblock fragment current-visible" data-fragment-index="0">
 	<div class="content diagram">
-		<img src="images/advent-calendar-module-multi.png" alt="b2e21fbf" style="margin: 0;">
+		<img src="../../_images/advent-calendar-module-multi-f1b09b68.png" alt="b2e21fbf" style="margin: 0;">
 	</div>
 </div>
-<aside class="notes"><div class="ulist"><ul><li><p>this is another module graph</p></li></ul></div></aside></section><section id="_module_structure_2"><h2>Module Structure</h2><div class="imageblock diagram" style=""><img src="images/advent-calendar-module-multi.png" alt="advent calendar module multi"></div>
+<aside class="notes"><div class="ulist"><ul><li><p>this is another module graph</p></li></ul></div></aside></section><section id="_module_structure_2"><h2>Module Structure</h2><div class="imageblock diagram" style=""><img src="../../_images/advent-calendar-module-multi-f1b09b68.png" alt="advent calendar module multi"></div>
 <div style="height: 210px;">
 <div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">module surprise {
 	<span class="hljs-comment">// requires no other modules</span>
@@ -147,7 +147,7 @@ between modules</p></li></ul></div>
 		List&lt;SurpriseFactory&gt; factories) {
 	// ...
 }</code></pre></div></div>
-<div class="imageblock diagram" style=""><img src="images/advent-requires-transitive-problem.png" alt="advent requires transitive problem"></div>
+<div class="imageblock diagram" style=""><img src="../../_images/advent-requires-transitive-problem-bbbf82b5.png" alt="advent requires transitive problem"></div>
 <div class="paragraph"><p>⇝ Module <em>calendar</em> is unusable without <em>surprise</em>!</p></div></section><section id="_try_and_error"><h2>Try and Error?</h2><div class="paragraph"><p>How can users of exposing module<br>
 determine required dependencies?</p></div>
 <div class="paragraph"><p>Try and error?</p></div>
@@ -164,7 +164,7 @@ without having to require it</p></li></ul></div>
 	requires transitive surprise;
 	// ...
 }</code></pre></div></div>
-<div class="imageblock diagram" style=""><img src="images/advent-requires-transitive-solution.png" alt="advent requires transitive solution"></div></section><section id="_further_applications"><h2>Further Applications</h2><div class="paragraph"><p>Implied readability is surprisingly versatile</p></div>
+<div class="imageblock diagram" style=""><img src="../../_images/advent-requires-transitive-solution-cdf82cae.png" alt="advent requires transitive solution"></div></section><section id="_further_applications"><h2>Further Applications</h2><div class="paragraph"><p>Implied readability is surprisingly versatile</p></div>
 <div class="ulist"><ul><li><p>aggregator modules</p></li><li><p>splitting modules up</p></li><li><p>even merging modules</p></li><li><p>renaming modules</p></li></ul></div></section><section id="_aggregator_modules"><h2>Aggregator Modules</h2><div class="paragraph"><p>Making it easier to consume<br>
 <em>calendar</em>, <em>factories</em>, <em>surprise</em>:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">module adventcalendar {
@@ -212,12 +212,12 @@ another module&#8217;s features</p></li></ul></div>
 <div class="ulist"><ul><li><p>a library may be absent from some deployments</p></li><li><p>code is aware and does not call absent modules</p></li></ul></div>
 <div class="paragraph"><p>Example:</p></div>
 <div class="ulist"><ul><li><p>each <code>SurpriseFactory</code> implementation<br>
-has its own module</p></li><li><p><em>advent</em> works without any specific factory</p></li></ul></div></section><section id="_adapting_code_2"><h2>Adapting Code</h2><div class="imageblock diagram" style=""><img src="images/advent-requires-static.png" alt="advent requires static"></div></section><section id="_enhancing_a_module"><h2>Enhancing A Module</h2><div class="paragraph"><p>Use case:</p></div>
+has its own module</p></li><li><p><em>advent</em> works without any specific factory</p></li></ul></div></section><section id="_adapting_code_2"><h2>Adapting Code</h2><div class="imageblock diagram" style=""><img src="../../_images/advent-requires-static-a2904bf8.png" alt="advent requires static"></div></section><section id="_enhancing_a_module"><h2>Enhancing A Module</h2><div class="paragraph"><p>Use case:</p></div>
 <div class="ulist"><ul><li><p>a project may provide usability functions<br>
 for other libraries</p></li><li><p>such code will not be called if library modules<br>
 are absent</p></li></ul></div>
 <div class="paragraph"><p>Example:</p></div>
-<div class="ulist"><ul><li><p>hypothetical library <em>uber-lib</em></p></li><li><p>provides usability functions for various libraries</p></li></ul></div></section><section id="_enhancing_a_module_2"><h2>Enhancing A Module</h2><div class="imageblock diagram" style=""><img src="images/uber-lib-requires-static.png" alt="uber lib requires static"></div></section><section id="_conundrum"><h2>Conundrum</h2><div class="paragraph"><p>With what we know so far:</p></div>
+<div class="ulist"><ul><li><p>hypothetical library <em>uber-lib</em></p></li><li><p>provides usability functions for various libraries</p></li></ul></div></section><section id="_enhancing_a_module_2"><h2>Enhancing A Module</h2><div class="imageblock diagram" style=""><img src="../../_images/uber-lib-requires-static-c92f1dc9.png" alt="uber lib requires static"></div></section><section id="_conundrum"><h2>Conundrum</h2><div class="paragraph"><p>With what we know so far:</p></div>
 <div class="ulist"><ul><li><p>for code to compile against another module<br>
 that module has to be required</p></li><li><p>a required module has to be present<br>
 at launch time</p></li></ul></div>
@@ -261,7 +261,7 @@ without that dependency</p></li></ul></div>
 	<tr class="toc-current"><td>Services</td></tr>
 	<tr><td>Qualified Exports</td></tr>
 	<tr><td>Reflective Access</td></tr>
-</table></section><section id="_dependency_inversion"><h2>Dependency Inversion?</h2><div class="imageblock diagram" style=""><img src="images/advent-dependency-inversion.png" alt="advent dependency inversion"></div></section><section id="_service_locator_pattern"><h2>Service Locator Pattern</h2><div class="paragraph"><p><strong>Consumers</strong> and <strong>implementations</strong><br>
+</table></section><section id="_dependency_inversion"><h2>Dependency Inversion?</h2><div class="imageblock diagram" style=""><img src="../../_images/advent-dependency-inversion-c54e1bc5.png" alt="advent dependency inversion"></div></section><section id="_service_locator_pattern"><h2>Service Locator Pattern</h2><div class="paragraph"><p><strong>Consumers</strong> and <strong>implementations</strong><br>
 of an API should be decoupled.</p></div>
 <div class="paragraph"><p>Service locator pattern:</p></div>
 <div class="ulist"><ul><li><p>service registry as central arbiter</p></li><li><p>implementors inform registry</p></li><li><p>consumers call registry to get implementations</p></li></ul></div></section><section id="_services_in_jpms"><h2>Services in JPMS</h2><div class="paragraph"><p>In the JPMS:</p></div>
@@ -291,7 +291,7 @@ module factory.quote {
 	requires surprise;
 	provides surprise.SurpriseFactory
 		with factory.quote.QuoteFactory;
-}</code></pre></div></div></section><section id="_factory_services_2"><h2>Factory Services</h2><div class="imageblock diagram" style=""><img src="images/advent-services.png" alt="advent services"></div></section><section id="_factory_services_3"><h2>Factory Services</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public static void main(String[] args) {
+}</code></pre></div></div></section><section id="_factory_services_2"><h2>Factory Services</h2><div class="imageblock diagram" style=""><img src="../../_images/advent-services-5f7e2255.png" alt="advent services"></div></section><section id="_factory_services_3"><h2>Factory Services</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">public static void main(String[] args) {
 	List&lt;SurpriseFactory&gt; factories = ServiceLoader
 		.load(SurpriseFactory.class).stream()
 		.map(Provider::get)
@@ -412,7 +412,7 @@ and <em>A</em> needs to export used packages</p></li></ul></div>
 <div class="paragraph"><p>The latter two accept <code>ALL-UNNAMED</code> as target.</p></div>
 <div class="paragraph"><p>More at <a href="https://blog.codefx.org">codefx.org</a>:</p></div>
 <div class="paragraph"><p><a href="https://blog.codefx.org/java/five-command-line-options-to-hack-the-java-9-module-system/">Five Command Line Options To Hack The JPMS</a></p></div></section></section>
-<section><section id="_creating_runtime_images_with_jlink"><h2>Creating Runtime Images With JLink</h2><h3>Custom-Made For Your Application</h3></section><section id="_remember_this" data-background-image="images/platform-modules.png" data-background-size="cover"><h2>Remember This?</h2></section><section id="_benefiting_from_jdk_modularization"><h2>Benefiting From JDK Modularization</h2><div class="paragraph"><p>Create a JDK install with just the code you need:</p></div>
+<section><section id="_creating_runtime_images_with_jlink"><h2>Creating Runtime Images With JLink</h2><h3>Custom-Made For Your Application</h3></section><section id="_remember_this" data-background-image="../../_images/platform-modules-ee5a3d40.png" data-background-size="cover"><h2>Remember This?</h2></section><section id="_benefiting_from_jdk_modularization"><h2>Benefiting From JDK Modularization</h2><div class="paragraph"><p>Create a JDK install with just the code you need:</p></div>
 <div class="ulist"><ul><li><p>know which modules your app uses (⇝ <code>jdeps</code>)</p></li><li><p>create an image with those modules (⇝ <code>jlink</code>)</p></li></ul></div>
 <div class="paragraph"><p>This is about <code>jlink</code>.</p></div></section><section id="_a_minimal_jdk_image"><h2>A Minimal JDK Image</h2><div class="paragraph"><p>Create with <code>jlink</code></p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">$ jlink
@@ -468,14 +468,14 @@ with just the right classes</p></li><li><p>create a runtime image<br>
 including your code</p></li></ul></div>
 <div class="paragraph"><p>This should make certain kinds of deploys<br>
 smaller and easier.</p></div></section></section>
-<section><section id="_what_about_osgi"><h2>What About OSGi?</h2><h3>Brief comparison<br>of Jigsaw and OSGi</h3></section><section id="_jigsaw_vs_osgi" data-background-image="images/bundles.jpg" data-background-size="cover"><h2>Jigsaw vs. OSGi</h2>
+<section><section id="_what_about_osgi"><h2>What About OSGi?</h2><h3>Brief comparison<br>of Jigsaw and OSGi</h3></section><section id="_jigsaw_vs_osgi" data-background-image="../../_images/bundles-f7008fec.jpg" data-background-size="cover"><h2>Jigsaw vs. OSGi</h2>
 <div class="paragraph"><p>OSGi Bundles:</p></div>
-<div class="ulist"><ul><li><p>are JARs with a descriptor (<code>MANIFEST.MF</code>)</p></li><li><p>have a name</p></li><li><p>import packages or bundles</p></li><li><p>define public API by exporting packages</p></li></ul></div></section><section id="_jigsaw_vs_osgi_2" data-background-image="images/bundles.jpg" data-background-size="cover"><h2>Jigsaw vs. OSGi</h2>
+<div class="ulist"><ul><li><p>are JARs with a descriptor (<code>MANIFEST.MF</code>)</p></li><li><p>have a name</p></li><li><p>import packages or bundles</p></li><li><p>define public API by exporting packages</p></li></ul></div></section><section id="_jigsaw_vs_osgi_2" data-background-image="../../_images/bundles-f7008fec.jpg" data-background-size="cover"><h2>Jigsaw vs. OSGi</h2>
 <table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:33.3333%"><col style="width:33.3333%"><col style="width:33.3334%"></colgroup><thead><tr><th class="tableblock halign-left valign-top"></th><th class="tableblock halign-left valign-top">Jigsaw</th><th class="tableblock halign-left valign-top">OSGi</th></tr></thead><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Versioning</strong></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">not at all</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">packages and modules</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Run-time Behavior</strong></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">mostly static</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">dynamic</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Services</strong></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">declarative via <code>ServiceLoader</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">declarative or programmatically;<br>
 more flexible</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Class Loaders</strong></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">operates below</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">one per bundle</p></td></tr></tbody></table></section></section>
-<section id="_about_nicolai_parlog" data-background-image="images/question-mark.jpg" data-background-size="cover"><h2>About Nicolai Parlog</h2>
+<section id="_about_nicolai_parlog" data-background-image="../../_images/question-mark-9644fc1f.jpg" data-background-size="cover"><h2>About Nicolai Parlog</h2>
 <div style="float: left; width: 45%; margin:0px;">
-	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="images/cover-jms.png" style="margin: 0;"></a>
+	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="../../_images/cover-jms-4e5e400d.png" style="margin: 0;"></a>
 	<p style="
 		position: fixed;
 		margin: -160px 0 0 60px;
@@ -551,7 +551,7 @@ more flexible</p></td></tr><tr><td class="tableblock halign-left valign-top"><p 
 <a href="http://milosevicmilos.com/">Milos Milosevic</a>
 (<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a>)</p></li><li><p>bundles:
 <a href="https://www.flickr.com/photos/dmahendra/">Danumurthi Mahendra</a>
-(<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a>)</p></li></ul></div></section></section></div></div><script src="_reveal.js/lib/js/head.min.js"></script><script src="_reveal.js/js/reveal.js"></script><script type="text/javascript">// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+(<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a>)</p></li></ul></div></section></section></div></div><script src="../../_reveal.js/c7ffc242/lib/js/head.min.js"></script><script src="../../_reveal.js/c7ffc242/js/reveal.js"></script><script type="text/javascript">// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
 Reveal.initialize({
   // Display controls in the bottom right corner
   controls: false,
@@ -602,7 +602,7 @@ Reveal.initialize({
   // Number of slides away from the current that are visible
   viewDistance: 3,
   // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
-  parallaxBackgroundImage: 'images/puzzle-people.jpg',
+  parallaxBackgroundImage: '../../_images/puzzle-people-732c26eb.jpg',
   // Parallax background size in CSS syntax (e.g., "2100px 900px")
   parallaxBackgroundSize: '3246px 1237px',
 
@@ -621,11 +621,11 @@ Reveal.initialize({
 
   // Optional libraries used to extend on reveal.js
   dependencies: [
-      { src: '_reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-      { src: '_reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-      { src: '_reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../../_reveal.js/c7ffc242/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: '../../_reveal.js/c7ffc242/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../../_reveal.js/c7ffc242/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
       
-      { src: '_reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-      { src: '_reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+      { src: '../../_reveal.js/c7ffc242/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+      { src: '../../_reveal.js/c7ffc242/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
   ]
 });</script></body></html>

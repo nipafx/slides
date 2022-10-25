@@ -1,7 +1,7 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>JUnit 5</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="reveal.js/css/theme/nipa-night.css" id="theme"><link href="reveal.js/lib/css/zenburn.css" rel="stylesheet"><script type="text/javascript">document.write( '<link rel="stylesheet" href="reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title-slide" data-state="title-slide"><h1>JUnit 5</h1><h2>Next Generation Testing<br>on the JVM</h2>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>JUnit 5</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="../../_reveal.js/096fb4dc/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="../../_reveal.js/096fb4dc/css/theme/nipa-night.css" id="theme"><link href="../../_reveal.js/096fb4dc/lib/css/zenburn.css" rel="stylesheet"><script type="text/javascript">document.write( '<link rel="stylesheet" href="../../_reveal.js/096fb4dc/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title-slide" data-state="title-slide"><h1>JUnit 5</h1><h2>Next Generation Testing<br>on the JVM</h2>
 <div class="event">
 	<div class="participant">
-		<img src="images/logo-nipa-face.png" class="logo">
+		<img src="../../_images/logo-nipa-face-ed83f892.png" class="logo">
 		<div class="name">
 			<p>Nicolai Parlog</p>
 			<p><a href="http://codefx.org">codefx.org</a>
@@ -9,22 +9,22 @@
 		</div>
 	</div>
 	<div class="participant">
-		<img src="images/logo-jug-da.png" class="logo">
+		<img src="../../_images/logo-jug-da-396d70f9.png" class="logo">
 		<div class="name">
 			<p><a href="http://jug-da.de/">JUG Darmstadt</a></p>
 			<p><a href="https://twitter.com/JUG_DA">@JUG_DA</a></p>
 		</div>
 	</div>
 </div>
-<link rel="stylesheet" href="highlight.js/9.2.0.monokai-sublime.css">
-<script src="highlight.js/9.2.0.min.js"></script>
+<link rel="stylesheet" href="../../_highlight.js/376a7e15/9.2.0.monokai-sublime.css">
+<script src="../../_highlight.js/376a7e15/9.2.0.min.js"></script>
 <script>
 	hljs.initHighlightingOnLoad();
 	hljs.configure({tabReplace: '    '})
 </script>
 <footer>
 	<div class="participant">
-		<img src="images/logo-nipa-face.png" class="logo">
+		<img src="../../_images/logo-nipa-face-ed83f892.png" class="logo">
 		<div class="name"><p>
 			Nicolai Parlog
 			/ <a href="http://codefx.org">codefx.org</a>
@@ -32,7 +32,7 @@
 		</p></div>
 	</div>
 	<div class="participant">
-		<img src="images/logo-jug-da.png" class="logo">
+		<img src="../../_images/logo-jug-da-396d70f9.png" class="logo">
 		<div class="name">
 			<p><a href="http://jug-da.de/">JUG Darmstadt</a> / <a href="https://twitter.com/JUG_DA">@JUG_DA</a></p>
 		</div>
@@ -147,7 +147,7 @@ class CountTest {
 	}
 }</code></pre></div></div>
 <p class="fragment current-visible">⇝ <code>@DisplayName</code> to show a nice name</p></section><section id="_what_s_new_12"><h2>What&#8217;s new?</h2><div class="paragraph"><p>The effects of <code>@Nested</code> and <code>@DisplayName</code>:</p></div>
-<div class="imageblock" style=""><div class="content"><img src="images/testing-a-stack.png" alt="Nested and DisplayName" width="900"></div></div></section><section id="_what_s_new_13"><h2>What&#8217;s new?</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@Test
+<div class="imageblock" style=""><div class="content"><img src="../../_images/testing-a-stack-d7d159fb.png" alt="Nested and DisplayName" width="900"></div></div></section><section id="_what_s_new_13"><h2>What&#8217;s new?</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java">@Test
 void someTest(MyServer server) {
 	// do something with `server`
 }</code></pre></div></div>
@@ -447,7 +447,7 @@ That's all very nice but how is it<br>
 (<a href="https://jaxenter.com/crowdfunding-for-junit-lambda-is-underway-119546.html">Johannes Link</a>)</p></div></blockquote></div></section><section id="_approach_in_junit_5_2"><h2>Approach in JUnit 5</h2><div class="paragraph"><p>Separation of concerns:</p></div>
 <div class="olist arabic"><ol class="arabic"><li><p>an API to write tests against</p></li><li><p>a mechanism to discover and run tests</p></li><li><p>an API for tools to run tests</p></li></ol></div></section><section id="_approach_in_junit_5_3"><h2>Approach in JUnit 5</h2><div class="paragraph"><p>Separation of concerns V 2.0:</p></div>
 <div class="olist arabic"><ol class="arabic"><li><p>an API to write tests against</p></li><li><p>a mechanism to discover and run tests</p><div class="olist loweralpha"><ol class="loweralpha" type="a"><li><p>specific engine per variant of tests<br>
-(e.g. JUnit 4 or JUnit 5)</p></li><li><p>orchestration of engines</p></li><li><p>API between them</p></li></ol></div></li><li><p>an API for tools to run tests</p></li></ol></div></section><section id="_subprojects_modules"><h2>Subprojects &amp; Modules</h2><div class="dlist"><dl><dt class="hdlist1">JUnit Jupiter 5.0.0-M3</dt><dd><div class="ulist"><ul><li><p><code>junit-jupiter-api</code></p></li><li><p><code>junit-jupiter-engine</code></p></li></ul></div></dd><dt class="hdlist1">JUnit Vintage 4.12.0-M3</dt><dd><div class="ulist"><ul><li><p><code>junit-vintage-engine</code></p></li></ul></div></dd><dt class="hdlist1">JUnit Platform 1.0.0-M3</dt><dd><div class="ulist"><ul><li><p><code>junit-platform-engine</code></p></li><li><p><code>junit-platform-runner</code></p></li><li><p>a lot more</p></li></ul></div></dd></dl></div></section><section id="_junit_5_modules"><h2>JUnit 5 Modules</h2><div class="imageblock diagram" style=""><div class="content"><img src="images/architecture-limited-lean.png" alt="architecture limited lean" width="500"></div></div></section><section id="_architecture_2"><h2>Architecture</h2><h3>Summary</h3>
+(e.g. JUnit 4 or JUnit 5)</p></li><li><p>orchestration of engines</p></li><li><p>API between them</p></li></ol></div></li><li><p>an API for tools to run tests</p></li></ol></div></section><section id="_subprojects_modules"><h2>Subprojects &amp; Modules</h2><div class="dlist"><dl><dt class="hdlist1">JUnit Jupiter 5.0.0-M3</dt><dd><div class="ulist"><ul><li><p><code>junit-jupiter-api</code></p></li><li><p><code>junit-jupiter-engine</code></p></li></ul></div></dd><dt class="hdlist1">JUnit Vintage 4.12.0-M3</dt><dd><div class="ulist"><ul><li><p><code>junit-vintage-engine</code></p></li></ul></div></dd><dt class="hdlist1">JUnit Platform 1.0.0-M3</dt><dd><div class="ulist"><ul><li><p><code>junit-platform-engine</code></p></li><li><p><code>junit-platform-runner</code></p></li><li><p>a lot more</p></li></ul></div></dd></dl></div></section><section id="_junit_5_modules"><h2>JUnit 5 Modules</h2><div class="imageblock diagram" style=""><div class="content"><img src="../../_images/architecture-limited-lean-7343e023.png" alt="architecture limited lean" width="500"></div></div></section><section id="_architecture_2"><h2>Architecture</h2><h3>Summary</h3>
 <div class="ulist"><ul><li><p>clear separation of concerns</p></li><li><p>API for developers</p></li><li><p>API for tools</p></li></ul></div>
 <p class="fragment" data-fragment-index="0">
 That's all very nice but how is it<br>
@@ -459,7 +459,7 @@ That's all very nice but how is it<br>
 </p></section><section id="_moar_engines"><h2>Moar Engines!</h2><div class="ulist"><ul><li><p>want to run JUnit 4 tests?<br>
 ⇝ create an engine for it</p></li><li><p>want TestNG to have support like JUnit?<br>
 ⇝ create an engine for it</p></li><li><p>want to write tests in natural language?<br>
-⇝ create an engine for it</p></li></ul></div></section><section id="_moar_engines_2"><h2>Moar Engines!</h2><div class="imageblock diagram" style=""><div class="content"><img src="images/architecture-lean.png" alt="architecture lean" width="500"></div></div></section><section id="_open_platform"><h2>Open Platform</h2><div class="paragraph"><p>Once JUnit 5 adoption sets in:</p></div>
+⇝ create an engine for it</p></li></ul></div></section><section id="_moar_engines_2"><h2>Moar Engines!</h2><div class="imageblock diagram" style=""><div class="content"><img src="../../_images/architecture-lean-d03416ff.png" alt="architecture lean" width="500"></div></div></section><section id="_open_platform"><h2>Open Platform</h2><div class="paragraph"><p>Once JUnit 5 adoption sets in:</p></div>
 <div class="ulist"><ul><li><p>tools are decoupled from implementation details</p></li><li><p>tools can support all frameworks (almost) equally well</p></li><li><p>new frameworks start with full tool support</p></li><li><p>developers can try out new things</p></li></ul></div>
 <div class="paragraph"><p>A new generation of test frameworks might arise!</p></div></section><section id="_open_platform_2"><h2>Open Platform</h2><div class="paragraph"><p>JUnit&#8217;s success as a platform<br>
 becomes <strong>available to everybody</strong>.</p></div>
@@ -503,7 +503,7 @@ junit-platform-console \
 <div class="ulist"><ul><li><p>you can start writing tests right away</p></li><li><p>only IntelliJ has native support</p></li><li><p>running with JUnit 4 is a good compromise</p></li></ul></div>
 <div class="paragraph"><p>(Read about <a href="http://blog.codefx.org/libraries/junit-5-setup/">the setup details</a>.)</p></div></section></section>
 <section><section id="_next_generation_testing_on_the_jvm"><h2>Next Generation Testing On The JVM</h2><div class="ulist"><ul><li><p>new API is an incremental improvement<br>
-full of thoughtful details</p></li><li><p>dynamic tests are very useful</p></li><li><p>extension model looks very promising</p></li><li><p>architecture opens up the platform</p></li><li><p>tool support is not there yet</p></li></ul></div><div class="paragraph"><p>(Read <a href="http://blog.codefx.org/tag/junit-5/">more about JUnit 5</a>.)</p></div></section><section id="_questions" data-background="images/question-mark.jpg"><h2>Questions?</h2><div class="paragraph"><p><h3>Find Me</h3></p></div>
+full of thoughtful details</p></li><li><p>dynamic tests are very useful</p></li><li><p>extension model looks very promising</p></li><li><p>architecture opens up the platform</p></li><li><p>tool support is not there yet</p></li></ul></div><div class="paragraph"><p>(Read <a href="http://blog.codefx.org/tag/junit-5/">more about JUnit 5</a>.)</p></div></section><section id="_questions" data-background="../../_images/question-mark-9644fc1f.jpg"><h2>Questions?</h2><div class="paragraph"><p><h3>Find Me</h3></p></div>
 <div class="paragraph"><p><a href="http://codefx.org">codefx.org</a> / <a href="https://twitter.com/nipafx">@nipafx</a> / <a href="https://google.com/+NicolaiParlog">+NicolaiParlog</a></p></div>
 <div class="paragraph"><p><h3>Me</h3></p></div>
 <div class="paragraph"><p>you can <a href="http://blog.codefx.org/hire-nicolai-parlog/">hire me</a></p></div>
@@ -517,7 +517,7 @@ full of thoughtful details</p></li><li><p>dynamic tests are very useful</p></li>
 <a href="http://blog.codefx.org/about-nicolai-parlog/">Nicolai Parlog</a>
 (<a href="https://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC 4.0</a>)</p></li><li><p>question-mark:
 <a href="http://milosevicmilos.com/">Milos Milosevic</a>
-(<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a>)</p></li></ul></div></section></div></div><script src="reveal.js/lib/js/head.min.js"></script><script src="reveal.js/js/reveal.js"></script><script type="text/javascript">// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+(<a href="https://creativecommons.org/licenses/by/2.0/">CC-BY 2.0</a>)</p></li></ul></div></section></div></div><script src="../../_reveal.js/096fb4dc/lib/js/head.min.js"></script><script src="../../_reveal.js/096fb4dc/js/../../_reveal.js/096fb4dc"></script><script type="text/javascript">// See https://github.com/hakimel/../../_reveal.js/096fb4dc#configuration for a full list of configuration options
 Reveal.initialize({
   // Display controls in the bottom right corner
   controls: false,
@@ -557,7 +557,7 @@ Reveal.initialize({
   // Opens links in an iframe preview overlay
   previewLinks: false,
   // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
-  // NOTE setting the theme in the config no longer works in reveal.js 3.x
+  // NOTE setting the theme in the config no longer works in ../../_reveal.js/096fb4dc 3.x
   //theme: Reveal.getQueryHash().theme || 'nipa-night',
   // Transition style (e.g., none, fade, slide, convex, concave, zoom)
   transition: Reveal.getQueryHash().transition || 'slide',
@@ -568,7 +568,7 @@ Reveal.initialize({
   // Number of slides away from the current that are visible
   viewDistance: 3,
   // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
-  parallaxBackgroundImage: 'images/soap-bubbles.jpg',
+  parallaxBackgroundImage: '../../_images/soap-bubbles-747e0437.jpg',
   // Parallax background size in CSS syntax (e.g., "2100px 900px")
   parallaxBackgroundSize: '4096px 2731px',
 
@@ -585,13 +585,13 @@ Reveal.initialize({
   minScale: 0.2,
   maxScale: 1.5,
 
-  // Optional libraries used to extend on reveal.js
+  // Optional libraries used to extend on ../../_reveal.js/096fb4dc
   dependencies: [
-      { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-      { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-      { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../../_reveal.js/096fb4dc/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: '../../_reveal.js/096fb4dc/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../../_reveal.js/096fb4dc/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
       
-      { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-      { src: 'reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+      { src: '../../_reveal.js/096fb4dc/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+      { src: '../../_reveal.js/096fb4dc/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
   ]
 });</script></body></html>
