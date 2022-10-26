@@ -4,7 +4,9 @@
   "description": "Slides for various talks I give and have given. They are written with the awesome [Asciidoctor](http://asciidoctor.org/) and visualized with [reveal.js](http://asciidoctor.org/). Thanks to GitHub Pages you can see them on [slides.nipafx.dev](https://slides.nipafx.dev).",
   "main": "index.js",
   "scripts": {
-    "start": "node observe.js"
+    "generate": "node generate.js",
+    "observe": "node generate.js --observe",
+    "permalink": "node perma.js"
   },
   "repository": {
     "type": "git",
@@ -21,6 +23,7 @@
     "@asciidoctor/reveal.js": "^4.1.0",
     "asciidoctor": "^2.2.1",
     "chokidar": "^3.5.1",
-    "fs-extra": "^9.1.0"
+    "fs-extra": "^9.1.0",
+    "prompt-sync": "^4.2.0"
   }
 }
