@@ -18,7 +18,7 @@ Thanks to GitHub Pages you can see them on [slides.nipafx.dev](https://slides.ni
 
 An amalgam of [submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) and [worktrees](https://git-scm.com/docs/git-worktree)...
 
-#### Branch `master`
+#### Branch `main`
 
 * `_highlight.js` (downloaded from [highlightjs.org](https://highlightjs.org/download/))
 * `_reveal.js` (submodule ~> [nipafx/reveal.js; nipa-talks](https://github.com/nipafx/reveal.js/tree/nipa-talks))
@@ -27,7 +27,7 @@ An amalgam of [submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) 
 * a subdirectory for each presentation, with all required files except shared ones
 * meta-information (LICENSE, README, ...)
 
-After checkout, the submodule needs to be initialized and the `gh-pages` branch should be added as a worktree to `master`:
+After checkout, the submodule needs to be initialized and the `gh-pages` branch should be added as a worktree to `main`:
 
 ```
 git submodule update
