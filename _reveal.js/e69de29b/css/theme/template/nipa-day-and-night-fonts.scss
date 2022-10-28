@@ -1,0 +1,65 @@
+// include theme-specific fonts
+@font-face {
+	font-family: "Source Sans Pro";
+	font-style: normal;
+	font-weight: normal;
+	src: local("Source Sans Pro Regular"), local("Source-Sans-Pro-Regular"),
+		url("../../lib/font/source-sans-pro/source-sans-pro-regular.woff2") format("woff2"),
+		url("../../lib/font/source-sans-pro/source-sans-pro-regular.woff") format("woff"),
+		url("../../lib/font/source-sans-pro/source-sans-pro-regular.ttf") format("truetype");
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Source Sans Pro";
+	font-style: normal;
+	font-weight: bold;
+	src: local("Source Sans Pro SemiBold"), local("Source-Sans-Pro-SemiBold"),
+		url("../../lib/font/source-sans-pro/source-sans-pro-semibold.woff2") format("woff2"),
+		url("../../lib/font/source-sans-pro/source-sans-pro-semibold.woff") format("woff"),
+		url("../../lib/font/source-sans-pro/source-sans-pro-semibold.ttf") format("truetype");
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Source Sans Pro";
+	font-style: italic;
+	font-weight: normal;
+	src: local("Source Sans Pro Italic"), local("Source-Sans-Pro-Italic"),
+		url("../../lib/font/source-sans-pro/source-sans-pro-italic.woff2") format("woff2"),
+		url("../../lib/font/source-sans-pro/source-sans-pro-italic.woff") format("woff"),
+		url("../../lib/font/source-sans-pro/source-sans-pro-italic.ttf") format("truetype");
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Source Sans Pro";
+	font-style: italic;
+	font-weight: bold;
+	src: local("Source Sans Pro SemiBoldItalic"), local("Source-Sans-Pro-SemiBoldItalic"),
+		url("../../lib/font/source-sans-pro/source-sans-pro-semibolditalic.woff2") format("woff2"),
+		url("../../lib/font/source-sans-pro/source-sans-pro-semibolditalic.woff") format("woff"),
+		url("../../lib/font/source-sans-pro/source-sans-pro-semibolditalic.ttf") format("truetype");
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Bedstead";
+	font-style: normal;
+	font-weight: normal;
+	src: local("Bedstead Regular"), local("Bedstead-Regular"), local("BedsteadRegular"),
+		url("../../lib/font/bedstead-regular.otf") format("opentype");
+	font-display: swap;
+}
+
+// set fonts
+$mainFont: 'Source Sans Pro', sans-serif;
+$mainFontSize: 35px;
+$headingFont: 'Source Sans Pro', Impact, sans-serif;
+$headingLetterSpacing: 0em;
+$headingTextTransform: capitalize;
+$codeFont: 'Bedstead', monospace;
+$codeFontSize: 28px;
+
+$headingMargin: 0 0 20px 0;
+$blockMargin: 10px;
