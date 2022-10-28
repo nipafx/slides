@@ -77,6 +77,13 @@ But JVM can make an exception for:
 
 Can be configured with `--illegal-access`.
 
+[source,bash]
+----
+$ java --class-path 'mods/*'
+    --illegal-access=deny
+    org.example.Main
+----
+
 === Illegal Access Modes
 
 Four modes:
@@ -92,18 +99,69 @@ First three permit static access.
 
 Configuration:
 
-* in Java 9-15, `permit` is default
-* in Java 16, `deny` is default
-* in Java 17, `--illegal-access` is no-op
-* in Java _??_, the option will be removed
+* *Java 9-15*: `permit` is default
+* *Java 16*: `deny` is default
+* *Java 17*: `--illegal-access` is no-op
+* *Java ??*: the option will be removed
+
+=== Illegal Access Recommendations
+
+I recommend:
+
+* `--illegal-access=deny` +
+  to prevent unnoticed access +
+  (before Java 16)
+* `--add-exports`/`--add-opens` +
+  for specific exceptions
+
+=== Add Exports
+
+A common case:
+
+Code needs types that +
+the owning module doesn't export.
+
+**Export them with `--add-exports`:**
 
 [source,bash]
 ----
 $ java --class-path 'mods/*'
-    --illegal-access=deny
-    advent.Main
+#   --add-exports <module>/<package>=<target>
+#                        class path ~ ALL-UNNAMED
+    --add-exports java.base/java.util=ALL-UNNAMED
+    org.example.Main
 ----
 
+(Works for `javac` and `java`.)
+
+=== Open Packages
+
+Another common case:
+
+A module reflects on types from a package that +
+the owning module doesn't open.
+
+**Open packages with `add-opens`:**
+
+[source,bash]
+----
+$ java --class-path 'mods/*'
+#   --add-opens <module>/<package>=<target>
+#                        class path ~ ALL-UNNAMED
+    --add-opens java.base/java.util=ALL-UNNAMED
+    org.example.Main
+----
+
+(Works for `java`.)
+
+=== Illegal Access Recommendations
+
+These command line flags +
+mark technical debt.
+
+*⇝ Work hard to get rid of them ASAP!*
+
+And henceworth enjoy strong encapsulation!
 
 
 == JVM Features
