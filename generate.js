@@ -76,10 +76,10 @@ const computeUniqueImageName = image => {
 }
 
 const computeFileHash = file => {
-	const fileBuffer = fs.readFileSync(file);
-	const hashSum = crypto.createHash('sha256');
-	hashSum.update(fileBuffer);
-	return hashSum.digest('hex').substring(0, 8);
+	const fileBuffer = fs.readFileSync(file)
+	const hashSum = crypto.createHash('sha256')
+	hashSum.update(fileBuffer)
+	return hashSum.digest('hex').substring(0, 8)
 }
 
 const filteredRevealJsFiles = [

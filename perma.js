@@ -1,6 +1,6 @@
 const fs = require(`fs-extra`)
 const proc = require('child_process')
-const prompt = require("prompt-sync")({ sigint: true });
+const prompt = require("prompt-sync")({ sigint: true })
 
 // PARSE ARGS
 
