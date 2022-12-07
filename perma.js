@@ -189,7 +189,6 @@ const annotate = (talk, date, eventName, presentationSlug) => {
 
 const push = () => {
 	proc.execSync(`git push --all`)
-	proc.execSync(`git push --tag`)
 	console.log(`✅  Done.`)
 }
 
