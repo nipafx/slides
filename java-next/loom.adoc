@@ -284,22 +284,21 @@ Structured concurrency:
 
 === Timeline
 
-JDK 19::
-
-* virtual threads preview
-* structured concurrency previews
-
 My personal (!) guess (!!):
 
-* more structured concurrency APIs in 2024
+JDK 20 (2023)::
+* virtual threads (2nd preview; https://openjdk.org/jeps/436[JEP 436])
+* structured concurrency (2nd incubator; https://openjdk.org/jeps/437[JEP 437])
+
+2024::
+* more structured concurrency APIs
 
 === Deeper Dives
 
-* 📝 https://openjdk.java.net/jeps/425[JEP 425: Virtual Threads]
-* 📝 https://openjdk.java.net/jeps/428[JEP 428: Structured Concurrency]
 * 📝 https://inside.java/2021/11/30/on-parallelism-and-concurrency/[On Parallelism and Concurrency]
 * 📝 https://250bpm.com/blog:71/[Structured Concurrency]
-* 📝 https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/[Notes on structured concurrency, or: ...]
+* 📝 https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/[Notes on structured concurrency [...\]]
 * 🎥 https://www.youtube.com/watch?v=fq0OEX0XYR8[Modern, Scalable Concurrency for the Java Platform] +
   (Sep 2021)
 * 🎥 https://www.youtube.com/watch?v=KG24inClY2M[State of Project Loom with Ron Pressler] (Jun 2021)
+* 🎥 https://www.youtube.com/watch?v=lKSSBvRDmTg[Java 19 Virtual Threads - JEP Café #11] (Jun 2022)

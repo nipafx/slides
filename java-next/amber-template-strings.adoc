@@ -48,7 +48,7 @@ All follow format-specific rules.
 
 === String templating
 
-Enter _String Templates_ (https://openjdk.org/jeps/430[JEP 403]):
+Enter _String Templates_ (https://openjdk.org/jeps/430[JEP 430]):
 
 ```java
 String query = STR."""
@@ -169,6 +169,7 @@ Template strings: https://openjdk.org/jeps/430[JEP 430]
 Other endeavors:
 
 * finish pattern matching (https://openjdk.java.net/jeps/433[JEP 433])
-* add more patterns (https://openjdk.java.net/jeps/405[JEP 405] and more)
+* add more patterns (https://openjdk.java.net/jeps/432[JEP 432] and more)
 * concise method bodies (https://openjdk.java.net/jeps/8209434[JEP draft])
-* serialization revamp (https://openjdk.java.net/projects/amber/design-notes/towards-better-serialization[white paper])
+* simplified `main` (https://openjdk.org/projects/amber/design-notes/on-ramp[design notes])
+* serialization revamp (https://openjdk.java.net/projects/amber/design-notes/towards-better-serialization[design notes])
