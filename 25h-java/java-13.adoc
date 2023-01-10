@@ -71,10 +71,10 @@ Escape sequences are translated afterwards:
 
 ```java
 String windows = """
-    Windows\r
-    line\r
-    endings\r
-    """
+	Windows\r
+	line\r
+	endings\r
+	"""
 ```
 
 === Indentation
@@ -130,11 +130,11 @@ But: `"` is not special!
 
 ```java
 String phrase = """
-    {
-        greeting: "hello",
-        audience: "text blocks",
-    }
-    """;
+	{
+		greeting: "hello",
+		audience: "text blocks",
+	}
+	""";
 ```
 
 ⇝ Way fewer escapes in HTML/JSON/SQL/etc.

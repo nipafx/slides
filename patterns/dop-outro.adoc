@@ -47,14 +47,14 @@ Return values that are deconstructed immediately:
 
 ```java
 sealed interface MatchResult<T> {
-    record NoMatch<T>() implements MatchResult<T> { }
-    record ExactMatch<T>(T entity)
+	record NoMatch<T>() implements MatchResult<T> { }
+	record ExactMatch<T>(T entity)
 		implements MatchResult<T> { }
-    record FuzzyMatches<T>(
+	record FuzzyMatches<T>(
 			Collection<FuzzyMatch<T>> entities)
-        implements MatchResult<T> { }
+		implements MatchResult<T> { }
 
-    record FuzzyMatch<T>(T entity, int distance) { }
+	record FuzzyMatch<T>(T entity, int distance) { }
 }
 
 MatchResult<User> findUser(String userName) { ... }

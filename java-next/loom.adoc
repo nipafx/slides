@@ -126,14 +126,14 @@ try (var executor = Executors
 ```java
 void handle(Request request, Response response)
 		throws InterruptedException {
-    try (var executor = Executors
+	try (var executor = Executors
 			.newVirtualThreadPerTaskExecutor()) {
-        var futureA = executor.submit(this::taskA);
-        var futureB = executor.submit(this::taskB);
-        response.send(futureA.get() + futureB.get());
-    } catch (ExecutionException ex) {
-        response.fail(ex);
-    }
+		var futureA = executor.submit(this::taskA);
+		var futureB = executor.submit(this::taskB);
+		response.send(futureA.get() + futureB.get());
+	} catch (ExecutionException ex) {
+		response.fail(ex);
+	}
 }
 ```
 
@@ -221,18 +221,18 @@ Simlarly, structured concurrency prescribes:
 ```java
 void handle(Request request, Response response)
 		throws InterruptedException {
-    try (var executor = Executors
+	try (var executor = Executors
 			.newVirtualThreadPerTaskExecutor()) {
 		// what's the relationship between
 		// this and the two spawned threads?
 		// what happens when one of them fails?
-        var futureA = executor.submit(this::taskA);
-        var futureB = executor.submit(this::taskB);
+		var futureA = executor.submit(this::taskA);
+		var futureB = executor.submit(this::taskB);
 		// what if we only need the faster one?
-        response.send(futureA.get() + futureB.get());
-    } catch (ExecutionException ex) {
-        response.fail(ex);
-    }
+		response.send(futureA.get() + futureB.get());
+	} catch (ExecutionException ex) {
+		response.fail(ex);
+	}
 }
 ```
 
@@ -242,18 +242,18 @@ void handle(Request request, Response response)
 void handle(Request request, Response response)
 		throws InterruptedException {
 	// define explicit success/error handling
-    try (var scope = new StructuredTaskScope
+	try (var scope = new StructuredTaskScope
 							.ShutdownOnFailure()) {
-        var futureA = scope.fork(this::taskA);
-        var futureB = scope.fork(this::taskB);
+		var futureA = scope.fork(this::taskA);
+		var futureB = scope.fork(this::taskB);
 		// wait explicitly until success criteria met
 		scope.join();
 		scope.throwIfFailed();
 
-        response.send(futureA.get() + futureB.get());
-    } catch (ExecutionException ex) {
-        response.fail(ex);
-    }
+		response.send(futureA.get() + futureB.get());
+	} catch (ExecutionException ex) {
+		response.fail(ex);
+	}
 }
 ```
 

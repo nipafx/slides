@@ -192,10 +192,10 @@ Code, code, code, code
 +
 ```java
 HttpRequest request = HttpRequest.newBuilder()
-    .GET()
-    .uri(URI.create("https://nipafx.dev"))
-    .header("Accept-Language", "en-US,en;q=0.5")
-    .build();
+	.GET()
+	.uri(URI.create("https://nipafx.dev"))
+	.header("Accept-Language", "en-US,en;q=0.5")
+	.build();
 ```
 * more `String` improvements | `String::lines`
 * easier IO | `Files::readString`

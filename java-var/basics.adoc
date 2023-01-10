@@ -27,10 +27,10 @@ This *is* about readability!
 <div style="height: 300px;">
 <div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">No no = <span class="hljs-keyword">new</span> No();
 AmountIncrease&lt;BigDecimal&gt; more =
-    <span class="hljs-keyword">new</span> BigDecimalAmountIncrease();
+	<span class="hljs-keyword">new</span> BigDecimalAmountIncrease();
 HorizontalConnection&lt;LinePosition, LinePosition&gt;
-    jumping =
-        <span class="hljs-keyword">new</span> HorizontalLinePositionConnection();
+	jumping =
+		<span class="hljs-keyword">new</span> HorizontalLinePositionConnection();
 Variable variable = <span class="hljs-keyword">new</span> Constant(<span class="hljs-number">5</span>);
 List&lt;String&gt; names = List.of(<span class="hljs-string">"Max"</span>, <span class="hljs-string">"Maria"</span>);</code></pre></div></div>
 <div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">var</span> no = <span class="hljs-keyword">new</span> No();

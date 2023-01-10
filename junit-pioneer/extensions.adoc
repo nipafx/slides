@@ -27,8 +27,8 @@ void testIntChars(
 @Test
 @DefaultLocale(language = "en")
 void test() {
-    assertThat(Locale.getDefault())
-        .isEqualTo(new Locale("en"));
+	assertThat(Locale.getDefault())
+		.isEqualTo(new Locale("en"));
 }
 ```
 
@@ -39,9 +39,9 @@ void test() {
 @ClearSystemProperty(key = "user.name")
 @SetSystemProperty(key = "user.dir", value = "...")
 void test() {
-    assertThat(System.getProperty("user.name"))
+	assertThat(System.getProperty("user.name"))
 		.isNull();
-    assertThat(System.getProperty("user.dir"))
+	assertThat(System.getProperty("user.dir"))
 		.isEqualTo("...");
 }
 ```
@@ -54,7 +54,7 @@ Mark tests that belong to issues:
 @Test
 @Issue("REQ-123")
 void test() {
-    // a test for the issue "REQ-123"
+	// a test for the issue "REQ-123"
 }
 ```
 
@@ -68,7 +68,7 @@ image::images/issue-test-suite.png[role="diagram"]
 ```java
 @RetryingTest(3)
 void test() {
-    // if 1st, 2nd, or 3rd execution passes,
+	// if 1st, 2nd, or 3rd execution passes,
 	// the test passes; otherwise fails
 }
 ```

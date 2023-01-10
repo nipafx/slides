@@ -19,8 +19,8 @@ include::../_shared/highlight.js.adoc[]
 ++++
 <h2>Considered Harmful</h2>
 <!-- would like a longer transition, but reveal immediately applies
-     new data-state, which leads to text from the old slide jumping
-	 to the new position before transitioning to the new text :( -->
+	new data-state, which leads to text from the old slide jumping
+	to the new position before transitioning to the new text :( -->
 <style>
 .reveal .slides > section, .reveal .slides > section > section  {
 	transition-duration: 0ms !important;

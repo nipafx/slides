@@ -239,9 +239,9 @@ $ javac -d classes ${*.java}
 # package with module-info.class
 # and specify main class
 $ jar --create
-    --file mods/advent.jar
-    --main-class advent.Main
-    ${*.class}
+	--file mods/advent.jar
+	--main-class advent.Main
+	${*.class}
 # run by specifying a module path
 # and a module to run (by name)
 $ java --module-path mods --module advent
@@ -335,13 +335,13 @@ image::images/advent-calendar-module-multi.png[role="diagram"]
 ----
 # compile all modules at once
 $ javac -d classes
-    --module-source-path "src"
-    --module advent
+	--module-source-path "src"
+	--module advent
 # package one by one, eventually advent
 $ jar --create
-    --file mods/advent.jar
-    --main-class advent.Main
-    ${*.class}
+	--file mods/advent.jar
+	--main-class advent.Main
+	${*.class}
 # launch the application
 $ java --module-path mods --module advent
 ----

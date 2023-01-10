@@ -25,9 +25,9 @@ compute `c = - (a² + b²)`:
 ```java
 // a, b, c have same length
 void compute(float[] a, float[] b, float[] c) {
-   for (int i = 0; i < a.length; i++) {
-        c[i] = (a[i] * a[i] + b[i] * b[i]) * -1.0f;
-   }
+	for (int i = 0; i < a.length; i++) {
+		c[i] = (a[i] * a[i] + b[i] * b[i]) * -1.0f;
+	}
 }
 ```
 
@@ -137,11 +137,11 @@ MemorySegment offHeap  = MemorySegment
 			ValueLayout.ADDRESS),
 		...);
 for (int i = 0; i < javaStrings.length; i++) {
-    // allocate off-heap & store a pointer
-    MemorySegment cString = SegmentAllocator
+	// allocate off-heap & store a pointer
+	MemorySegment cString = SegmentAllocator
 		.implicitAllocator()
 		.allocateUtf8String(javaStrings[i]);
-    offHeap
+	offHeap
 		.setAtIndex(ValueLayout.ADDRESS, i, cString);
 }
 ```
@@ -195,11 +195,11 @@ MemorySegment offHeap  = allocator
 		ValueLayout.ADDRESS,
 		javaStrings.length);
 for (int i = 0; i < javaStrings.length; i++) {
-    // llocate a string off-heap,
+	// allocate a string off-heap,
 	// then store a pointer to it
-    MemorySegment cStr = allocator
+	MemorySegment cStr = allocator
 		.allocateUtf8String(javaStrings[i]);
-    offHeap
+	offHeap
 		.setAtIndex(ValueLayout.ADDRESS, i, cStr);
 }
 ```
@@ -211,9 +211,9 @@ Getting the results back:
 ```java
 // copy the (reordered) strings back to heap
 for (int i = 0; i < javaStrings.length; i++) {
-    MemoryAddress cStringPtr = offHeap
+	MemoryAddress cStringPtr = offHeap
 		.getAtIndex(ValueLayout.ADDRESS, i);
-    javaStrings[i] = cStringPtr.getUtf8String(0);
+	javaStrings[i] = cStringPtr.getUtf8String(0);
 }
 ```
 

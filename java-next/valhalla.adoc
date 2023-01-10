@@ -160,8 +160,8 @@ Each primitive class `P` declares two types:
 
 ```java
 primitive class Node<T> {
-    T value;
-    Node.ref<T> nextNode;
+	T value;
+	Node.ref<T> nextNode;
 }
 ```
 

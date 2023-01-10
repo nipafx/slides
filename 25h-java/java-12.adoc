@@ -96,9 +96,9 @@ Enter `switch` expressions:
 
 ```java
 boolean result = switch(ternaryBool) {
-    case TRUE -> true;
-    case FALSE -> false;
-    case FILE_NOT_FOUND ->
+	case TRUE -> true;
+	case FALSE -> false;
+	case FILE_NOT_FOUND ->
 		throw new UncheckedIOException(
 			"This is ridiculous!",
 			new FileNotFoundException());
@@ -131,9 +131,9 @@ Statement:
 
 ```java
 if (condition)
-    result = doThis();
+	result = doThis();
 else
-    result = doThat();
+	result = doThat();
 ```
 
 Expression:
@@ -174,9 +174,9 @@ expressions and statements, e.g.:
 
 ```java
 boolean result = switch(ternaryBool) {
-    case TRUE: yield true;
-    case FALSE: yield false;
-    case FILE_NOT_FOUND:
+	case TRUE: yield true;
+	case FALSE: yield false;
+	case FILE_NOT_FOUND:
 		throw new UncheckedIOException(
 			"This is ridiculous!",
 			new FileNotFoundException());
@@ -246,14 +246,14 @@ the arrow form can use statement blocks:
 
 ```java
 boolean result = switch (Bool.random()) {
-    case TRUE -> {
-        System.out.println("Bool true");
-        yield true;
-    }
-    case FALSE -> {
-        System.out.println("Bool false");
-        yield false;
-    }
+	case TRUE -> {
+		System.out.println("Bool true");
+		yield true;
+	}
+	case FALSE -> {
+		System.out.println("Bool false");
+		yield false;
+	}
 	// cases `FILE_NOT_FOUND` and `default`
 };
 ```
@@ -265,17 +265,17 @@ Natural way to create scope:
 ```java
 boolean result = switch (Bool.random()) {
 	// cases `TRUE` and `FALSE`
-    case FILE_NOT_FOUND -> {
-        var ex = new UncheckedIOException(
-            "This is ridiculous!",
-            new FileNotFoundException());
-        throw ex;
-    }
-    default -> {
-        var ex = new IllegalArgumentException(
-            "Seriously?! 🤬");
-        throw ex;
-    }
+	case FILE_NOT_FOUND -> {
+		var ex = new UncheckedIOException(
+			"This is ridiculous!",
+			new FileNotFoundException());
+		throw ex;
+	}
+	default -> {
+		var ex = new IllegalArgumentException(
+			"Seriously?! 🤬");
+		throw ex;
+	}
 };
 ```
 
@@ -314,8 +314,8 @@ If target type is known, all branches must conform to it:
 
 ```java
 String result = switch (ternaryBool) {
-    case TRUE, FALSE -> "sane";
-    default -> "insane";
+	case TRUE, FALSE -> "sane";
+	default -> "insane";
 };
 ```
 
@@ -325,8 +325,8 @@ If target type is unknown, the compiler infers a type:
 // compiler infers super type of `String` and
 // `IllegalArgumentException` ~> `Serializable`
 var serializableMessage = switch (bool) {
-    case TRUE, FALSE -> "sane";
-    default -> new IllegalArgumentException("insane");
+	case TRUE, FALSE -> "sane";
+	default -> new IllegalArgumentException("insane");
 };
 ```
 
@@ -337,13 +337,13 @@ you can't return early from a `switch` expression:
 
 ```java
 public String sanity(Bool ternaryBool) {
-    String result = switch (ternaryBool) {
-        // compile error:
+	String result = switch (ternaryBool) {
+		// compile error:
 		//     "return outside
 		//      of enclosing switch expression"
-        case TRUE, FALSE -> { return "sane"; }
-        default -> { return "This is ridiculous!"; }
-    };
+		case TRUE, FALSE -> { return "sane"; }
+		default -> { return "This is ridiculous!"; }
+	};
 }
 ```
 
@@ -357,9 +357,9 @@ a `switch` expression checks exhaustiveness:
 //     "the switch expression does not cover
 //      all possible input values"
 boolean result = switch (ternaryBool) {
-    case TRUE -> true;
-    // no case for `FALSE`
-    case FILE_NOT_FOUND ->
+	case TRUE -> true;
+	// no case for `FALSE`
+	case FILE_NOT_FOUND ->
 		throw new UncheckedIOException(
 			"This is ridiculous!",
 			new FileNotFoundException());
@@ -374,9 +374,9 @@ No compile error for missing `default`:
 // compiles without `default` branch because
 // all cases for `ternaryBool` are covered
 boolean result = switch (ternaryBool) {
-    case TRUE -> true;
-    case FALSE -> false;
-    case FILE_NOT_FOUND ->
+	case TRUE -> true;
+	case FALSE -> false;
+	case FILE_NOT_FOUND ->
 		throw new UncheckedIOException(
 			"This is ridiculous!",
 			new FileNotFoundException());

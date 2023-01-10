@@ -265,7 +265,7 @@ Should this code emit a warning?
 
 <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DeprecatedImports</span> </span>{
 
-    LineNumberInputStream stream;
+	LineNumberInputStream stream;
 
 }</code></pre></div></div>
 <div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">// LineNumberInputStream is deprecated
@@ -274,7 +274,7 @@ Should this code emit a warning?
 <span class="hljs-meta">@Deprecated</span>
 <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DeprecatedImports</span> </span>{
 
-    LineNumberInputStream stream;
+	LineNumberInputStream stream;
 
 }</code></pre></div></div></div>
 ++++
@@ -1005,8 +1005,8 @@ Module descriptor for _system.out.logger_:
 
 ++++
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> system.out.logger {
-    <span class="hljs-keyword">provides</span> java.lang.System.LoggerFinder
-        <span class="hljs-keyword">with</span> system.out.logger.SystemOutLoggerFinder;
+	<span class="hljs-keyword">provides</span> java.lang.System.LoggerFinder
+		<span class="hljs-keyword">with</span> system.out.logger.SystemOutLoggerFinder;
 }</code></pre></div></div>
 ++++
 

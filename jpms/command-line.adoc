@@ -64,8 +64,8 @@ Configuration:
 [source,bash]
 ----
 $ java --class-path 'mods/*'
-    --illegal-access=deny
-    advent.Main
+	--illegal-access=deny
+	advent.Main
 ----
 
 
@@ -104,8 +104,8 @@ the owning module doesn't export.
 ----
 $ java --module-path mods
 #   --add-exports <module>/<package>=<target>
-    --add-exports factories/factory.quotes=advent
-    --module advent
+	--add-exports factories/factory.quotes=advent
+	--module advent
 ----
 
 Use target `ALL-UNNAMED` to export +
@@ -125,8 +125,8 @@ the owning module doesn't open.
 ----
 $ java --module-path mods
 #   --add-opens <module>/<package>=<target>
-    --add-opens factories/factory.quotes=advent
-    --module advent
+	--add-opens factories/factory.quotes=advent
+	--module advent
 ----
 
 Use target `ALL-UNNAMED` to open +
@@ -146,8 +146,8 @@ it might not make it into the module graph.
 ----
 $ java --module-path mods
 #   --add-modules <module>(,<module>)*
-    --add-modules java.xml.ws.annotation
-    --module advent
+	--add-modules java.xml.ws.annotation
+	--module advent
 ----
 
 
@@ -178,8 +178,8 @@ by another but you need it to be.
 ----
 $ java --module-path mods
 #   --add-reads <module>=<target>(,<more>)*
-    --add-reads advent=factories
-    --module advent
+	--add-reads advent=factories
+	--module advent
 ----
 
 
@@ -192,10 +192,10 @@ Maybe you have a package split...
 [source,bash]
 ----
 $ java --module-path mods
-    --add-modules java.xml.ws.annotation
+	--add-modules java.xml.ws.annotation
 #   --patch-module <module>=<JAR>
-    --patch-module java.xml.ws.annotation=jsr305.jar
-    --module advent
+	--patch-module java.xml.ws.annotation=jsr305.jar
+	--module advent
 ----
 
 All classes from `jsr305.jar` are put +

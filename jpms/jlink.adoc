@@ -28,11 +28,11 @@ Create with `jlink`:
 ----
 $ jlink
 #   define output folder for the image
-    --output jdk-minimal
+	--output jdk-minimal
 #   where to find modules? (obsolete in ⑪)
-    --module-path $JAVA_HOME/jmods
+	--module-path $JAVA_HOME/jmods
 #   which modules to add (includes dependencies!)
-    --add-modules java.base
+	--add-modules java.base
 ----
 
 Try it out:
@@ -110,11 +110,11 @@ You can even create a launcher:
 [source,bash]
 ----
 $ jlink
-    --output app-image
-    --module-path $JAVA_HOME/jmods:mods
-    --add-modules advent,...
+	--output app-image
+	--module-path $JAVA_HOME/jmods:mods
+	--add-modules advent,...
 #   --launcher <name>=<module>[/<mainclass>]
-    --launcher calendar=advent
+	--launcher calendar=advent
 ----
 
 Launching the app:

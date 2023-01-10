@@ -80,8 +80,8 @@ Can be configured with `--illegal-access`.
 [source,bash]
 ----
 $ java --class-path 'mods/*'
-    --illegal-access=deny
-    org.example.Main
+	--illegal-access=deny
+	org.example.Main
 ----
 
 === Illegal Access Modes
@@ -128,8 +128,8 @@ the owning module doesn't export.
 $ java --class-path 'mods/*'
 #   --add-exports <module>/<package>=<target>
 #                        class path ~ ALL-UNNAMED
-    --add-exports java.base/java.util=ALL-UNNAMED
-    org.example.Main
+	--add-exports java.base/java.util=ALL-UNNAMED
+	org.example.Main
 ----
 
 (Works for `javac` and `java`.)
@@ -148,8 +148,8 @@ the owning module doesn't open.
 $ java --class-path 'mods/*'
 #   --add-opens <module>/<package>=<target>
 #                        class path ~ ALL-UNNAMED
-    --add-opens java.base/java.util=ALL-UNNAMED
-    org.example.Main
+	--add-opens java.base/java.util=ALL-UNNAMED
+	org.example.Main
 ----
 
 (Works for `java`.)
@@ -513,15 +513,15 @@ jar --create --file out/mr.jar
 
 ```bash
 └ dev
-    └ nipafx ... (moar folders)
-        ├ Main.class
-        └ Version.class # 8
+  └ nipafx ... (moar folders)
+    ├ Main.class
+    └ Version.class # 8
 └ META-INF
-    └ versions
-        └ 9
-            └ dev
-                └ nipafx ... (moar folders)
-                    └ Version.class # 9
+  └ versions
+    └ 9
+      └ dev
+        └ nipafx ... (moar folders)
+          └ Version.class # 9
 ```
 
 === Run!

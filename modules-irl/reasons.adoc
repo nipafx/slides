@@ -45,9 +45,9 @@ Explicit dependencies in action:
 ```sh
 # create the image
 $ jlink
-    --module-path mods
-    --add-modules com.example.main
-    --output app-image
+	--module-path mods
+	--add-modules com.example.main
+	--output app-image
 
 # list contained modules
 $ app-image/bin/java --list-modules

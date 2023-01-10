@@ -209,10 +209,10 @@ Replacement may look as follows:
 ----
 class ListWrapper<E> implements List<E> {
 
-    private List<E> list;
+	private List<E> list;
 
-    public int size() -> list.size();
-    public T get(int index) -> list.get(index);
+	public int size() -> list.size();
+	public T get(int index) -> list.get(index);
 	public int indexOf(E el) = list::indexOf;
 
 }
