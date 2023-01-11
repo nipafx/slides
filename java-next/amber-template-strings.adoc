@@ -166,10 +166,16 @@ JSONObject doc = JSON."""
 
 Template strings: https://openjdk.org/jeps/430[JEP 430]
 
-Other endeavors:
+Pattern matching:
 
-* finish pattern matching (https://openjdk.java.net/jeps/433[JEP 433])
-* add more patterns (https://openjdk.java.net/jeps/432[JEP 432] and more)
-* concise method bodies (https://openjdk.java.net/jeps/8209434[JEP draft])
+* finish pattern matching (https://openjdk.org/jeps/433[JEP 433])
+* finish record patterns (https://openjdk.org/jeps/432[JEP 432])
+* primitive types in patterns (https://bugs.openjdk.org/browse/JDK-8288476[JEP draft])
+* unnamed patterns/variables (https://bugs.openjdk.org/browse/JDK-8294349[JEP draft])
+
+Other endeavors and conversations:
+
 * simplified `main` (https://openjdk.org/projects/amber/design-notes/on-ramp[design notes])
-* serialization revamp (https://openjdk.java.net/projects/amber/design-notes/towards-better-serialization[design notes])
+* relaxed `super()` (https://mail.openjdk.org/pipermail/amber-dev/2022-October/007537.html[discussions])
+* concise method bodies (https://openjdk.java.net/jeps/8209434[JEP draft])
+* serialization revamp (https://openjdk.org/projects/amber/design-notes/towards-better-serialization[design notes])
