@@ -481,9 +481,9 @@ public class Transitive {
 <div class="paragraph"><p>⇝ Modules make dependencies more explicit.</p></div></div></section><section id="_self_contained_applications"><h2>Self-contained applications</h2><div class="slide-content"><div class="paragraph"><p>Explicit dependencies in action:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-sh" data-lang="sh"># create the image
 $ jlink
-    --module-path mods
-    --add-modules com.example.main
-    --output app-image
+	--module-path mods
+	--add-modules com.example.main
+	--output app-image
 
 # list contained modules
 $ app-image/bin/java --list-modules

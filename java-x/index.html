@@ -851,9 +851,9 @@ switch (ternaryBool) {
 on missing branches</p></li><li><p>creating a method is not always<br>
 possible or convenient</p></li></ul></div></div></section><section id="_switch_expression"><h2>Switch Expression</h2><div class="slide-content"><div class="paragraph"><p>Enter <code>switch</code> expressions:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">boolean result = switch(ternaryBool) {
-    case TRUE -&gt; true;
-    case FALSE -&gt; false;
-    case FILE_NOT_FOUND -&gt;
+	case TRUE -&gt; true;
+	case FALSE -&gt; false;
+	case FILE_NOT_FOUND -&gt;
 		throw new UncheckedIOException(
 			"This is ridiculous!",
 			new FileNotFoundException());
@@ -862,9 +862,9 @@ possible or convenient</p></li></ul></div></div></section><section id="_switch_e
 <div class="ulist"><ul><li><p><code>switch</code> "has a result"<br>
 ⇝ it&#8217;s an <em>expression</em>, not a <em>statement</em></p></li><li><p>lambda-style arrow syntax</p></li></ul></div></div></section><section id="_expression_vs_statement"><h2>Expression vs Statement</h2><div class="slide-content"><div class="paragraph"><p>Statement:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">if (condition)
-    result = doThis();
+	result = doThis();
 else
-    result = doThat();</code></pre></div></div>
+	result = doThat();</code></pre></div></div>
 <div class="paragraph"><p>Expression:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">result = condition
 	? doThis()
@@ -879,9 +879,9 @@ treated as a statement</p></li></ul></div>
 (more on that later).</p></div></div></section><section id="_arrow_vs_colon"><h2>Arrow vs Colon</h2><div class="slide-content"><div class="paragraph"><p>You can use <code>:</code> and <code>-&gt;</code> with<br>
 expressions and statements, e.g.:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">boolean result = switch(ternaryBool) {
-    case TRUE: yield true;
-    case FALSE: yield false;
-    case FILE_NOT_FOUND:
+	case TRUE: yield true;
+	case FALSE: yield false;
+	case FILE_NOT_FOUND:
 		throw new UncheckedIOException(
 			"This is ridiculous!",
 			new FileNotFoundException());
@@ -911,29 +911,29 @@ the arrow form has no fall-through:</p></div>
 }</code></pre></div></div></div></section><section id="_statement_blocks"><h2>Statement Blocks</h2><div class="slide-content"><div class="paragraph"><p>Whether used as statement or expression,<br>
 the arrow form can use statement blocks:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">boolean result = switch (ternaryBoolean) {
-    case TRUE -&gt; {
-        System.out.println("Bool true");
-        yield true;
-    }
-    case FALSE -&gt; {
-        System.out.println("Bool false");
-        yield false;
-    }
+	case TRUE -&gt; {
+		System.out.println("Bool true");
+		yield true;
+	}
+	case FALSE -&gt; {
+		System.out.println("Bool false");
+		yield false;
+	}
 	// cases `FILE_NOT_FOUND` and `default`
 };</code></pre></div></div></div></section><section id="_statement_blocks_2"><h2>Statement Blocks</h2><div class="slide-content"><div class="paragraph"><p>Natural way to create scope:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">boolean result = switch (ternaryBoolean) {
 	// cases `TRUE` and `FALSE`
-    case FILE_NOT_FOUND -&gt; {
-        var ex = new UncheckedIOException(
-            "This is ridiculous!",
-            new FileNotFoundException());
-        throw ex;
-    }
-    default -&gt; {
-        var ex = new IllegalArgumentException(
-            "Seriously?! 🤬");
-        throw ex;
-    }
+	case FILE_NOT_FOUND -&gt; {
+		var ex = new UncheckedIOException(
+			"This is ridiculous!",
+			new FileNotFoundException());
+		throw ex;
+	}
+	default -&gt; {
+		var ex = new IllegalArgumentException(
+			"Seriously?! 🤬");
+		throw ex;
+	}
 };</code></pre></div></div></div></section><section id="_poly_expression"><h2>Poly Expression</h2><div class="slide-content"><div class="paragraph"><p>A <em>poly expression</em></p></div>
 <div class="ulist"><ul><li><p>has no definitive type</p></li><li><p>can be one of several types</p></li></ul></div>
 <div class="paragraph"><p>Lambdas are poly expressions:</p></div>
@@ -947,34 +947,34 @@ String result = switch (ternaryBool) { ... }
 // target type unknown
 var result = switch (ternaryBool) { ... }</code></pre></div></div></div></section><section id="_poly_expression_3"><h2>Poly Expression</h2><div class="slide-content"><div class="paragraph"><p>If target type is known, all branches must conform to it:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">String result = switch (ternaryBool) {
-    case TRUE, FALSE -&gt; "sane";
-    default -&gt; "insane";
+	case TRUE, FALSE -&gt; "sane";
+	default -&gt; "insane";
 };</code></pre></div></div>
 <div class="paragraph"><p>If target type is unknown, the compiler infers a type:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// compiler infers super type of `String` and
 // `IllegalArgumentException` ~&gt; `Serializable`
 var serializableMessage = switch (bool) {
-    case TRUE, FALSE -&gt; "sane";
-    default -&gt; new IllegalArgumentException("insane");
+	case TRUE, FALSE -&gt; "sane";
+	default -&gt; new IllegalArgumentException("insane");
 };</code></pre></div></div></div></section><section id="_returning_early"><h2>Returning Early</h2><div class="slide-content"><div class="paragraph"><p>Whether in colon or arrow form,<br>
 you can&#8217;t return early from a <code>switch</code> expression:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public String sanity(Bool ternaryBool) {
-    String result = switch (ternaryBool) {
-        // compile error:
-		//     "return outside
-		//      of enclosing switch expression"
-        case TRUE, FALSE -&gt; { return "sane"; }
-        default -&gt; { return "This is ridiculous!"; }
-    };
+	String result = switch (ternaryBool) {
+		// compile error:
+		//   "return outside
+		//    of enclosing switch expression"
+		case TRUE, FALSE -&gt; { return "sane"; }
+		default -&gt; { return "This is ridiculous!"; }
+	};
 }</code></pre></div></div></div></section><section id="_completeness_2"><h2>Completeness</h2><div class="slide-content"><div class="paragraph"><p>Whether in colon or arrow form,<br>
 a <code>switch</code> expression checks completeness:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// compile error:
 //     "the switch expression does not cover
 //      all possible input values"
 boolean result = switch (ternaryBool) {
-    case TRUE -&gt; true;
-    // no case for `FALSE`
-    case FILE_NOT_FOUND -&gt;
+	case TRUE -&gt; true;
+	// no case for `FALSE`
+	case FILE_NOT_FOUND -&gt;
 		throw new UncheckedIOException(
 			"This is ridiculous!",
 			new FileNotFoundException());
@@ -982,9 +982,9 @@ boolean result = switch (ternaryBool) {
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// compiles without `default` branch because
 // all cases for `ternaryBool` are covered
 boolean result = switch (ternaryBool) {
-    case TRUE -&gt; true;
-    case FALSE -&gt; false;
-    case FILE_NOT_FOUND -&gt;
+	case TRUE -&gt; true;
+	case FALSE -&gt; false;
+	case FILE_NOT_FOUND -&gt;
 		throw new UncheckedIOException(
 			"This is ridiculous!",
 			new FileNotFoundException());
@@ -1156,10 +1156,10 @@ Source file properties influence semantics?</p></div>
 <div class="paragraph"><p><strong>Text block lines always end with <code>\n</code>!</strong></p></div>
 <div class="paragraph"><p>Escape sequences are translated afterwards:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">String windows = """
-    Windows\r
-    line\r
-    endings\r
-    """</code></pre></div></div></div></section><section id="_indentation"><h2>Indentation</h2><div class="slide-content"><div class="paragraph"><p>Compiler discerns:</p></div>
+	Windows\r
+	line\r
+	endings\r
+	"""</code></pre></div></div></div></section><section id="_indentation"><h2>Indentation</h2><div class="slide-content"><div class="paragraph"><p>Compiler discerns:</p></div>
 <div class="ulist"><ul><li><p>accidental indentation<br>
 (from code style; gets removed)</p></li><li><p>essential indentation<br>
 (within the string; remains)</p></li></ul></div>
@@ -1180,11 +1180,11 @@ String haikuBlock = """
 <div class="ulist"><ul><li><p>escape sequences work (e.g. <code>\r</code>)</p></li><li><p>escape sequences are necessary</p></li></ul></div>
 <div class="paragraph"><p>But: <code>"</code> is not special!</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">String phrase = """
-    {
-        greeting: "hello",
-        audience: "text blocks",
-    }
-    """;</code></pre></div></div>
+	{
+		greeting: "hello",
+		audience: "text blocks",
+	}
+	""";</code></pre></div></div>
 <div class="paragraph"><p>⇝ Way fewer escapes in HTML/JSON/SQL/etc.</p></div></div></section><section id="_more_on_text_blocks"><h2>More on Text Blocks</h2><div class="slide-content"><div class="ulist"><ul><li><p><a href="https://blog.codefx.org/java/text-blocks/">Definitive Guide To Text Blocks</a></p></li><li><p><a href="http://cr.openjdk.java.net/~jlaskey/Strings/TextBlocksGuide_v9.html">Programmer&#8217;s Guide To Text Blocks</a></p></li></ul></div></div></section></section>
 <section><section id="_new_language_features_8"><h2>New Language Features</h2><div class="slide-content"><table class="toc">
 	<tr><td>Pattern Matching Things...</td></tr>
@@ -1468,7 +1468,7 @@ synchronize(answer) { /*... */ }</code></pre></div></div>
 
 <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DeprecatedImports</span> </span>{
 
-    LineNumberInputStream stream;
+	LineNumberInputStream stream;
 
 }</code></pre></div></div>
 <div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">// LineNumberInputStream is deprecated
@@ -1477,7 +1477,7 @@ synchronize(answer) { /*... */ }</code></pre></div></div>
 <span class="hljs-meta">@Deprecated</span>
 <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DeprecatedImports</span> </span>{
 
-    LineNumberInputStream stream;
+	LineNumberInputStream stream;
 
 }</code></pre></div></div></div></div></section><section id="_not_on_imports"><h2>Not On Imports</h2><div class="slide-content"><div class="paragraph"><p>Java 9 no longer emits warnings<br>
 for importing deprecated members.</p></div>
@@ -2245,8 +2245,8 @@ exported packages can be accessed</p></li><li><p>static or reflective access to 
 <div class="ulist"><ul><li><p>code on the class path</p></li><li><p>that accesses pre-JDK-9 packages</p></li></ul></div>
 <div class="paragraph"><p>Can be configured with <code>--illegal-access</code>.</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-bash" data-lang="bash">$ java --class-path 'mods/*'
-    --illegal-access=deny
-    org.example.Main</code></pre></div></div></div></section><section id="_illegal_access_modes"><h2>Illegal Access Modes</h2><div class="slide-content"><div class="paragraph"><p>Four modes:</p></div>
+	--illegal-access=deny
+	org.example.Main</code></pre></div></div></div></section><section id="_illegal_access_modes"><h2>Illegal Access Modes</h2><div class="slide-content"><div class="paragraph"><p>Four modes:</p></div>
 <div class="ulist"><ul><li><p><code>permit</code>: warning on <em>first</em> reflective access to package</p></li><li><p><code>warn</code>: warning on <em>each</em> reflective access</p></li><li><p><code>debug</code>: like <code>warn</code> plus stack trace</p></li><li><p><code>deny</code>: illegal access denied (static + reflective)</p></li></ul></div>
 <div class="paragraph"><p>First three permit static access.</p></div></div></section><section id="_configure_illegal_access"><h2>Configure Illegal Access</h2><div class="slide-content"><div class="paragraph"><p>Configuration:</p></div>
 <div class="ulist"><ul><li><p><strong>Java 9-15</strong>: <code>permit</code> is default</p></li><li><p><strong>Java 16</strong>: <code>deny</code> is default</p></li><li><p><strong>Java 17</strong>: <code>--illegal-access</code> is no-op</p></li><li><p><strong>Java ??</strong>: the option will be removed</p></li></ul></div></div></section><section id="_illegal_access_recommendations"><h2>Illegal Access Recommendations</h2><div class="slide-content"><div class="paragraph"><p>I recommend:</p></div>
@@ -2260,8 +2260,8 @@ the owning module doesn&#8217;t export.</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-bash" data-lang="bash">$ java --class-path 'mods/*'
 #   --add-exports &lt;module&gt;/&lt;package&gt;=&lt;target&gt;
 #                        class path ~ ALL-UNNAMED
-    --add-exports java.base/java.util=ALL-UNNAMED
-    org.example.Main</code></pre></div></div>
+	--add-exports java.base/java.util=ALL-UNNAMED
+	org.example.Main</code></pre></div></div>
 <div class="paragraph"><p>(Works for <code>javac</code> and <code>java</code>.)</p></div></div></section><section id="_open_packages"><h2>Open Packages</h2><div class="slide-content"><div class="paragraph"><p>Another common case:</p></div>
 <div class="paragraph"><p>A module reflects on types from a package that<br>
 the owning module doesn&#8217;t open.</p></div>
@@ -2269,8 +2269,8 @@ the owning module doesn&#8217;t open.</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-bash" data-lang="bash">$ java --class-path 'mods/*'
 #   --add-opens &lt;module&gt;/&lt;package&gt;=&lt;target&gt;
 #                        class path ~ ALL-UNNAMED
-    --add-opens java.base/java.util=ALL-UNNAMED
-    org.example.Main</code></pre></div></div>
+	--add-opens java.base/java.util=ALL-UNNAMED
+	org.example.Main</code></pre></div></div>
 <div class="paragraph"><p>(Works for <code>java</code>.)</p></div></div></section><section id="_illegal_access_recommendations_2"><h2>Illegal Access Recommendations</h2><div class="slide-content"><div class="paragraph"><p>These command line flags<br>
 mark technical debt.</p></div>
 <div class="paragraph"><p><strong>⇝ Work hard to get rid of them ASAP!</strong></p></div>
@@ -2401,15 +2401,15 @@ public class Version {
 <div class="ulist"><ul><li><p>compile <code>Main</code> and <code>Version[8]</code> to <code>out/java-8</code></p></li><li><p>compile <code>Version[9]</code> to <code>out/java-9</code></p></li><li><p>use new <code>jar</code> flag <code>--release</code>:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-bash" data-lang="bash">jar --create --file out/mr.jar
 	-C out/java-8 .
 	--release 9 -C out/java-9 .</code></pre></div></div></li></ul></div></div></section><section id="_jar_content"><h2>JAR Content</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-bash" data-lang="bash">└ dev
-    └ nipafx ... (moar folders)
-        ├ Main.class
-        └ Version.class # 8
+  └ nipafx ... (moar folders)
+    ├ Main.class
+    └ Version.class # 8
 └ META-INF
-    └ versions
-        └ 9
-            └ dev
-                └ nipafx ... (moar folders)
-                    └ Version.class # 9</code></pre></div></div></div></section><section id="_run"><h2>Run!</h2><div class="slide-content"><div class="paragraph"><p>With <code>java -cp out/mr.jar &#8230;&#8203;Main</code>:</p></div>
+  └ versions
+    └ 9
+      └ dev
+        └ nipafx ... (moar folders)
+          └ Version.class # 9</code></pre></div></div></div></section><section id="_run"><h2>Run!</h2><div class="slide-content"><div class="paragraph"><p>With <code>java -cp out/mr.jar &#8230;&#8203;Main</code>:</p></div>
 <div class="ulist"><ul><li><p>prints <code>"Java 8"</code> on Java 8</p></li><li><p>prints <code>"Java 9+"</code> on Java 9 and later</p></li></ul></div>
 <div class="paragraph"><p>Great Success!</p></div></div></section></section>
 <section><section id="_jvm_features_8"><h2>JVM Features</h2><div class="slide-content"><table class="toc">

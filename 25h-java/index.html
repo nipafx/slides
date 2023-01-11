@@ -631,9 +631,9 @@ $ javac -d classes ${*.java}
 # package with module-info.class
 # and specify main class
 $ jar --create
-    --file mods/advent.jar
-    --main-class advent.Main
-    ${*.class}
+	--file mods/advent.jar
+	--main-class advent.Main
+	${*.class}
 # run by specifying a module path
 # and a module to run (by name)
 $ java --module-path mods --module advent</code></pre></div></div></div></section><section id="_dependency_inversion"><h2>Dependency Inversion?</h2><div class="slide-content"><div class="imageblock diagram"><img src="../_images/advent-dependency-inversion-c8466393.png" alt="advent dependency inversion"></div></div></section><section id="_service_locator_pattern"><h2>Service Locator Pattern</h2><div class="slide-content"><div class="paragraph"><p><strong>Consumers</strong> and <strong>implementations</strong><br>
@@ -683,11 +683,11 @@ request implementations from <code>ServiceLoader</code>:</p></div>
 <div class="paragraph"><p>This is about <code>jlink</code>.</p></div></div></section><section id="_a_minimal_jdk_image"><h2>A Minimal JDK Image</h2><div class="slide-content"><div class="paragraph"><p>Create with <code>jlink</code>:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-bash" data-lang="bash">$ jlink
 #   define output folder for the image
-    --output jdk-minimal
+	--output jdk-minimal
 #   where to find modules? (obsolete in ⑪)
-    --module-path $JAVA_HOME/jmods
+	--module-path $JAVA_HOME/jmods
 #   which modules to add (includes dependencies!)
-    --add-modules java.base</code></pre></div></div>
+	--add-modules java.base</code></pre></div></div>
 <div class="paragraph"><p>Try it out:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-bash" data-lang="bash">$ jdk-minimal/bin/java --list-modules
 &gt; java.base</code></pre></div></div></div></section><section id="_image_for_a_backend"><h2>Image For A Backend</h2><div class="slide-content"><div class="paragraph"><p>Say you use JAXP, JDBC, and JUL:</p></div>
@@ -711,11 +711,11 @@ which creates module descriptors on the fly.</p></div></div></section><section i
 <div class="paragraph"><p>Launching the app:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-bash" data-lang="bash">app-image/bin/java --module advent</code></pre></div></div></div></section><section id="_creating_a_launcher"><h2>Creating A Launcher</h2><div class="slide-content"><div class="paragraph"><p>You can even create a launcher:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-bash" data-lang="bash">$ jlink
-    --output app-image
-    --module-path $JAVA_HOME/jmods:mods
-    --add-modules advent,...
+	--output app-image
+	--module-path $JAVA_HOME/jmods:mods
+	--add-modules advent,...
 #   --launcher &lt;name&gt;=&lt;module&gt;[/&lt;mainclass&gt;]
-    --launcher calendar=advent</code></pre></div></div>
+	--launcher calendar=advent</code></pre></div></div>
 <div class="paragraph"><p>Launching the app:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-bash" data-lang="bash">app-image/bin/calendar</code></pre></div></div></div></section><section id="_more_features"><h2>More Features</h2><div class="slide-content"><div class="ulist"><ul><li><p>automatic service binding<br>
 (with <code>--bind-services</code>)</p></li><li><p>various optimizations<br>
@@ -1059,10 +1059,10 @@ String formatted = switch (value) {
 XML, JSON, YAML, &#8230;&#8203;</p></li></ul></div></div></section><section id="_new_serialization"><h2>New serialization</h2><div class="slide-content"><div class="paragraph"><p><strong>Yeah:</strong></p></div>
 <div class="ulist"><ul><li><p>records are a great fit for serialization</p></li><li><p>new mechanism uses (de)constructors</p></li><li><p>superior maintainability</p></li></ul></div></div></section><section id="_concise_method_bodies"><h2>Concise method bodies</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">class ListWrapper&lt;E&gt; implements List&lt;E&gt; {
 
-    private List&lt;E&gt; list;
+	private List&lt;E&gt; list;
 
-    public int size() -&gt; list.size();
-    public T get(int index) -&gt; list.get(index);
+	public int size() -&gt; list.size();
+	public T get(int index) -&gt; list.get(index);
 	public int indexOf(E el) = list::indexOf;
 
 }</code></pre></div></div>
@@ -1254,7 +1254,7 @@ can be applied to private methods.</p></div></div></section><section id="_deprec
 
 <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DeprecatedImports</span> </span>{
 
-    LineNumberInputStream stream;
+	LineNumberInputStream stream;
 
 }</code></pre></div></div>
 <div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">// LineNumberInputStream is deprecated
@@ -1263,7 +1263,7 @@ can be applied to private methods.</p></div></div></section><section id="_deprec
 <span class="hljs-meta">@Deprecated</span>
 <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DeprecatedImports</span> </span>{
 
-    LineNumberInputStream stream;
+	LineNumberInputStream stream;
 
 }</code></pre></div></div></div></div></section><section id="_not_on_imports"><h2>Not On Imports</h2><div class="slide-content"><div class="paragraph"><p>Java 9 no longer emits warnings<br>
 for importing deprecated members.</p></div>
@@ -1533,8 +1533,8 @@ as backend for JDK logging.</p></div></div></section><section id="_loggers_and_f
 
 }</code></pre></div></div></div></section><section id="_registering_the_service"><h2>Registering the Service</h2><div class="slide-content"><div class="paragraph"><p>Module descriptor for <em>system.out.logger</em>:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> system.out.logger {
-    <span class="hljs-keyword">provides</span> java.lang.System.LoggerFinder
-        <span class="hljs-keyword">with</span> system.out.logger.SystemOutLoggerFinder;
+	<span class="hljs-keyword">provides</span> java.lang.System.LoggerFinder
+		<span class="hljs-keyword">with</span> system.out.logger.SystemOutLoggerFinder;
 }</code></pre></div></div>
 <div class="paragraph"><p>Module system and JDK take care of the rest!</p></div></div></section><section id="_even_more_newjvmfeatures"><h2>Even More New&nbsp;JVM&nbsp;Features</h2><div class="slide-content"><div class="ulist"><ul><li><p>new version strings (<a href="http://openjdk.java.net/jeps/223">JEP 223</a>)</p></li><li><p>GNU-style command line options (<a href="http://openjdk.java.net/jeps/293">JEP 293</a>)</p></li><li><p>command line flag validation (<a href="http://openjdk.java.net/jeps/245">JEP 245</a>)</p></li><li><p>reserved stack areas (<a href="http://openjdk.java.net/jeps/270">JEP 270</a>)</p></li><li><p>Unicode 7 &amp; 8 (JEPS <a href="http://openjdk.java.net/jeps/227">227</a> &amp; <a href="http://openjdk.java.net/jeps/267">267</a>)</p></li></ul></div></div></section><section id="_compact_strings"><h2>Compact Strings</h2><div class="slide-content"><div class="paragraph"><p>Going from UTF-16 to ISO-8859-1.</p></div></div></section><section id="_strings_and_memory"><h2>Strings and memory</h2><div class="slide-content"><div class="ulist"><ul><li><p>20% - 30% of heap are <code>char[]</code> for <code>String</code></p></li><li><p>a <code>char</code> is UTF-16 code unit ⇝ 2 bytes</p></li><li><p>most strings only require ISO-8859-1 ⇝ 1 byte</p></li></ul></div>
 <div class="paragraph"><p><strong>10% - 15% of memory is wasted!</strong></p></div></div></section><section id="_compact_strings_2"><h2>Compact Strings</h2><div class="slide-content"><div class="paragraph"><p>For Java 9, <code>String</code> was changed:</p></div>
@@ -1947,9 +1947,9 @@ switch (ternaryBool) {
 <div class="ulist"><ul><li><p><code>default</code> is not really necessary</p></li><li><p>creating a method is not always<br>
 possible or convenient</p></li></ul></div></div></section><section id="_switch_expression"><h2>Switch Expression</h2><div class="slide-content"><div class="paragraph"><p>Enter <code>switch</code> expressions:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">boolean result = switch(ternaryBool) {
-    case TRUE -&gt; true;
-    case FALSE -&gt; false;
-    case FILE_NOT_FOUND -&gt;
+	case TRUE -&gt; true;
+	case FALSE -&gt; false;
+	case FILE_NOT_FOUND -&gt;
 		throw new UncheckedIOException(
 			"This is ridiculous!",
 			new FileNotFoundException());
@@ -1964,9 +1964,9 @@ a <a href="https://blog.codefx.org/java/enable-preview-language-features/">previ
 <em>12 (Preview) - &#8230;&#8203;</em> or <em>13 (Preview) - &#8230;&#8203;</em></p></li><li><p>in Eclipse, go to <em>Compiler Settings</em><br>
 and check <em>Enable preview features</em></p></li></ul></div></div></section><section id="_expression_vs_statement"><h2>Expression vs Statement</h2><div class="slide-content"><div class="paragraph"><p>Statement:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">if (condition)
-    result = doThis();
+	result = doThis();
 else
-    result = doThat();</code></pre></div></div>
+	result = doThat();</code></pre></div></div>
 <div class="paragraph"><p>Expression:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">result = condition
 	? doThis()
@@ -1981,9 +1981,9 @@ treated as a statement</p></li></ul></div>
 (more on that later).</p></div></div></section><section id="_arrow_vs_colon"><h2>Arrow vs Colon</h2><div class="slide-content"><div class="paragraph"><p>You can use <code>:</code> and <code>-&gt;</code> with<br>
 expressions and statements, e.g.:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">boolean result = switch(ternaryBool) {
-    case TRUE: yield true;
-    case FALSE: yield false;
-    case FILE_NOT_FOUND:
+	case TRUE: yield true;
+	case FALSE: yield false;
+	case FILE_NOT_FOUND:
 		throw new UncheckedIOException(
 			"This is ridiculous!",
 			new FileNotFoundException());
@@ -2013,29 +2013,29 @@ the arrow form has no fall-through:</p></div>
 }</code></pre></div></div></div></section><section id="_statement_blocks"><h2>Statement Blocks</h2><div class="slide-content"><div class="paragraph"><p>Whether used as statement or expression,<br>
 the arrow form can use statement blocks:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">boolean result = switch (Bool.random()) {
-    case TRUE -&gt; {
-        System.out.println("Bool true");
-        yield true;
-    }
-    case FALSE -&gt; {
-        System.out.println("Bool false");
-        yield false;
-    }
+	case TRUE -&gt; {
+		System.out.println("Bool true");
+		yield true;
+	}
+	case FALSE -&gt; {
+		System.out.println("Bool false");
+		yield false;
+	}
 	// cases `FILE_NOT_FOUND` and `default`
 };</code></pre></div></div></div></section><section id="_statement_blocks_2"><h2>Statement Blocks</h2><div class="slide-content"><div class="paragraph"><p>Natural way to create scope:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">boolean result = switch (Bool.random()) {
 	// cases `TRUE` and `FALSE`
-    case FILE_NOT_FOUND -&gt; {
-        var ex = new UncheckedIOException(
-            "This is ridiculous!",
-            new FileNotFoundException());
-        throw ex;
-    }
-    default -&gt; {
-        var ex = new IllegalArgumentException(
-            "Seriously?! 🤬");
-        throw ex;
-    }
+	case FILE_NOT_FOUND -&gt; {
+		var ex = new UncheckedIOException(
+			"This is ridiculous!",
+			new FileNotFoundException());
+		throw ex;
+	}
+	default -&gt; {
+		var ex = new IllegalArgumentException(
+			"Seriously?! 🤬");
+		throw ex;
+	}
 };</code></pre></div></div></div></section><section id="_poly_expression"><h2>Poly Expression</h2><div class="slide-content"><div class="paragraph"><p>A <em>poly expression</em></p></div>
 <div class="ulist"><ul><li><p>has no definitive type</p></li><li><p>can be one of several types</p></li></ul></div>
 <div class="paragraph"><p>Lambdas are poly expressions:</p></div>
@@ -2049,34 +2049,34 @@ String result = switch (ternaryBool) { ... }
 // target type unknown
 var result = switch (ternaryBool) { ... }</code></pre></div></div></div></section><section id="_poly_expression_3"><h2>Poly Expression</h2><div class="slide-content"><div class="paragraph"><p>If target type is known, all branches must conform to it:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">String result = switch (ternaryBool) {
-    case TRUE, FALSE -&gt; "sane";
-    default -&gt; "insane";
+	case TRUE, FALSE -&gt; "sane";
+	default -&gt; "insane";
 };</code></pre></div></div>
 <div class="paragraph"><p>If target type is unknown, the compiler infers a type:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// compiler infers super type of `String` and
 // `IllegalArgumentException` ~&gt; `Serializable`
 var serializableMessage = switch (bool) {
-    case TRUE, FALSE -&gt; "sane";
-    default -&gt; new IllegalArgumentException("insane");
+	case TRUE, FALSE -&gt; "sane";
+	default -&gt; new IllegalArgumentException("insane");
 };</code></pre></div></div></div></section><section id="_returning_early"><h2>Returning Early</h2><div class="slide-content"><div class="paragraph"><p>Whether in colon or arrow form,<br>
 you can&#8217;t return early from a <code>switch</code> expression:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public String sanity(Bool ternaryBool) {
-    String result = switch (ternaryBool) {
-        // compile error:
+	String result = switch (ternaryBool) {
+		// compile error:
 		//     "return outside
 		//      of enclosing switch expression"
-        case TRUE, FALSE -&gt; { return "sane"; }
-        default -&gt; { return "This is ridiculous!"; }
-    };
+		case TRUE, FALSE -&gt; { return "sane"; }
+		default -&gt; { return "This is ridiculous!"; }
+	};
 }</code></pre></div></div></div></section><section id="_exhaustiveness"><h2>Exhaustiveness</h2><div class="slide-content"><div class="paragraph"><p>Whether in colon or arrow form,<br>
 a <code>switch</code> expression checks exhaustiveness:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// compile error:
 //     "the switch expression does not cover
 //      all possible input values"
 boolean result = switch (ternaryBool) {
-    case TRUE -&gt; true;
-    // no case for `FALSE`
-    case FILE_NOT_FOUND -&gt;
+	case TRUE -&gt; true;
+	// no case for `FALSE`
+	case FILE_NOT_FOUND -&gt;
 		throw new UncheckedIOException(
 			"This is ridiculous!",
 			new FileNotFoundException());
@@ -2084,9 +2084,9 @@ boolean result = switch (ternaryBool) {
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// compiles without `default` branch because
 // all cases for `ternaryBool` are covered
 boolean result = switch (ternaryBool) {
-    case TRUE -&gt; true;
-    case FALSE -&gt; false;
-    case FILE_NOT_FOUND -&gt;
+	case TRUE -&gt; true;
+	case FALSE -&gt; false;
+	case FILE_NOT_FOUND -&gt;
 		throw new UncheckedIOException(
 			"This is ridiculous!",
 			new FileNotFoundException());
@@ -2227,10 +2227,10 @@ Source file properties influence semantics?</p></div>
 <div class="paragraph"><p><strong>Text block lines always end with <code>\n</code>!</strong></p></div>
 <div class="paragraph"><p>Escape sequences are translated afterwards:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">String windows = """
-    Windows\r
-    line\r
-    endings\r
-    """</code></pre></div></div></div></section><section id="_indentation"><h2>Indentation</h2><div class="slide-content"><div class="paragraph"><p>Compiler discerns:</p></div>
+	Windows\r
+	line\r
+	endings\r
+	"""</code></pre></div></div></div></section><section id="_indentation"><h2>Indentation</h2><div class="slide-content"><div class="paragraph"><p>Compiler discerns:</p></div>
 <div class="ulist"><ul><li><p>accidental indentation<br>
 (from code style; gets removed)</p></li><li><p>essential indentation<br>
 (within the string; remains)</p></li></ul></div>
@@ -2251,11 +2251,11 @@ String haikuBlock = """
 <div class="ulist"><ul><li><p>escape sequences work (e.g. <code>\r</code>)</p></li><li><p>escape sequences are necessary</p></li></ul></div>
 <div class="paragraph"><p>But: <code>"</code> is not special!</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">String phrase = """
-    {
-        greeting: "hello",
-        audience: "text blocks",
-    }
-    """;</code></pre></div></div>
+	{
+		greeting: "hello",
+		audience: "text blocks",
+	}
+	""";</code></pre></div></div>
 <div class="paragraph"><p>⇝ Way fewer escapes in HTML/JSON/SQL/etc.</p></div></div></section><section id="_more_on_text_blocks"><h2>More on Text Blocks</h2><div class="slide-content"><div class="ulist"><ul><li><p><a href="https://blog.codefx.org/java/text-blocks/">Definitive Guide To Text Blocks</a></p></li><li><p><a href="http://cr.openjdk.java.net/~jlaskey/Strings/TextBlocksGuide_v9.html">Programmer&#8217;s Guide To Text Blocks</a></p></li></ul></div></div></section><section id="_even_more_newiomethods_2"><h2>Even More New&nbsp;I/O&nbsp;Methods</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">FileSystems.newFileSystem(Path, ...);
 ByteBuffer.get(int, ...)
 ByteBuffer.put(int, ...)</code></pre></div></div></div></section><section id="_dynamic_appcds"><h2>Dynamic AppCDS</h2><div class="slide-content"><div class="paragraph"><p>Java 13 can create archive when<br>

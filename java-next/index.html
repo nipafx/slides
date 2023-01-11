@@ -423,10 +423,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://www.ittage.informatik-aktuell.de/"><img src="../_images/logo-it-tage-2021-c47a5c68.png" class="logo" style="{host-logo-style}"></a>
+		<a href="https://turkeyjava.com/"><img src="../_images/logo-tjc-d9cb02bd.png" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://www.ittage.informatik-aktuell.de/">IT-Tage</a></p>
-			<p><a href="https://twitter.com/hashtag/ittage?f=live" style="{host-twitter-style}">#ittage</a></p>
+			<p><a href="https://turkeyjava.com/">IT-Tage</a></p>
+			<p><a href="https://twitter.com/turkeyjavacom" style="{host-twitter-style}">@turkeyjavacom</a></p>
 		</div>
 	</div>
 	<div class="participant">
@@ -448,9 +448,9 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://www.ittage.informatik-aktuell.de/"><img src="../_images/logo-it-tage-2021-c47a5c68.png" class="logo" style="{host-logo-style}"></a>
+		<a href="https://turkeyjava.com/"><img src="../_images/logo-tjc-d9cb02bd.png" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://www.ittage.informatik-aktuell.de/">IT-Tage</a> / <a href="https://twitter.com/hashtag/ittage?f=live" style="{host-twitter-style}">#ittage</a></p>
+			<p><a href="https://turkeyjava.com/">IT-Tage</a> / <a href="https://twitter.com/turkeyjavacom" style="{host-twitter-style}">@turkeyjavacom</a></p>
 		</div>
 	</div>
 </footer>
@@ -538,15 +538,17 @@ Total     $27.19</code></pre></div></div></div></section><section id="_why_strin
 	""";
 
 JSONObject doc = JSON."""
-    {
-        "name":    "\{name}",
-        "phone":   "\{phone}",
-        "address": "\{address}"
-    };
-    """;</code></pre></div></div></div></section><section id="_amber_endeavors"><h2>Amber endeavors</h2><div class="slide-content"><div class="paragraph"><p>Template strings: <a href="https://openjdk.org/jeps/430">JEP 430</a></p></div>
-<div class="paragraph"><p>Other endeavors:</p></div>
-<div class="ulist"><ul><li><p>finish pattern matching (<a href="https://openjdk.java.net/jeps/433">JEP 433</a>)</p></li><li><p>add more patterns (<a href="https://openjdk.java.net/jeps/432">JEP 432</a> and more)</p></li><li><p>concise method bodies (<a href="https://openjdk.java.net/jeps/8209434">JEP draft</a>)</p></li><li><p>simplified <code>main</code> (<a href="https://openjdk.org/projects/amber/design-notes/on-ramp">design notes</a>)</p></li><li><p>serialization revamp (<a href="https://openjdk.java.net/projects/amber/design-notes/towards-better-serialization">design notes</a>)</p></li></ul></div></div></section><section id="_project_amber_2"><h2>Project Amber</h2><div class="slide-content"><div class="ulist"><ul><li><p>makes Java more expressive</p></li><li><p>reduces amount of code</p></li><li><p>makes us more productive</p></li></ul></div></div></section><section id="_timeline"><h2>Timeline</h2><div class="slide-content"><div class="paragraph"><p>My personal (!) guesses (!!):</p></div>
-<div class="dlist"><dl><dt class="hdlist1">JDK 20 (2023)</dt><dd><div class="ulist"><ul><li><p>pattern matching in <code>switch</code> (4th preview; <a href="https://openjdk.java.net/jeps/433">JEP 433</a>)</p></li><li><p>record patterns (2nd preview; <a href="https://openjdk.java.net/jeps/432">JEP 432</a>)</p></li></ul></div></dd><dt class="hdlist1">JDK 21 (2023)</dt><dd><div class="ulist"><ul><li><p>patterns in switch finalized</p></li><li><p>template strings preview (<a href="https://openjdk.org/jeps/430">JEP 430</a>)</p></li><li><p>first steps to simplified <code>main</code></p></li></ul></div></dd><dt class="hdlist1">2024</dt><dd><div class="ulist"><ul><li><p>more patterns preview</p></li><li><p>more simplified <code>main</code></p></li></ul></div></dd></dl></div></div></section><section id="_deeper_dives"><h2>Deeper Dives</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.java.net/projects/amber/design-notes/patterns/pattern-match-object-model">Pattern Matching in the Java Object Model</a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=qul2B8iPC-o">Java Language Futures: All Aboard Project Amber</a><br>
+	{
+		"name":    "\{name}",
+		"phone":   "\{phone}",
+		"address": "\{address}"
+	};
+	""";</code></pre></div></div></div></section><section id="_amber_endeavors"><h2>Amber endeavors</h2><div class="slide-content"><div class="paragraph"><p>Template strings: <a href="https://openjdk.org/jeps/430">JEP 430</a></p></div>
+<div class="paragraph"><p>Pattern matching:</p></div>
+<div class="ulist"><ul><li><p>finish pattern matching (<a href="https://openjdk.org/jeps/433">JEP 433</a>)</p></li><li><p>finish record patterns (<a href="https://openjdk.org/jeps/432">JEP 432</a>)</p></li><li><p>primitive types in patterns (<a href="https://bugs.openjdk.org/browse/JDK-8288476">JEP draft</a>)</p></li><li><p>unnamed patterns/variables (<a href="https://bugs.openjdk.org/browse/JDK-8294349">JEP draft</a>)</p></li></ul></div>
+<div class="paragraph"><p>Other endeavors and conversations:</p></div>
+<div class="ulist"><ul><li><p>simplified <code>main</code> (<a href="https://openjdk.org/projects/amber/design-notes/on-ramp">design notes</a>)</p></li><li><p>relaxed <code>super()</code> (<a href="https://mail.openjdk.org/pipermail/amber-dev/2022-October/007537.html">discussions</a>)</p></li><li><p>concise method bodies (<a href="https://openjdk.java.net/jeps/8209434">JEP draft</a>)</p></li><li><p>serialization revamp (<a href="https://openjdk.org/projects/amber/design-notes/towards-better-serialization">design notes</a>)</p></li></ul></div></div></section><section id="_project_amber_2"><h2>Project Amber</h2><div class="slide-content"><div class="ulist"><ul><li><p>makes Java more expressive</p></li><li><p>reduces amount of code</p></li><li><p>makes us more productive</p></li></ul></div></div></section><section id="_timeline"><h2>Timeline</h2><div class="slide-content"><div class="paragraph"><p>My personal (!) guesses (!!):</p></div>
+<div class="dlist"><dl><dt class="hdlist1">JDK 20 (2023)</dt><dd><div class="ulist"><ul><li><p>pattern matching in <code>switch</code> (4th preview; <a href="https://openjdk.java.net/jeps/433">JEP 433</a>)</p></li><li><p>record patterns (2nd preview; <a href="https://openjdk.java.net/jeps/432">JEP 432</a>)</p></li></ul></div></dd><dt class="hdlist1">JDK 21 (2023)</dt><dd><div class="ulist"><ul><li><p>template strings preview (<a href="https://openjdk.org/jeps/430">JEP 430</a>)</p></li><li><p>first steps to simplified <code>main</code></p></li></ul></div></dd><dt class="hdlist1">2024</dt><dd><div class="ulist"><ul><li><p>more simplified <code>main</code></p></li><li><p>primitive types in patterns</p></li><li><p>unnamed patterns</p></li></ul></div></dd></dl></div></div></section><section id="_deeper_dives"><h2>Deeper Dives</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.java.net/projects/amber/design-notes/patterns/pattern-match-object-model">Pattern Matching in the Java Object Model</a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=qul2B8iPC-o">Java Language Futures: All Aboard Project Amber</a><br>
 (Nov 2017)</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=hDV6G1MbUH8">Java Language Futures: Late 2021 Edition</a> (Sep 2021)</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=UlFFKkq6fyU">Pattern Matching in Java (17)</a> (Sep 2021)</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=a8OdwUiSnXw">State of Pattern Matching with Brian Goetz</a> (Feb 2022)</p></li></ul></div></div></section></section>
 <section><section id="_project_panama" data-background-image="../_images/panama-canal-aaf5b191.jpg" data-background-size="cover"><h2>Project Panama</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>Interconnecting JVM and native code</p></div></blockquote></div><div class="paragraph"><p>Profile:</p></div><div class="ulist"><ul><li><p><a href="https://openjdk.java.net/projects/panama/">project</a> /
 <a href="https://mail.openjdk.java.net/mailman/listinfo/panama-dev">mailing list</a> /
@@ -554,9 +556,9 @@ JSONObject doc = JSON."""
 compute <code>c = - (a² + b²)</code>:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// a, b, c have same length
 void compute(float[] a, float[] b, float[] c) {
-   for (int i = 0; i &lt; a.length; i++) {
-        c[i] = (a[i] * a[i] + b[i] * b[i]) * -1.0f;
-   }
+	for (int i = 0; i &lt; a.length; i++) {
+		c[i] = (a[i] * a[i] + b[i] * b[i]) * -1.0f;
+	}
 }</code></pre></div></div></div></section><section id="_auto_vectorization"><h2>Auto-vectorization</h2><div class="slide-content"><div class="paragraph"><p>Vectorization - modern CPUs:</p></div>
 <div class="ulist"><ul><li><p>have multi-word registers (e.g. 512 bit)</p></li><li><p>can store several numbers (e.g. 16 <code>float</code>​s)</p></li><li><p>can execute several computations at once</p></li></ul></div>
 <div class="paragraph"><p>⇝ <em>Single Instruction, multiple data</em> (SIMD)</p></div>
@@ -577,16 +579,55 @@ void compute(float[] a, float[] b, float[] c) {
 		vc.intoArray(c, i);
 	}
 }</code></pre></div></div></div></section><section id="_vector_api_2"><h2>Vector API</h2><div class="slide-content"><div class="paragraph"><p>Properties:</p></div>
-<div class="ulist"><ul><li><p>clear and concise API (given the requirements)</p></li><li><p>platform agnostic</p></li><li><p>reliable run-time compilation and performance</p></li><li><p>graceful degradation</p></li></ul></div></div></section><section id="_foreign_apis"><h2>Foreign APIs</h2><div class="slide-content"><div class="paragraph"><p>Storing data off-heap is tough:</p></div>
-<div class="ulist"><ul><li><p><code>ByteBuffer</code> is limited (2GB) and inefficient</p></li><li><p><code>Unsafe</code> is&#8230;&#8203; unsafe and not supported</p></li></ul></div>
-<div class="paragraph"><p>JNI isn&#8217;t ideal:</p></div>
-<div class="ulist"><ul><li><p>involves several tedious artifacts (header file, impl, &#8230;&#8203;)</p></li><li><p>can only interoperate with languages that align<br>
-with OS/architecture the JVM was built for</p></li><li><p>doesn&#8217;t reconcile Java/C type systems</p></li></ul></div></div></section><section id="_foreign_memory_api"><h2>Foreign-memory API</h2><div class="slide-content"><div class="paragraph"><p>Safe and performant foreign-memory API:</p></div>
+<div class="ulist"><ul><li><p>clear and concise API (given the requirements)</p></li><li><p>platform agnostic</p></li><li><p>reliable run-time compilation and performance</p></li><li><p>graceful degradation</p></li></ul></div></div></section><section id="_foreign_memory_api"><h2>Foreign-memory API</h2><div class="slide-content"><div class="paragraph"><p>Storing data off-heap is tough:</p></div>
+<div class="ulist"><ul><li><p><code>ByteBuffer</code> is limited (2GB) and inefficient</p></li><li><p><code>Unsafe</code> is&#8230;&#8203; unsafe and not supported</p></li></ul></div></div></section><section id="_foreign_memory_api_2"><h2>Foreign-memory API</h2><div class="slide-content"><div class="paragraph"><p>Panama introduces safe and performant API:</p></div>
 <div class="ulist"><ul><li><p>to allocate:<br>
-<code>MemorySegment</code>, <code>MemoryAddress</code>, <code>SegmentAllocator</code></p></li><li><p>to access/manipulate: <code>MemoryLayout</code>, <code>VarHandle</code></p></li><li><p>control (de)allocation: <code>MemorySession</code></p></li></ul></div></div></section><section id="_foreign_function_api"><h2>Foreign-function API</h2><div class="slide-content"><div class="paragraph"><p>Streamlined tooling/API for foreign functions<br>
+<code>MemorySegment</code>, <code>SegmentAllocator</code></p></li><li><p>to access/manipulate: <code>MemoryLayout</code>, <code>VarHandle</code></p></li><li><p>control (de)allocation: <code>Arena</code>, <code>SegmentScope</code></p></li></ul></div></div></section><section id="_foreign_memory_api_3"><h2>Foreign-memory API</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// create `Arena` to manage off-heap memory lifetime
+try (Arena offHeap = Arena.openConfined()) {
+	// [allocate off-heap memory to store pointers]
+	// [do something with off-heap data]
+	// [copy data back to heap]
+} // off-heap memory is deallocated here</code></pre></div></div></div></section><section id="_foreign_memory_api_4"><h2>Foreign-memory API</h2><div class="slide-content"><div class="paragraph"><p>Allocate off-heap memory to store pointers:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">String[] javaStrings = { "mouse", "cat", "dog" };
+// Arena offHeap = ...
+
+MemorySegment pointers = offHeap.allocateArray(
+	ValueLayout.ADDRESS, javaStrings.length);
+for (int i = 0; i &lt; javaStrings.length; i++) {
+	// allocate off-heap &amp; store a pointer
+	MemorySegment cString = offHeap
+		.allocateUtf8String(javaStrings[i]);
+	pointers
+		.setAtIndex(ValueLayout.ADDRESS, i, cString);
+}</code></pre></div></div></div></section><section id="_foreign_memory_api_5"><h2>Foreign-memory API</h2><div class="slide-content"><div class="paragraph"><p>Copy data back to heap:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// String[] javaStrings = ...
+// MemorySegment pointers =
+
+for (int i = 0; i &lt; javaStrings.length; i++) {
+	MemorySegment cString = pointers
+		.getAtIndex(ValueLayout.ADDRESS, i);
+	javaStrings[i] = cString.getUtf8String(0);
+}</code></pre></div></div></div></section><section id="_foreign_function_api"><h2>Foreign-function API</h2><div class="slide-content"><div class="paragraph"><p>JNI isn&#8217;t ideal:</p></div>
+<div class="ulist"><ul><li><p>involves several tedious artifacts (header file, impl, &#8230;&#8203;)</p></li><li><p>can only interoperate with languages that align<br>
+with OS/architecture the JVM was built for</p></li><li><p>doesn&#8217;t reconcile Java/C type systems</p></li></ul></div></div></section><section id="_foreign_function_api_2"><h2>Foreign-function API</h2><div class="slide-content"><div class="paragraph"><p>Panama introduces streamlined tooling/API<br>
 based on method handles:</p></div>
-<div class="ulist"><ul><li><p>classes to call foreign functions<br>
-<code>Linker</code>, <code>FunctionDescriptor</code>, <code>SymbolLookup</code></p></li><li><p><code>jextract</code>: generates method handles from header file</p></li></ul></div></div></section><section id="_timeline_2"><h2>Timeline</h2><div class="slide-content"><div class="paragraph"><p>Official plans:</p></div>
+<div class="ulist"><ul><li><p><code>jextract</code>: generates method handles from header file</p></li><li><p>classes to call foreign functions<br>
+<code>Linker</code>, <code>FunctionDescriptor</code>, <code>SymbolLookup</code></p></li></ul></div></div></section><section id="_foreign_function_api_3"><h2>Foreign-function API</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// find foreign function on the C library path
+Linker linker = Linker.nativeLinker();
+SymbolLookup stdlib = linker.defaultLookup();
+MethodHandle radixSort = linker
+	.downcallHandle(stdlib.find("radixsort"), ...);
+
+String[] javaStrings = { "mouse", "cat", "dog" };
+try (Arena offHeap = Arena.openConfined()) {
+	// [move Java strings off heap]
+	// invoke foreign function
+	radixSort.invoke(
+		offHeap, javaStrings.length,
+		MemoryAddress.NULL, '\0');
+	// [copy data back to heap]
+}</code></pre></div></div></div></section><section id="_project_panama_2"><h2>Project Panama</h2><div class="slide-content"><div class="ulist"><ul><li><p>connects Java with native code</p></li><li><p>reliably</p></li><li><p>offers safe, detailed, and performant APIs to:
+*</p></li></ul></div></div></section><section id="_timeline_2"><h2>Timeline</h2><div class="slide-content"><div class="paragraph"><p>Official plans:</p></div>
 <div class="dlist"><dl><dt class="hdlist1">JDK 20 (2023)</dt><dd><div class="ulist"><ul><li><p>foreign APIs (2nd preview; <a href="https://openjdk.java.net/jeps/434">JEP 434</a>)</p></li></ul></div></dd></dl></div>
 <div class="paragraph"><p>Vector API needs to wait for Valhalla&#8217;s<br>
 primitive types and universal generics.</p></div></div></section><section id="_deeper_dives_2"><h2>Deeper Dives</h2><div class="slide-content"><div class="paragraph"><p>Vector API:</p></div>
@@ -634,8 +675,8 @@ We plan to migrate many value-based classes in the JDK to value classes.</p></di
 <div class="paragraph"><p>What about <code>ComplexNumber</code>?</p></div></div></section><section id="_primitive_boxes_2"><h2>Primitive "boxes"</h2><div class="slide-content"><div class="paragraph"><p>Each primitive class <code>P</code> declares two types:</p></div>
 <div class="ulist"><ul><li><p><code>P</code>: as discussed so far</p></li><li><p><code>P.ref</code>: behaves like a value type</p></li></ul></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">primitive class Node&lt;T&gt; {
-    T value;
-    Node.ref&lt;T&gt; nextNode;
+	T value;
+	Node.ref&lt;T&gt; nextNode;
 }</code></pre></div></div></div></section><section id="_migration_to_primitive_types"><h2>Migration to primitive types</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>[W]e want to adjust the basic primitives (<code>int</code>, <code>double</code>, etc.) to behave as consistently with new primitives as possible.</p></div></blockquote></div>
 <div class="paragraph"><p>On the example of <code>int</code>/<code>Integer</code>:</p></div>
 <div class="ulist"><ul><li><p>declare <code>int</code> as primitive class</p></li><li><p>alias <code>Integer</code> with <code>int.ref</code></p></li><li><p>remove <code>Integer</code></p></li></ul></div></div></section><section id="_universal_generics"><h2>Universal generics</h2><div class="slide-content"><div class="paragraph"><p>When everybody creates their own values and primitives,<br>
@@ -664,7 +705,7 @@ design and performance</p></li><li><p>no more manual specializations</p></li><li
 <div class="ulist"><ul><li><p>auto-generated CDS ⑲ (<a href="https://bugs.openjdk.org/browse/JDK-8261455">JDK-8261455</a>)</p></li><li><p>dynamic CDS archives ⑬ (<a href="https://openjdk.java.net/jeps/350">JEP 350</a>)</p></li><li><p>default CDS archives ⑫ (<a href="https://openjdk.java.net/jeps/341">JEP 341</a>)</p></li><li><p>continuous improvements in all garbage collectors</p></li></ul></div>
 <div class="paragraph"><p>Security:</p></div>
 <div class="ulist"><ul><li><p>context-specific deserialization filters ⑰ (<a href="https://openjdk.java.net/jeps/415">JEP 415</a>)</p></li><li><p>Edwards-Curve Digital Signature Algorithm ⑮ (<a href="https://openjdk.java.net/jeps/339">JEP 339</a>)</p></li><li><p>ongoing enhancements (<a href="https://seanjmullan.org/blog/">Sean Mullan&#8217;s blog</a>)</p></li></ul></div></div></section><section id="_cleaning_house"><h2>Cleaning house</h2><div class="slide-content"><div class="paragraph"><p>Deprecations (for removal):</p></div>
-<div class="ulist"><ul><li><p>finalization ⑱ (<a href="https://openjdk.java.net/jeps/421">JEP 421</a>)</p></li><li><p>security manager ⑰ (<a href="https://openjdk.java.net/jeps/411">JEP 411</a>)</p></li><li><p>applet API ⑰ (<a href="https://openjdk.java.net/jeps/398">JEP 398</a>)</p></li><li><p>biased locking ⑮ (<a href="https://openjdk.java.net/jeps/374">JEP 374</a>)</p></li></ul></div>
+<div class="ulist"><ul><li><p>finalization ⑱ (<a href="https://openjdk.java.net/jeps/421">JEP 421</a>)</p></li><li><p>security manager ⑰ (<a href="https://openjdk.java.net/jeps/411">JEP 411</a>)</p></li><li><p>applet API ⑰ (<a href="https://openjdk.java.net/jeps/398">JEP 398</a>)</p></li><li><p>primitive wrapper constructors ⑯ (<a href="https://openjdk.java.net/jeps/390">JEP 390</a>)</p></li><li><p>biased locking ⑮ (<a href="https://openjdk.java.net/jeps/374">JEP 374</a>)</p></li></ul></div>
 <div class="paragraph"><p>Already removed:</p></div>
 <div class="ulist"><ul><li><p>RMI activation ⑰ (<a href="https://openjdk.java.net/jeps/407">JEP 407</a>)</p></li><li><p>Nashorn ⑮ (<a href="https://openjdk.java.net/jeps/372">JEP 372</a>)</p></li><li><p>concurrent mark sweep GC ⑭ (<a href="https://openjdk.java.net/jeps/363">JEP 363</a>)</p></li></ul></div></div></section><section id="_migrations"><h2>Migrations</h2><div class="slide-content"><div class="paragraph"><p>To ease migrations:</p></div>
 <div class="ulist"><ul><li><p>stick to supported APIs</p></li><li><p>stick to standardized behavior</p></li><li><p>stick to well-maintained projects</p></li><li><p>keep dependencies and tools up to date</p></li><li><p>stay ahead of removals (<code>jdeprscan</code>)</p></li><li><p>build on each release (including EA)</p></li></ul></div>
@@ -705,14 +746,14 @@ with Java&#8217;s unit of concurrency (thread):</p></div>
 } // executor.close() is called implicitly, and waits</code></pre></div></div>
 <aside class="notes"><div class="ulist"><ul><li><p>all APIs are in flux</p></li></ul></div></aside></div></section><section id="_example_2"><h2>Example</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">void handle(Request request, Response response)
 		throws InterruptedException {
-    try (var executor = Executors
+	try (var executor = Executors
 			.newVirtualThreadPerTaskExecutor()) {
-        var futureA = executor.submit(this::taskA);
-        var futureB = executor.submit(this::taskB);
-        response.send(futureA.get() + futureB.get());
-    } catch (ExecutionException ex) {
-        response.fail(ex);
-    }
+		var futureA = executor.submit(this::taskA);
+		var futureB = executor.submit(this::taskB);
+		response.send(futureA.get() + futureB.get());
+	} catch (ExecutionException ex) {
+		response.fail(ex);
+	}
 }</code></pre></div></div></div></section><section id="_performance"><h2>Performance</h2><div class="slide-content"><div class="paragraph"><p>Virtual threads aren&#8217;t "faster threads":<br>
 Each task takes the same time (same <em>latency</em>).</p></div>
 <div class="paragraph"><p>So why bother?</p></div></div></section><section id="_parallelism_vs_concurrency"><h2>Parallelism vs concurrency</h2><div class="slide-content"><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:33.3333%"><col style="width:33.3333%"><col style="width:33.3334%"></colgroup><thead><tr><th class="tableblock halign-left valign-top"></th><th class="tableblock halign-left valign-top">Parallelism</th><th class="tableblock halign-left valign-top">Concurrency</th></tr><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Task origin</strong></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">solution</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">problem</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Control</strong></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">developer</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">environment</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Resource use</strong></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">coordinated</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">competitive</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Metric</strong></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">latency</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">throughput</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Abstraction</strong></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">CPU cores</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">tasks</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><strong># of threads</strong></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"># of cores</p></td><td class="tableblock halign-left valign-top"><p class="tableblock"># of tasks</p></td></tr></table></div></section><section id="_performance_2"><h2>Performance</h2><div class="slide-content"><div class="paragraph"><p>When workload is not CPU-bound:</p></div>
@@ -733,33 +774,33 @@ and clearly defined exit points</p></li><li><p>influenced languages and runtimes
 <div class="paragraph"><p>⇝ Enables parent-child/sibling relationships<br>
   and logical grouping of threads.</p></div></div></section><section id="_unstructured_concurrency"><h2>Unstructured concurrency</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">void handle(Request request, Response response)
 		throws InterruptedException {
-    try (var executor = Executors
+	try (var executor = Executors
 			.newVirtualThreadPerTaskExecutor()) {
 		// what's the relationship between
 		// this and the two spawned threads?
 		// what happens when one of them fails?
-        var futureA = executor.submit(this::taskA);
-        var futureB = executor.submit(this::taskB);
+		var futureA = executor.submit(this::taskA);
+		var futureB = executor.submit(this::taskB);
 		// what if we only need the faster one?
-        response.send(futureA.get() + futureB.get());
-    } catch (ExecutionException ex) {
-        response.fail(ex);
-    }
+		response.send(futureA.get() + futureB.get());
+	} catch (ExecutionException ex) {
+		response.fail(ex);
+	}
 }</code></pre></div></div></div></section><section id="_structured_concurrency_3"><h2>Structured concurrency</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">void handle(Request request, Response response)
 		throws InterruptedException {
 	// define explicit success/error handling
-    try (var scope = new StructuredTaskScope
+	try (var scope = new StructuredTaskScope
 							.ShutdownOnFailure()) {
-        var futureA = scope.fork(this::taskA);
-        var futureB = scope.fork(this::taskB);
+		var futureA = scope.fork(this::taskA);
+		var futureB = scope.fork(this::taskB);
 		// wait explicitly until success criteria met
 		scope.join();
 		scope.throwIfFailed();
 
-        response.send(futureA.get() + futureB.get());
-    } catch (ExecutionException ex) {
-        response.fail(ex);
-    }
+		response.send(futureA.get() + futureB.get());
+	} catch (ExecutionException ex) {
+		response.fail(ex);
+	}
 }</code></pre></div></div></div></section><section id="_structured_concurrency_4"><h2>Structured concurrency</h2><div class="slide-content"><div class="ulist"><ul><li><p>forked tasks are children of the scope</p></li><li><p>creates relationship between threads</p></li><li><p>success/failure policy can be defined<br>
 across all children</p></li></ul></div></div></section><section data-background-color="white" data-background-image="../_images/thread-dump-d810bb0e.png" data-background-size="contain" data-state="empty"></section><section id="_project_loom_2"><h2>Project Loom</h2><div class="slide-content"><div class="paragraph"><p>Virtual threads:</p></div>
 <div class="ulist"><ul><li><p>code is simple to write, debug, profile</p></li><li><p>high throughput</p></li><li><p>new programing model</p></li></ul></div>

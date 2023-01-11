@@ -520,26 +520,26 @@ void testIntChars(
 }</code></pre></div></div></div></section><section id="_default_locale"><h2>Default Locale</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">@Test
 @DefaultLocale(language = "en")
 void test() {
-    assertThat(Locale.getDefault())
-        .isEqualTo(new Locale("en"));
+	assertThat(Locale.getDefault())
+		.isEqualTo(new Locale("en"));
 }</code></pre></div></div></div></section><section id="_system_properties"><h2>System Properties</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">@Test
 @ClearSystemProperty(key = "user.name")
 @SetSystemProperty(key = "user.dir", value = "...")
 void test() {
-    assertThat(System.getProperty("user.name"))
+	assertThat(System.getProperty("user.name"))
 		.isNull();
-    assertThat(System.getProperty("user.dir"))
+	assertThat(System.getProperty("user.dir"))
 		.isEqualTo("...");
 }</code></pre></div></div></div></section><section id="_issue_information"><h2>Issue Information</h2><div class="slide-content"><div class="paragraph"><p>Mark tests that belong to issues:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">@Test
 @Issue("REQ-123")
 void test() {
-    // a test for the issue "REQ-123"
+	// a test for the issue "REQ-123"
 }</code></pre></div></div>
 <div class="paragraph"><p>Process information after execution:</p></div>
 <div class="imageblock diagram"><img src="../_images/issue-test-suite-f074373f.png" alt="issue test suite"></div></div></section><section id="_retrying_tests"><h2>Retrying Tests</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">@RetryingTest(3)
 void test() {
-    // if 1st, 2nd, or 3rd execution passes,
+	// if 1st, 2nd, or 3rd execution passes,
 	// the test passes; otherwise fails
 }</code></pre></div></div></div></section><section id="_others"><h2>Others</h2><div class="slide-content"><div class="paragraph"><p>We have <a href="https://junit-pioneer.org/docs/">a few more</a>:</p></div>
 <div class="ulist"><ul><li><p>ranges for parameters</p></li><li><p>set default time zone</p></li><li><p>set environment variables</p></li><li><p>disable specific parameterized tests</p></li><li><p>publish report entries</p></li><li><p>mocking standard I/O</p></li></ul></div>
