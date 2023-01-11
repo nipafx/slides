@@ -75,6 +75,8 @@ Properties:
 * reliable run-time compilation and performance
 * graceful degradation
 
+////
+
 === Foreign APIs
 
 Storing data off-heap is tough:
@@ -94,9 +96,9 @@ JNI isn't ideal:
 Safe and performant foreign-memory API:
 
 * to allocate: +
-  `MemorySegment`, `MemoryAddress`, `SegmentAllocator`
+  `MemorySegment`, `SegmentAllocator`
 * to access/manipulate: `MemoryLayout`, `VarHandle`
-* control (de)allocation: `MemorySession`
+* control (de)allocation: `Arena`, `SegmentScope`
 
 === Foreign-function API
 
@@ -121,28 +123,52 @@ Storing data off-heap is tough:
 Panama introduces safe and performant API:
 
 * to allocate: +
-  `MemorySegment`, `MemoryAddress`, `SegmentAllocator`
+  `MemorySegment`, `SegmentAllocator`
 * to access/manipulate: `MemoryLayout`, `VarHandle`
-* control (de)allocation: `MemorySession`
+* control (de)allocation: `Arena`, `SegmentScope`
 
 === Foreign-memory API
 
 ```java
+// create `Arena` to manage off-heap memory lifetime
+try (Arena offHeap = Arena.openConfined()) {
+	// [allocate off-heap memory to store pointers]
+	// [do something with off-heap data]
+	// [copy data back to heap]
+} // off-heap memory is deallocated here
+```
+
+=== Foreign-memory API
+
+Allocate off-heap memory to store pointers:
+
+```java
 String[] javaStrings = { "mouse", "cat", "dog" };
-// allocate off-heap memory to store pointers
-MemorySegment offHeap  = MemorySegment
-	.allocateNative(
-		MemoryLayout.sequenceLayout(
-			javaStrings.length,
-			ValueLayout.ADDRESS),
-		...);
+// Arena offHeap = ...
+
+MemorySegment pointers = offHeap.allocateArray(
+	ValueLayout.ADDRESS, javaStrings.length);
 for (int i = 0; i < javaStrings.length; i++) {
 	// allocate off-heap & store a pointer
-	MemorySegment cString = SegmentAllocator
-		.implicitAllocator()
+	MemorySegment cString = offHeap
 		.allocateUtf8String(javaStrings[i]);
-	offHeap
+	pointers
 		.setAtIndex(ValueLayout.ADDRESS, i, cString);
+}
+```
+
+=== Foreign-memory API
+
+Copy data back to heap:
+
+```java
+// String[] javaStrings = ...
+// MemorySegment pointers =
+
+for (int i = 0; i < javaStrings.length; i++) {
+	MemorySegment cString = pointers
+		.getAtIndex(ValueLayout.ADDRESS, i);
+	javaStrings[i] = cString.getUtf8String(0);
 }
 ```
 
@@ -170,54 +196,26 @@ based on method handles:
 // find foreign function on the C library path
 Linker linker = Linker.nativeLinker();
 SymbolLookup stdlib = linker.defaultLookup();
-MethodHandle radixSort = linker.downcallHandle(
-	stdlib.lookup("radixsort"),
-	...);
+MethodHandle radixSort = linker
+	.downcallHandle(stdlib.find("radixsort"), ...);
 
-// move Java strings off heap
 String[] javaStrings = { "mouse", "cat", "dog" };
-MemorySegment offHeap = // ...
-
-// invoke foreign function
-radixSort.invoke(
-	offHeap, javaStrings.length,
-	MemoryAddress.NULL, '\0');
-```
-
-=== Foreign-memory API
-
-Moving `javaStrings` off heap:
-
-```java
-SegmentAllocator allocator = implicitAllocator();
-MemorySegment offHeap  = allocator
-	.allocateArray(
-		ValueLayout.ADDRESS,
-		javaStrings.length);
-for (int i = 0; i < javaStrings.length; i++) {
-	// allocate a string off-heap,
-	// then store a pointer to it
-	MemorySegment cStr = allocator
-		.allocateUtf8String(javaStrings[i]);
-	offHeap
-		.setAtIndex(ValueLayout.ADDRESS, i, cStr);
+try (Arena offHeap = Arena.openConfined()) {
+	// [move Java strings off heap]
+	// invoke foreign function
+	radixSort.invoke(
+		offHeap, javaStrings.length,
+		MemoryAddress.NULL, '\0');
+	// [copy data back to heap]
 }
 ```
 
-=== Foreign-memory API
+=== Project Panama
 
-Getting the results back:
-
-```java
-// copy the (reordered) strings back to heap
-for (int i = 0; i < javaStrings.length; i++) {
-	MemoryAddress cStringPtr = offHeap
-		.getAtIndex(ValueLayout.ADDRESS, i);
-	javaStrings[i] = cStringPtr.getUtf8String(0);
-}
-```
-
-////
+* connects Java with native code
+* reliably
+* offers safe, detailed, and performant APIs to:
+	*
 
 === Timeline
 
