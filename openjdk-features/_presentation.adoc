@@ -1,0 +1,42 @@
+= From Idea to IDE
+:backend: revealjs
+:revealjs_theme: nipa-night
+:revealjsdir: ../_reveal.js/head
+:revealjs_controls: false
+:revealjs_progress: false
+:revealjs_slideNumber: false
+:revealjs_history: true
+:revealjs_center: true
+:revealjs_transition: fade
+:revealjs_backgroundTransition: fade
+:revealjs_parallaxBackgroundImage: images/steps.jpg
+:revealjs_parallaxBackgroundSize: 4896px 3264px
+:docinfo: shared
+:docinfodir: ../_shared
+
+include::../_shared/highlight.js.adoc[]
+
+++++
+<h2 style="font-size: 1.75em">How Java Features Are Considered, Designed, And Shipped</h2>
+++++
+
+:host-name: JUG Bonn
+:host-url: https://www.meetup.com/de-DE/jug-bonn/
+:host-logo-url: images/logo-jug-bonn.png
+// :host-logo-style: border-color: black;
+:host-twitter-name: @jugbonn
+:host-twitter-url: https://twitter.com/jugbonn
+include::../_shared/event-on-title-and-footer.adoc[]
+
+
+// ######### //
+// I N T R O //
+// ######### //
+
+// ⇝
+
+include::stages.adoc[]
+
+include::../_shared/about-slide.adoc[]
+
+include::images/sources.adoc[]

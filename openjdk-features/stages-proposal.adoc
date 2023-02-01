@@ -1,0 +1,39 @@
+== From Idea to IDE
+
+{toc}
+
+////
+Proposal
+* hallmarks: TODO
+* artifact:
+	JEPs (across previews)
+	maybe fork of openjdk/jdk
+* change: 40%
+* survival: 85%
+* considerations:
+	* TODO
+
+JEPs
+* total: 421
+	* closed: 329
+		* rejected: 18 (marked as "withdrawn" on https://openjdk.org/jeps/0: 108, 116, 125, 132, 146, 151, 154, 157, 159, 183, 186, 191, 194, 301, 308, 311, 326, 342)
+		* draft/submitted & rejected: 26 (https://bugs.openjdk.org/browse/JDK-8046957?jql=project%20%3D%20JDK%20AND%20issuetype%20%3D%20JEP%20AND%20status%20%3D%20Closed%20AND%20resolution%20in%20(Rejected%2C%20Withdrawn)%20ORDER%20BY%20created%20ASC%2C%20lastViewed%20DESC minus the 18 above)
+		* delivered: 285 (https://bugs.openjdk.org/browse/JDK-8046112?jql=project%20%3D%20JDK%20AND%20issuetype%20%3D%20JEP%20AND%20status%20%3D%20Closed%20AND%20resolution%20%3D%20Delivered%20ORDER%20BY%20created%20ASC%2C%20lastViewed%20DESC)
+	* open: 92
+		* draft: 55 (https://bugs.openjdk.org/browse/JDK-8046127?jql=project%20%3D%20JDK%20AND%20issuetype%20%3D%20JEP%20AND%20status%20%3D%20Draft%20ORDER%20BY%20created%20ASC)
+		* active: 37
+			* dormant (not updated in >3 years): 13 (https://bugs.openjdk.org/browse/JDK-8046185?jql=project%20%3D%20JDK%20AND%20issuetype%20%3D%20JEP%20AND%20status%20!%3D%20Closed%20AND%20status%20!%3D%20draft%20AND%20updated%20%3C%20-156w%20ORDER%20BY%20created%20ASC)
+* progression:
+	* drafted: 421
+		* rejected: 26
+		* still open: 55
+	* candidate: 340
+		* rejected: 18
+		* open & active: 24
+		* open & dormant: 13
+	* delivered: 285
+* progression (closed):
+	* drafted: 329
+	* candidate: 303
+	* delivered: 285
+////

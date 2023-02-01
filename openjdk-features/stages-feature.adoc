@@ -1,0 +1,106 @@
+[state="empty"]
+== !
+// TODO: Text Block in IDE screenshot
+// image::images/panic.gif[background, size=cover]
+
+=== Text Blocks
+
+> A text block is a multi-line string literal that avoids the need for most escape sequences, automatically formats the string in a predictable way, and gives the developer control over the format when desired.
+
+* new language feature in Java 15
+* triggered additions to `String`: +
+  `formatted`,
+  `indent`,
+  `stripIndent`,
+  `translateEscapes`
+
+[state="empty",background-color="white"]
+=== !
+image::images/jls-15-text-blocks.png[background, size=contain]
+
+[state="empty",background-color="white"]
+=== !
+image::images/jdk-documentation-specs.png[background, size=contain]
+
+
+[state="empty",background-color="#2d333b"]
+=== !
+image::images/github-jdk.png[background, size=contain]
+
+// === Artifacts
+// image::images/jls-15-text-blocks+github-jdk.png[background, size=cover]
+
+// * JLS, JVMS, Javadoc, etc. (specification)
+// * openjdk/jdk (implementation)
+
+=== Hallmarks
+
+Java features:
+
+* come as syntax, VM capabilities, APIs +
+  (or any combination)
+* specified in JLS, JVMS, Javadoc, etc. & +
+  implemented in openjdk/jdk
+* fulfill clearly defined requirements
+* fit in seamlessly & have good tool support
+
+> Why did _this_ take so long?
+
+=== Evolution
+
+Considerations for feature evolution/removal:
+
+* Is it used?
+* Does it hurt as is?
+* Would a change/removal hurt?
+
+=== Some Removals
+
+Single underscore as variable name ⛔⑨: ::
+* rarely used
+* prevents very useful language feature
+* easy to fix
+Applet API ⚠️⑰: ::
+* unused and unusable
+Concurrent mark sweep GC ⛔⑭: ::
+* maintenance cost
+* lots of alternative GCs
+* easy to fix
+
+// Security manager::
+// * very low adoption
+// * easy to get wrong
+// * maintenance cost
+// * better mechansisms exist
+
+// Primitive wrapper constructors::
+// * prevent primitive types
+// * easy to fix
+
+// Finalization::
+// * easy to get wrong
+// * peformance & maintenance cost
+// * better mechansisms exist
+
+=== Evolution
+
+Features are extremely stable +
+but not immutable.
+
+My guesstimates:
+
+* rate of change: 0.5%
+* survival rate: 99.9%
+
+=== Evolution
+
+But how does a feature become permanent?
+
+Long story:
+
+[%step%]
+* starts with an idea
+* refinement in conversations
+* prototype and proposal
+* preview feature
+* finalization
