@@ -2,18 +2,136 @@
 
 {toc}
 
+=== Previews in Java 20
+
+* pattern matching for switch (4th)
+* foreign function & memory API (2nd)
+* virtual threads (2nd)
+
+=== Specification
+
+* introduced by https://openjdk.org/jeps/12[JEP 12]
+* refined by https://openjdk.org/jeps/8300604[a recent JEP draft]
+* specified by JLS (e.g., https://docs.oracle.com/javase/specs/jls/se19/html/jls-1.html#jls-1.5[for 19])
+
+[state="empty",background-color="white"]
+=== !
+image::images/jls-19-preview-features.png[background, size=contain]
+
+=== Artifacts
+
+JLS requires artifacts for preview features:
+
+* specified in JLS:
+** all preview features are mentioned
+** JLS changes/diffs are linked
+
+* implemented in openjdk/jdk, but:
+** disabled by default
+** by compiler and runtime
+
+[state="empty",background-color="white"]
+=== !
+image::images/jls-14-text-block-preview.png[background, size=contain]
+
+=== Enabling
+
+Enabling:
+
+* for both with `--preview-feature`
+* generates compiler warnings
+* pins Java version
+
+=== Version Pinning
+
+```java
+public class TextBlocks {
+
+	public static void main(String[] args) {
+		System.out.println("""
+				Hello,
+				text blocks!""");
+	}
+
+}
+```
+
+=== Version Pinning
+
+Compiling with Java 14:
+
+```
+$ javac TextBlocks.java
+> TextBlocks.java:6: error: text blocks are a preview
+> feature and are disabled by default.
+>                 System.out.println("""
+>                                    ^
+>   (use --enable-preview to enable text blocks)
+> 1 error
+
+$ javac --enable-preview --release 14 TextBlocks.java
+> Note: TextBlocks.java uses preview language features.
+> Note: Recompile with -Xlint:preview for details.
+```
+
+=== Version Pinning
+
+Running with Java 14:
+
+```
+$ java TextBlocks
+> Error: LinkageError occurred while loading main class
+> TextBlocks
+>        java.lang.UnsupportedClassVersionError:
+>        Preview features are not enabled for
+>        TextBlocks (class file version 58.65535).
+>        Try running with '--enable-preview'
+
+$ java --enable-preview TextBlocks
+> Hello,
+> text blocks!
+```
+
+=== Version Pinning
+
+Compiled with Java 14, launched with 15:
+
+```
+$ java --enable-preview TextBlocks
+> Error: LinkageError occurred while loading main class
+> TextBlocks
+>        java.lang.UnsupportedClassVersionError:
+>        TextBlocks (class file version 58.65535)
+>        was compiled with preview features that are
+>        unsupported. This version of the Java Runtime
+>        only recognizes preview features for class
+>        file version 59.65535
+
+```
+
+=== Goals
+
+Goals of preview features are:
+
+* prevent (accidental) use in production
+* foster early IDE support
+* experiment, report, review, refine
+** "Is it surfaced correctly?"
+** "Are there unforeseen edge cases?"
+
+=== Evolution
+
+Preview features evolve +
+(particularly on the surface) +
+but usually finalize.
+
+My guesstimates:
+
+* rate of change: 10%
+* survival rate: 95%
+
+
 ////
 Preview Feature:
-* hallmarks:
-	* early IDE support
-	* experiment, review, report
-* artifact:
-	JLS, e.g. https://docs.oracle.com/javase/specs/jls/se16/html/jls-1.html#jls-1.5
-	JLS diff on https://docs.oracle.com/javase/specs/, e.g. https://docs.oracle.com/javase/specs/jls/se16/preview/specs/sealed-classes-jls.html
-	openjdk/jdk
-* change: 10%
-* survival: 100% (95%)
-* considerations:
-	* surfaced correctly
-	* edge cases
+* side note on incubating APIs
 ////
