@@ -1,0 +1,108 @@
+== The Full Journey
+
+Got everything?
+
+[%step]
+
+Let's rewind.
+
+=== The Full Journey
+
+[cols="2s, 8d", options="header"]
+|===
+|
+|Considerations
+
+|Idea
+|"Can it be good for Java?"
+
+|Conversation
+|"How can it be implemented/introduced?"
+
+|Proposal
+|"Is _this_ the best way to implement it?"
+
+|Preview
+|"Is it surfaced correctly?"
+
+|Feature
+|"Does it hurt? Can it be changed/removed?"
+|===
+
+=== Contributing Don'ts
+
+* start with an implementation
+* write a JEP or file a feature issue
+* propose (just) a solution on a mailing list
+* assume to be the first one with that idea
+* forget to research past phases
+
+=== Contributing Dos
+
+* be mindful of the phase
+* start with experimentation and reporting
+* describe problems and solicit input
+* discuss before coding
+
+=== The Full Journey
+
+[cols="3s, 3d, 6d, 2d, 2d, 2d", options="header"]
+|===
+|
+|Spec
+|Artifacts
+|📆
+|🧬
+|🚀
+
+|Idea
+|--
+|🌬, 📔
+|🤷🏾‍♂️
+|🤷🏾‍♂️
+|🤷🏾‍♂️
+
+|Conversation
+|--
+|🎟, 📬, …
+|6-60
+|50-500%
+|25-70%
+
+|Proposal
+|JEP 1
+|JEP / jdk 🌳
+|6-36
+|40%
+|85%
+
+|Preview
+|JLS
+|JLS diff / jdk
+|12-24
+|5%
+|95%
+
+|Feature
+|JLS
+|JLS / jdk
+|∞
+|0.5%
+|
+|===
+
+=== Nota Bene
+
+Incubating APIs:
+
+* belong into _Proposal_ (not _Preview_)
+* come with alpha-version implementations
+
+JEPs:
+
+* not all proposals need one
+* smaller changes stick to JBS issues
+
+=== Complexity
+
+Why so long and complicated?
