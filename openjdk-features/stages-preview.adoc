@@ -4,11 +4,13 @@
 
 === Previews in Java 20
 
-* pattern matching for switch (4th)
-* foreign function & memory API (2nd)
-* virtual threads (2nd)
+* pattern matching for switch (https://openjdk.org/jeps/433[4th])
+* foreign function & memory API (https://openjdk.org/jeps/434[2nd])
+* virtual threads (https://openjdk.org/jeps/436[2nd])
 
 === Specification
+
+The concept of preview features was:
 
 * introduced by https://openjdk.org/jeps/12[JEP 12]
 * refined by https://openjdk.org/jeps/8300604[a recent JEP draft]
@@ -20,7 +22,7 @@ image::images/jls-19-preview-features.png[background, size=contain]
 
 === Artifacts
 
-JLS requires artifacts for preview features:
+Required artifacts for preview features:
 
 * specified in JLS:
 ** all preview features are mentioned
@@ -38,11 +40,12 @@ image::images/jls-14-text-block-preview.png[background, size=contain]
 
 Enabling:
 
-* for both with `--preview-feature`
+* for compiler and runtime +
+  with `--enable-preview`
 * generates compiler warnings
 * pins Java version
 
-=== Version Pinning
+=== Example
 
 ```java
 public class TextBlocks {
@@ -56,13 +59,13 @@ public class TextBlocks {
 }
 ```
 
-=== Version Pinning
+=== Enabling For Compilation
 
 Compiling with Java 14:
 
 ```
 $ javac TextBlocks.java
-> TextBlocks.java:6: error: text blocks are a preview
+> TextBlocks.java:4: error: text blocks are a preview
 > feature and are disabled by default.
 >                 System.out.println("""
 >                                    ^
@@ -74,7 +77,7 @@ $ javac --enable-preview --release 14 TextBlocks.java
 > Note: Recompile with -Xlint:preview for details.
 ```
 
-=== Version Pinning
+=== Enabling For Execution
 
 Running with Java 14:
 
@@ -109,29 +112,28 @@ $ java --enable-preview TextBlocks
 
 ```
 
-=== Goals
+=== Goals & Considerations
 
-Goals of preview features are:
+Goals of preview features:
 
 * prevent (accidental) use in production
 * foster early IDE support
-* experiment, report, review, refine
-** "Is it surfaced correctly?"
-** "Are there unforeseen edge cases?"
+* user experimentation and reports
+* review and refinement
+
+Considerations:
+
+* "Is it surfaced correctly?"
+* "Are there unforeseen edge cases?"
 
 === Evolution
 
-Preview features evolve +
+Preview features evolve a bit +
 (particularly on the surface) +
-but usually finalize.
+and usually finalize.
 
 My guesstimates:
 
-* rate of change: 10%
-* survival rate: 95%
-
-
-////
-Preview Feature:
-* side note on incubating APIs
-////
+* duration: 12-24 months
+* rate of change: 5%
+* rate of progression: 95%

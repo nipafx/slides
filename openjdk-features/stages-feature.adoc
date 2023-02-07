@@ -1,13 +1,12 @@
 [state="empty"]
 == !
-// TODO: Text Block in IDE screenshot
-// image::images/panic.gif[background, size=cover]
+image::images/text-blocks-ide.png[background, size=cover]
 
 === Text Blocks
 
 > A text block is a multi-line string literal that avoids the need for most escape sequences, automatically formats the string in a predictable way, and gives the developer control over the format when desired.
 
-* new language feature in Java 15
+* language feature added in Java 15
 * triggered additions to `String`: +
   `formatted`,
   `indent`,
@@ -50,8 +49,9 @@ Java features:
 
 Considerations for feature evolution/removal:
 
+* Does it hurt?
 * Is it used?
-* Does it hurt as is?
+* Can it be extended/improved?
 * Would a change/removal hurt?
 
 === Some Removals
@@ -82,6 +82,13 @@ Concurrent mark sweep GC ⛔⑭: ::
 // * peformance & maintenance cost
 // * better mechansisms exist
 
+=== !
+[link=https://www.youtube.com/watch?v=3HnH6G_zcP0]
+image::images/inside-java-newscast-41.png[]
+
+Prepare Your Code Bases For Future Java +
+Inside Java Newscast #41
+
 === Evolution
 
 Features are extremely stable +
@@ -89,7 +96,7 @@ but not immutable.
 
 My guesstimates:
 
-* rate of change: 0.5%
+* rate of change: 1%
 * survival rate: 99.9%
 
 === Evolution
@@ -98,9 +105,9 @@ But how does a feature become permanent?
 
 Long story:
 
-[%step%]
+[%step]
 * starts with an idea
-* refinement in conversations
+* refinement in explorations
 * prototype and proposal
 * preview feature
-* finalization
+* finalized feature

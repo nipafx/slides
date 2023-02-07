@@ -2,16 +2,14 @@
 
 {toc}
 
-=== Current Proposals
+=== Some Current Proposals
 
-* https://openjdk.org/jeps/430[string templates]
-* https://openjdk.org/jeps/431[sequenced collections]
-* https://openjdk.org/jeps/435[asynchronous stack trace VM API]
+Defined in _JDK Enhancement Proposals_ / _JEPs_ +
+(essentally decision records):
 
-These (and others) are defined in +
-_JDK Enhancement Proposals_ / _JEPs_ +
-(essentally decision records).
-
+* string templates (https://openjdk.org/jeps/430[JEP 430])
+* sequenced collections (https://openjdk.org/jeps/431[JEP 431])
+* asynchronous stack trace VM API (https://openjdk.org/jeps/435[JEP 435])
 
 [state="empty"]
 === !
@@ -27,10 +25,9 @@ image::images/jep-specify-meme-3.png[background, size=cover]
 
 === Specification
 
-JEPs were:
+JEPs were introduced by https://openjdk.org/jeps/1[JEP 1].
 
-* introduced by https://openjdk.org/jeps/1[JEP 1]
-* superseded by https://cr.openjdk.java.net/~mr/jep/jep-2.0-02.html[JEP 2.0 draft]
+It was superseded by https://cr.openjdk.java.net/~mr/jep/jep-2.0-02.html[JEP 2.0 draft].
 
 [state="empty",background-color="white"]
 === !
@@ -50,7 +47,7 @@ image::images/jep-2.0-workflow.png[background, size=contain]
 
 === JEP Filters
 
-JEPs (as JBS bugs) by states:
+JEPs (as JBS issues) by states:
 
 * https://bugs.openjdk.org/issues/?jql=project%20%3D%20JDK%20AND%20issuetype%20%3D%20JEP%20AND%20status%20%3D%20Draft[Draft JEPs]
 * https://bugs.openjdk.org/issues/?jql=project%20%3D%20JDK%20AND%20issuetype%20%3D%20JEP%20AND%20status%20%3D%20Submitted[Submitted JEPs]
@@ -78,8 +75,8 @@ image::images/jep-2.0-numbers.png[background, size=contain]
 === JEP Progression (Closed)
 
 * drafted: 329
-* candidate: 303
-* delivered: 285
+* candidate: 303 (90%)
+* delivered: 285 (85%)
 
 ////
 Update numbers:
@@ -96,7 +93,7 @@ Update numbers:
 
 Proposals are defined by JEPs.
 
-Often also come with prototypes in +
+Often also come with implementations in +
 project forks or feature branches of openjdk/jdk, e.g.:
 
 * https://github.com/openjdk/valhalla[openjdk/valhalla]
@@ -107,6 +104,7 @@ project forks or feature branches of openjdk/jdk, e.g.:
 Goals of JEPs:
 
 * expose proposal to wider audience
+* seek feedback on the proposed solution
 * motivate, describe, archive proposals +
   with their contexts and consequences
 
@@ -122,5 +120,6 @@ and most are delivered.
 
 My guesstimates:
 
-* change: 40%
-* survival: 85%
+* duration: 6-36 months
+* rate of change: 40%
+* rate of progression: 85%
