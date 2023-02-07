@@ -2,38 +2,125 @@
 
 {toc}
 
+=== Current Proposals
+
+* https://openjdk.org/jeps/430[string templates]
+* https://openjdk.org/jeps/431[sequenced collections]
+* https://openjdk.org/jeps/435[asynchronous stack trace VM API]
+
+These (and others) are defined in +
+_JDK Enhancement Proposals_ / _JEPs_ +
+(essentally decision records).
+
+
+[state="empty"]
+=== !
+image::images/jep-specify-meme-1.png[background, size=cover]
+
+[state="empty"]
+=== !
+image::images/jep-specify-meme-2.png[background, size=cover]
+
+[state="empty"]
+=== !
+image::images/jep-specify-meme-3.png[background, size=cover]
+
+=== Specification
+
+JEPs were:
+
+* introduced by https://openjdk.org/jeps/1[JEP 1]
+* superseded by https://cr.openjdk.java.net/~mr/jep/jep-2.0-02.html[JEP 2.0 draft]
+
+[state="empty",background-color="white"]
+=== !
+image::images/jep-2.0-workflow.png[background, size=contain]
+
+[NOTE.speaker]
+--
+* Draft: drafted, reviewed, revised, endorsed
+* Submitted: ready to be evaluated for the JDK Roadmap
+* Candidate: added to the JDK Roadmap
+* Targeted: supposed to be released in that version
+* Integrated: code/tests are integrated into openjdk/jdk
+* Complete: functional/performance/conformance tests have been delivered; only bug fixes are expected
+* Closed/Delivered: release shipped with JEP
+* Closed/...: work stopped
+--
+
+=== JEP Filters
+
+JEPs (as JBS bugs) by states:
+
+* https://bugs.openjdk.org/issues/?jql=project%20%3D%20JDK%20AND%20issuetype%20%3D%20JEP%20AND%20status%20%3D%20Draft[Draft JEPs]
+* https://bugs.openjdk.org/issues/?jql=project%20%3D%20JDK%20AND%20issuetype%20%3D%20JEP%20AND%20status%20%3D%20Submitted[Submitted JEPs]
+* https://bugs.openjdk.org/issues/?jql=project%20%3D%20JDK%20AND%20issuetype%20%3D%20JEP%20AND%20status%20%3D%20Candidate[Candidate JEPs]
+* https://bugs.openjdk.org/issues/?jql=project%20%3D%20JDK%20AND%20issuetype%20%3D%20JEP%20AND%20status%20%3D%20Targeted[Targeted JEPs]
+* https://bugs.openjdk.org/issues/?jql=project%20%3D%20JDK%20AND%20issuetype%20%3D%20JEP%20AND%20status%20%3D%20Integrated[Integrated JEPs]
+* https://bugs.openjdk.org/issues/?jql=project%20%3D%20JDK%20AND%20issuetype%20%3D%20JEP%20AND%20status%20%3D%20Complete[Complete JEPs]
+* https://bugs.openjdk.org/issues/?jql=project%20%3D%20JDK%20AND%20issuetype%20%3D%20JEP%20AND%20status%20%3D%20Closed%20AND%20resolution%20%3D%20Delivered[Closed/Delivered JEPs]
+
+[state="empty",background-color="white"]
+=== !
+image::images/jep-2.0-numbers.png[background, size=contain]
+
+=== JEP Progression (All)
+
+* drafted: 421
+** rejected: 26
+** still open: 55
+* candidate: 340
+** withdrawn: 18
+** open & active: 24
+** open & dormant: 13
+* delivered: 285
+
+=== JEP Progression (Closed)
+
+* drafted: 329
+* candidate: 303
+* delivered: 285
+
 ////
-Proposal
-* hallmarks: TODO
-* artifact:
-	JEPs (across previews)
-	maybe fork of openjdk/jdk
+Update numbers:
+* Total: https://bugs.openjdk.org/issues/?jql=project%20%3D%20JDK%20AND%20issuetype%20%3D%20JEP%20ORDER%20BY%20created%20ASC%2C%20lastViewed%20DESC
+* Draft: https://bugs.openjdk.org/issues/?jql=project%20%3D%20JDK%20AND%20issuetype%20%3D%20JEP%20AND%20status%20%3D%20Draft%20ORDER%20BY%20created%20ASC%2C%20lastViewed%20DESC
+* In flight - active (<3 years): https://bugs.openjdk.org/issues/?jql=project%20%3D%20JDK%20AND%20issuetype%20%3D%20JEP%20AND%20status%20!%3D%20Closed%20AND%20status%20!%3D%20draft%20AND%20updated%20%3E%3D%20-156w%20ORDER%20BY%20created%20ASC
+* In flight - dormant (>3 years): https://bugs.openjdk.org/issues/?jql=project%20%3D%20JDK%20AND%20issuetype%20%3D%20JEP%20AND%20status%20!%3D%20Closed%20AND%20status%20!%3D%20draft%20AND%20updated%20%3C%20-156w%20ORDER%20BY%20created%20ASC
+* Closed/Rejected + Closed/Withdrawn: https://bugs.openjdk.org/issues/?jql=project%20%3D%20JDK%20AND%20issuetype%20%3D%20JEP%20AND%20status%20%3D%20Closed%20AND%20resolution%20in%20(Rejected%2C%20Withdrawn)%20ORDER%20BY%20created%20ASC%2C%20lastViewed%20DESC
+* Closed/Withdrawn: strikethrough in https://openjdk.org/jeps/0
+* Closed/Delivered JEPs: https://bugs.openjdk.org/issues/?jql=project%20%3D%20JDK%20AND%20issuetype%20%3D%20JEP%20AND%20status%20%3D%20Closed%20AND%20resolution%20%3D%20Delivered
+////
+
+=== Artifacts
+
+Proposals are defined by JEPs.
+
+Often also come with prototypes in +
+project forks or feature branches of openjdk/jdk, e.g.:
+
+* https://github.com/openjdk/valhalla[openjdk/valhalla]
+* https://github.com/openjdk/amber/tree/templated-strings[openjdk/amber 🌳 templated-strings]
+
+=== Goals & Considerations
+
+Goals of JEPs:
+
+* expose proposal to wider audience
+* motivate, describe, archive proposals +
+  with their contexts and consequences
+
+Proposal considerations:
+
+* "Is this the right way to do it?"
+
+=== Evolution
+
+Proposals evolve noticeably +
+(particularly until _Candidate_) +
+and most are delivered.
+
+My guesstimates:
+
 * change: 40%
 * survival: 85%
-* considerations:
-	* TODO
-
-JEPs
-* total: 421
-	* closed: 329
-		* rejected: 18 (marked as "withdrawn" on https://openjdk.org/jeps/0: 108, 116, 125, 132, 146, 151, 154, 157, 159, 183, 186, 191, 194, 301, 308, 311, 326, 342)
-		* draft/submitted & rejected: 26 (https://bugs.openjdk.org/browse/JDK-8046957?jql=project%20%3D%20JDK%20AND%20issuetype%20%3D%20JEP%20AND%20status%20%3D%20Closed%20AND%20resolution%20in%20(Rejected%2C%20Withdrawn)%20ORDER%20BY%20created%20ASC%2C%20lastViewed%20DESC minus the 18 above)
-		* delivered: 285 (https://bugs.openjdk.org/browse/JDK-8046112?jql=project%20%3D%20JDK%20AND%20issuetype%20%3D%20JEP%20AND%20status%20%3D%20Closed%20AND%20resolution%20%3D%20Delivered%20ORDER%20BY%20created%20ASC%2C%20lastViewed%20DESC)
-	* open: 92
-		* draft: 55 (https://bugs.openjdk.org/browse/JDK-8046127?jql=project%20%3D%20JDK%20AND%20issuetype%20%3D%20JEP%20AND%20status%20%3D%20Draft%20ORDER%20BY%20created%20ASC)
-		* active: 37
-			* dormant (not updated in >3 years): 13 (https://bugs.openjdk.org/browse/JDK-8046185?jql=project%20%3D%20JDK%20AND%20issuetype%20%3D%20JEP%20AND%20status%20!%3D%20Closed%20AND%20status%20!%3D%20draft%20AND%20updated%20%3C%20-156w%20ORDER%20BY%20created%20ASC)
-* progression:
-	* drafted: 421
-		* rejected: 26
-		* still open: 55
-	* candidate: 340
-		* rejected: 18
-		* open & active: 24
-		* open & dormant: 13
-	* delivered: 285
-* progression (closed):
-	* drafted: 329
-	* candidate: 303
-	* delivered: 285
-////
