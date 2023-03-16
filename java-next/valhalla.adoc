@@ -22,7 +22,7 @@ Java has a split type system:
 We can only create classes, but:
 
 * have identity
-* are references
+* have references
 
 [NOTE.speaker]
 --
@@ -44,11 +44,10 @@ But not all custom types need that!
 
 === References
 
-All classes come as _references_:
+All class instances come as _references_:
 
 * memory access indirection
 * nullability
-* protect from tearing
 
 But not all custom types need that!
 
@@ -57,7 +56,7 @@ But not all custom types need that!
 Valhalla's goals is to unify the type system:
 
 * _value types_ (disavow identity)
-* _primitive types_ (disavow identity + references)
+* something 🤷🏾‍♂️ (disavow identity + references)
 * _universal generics_ (`ArrayList<int>`)
 * _specialized generics_ (backed by `int[]`)
 
@@ -92,6 +91,7 @@ No identity:
 
 * some runtime operations throw exceptions
 * "identity" check `==` compares by state
+* `null` is default value
 
 Benefits:
 
@@ -99,89 +99,72 @@ Benefits:
 * more expressiveness
 * more optimizations
 
-=== Value type behavior
-
-Value types are references:
-
-* `null` is default value
-* no tearing
-
 === Migration to value types
 
 > The JDK (as well as other libraries) has many value-based classes, such as `Optional` and `LocalDateTime`. [...]
 > We plan to migrate many value-based classes in the JDK to value classes.
 
+=== Getting rid of references
+
+Value types have references:
+
+* allow `null`
+* prevent flattening
+
+How do we get rid of them?
+
+=== Something 🤷🏾‍♂️
+
+Two proposals:
+
+* primitive classes
+* nullness markers
+
 === Primitive types
 
-```java
-primitive class ComplexNumber {
-	private long rational;
-	private long irrational;
-
-	// constructor, etc.
-}
-```
-
-Codes (almost) like a value class - exception:
-
-* no field of own type (i.e. no circularity)
-
-=== Primitive type behavior
-
-No identity (like value types).
-
-No references:
-
-* default value has all fields set to their defaults
-* can tear under concurrent assignment
-
-Benefit:
-
-* performance comparable to that of today's primitives!
-
-=== Primitive "boxes"
-
-Sometimes, even `int` needs to be a reference:
-
-* nullability
-* non-tearability
-* self-reference
-
-So we box to `Integer`.
-
-What about `ComplexNumber`?
-
-=== Primitive "boxes"
-
-Each primitive class `P` declares two types:
-
-* `P`: as discussed so far
-* `P.ref`: behaves like a value type
+Proposed by https://openjdk.java.net/jeps/401[JEP 401]:
 
 ```java
-primitive class Node<T> {
-	T value;
-	Node.ref<T> nextNode;
-}
+primitive class ComplexNumber { /* ... */ }
 ```
 
-=== Migration to primitive types
+Properties:
 
-> [W]e want to adjust the basic primitives (`int`, `double`, etc.) to behave as consistently with new primitives as possible.
+* no identity (like value types)
+* no references:
+** non-nullable
+** default value has all fields set to their defaults
 
-On the example of `int`/`Integer`:
+=== Primitive types
 
-* declare `int` as primitive class
-* alias `Integer` with `int.ref`
-* remove `Integer`
+But:
+
+* declaration-site
+* requires a box, e.g. `ComplexNumber.ref`
+* ad-hoc solution to larger problem
+
+=== Nullness markers
+
+Currently https://mail.openjdk.org/pipermail/valhalla-spec-experts/2023-February/002223.html[discussed on the mailing list]:
+
+* use-site nullness markers (yes: `?`, `!`, etc.)
+* value class + not null = flattenable
+
+This is still very vague!
+
+=== Either way...
+
+* flattenable instances
+* performance comparable +
+  to today's primitives!
 
 === Universal generics
 
-When everybody creates their own values and primitives, +
+When everybody creates their own value classes, +
 boxing becomes omni-present and very painful!
 
-Universal generics allow value/primitive +
-classes as type parameters:
+Universal generics allow value classes +
+as type parameters:
 
 [source,java]
 ----
@@ -201,7 +184,7 @@ Generics over primitives will avoid references!
 
 === Project Valhalla
 
-Value and primitive types plus +
+Value types and _something_ plus +
 universal and specialized generics:
 
 * fewer trade-offs between +
@@ -215,16 +198,7 @@ Makes Java more expressive and performant.
 
 === Timeline
 
-My personal (!) guesses (!!):
-
-2023::
-* value classes preview (https://openjdk.java.net/jeps/8277163[JEP draft])
-2024::
-* primitive classes preview (https://openjdk.java.net/jeps/401[JEP 401])
-* primitives as classes preview (https://openjdk.java.net/jeps/402[JEP 402])
-* universal generics preview (https://openjdk.java.net/jeps/8261529[JEP draft])
-2025::
-* specialized generics preview
+🤷🏾‍♂️
 
 === Deeper Dives
 
