@@ -58,10 +58,9 @@ include::amber-template-strings.adoc[]
 
 My personal (!) guesses (!!):
 
-JDK 20 (2023)::
-* pattern matching in `switch` (4th preview; https://openjdk.java.net/jeps/433[JEP 433])
-* record patterns (2nd preview; https://openjdk.java.net/jeps/432[JEP 432])
 JDK 21 (2023)::
+* pattern matching in `switch` finalizes (https://openjdk.org/jeps/441[JEP 441])
+* record patterns finalize (https://openjdk.org/jeps/440[JEP 440])
 * template strings preview (https://openjdk.org/jeps/430[JEP 430])
 * first steps to simplified `main`
 2024::

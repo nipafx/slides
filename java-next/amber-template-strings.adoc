@@ -57,12 +57,12 @@ String query = STR."""
 	""";
 ```
 
-Ingredients:
+_Template expression_ ingredients:
 
 * _template_ with embedded expressions +
-  ~> `TemplatedString`
+  ~> `StringTemplate`
 * _template processor_ (e.g. `STR`): +
-  transforms `TemplatedString` into `String`*
+  transforms `StringTemplate` into `String`*
 
 === Template procesor STR
 
@@ -85,10 +85,10 @@ Tax       $3.546
 Total     $27.186
 ```
 
-=== Template processor FMTR
+=== Template processor FMT
 
 ```java
-String form = FMTR."""
+String form = FMT."""
 	Desc        Unit      Qty   Amount
 	%-10s\{desc} $%5.2f\{price} %5d\{qty} $%5.2f\{price * qty}
 
@@ -118,36 +118,30 @@ Why the detour?
 
 === Custom templating
 
-The `TemplateProcessor` interface:
+Top interface:
 
 ```java
-interface TemplateProcessor<RESULT, EXCEPTION> {
-	RESULT apply(TemplatedString s) throws EXCEPTION;
+public interface ValidatingProcessor<RESULT, EX> {
+	RESULT process(StringTemplate s) throws EX;
 }
 ```
 
 `RESULT` can be of any type!
 
-////
-// text variant:
-`interface TemplatedString`:
+Specializations:
 
-* `stencil()`: string with placeholders for expressions
-* `fragments()`: result of splitting stencil at placeholders
-* `values()`: expression values
-
-// code variant:
 ```java
-// represents strings like "Name: \{name}"
-interface TemplatedString {
-	// methods to access fragments and values
-}
+public interface TemplateProcessor<RESULT>
+	extends ValidatingProcessor<RESULT, RuntimeException> { }
+
+public interface StringProcessor
+	extends TemplateProcessor<String> { }
 ```
-////
 
 === Custom templating
 
 ```java
+// might throw `SQLException`
 Statement query = SQL."""
 	SELECT * FROM Person p
 	WHERE p.\{property} = '\{value}'
@@ -162,16 +156,21 @@ JSONObject doc = JSON."""
 	""";
 ```
 
-=== Amber endeavors
+=== Template strings
 
-Template strings: https://openjdk.org/jeps/430[JEP 430]
+* https://openjdk.org/jeps/430[JEP 430]
+* candidate for JDK 21 🙌🏾
+
+=== Amber endeavors
 
 Pattern matching:
 
-* finish pattern matching (https://openjdk.org/jeps/433[JEP 433])
-* finish record patterns (https://openjdk.org/jeps/432[JEP 432])
+* pattern matching in `switch` (https://openjdk.org/jeps/433[JEP 433] - in JDK 20)
+* record patterns (https://openjdk.org/jeps/432[JEP 432] - in JDK 20)
 * primitive types in patterns (https://bugs.openjdk.org/browse/JDK-8288476[JEP draft])
 * unnamed patterns/variables (https://bugs.openjdk.org/browse/JDK-8294349[JEP draft])
+
+=== Amber endeavors
 
 Other endeavors and conversations:
 
