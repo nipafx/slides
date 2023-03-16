@@ -243,9 +243,9 @@ void handle(Request request, Response response)
 		throws InterruptedException {
 	// define explicit success/error handling
 	try (var scope = new StructuredTaskScope
-							.ShutdownOnFailure()) {
-		var futureA = scope.fork(this::taskA);
-		var futureB = scope.fork(this::taskB);
+			.ShutdownOnFailure()) {
+		var futureA = scope.fork(() -> doA(request));
+		var futureB = scope.fork(() -> doB(request));
 		// wait explicitly until success criteria met
 		scope.join();
 		scope.throwIfFailed();
@@ -284,13 +284,21 @@ Structured concurrency:
 
 === Timeline
 
-My personal (!) guess (!!):
-
 JDK 20 (2023)::
 * virtual threads (2nd preview; https://openjdk.org/jeps/436[JEP 436])
 * structured concurrency (2nd incubator; https://openjdk.org/jeps/437[JEP 437])
+* scope locals incubate (1st incubator; https://openjdk.org/jeps/429[JEP 429])
+
+=== Timeline
+
+My personal (!) guesses (!!):
+
+JDK 21 (2023)::
+* virtual threads finalize
+* structured concurrency finalizes?
 
 2024::
+* scope locals finalize
 * more structured concurrency APIs
 
 === Deeper Dives
