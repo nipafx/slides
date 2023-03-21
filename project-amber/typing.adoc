@@ -1,28 +1,186 @@
-== Typing
+== Type Safety & Encapsulation
 
-=== Strongly Typed & Encapsulated
+How Project Amber tackles the tension +
+*explicitness/safety vs verbosity* +
+for more succinctness and new features.
 
-// TODO advantages of strongly-typed languages
-// TODO advantages of encapsulation
-// TODO downsides; here: verbosity, redundancy
+=== Type Safety
 
-=== Lambda Expressions
+Java is...
 
-// TODO parameter type inference
+strongly typed: ::
+every field, variable, method argument +
+and return has a type
 
-=== var `var`
+statically typed: ::
+all this is known at compile time
 
-// TODO explain with focus on removing redundancy
+=== Encapsulation
+
+For our types, fields, methods:
+
+* pick lowest feasible visibility
+* hide internals behind accessors
+
+=== Type Safety & Encapsulation
+
+We rely on them to:
+
+* model domains
+* guarantee invariants
+* modularize problems
+* catch errors early
+* understand code
+
+=== Type Safety & Encapsulation
+
+But, they can be:
+
+* verbose
+* redundant
+
+Underlying tension: +
+explicitness/safety vs verbosity.
+
+=== Throwback: Lambdas
+
+```java
+Predicate<Person> isOld = person -> person.age() >= 30;
+```
+
+* didn't allow anything new!
+* focus on what's essential +
+  (behavior and semantics)
+* removed losts of verbosity +
+  (and bits of explicitness)
+
+Found a (situationally) better balance. +
+⇝ More "code as data".
+
+=== Project Amber
+
+Aims to do more of that:
+
+* give up small amounts of benefits
+* in suitable, specific situations
+* for new semantics and features
+* for much more succinctness
+
+=== var
+
+```java
+var audienceMember = new Person("John Doe");
+```
+
+* focus on what's essential +
+  (variable name and expression)
+* removes verbosity & redundancy +
+  (and bits of explicitness)
+
+Finds a better balance (if used wisely). +
+⇝ More readable variables.
 
 === Records
 
-// TODO explain with focus on lack of encapsulation
+```java
+record Person(String name, LocalDate birthday) { }
+```
 
-=== Destructuring
+[quote,JEP 395]
+____
+[Records] are classes that act as transparent carriers for immutable data.
+____
 
-// TODO explain with focus on succinctness
-// TODO preview destructuring on assignemnt: https://twitter.com/BrianGoetz/status/1599000138793771010
+* opt out of encapsulation
+* allow compiler to understand internals
+* reduce verbosity _a lot_
+
+Defines a new point of balance.
+
+=== Throwback: Pattern Matching
+
+```java
+Object obj = // ...
+// in `if` (since Java 16):
+if (obj instanceof Person person) {
+	var name = person.name();
+	var bday = person.birtday();
+	// use `name` and `bday`
+}
+// in `switch` (probably in Java 21):
+switch (obj) {
+	case Person person -> {
+		var name = person.name();
+		var bday = person.birtday();
+		// use `name` and `bday`
+	}
+	// ...
+}
+```
+
+=== Destructuring Records
+
+Probably in Java 21 (https://openjdk.org/jeps/440[JEP 440]):
+
+```java
+Object obj = // ...
+
+if (obj instanceof Person(var name, var bday)) {
+	// use `name` and `bday`
+}
+
+switch (obj) {
+	case Person(var name, var bday) -> {
+		// use `name` and `bday`
+	}
+	// ...
+}
+```
+
+=== Destructuring Records
+
+```java
+var person = fetchPerson();
+var name = person.name();
+var bday = person.birtday();
+// use `name` and `bday`
+```
+
+In the future (no JEP, but https://twitter.com/BrianGoetz/status/1599000138793771010[it's coming]):
+
+```java
+// speculative syntax
+Person(var name, var bday) = fetchPerson();
+// use `name` and `bday`
+```
+
+=== Destructuring Records
+
+```java
+var person = fetchPerson();
+var unnamed = new Person("", person.birthday());
+```
+
+Maybe in the future (https://github.com/openjdk/amber-docs/blob/master/eg-drafts/reconstruction-records-and-classes.md[design document] from Aug 2020):
+
+```java
+// highly speculative syntax
+var person = fetchPerson();
+var unnamed = person with {
+		name = "";
+	};
+```
 
 === Summary
 
-// TODO explain importance of strong types and how these features make it easier to deal with the associated verbosity
+// TODO: example
+
+Type safety and encapsulation:
+
+* are bedrocks of Java
+* but aren't free
+
+Project Amber introduces new features that:
+
+* lower the cost
+* make them shine brighter
