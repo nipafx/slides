@@ -17,21 +17,27 @@
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://www.oracle.com/java/" title="Java @ Oracle"><img src="images/logo-oracle.png" alt="Oracle logo" class="logo"></a>
+		<a href="{guest-url}" title="{guest-name}"><img src="images/{guest-photo}"  alt="Photo of {guest-name}" class="logo"></a>
 		<div class="name">
-			<p>Developer Advocate</a></p>
-			<p>Java Team at Oracle</p>
+			<p><a href="{guest-url}" title="{guest-name} online">{guest-name}</a></p>
+			<p><a href="{guest-twitter-url}" title="{guest-name} on Twitter">{guest-twitter-name}</a></p>
 		</div>
 	</div>
 </div>
 <footer>
 	<div class="participant">
 		<a href="https://nipafx.dev/nicolai-parlog" title="Nicolai"><img src="images/nipa-face.jpg" alt="Photo of Nicolai" class="logo"></a>
-		<a href="https://www.oracle.com/java/"><img src="images/logo-oracle.png" class="logo"></a>
 		<div class="name"><p>
 			<a href="https://nipafx.dev/nicolai-parlog" title="About Nicolai">Nicolai Parlog</a>
 			/ <a href="https://nipafx.dev" title="Nicolai's website">nipafx.dev</a>
 			/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a>
+		</p></div>
+	</div>
+	<div class="participant">
+		<a href="{guest-url}" title="{guest-name}"><img src="images/{guest-photo}"  alt="Photo of {guest-name}" class="logo"></a>
+		<div class="name"><p>
+			<a href="{guest-url}" title="{guest-name} online">{guest-name}</a>
+			/ <a href="{guest-twitter-url}" title="{guest-name} on Twitter">{guest-twitter-name}</a>
 		</p></div>
 	</div>
 	<div class="participant">
