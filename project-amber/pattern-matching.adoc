@@ -1,10 +1,259 @@
 == Dealing With Data
 
-// TODO importance of dealing with data as data
-// TODO use FP as poster child
+How Project Amber introduces +
+*a new programming paradigm* +
+to handle data as data.
 
-// TODO reduced example from DOP talk
+=== Data-Oriented Problems
+
+Essentials when dealing with data +
+(JSON, SQL result, events, …):
+
+* represent data with simple, immutable types
+* model alternatives explicitly
+* make illegal states unrepresentable
+* represent polymoprhic behavior with functions
+* deconstruct data easily and quickly
+
+=== Example: GitHub Crawler
+
+Starting with a seed URL:
+
+. identifies kind of page
+. follows links from GitHub pages (⇝ 1.)
+
+```java
+public static Page loadPageTree(/*...*/) {
+	// [...]
+}
+```
+
+What does `Page` look like?
+
+=== Data Representation
+
+"Represent data with simple immutable types." ✅
+
+Records:
+
+```java
+public record ErrorPage(
+	URI url, Exception ex) { }
+public record ExternalPage(
+	URI url, String content) { }
+public record GitHubIssuePage(
+	URI url, String content,
+	Set<Page> links, int issueNumber) { }
+public record GitHubPrPage(
+	URI url, String content,
+	Set<Page> links, int prNumber) { }
+```
+
+=== Modeling Alternatives
+
+"Model alternatives explicitly." ❓
+
+Use sealed types to limit inheritance:
+
+```java
+public sealed interface Page
+		permits ErrorPage, SuccessfulPage {
+	// [...]
+}
+```
+
+Only `ErrorPage` and `SuccessfulPage` +
+can implement/extend `Page`.
+
+⇝ `interface MyPage extends Page` doesn't compile
+
+=== Modeling Alternatives
+
+```java
+public sealed interface Page
+        permits ErrorPage, SuccessfulPage {
+    URI url();
+}
+
+public sealed interface SuccessfulPage
+        extends Page permits ExternalPage, GitHubPage {
+    String content();
+}
+
+public sealed interface GitHubPage
+        extends SuccessfulPage
+        permits GitHubIssuePage, GitHubPrPage {
+    Set<Page> links();
+    default Stream<Page> subtree() { ... }
+}
+```
+
+[state=empty,background-color=white]
+=== !
+image::images/github-crawler-types.png[background, size=contain]
+
+////
+yuml.me - https://yuml.me/nipafx/edit/github-crawler
+
+[Page|URI url() {bg:dodgerblue}]
+[ErrorPage|Exception error() {bg:orange}]
+[SuccessfulPage|String content() {bg:dodgerblue}]
+[GitHubPage|Set〈Page〉 links() {bg:dodgerblue}]
+[GitHubIssuePage|int issueNumber() {bg:orange}]
+[GitHubPrPage|int prNumber() {bg:orange}]
+
+[Page]<-[ErrorPage]
+[Page]<-[SuccessfulPage]
+[SuccessfulPage]<-[GitHubPage]
+[GitHubPage]<-[GitHubIssuePage]
+[GitHubPage]<-[GitHubPrPage]
+////
+
+=== Illegal States
+
+"Make illegal states unrepresentable." ✅
+
+Combine:
+
+* sealed types
+* records
+* data validation in +
+  constructors or factories
+
+(Also makes code more self-explanatory.)
+
+=== Representing Behavior
+
+"Represent polymoprhic behavior with functions." ✅
+
+(Static) methods that have data as input:
+
+```java
+public static String createPageName(Page page) {
+	// [...]
+}
+```
+
+"Polymorphic"❓
+
+=== Polymorphic Behavior
+
+Switch over input type:
+
+```java
+public static String createPageName(Page page) {
+	return switch (page) {
+		case ErrorPage err
+			-> "💥 ERROR: " + err.url().getHost();
+		case ExternalPage ext
+			-> "💤 EXTERNAL: " + ext.url().getHost();
+		case GitHubIssuePage issue
+			-> "🐈 ISSUE #" + issue.issueNumber();
+		case GitHubPrPage pr
+			-> "🐙 PR #" + pr.prNumber();
+		// [...]
+	};
+}
+```
+
+=== Polymorphic Behavior
+
+To keep code maintainable:
+
+* switch over sealed types
+* enumerate all possible types
+* avoid `default` branch
+
+⇝ Compile errors when types are added.
+
+```java
+switch (page) {
+	case ErrorPage err -> // [...]
+	case ExternalPage ext -> // [...]
+	case GitHubIssuePage issue -> // [...]
+	case GitHubPrPage pr -> // [...]
+	// no default branch!
+}
+```
+
+=== Deconstructing Data
+
+"Deconstruct data easily and quickly" ✅
+
+Use deconstruction patterns:
+
+```java
+public static String createPageName(Page page) {
+	return switch (page) {
+		case ErrorPage(var url, var ex)
+			-> "💥 ERROR: " + url.getHost();
+		case GitHubIssuePage(
+				var url, var content, var links,
+				int issueNumber)
+			-> "🐈 ISSUE #" + issueNumber;
+		// [...]
+	};
+}
+```
+
+=== Ignoring Data
+
+With unnamed patterns (https://openjdk.org/jeps/8294349[JEP draft]), +
+use `_` to ignore components:
+
+```java
+public static String createPageName(Page page) {
+	return switch (page) {
+		case ErrorPage(var url, _)
+			-> "💥 ERROR: " + url.getHost();
+		case GitHubIssuePage(_, _, _, int issueNumber)
+			-> "🐈 ISSUE #" + issueNumber;
+		// [...]
+	};
+}
+```
+
+=== Data-Oriented Programming
+
+Use Java's strong typing to model data as data:
+
+* use types to model data, particularly:
+** data as data with records
+** alternatives with sealed types
+* use (static) methods to model behavior, particularly:
+** exhaustive `switch` without `default`
+** pattern matching to destructure polymorphic data
+
+=== Data-Oriented Programming…
+
+… isn't funtional programming::
+* but it's similar (data + functions)
+* first priority is data, not functions
+
+… doesn't kill object-oriented programming::
+* use OOP to modularize large systems
+* use DOP to model small, data-focused (sub)systems
+
+=== More
+
+More on data-oriented programming:
+
+* seminal https://www.infoq.com/articles/data-oriented-programming-java/[article by Brian Goetz] on InfoQ
+* GitHub crawler on https://github.com/nipafx/loom-lab[github.com/nipafx/loom-lab]
+* on https://www.youtube.com/java[youtube.com/@java]:
+** intro in https://www.youtube.com/watch?v=5qYJYGvVLg8[Inside Java Newscast #29]
+** deeper tutorial in https://www.youtube.com/watch?v=aKaw9W789wU[JEP Cafe #14]
+** practical example in https://www.youtube.com/watch?v=vvXmO2ZMGsk[Inside Java Newscast #33]
+* yesterday's talk on https://www.youtube.com/@DevoxxForever[youtube.com/@DevoxxForever]
 
 === Summary
 
-// TODO more on DOP on our YouTube: https://www.youtube.com/watch?v=5qYJYGvVLg8
+Object-oriented programming:
+
+* is the beating heart of Java develoment 💓
+* but isn't the best fit in all situations
+
+Project Amber introduces new features that:
+
+* unlock data-oriented programming
+* make functional programming more feasible
