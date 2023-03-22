@@ -1,29 +1,172 @@
 == Strings
 
-=== String issues
+How Project Amber +
+*smartly enhances* +
+one of the most basic types.
 
-// TODO add example here
+=== String Issues
 
-* multiple lines
-* embedding variable
-* escaping special characters
+```java
+String json = "{\n"
+	+ "\t\"name\": \"" + name + "\",\n"
+	+ "\t\"year\": \"" + bday.getYear() + "\"\n"
+	+ "}";
+```
+
+What we're expressing:
+
+[%step]
+* we need a `String` ✅ 😃
+* across multiple lines 🫠
+* with indentation 🫣
+* and quotation marks 😢
+* and embedded variables 😭
+
+=== String Issues
+
+String literals lack expressiveness:
+
+* no concept of multi-line-ness
+* no concept of interpolation/processing
+* no concept of rawness
+
+Project Amber is fixing that! +
+(But without throwing it all into one pot.)
 
 === Text Blocks
 
-// TODO explain feature on high level
-// TODO highlight last-mover advantage
-// TODO show improved example
+Java 15 finalized text blocks:
+
+* multiline string literals
+* understand _incidental_ vs _essential_ white space
+* require less escaping
+
+```java
+String duke = """
+	{
+		"name": "Duke",
+		"year": "1992"
+	}""";
+```
+
+We can now "enable" multi-line-ness.
+
+=== Text Blocks
+
+But embedding variables is still cumbersome.
+
+With `String::formatted`:
+
+```java
+String json = """
+	{
+		"name": "%s",
+		"year": "%d"
+	}"""
+	.formatted(name, bday.getYear());
+```
 
 === String Templates
 
-// TODO explain feature on high level
-// TODO highlight last-mover advantage
-// TODO show improved example
+Java 21 may preview string templates (https://openjdk.org/jeps/430[JEP 430]):
+
+* allow embedding expressions
+* understand need for explicit processing +
+  for validation, escaping, etc.
+
+```java
+String json = STR."""
+	{
+		"name": "\{name}",
+		"year": "\{bday.getYear()}"
+	}""";
+```
+
+We'd be able to "enable" variable embedding.
+
+=== String Templates
+
+_Template expression_:
+
+```java
+String json = STR."""
+	{
+		"name": "\{name}",
+		"year": "\{bday.getYear()}"
+	}""";
+```
+
+Ingredients:
+
+* _template_ with embedded expressions: `StringTemplate`
+* _template processor_ (e.g. `STR`): `StringTemplate` ⇝ `String`*
+
+=== Why strings?
+
+Often, strings are just exchange format, e.g.:
+
+* start with: `String` + values
+* validate / sanitize (i.e. parse)
+* simplify to: `String`
+* parse to: `JSONObject`, `Statement`, …
+
+Why the detour?
+
+=== Custom templating
+
+Top interface:
+
+```java
+public interface ValidatingProcessor<RESULT, EX> {
+	RESULT process(StringTemplate s) throws EX;
+}
+```
+
+`RESULT` can be of any type!
+
+(We're sipping the specializations +
+`TemplateProcessor<RESULT>`, `StringProcessor`.)
+
+=== Custom templating
+
+```java
+// validates & escapes JSON
+JSONObject doc = JSON."""
+	{
+		"name": "\{name}",
+		"year": "\{bday.getYear()}"
+	}""";
+
+// prevents SQL injections
+Statement query = SQL."""
+	SELECT * FROM Person p
+	WHERE p.name = '\{name}'
+	""";
+```
 
 === Raw Strings
 
-// TODO discuss JEP 326
+* proposed for Java 12 (https://openjdk.org/jeps/326[JEP 326])
+* withdrawn due to complexity
+* still needed (e.g. for regex)
+
+```java
+String regex = "\\[\\d{2,4}\\]"; // 🤔🤔🤔
+// made-up syntax!
+String rawRegex = !"\[\d{2,4}\]" // 🤔
+```
+
+We hope to be able to "enable" rawness. 🤞
 
 === Summary
 
-// TODO show how these features work separately and together to make string-handling easier
+Strings are:
+
+* essential to development
+* not expressive in Java
+
+Project Amber introduces new features that:
+
+* make strings more expressive
+* learned from other languages
+* can be combined as needed
