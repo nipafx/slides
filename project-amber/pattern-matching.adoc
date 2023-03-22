@@ -12,8 +12,8 @@ Essentials when dealing with data +
 * represent data with simple, immutable types
 * model alternatives explicitly
 * make illegal states unrepresentable
-* represent polymoprhic behavior with functions
-* deconstruct data easily and quickly
+* represent polymorphic behavior with functions
+* (de)construct data easily and quickly
 
 === Example: GitHub Crawler
 
@@ -24,7 +24,7 @@ Starting with a seed URL:
 
 ```java
 public static Page loadPageTree(/*...*/) {
-	// [...]
+	// ...
 }
 ```
 
@@ -58,7 +58,7 @@ Use sealed types to limit inheritance:
 ```java
 public sealed interface Page
 		permits ErrorPage, SuccessfulPage {
-	// [...]
+	// ...
 }
 ```
 
@@ -117,8 +117,8 @@ Combine:
 
 * sealed types
 * records
-* data validation in +
-  constructors or factories
+* data validation +
+  (during construction)
 
 (Also makes code more self-explanatory.)
 
@@ -130,7 +130,7 @@ Combine:
 
 ```java
 public static String createPageName(Page page) {
-	// [...]
+	// ...
 }
 ```
 
@@ -151,7 +151,7 @@ public static String createPageName(Page page) {
 			-> "🐈 ISSUE #" + issue.issueNumber();
 		case GitHubPrPage pr
 			-> "🐙 PR #" + pr.prNumber();
-		// [...]
+		// ...
 	};
 }
 ```
@@ -164,17 +164,17 @@ To keep code maintainable:
 * enumerate all possible types
 * avoid `default` branch
 
-⇝ Compile errors when types are added.
-
 ```java
 switch (page) {
-	case ErrorPage err -> // [...]
-	case ExternalPage ext -> // [...]
-	case GitHubIssuePage issue -> // [...]
-	case GitHubPrPage pr -> // [...]
+	case ErrorPage err -> // ...
+	case ExternalPage ext -> // ...
+	case GitHubIssuePage issue -> // ...
+	case GitHubPrPage pr -> // ...
 	// no default branch!
 }
 ```
+
+⇝ Compile error when new type is added.
 
 === Deconstructing Data
 
@@ -191,14 +191,14 @@ public static String createPageName(Page page) {
 				var url, var content, var links,
 				int issueNumber)
 			-> "🐈 ISSUE #" + issueNumber;
-		// [...]
+		// ...
 	};
 }
 ```
 
 === Ignoring Data
 
-With unnamed patterns (https://openjdk.org/jeps/8294349[JEP draft]), +
+With unnamed patterns (https://openjdk.org/jeps/443[JEP 443]), +
 use `_` to ignore components:
 
 ```java
@@ -208,7 +208,7 @@ public static String createPageName(Page page) {
 			-> "💥 ERROR: " + url.getHost();
 		case GitHubIssuePage(_, _, _, int issueNumber)
 			-> "🐈 ISSUE #" + issueNumber;
-		// [...]
+		// ...
 	};
 }
 ```

@@ -20,7 +20,7 @@ all this is known at compile time
 For our types, fields, methods:
 
 * pick lowest feasible visibility
-* hide internals behind accessors
+* hide internals (behind accessors)
 
 === Type Safety & Encapsulation
 
@@ -95,9 +95,10 @@ ____
 * allow compiler to understand internals
 * reduce verbosity _a lot_
 
-Defines a new point of balance.
+Defines a new point of balance. +
+⇝ More and simpler types.
 
-=== Throwback: Pattern Matching
+=== Pattern Matching
 
 ```java
 Object obj = // ...
@@ -172,8 +173,6 @@ var unnamed = person with {
 ```
 
 === Summary
-
-// TODO: example
 
 Type safety and encapsulation:
 

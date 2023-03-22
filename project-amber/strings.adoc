@@ -2,7 +2,7 @@
 
 How Project Amber +
 *smartly enhances* +
-one of the most basic types.
+one of Java's most basic types.
 
 === String Issues
 
@@ -46,7 +46,8 @@ String duke = """
 	{
 		"name": "Duke",
 		"year": "1992"
-	}""";
+	}
+	""";
 ```
 
 We can now "enable" multi-line-ness.
@@ -62,8 +63,8 @@ String json = """
 	{
 		"name": "%s",
 		"year": "%d"
-	}"""
-	.formatted(name, bday.getYear());
+	}
+	""".formatted(name, bday.getYear());
 ```
 
 === String Templates
@@ -72,14 +73,15 @@ Java 21 may preview string templates (https://openjdk.org/jeps/430[JEP 430]):
 
 * allow embedding expressions
 * understand need for explicit processing +
-  for validation, escaping, etc.
+  (for validation, escaping, etc.)
 
 ```java
 String json = STR."""
 	{
 		"name": "\{name}",
 		"year": "\{bday.getYear()}"
-	}""";
+	}
+	""";
 ```
 
 We'd be able to "enable" variable embedding.
@@ -93,7 +95,8 @@ String json = STR."""
 	{
 		"name": "\{name}",
 		"year": "\{bday.getYear()}"
-	}""";
+	}
+	""";
 ```
 
 Ingredients:
@@ -117,15 +120,12 @@ Why the detour?
 Top interface:
 
 ```java
-public interface ValidatingProcessor<RESULT, EX> {
+public interface Processor<RESULT, EX> {
 	RESULT process(StringTemplate s) throws EX;
 }
 ```
 
 `RESULT` can be of any type!
-
-(We're sipping the specializations +
-`TemplateProcessor<RESULT>`, `StringProcessor`.)
 
 === Custom templating
 
@@ -135,7 +135,8 @@ JSONObject doc = JSON."""
 	{
 		"name": "\{name}",
 		"year": "\{bday.getYear()}"
-	}""";
+	}
+	""";
 
 // prevents SQL injections
 Statement query = SQL."""
@@ -160,10 +161,10 @@ We hope to be able to "enable" rawness. 🤞
 
 === Summary
 
-Strings are:
+Java's strings are:
 
 * essential to development
-* not expressive in Java
+* not expressive
 
 Project Amber introduces new features that:
 

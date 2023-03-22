@@ -47,30 +47,56 @@ public class Main {
 * returns & parameters
 * statements & arguments
 
-=== Simplifications
+=== Approachability
 
 That's _a lot_ of tools and concepts!
 
-Simplifications:
+Java is great for large-scale development:
 
-* `jshell` (Java 9):
-** *all you need*: JDK, `jshell`, statements & arguments
-** *but*: not great for beginners (IMO); no progression
-* single-file execution (Java 11):
-** **removed**: `javac`
-** **but**: no progression
+* detailed toolchain
+* refined programming model
+
+This make it less approachable.
+
+Let's change that!
+
+=== jshell
+
+Java 9 added `jshell`:
+
+* *all you need*:
+** tools: JDK, `jshell`
+** concepts: statements & arguments
+* *but*:
+** not great for beginners (IMO)
+** no progression
+
+More is needed.
+
+=== Single-file Execution
+
+Java 11 added single-file execution:
+
+```
+java Prog.java
+```
+
+* **removed**: `javac`
+* **but**: no progression
+
+Much better for beginners, +
+but just a section of an on-ramp.
 
 === On-Ramp
 
-Expand single-file execution +
-in two directions:
+Expand single-file execution in two directions:
 
-* simplyify code: reduce required Java concepts
-* ease progression: run multiple files with `java`
+* *simplyify code*: reduce required Java concepts
+* *ease progression*: run multiple files with `java`
 
 === Simpler Code
 
-Remove necessity of:
+Remove requirement of:
 
 * `String[] args` parameter
 * `main` being static
@@ -78,6 +104,7 @@ Remove necessity of:
 * the class itself
 
 ```java
+// all the code in Prog.java
 void main() {
 	System.out.println("Hello, World!")
 }
@@ -117,7 +144,7 @@ Natural progression:
 * need more functionality? ⇝ explore JDK APIs
 * even more? ⇝ explore simple libraries
 * need more structure? ⇝ split into multiple files
-* even more ⇝ use packages visibility
+* even more ⇝ use visibility & packages
 
 === Summary
 
