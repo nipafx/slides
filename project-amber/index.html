@@ -464,7 +464,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 </script></div></section>
 <section><section id="_strings"><h2>Strings</h2><div class="slide-content"><div class="paragraph"><p>How Project Amber<br>
 <strong>smartly enhances</strong><br>
-one of the most basic types.</p></div></div></section><section id="_string_issues"><h2>String Issues</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">String json = "{\n"
+one of Java&#8217;s most basic types.</p></div></div></section><section id="_string_issues"><h2>String Issues</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">String json = "{\n"
 	+ "\t\"name\": \"" + name + "\",\n"
 	+ "\t\"year\": \"" + bday.getYear() + "\"\n"
 	+ "}";</code></pre></div></div>
@@ -478,43 +478,45 @@ one of the most basic types.</p></div></div></section><section id="_string_issue
 	{
 		"name": "Duke",
 		"year": "1992"
-	}""";</code></pre></div></div>
+	}
+	""";</code></pre></div></div>
 <div class="paragraph"><p>We can now "enable" multi-line-ness.</p></div></div></section><section id="_text_blocks_2"><h2>Text Blocks</h2><div class="slide-content"><div class="paragraph"><p>But embedding variables is still cumbersome.</p></div>
 <div class="paragraph"><p>With <code>String::formatted</code>:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">String json = """
 	{
 		"name": "%s",
 		"year": "%d"
-	}"""
-	.formatted(name, bday.getYear());</code></pre></div></div></div></section><section id="_string_templates"><h2>String Templates</h2><div class="slide-content"><div class="paragraph"><p>Java 21 may preview string templates (<a href="https://openjdk.org/jeps/430">JEP 430</a>):</p></div>
+	}
+	""".formatted(name, bday.getYear());</code></pre></div></div></div></section><section id="_string_templates"><h2>String Templates</h2><div class="slide-content"><div class="paragraph"><p>Java 21 may preview string templates (<a href="https://openjdk.org/jeps/430">JEP 430</a>):</p></div>
 <div class="ulist"><ul><li><p>allow embedding expressions</p></li><li><p>understand need for explicit processing<br>
-for validation, escaping, etc.</p></li></ul></div>
+(for validation, escaping, etc.)</p></li></ul></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">String json = STR."""
 	{
 		"name": "\{name}",
 		"year": "\{bday.getYear()}"
-	}""";</code></pre></div></div>
+	}
+	""";</code></pre></div></div>
 <div class="paragraph"><p>We&#8217;d be able to "enable" variable embedding.</p></div></div></section><section id="_string_templates_2"><h2>String Templates</h2><div class="slide-content"><div class="paragraph"><p><em>Template expression</em>:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">String json = STR."""
 	{
 		"name": "\{name}",
 		"year": "\{bday.getYear()}"
-	}""";</code></pre></div></div>
+	}
+	""";</code></pre></div></div>
 <div class="paragraph"><p>Ingredients:</p></div>
 <div class="ulist"><ul><li><p><em>template</em> with embedded expressions: <code>StringTemplate</code></p></li><li><p><em>template processor</em> (e.g. <code>STR</code>): <code>StringTemplate</code> ⇝ <code>String</code>*</p></li></ul></div></div></section><section id="_why_strings"><h2>Why strings?</h2><div class="slide-content"><div class="paragraph"><p>Often, strings are just exchange format, e.g.:</p></div>
 <div class="ulist"><ul><li><p>start with: <code>String</code> + values</p></li><li><p>validate / sanitize (i.e. parse)</p></li><li><p>simplify to: <code>String</code></p></li><li><p>parse to: <code>JSONObject</code>, <code>Statement</code>, …</p></li></ul></div>
 <div class="paragraph"><p>Why the detour?</p></div></div></section><section id="_custom_templating"><h2>Custom templating</h2><div class="slide-content"><div class="paragraph"><p>Top interface:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public interface ValidatingProcessor&lt;RESULT, EX&gt; {
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public interface Processor&lt;RESULT, EX&gt; {
 	RESULT process(StringTemplate s) throws EX;
 }</code></pre></div></div>
-<div class="paragraph"><p><code>RESULT</code> can be of any type!</p></div>
-<div class="paragraph"><p>(We&#8217;re sipping the specializations<br>
-<code>TemplateProcessor&lt;RESULT&gt;</code>, <code>StringProcessor</code>.)</p></div></div></section><section id="_custom_templating_2"><h2>Custom templating</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// validates &amp; escapes JSON
+<div class="paragraph"><p><code>RESULT</code> can be of any type!</p></div></div></section><section id="_custom_templating_2"><h2>Custom templating</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// validates &amp; escapes JSON
 JSONObject doc = JSON."""
 	{
 		"name": "\{name}",
 		"year": "\{bday.getYear()}"
-	}""";
+	}
+	""";
 
 // prevents SQL injections
 Statement query = SQL."""
@@ -524,8 +526,8 @@ Statement query = SQL."""
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">String regex = "\\[\\d{2,4}\\]"; // 🤔🤔🤔
 // made-up syntax!
 String rawRegex = !"\[\d{2,4}\]" // 🤔</code></pre></div></div>
-<div class="paragraph"><p>We hope to be able to "enable" rawness. 🤞</p></div></div></section><section id="_summary"><h2>Summary</h2><div class="slide-content"><div class="paragraph"><p>Strings are:</p></div>
-<div class="ulist"><ul><li><p>essential to development</p></li><li><p>not expressive in Java</p></li></ul></div>
+<div class="paragraph"><p>We hope to be able to "enable" rawness. 🤞</p></div></div></section><section id="_summary"><h2>Summary</h2><div class="slide-content"><div class="paragraph"><p>Java&#8217;s strings are:</p></div>
+<div class="ulist"><ul><li><p>essential to development</p></li><li><p>not expressive</p></li></ul></div>
 <div class="paragraph"><p>Project Amber introduces new features that:</p></div>
 <div class="ulist"><ul><li><p>make strings more expressive</p></li><li><p>learned from other languages</p></li><li><p>can be combined as needed</p></li></ul></div></div></section></section>
 <section><section id="_type_safety_encapsulation"><h2>Type Safety &amp; Encapsulation</h2><div class="slide-content"><div class="paragraph"><p>How Project Amber tackles the tension<br>
@@ -533,7 +535,7 @@ String rawRegex = !"\[\d{2,4}\]" // 🤔</code></pre></div></div>
 for more succinctness and new features.</p></div></div></section><section id="_type_safety"><h2>Type Safety</h2><div class="slide-content"><div class="paragraph"><p>Java is&#8230;&#8203;</p></div>
 <div class="dlist"><dl><dt class="hdlist1">strongly typed: </dt><dd><p>every field, variable, method argument<br>
 and return has a type</p></dd><dt class="hdlist1">statically typed: </dt><dd><p>all this is known at compile time</p></dd></dl></div></div></section><section id="_encapsulation"><h2>Encapsulation</h2><div class="slide-content"><div class="paragraph"><p>For our types, fields, methods:</p></div>
-<div class="ulist"><ul><li><p>pick lowest feasible visibility</p></li><li><p>hide internals behind accessors</p></li></ul></div></div></section><section id="_type_safety_encapsulation_2"><h2>Type Safety &amp; Encapsulation</h2><div class="slide-content"><div class="paragraph"><p>We rely on them to:</p></div>
+<div class="ulist"><ul><li><p>pick lowest feasible visibility</p></li><li><p>hide internals (behind accessors)</p></li></ul></div></div></section><section id="_type_safety_encapsulation_2"><h2>Type Safety &amp; Encapsulation</h2><div class="slide-content"><div class="paragraph"><p>We rely on them to:</p></div>
 <div class="ulist"><ul><li><p>model domains</p></li><li><p>guarantee invariants</p></li><li><p>modularize problems</p></li><li><p>catch errors early</p></li><li><p>understand code</p></li></ul></div></div></section><section id="_type_safety_encapsulation_3"><h2>Type Safety &amp; Encapsulation</h2><div class="slide-content"><div class="paragraph"><p>But, they can be:</p></div>
 <div class="ulist"><ul><li><p>verbose</p></li><li><p>redundant</p></li></ul></div>
 <div class="paragraph"><p>Underlying tension:<br>
@@ -551,7 +553,8 @@ explicitness/safety vs verbosity.</p></div></div></section><section id="_throwba
 ⇝ More readable variables.</p></div></div></section><section id="_records"><h2>Records</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">record Person(String name, LocalDate birthday) { }</code></pre></div></div>
 <div class="quoteblock"><blockquote><div class="paragraph"><p>[Records] are classes that act as transparent carriers for immutable data.</p></div></blockquote><div class="attribution">&#8212; JEP 395</div></div>
 <div class="ulist"><ul><li><p>opt out of encapsulation</p></li><li><p>allow compiler to understand internals</p></li><li><p>reduce verbosity <em>a lot</em></p></li></ul></div>
-<div class="paragraph"><p>Defines a new point of balance.</p></div></div></section><section id="_throwback_pattern_matching"><h2>Throwback: Pattern Matching</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">Object obj = // ...
+<div class="paragraph"><p>Defines a new point of balance.<br>
+⇝ More and simpler types.</p></div></div></section><section id="_pattern_matching"><h2>Pattern Matching</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">Object obj = // ...
 // in `if` (since Java 16):
 if (obj instanceof Person person) {
 	var name = person.name();
@@ -600,10 +603,10 @@ var unnamed = person with {
 <strong>a new programming paradigm</strong><br>
 to handle data as data.</p></div></div></section><section id="_data_oriented_problems"><h2>Data-Oriented Problems</h2><div class="slide-content"><div class="paragraph"><p>Essentials when dealing with data<br>
 (JSON, SQL result, events, …):</p></div>
-<div class="ulist"><ul><li><p>represent data with simple, immutable types</p></li><li><p>model alternatives explicitly</p></li><li><p>make illegal states unrepresentable</p></li><li><p>represent polymoprhic behavior with functions</p></li><li><p>deconstruct data easily and quickly</p></li></ul></div></div></section><section id="_example_github_crawler"><h2>Example: GitHub Crawler</h2><div class="slide-content"><div class="paragraph"><p>Starting with a seed URL:</p></div>
+<div class="ulist"><ul><li><p>represent data with simple, immutable types</p></li><li><p>model alternatives explicitly</p></li><li><p>make illegal states unrepresentable</p></li><li><p>represent polymorphic behavior with functions</p></li><li><p>(de)construct data easily and quickly</p></li></ul></div></div></section><section id="_example_github_crawler"><h2>Example: GitHub Crawler</h2><div class="slide-content"><div class="paragraph"><p>Starting with a seed URL:</p></div>
 <div class="olist arabic"><ol class="arabic"><li><p>identifies kind of page</p></li><li><p>follows links from GitHub pages (⇝ 1.)</p></li></ol></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public static Page loadPageTree(/*...*/) {
-	// [...]
+	// ...
 }</code></pre></div></div>
 <div class="paragraph"><p>What does <code>Page</code> look like?</p></div></div></section><section id="_data_representation"><h2>Data Representation</h2><div class="slide-content"><div class="paragraph"><p>"Represent data with simple immutable types." ✅</p></div>
 <div class="paragraph"><p>Records:</p></div>
@@ -620,7 +623,7 @@ public record GitHubPrPage(
 <div class="paragraph"><p>Use sealed types to limit inheritance:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public sealed interface Page
 		permits ErrorPage, SuccessfulPage {
-	// [...]
+	// ...
 }</code></pre></div></div>
 <div class="paragraph"><p>Only <code>ErrorPage</code> and <code>SuccessfulPage</code><br>
 can implement/extend <code>Page</code>.</p></div>
@@ -641,12 +644,12 @@ public sealed interface GitHubPage
     default Stream&lt;Page&gt; subtree() { ... }
 }</code></pre></div></div></div></section><section data-background-color="white" data-background-image="../_images/github-crawler-types-3c131fff.png" data-background-size="contain" data-state="empty"></section><section id="_illegal_states"><h2>Illegal States</h2><div class="slide-content"><div class="paragraph"><p>"Make illegal states unrepresentable." ✅</p></div>
 <div class="paragraph"><p>Combine:</p></div>
-<div class="ulist"><ul><li><p>sealed types</p></li><li><p>records</p></li><li><p>data validation in<br>
-constructors or factories</p></li></ul></div>
+<div class="ulist"><ul><li><p>sealed types</p></li><li><p>records</p></li><li><p>data validation<br>
+(during construction)</p></li></ul></div>
 <div class="paragraph"><p>(Also makes code more self-explanatory.)</p></div></div></section><section id="_representing_behavior"><h2>Representing Behavior</h2><div class="slide-content"><div class="paragraph"><p>"Represent polymoprhic behavior with functions." ✅</p></div>
 <div class="paragraph"><p>(Static) methods that have data as input:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public static String createPageName(Page page) {
-	// [...]
+	// ...
 }</code></pre></div></div>
 <div class="paragraph"><p>"Polymorphic"❓</p></div></div></section><section id="_polymorphic_behavior"><h2>Polymorphic Behavior</h2><div class="slide-content"><div class="paragraph"><p>Switch over input type:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public static String createPageName(Page page) {
@@ -659,18 +662,18 @@ constructors or factories</p></li></ul></div>
 			-&gt; "🐈 ISSUE #" + issue.issueNumber();
 		case GitHubPrPage pr
 			-&gt; "🐙 PR #" + pr.prNumber();
-		// [...]
+		// ...
 	};
 }</code></pre></div></div></div></section><section id="_polymorphic_behavior_2"><h2>Polymorphic Behavior</h2><div class="slide-content"><div class="paragraph"><p>To keep code maintainable:</p></div>
 <div class="ulist"><ul><li><p>switch over sealed types</p></li><li><p>enumerate all possible types</p></li><li><p>avoid <code>default</code> branch</p></li></ul></div>
-<div class="paragraph"><p>⇝ Compile errors when types are added.</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">switch (page) {
-	case ErrorPage err -&gt; // [...]
-	case ExternalPage ext -&gt; // [...]
-	case GitHubIssuePage issue -&gt; // [...]
-	case GitHubPrPage pr -&gt; // [...]
+	case ErrorPage err -&gt; // ...
+	case ExternalPage ext -&gt; // ...
+	case GitHubIssuePage issue -&gt; // ...
+	case GitHubPrPage pr -&gt; // ...
 	// no default branch!
-}</code></pre></div></div></div></section><section id="_deconstructing_data"><h2>Deconstructing Data</h2><div class="slide-content"><div class="paragraph"><p>"Deconstruct data easily and quickly" ✅</p></div>
+}</code></pre></div></div>
+<div class="paragraph"><p>⇝ Compile error when new type is added.</p></div></div></section><section id="_deconstructing_data"><h2>Deconstructing Data</h2><div class="slide-content"><div class="paragraph"><p>"Deconstruct data easily and quickly" ✅</p></div>
 <div class="paragraph"><p>Use deconstruction patterns:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public static String createPageName(Page page) {
 	return switch (page) {
@@ -680,9 +683,9 @@ constructors or factories</p></li></ul></div>
 				var url, var content, var links,
 				int issueNumber)
 			-&gt; "🐈 ISSUE #" + issueNumber;
-		// [...]
+		// ...
 	};
-}</code></pre></div></div></div></section><section id="_ignoring_data"><h2>Ignoring Data</h2><div class="slide-content"><div class="paragraph"><p>With unnamed patterns (<a href="https://openjdk.org/jeps/8294349">JEP draft</a>),<br>
+}</code></pre></div></div></div></section><section id="_ignoring_data"><h2>Ignoring Data</h2><div class="slide-content"><div class="paragraph"><p>With unnamed patterns (<a href="https://openjdk.org/jeps/443">JEP 443</a>),<br>
 use <code>_</code> to ignore components:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public static String createPageName(Page page) {
 	return switch (page) {
@@ -690,7 +693,7 @@ use <code>_</code> to ignore components:</p></div>
 			-&gt; "💥 ERROR: " + url.getHost();
 		case GitHubIssuePage(_, _, _, int issueNumber)
 			-&gt; "🐈 ISSUE #" + issueNumber;
-		// [...]
+		// ...
 	};
 }</code></pre></div></div></div></section><section id="_data_oriented_programming"><h2>Data-Oriented Programming</h2><div class="slide-content"><div class="paragraph"><p>Use Java&#8217;s strong typing to model data as data:</p></div>
 <div class="ulist"><ul><li><p>use types to model data, particularly:</p><div class="ulist"><ul><li><p>data as data with records</p></li><li><p>alternatives with sealed types</p></li></ul></div></li><li><p>use (static) methods to model behavior, particularly:</p><div class="ulist"><ul><li><p>exhaustive <code>switch</code> without <code>default</code></p></li><li><p>pattern matching to destructure polymorphic data</p></li></ul></div></li></ul></div></div></section><section id="_data_oriented_programming_2"><h2>Data-Oriented Programming…</h2><div class="slide-content"><div class="dlist"><dl><dt class="hdlist1">… isn&#8217;t funtional programming</dt><dd><div class="ulist"><ul><li><p>but it&#8217;s similar (data + functions)</p></li><li><p>first priority is data, not functions</p></li></ul></div></dd><dt class="hdlist1">… doesn&#8217;t kill object-oriented programming</dt><dd><div class="ulist"><ul><li><p>use OOP to modularize large systems</p></li><li><p>use DOP to model small, data-focused (sub)systems</p></li></ul></div></dd></dl></div></div></section><section id="_more"><h2>More</h2><div class="slide-content"><div class="paragraph"><p>More on data-oriented programming:</p></div>
@@ -710,13 +713,21 @@ Java needs an on-ramp for new (Java) developers!</p></div></div></section><secti
 		System.out.println("Hello, World!")
 	}
 }</code></pre></div></div>
-<div class="ulist"><ul><li class="fragment"><p>visibility</p></li><li class="fragment"><p>classes &amp; methods</p></li><li class="fragment"><p>static vs instance</p></li><li class="fragment"><p>returns &amp; parameters</p></li><li class="fragment"><p>statements &amp; arguments</p></li></ul></div></div></section><section id="_simplifications"><h2>Simplifications</h2><div class="slide-content"><div class="paragraph"><p>That&#8217;s <em>a lot</em> of tools and concepts!</p></div>
-<div class="paragraph"><p>Simplifications:</p></div>
-<div class="ulist"><ul><li><p><code>jshell</code> (Java 9):</p><div class="ulist"><ul><li><p><strong>all you need</strong>: JDK, <code>jshell</code>, statements &amp; arguments</p></li><li><p><strong>but</strong>: not great for beginners (IMO); no progression</p></li></ul></div></li><li><p>single-file execution (Java 11):</p><div class="ulist"><ul><li><p><strong>removed</strong>: <code>javac</code></p></li><li><p><strong>but</strong>: no progression</p></li></ul></div></li></ul></div></div></section><section id="_on_ramp"><h2>On-Ramp</h2><div class="slide-content"><div class="paragraph"><p>Expand single-file execution<br>
-in two directions:</p></div>
-<div class="ulist"><ul><li><p>simplyify code: reduce required Java concepts</p></li><li><p>ease progression: run multiple files with <code>java</code></p></li></ul></div></div></section><section id="_simpler_code"><h2>Simpler Code</h2><div class="slide-content"><div class="paragraph"><p>Remove necessity of:</p></div>
+<div class="ulist"><ul><li class="fragment"><p>visibility</p></li><li class="fragment"><p>classes &amp; methods</p></li><li class="fragment"><p>static vs instance</p></li><li class="fragment"><p>returns &amp; parameters</p></li><li class="fragment"><p>statements &amp; arguments</p></li></ul></div></div></section><section id="_approachability"><h2>Approachability</h2><div class="slide-content"><div class="paragraph"><p>That&#8217;s <em>a lot</em> of tools and concepts!</p></div>
+<div class="paragraph"><p>Java is great for large-scale development:</p></div>
+<div class="ulist"><ul><li><p>detailed toolchain</p></li><li><p>refined programming model</p></li></ul></div>
+<div class="paragraph"><p>This make it less approachable.</p></div>
+<div class="paragraph"><p>Let&#8217;s change that!</p></div></div></section><section id="_jshell"><h2>jshell</h2><div class="slide-content"><div class="paragraph"><p>Java 9 added <code>jshell</code>:</p></div>
+<div class="ulist"><ul><li><p><strong>all you need</strong>:</p><div class="ulist"><ul><li><p>tools: JDK, <code>jshell</code></p></li><li><p>concepts: statements &amp; arguments</p></li></ul></div></li><li><p><strong>but</strong>:</p><div class="ulist"><ul><li><p>not great for beginners (IMO)</p></li><li><p>no progression</p></li></ul></div></li></ul></div>
+<div class="paragraph"><p>More is needed.</p></div></div></section><section id="_single_file_execution"><h2>Single-file Execution</h2><div class="slide-content"><div class="paragraph"><p>Java 11 added single-file execution:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code>java Prog.java</code></pre></div></div>
+<div class="ulist"><ul><li><p><strong>removed</strong>: <code>javac</code></p></li><li><p><strong>but</strong>: no progression</p></li></ul></div>
+<div class="paragraph"><p>Much better for beginners,<br>
+but just a section of an on-ramp.</p></div></div></section><section id="_on_ramp"><h2>On-Ramp</h2><div class="slide-content"><div class="paragraph"><p>Expand single-file execution in two directions:</p></div>
+<div class="ulist"><ul><li><p><strong>simplyify code</strong>: reduce required Java concepts</p></li><li><p><strong>ease progression</strong>: run multiple files with <code>java</code></p></li></ul></div></div></section><section id="_simpler_code"><h2>Simpler Code</h2><div class="slide-content"><div class="paragraph"><p>Remove requirement of:</p></div>
 <div class="ulist"><ul><li><p><code>String[] args</code> parameter</p></li><li><p><code>main</code> being static</p></li><li><p><code>main</code> or the class being public</p></li><li><p>the class itself</p></li></ul></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">void main() {
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// all the code in Prog.java
+void main() {
 	System.out.println("Hello, World!")
 }</code></pre></div></div>
 <div class="paragraph"><p>(<a href="https://openjdk.org/jeps/8302326">JEP draft</a>)</p></div></div></section><section id="_running_multiple_files"><h2>Running Multiple Files</h2><div class="slide-content"><div class="paragraph"><p>Say you have a folder:</p></div>
@@ -728,7 +739,7 @@ in two directions:</p></div>
 <div class="paragraph"><p>Run with:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code>java -cp 'Lib/*' Prog.java</code></pre></div></div>
 <div class="paragraph"><p>(<a href="https://openjdk.org/jeps/8304400">JEP draft</a>)</p></div></div></section><section id="_progression"><h2>Progression</h2><div class="slide-content"><div class="paragraph"><p>Natural progression:</p></div>
-<div class="ulist"><ul><li class="fragment"><p>start with <code>main()</code></p></li><li class="fragment"><p>need arguments? ⇝ add <code>String[] args</code></p></li><li class="fragment"><p>need to organize code? ⇝ add methods</p></li><li class="fragment"><p>need shared state? ⇝ add fields</p></li><li class="fragment"><p>need more functionality? ⇝ explore JDK APIs</p></li><li class="fragment"><p>even more? ⇝ explore simple libraries</p></li><li class="fragment"><p>need more structure? ⇝ split into multiple files</p></li><li class="fragment"><p>even more ⇝ use packages visibility</p></li></ul></div></div></section><section id="_summary_4"><h2>Summary</h2><div class="slide-content"><div class="paragraph"><p>Java&#8217;s strengths for large-scale development<br>
+<div class="ulist"><ul><li class="fragment"><p>start with <code>main()</code></p></li><li class="fragment"><p>need arguments? ⇝ add <code>String[] args</code></p></li><li class="fragment"><p>need to organize code? ⇝ add methods</p></li><li class="fragment"><p>need shared state? ⇝ add fields</p></li><li class="fragment"><p>need more functionality? ⇝ explore JDK APIs</p></li><li class="fragment"><p>even more? ⇝ explore simple libraries</p></li><li class="fragment"><p>need more structure? ⇝ split into multiple files</p></li><li class="fragment"><p>even more ⇝ use visibility &amp; packages</p></li></ul></div></div></section><section id="_summary_4"><h2>Summary</h2><div class="slide-content"><div class="paragraph"><p>Java&#8217;s strengths for large-scale development<br>
 make it less approachable:</p></div>
 <div class="ulist"><ul><li><p>detailed toolchain</p></li><li><p>refined programming model</p></li></ul></div>
 <div class="paragraph"><p>Project Amber introduces new features that:</p></div>
