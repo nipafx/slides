@@ -1,14 +1,134 @@
 == Starting (With) Java
 
-=== Issues
+How Project Amber +
+*paves the on-ramp* +
+for new (Java) developers.
 
-* compile, then run
-* public class public static void main String [] args
+=== Why Do We Care?
 
-=== Solution
+We all know Java, IDEs, build tools, etc.
 
-// TODO copy stuff from IJN#35
+* do we all?
+* what about your kids?
+* what about students?
+* what about the frontend dev?
+* what about ML/AI folks?
+
+Java needs to be approachable! +
+Java needs an on-ramp for new (Java) developers!
+
+=== Running Java
+
+To write and run a simple Java program, you need:
+
+[%step]
+* a JDK
+* an editor (IDE?)
+* `javac` (build tool? IDE?)
+* `java` (IDE?)
+* some Java code
+
+=== Writing Java
+
+Minimal Java code:
+
+```java
+public class Main {
+	public static void main(String[] args) {
+		System.out.println("Hello, World!")
+	}
+}
+```
+
+[%step]
+* visibility
+* classes & methods
+* static vs instance
+* returns & parameters
+* statements & arguments
+
+=== Simplifications
+
+That's _a lot_ of tools and concepts!
+
+Simplifications:
+
+* `jshell` (Java 9):
+** *all you need*: JDK, `jshell`, statements & arguments
+** *but*: not great for beginners (IMO); no progression
+* single-file execution (Java 11):
+** **removed**: `javac`
+** **but**: no progression
+
+=== On-Ramp
+
+Expand single-file execution +
+in two directions:
+
+* simplyify code: reduce required Java concepts
+* ease progression: run multiple files with `java`
+
+=== Simpler Code
+
+Remove necessity of:
+
+* `String[] args` parameter
+* `main` being static
+* `main` or the class being public
+* the class itself
+
+```java
+void main() {
+	System.out.println("Hello, World!")
+}
+```
+
+(https://openjdk.org/jeps/8302326[JEP draft])
+
+=== Running Multiple Files
+
+Say you have a folder:
+
+```
+MyFirstJava
+ ├─ Prog.java
+ ├─ Helper.java
+ └─ Lib
+     └─ library.jar
+```
+
+Run with:
+
+```
+java -cp 'Lib/*' Prog.java
+```
+
+(https://openjdk.org/jeps/8304400[JEP draft])
+
+=== Progression
+
+Natural progression:
+
+[%step]
+* start with `main()`
+* need arguments? ⇝ add `String[] args`
+* need to organize code? ⇝ add methods
+* need shared state? ⇝ add fields
+* need more functionality? ⇝ explore JDK APIs
+* even more? ⇝ explore simple libraries
+* need more structure? ⇝ split into multiple files
+* even more ⇝ use packages visibility
 
 === Summary
 
-// TODO explain more focus on Java/programming newbies
+Java's strengths for large-scale development +
+make it less approachable:
+
+* detailed toolchain
+* refined programming model
+
+Project Amber introduces new features that:
+
+* make it easier to start
+* allow gradual progression
+* entice the future dev generation
