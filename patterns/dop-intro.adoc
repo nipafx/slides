@@ -25,14 +25,10 @@ Paradigms often come with an +
 > Everything is an object
 
 * combines state and behavior
-* works best when defining/upholding boundaries
+* hinges on encapsulation
+* polymorphism through inheritance
 
-Great use cases:
-
-* boundaries between libraries and clients
-* in large programs to enable modular reasoning
-
-Smaller programs/subsystems have less need for boundaries.
+Works best when defining/upholding boundaries.
 
 [NOTE.speaker]
 --
@@ -44,21 +40,27 @@ Smaller programs/subsystems have less need for boundaries.
 * security boundaries
 --
 
+=== Mixed Programming
+
+Great use cases for OOP:
+
+* boundaries between libraries and clients
+* in large programs to enable modular reasoning
+
+Consider a data-oriented approach for:
+
+* smaller (sub)systems
+* focused on data
+
 === Data-Oriented Programming
 
-Use Java's strong typing to model data as data:
-
-* use classes to represent data, particularly:
-** data as data with records
-** alternatives with sealed classes
-* use methods (separately) to model behavior, particularly:
-** exhaustive `switch` without `default`
-** pattern matching to destructure polymorphic data
-
-=== Guiding Principles
+Guiding principles:
 
 * model the data, the whole data, +
   and nothing but the data
 * data is immutable
 * validate at the boundary
 * make illegal states unrepresentable
+
+From Brian Goetz' seminal article: +
+https://www.infoq.com/articles/data-oriented-programming-java/[Data Oriented Programming in Java]

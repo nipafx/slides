@@ -46,18 +46,31 @@ record PageWithLinks(Page page, Set<URI> links) {
 Return values that are deconstructed immediately:
 
 ```java
-sealed interface MatchResult<T> {
-	record NoMatch<T>() implements MatchResult<T> { }
-	record ExactMatch<T>(T entity)
-		implements MatchResult<T> { }
-	record FuzzyMatches<T>(
-			Collection<FuzzyMatch<T>> entities)
-		implements MatchResult<T> { }
+// type declaration
+sealed interface Match<T> { }
 
-	record FuzzyMatch<T>(T entity, int distance) { }
+record None<T>() implements MatchResult<T> { }
+record Exact<T>(T entity) implements Match<T> { }
+record Fuzzies<T>(Collection<Fuzzy<T>> entities)
+	implements MatchResult<T> { }
+
+record Fuzzy<T>(T entity, int distance) { }
+
+// method declaration
+Match<User> findUser(String userName) { ... }
+```
+
+=== Complex Return Types
+
+Return values that are deconstructed immediately:
+
+```java
+// calling the method
+switch (findUser("John Doe")) {
+	case None<> none -> // ...
+	case Exact<> exact -> // ...
+	case Fuzzies<> fuzzies -> // ...
 }
-
-MatchResult<User> findUser(String userName) { ... }
 ```
 
 === Complex Domains
@@ -67,7 +80,6 @@ of the program's domain.
 
 For example `Page`.
 
-
 === Functional Programming?!
 
 * immutable data structures
@@ -75,10 +87,10 @@ For example `Page`.
 
 Isn't this just functional programming?!
 
-[step = 1]
+[%step]
 Kind of.
 
-=== FP vs DOP
+=== DOP vs FP
 
 **Functional programming:**
 
@@ -108,20 +120,30 @@ but its where you put the programmers attention
 is it object modeling?  is it factoring the computation so it can be composed functionally?  is it data modeling?
 ////
 
-=== OOP vs DOP
+=== DOP vs OOP
 
 **OOP is not dead (again):**
 
-* valuable for complex entities +
-   or rich libraries
+* valuable for complex entities or rich libraries
 * use whenever encapsulation is needed
 * still a good default on high level
 
 **DOP --  consider when:**
 
-* handling outside data (like JSON)
+* mainly handling outside data
 * working with simple or ad-hoc data
 * data and behavior should be separated
+
+=== Data-Oriented Programming
+
+Use Java's strong typing to model data as data:
+
+* use classes to represent data, particularly:
+** data as data with records
+** alternatives with sealed classes
+* use methods (separately) to model behavior, particularly:
+** exhaustive `switch` without `default`
+** pattern matching to destructure polymorphic data
 
 === Guiding Principles
 
@@ -131,3 +153,4 @@ is it object modeling?  is it factoring the computation so it can be composed fu
 * validate at the boundary
 * make illegal states unrepresentable
 
+https://www.infoq.com/articles/data-oriented-programming-java/[Data Oriented Programming in Java]

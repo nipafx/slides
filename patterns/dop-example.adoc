@@ -34,21 +34,24 @@ public class PageTreeFactory {
 
 What does `Page` look like?
 
-=== `Page` Requirements
+=== Requirements
+
+Pages:
 
 * all pages have a `url`
-* pages that couldn't be resolved, have an `error`
-* pages that could be resolved have `content`
+* unresolved pages have an `error`
+* resolved pages have `content`
 * GitHub pages have:
 ** outgoing `links`
 ** `issueNumber` or `prNumber`
 
 === Requirements
 
-Operations on pages and their subtree:
+Operations on pages +
+(and their subtree):
 
 * pretty print
-* collect statistics
+* evaluate statistics
 
 === A Possible Implementation
 
@@ -78,7 +81,8 @@ Problems:
 
 === Applying DOP
 
-> Model the data, the whole data, and nothing but the data.
+> Model the data, the whole data, +
+> and nothing but the data.
 
 There are four kinds of pages:
 
@@ -88,6 +92,34 @@ There are four kinds of pages:
 * GitHub PR page
 
 ⇝ Use four records to model them!
+
+=== Detour: Records
+
+_[Finalized in Java 16]_
+
+[quote]
+____
+[T]ransparent carriers for immutable data
+____
+
+* opt out of encapsulation
+* allow compiler to understand internals
+
+Most obvious consequence: less boilerplate.
+
+=== Detour: Records
+
+```java
+record ExternalPage(URI url, String content) { }
+```
+
+* `ExternalPage` is final
+* private final fields: `URI url` and `String content`
+* constructor: `ExternalPage(URI url, String content)`
+* accessors: `URI url()` and `String content()`
+* `equals()`, `hashCode()`, `toString()` that use the two fields
+
+All method/constructor bodies can be customized!
 
 === Modeling The Data
 
@@ -107,23 +139,10 @@ public record GitHubPrPage(
 	String content, Set<Page> links) { }
 ```
 
-=== Detour: Records
-
-Records are transparent data carriers.
-
-`record ExternalPage(URI url, String content) { }`:
-
-* private final fields: `URI url` and `String content`
-* constructor: `ExternalPage(URI url, String content)`
-* accessors: `URI url()` and `String content()`
-* `equals()`, `hashCode()`, `toString()` that use the two fields
-* `ExternalPage` is final
-
-All method/constructor bodies can be customized!
-
 === Applying DOP
 
-> Model the data, the whole data, and nothing but the data.
+> Model the data, the whole data, +
+> and nothing but the data.
 
 There are additional relations between them:
 
@@ -133,30 +152,17 @@ There are additional relations between them:
 
 ⇝ Use sealed types to model the alternatives!
 
-=== Modeling Alternatives
-
-```java
-public sealed interface Page
-		permits ErrorPage, SuccessfulPage {
-	URI url();
-}
-
-public sealed interface SuccessfulPage
-		extends Page permits ExternalPage, GitHubPage {
-	String content();
-}
-
-public sealed interface GitHubPage
-		extends SuccessfulPage
-		permits GitHubIssuePage, GitHubPrPage {
-	Set<Page> links();
-	default Stream<Page> subtree() { ... }
-}
-```
-
 === Detour: Sealed Types
 
-Use sealed types to limit inheritance.
+_[Finalized in Java 17]_
+
+Sealed types limit inheritance, +
+by only allowing specific subtypes.
+
+* communicates intention to developers
+* allows compiler to check exhaustiveness
+
+=== Detour: Sealed Types
 
 ```java
 public sealed interface Page
@@ -185,6 +191,26 @@ Inheriting types must be:
 * directly inherit from sealed type
 * `final`, `sealed`, or `non-sealed`
 
+=== Modeling Alternatives
+
+```java
+public sealed interface Page
+		permits ErrorPage, SuccessfulPage {
+	URI url();
+}
+
+public sealed interface SuccessfulPage
+		extends Page permits ExternalPage, GitHubPage {
+	String content();
+}
+
+public sealed interface GitHubPage
+		extends SuccessfulPage
+		permits GitHubIssuePage, GitHubPrPage {
+	Set<Page> links();
+	default Stream<Page> subtree() { ... }
+}
+```
 
 [state=empty,background-color=white]
 === !
@@ -215,8 +241,7 @@ Many are already, e.g.:
 
 * with `error` and with `content`
 * with `issueNumber` and `prNumber`
-* with `isseNumber` or `prNumber` +
-  but no `links`
+* with `isseNumber` or `prNumber` but no `links`
 
 === Validation
 
@@ -225,11 +250,14 @@ Many are already, e.g.:
 ⇝ Reject other illegal states in constructors.
 
 ```java
-public ExternalPage {
-	Objects.requireNonNull(url);
-	Objects.requireNonNull(content);
-	if (content.isBlank())
-		throw new IllegalArgumentException();
+record ExternalPage(URI url, String content) {
+	// compact constructor
+	ExternalPage {
+		Objects.requireNonNull(url);
+		Objects.requireNonNull(content);
+		if (content.isBlank())
+			throw new IllegalArgumentException();
+	}
 }
 ```
 
@@ -243,7 +271,8 @@ but field types may not be.
 ⇝ Fix that during construction.
 
 ```java
-public GitHubPrPage {
+// compact constructor
+GitHubPrPage {
 	// [...]
 	links = Set.copyOf(links);
 }
@@ -260,7 +289,8 @@ But where did the operations go?
 
 === Operations On Data
 
-> Model the data, the whole data, and nothing but the data.
+> Model the data, the whole data, +
+> and nothing but the data.
 
 ⇝ Operations should be limited to derived quantities.
 
@@ -281,6 +311,88 @@ to apply polymorphic operations to data!
 
 And records eschew encapsulation, +
 so everything is accessible.
+
+=== Detour: Type Patterns
+
+_[Finalized in Java 16]_
+
+Typecheck, cast, and declaration all in one.
+
+```java
+if (rootPage instanceof GitHubPage ghPage)
+	// do something with `ghPage`
+```
+
+* checks `rootPage instanceof GitHubPage`
+* declares variable `GitHubPage ghPage`
+
+Only where the check is passed, is `ghPage` in scope. +
+(_Flow-scoping_)
+
+=== Detour: Flow Scoping
+
+> Only where the check is passed, +
+> is `ghPage` in scope.
+
+```java
+if (!(rootPage instanceof GitHubPage ghPage))
+	// can't use `ghPage` here
+	return;
+
+// do something with `ghPage` here 😈
+```
+
+=== Detour: Patterns in Switch
+
+_[Preview since Java 17; probably final in 21 - https://openjdk.org/jeps/441[JEP 441]]_
+
+All patterns can be used in switches +
+
+```java
+switch (page) {
+	case ExternalPage ext -> // use `ext`
+	case GitHubPrPage pr -> // use `pr`
+	// ...
+};
+```
+
+* checks `page` against all listed types
+* executes matching branch with respective variable
+
+=== Gathering Statistics
+
+In class `Statistician`:
+
+```java
+public static Stats evaluate(Page rootPage) {
+	Statistician statistician = new Statistician();
+	statistician.evaluateTree(rootPage);
+	return statistician.result();
+}
+
+private void evaluateTree(Page page) {
+	if (page instanceof GitHubPage ghPage)
+		ghPage.subtree().forEach(this::evaluatePage);
+	else
+		evaluatePage(page);
+}
+```
+
+=== Gathering Statistics
+
+In class `Statistician`:
+
+```java
+private void evaluatePage(Page page) {
+	// `numberOf...` are fields
+	switch (page) {
+		case ErrorPage __ -> numberOfErrors++;
+		case ExternalPage __ -> numberOfExternals++;
+		case GitHubIssuePage __ -> numberOfIssues++;
+		case GitHubPrPage __ -> numberOfPrs++;
+	}
+}
+```
 
 === Printing A Page List
 
@@ -317,80 +429,90 @@ private static String createPageName(Page page) {
 }
 ```
 
-=== Detour: Type Patterns
+⇝ Simpler access with record/deconstruction patterns.
 
-Typecheck, cast, and declaration all in one.
+=== Detour: Record Patterns
 
-```java
-if (rootPage instanceof GitHubPage ghPage)
-	// do something with `ghPage`
-```
+_[Preview since Java 19; probably final in 21 - https://openjdk.org/jeps/440[JEP 440]]_
 
-* checks `rootPage instanceof GitHubPage`
-* declares variable `GitHubPage ghPage`
-
-Only where the check is passed, +
-is `ghPage` in scope.
-
-(Flow-scoping)
-
-=== Detour: Patterns in Switch
-
-All patterns can be used in switches (soon):
+Records are transparent, so you can +
+deconstruct them in `if` and `switch`:
 
 ```java
-return switch (page) {
-	case ErrorPage err -> // use `ErrorPage err`
-	case ExternalPage ext -> // use `ext`
-	case GitHubIssuePage issue -> // use `issue`
-	case GitHubPrPage pr -> // use `pr`
-};
-```
+record ExternalPage(URI url, String content) { }
 
-* checks `page` against all listed types
-* executes matching branch with respective variable
-* requires no default branch if exhaustive
-
-=== Gathering Statistics
-
-In class `Statistician`:
-
-```java
-public static Stats evaluate(Page rootPage) {
-	Statistician statistician = new Statistician();
-	statistician.evaluateTree(rootPage);
-	return statistician.result();
-}
-
-private void evaluateTree(Page page) {
-	if (page instanceof GitHubPage ghPage)
-		ghPage.subtree().forEach(this::evaluatePage);
-	else
-		evaluatePage(page);
+// elsewhere
+Object obj = // ...
+if (obj instanceof ExternalPage(var url, var content))
+	// use `url` and `content` here
+switch (obj) {
+	case ExternalPage(var url, var content) ->
+		// use `url` and `content` here
 }
 ```
 
-=== Gathering Statistics
+=== Deconstructing Data
 
-In class `Statistician`:
+Use deconstruction patterns:
 
 ```java
-private void evaluatePage(Page page) {
-	// `numberOf...` are fields
-	switch (page) {
-		case ErrorPage __ -> numberOfErrors++;
-		case ExternalPage __ -> numberOfExternalLinks++;
-		case GitHubIssuePage __ -> numberOfIssues++;
-		case GitHubPrPage __ -> numberOfPrs++;
-	}
+public static String createPageName(Page page) {
+	return switch (page) {
+		case ErrorPage(var url, var ex)
+			-> "💥 ERROR: " + url.getHost();
+		case GitHubIssuePage(
+				var url, var content, var links,
+				int issueNumber)
+			-> "🐈 ISSUE #" + issueNumber;
+		// ...
+	};
+}
+```
+
+⇝ Eve simpler access with unnamed patterns.
+
+=== Detour: Unnamed Patterns
+
+_[Maybe preview in Java 21 - https://openjdk.org/jeps/443[JEP 443]]_
+
+Replace variables you don't need with `_`:
+
+```java
+case ErrorPage(var url, _)
+	-> "💥 ERROR: " + url.getHost();
+case GitHubIssuePage(_, _, _, int issueNumber)
+	-> "🐈 ISSUE #" + issueNumber;
+```
+
+
+=== Deconstructing Data
+
+Use record and unnamed patterns for simple access:
+
+```java
+private static String createPageName(Page page) {
+	return switch (page) {
+		case ErrorPage(var url, _)
+			-> "💥 ERROR: " + url.getHost();
+		case ExternalPage(var url, _)
+			-> "💤 EXTERNAL: " + url.getHost();
+		case GitHubIssuePage(_, _, _, issueNumber)
+			-> "🐈 ISSUE #" + issueNumber;
+		case GitHubPrPage(_, _, _, prNumber)
+			-> "🐙 PR #" + prNumber;
+	};
 }
 ```
 
 === Operations On Data
 
-Yes, switching over types is icky.
+Looks good?
 
-But switching over _sealed_ types is safe.
+"Isn't switching over types icky?"
+
+Yes, but why?
+
+=== Extending Operations On Data
 
 What happens when we add:
 
@@ -426,6 +548,18 @@ public sealed interface GitHubPage
 
 Next stop: all `switch` without `default`.
 
+```java
+// non-exhaustive ⇝ compile error
+switch (page) {
+	case ErrorPage __ -> numberOfErrors++;
+	case ExternalPage __ -> numberOfExternalLinks++;
+	case GitHubIssuePage __ -> numberOfIssues++;
+	case GitHubPrPage __ -> numberOfPrs++;
+}
+```
+
+=== Extending Operations On Data
+
 ⇝ Handle the new subtype!
 
 ```java
@@ -437,6 +571,17 @@ switch (page) {
 	case GitHubCommitPage __ -> numberOfCommits++;
 }
 ```
+
+=== Operations On Data
+
+To keep operations maintainable:
+
+* switch over sealed types
+* enumerate all possible types +
+  (even if you need to ignore some)
+* avoid `default` branch
+
+⇝ Compile error when new type is added.
 
 === Where Are We?
 
