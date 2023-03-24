@@ -115,6 +115,12 @@ yuml.me - https://yuml.me/nipafx/edit/github-crawler
 [GitHubPage]<-[GitHubPrPage]
 ////
 
+[NOTE.speaker]
+--
+* this hierarchy is completely sealed
+* no new types can be added
+--
+
 === Illegal States
 
 "Make illegal states unrepresentable." ✅
@@ -218,6 +224,8 @@ public static String createPageName(Page page) {
 	};
 }
 ```
+
+⇝ Focus on what's essential.
 
 === Data-Oriented Programming
 
