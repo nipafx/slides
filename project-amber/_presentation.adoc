@@ -11,6 +11,7 @@
 :revealjs_backgroundTransition: fade
 :revealjs_parallaxBackgroundImage: images/amber.jpg
 :revealjs_parallaxBackgroundSize: 6024px 4023px
+:revealjs_totalTime: 3000
 :docinfo: shared
 :docinfodir: ../_shared
 
@@ -41,22 +42,16 @@ include::../_shared/event-on-title-and-footer-guest.adoc[]
 
 // ⇝
 
-// TODO: intro
+include::intro.adoc[]
 
-// Ana (10 minutes)
 include::strings.adoc[]
 
-// Nicolai (10 minutes)
 include::typing.adoc[]
 
-// Ana (15 minutes)
 include::pattern-matching.adoc[]
 
-// Nicolai (5 minutes)
 include::launch-protocol.adoc[]
 
-// TODO: outro
-
-include::../_shared/about-slide.adoc[]
+include::outro.adoc[]
 
 include::images/sources.adoc[]

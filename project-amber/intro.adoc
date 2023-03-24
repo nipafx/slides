@@ -1,0 +1,71 @@
+== Java's Got Problems
+
+[%step]
+* slow
+* old
+* verbose
+* cumbersome
+* no fun!
+
+[%step]
+None of that is true, but +
+none of it is (entirely) false.
+
+=== Java's Got Problems
+
+A more nuanced view +
+(on some issues):
+
+* strings lack expressiveness
+* the type system and encapsulation +
+  can get in the way
+* dealing with data is clunky
+* getting started isn't easy
+
+=== The SolutionFactory
+
+Project Amber:
+
+> Smaller, productivity-oriented Java language features
+
+Profile:
+
+* https://openjdk.java.net/projects/amber/[project] /
+https://wiki.openjdk.java.net/display/amber/Main[wiki] /
+https://mail.openjdk.java.net/mailman/listinfo/amber-dev[mailing list]
+* launched March 2017
+* led by Brian Goetz, +
+  and Gavin Bierman
+
+=== Project Amber
+
+Goal is not:
+
+* syntax sugar
+* minor improvements
+
+Instead, identify situations where:
+
+* Java lacks expressiveness
+* strengths turn into weaknesses
+* tensions and tradeoffs occur
+
+And resolve those for greater good!
+
+=== Nota Bene
+
+Project Amber is not the only one doing that!
+
+* Valhalla resolves _design vs performance_
+* Loom resolves _simplicity vs scalability_
+* Panama resolves _flexibility vs safety_
+* Leyden resolves _optimization vs specification_
+
+=== Table of Contents
+
+Getting back to Project Amber:
+
+* strings
+* type safety & encapsulation
+* dealing with data
+* starting (with) Java
