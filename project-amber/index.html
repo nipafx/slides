@@ -592,9 +592,7 @@ switch (obj) {
 	}
 	// ...
 }</code></pre></div></div></div></section><section id="_destructuring_records"><h2>Destructuring Records</h2><div class="slide-content"><div class="paragraph"><p>Probably in Java 21 (<a href="https://openjdk.org/jeps/440">JEP 440</a>):</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">Object obj = // ...
-
-if (obj instanceof Person(var name, var bday)) {
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">if (obj instanceof Person(var name, var bday)) {
 	// use `name` and `bday`
 }
 
@@ -666,7 +664,8 @@ public sealed interface GitHubPage
         permits GitHubIssuePage, GitHubPrPage {
     Set&lt;Page&gt; links();
     default Stream&lt;Page&gt; subtree() { ... }
-}</code></pre></div></div></div></section><section data-background-color="white" data-background-image="../_images/github-crawler-types-3c131fff.png" data-background-size="contain" data-state="empty"></section><section id="_illegal_states"><h2>Illegal States</h2><div class="slide-content"><div class="paragraph"><p>"Make illegal states unrepresentable." ✅</p></div>
+}</code></pre></div></div></div></section><section data-background-color="white" data-background-image="../_images/github-crawler-types-3c131fff.png" data-background-size="contain" data-state="empty"><div class="slide-content">
+<aside class="notes"><div class="ulist"><ul><li><p>this hierarchy is completely sealed</p></li><li><p>no new types can be added</p></li></ul></div></aside></div></section><section id="_illegal_states"><h2>Illegal States</h2><div class="slide-content"><div class="paragraph"><p>"Make illegal states unrepresentable." ✅</p></div>
 <div class="paragraph"><p>Combine:</p></div>
 <div class="ulist"><ul><li><p>sealed types</p></li><li><p>records</p></li><li><p>data validation<br>
 (during construction)</p></li></ul></div>
@@ -719,7 +718,8 @@ use <code>_</code> to ignore components:</p></div>
 			-&gt; "🐈 ISSUE #" + issueNumber;
 		// ...
 	};
-}</code></pre></div></div></div></section><section id="_data_oriented_programming"><h2>Data-Oriented Programming</h2><div class="slide-content"><div class="paragraph"><p>Use Java&#8217;s strong typing to model data as data:</p></div>
+}</code></pre></div></div>
+<div class="paragraph"><p>⇝ Focus on what&#8217;s essential.</p></div></div></section><section id="_data_oriented_programming"><h2>Data-Oriented Programming</h2><div class="slide-content"><div class="paragraph"><p>Use Java&#8217;s strong typing to model data as data:</p></div>
 <div class="ulist"><ul><li><p>use types to model data, particularly:</p><div class="ulist"><ul><li><p>data as data with records</p></li><li><p>alternatives with sealed types</p></li></ul></div></li><li><p>use (static) methods to model behavior, particularly:</p><div class="ulist"><ul><li><p>exhaustive <code>switch</code> without <code>default</code></p></li><li><p>pattern matching to destructure polymorphic data</p></li></ul></div></li></ul></div></div></section><section id="_data_oriented_programming_2"><h2>Data-Oriented Programming…</h2><div class="slide-content"><div class="dlist"><dl><dt class="hdlist1">… isn&#8217;t funtional programming</dt><dd><div class="ulist"><ul><li><p>but it&#8217;s similar (data + functions)</p></li><li><p>first priority is data, not functions</p></li></ul></div></dd><dt class="hdlist1">… doesn&#8217;t kill object-oriented programming</dt><dd><div class="ulist"><ul><li><p>use OOP to modularize large systems</p></li><li><p>use DOP to model small, data-focused (sub)systems</p></li></ul></div></dd></dl></div></div></section><section id="_more"><h2>More</h2><div class="slide-content"><div class="paragraph"><p>More on data-oriented programming:</p></div>
 <div class="ulist"><ul><li><p>seminal <a href="https://www.infoq.com/articles/data-oriented-programming-java/">article by Brian Goetz</a> on InfoQ</p></li><li><p>GitHub crawler on <a href="https://github.com/nipafx/loom-lab">github.com/nipafx/loom-lab</a></p></li><li><p>on <a href="https://www.youtube.com/java">youtube.com/@java</a>:</p><div class="ulist"><ul><li><p>intro in <a href="https://www.youtube.com/watch?v=5qYJYGvVLg8">Inside Java Newscast #29</a></p></li><li><p>deeper tutorial in <a href="https://www.youtube.com/watch?v=aKaw9W789wU">JEP Cafe #14</a></p></li><li><p>practical example in <a href="https://www.youtube.com/watch?v=vvXmO2ZMGsk">Inside Java Newscast #33</a></p></li></ul></div></li><li><p>yesterday&#8217;s talk on <a href="https://www.youtube.com/@DevoxxForever">youtube.com/@DevoxxForever</a></p></li></ul></div></div></section><section id="_summary_3"><h2>Summary</h2><div class="slide-content"><div class="paragraph"><p>Object-oriented programming:</p></div>
 <div class="ulist"><ul><li><p>is the beating heart of Java develoment 💓</p></li><li><p>but isn&#8217;t the best fit in all situations</p></li></ul></div>
