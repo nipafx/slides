@@ -15,6 +15,11 @@ Essentials when dealing with data +
 * represent polymorphic behavior with functions
 * (de)construct data easily and quickly
 
+[NOTE.speaker]
+--
+… with functions _that take data as input_
+--
+
 === Example: GitHub Crawler
 
 Starting with a seed URL:
@@ -53,7 +58,8 @@ public record GitHubPrPage(
 
 "Model alternatives explicitly." ❓
 
-Use sealed types to limit inheritance:
+Use sealed types to limit inheritance +
+(since Java 17; https://openjdk.org/jeps/409[JEP 409]):
 
 ```java
 public sealed interface Page

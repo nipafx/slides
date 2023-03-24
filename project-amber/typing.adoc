@@ -66,7 +66,9 @@ Aims to do more of that:
 * for new semantics and features
 * for much more succinctness
 
-=== var
+=== Local-Variable Type Inference
+
+Java 10 introduced `var` (https://openjdk.org/jeps/286[JEP 286]):
 
 ```java
 var audienceMember = new Person("John Doe");
@@ -82,14 +84,13 @@ Finds a better balance (if used wisely). +
 
 === Records
 
+Java 16 introduced records (https://openjdk.org/jeps/395[JEP 395]):
+
 ```java
 record Person(String name, LocalDate birthday) { }
 ```
 
-[quote,JEP 395]
-____
-[Records] are classes that act as transparent carriers for immutable data.
-____
+> [T]ransparent carriers for immutable data.
 
 * opt out of encapsulation
 * allow compiler to understand internals
@@ -100,20 +101,19 @@ Defines a new point of balance. +
 
 === Pattern Matching
 
+In `if` since Java 16 (https://openjdk.org/jeps/394[JEP 394]), +
+in `switch` probably in Java 21 (https://openjdk.org/jeps/441[JEP 441]):
+
 ```java
-Object obj = // ...
-// in `if` (since Java 16):
 if (obj instanceof Person person) {
 	var name = person.name();
 	var bday = person.birtday();
 	// use `name` and `bday`
 }
-// in `switch` (probably in Java 21):
+
 switch (obj) {
 	case Person person -> {
-		var name = person.name();
-		var bday = person.birtday();
-		// use `name` and `bday`
+		// as above...
 	}
 	// ...
 }

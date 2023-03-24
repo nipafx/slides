@@ -8,12 +8,14 @@ for new (Java) developers.
 
 We all know Java, IDEs, build tools, etc.
 
+[%step]
 * do we all?
 * what about your kids?
 * what about students?
 * what about the frontend dev?
 * what about ML/AI folks?
 
+[%step]
 Java needs to be approachable! +
 Java needs an on-ramp for new (Java) developers!
 
@@ -58,6 +60,7 @@ Java is great for large-scale development:
 
 This make it less approachable.
 
+[%step]
 Let's change that!
 
 === jshell
@@ -98,11 +101,13 @@ Expand single-file execution in two directions:
 
 Remove requirement of:
 
+[%step]
 * `String[] args` parameter
 * `main` being static
 * `main` or the class being public
 * the class itself
 
+[%step]
 ```java
 // all the code in Prog.java
 void main() {
@@ -110,6 +115,7 @@ void main() {
 }
 ```
 
+[%step]
 (https://openjdk.org/jeps/8302326[JEP draft])
 
 === Running Multiple Files

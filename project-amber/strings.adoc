@@ -35,10 +35,10 @@ Project Amber is fixing that! +
 
 === Text Blocks
 
-Java 15 finalized text blocks:
+Java 15 finalized text blocks (https://openjdk.org/jeps/378[JEP 378]):
 
 * multiline string literals
-* understand _incidental_ vs _essential_ white space
+* understand _incidental_ vs _essential_ indentation
 * require less escaping
 
 ```java
@@ -51,6 +51,15 @@ String duke = """
 ```
 
 We can now "enable" multi-line-ness.
+
+[NOTE.speaker]
+--
+indentation:
+
+* incidental: from code formatting
+* essential: desired indentation
+* Lesson learned: Java keeps only essential
+--
 
 === Text Blocks
 
@@ -86,6 +95,12 @@ String json = STR."""
 
 We'd be able to "enable" variable embedding.
 
+[NOTE.speaker]
+--
+* embedded expressions are "standard"
+* Lesson learned: require processing
+--
+
 === String Templates
 
 _Template expression_:
@@ -104,13 +119,23 @@ Ingredients:
 * _template_ with embedded expressions: `StringTemplate`
 * _template processor_ (e.g. `STR`): `StringTemplate` ⇝ `String`*
 
+[NOTE.speaker]
+--
+`STR`:
+
+* singleton class instance
+* method `process`
+* performs a stateless interpolation
+* hence upper-case field name
+--
+
 === Why strings?
 
 Often, strings are just exchange format, e.g.:
 
 * start with: `String` + values
 * validate / sanitize (i.e. parse)
-* simplify to: `String`
+* _dumb down to:_ `String`  🤔
 * parse to: `JSONObject`, `Statement`, …
 
 Why the detour?
