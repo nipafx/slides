@@ -30,7 +30,7 @@ String literals lack expressiveness:
 * no concept of interpolation/processing
 * no concept of rawness
 
-Project Amber is fixing that! +
+Project Amber is working on that. +
 (But without throwing it all into one pot.)
 
 === Text Blocks
@@ -119,16 +119,6 @@ Ingredients:
 * _template_ with embedded expressions: `StringTemplate`
 * _template processor_ (e.g. `STR`): `StringTemplate` ⇝ `String`*
 
-[NOTE.speaker]
---
-`STR`:
-
-* singleton class instance
-* method `process`
-* performs a stateless interpolation
-* hence upper-case field name
---
-
 === Why strings?
 
 Often, strings are just exchange format, e.g.:
@@ -142,7 +132,8 @@ Why the detour?
 
 === Custom templating
 
-Top interface:
+`STR` is a singleton instance of +
+a `Processor` implementation:
 
 ```java
 public interface Processor<RESULT, EX> {
@@ -174,7 +165,7 @@ Statement query = SQL."""
 
 * proposed for Java 12 (https://openjdk.org/jeps/326[JEP 326])
 * withdrawn due to complexity
-* still needed (e.g. for regex)
+* still needed in some form (e.g. for regex)
 
 ```java
 String regex = "\\[\\d{2,4}\\]"; // 🤔🤔🤔
@@ -182,7 +173,8 @@ String regex = "\\[\\d{2,4}\\]"; // 🤔🤔🤔
 String rawRegex = !"\[\d{2,4}\]" // 🤔
 ```
 
-We hope to be able to "enable" rawness. 🤞
+We hope that, in the future, we can "enable" rawness. 🤞 +
+(But no plans at the moment.)
 
 === Summary
 

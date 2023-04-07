@@ -58,8 +58,11 @@ public record GitHubPrPage(
 
 "Model alternatives explicitly." ❓
 
-Use sealed types to limit inheritance +
-(since Java 17; https://openjdk.org/jeps/409[JEP 409]):
+Use sealed types to limit inheritance.
+
+=== Sealed Types
+
+Java 17 introduced sealed types (https://openjdk.org/jeps/409[JEP 409]):
 
 ```java
 public sealed interface Page
@@ -136,7 +139,7 @@ Combine:
 
 === Representing Behavior
 
-"Represent polymoprhic behavior with functions." ✅
+"Represent polymorphic behavior with functions." ✅
 
 (Static) methods that have data as input:
 
@@ -148,7 +151,7 @@ public static String createPageName(Page page) {
 
 "Polymorphic"❓
 
-=== Polymorphic Behavior
+=== Data-Driven Polymorphism
 
 Switch over input type:
 
@@ -168,7 +171,7 @@ public static String createPageName(Page page) {
 }
 ```
 
-=== Polymorphic Behavior
+=== Data-Driven Polymorphism
 
 To keep code maintainable:
 
@@ -227,6 +230,22 @@ public static String createPageName(Page page) {
 
 ⇝ Focus on what's essential.
 
+=== Avoiding Default
+
+Use `_` to define default behavior:
+
+```java
+public static String createPageEmoji(Page page) {
+	return switch (page) {
+		case GitHubIssuePage issue -> "🐈";
+		case GitHubPrPage pr -> "🐙";
+		case ErrorPage _, ExternalPage _ -> "n.a.";
+	};
+}
+```
+
+⇝ Default behavior without `default` branch.
+
 === Data-Oriented Programming
 
 Use Java's strong typing to model data as data:
@@ -247,6 +266,11 @@ Use Java's strong typing to model data as data:
 … doesn't kill object-oriented programming::
 * use OOP to modularize large systems
 * use DOP to model small, data-focused (sub)systems
+
+[NOTE.speaker]
+--
+OOP: The machinery of modeling with objects has a modeling cost that's doesn't always pay off.
+--
 
 === More
 

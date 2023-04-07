@@ -19,8 +19,9 @@ all this is known at compile time
 
 For our types, fields, methods:
 
-* pick lowest feasible visibility
+* decouple API from internal state
 * hide internals (behind accessors)
+* pick lowest feasible visibility
 
 === Type Safety & Encapsulation
 
@@ -51,7 +52,7 @@ Predicate<Person> isOld = person -> person.age() >= 30;
 * didn't allow anything new!
 * focus on what's essential +
   (behavior and semantics)
-* removed losts of verbosity +
+* removed lots of verbosity +
   (and bits of explicitness)
 
 Found a (situationally) better balance. +
@@ -92,12 +93,12 @@ record Person(String name, LocalDate birthday) { }
 
 > [T]ransparent carriers for immutable data.
 
-* opt out of encapsulation
-* allow compiler to understand internals
+* compiler to understands internals
+* couple API to internals
 * reduce verbosity _a lot_
 
 Defines a new point of balance. +
-⇝ More and simpler types.
+⇝ More "data as data".
 
 === Pattern Matching
 
@@ -160,14 +161,15 @@ var person = fetchPerson();
 var unnamed = new Person("", person.birthday());
 ```
 
-Maybe in the future (https://github.com/openjdk/amber-docs/blob/master/eg-drafts/reconstruction-records-and-classes.md[design document] from Aug 2020):
+Maybe _functional mutation_ in the future +
+(https://github.com/openjdk/amber-docs/blob/master/eg-drafts/reconstruction-records-and-classes.md[design document] from Aug 2020):
 
 ```java
 // highly speculative syntax
 var person = fetchPerson();
 var unnamed = person with {
-		name = "";
-	};
+	name = "";
+};
 ```
 
 === Summary
