@@ -91,7 +91,7 @@ Java 16 introduced records (https://openjdk.org/jeps/395[JEP 395]):
 record Person(String name, LocalDate birthday) { }
 ```
 
-> [T]ransparent carriers for immutable data.
+> Transparent carriers for immutable data.
 
 * compiler to understands internals
 * couple API to internals
