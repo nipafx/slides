@@ -513,7 +513,7 @@ and nothing but the data.</p></div></blockquote></div>
 <div class="paragraph"><p>There are four kinds of pages:</p></div>
 <div class="ulist"><ul><li><p>error page</p></li><li><p>external page</p></li><li><p>GitHub issue page</p></li><li><p>GitHub PR page</p></li></ul></div>
 <div class="paragraph"><p>⇝ Use four records to model them!</p></div></div></section><section id="_detour_records"><h2>Detour: Records</h2><div class="slide-content"><div class="paragraph"><p><em>[Finalized in Java 16]</em></p></div>
-<div class="quoteblock"><blockquote><div class="paragraph"><p>[T]ransparent carriers for immutable data</p></div></blockquote></div>
+<div class="quoteblock"><blockquote><div class="paragraph"><p>Transparent carriers for immutable data</p></div></blockquote></div>
 <div class="ulist"><ul><li><p>opt out of encapsulation</p></li><li><p>allow compiler to understand internals</p></li></ul></div>
 <div class="paragraph"><p>Most obvious consequence: less boilerplate.</p></div></div></section><section id="_detour_records_2"><h2>Detour: Records</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">record ExternalPage(URI url, String content) { }</code></pre></div></div>
 <div class="ulist"><ul><li><p><code>ExternalPage</code> is final</p></li><li><p>private final fields: <code>URI url</code> and <code>String content</code></p></li><li><p>constructor: <code>ExternalPage(URI url, String content)</code></p></li><li><p>accessors: <code>URI url()</code> and <code>String content()</code></p></li><li><p><code>equals()</code>, <code>hashCode()</code>, <code>toString()</code> that use the two fields</p></li></ul></div>
