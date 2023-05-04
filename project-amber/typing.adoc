@@ -93,7 +93,7 @@ record Person(String name, LocalDate birthday) { }
 
 > Transparent carriers for immutable data.
 
-* compiler to understands internals
+* compiler understands internals
 * couple API to internals
 * reduce verbosity _a lot_
 
@@ -103,7 +103,7 @@ Defines a new point of balance. +
 === Pattern Matching
 
 In `if` since Java 16 (https://openjdk.org/jeps/394[JEP 394]), +
-in `switch` probably in Java 21 (https://openjdk.org/jeps/441[JEP 441]):
+in `switch` since Java 21 (https://openjdk.org/jeps/441[JEP 441]):
 
 ```java
 if (obj instanceof Person person) {
@@ -122,7 +122,7 @@ switch (obj) {
 
 === Destructuring Records
 
-Probably in Java 21 (https://openjdk.org/jeps/440[JEP 440]):
+Since Java 21 (https://openjdk.org/jeps/440[JEP 440]):
 
 ```java
 if (obj instanceof Person(var name, var bday)) {
