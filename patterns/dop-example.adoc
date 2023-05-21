@@ -344,7 +344,7 @@ if (!(rootPage instanceof GitHubPage ghPage))
 
 === Detour: Patterns in Switch
 
-_[Preview since Java 17; probably final in 21 - https://openjdk.org/jeps/441[JEP 441]]_
+_[Finalized in Java 21]_
 
 All patterns can be used in switches +
 
@@ -433,7 +433,7 @@ private static String createPageName(Page page) {
 
 === Detour: Record Patterns
 
-_[Preview since Java 19; probably final in 21 - https://openjdk.org/jeps/440[JEP 440]]_
+_[Finalized in Java 21]_
 
 Records are transparent, so you can +
 deconstruct them in `if` and `switch`:
@@ -469,11 +469,11 @@ public static String createPageName(Page page) {
 }
 ```
 
-⇝ Eve simpler access with unnamed patterns.
+⇝ Even simpler access with unnamed patterns.
 
 === Detour: Unnamed Patterns
 
-_[Maybe preview in Java 21 - https://openjdk.org/jeps/443[JEP 443]]_
+_[Preview in Java 21 - https://openjdk.org/jeps/443[JEP 443]]_
 
 Replace variables you don't need with `_`:
 
