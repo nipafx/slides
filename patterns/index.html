@@ -606,7 +606,7 @@ is <code>ghPage</code> in scope.</p></div></blockquote></div>
 	// can't use `ghPage` here
 	return;
 
-// do something with `ghPage` here 😈</code></pre></div></div></div></section><section id="_detour_patterns_in_switch"><h2>Detour: Patterns in Switch</h2><div class="slide-content"><div class="paragraph"><p><em>[Preview since Java 17; probably final in 21 - <a href="https://openjdk.org/jeps/441">JEP 441</a>]</em></p></div>
+// do something with `ghPage` here 😈</code></pre></div></div></div></section><section id="_detour_patterns_in_switch"><h2>Detour: Patterns in Switch</h2><div class="slide-content"><div class="paragraph"><p><em>[Finalized in Java 21]</em></p></div>
 <div class="paragraph"><p>All patterns can be used in switches<br></p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">switch (page) {
 	case ExternalPage ext -&gt; // use `ext`
@@ -656,7 +656,7 @@ private void evaluateTree(Page page) {
 			-&gt; "🐙 PR #" + pr.prNumber();
 	};
 }</code></pre></div></div>
-<div class="paragraph"><p>⇝ Simpler access with record/deconstruction patterns.</p></div></div></section><section id="_detour_record_patterns"><h2>Detour: Record Patterns</h2><div class="slide-content"><div class="paragraph"><p><em>[Preview since Java 19; probably final in 21 - <a href="https://openjdk.org/jeps/440">JEP 440</a>]</em></p></div>
+<div class="paragraph"><p>⇝ Simpler access with record/deconstruction patterns.</p></div></div></section><section id="_detour_record_patterns"><h2>Detour: Record Patterns</h2><div class="slide-content"><div class="paragraph"><p><em>[Finalized in Java 21]</em></p></div>
 <div class="paragraph"><p>Records are transparent, so you can<br>
 deconstruct them in <code>if</code> and <code>switch</code>:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">record ExternalPage(URI url, String content) { }
@@ -680,7 +680,7 @@ switch (obj) {
 		// ...
 	};
 }</code></pre></div></div>
-<div class="paragraph"><p>⇝ Eve simpler access with unnamed patterns.</p></div></div></section><section id="_detour_unnamed_patterns"><h2>Detour: Unnamed Patterns</h2><div class="slide-content"><div class="paragraph"><p><em>[Maybe preview in Java 21 - <a href="https://openjdk.org/jeps/443">JEP 443</a>]</em></p></div>
+<div class="paragraph"><p>⇝ Even simpler access with unnamed patterns.</p></div></div></section><section id="_detour_unnamed_patterns"><h2>Detour: Unnamed Patterns</h2><div class="slide-content"><div class="paragraph"><p><em>[Preview in Java 21 - <a href="https://openjdk.org/jeps/443">JEP 443</a>]</em></p></div>
 <div class="paragraph"><p>Replace variables you don&#8217;t need with <code>_</code>:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">case ErrorPage(var url, _)
 	-&gt; "💥 ERROR: " + url.getHost();

@@ -550,15 +550,15 @@ String rawRegex = !"\[\d{2,4}\]" // 🤔</code></pre></div></div>
 <div class="paragraph"><p>Project Amber introduces new features that:</p></div>
 <div class="ulist"><ul><li><p>make strings more expressive</p></li><li><p>learned from other languages</p></li><li><p>can be combined as needed</p></li></ul></div></div></section></section>
 <section><section id="_type_safety_encapsulation"><h2>Type Safety &amp; Encapsulation</h2><div class="slide-content"><div class="paragraph"><p>How Project Amber tackles the tension<br>
-<strong>explicitness/safety vs verbosity</strong><br>
-for more succinctness and new features.</p></div></div></section><section id="_type_safety"><h2>Type Safety</h2><div class="slide-content"><div class="paragraph"><p>Java is&#8230;&#8203;</p></div>
+<strong>explicitness/safety vs succinctness</strong><br>
+for less verbosity and new features.</p></div></div></section><section id="_type_safety"><h2>Type Safety</h2><div class="slide-content"><div class="paragraph"><p>Java is&#8230;&#8203;</p></div>
 <div class="dlist"><dl><dt class="hdlist1">strongly typed: </dt><dd><p>every field, variable, method argument<br>
 and return has a type</p></dd><dt class="hdlist1">statically typed: </dt><dd><p>all this is known at compile time</p></dd></dl></div></div></section><section id="_encapsulation"><h2>Encapsulation</h2><div class="slide-content"><div class="paragraph"><p>For our types, fields, methods:</p></div>
 <div class="ulist"><ul><li><p>decouple API from internal state</p></li><li><p>hide internals (behind accessors)</p></li><li><p>pick lowest feasible visibility</p></li></ul></div></div></section><section id="_type_safety_encapsulation_2"><h2>Type Safety &amp; Encapsulation</h2><div class="slide-content"><div class="paragraph"><p>We rely on them to:</p></div>
 <div class="ulist"><ul><li><p>model domains</p></li><li><p>guarantee invariants</p></li><li><p>modularize problems</p></li><li><p>catch errors early</p></li><li><p>understand code</p></li></ul></div></div></section><section id="_type_safety_encapsulation_3"><h2>Type Safety &amp; Encapsulation</h2><div class="slide-content"><div class="paragraph"><p>But, they can be:</p></div>
 <div class="ulist"><ul><li><p>verbose</p></li><li><p>redundant</p></li></ul></div>
 <div class="paragraph"><p>Underlying tension:<br>
-explicitness/safety vs verbosity.</p></div></div></section><section id="_throwback_lambdas"><h2>Throwback: Lambdas</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">Predicate&lt;Person&gt; isOld = person -&gt; person.age() &gt;= 30;</code></pre></div></div>
+explicitness/safety vs succinctness.</p></div></div></section><section id="_throwback_lambdas"><h2>Throwback: Lambdas</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">Predicate&lt;Person&gt; isOld = person -&gt; person.age() &gt;= 30;</code></pre></div></div>
 <div class="ulist"><ul><li><p>didn&#8217;t allow anything new!</p></li><li><p>focus on what&#8217;s essential<br>
 (behavior and semantics)</p></li><li><p>removed lots of verbosity<br>
 (and bits of explicitness)</p></li></ul></div>
@@ -755,7 +755,7 @@ Java needs an on-ramp for new (Java) developers!</p></div></div></section><secti
 <div class="paragraph"><p>Much better for beginners,<br>
 but just a section of an on-ramp.</p></div></div></section><section id="_on_ramp"><h2>On-Ramp</h2><div class="slide-content"><div class="paragraph"><p>Expand single-file execution in two directions:</p></div>
 <div class="ulist"><ul><li><p><strong>simplify code</strong>: reduce required Java concepts</p></li><li><p><strong>ease progression</strong>: run multiple files with <code>java</code></p></li></ul></div></div></section><section id="_simpler_code"><h2>Simpler Code</h2><div class="slide-content"><div class="paragraph"><p>Remove requirement of:</p></div>
-<div class="ulist"><ul><li class="fragment"><p><code>String[] args</code> parameter</p></li><li class="fragment"><p><code>main</code> being static</p></li><li class="fragment"><p><code>main</code> or the class being public</p></li><li class="fragment"><p>the class itself</p></li></ul></div>
+<div class="ulist"><ul><li class="fragment"><p><code>String[] args</code> parameter</p></li><li class="fragment"><p><code>main</code> being static</p></li><li class="fragment"><p><code>main</code> being public</p></li><li class="fragment"><p>the class itself</p></li></ul></div>
 <div class="listingblock fragment"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// all the code in Prog.java
 void main() {
 	System.out.println("Hello, World!");
