@@ -410,23 +410,22 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 <h2>In Java (21)</h2>
 <div class="event">
 	<div class="participant">
-		<a href="https://nipafx.dev/nicolai-parlog"><img src="../_images/nipa-face-c9e3bd71.jpg" class="logo"></a>
+		<a href="https://nipafx.dev/nicolai-parlog" title="Nicolai"><img src="../_images/nipa-face-c9e3bd71.jpg" alt="Photo of Nicolai" class="logo"></a>
 		<div class="name">
-			<p><a href="https://nipafx.dev/nicolai-parlog">Nicolai Parlog</a></p>
-			<p><a href="https://nipafx.dev">nipafx.dev</a>
+			<p><a href="https://nipafx.dev/nicolai-parlog" title="About Nicolai">Nicolai Parlog</a></p>
+			<p><a href="https://nipafx.dev" title="Nicolai's website">nipafx.dev</a>
 				/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a></p>
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://dev.java"><img src="../_images/logo-java-youtube-32698487.jpg" class="logo" style="background-color: #da281e"></a>
+		<a href="https://www.meetup.com/de-DE/java-user-group-saarland-jugsaar/" title="JUG Saar"><img src="../_images/logo-jug-saar-295d2df4.png" alt="Logo of JUG Saar" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://dev.java">Java</a></p>
-			<p><a href="https://youtube.com/java">youtube.com/java</a>
-				/ <a href="https://twitter.com/java">@java</a></p>
+			<p><a href="https://www.meetup.com/de-DE/java-user-group-saarland-jugsaar/" title="JUG Saar website">JUG Saar</a></p>
+			<p><a href="https://twitter.com/jugsaar" title="JUG Saar on Twitter">@jugsaar</a></p>
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://www.oracle.com/java/"><img src="../_images/logo-oracle-05a92737.png" class="logo"></a>
+		<a href="https://www.oracle.com/java/" title="Java @ Oracle"><img src="../_images/logo-oracle-05a92737.png" alt="Oracle logo" class="logo"></a>
 		<div class="name">
 			<p>Developer Advocate</a></p>
 			<p>Java Team at Oracle</p>
@@ -435,20 +434,19 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 </div>
 <footer>
 	<div class="participant">
-		<a href="https://nipafx.dev/nicolai-parlog"><img src="../_images/nipa-face-c9e3bd71.jpg" class="logo"></a>
+		<a href="https://nipafx.dev/nicolai-parlog" title="Nicolai"><img src="../_images/nipa-face-c9e3bd71.jpg" alt="Photo of Nicolai" class="logo"></a>
 		<a href="https://www.oracle.com/java/"><img src="../_images/logo-oracle-05a92737.png" class="logo"></a>
 		<div class="name"><p>
-			<a href="https://nipafx.dev/nicolai-parlog">Nicolai Parlog</a>
-			/ <a href="https://nipafx.dev">nipafx.dev</a>
+			<a href="https://nipafx.dev/nicolai-parlog" title="About Nicolai">Nicolai Parlog</a>
+			/ <a href="https://nipafx.dev" title="Nicolai's website">nipafx.dev</a>
 			/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a>
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://dev.java"><img src="../_images/logo-java-youtube-32698487.jpg" class="logo" style="background-color: #da281e"></a>
+		<a href="https://www.meetup.com/de-DE/java-user-group-saarland-jugsaar/" title="JUG Saar"><img src="../_images/logo-jug-saar-295d2df4.png" alt="Logo of JUG Saar" class="logo" style="{host-logo-style}"></a>
 		<div class="name"><p>
-			<a href="https://dev.java">Java</a>
-				/ <a href="https://youtube.com/java">youtube.com/java</a>
-				/ <a href="https://twitter.com/java">@java</a>
+			<a href="https://www.meetup.com/de-DE/java-user-group-saarland-jugsaar/" title="JUG Saar website">JUG Saar</a>
+			/ <a href="https://twitter.com/jugsaar" title="JUG Saar on Twitter">@jugsaar</a>
 		</p></div>
 	</div>
 </footer>
@@ -496,6 +494,7 @@ and nothing but the data</p></li><li><p>data is immutable</p></li><li><p>validat
 	}
 
 }</code></pre></div></div>
+<div class="paragraph"><p>(Code on <a href="https://github.com/nipafx/loom-lab">github.com/nipafx/loom-lab</a>.)</p></div>
 <div class="paragraph"><p>What does <code>Page</code> look like?</p></div></div></section><section id="_requirements"><h2>Requirements</h2><div class="slide-content"><div class="paragraph"><p>Pages:</p></div>
 <div class="ulist"><ul><li><p>all pages have a <code>url</code></p></li><li><p>unresolved pages have an <code>error</code></p></li><li><p>resolved pages have <code>content</code></p></li><li><p>GitHub pages have:</p><div class="ulist"><ul><li><p>outgoing <code>links</code></p></li><li><p><code>issueNumber</code> or <code>prNumber</code></p></li></ul></div></li></ul></div></div></section><section id="_requirements_2"><h2>Requirements</h2><div class="slide-content"><div class="paragraph"><p>Operations on pages<br>
 (and their subtree):</p></div>
@@ -514,7 +513,7 @@ public String printPageList();</code></pre></div></div></div></section><section 
 and nothing but the data.</p></div></blockquote></div>
 <div class="paragraph"><p>There are four kinds of pages:</p></div>
 <div class="ulist"><ul><li><p>error page</p></li><li><p>external page</p></li><li><p>GitHub issue page</p></li><li><p>GitHub PR page</p></li></ul></div>
-<div class="paragraph"><p>⇝ Use four records to model them!</p></div></div></section><section id="_detour_records"><h2>Detour: Records</h2><div class="slide-content"><div class="paragraph"><p><em>[Finalized in Java 16]</em></p></div>
+<div class="paragraph"><p>⇝ Use four records to model them!</p></div></div></section><section id="_detour_records"><h2>Detour: Records</h2><div class="slide-content"><div class="paragraph"><p><em>[Finalized in Java 16&#8201;&#8212;&#8201;<a href="https://openjdk.org/jeps/395">JEP 395</a>]</em></p></div>
 <div class="quoteblock"><blockquote><div class="paragraph"><p>Transparent carriers for immutable data</p></div></blockquote></div>
 <div class="ulist"><ul><li><p>opt out of encapsulation</p></li><li><p>allow compiler to understand internals</p></li></ul></div>
 <div class="paragraph"><p>Most obvious consequence: less boilerplate.</p></div></div></section><section id="_detour_records_2"><h2>Detour: Records</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">record ExternalPage(URI url, String content) { }</code></pre></div></div>
@@ -535,7 +534,7 @@ public record GitHubPrPage(
 and nothing but the data.</p></div></blockquote></div>
 <div class="paragraph"><p>There are additional relations between them:</p></div>
 <div class="ulist"><ul><li><p>a page (load) is either successful or not</p></li><li><p>a successful page is either external or GitHub</p></li><li><p>a GitHub page is either for a PR or an issue</p></li></ul></div>
-<div class="paragraph"><p>⇝ Use sealed types to model the alternatives!</p></div></div></section><section id="_detour_sealed_types"><h2>Detour: Sealed Types</h2><div class="slide-content"><div class="paragraph"><p><em>[Finalized in Java 17]</em></p></div>
+<div class="paragraph"><p>⇝ Use sealed types to model the alternatives!</p></div></div></section><section id="_detour_sealed_types"><h2>Detour: Sealed Types</h2><div class="slide-content"><div class="paragraph"><p><em>[Finalized in Java 17&#8201;&#8212;&#8201;<a href="https://openjdk.org/jeps/409">JEP 409</a>]</em></p></div>
 <div class="paragraph"><p>Sealed types limit inheritance,<br>
 by only allowing specific subtypes.</p></div>
 <div class="ulist"><ul><li><p>communicates intention to developers</p></li><li><p>allows compiler to check exhaustiveness</p></li></ul></div></div></section><section id="_detour_sealed_types_2"><h2>Detour: Sealed Types</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public sealed interface Page
@@ -594,7 +593,7 @@ public String printPageList();</code></pre></div></div>
 <div class="paragraph fragment" data-fragment-index="1"><p>But what if it didn&#8217;t? 😁</p></div></div></section><section id="_operations_on_data_2"><h2>Operations On Data</h2><div class="slide-content"><div class="paragraph"><p>Pattern matching on sealed types is perfect<br>
 to apply polymorphic operations to data!</p></div>
 <div class="paragraph"><p>And records eschew encapsulation,<br>
-so everything is accessible.</p></div></div></section><section id="_detour_type_patterns"><h2>Detour: Type Patterns</h2><div class="slide-content"><div class="paragraph"><p><em>[Finalized in Java 16]</em></p></div>
+so everything is accessible.</p></div></div></section><section id="_detour_type_patterns"><h2>Detour: Type Patterns</h2><div class="slide-content"><div class="paragraph"><p><em>[Finalized in Java 16&#8201;&#8212;&#8201;<a href="https://openjdk.org/jeps/394">JEP 394</a>]</em></p></div>
 <div class="paragraph"><p>Typecheck, cast, and declaration all in one.</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">if (rootPage instanceof GitHubPage ghPage)
 	// do something with `ghPage`</code></pre></div></div>
@@ -606,7 +605,7 @@ is <code>ghPage</code> in scope.</p></div></blockquote></div>
 	// can't use `ghPage` here
 	return;
 
-// do something with `ghPage` here 😈</code></pre></div></div></div></section><section id="_detour_patterns_in_switch"><h2>Detour: Patterns in Switch</h2><div class="slide-content"><div class="paragraph"><p><em>[Finalized in Java 21]</em></p></div>
+// do something with `ghPage` here 😈</code></pre></div></div></div></section><section id="_detour_patterns_in_switch"><h2>Detour: Patterns in Switch</h2><div class="slide-content"><div class="paragraph"><p><em>[Finalized in Java 21&#8201;&#8212;&#8201;<a href="https://openjdk.org/jeps/441">JEP 441</a>]</em></p></div>
 <div class="paragraph"><p>All patterns can be used in switches<br></p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">switch (page) {
 	case ExternalPage ext -&gt; // use `ext`
@@ -656,7 +655,7 @@ private void evaluateTree(Page page) {
 			-&gt; "🐙 PR #" + pr.prNumber();
 	};
 }</code></pre></div></div>
-<div class="paragraph"><p>⇝ Simpler access with record/deconstruction patterns.</p></div></div></section><section id="_detour_record_patterns"><h2>Detour: Record Patterns</h2><div class="slide-content"><div class="paragraph"><p><em>[Finalized in Java 21]</em></p></div>
+<div class="paragraph"><p>⇝ Simpler access with record/deconstruction patterns.</p></div></div></section><section id="_detour_record_patterns"><h2>Detour: Record Patterns</h2><div class="slide-content"><div class="paragraph"><p><em>[Finalized in Java 21&#8201;&#8212;&#8201;<a href="https://openjdk.org/jeps/440">JEP 440</a>]</em></p></div>
 <div class="paragraph"><p>Records are transparent, so you can<br>
 deconstruct them in <code>if</code> and <code>switch</code>:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">record ExternalPage(URI url, String content) { }
@@ -680,7 +679,7 @@ switch (obj) {
 		// ...
 	};
 }</code></pre></div></div>
-<div class="paragraph"><p>⇝ Even simpler access with unnamed patterns.</p></div></div></section><section id="_detour_unnamed_patterns"><h2>Detour: Unnamed Patterns</h2><div class="slide-content"><div class="paragraph"><p><em>[Preview in Java 21 - <a href="https://openjdk.org/jeps/443">JEP 443</a>]</em></p></div>
+<div class="paragraph"><p>⇝ Even simpler access with unnamed patterns.</p></div></div></section><section id="_detour_unnamed_patterns"><h2>Detour: Unnamed Patterns</h2><div class="slide-content"><div class="paragraph"><p><em>[Preview in Java 21&#8201;&#8212;&#8201;<a href="https://openjdk.org/jeps/443">JEP 443</a>]</em></p></div>
 <div class="paragraph"><p>Replace variables you don&#8217;t need with <code>_</code>:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">case ErrorPage(var url, _)
 	-&gt; "💥 ERROR: " + url.getHost();
@@ -718,17 +717,17 @@ case GitHubIssuePage(_, _, _, int issueNumber)
 }</code></pre></div></div></div></section><section id="_extending_operations_on_data_3"><h2>Extending Operations On Data</h2><div class="slide-content"><div class="paragraph"><p>Next stop: all <code>switch</code> without <code>default</code>.</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// non-exhaustive ⇝ compile error
 switch (page) {
-	case ErrorPage __ -&gt; numberOfErrors++;
-	case ExternalPage __ -&gt; numberOfExternalLinks++;
-	case GitHubIssuePage __ -&gt; numberOfIssues++;
-	case GitHubPrPage __ -&gt; numberOfPrs++;
+	case ErrorPage _ -&gt; numberOfErrors++;
+	case ExternalPage _ -&gt; numberOfExternalLinks++;
+	case GitHubIssuePage _ -&gt; numberOfIssues++;
+	case GitHubPrPage _ -&gt; numberOfPrs++;
 }</code></pre></div></div></div></section><section id="_extending_operations_on_data_4"><h2>Extending Operations On Data</h2><div class="slide-content"><div class="paragraph"><p>⇝ Handle the new subtype!</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">switch (page) {
-	case ErrorPage __ -&gt; numberOfErrors++;
-	case ExternalPage __ -&gt; numberOfExternalLinks++;
-	case GitHubIssuePage __ -&gt; numberOfIssues++;
-	case GitHubPrPage __ -&gt; numberOfPrs++;
-	case GitHubCommitPage __ -&gt; numberOfCommits++;
+	case ErrorPage _ -&gt; numberOfErrors++;
+	case ExternalPage _ -&gt; numberOfExternalLinks++;
+	case GitHubIssuePage _ -&gt; numberOfIssues++;
+	case GitHubPrPage _ -&gt; numberOfPrs++;
+	case GitHubCommitPage _ -&gt; numberOfCommits++;
 }</code></pre></div></div></div></section><section id="_operations_on_data_4"><h2>Operations On Data</h2><div class="slide-content"><div class="paragraph"><p>To keep operations maintainable:</p></div>
 <div class="ulist"><ul><li><p>switch over sealed types</p></li><li><p>enumerate all possible types<br>
 (even if you need to ignore some)</p></li><li><p>avoid <code>default</code> branch</p></li></ul></div>
