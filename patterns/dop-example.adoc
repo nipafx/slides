@@ -32,6 +32,8 @@ public class PageTreeFactory {
 }
 ```
 
+(Code on https://github.com/nipafx/loom-lab[github.com/nipafx/loom-lab].)
+
 What does `Page` look like?
 
 === Requirements
@@ -95,7 +97,7 @@ There are four kinds of pages:
 
 === Detour: Records
 
-_[Finalized in Java 16]_
+_[Finalized in Java 16 -- https://openjdk.org/jeps/395[JEP 395]]_
 
 [quote]
 ____
@@ -154,7 +156,7 @@ There are additional relations between them:
 
 === Detour: Sealed Types
 
-_[Finalized in Java 17]_
+_[Finalized in Java 17 -- https://openjdk.org/jeps/409[JEP 409]]_
 
 Sealed types limit inheritance, +
 by only allowing specific subtypes.
@@ -314,7 +316,7 @@ so everything is accessible.
 
 === Detour: Type Patterns
 
-_[Finalized in Java 16]_
+_[Finalized in Java 16 -- https://openjdk.org/jeps/394[JEP 394]]_
 
 Typecheck, cast, and declaration all in one.
 
@@ -344,7 +346,7 @@ if (!(rootPage instanceof GitHubPage ghPage))
 
 === Detour: Patterns in Switch
 
-_[Finalized in Java 21]_
+_[Finalized in Java 21 -- https://openjdk.org/jeps/441[JEP 441]]_
 
 All patterns can be used in switches +
 
@@ -433,7 +435,7 @@ private static String createPageName(Page page) {
 
 === Detour: Record Patterns
 
-_[Finalized in Java 21]_
+_[Finalized in Java 21 -- https://openjdk.org/jeps/440[JEP 440]]_
 
 Records are transparent, so you can +
 deconstruct them in `if` and `switch`:
@@ -473,7 +475,7 @@ public static String createPageName(Page page) {
 
 === Detour: Unnamed Patterns
 
-_[Preview in Java 21 - https://openjdk.org/jeps/443[JEP 443]]_
+_[Preview in Java 21 -- https://openjdk.org/jeps/443[JEP 443]]_
 
 Replace variables you don't need with `_`:
 
@@ -551,10 +553,10 @@ Next stop: all `switch` without `default`.
 ```java
 // non-exhaustive ⇝ compile error
 switch (page) {
-	case ErrorPage __ -> numberOfErrors++;
-	case ExternalPage __ -> numberOfExternalLinks++;
-	case GitHubIssuePage __ -> numberOfIssues++;
-	case GitHubPrPage __ -> numberOfPrs++;
+	case ErrorPage _ -> numberOfErrors++;
+	case ExternalPage _ -> numberOfExternalLinks++;
+	case GitHubIssuePage _ -> numberOfIssues++;
+	case GitHubPrPage _ -> numberOfPrs++;
 }
 ```
 
@@ -564,11 +566,11 @@ switch (page) {
 
 ```java
 switch (page) {
-	case ErrorPage __ -> numberOfErrors++;
-	case ExternalPage __ -> numberOfExternalLinks++;
-	case GitHubIssuePage __ -> numberOfIssues++;
-	case GitHubPrPage __ -> numberOfPrs++;
-	case GitHubCommitPage __ -> numberOfCommits++;
+	case ErrorPage _ -> numberOfErrors++;
+	case ExternalPage _ -> numberOfExternalLinks++;
+	case GitHubIssuePage _ -> numberOfIssues++;
+	case GitHubPrPage _ -> numberOfPrs++;
+	case GitHubCommitPage _ -> numberOfCommits++;
 }
 ```
 
