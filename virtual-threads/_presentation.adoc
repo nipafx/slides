@@ -1,0 +1,74 @@
+= Scaling Simply
+:backend: revealjs
+:revealjs_theme: nipa-night
+:revealjsdir: ../_reveal.js/head
+:revealjs_controls: false
+:revealjs_progress: false
+:revealjs_slideNumber: false
+:revealjs_history: true
+:revealjs_center: true
+:revealjs_transition: fade
+:revealjs_backgroundTransition: fade
+:revealjs_parallaxBackgroundImage: images/loom.jpg
+:revealjs_parallaxBackgroundSize: 7680px 3510px
+:docinfo: shared
+:docinfodir: ../_shared
+
+include::../_shared/highlight.js.adoc[]
+
+++++
+<style>
+.reveal .title h2 {
+	font-size: 1.75em;
+}
+</style>
+<h2>With Virtual Threads</h2>
+++++
+
+:host-name: VDZ
+:host-logo-url: images/logo-voxxed-days-zuerich.png
+:host-url: https://voxxeddays.com/zurich/
+:host-logo-style: background-color: transparent; border-width: 0;
+:host-twitter-name: @VoxxedZurich
+:host-twitter-url: https://twitter.com/voxxedzurich
+include::../_shared/java-stream-on-title-and-footer.adoc[]
+
+
+// ######### //
+// I N T R O //
+// ######### //
+
+// ⇝
+
+== Lots to talk about!
+
+++++
+<table class="toc">
+	<tr><td>Virtual Threads</td></tr>
+	<tr><td>Structured Concurrency</td></tr>
+	<tr><td>Project Loom</td></tr>
+</table>
+++++
+
+Slides at https://slides.nipafx.dev/[slides.nipafx.dev].
+
+// Tweet questions with https://twitter.com/hashtag/JavaNext?src=hash[#JavaNext]
+
+
+// ####################### //
+// P R E S E N T A T I O N //
+// ####################### //
+
+include::threads.adoc[]
+
+include::structured.adoc[]
+
+include::loom.adoc[]
+
+// ######### //
+// O U T R O //
+// ######### //
+
+include::../_shared/about-slide.adoc[]
+
+include::images/sources.adoc[]

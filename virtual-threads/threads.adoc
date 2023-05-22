@@ -1,0 +1,179 @@
+== Motivation
+
+Imagine a hypothetical HTTP request:
+
+. interpret request
+. query database (_blocks_)
+. process data for response
+
+Resource utilization:
+
+* good for 1. and 3.
+* really bad for 2.
+
+How to implement that request?
+
+=== Synchronous
+
+Align application's unit of concurrency (request)  +
+with Java's unit of concurrency (thread):
+
+* use thread per request
+* simple to write, debug, profile
+* blocks threads on certain calls
+* limited number of _platform_ threads +
+  ⇝ bad resource utilization +
+  ⇝ low throughput
+
+[NOTE.speaker]
+--
+* common CPU load: 5-30%
+--
+
+=== Asynchronous
+
+Only use threads for actual computations:
+
+* use non-blocking APIs +
+  (with futures / reactive streams)
+* harder to write, challenging to debug/profile
+* incompatible with synchronous code
+* shares platform threads +
+  ⇝ great resource utilization +
+  ⇝ high throughput
+
+=== Motivation
+
+Resolve the conflict between:
+
+* simplicity
+* throughput
+
+=== Enter virtual threads!
+
+A _virtual_ thread:
+
+* is a regular `Thread`
+* low memory footprint ([k]bytes)
+* small switching cost
+* scheduled by the Java runtime
+* requires no OS thread when waiting
+
+=== Virtual thread management
+
+The runtime manages virtual threads:
+
+* runs them on a pool of _carrier threads_
+* makes them _yield_ on blocking calls +
+(*frees the carrier thread!*)
+* _continues_ them when calls return
+
+=== Virtual thread example
+
+Remember the hypothetical request:
+
+. interpret request
+. query database (_blocks_)
+. process data for response
+
+In a virtual thread:
+
+[%step]
+* runtime submits task to carrier thread pool
+* when 2. blocks, virtual thread yields
+* runtime hands carrier thread back to pool
+* when 2. unblocks, runtime resubmits task
+* virtual thread continues with 3.
+
+=== Example
+
+```java
+try (var executor = Executors
+		.newVirtualThreadPerTaskExecutor()) {
+	IntStream
+		.range(0, 1_000_000)
+		.forEach(number -> {
+			executor.submit(() -> {
+				Thread.sleep(Duration.ofSeconds(1));
+				return number;
+			});
+		});
+} // executor.close() is called implicitly, and waits
+```
+
+
+[NOTE.speaker]
+--
+* all APIs are in flux
+--
+
+=== Example
+
+```java
+void handle(Request request, Response response)
+		throws InterruptedException {
+	try (var executor = Executors
+			.newVirtualThreadPerTaskExecutor()) {
+		var futureA = executor.submit(this::taskA);
+		var futureB = executor.submit(this::taskB);
+		response.send(futureA.get() + futureB.get());
+	} catch (ExecutionException ex) {
+		response.fail(ex);
+	}
+}
+```
+
+=== Performance
+
+Virtual threads aren't "faster threads": +
+Each task takes the same time (same _latency_).
+
+So why bother?
+
+=== Parallelism vs concurrency
+
+[options="header"]
+|============================================
+|                | Parallelism  | Concurrency
+| *Task origin*  | solution     | problem
+| *Control*      | developer    | environment
+| *Resource use* | coordinated  | competitive
+| *Metric*       | latency      | throughput
+| *Abstraction*  | CPU cores    | tasks
+| *# of threads* | # of cores   | # of tasks
+|============================================
+
+=== Performance
+
+When workload is not CPU-bound:
+
+* start waiting as early as possible
+* for as many tasks as possible
+
+⇝ Virtual threads increase _throughput_:
+
+* when number of concurrent tasks is high
+* when workload is not CPU-bound
+
+[NOTE.speaker]
+--
+* maximize progress other systems can make.
+* "high": more than a few thousand
+--
+
+=== Use Cases
+
+Virtual threads are cheap and plentiful:
+
+* no pooling necessary
+* allows thread per task
+* allows liberal creation +
+  of threads for subtasks
+
+⇝ Enables new concurrency programming models.
+
+[NOTE.speaker]
+--
+* "thread per task" covers earlier example
+* "thread per subtask" comes next
+--

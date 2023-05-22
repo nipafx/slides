@@ -1,0 +1,75 @@
+== Structured concurrency
+
+Structured programming:
+
+* prescribes single entry point +
+  and clearly defined exit points
+* influenced languages and runtimes
+
+Simlarly, structured concurrency prescribes:
+
+> When the flow of execution splits into multiple concurrent flows, they rejoin in the same code block.
+
+=== Structured concurrency
+
+> When the flow of execution splits into multiple concurrent flows, they rejoin in the same code block.
+
+⇝ Threads are short-lived:
+
+* start when task begins
+* end on completion
+
+⇝ Enables parent-child/sibling relationships +
+  and logical grouping of threads.
+
+=== Unstructured concurrency
+
+```java
+void handle(Request request, Response response)
+		throws InterruptedException {
+	try (var executor = Executors
+			.newVirtualThreadPerTaskExecutor()) {
+		// what's the relationship between
+		// this and the two spawned threads?
+		// what happens when one of them fails?
+		var futureA = executor.submit(this::taskA);
+		var futureB = executor.submit(this::taskB);
+		// what if we only need the faster one?
+		response.send(futureA.get() + futureB.get());
+	} catch (ExecutionException ex) {
+		response.fail(ex);
+	}
+}
+```
+
+=== Structured concurrency
+
+```java
+void handle(Request request, Response response)
+		throws InterruptedException {
+	// define explicit success/error handling
+	try (var scope = new StructuredTaskScope
+			.ShutdownOnFailure()) {
+		var futureA = scope.fork(() -> doA(request));
+		var futureB = scope.fork(() -> doB(request));
+		// wait explicitly until success criteria met
+		scope.join();
+		scope.throwIfFailed();
+
+		response.send(futureA.get() + futureB.get());
+	} catch (ExecutionException ex) {
+		response.fail(ex);
+	}
+}
+```
+
+=== Structured concurrency
+
+* forked tasks are children of the scope
+* creates relationship between threads
+* success/failure policy can be defined +
+  across all children
+
+[state=empty,background-color=white]
+=== !
+image::images/thread-dump.png[background, size=contain]

@@ -1,0 +1,36 @@
+== Project Loom
+
+> JVM features and APIs for supporting easy-to-use, high-throughput, lightweight concurrency and new programming models
+
+Profile:
+
+* http://openjdk.java.net/projects/loom/[project] /
+https://wiki.openjdk.java.net/display/loom/Main[wiki] /
+http://mail.openjdk.java.net/mailman/listinfo/loom-dev[mailing list] /
+http://jdk.java.net/loom[early access builds]
+* launched January 2018
+* led by Ron Pressler
+
+=== Project Loom
+
+Virtual threads:
+
+* code is simple to write, debug, profile
+* high throughput
+* new programing model
+
+Structured concurrency:
+
+* clearer concurrency code
+* simpler failure/success policies
+* better debugging
+
+=== Deeper Dives
+
+* 📝 https://inside.java/2021/11/30/on-parallelism-and-concurrency/[On Parallelism and Concurrency]
+* 📝 https://250bpm.com/blog:71/[Structured Concurrency]
+* 📝 https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/[Notes on structured concurrency [...\]]
+* 🎥 https://www.youtube.com/watch?v=fq0OEX0XYR8[Modern, Scalable Concurrency for the Java Platform] +
+  (Sep 2021)
+* 🎥 https://www.youtube.com/watch?v=KG24inClY2M[State of Project Loom with Ron Pressler] (Jun 2021)
+* 🎥 https://www.youtube.com/watch?v=lKSSBvRDmTg[Java 19 Virtual Threads - JEP Café #11] (Jun 2022)
