@@ -45,6 +45,7 @@ include::../_shared/java-stream-on-title-and-footer.adoc[]
 ++++
 <table class="toc">
 	<tr><td>Virtual Threads</td></tr>
+	<tr><td>Preparing Your Code</td></tr>
 	<tr><td>Structured Concurrency</td></tr>
 	<tr><td>Project Loom</td></tr>
 </table>
@@ -60,6 +61,8 @@ Slides at https://slides.nipafx.dev/[slides.nipafx.dev].
 // ####################### //
 
 include::threads.adoc[]
+
+include::details.adoc[]
 
 include::structured.adoc[]
 
