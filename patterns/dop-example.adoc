@@ -585,6 +585,22 @@ To keep operations maintainable:
 
 ⇝ Compile error when new type is added.
 
+=== Avoiding Default
+
+Use `_` to define default behavior:
+
+```java
+public static String createPageEmoji(Page page) {
+	return switch (page) {
+		case GitHubIssuePage issue -> "🐈";
+		case GitHubPrPage pr -> "🐙";
+		case ErrorPage _, ExternalPage _ -> "n.a.";
+	};
+}
+```
+
+⇝ Default behavior without `default` branch.
+
 === Where Are We?
 
 * operations separate from data
