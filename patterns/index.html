@@ -418,10 +418,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://www.meetup.com/de-DE/java-user-group-saarland-jugsaar/" title="JUG Saar"><img src="../_images/logo-jug-saar-295d2df4.png" alt="Logo of JUG Saar" class="logo" style="{host-logo-style}"></a>
+		<a href="http://www.majug.de/" title="JUG Mannheim"><img src="../_images/logo-majug-2d93cde8.png" alt="Logo of JUG Mannheim" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://www.meetup.com/de-DE/java-user-group-saarland-jugsaar/" title="JUG Saar website">JUG Saar</a></p>
-			<p><a href="https://twitter.com/jugsaar" title="JUG Saar on Twitter">@jugsaar</a></p>
+			<p><a href="http://www.majug.de/" title="JUG Mannheim website">JUG Mannheim</a></p>
+			<p><a href="https://twitter.com/majug" title="JUG Mannheim on Twitter">@majug</a></p>
 		</div>
 	</div>
 	<div class="participant">
@@ -443,10 +443,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://www.meetup.com/de-DE/java-user-group-saarland-jugsaar/" title="JUG Saar"><img src="../_images/logo-jug-saar-295d2df4.png" alt="Logo of JUG Saar" class="logo" style="{host-logo-style}"></a>
+		<a href="http://www.majug.de/" title="JUG Mannheim"><img src="../_images/logo-majug-2d93cde8.png" alt="Logo of JUG Mannheim" class="logo" style="{host-logo-style}"></a>
 		<div class="name"><p>
-			<a href="https://www.meetup.com/de-DE/java-user-group-saarland-jugsaar/" title="JUG Saar website">JUG Saar</a>
-			/ <a href="https://twitter.com/jugsaar" title="JUG Saar on Twitter">@jugsaar</a>
+			<a href="http://www.majug.de/" title="JUG Mannheim website">JUG Mannheim</a>
+			/ <a href="https://twitter.com/majug" title="JUG Mannheim on Twitter">@majug</a>
 		</p></div>
 	</div>
 </footer>
@@ -731,7 +731,15 @@ switch (page) {
 }</code></pre></div></div></div></section><section id="_operations_on_data_4"><h2>Operations On Data</h2><div class="slide-content"><div class="paragraph"><p>To keep operations maintainable:</p></div>
 <div class="ulist"><ul><li><p>switch over sealed types</p></li><li><p>enumerate all possible types<br>
 (even if you need to ignore some)</p></li><li><p>avoid <code>default</code> branch</p></li></ul></div>
-<div class="paragraph"><p>⇝ Compile error when new type is added.</p></div></div></section><section id="_where_are_we_2"><h2>Where Are We?</h2><div class="slide-content"><div class="ulist"><ul><li><p>operations separate from data</p></li><li><p>adding new operations is easy</p></li><li><p>adding new data types is more work,<br>
+<div class="paragraph"><p>⇝ Compile error when new type is added.</p></div></div></section><section id="_avoiding_default"><h2>Avoiding Default</h2><div class="slide-content"><div class="paragraph"><p>Use <code>_</code> to define default behavior:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public static String createPageEmoji(Page page) {
+	return switch (page) {
+		case GitHubIssuePage issue -&gt; "🐈";
+		case GitHubPrPage pr -&gt; "🐙";
+		case ErrorPage _, ExternalPage _ -&gt; "n.a.";
+	};
+}</code></pre></div></div>
+<div class="paragraph"><p>⇝ Default behavior without <code>default</code> branch.</p></div></div></section><section id="_where_are_we_2"><h2>Where Are We?</h2><div class="slide-content"><div class="ulist"><ul><li><p>operations separate from data</p></li><li><p>adding new operations is easy</p></li><li><p>adding new data types is more work,<br>
 but supported by the compiler</p></li></ul></div>
 <div class="paragraph"><p>⇝ Like the visitor pattern, but less painful.</p></div></div></section></section>
 <section><section id="_data_oriented_programming_5"><h2>Data-Oriented Programming</h2><div class="slide-content"><table class="toc">
