@@ -7,7 +7,7 @@ Virtual threads are cheap and plentiful:
 * allows liberal creation +
   of threads for subtasks
 
-⇝ Enables new concurrency programming models.
+⇝ Enables new concurrency programming model.
 
 === A first step
 
@@ -15,14 +15,14 @@ Whenever you need concurrent subtasks, +
 spawn virtual threads for each:
 
 ```java
-private static final ExecturoService VIRTUAL =
+private static final ExecutorService VIRTUAL =
 	Executors.newVirtualThreadPerTaskExecutor()
 
 void handle(Request request, Response response)
 		throws InterruptedException {
-	var futureA = executor.submit(this::taskA);
-	var futureB = executor.submit(this::taskB);
-	response.send(futureA.get() + futureB.get());
+	var taskA = VIRTUAL.submit(this::doA);
+	var taskB = VIRTUAL.submit(this::doB);
+	response.send(taskA.get() + taskB.get());
 }
 ```
 
@@ -34,6 +34,7 @@ But we can do (much) better!
 Emerged when the sea of statements and GOTOs +
 became unmaintainable:
 
+* prescribes control structures
 * prescribes single entry point +
   and clearly defined exit points
 * influenced languages and runtimes
@@ -43,7 +44,7 @@ The stricter approach made code (much) clearer!
 === Unstructured concurrency
 
 ```java
-private static final ExecturoService VIRTUAL =
+private static final ExecutorService VIRTUAL =
 	Executors.newVirtualThreadPerTaskExecutor()
 
 void handle(Request request, Response response)
@@ -51,25 +52,23 @@ void handle(Request request, Response response)
 	// what's the relationship between
 	// this and the two spawned threads?
 	// what happens when one of them fails?
-	var futureA = executor.submit(this::taskA);
-	var futureB = executor.submit(this::taskB);
+	var taskA = VIRTUAL.submit(this::doA);
+	var taskB = VIRTUAL.submit(this::doB);
 	// what if we only need the faster one?
-	response.send(futureA.get() + futureB.get());
+	response.send(taskA.get() + taskB.get());
 }
 ```
 
 === Structured concurrency
 
-Simlarly, _structured concurrency_ prescribes:
-
 > When the flow of execution splits +
 > into multiple concurrent flows, +
 > they rejoin in the same code block.
 
-⇝ Most threads are short-lived:
+⇝ Thread lifecycle is simple:
 
-* start when task begins
-* end on completion
+* starts when task begins
+* ends on completion
 
 ⇝ Enables parent-child/sibling relationships +
   and logical grouping of threads.
@@ -82,8 +81,8 @@ void handle(Request request, Response response)
 	// define explicit success/error handling
 	try (var scope = new StructuredTaskScope
 			.ShutdownOnFailure()) {
-		var taskA = scope.fork(() -> doA(request));
-		var taskB = scope.fork(() -> doB(request));
+		var taskA = scope.fork(this::doA);
+		var taskB = scope.fork(this::doB);
 		// wait explicitly until success criteria met
 		scope.join();
 		scope.throwIfFailed();

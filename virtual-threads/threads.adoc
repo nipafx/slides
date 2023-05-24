@@ -34,8 +34,7 @@ with Java's unit of concurrency (thread):
 
 Only use threads for actual computations:
 
-* use non-blocking APIs +
-  (with futures / reactive streams)
+* use non-blocking APIs (futures / reactive streams)
 * harder to write, challenging to debug/profile
 * incompatible with synchronous code
 * shares platform threads +
@@ -68,6 +67,36 @@ A _virtual_ thread:
 * scheduled by the Java runtime
 * requires no OS thread when waiting
 
+=== Virtual things
+
+*Virtual memory:*
+
+* maps large virtual address space +
+  to limited physical memory
+* gives illusion of plentiful memory
+
+*Virtual threads:*
+
+* map large number of virtual threads +
+  to a small number of OS threads
+* give the illusion of plentiful threads
+
+=== Virtual things
+
+Programs rarely care about virtual vs physical memory.
+
+Programs need rarely care about virtual vs platform thread.
+
+Instead:
+
+* write straightforward (blocking) code
+* runtime shares available OS threads
+* reduces the cost of blocking to near zero
+
+[state=empty,background-color=white]
+=== !
+image::images/one-million.jpg[background, size=cover]
+
 === Example
 
 ```java
@@ -88,10 +117,53 @@ try (var executor = Executors
 
 Virtual threads:
 
-* remove "number of threads" as bottle neck
+* remove "number of threads" as bottleneck
 * match app's unit of concurrency to Java's
 
 ⇝ _simplicity && throughput_
+
+=== Performance
+
+Virtual threads aren't "faster threads":
+
+* same number of CPU cycles
+* each task takes the same time (same _latency_)
+
+[%step]
+So why bother?
+
+=== Parallelism vs concurrency
+
+[options="header"]
+|============================================
+|                | Parallelism  | Concurrency
+| *Task origin*  | solution     | problem
+| *Control*      | developer    | environment
+| *Resource use* | coordinated  | competitive
+| *Metric*       | latency      | throughput
+| *Abstraction*  | CPU cores    | tasks
+| *# of threads* | # of cores   | # of tasks
+|============================================
+
+=== Performance
+
+When workload is not CPU-bound:
+
+* start waiting as early as possible
+* for as many tasks as possible
+
+⇝ Virtual threads increase _throughput_:
+
+* when workload is not CPU-bound
+* when number of concurrent tasks is high
+
+[NOTE.speaker]
+--
+* maximize progress other systems can make.
+* "high": more than a few thousand
+--
+
+// TODO: Elliot's benchmarks
 
 === Server How-To
 
@@ -136,45 +208,6 @@ public String handle() {
 ```
 
 (Requires `--add-opens java.base/java.lang=ALL-UNNAMED`.)
-
-=== Performance
-
-Virtual threads aren't "faster threads": +
-Each task takes the same time (same _latency_).
-
-[%step]
-So why bother?
-
-=== Parallelism vs concurrency
-
-[options="header"]
-|============================================
-|                | Parallelism  | Concurrency
-| *Task origin*  | solution     | problem
-| *Control*      | developer    | environment
-| *Resource use* | coordinated  | competitive
-| *Metric*       | latency      | throughput
-| *Abstraction*  | CPU cores    | tasks
-| *# of threads* | # of cores   | # of tasks
-|============================================
-
-=== Performance
-
-When workload is not CPU-bound:
-
-* start waiting as early as possible
-* for as many tasks as possible
-
-⇝ Virtual threads increase _throughput_:
-
-* when workload is not CPU-bound
-* when number of concurrent tasks is high
-
-[NOTE.speaker]
---
-* maximize progress other systems can make.
-* "high": more than a few thousand
---
 
 === Virtual Threads
 

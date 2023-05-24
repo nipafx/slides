@@ -46,6 +46,16 @@ public <T> T queryDatabase(Callable<T> query)
 }
 ```
 
+[%step]
+Where are the virtual threads? ⇝ Later.
+
+=== Caveats
+
+To understand virtual thread caveats +
+we need to understand how they work.
+
+(Also, it's very interesting.)
+
 === Under the hood
 
 The Java runtime manages virtual threads:
@@ -53,9 +63,11 @@ The Java runtime manages virtual threads:
 [%step]
 * runs them on a pool of _carrier threads_ +
 * on blocking call:
+[%step]
 ** internally calls non-blocking operation
 ** *_unmounts_ from carrier thread!*
 * when call returns: +
+[%step]
 ** _mounts_ to (other) carrier thread
 ** continues
 
@@ -103,10 +115,12 @@ Virtual threads work correctly with everything:
 
 But not all scale perfectly.
 
+// TODO: explain JFR events to discover issues
+
 === Caveat #1: capture
 
 Despite lots of internal rework
-(JEPs https://openjdk.java.net/jeps/353[353], https://openjdk.java.net/jeps/373[373]) +
+(e.g. JEPs https://openjdk.java.net/jeps/353[353], https://openjdk.java.net/jeps/373[373]) +
 not all blocking operations unmount.
 
 Some _capture_ platform thread:
@@ -124,9 +138,9 @@ Some operations _pin_ (operations don't unmount):
 
 * native method call (JNI)
 * foreign function call (FFM)
-* `synchronized` block
+* `synchronized` block (for now)
 
-⇝ No compensation; we can refactor.
+⇝ No compensation
 
 ⚠️ Problematic when:
 
@@ -145,7 +159,7 @@ If possible:
 === With synchronization
 
 ```java
-// guarantees sequential access, but pins 👎🏾
+// guarantees sequential access, but pins (for now) 👎🏾
 public synchronized String accessResource() {
 	return access();
 }
@@ -185,11 +199,12 @@ Thread-locals can hinder scalability:
 === With thread-local
 
 ```java
-final static ThreadLocal<Principal> PRINCIPAL =
+// copies value for each inheriting thread 👎🏾
+static final ThreadLocal<Principal> PRINCIPAL =
 	new ThreadLocal<>();
 
-void serve(Request request, Response response) {
-	var level = request.isAuthorized() ? ADMIN : GUEST;
+public void serve(Request request, Response response) {
+	var level = request.isAdmin() ? ADMIN : GUEST;
 	var principal = new Principal(level);
 	PRINCIPAL.set(principal);
 	Application.handle(request, response);
@@ -199,10 +214,11 @@ void serve(Request request, Response response) {
 === With scoped value
 
 ```java
-final static ScopedValue<Principal> PRINCIPAL =
+// immutable, so no copies needed 👍🏾
+static final ScopedValue<Principal> PRINCIPAL =
 	new ScopedValue<>();
 
-void serve(Request request, Response response) {
+public void serve(Request request, Response response) {
 	var level = request.isAdmin() ? ADMIN : GUEST;
 	var principal = new Principal(level);
 	ScopedValue
@@ -222,5 +238,5 @@ Also helpful:
 
 [start=2]
 . remove long-running I/O from pinned sections
-. replace `synchronized` with locks
 . replace thread-locals with scoped values
+. replace `synchronized` with locks
