@@ -1,46 +1,78 @@
-== Structured concurrency
+== Unlocking the full potential
 
-Structured programming:
+Virtual threads are cheap and plentiful:
+
+* no pooling necessary
+* allows thread per task
+* allows liberal creation +
+  of threads for subtasks
+
+⇝ Enables new concurrency programming models.
+
+=== A first step
+
+Whenever you need concurrent subtasks, +
+spawn virtual threads for each:
+
+```java
+private static final ExecturoService VIRTUAL =
+	Executors.newVirtualThreadPerTaskExecutor()
+
+void handle(Request request, Response response)
+		throws InterruptedException {
+	var futureA = executor.submit(this::taskA);
+	var futureB = executor.submit(this::taskB);
+	response.send(futureA.get() + futureB.get());
+}
+```
+
+[%step]
+But we can do (much) better!
+
+=== Structured programming
+
+Emerged when the sea of statements and GOTOs +
+became unmaintainable:
 
 * prescribes single entry point +
   and clearly defined exit points
 * influenced languages and runtimes
 
-Simlarly, structured concurrency prescribes:
+The stricter approach made code (much) clearer!
 
-> When the flow of execution splits into multiple concurrent flows, they rejoin in the same code block.
+=== Unstructured concurrency
+
+```java
+private static final ExecturoService VIRTUAL =
+	Executors.newVirtualThreadPerTaskExecutor()
+
+void handle(Request request, Response response)
+		throws InterruptedException {
+	// what's the relationship between
+	// this and the two spawned threads?
+	// what happens when one of them fails?
+	var futureA = executor.submit(this::taskA);
+	var futureB = executor.submit(this::taskB);
+	// what if we only need the faster one?
+	response.send(futureA.get() + futureB.get());
+}
+```
 
 === Structured concurrency
 
-> When the flow of execution splits into multiple concurrent flows, they rejoin in the same code block.
+Simlarly, _structured concurrency_ prescribes:
 
-⇝ Threads are short-lived:
+> When the flow of execution splits +
+> into multiple concurrent flows, +
+> they rejoin in the same code block.
+
+⇝ Most threads are short-lived:
 
 * start when task begins
 * end on completion
 
 ⇝ Enables parent-child/sibling relationships +
   and logical grouping of threads.
-
-=== Unstructured concurrency
-
-```java
-void handle(Request request, Response response)
-		throws InterruptedException {
-	try (var executor = Executors
-			.newVirtualThreadPerTaskExecutor()) {
-		// what's the relationship between
-		// this and the two spawned threads?
-		// what happens when one of them fails?
-		var futureA = executor.submit(this::taskA);
-		var futureB = executor.submit(this::taskB);
-		// what if we only need the faster one?
-		response.send(futureA.get() + futureB.get());
-	} catch (ExecutionException ex) {
-		response.fail(ex);
-	}
-}
-```
 
 === Structured concurrency
 
@@ -50,26 +82,34 @@ void handle(Request request, Response response)
 	// define explicit success/error handling
 	try (var scope = new StructuredTaskScope
 			.ShutdownOnFailure()) {
-		var futureA = scope.fork(() -> doA(request));
-		var futureB = scope.fork(() -> doB(request));
+		var taskA = scope.fork(() -> doA(request));
+		var taskB = scope.fork(() -> doB(request));
 		// wait explicitly until success criteria met
 		scope.join();
 		scope.throwIfFailed();
-
-		response.send(futureA.get() + futureB.get());
+		response.send(taskA.get() + taskB.get());
 	} catch (ExecutionException ex) {
 		response.fail(ex);
 	}
 }
 ```
 
-=== Structured concurrency
+=== Benefits
 
-* forked tasks are children of the scope
-* creates relationship between threads
 * success/failure policy can be defined +
   across all children
+* create your own (explicit) policies
+* forked tasks are children of the scope
+* creates relationship between threads
 
-[state=empty,background-color=white]
-=== !
-image::images/thread-dump.png[background, size=contain]
+=== Observability
+
+Every task scope thread knows its parent!
+
+During debugging/analyzing, you can:
+
+. navigate that thread's stack
+. navigate to its parent thread
+. GOTO 1
+
+A task's _entire_ context is visible.
