@@ -49,10 +49,10 @@ Return values that are deconstructed immediately:
 // type declaration
 sealed interface Match<T> { }
 
-record None<T>() implements MatchResult<T> { }
+record None<T>() implements Match<T> { }
 record Exact<T>(T entity) implements Match<T> { }
 record Fuzzies<T>(Collection<Fuzzy<T>> entities)
-	implements MatchResult<T> { }
+	implements Match<T> { }
 
 record Fuzzy<T>(T entity, int distance) { }
 
