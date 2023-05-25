@@ -764,10 +764,10 @@ but supported by the compiler</p></li></ul></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// type declaration
 sealed interface Match&lt;T&gt; { }
 
-record None&lt;T&gt;() implements MatchResult&lt;T&gt; { }
+record None&lt;T&gt;() implements Match&lt;T&gt; { }
 record Exact&lt;T&gt;(T entity) implements Match&lt;T&gt; { }
 record Fuzzies&lt;T&gt;(Collection&lt;Fuzzy&lt;T&gt;&gt; entities)
-	implements MatchResult&lt;T&gt; { }
+	implements Match&lt;T&gt; { }
 
 record Fuzzy&lt;T&gt;(T entity, int distance) { }
 
