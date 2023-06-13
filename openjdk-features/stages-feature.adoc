@@ -47,61 +47,7 @@ Java features:
 
 === Evolution
 
-Considerations for feature evolution/removal:
-
-* Does it hurt?
-* Is it used?
-* Can it be extended/improved?
-* Would a change/removal hurt?
-
-=== Some Removals
-
-Single underscore as variable name ⛔⑨: ::
-* rarely used
-* prevents very useful language feature
-* easy to fix
-Applet API ⚠️⑰: ::
-* unused and unusable
-Concurrent mark sweep GC ⛔⑭: ::
-* maintenance cost
-* lots of alternative GCs
-* easy to fix
-
-// Security manager::
-// * very low adoption
-// * easy to get wrong
-// * maintenance cost
-// * better mechansisms exist
-
-// Primitive wrapper constructors::
-// * prevent primitive types
-// * easy to fix
-
-// Finalization::
-// * easy to get wrong
-// * peformance & maintenance cost
-// * better mechansisms exist
-
-=== !
-[link=https://www.youtube.com/watch?v=3HnH6G_zcP0]
-image::images/inside-java-newscast-41.png[]
-
-Prepare Your Code Bases For Future Java +
-Inside Java Newscast #41
-
-=== Evolution
-
-Features are extremely stable +
-but not immutable.
-
-My guesstimates:
-
-* rate of change: 1%
-* survival rate: 99.9%
-
-=== Evolution
-
-But how does a feature become permanent?
+But where does a feature come from?
 
 Long story:
 
