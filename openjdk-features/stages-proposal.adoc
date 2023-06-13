@@ -8,9 +8,9 @@
 Defined in _JDK Enhancement Proposals_ (_JEPs_) +
 (essentally decision records):
 
-* string templates (https://openjdk.org/jeps/430[JEP 430])
-* sequenced collections (https://openjdk.org/jeps/431[JEP 431])
 * asynchronous stack trace VM API (https://openjdk.org/jeps/435[JEP 435])
+* statements before `super()` (https://openjdk.org/jeps/447[JEP 447])
+* compact object headers (https://openjdk.org/jeps/450[JEP 450])
 
 [state="empty",background-color="black"]
 === !
@@ -51,39 +51,38 @@ JEPs (as JBS issues) by states:
 * https://bugs.openjdk.org/issues/?jql=project%20%3D%20JDK%20AND%20issuetype%20%3D%20JEP%20AND%20status%20%3D%20Closed%20AND%20resolution%20%3D%20Delivered[Closed/Delivered JEPs]
 
 // UPDATE TO TODAY
+=== JEP Progression (All)
+
+// total/drafted: https://bugs.openjdk.org/browse/JDK-8046112?jql=project%20%3D%20JDK%20AND%20issuetype%20%3D%20JEP%20ORDER%20BY%20created%20ASC%2C%20lastViewed%20DESC
+* drafted: 437
+* open:
+// draft: https://bugs.openjdk.org/issues/?jql=project%20%3D%20JDK%20AND%20issuetype%20%3D%20JEP%20AND%20status%20%3D%20Draft
+** draft: 51
+// open & active: https://bugs.openjdk.org/issues/?jql=project%20%3D%20JDK%20AND%20issuetype%20%3D%20JEP%20AND%20status%20!%3D%20Closed%20AND%20status%20!%3D%20draft%20AND%20updated%20%3E%3D%20-156w%20ORDER%20BY%20created%20ASC
+** candidate & active: 33
+// open & dormant: https://bugs.openjdk.org/issues/?jql=project%20%3D%20JDK%20AND%20issuetype%20%3D%20JEP%20AND%20status%20!%3D%20Closed%20AND%20status%20!%3D%20draft%20AND%20updated%20%3C%20-156w%20ORDER%20BY%20created%20ASC
+** candidate & dormant: 13
+* closed:
+// withdrawn: CSS class "withdrawn" in https://openjdk.org/jeps/0
+** withdrawn: 18
+// rejected stats in JBS is borked; instead subtract "withdrawn" from https://bugs.openjdk.org/issues/?jql=project%20%3D%20JDK%20AND%20issuetype%20%3D%20JEP%20AND%20status%20%3D%20Closed%20AND%20resolution%20in%20(Rejected%2C%20Withdrawn)%20ORDER%20BY%20created%20ASC%2C%20lastViewed%20DESC
+** rejected: 31
+// delivered: https://bugs.openjdk.org/issues/?jql=project%20%3D%20JDK%20AND%20issuetype%20%3D%20JEP%20AND%20status%20%3D%20Closed%20AND%20resolution%20%3D%20Delivered
+** delivered: 291
+
+// UPDATE TO TODAY
 [state="empty",background-color="white"]
 === !
 image::images/jep-2.0-numbers.png[background, size=contain]
 
 // UPDATE TO TODAY
-=== JEP Progression (All)
-
-* drafted: 421
-** rejected: 26
-** still open: 55
-* candidate: 340
-** withdrawn: 18
-** open & active: 24
-** open & dormant: 13
-* delivered: 285
-
-// UPDATE TO TODAY
 === JEP Progression (Closed)
 
-* drafted: 329
-* candidate: 303 (90%)
-* delivered: 285 (85%)
-
-////
-Update numbers:
-* Total: https://bugs.openjdk.org/issues/?jql=project%20%3D%20JDK%20AND%20issuetype%20%3D%20JEP%20ORDER%20BY%20created%20ASC%2C%20lastViewed%20DESC
-* Draft: https://bugs.openjdk.org/issues/?jql=project%20%3D%20JDK%20AND%20issuetype%20%3D%20JEP%20AND%20status%20%3D%20Draft%20ORDER%20BY%20created%20ASC%2C%20lastViewed%20DESC
-* In flight - active (<3 years): https://bugs.openjdk.org/issues/?jql=project%20%3D%20JDK%20AND%20issuetype%20%3D%20JEP%20AND%20status%20!%3D%20Closed%20AND%20status%20!%3D%20draft%20AND%20updated%20%3E%3D%20-156w%20ORDER%20BY%20created%20ASC
-* In flight - dormant (>3 years): https://bugs.openjdk.org/issues/?jql=project%20%3D%20JDK%20AND%20issuetype%20%3D%20JEP%20AND%20status%20!%3D%20Closed%20AND%20status%20!%3D%20draft%20AND%20updated%20%3C%20-156w%20ORDER%20BY%20created%20ASC
-* Closed/Rejected + Closed/Withdrawn: https://bugs.openjdk.org/issues/?jql=project%20%3D%20JDK%20AND%20issuetype%20%3D%20JEP%20AND%20status%20%3D%20Closed%20AND%20resolution%20in%20(Rejected%2C%20Withdrawn)%20ORDER%20BY%20created%20ASC%2C%20lastViewed%20DESC
-* Closed/Withdrawn: strikethrough in https://openjdk.org/jeps/0
-* Closed/Delivered JEPs: https://bugs.openjdk.org/issues/?jql=project%20%3D%20JDK%20AND%20issuetype%20%3D%20JEP%20AND%20status%20%3D%20Closed%20AND%20resolution%20%3D%20Delivered
-////
+// drafted: "delivered" + "rejected" + "withdrawn" (all above)
+* drafted: 340
+* withdrawn: 18
+* rejected: 31
+* delivered: 291 (85%)
 
 // UPDATE TO TODAY
 === Artifacts
@@ -94,7 +93,7 @@ Often also come with implementations in +
 project forks or feature branches of openjdk/jdk, e.g.:
 
 * https://github.com/openjdk/valhalla[openjdk/valhalla]
-* https://github.com/openjdk/amber/tree/templated-strings[openjdk/amber 🌳 templated-strings]
+* https://github.com/openjdk/amber/tree/super-init[openjdk/amber 🌳 super-init]
 
 === Goals & Considerations
 

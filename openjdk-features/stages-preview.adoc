@@ -3,11 +3,14 @@
 {toc}
 
 // UPDATE CURRENT RELEASE
-=== Previews in Java 20
+=== Previews in Java 21
 
-* pattern matching for switch (https://openjdk.org/jeps/433[4th])
-* foreign function & memory API (https://openjdk.org/jeps/434[2nd])
-* virtual threads (https://openjdk.org/jeps/436[2nd])
+* foreign function & memory API (https://openjdk.org/jeps/442[3rd])
+* string templates (https://openjdk.org/jeps/430[1st])
+* simplified `main` (https://openjdk.org/jeps/445[1st])
+* unnamed patterns & variables (https://openjdk.org/jeps/443[1st])
+* scoped values (https://openjdk.org/jeps/446[1st])
+* structured concurrency (https://openjdk.org/jeps/453[1st])
 
 === Specification
 
@@ -16,7 +19,7 @@ The concept of preview features was:
 * introduced by https://openjdk.org/jeps/12[JEP 12]
 * refined by https://openjdk.org/jeps/8300604[a recent JEP draft]
 // UPDATE CURRENT RELEASE
-* specified by JLS (e.g., https://docs.oracle.com/javase/specs/jls/se19/html/jls-1.html#jls-1.5[for 19])
+* specified by JLS (e.g., https://docs.oracle.com/javase/specs/jls/se20/html/jls-1.html#jls-1.5[for 20])
 
 // UPDATE CURRENT RELEASE (maybe, it's not that important)
 [state="empty",background-color="white"]
