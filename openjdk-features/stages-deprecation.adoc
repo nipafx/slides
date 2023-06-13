@@ -15,6 +15,7 @@ Considerations for feature evolution/removal:
 * Can it be extended/improved?
 * Would a change/removal hurt?
 
+// UPDATE TO TODAY
 === Some Removals
 
 Single underscore as variable name ⛔⑨: ::
@@ -28,6 +29,7 @@ Concurrent mark sweep GC ⛔⑭: ::
 RMI Activation ⛔⑰: ::
 * obsolete and disused
 
+// UPDATE TO TODAY
 === Some Terminal Deprecations
 
 Primitive wrapper constructors ⚠️⑯: ::
@@ -62,5 +64,5 @@ but not immutable.
 
 My guesstimates:
 
-* rate of change: 1%
-* survival rate: 99.9%
+* rate of change: 0.5%
+* survival rate: 99.95%
