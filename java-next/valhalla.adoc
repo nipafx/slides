@@ -56,7 +56,8 @@ But not all custom types need that!
 Valhalla's goals is to unify the type system:
 
 * _value types_ (disavow identity)
-* something 🤷🏾‍♂️ (disavow identity + references)
+* _null-restriction_ + _implicit constructors_ +
+  (disavow identity + references)
 * _universal generics_ (`ArrayList<int>`)
 * _specialized generics_ (backed by `int[]`)
 
@@ -106,57 +107,104 @@ Benefits:
 
 === Getting rid of references
 
-Value types have references:
+In general, value types have references:
 
 * allow `null`
 * prevent flattening
 
 How do we get rid of them?
 
-=== Something 🤷🏾‍♂️
+=== Null-restriction
 
-Two proposals:
+No references = no `null`!
 
-* primitive classes
-* nullness markers
-
-=== Primitive types
-
-Proposed by https://openjdk.java.net/jeps/401[JEP 401]:
+⇝ Restrict variables to non-`null` values:
 
 ```java
-primitive class ComplexNumber { /* ... */ }
+// number can't be null
+ComplexNumber! number = // ...
 ```
 
-Properties:
+🤯🤯🤯
 
-* no identity (like value types)
-* no references:
-** non-nullable
-** default value has all fields set to their defaults
+=== Null-restriction
 
-=== Primitive types
+https://openjdk.java.net/jeps/401[JEP 401]:
 
-But:
+> A variable with a https://openjdk.java.net/jeps/8303099[null-restricted type] prevents attempts to set the variable to null. Details of this behavior are described in the referenced JEP.
 
-* declaration-site
-* requires a box, e.g. `ComplexNumber.ref`
-* ad-hoc solution to larger problem
+Let's follow that reference!
 
-=== Nullness markers
+[%step]
+image::images/null-restricted-jep.png[]
 
-Currently https://mail.openjdk.org/pipermail/valhalla-spec-experts/2023-February/002223.html[discussed on the mailing list]:
+=== Null-restriction
 
-* use-site nullness markers (yes: `?`, `!`, etc.)
-* value class + not null = flattenable
+https://openjdk.java.net/jeps/401[JEP 401] (continued):
 
-This is still very vague!
+> The details of general-purpose null-restricted types are still under development. The most relevant feature for this JEP is that the type of a variable or method return may use a ! suffix to indicate that it does not store null. This is enforced with runtime checks.
 
-=== Either way...
+[%step]
+_stuffing_brain_back_into_head.gif_
 
-* flattenable instances
-* performance comparable +
-  to today's primitives!
+=== Null-restriction
+
+Variable can't be null:
+
+```java
+ComplexNumber! number = // ...
+```
+
+But can `ComplexNumber` cope?
+
+=== Default instances
+
+The type needs a _default instance_:
+
+* implicit constructor
+* without code
+
+=== Implicit constructor
+
+```java
+value class ComplexNumber {
+	private double real;
+	private double imaginary;
+
+	// implicitly sets all fields to default values
+	public implicit ComplexNumber();
+
+	public ComplexNumber(double r, double i) {
+		// ...
+	}
+
+	// etc.
+
+}
+```
+
+=== No references
+
+The just-in-time compiler _can_ +
+inline/flatten variables …
+
+* of a value type
+* with implicit constructor
+* that are null-restricted
+
+Performance comparable to today's primitives! 🚀
+
+=== Emergent performance
+
+Don't create a type _in order to_ get performance.
+
+Instead:
+
+* "Is the type value-ish?" ⇝ value type
+* "Is all-fields-default usable?" ⇝ implicit constructor
+* "Is no `null` needed?" ⇝ restrict nullness
+
+Performance emerges from domain decisions!
 
 === Universal generics
 
@@ -184,8 +232,8 @@ Generics over primitives will avoid references!
 
 === Project Valhalla
 
-Value types and _something_ plus +
-universal and specialized generics:
+Value types, implicit constructors, null-restriction +
+plus universal and specialized generics:
 
 * fewer trade-offs between +
   design and performance
@@ -204,6 +252,14 @@ Makes Java more expressive and performant.
 ____
 At most one more iteration.
 ____
+
+=== Deeper Dives
+
+* https://openjdk.org/jeps/8277163[JEP draft]: Value Objects
+* https://openjdk.org/jeps/401[JEP 401]: Flattened Heap Layouts for Value Objects
+* https://openjdk.org/jeps/8277163[JEP draft 🥷🏾]: Null-restricted Types (?)
+* https://openjdk.org/jeps/402[JEP 402]: Enhanced Primitive Boxing
+* https://openjdk.org/jeps/8261529[JEP draft]: Universal Generics
 
 === Deeper Dives
 
