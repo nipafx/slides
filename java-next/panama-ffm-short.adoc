@@ -1,0 +1,32 @@
+=== Foreign memory
+
+Storing data off-heap is tough:
+
+* `ByteBuffer` is limited (2GB) and inefficient
+* `Unsafe` is... unsafe and not supported
+
+=== Foreign-memory API
+
+Safe and performant foreign-memory API:
+
+* control (de)allocation: +
+ `Arena`, `MemorySegment`, `SegmentAllocator`
+* to access/manipulate: `MemoryLayout`, `VarHandle`
+
+=== Foreign functions
+
+JNI isn't ideal:
+
+* involves several tedious artifacts (header file, impl, ...)
+* can only interoperate with languages that align +
+  with OS/architecture the JVM was built for
+* doesn't reconcile Java/C type systems
+
+=== Foreign-function API
+
+Streamlined tooling/API for foreign functions +
+based on method handles:
+
+* `jextract`: generates method handles from header file
+* classes to call foreign functions +
+  `Linker`, `FunctionDescriptor`, `SymbolLookup`
