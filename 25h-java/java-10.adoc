@@ -139,7 +139,7 @@ rhetoricalQuestion.answer(yes -> "see my point?");
 === Style Guidelines
 
 Principles from the
-http://openjdk.java.net/projects/amber/LVTIstyle.html[official style guidelines]:
+https://openjdk.org/projects/amber/LVTIstyle.html[official style guidelines]:
 
 [%step]
 . Reading code is more important than writing it.
@@ -292,7 +292,7 @@ long l = 42
 💻 https://blog.codefx.org/java/java-10-var-type-inference/[tiny.cc/java-var] /
 ▶ https://www.youtube.com/watch?v=Le1DbpRZdRQ&index=1&list=PL_-IO8LOLuNp2stY1qBUtXlfMdJW7wvfT[tiny.cc/java-var-yt]
 * https://snyk.io/blog/local-type-inference-java-cheat-sheet[cheat sheet] (*⇜ print when getting started!*)
-* http://openjdk.java.net/projects/amber/LVTIstyle.html[official style guidelines]
+* https://openjdk.org/projects/amber/LVTIstyle.html[official style guidelines]
 * `var` and ...
 ** https://blog.codefx.org/java/intersection-types-var/[intersection types]
 ** https://blog.codefx.org/java/traits-var/[traits]
@@ -352,7 +352,7 @@ T orElseThrow(
 
 === Get Considered Harmful
 
-https://bugs.openjdk.java.net/browse/JDK-8160606[JDK-8160606]
+https://bugs.openjdk.org/browse/JDK-8160606[JDK-8160606]
 will deprecate +
 `Optional::get`.
 
@@ -392,7 +392,7 @@ DateTimeFormatter.localizedBy(Locale locale);
 
 === Even More New&nbsp;JVM&nbsp;Features
 
-* alternative memory device support (http://openjdk.java.net/jeps/316[JEP 316])
+* alternative memory device support (https://openjdk.org/jeps/316[JEP 316])
 
 
 === Application Class-Data Sharing
@@ -557,7 +557,7 @@ To invalidate the archive:
 Class path, class path... +
 what about the module path?
 
-[quote, 'http://openjdk.java.net/jeps/310[JEP 310]']
+[quote, 'https://openjdk.org/jeps/310[JEP 310]']
 ____
 In this release, CDS cannot archive classes from user-defined modules (such as those specified in `--module-path`).
 We plan to add that support in a future release.
@@ -575,7 +575,7 @@ Observe sharing with +
 
 === Even More Performance
 
-* Graal -- Java-based JIT compiler (http://openjdk.java.net/jeps/317[JEP 317])
-* parallel full GC for G1 (http://openjdk.java.net/jeps/307[JEP 307])
-* thread-local handshakes (http://openjdk.java.net/jeps/312[JEP 312])
+* Graal -- Java-based JIT compiler (https://openjdk.org/jeps/317[JEP 317])
+* parallel full GC for G1 (https://openjdk.org/jeps/307[JEP 307])
+* thread-local handshakes (https://openjdk.org/jeps/312[JEP 312])
 

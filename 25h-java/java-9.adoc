@@ -481,11 +481,11 @@ image::images/stack-walker-limit-with-estimated-size.png[role="diagram"]
 
 === Even More New APIs
 
-* multi-resolution images (http://openjdk.java.net/jeps/251[JEP 251])
-* native desktop integration (http://openjdk.java.net/jeps/272[JEP 272])
-* deserialization filter (http://openjdk.java.net/jeps/290[JEP 290])
-* DTLS (http://openjdk.java.net/jeps/219[JEP 219]), +
-  TLS ALPN and OCSP stapling (http://openjdk.java.net/jeps/244[JEP 244])
+* multi-resolution images (https://openjdk.org/jeps/251[JEP 251])
+* native desktop integration (https://openjdk.org/jeps/272[JEP 272])
+* deserialization filter (https://openjdk.org/jeps/290[JEP 290])
+* DTLS (https://openjdk.org/jeps/219[JEP 219]), +
+  TLS ALPN and OCSP stapling (https://openjdk.org/jeps/244[JEP 244])
 
 
 === Stream
@@ -735,11 +735,11 @@ Interesting `static` methods:
 
 === Even More Updated&nbsp;APIs
 
-* OASIS XML Catalogs 1.1 (http://openjdk.java.net/jeps/268[JEP 268]), +
-Xerces 2.11.0 (http://openjdk.java.net/jeps/255[JEP 255])
+* OASIS XML Catalogs 1.1 (https://openjdk.org/jeps/268[JEP 268]), +
+Xerces 2.11.0 (https://openjdk.org/jeps/255[JEP 255])
 // TODO does this include Xerxes support for XSLT 2?
 * Unicode support in +
-`PropertyResourceBundle` (http://openjdk.java.net/jeps/226[JEP 226])
+`PropertyResourceBundle` (https://openjdk.org/jeps/226[JEP 226])
 * `InputStream.transferTo(OutputStream);`
 
 Many lower-level APIs.
@@ -1015,11 +1015,11 @@ Module system and JDK take care of the rest!
 
 === Even More New&nbsp;JVM&nbsp;Features
 
-* new version strings (http://openjdk.java.net/jeps/223[JEP 223])
-* GNU-style command line options (http://openjdk.java.net/jeps/293[JEP 293])
-* command line flag validation (http://openjdk.java.net/jeps/245[JEP 245])
-* reserved stack areas (http://openjdk.java.net/jeps/270[JEP 270])
-* Unicode 7 & 8 (JEPS http://openjdk.java.net/jeps/227[227] & http://openjdk.java.net/jeps/267[267])
+* new version strings (https://openjdk.org/jeps/223[JEP 223])
+* GNU-style command line options (https://openjdk.org/jeps/293[JEP 293])
+* command line flag validation (https://openjdk.org/jeps/245[JEP 245])
+* reserved stack areas (https://openjdk.org/jeps/270[JEP 270])
+* Unicode 7 & 8 (JEPS https://openjdk.org/jeps/227[227] & https://openjdk.org/jeps/267[267])
 
 
 === Compact Strings
@@ -1155,11 +1155,11 @@ The Lord Of The Strings]
 
 === Even More Performance
 
-* G1 default GC (http://openjdk.java.net/jeps/248[JEP 248])
-* cgroup-memory limits (https://bugs.openjdk.java.net/browse/JDK-8170888[JDK-8170888])
-* contended locks (http://openjdk.java.net/jeps/143[JEP 143])
-* security manager (http://openjdk.java.net/jeps/232[JEP 232])
-// * intern strings in CDS archives (http://openjdk.java.net/jeps/250[JEP 250])
-* Java 2D rendering (http://openjdk.java.net/jeps/265[JEP 265])
-* GHASH/RSA computation (http://openjdk.java.net/jeps/246[JEP 246])
-* Java-level JVM compiler interface (http://openjdk.java.net/jeps/243[JEP 243])
+* G1 default GC (https://openjdk.org/jeps/248[JEP 248])
+* cgroup-memory limits (https://bugs.openjdk.org/browse/JDK-8170888[JDK-8170888])
+* contended locks (https://openjdk.org/jeps/143[JEP 143])
+* security manager (https://openjdk.org/jeps/232[JEP 232])
+// * intern strings in CDS archives (https://openjdk.org/jeps/250[JEP 250])
+* Java 2D rendering (https://openjdk.org/jeps/265[JEP 265])
+* GHASH/RSA computation (https://openjdk.org/jeps/246[JEP 246])
+* Java-level JVM compiler interface (https://openjdk.org/jeps/243[JEP 243])

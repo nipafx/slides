@@ -251,7 +251,7 @@ To invalidate the archive:
 Class path, class path... +
 what about the module path?
 
-[quote, 'http://openjdk.java.net/jeps/310[JEP 310]']
+[quote, 'https://openjdk.org/jeps/310[JEP 310]']
 ____
 In this release, CDS cannot archive classes from user-defined modules (such as those specified in `--module-path`).
 We plan to add that support in a future release.
@@ -421,65 +421,65 @@ The Lord Of The Strings]
 
 *In Java 9:*
 
-* cgroup-memory limits (https://bugs.openjdk.java.net/browse/JDK-8170888[JDK-8170888])
-* contended locks (http://openjdk.java.net/jeps/143[JEP 143])
-* security manager (http://openjdk.java.net/jeps/232[JEP 232])
-* intern strings in CDS archives (http://openjdk.java.net/jeps/250[JEP 250])
-* Java 2D rendering (http://openjdk.java.net/jeps/265[JEP 265])
-* GHASH/RSA computation (http://openjdk.java.net/jeps/246[JEP 246])
-* Java-level JVM compiler interface (http://openjdk.java.net/jeps/243[JEP 243])
+* cgroup-memory limits (https://bugs.openjdk.org/browse/JDK-8170888[JDK-8170888])
+* contended locks (https://openjdk.org/jeps/143[JEP 143])
+* security manager (https://openjdk.org/jeps/232[JEP 232])
+* intern strings in CDS archives (https://openjdk.org/jeps/250[JEP 250])
+* Java 2D rendering (https://openjdk.org/jeps/265[JEP 265])
+* GHASH/RSA computation (https://openjdk.org/jeps/246[JEP 246])
+* Java-level JVM compiler interface (https://openjdk.org/jeps/243[JEP 243])
 
 === Even More Performance
 
 *In Java 10:*
 
-* thread-local handshakes (http://openjdk.java.net/jeps/312[JEP 312])
+* thread-local handshakes (https://openjdk.org/jeps/312[JEP 312])
 
 *In Java 11:*
 
-* low-overhead heap profiling (http://openjdk.java.net/jeps/331[JEP 331])
-* open-source Flight Recorder (http://openjdk.java.net/jeps/328[JEP 328])
+* low-overhead heap profiling (https://openjdk.org/jeps/331[JEP 331])
+* open-source Flight Recorder (https://openjdk.org/jeps/328[JEP 328])
 
 *In Java 14:*
 
-* JFR event streaming API (https://openjdk.java.net/jeps/349[JEP 349])
+* JFR event streaming API (https://openjdk.org/jeps/349[JEP 349])
 
 === Garbage Collectors
 
 G1, ZGC and Shenandoah are actively developed +
 and become faster in each release.
 
-* ⑨: G1 is default (http://openjdk.java.net/jeps/248[JEP 248])
+* ⑨: G1 is default (https://openjdk.org/jeps/248[JEP 248])
 * ⑮: ZGC and Shenandoah are production features +
-(http://openjdk.java.net/jeps/377[JEP 377]) and (http://openjdk.java.net/jeps/379[JEP 379])
+(https://openjdk.org/jeps/377[JEP 377]) and (https://openjdk.org/jeps/379[JEP 379])
 
 ////
 
 *In Java 10:*
 
-* parallel full GC for G1 (http://openjdk.java.net/jeps/307[JEP 307])
+* parallel full GC for G1 (https://openjdk.org/jeps/307[JEP 307])
 
 *In Java 11:*
 
-* Epsilon GC (http://openjdk.java.net/jeps/318[JEP 318])
+* Epsilon GC (https://openjdk.org/jeps/318[JEP 318])
 
 *In Java 12:*
 
-* Shenandoah (http://openjdk.java.net/jeps/189[JEP 189])
+* Shenandoah (https://openjdk.org/jeps/189[JEP 189])
 * G1 improvements:
-** abortable mixed collections (http://openjdk.java.net/jeps/344[JEP 344])
-** promptly return unused memory (http://openjdk.java.net/jeps/346[JEP 346])
+** abortable mixed collections (https://openjdk.org/jeps/344[JEP 344])
+** promptly return unused memory (https://openjdk.org/jeps/346[JEP 346])
 
 *In Java 13:*
 
 * Shenandoah improvements:
-** internals (https://bugs.openjdk.java.net/browse/JDK-8221766[JDK-8221766], https://bugs.openjdk.java.net/browse/JDK-8224584[JDK-8224584])
-** more platforms (https://bugs.openjdk.java.net/browse/JDK-8225048[JDK-8225048], https://bugs.openjdk.java.net/browse/JDK-8223767[JDK-8223767])
+** internals (https://bugs.openjdk.org/browse/JDK-8221766[JDK-8221766], https://bugs.openjdk.org/browse/JDK-8224584[JDK-8224584])
+** more platforms (https://bugs.openjdk.org/browse/JDK-8225048[JDK-8225048], https://bugs.openjdk.org/browse/JDK-8223767[JDK-8223767])
 
 * ZGC improvements:
-** implements `-XX:SoftMaxHeapSize` (https://bugs.openjdk.java.net/browse/JDK-8222145[JDK-8222145])
-** max heap size of 16 TB (https://bugs.openjdk.java.net/browse/JDK-8221786[JDK-8221786])
-** uncommits unused memory (https://openjdk.java.net/jeps/351[JEP 351])
+** implements `-XX:SoftMaxHeapSize` (https://bugs.openjdk.org/browse/JDK-8222145[JDK-8222145])
+** max heap size of 16 TB (https://bugs.openjdk.org/browse/JDK-8221786[JDK-8221786])
+** uncommits unused memory (https://openjdk.org/jeps/351[JEP 351])
 
 *In Java 14:*
 

@@ -7,9 +7,9 @@ There's much more going on!
 Lots of API additions and changes:
 
 * sequenced collections ㉑ (https://openjdk.org/jeps/431[JEP 431])
-* IP address resolution SPI ⑱ (https://openjdk.java.net/jeps/418[JEP 418])
-* new random generator API ⑰ (https://openjdk.java.net/jeps/356[JEP 356])
-* Unix domain sockets ⑯ (https://openjdk.java.net/jeps/380[JEP 380])
+* IP address resolution SPI ⑱ (https://openjdk.org/jeps/418[JEP 418])
+* new random generator API ⑰ (https://openjdk.org/jeps/356[JEP 356])
+* Unix domain sockets ⑯ (https://openjdk.org/jeps/380[JEP 380])
 
 As well as lots of small additions to: +
   `String`, `Stream`, `Math`, `CompletableFuture`, regex, HTTP/2 API
@@ -18,24 +18,24 @@ As well as lots of small additions to: +
 
 Usability:
 
-* UTF-8 by default ⑱ (https://openjdk.java.net/jeps/400[JEP 400])
-* simple web server ⑱ (https://openjdk.java.net/jeps/408[JEP 408])
-* helpful NPEs ⑭ (https://openjdk.java.net/jeps/358[JEP 358])
+* UTF-8 by default ⑱ (https://openjdk.org/jeps/400[JEP 400])
+* simple web server ⑱ (https://openjdk.org/jeps/408[JEP 408])
+* helpful NPEs ⑭ (https://openjdk.org/jeps/358[JEP 358])
 
 Tooling:
 
 * JFR scrubbing ⑲ (https://bugs.openjdk.org/browse/JDK-8271585[JDK-8271585])
-* code snippets in Javadoc ⑱ (https://openjdk.java.net/jeps/413[JEP 413])
-* packaging tool ⑯ (https://openjdk.java.net/jeps/392[JEP 392])
-* JFR event streaming ⑭ (https://openjdk.java.net/jeps/349[JEP 349])
+* code snippets in Javadoc ⑱ (https://openjdk.org/jeps/413[JEP 413])
+* packaging tool ⑯ (https://openjdk.org/jeps/392[JEP 392])
+* JFR event streaming ⑭ (https://openjdk.org/jeps/349[JEP 349])
 
 === Continuous improvements
 
 Performance:
 
 * auto-generated CDS ⑲ (https://bugs.openjdk.org/browse/JDK-8261455[JDK-8261455])
-* dynamic CDS archives ⑬ (https://openjdk.java.net/jeps/350[JEP 350])
-* default CDS archives ⑫ (https://openjdk.java.net/jeps/341[JEP 341])
+* dynamic CDS archives ⑬ (https://openjdk.org/jeps/350[JEP 350])
+* default CDS archives ⑫ (https://openjdk.org/jeps/341[JEP 341])
 * generational ZGC ㉑ (https://openjdk.org/jeps/439[JEP 439])
 
 Continuous GC and performance improvements.
@@ -45,8 +45,8 @@ Continuous GC and performance improvements.
 Security:
 
 * key encapsulation mechanism API ㉑ (https://openjdk.org/jeps/452[JEP 452])
-* context-specific deserialization filters ⑰ (https://openjdk.java.net/jeps/415[JEP 415])
-* Edwards-Curve Digital Signature Algorithm ⑮ (https://openjdk.java.net/jeps/339[JEP 339])
+* context-specific deserialization filters ⑰ (https://openjdk.org/jeps/415[JEP 415])
+* Edwards-Curve Digital Signature Algorithm ⑮ (https://openjdk.org/jeps/339[JEP 339])
 * ongoing enhancements (https://seanjmullan.org/blog/[Sean Mullan's blog])
 
 
@@ -55,19 +55,19 @@ Security:
 Deprecations (for removal):
 
 * Windows 32-bit x86 port ㉑ (https://openjdk.org/jeps/449[JEP 449])
-* finalization ⑱ (https://openjdk.java.net/jeps/421[JEP 421])
-* security manager ⑰ (https://openjdk.java.net/jeps/411[JEP 411])
-* applet API ⑰ (https://openjdk.java.net/jeps/398[JEP 398])
-* primitive wrapper constructors ⑯ (https://openjdk.java.net/jeps/390[JEP 390])
-* biased locking ⑮ (https://openjdk.java.net/jeps/374[JEP 374])
+* finalization ⑱ (https://openjdk.org/jeps/421[JEP 421])
+* security manager ⑰ (https://openjdk.org/jeps/411[JEP 411])
+* applet API ⑰ (https://openjdk.org/jeps/398[JEP 398])
+* primitive wrapper constructors ⑯ (https://openjdk.org/jeps/390[JEP 390])
+* biased locking ⑮ (https://openjdk.org/jeps/374[JEP 374])
 
 === Cleaning house
 
 Already removed:
 
-* RMI activation ⑰ (https://openjdk.java.net/jeps/407[JEP 407])
-* Nashorn ⑮ (https://openjdk.java.net/jeps/372[JEP 372])
-* concurrent mark sweep GC ⑭ (https://openjdk.java.net/jeps/363[JEP 363])
+* RMI activation ⑰ (https://openjdk.org/jeps/407[JEP 407])
+* Nashorn ⑮ (https://openjdk.org/jeps/372[JEP 372])
+* concurrent mark sweep GC ⑭ (https://openjdk.org/jeps/363[JEP 363])
 
 === Migrations
 

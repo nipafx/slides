@@ -36,14 +36,14 @@ Records are about neither.
 
 === Record Semantics
 
-Core semantics (https://openjdk.java.net/jeps/395[source]):
+Core semantics (https://openjdk.org/jeps/395[source]):
 
 [quote]
 ____
 [Records] are classes that act as transparent carriers for immutable data.
 ____
 
-Transparency inspires this motto for records (https://cr.openjdk.java.net/~briangoetz/amber/datum.html[source]):
+Transparency inspires this motto for records (https://cr.openjdk.org/~briangoetz/amber/datum.html[source]):
 
 [quote]
 ____
@@ -90,7 +90,7 @@ their deconstruction becomes:
 
 === Destructuring
 
-https://openjdk.java.net/jeps/405[JEP 405] proposes _record patterns_ +
+https://openjdk.org/jeps/405[JEP 405] proposes _record patterns_ +
 that deconstruct records:
 
 [source,java]

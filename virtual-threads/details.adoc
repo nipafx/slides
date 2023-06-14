@@ -124,7 +124,7 @@ But not all scale perfectly.
 === Caveat #1: capture
 
 Despite lots of internal rework
-(e.g. JEPs https://openjdk.java.net/jeps/353[353], https://openjdk.java.net/jeps/373[373]) +
+(e.g. JEPs https://openjdk.org/jeps/353[353], https://openjdk.org/jeps/373[373]) +
 not all blocking operations unmount.
 
 Some _capture_ platform thread:
@@ -198,7 +198,7 @@ Thread-locals can hinder scalability:
 
 (There are also API shortcomings.)
 
-⇝ Refactor to scoped values (http://openjdk.java.net/jeps/446[JEP 446]).
+⇝ Refactor to scoped values (https://openjdk.org/jeps/446[JEP 446]).
 
 === With thread-local
 

@@ -120,7 +120,7 @@ record Add(List<Node> summands) implements Node { }
 
 === Pattern matching now
 
-Use type patterns in switch (https://openjdk.java.net/jeps/420[JEP 420] / 2nd preview in 18):
+Use type patterns in switch (https://openjdk.org/jeps/420[JEP 420] / 2nd preview in 18):
 
 ```java
 long evaluate(Node node) {
@@ -141,7 +141,7 @@ long evaluate(Node node) {
 
 === Pattern matching later
 
-Also use deconstruction patterns (https://openjdk.java.net/jeps/405[JEP 405] / not targeted):
+Also use deconstruction patterns (https://openjdk.org/jeps/405[JEP 405] / not targeted):
 
 ```java
 long evaluate(Node node) {
@@ -183,5 +183,5 @@ to tease apart the data.
 Possible future changes:
 
 * template strings (https://openjdk.org/jeps/430[JEP 403])
-* concise method bodies (https://openjdk.java.net/jeps/8209434[JEP draft])
-* serialization revamp (https://openjdk.java.net/projects/amber/design-notes/towards-better-serialization[white paper])
+* concise method bodies (https://openjdk.org/jeps/8209434[JEP draft])
+* serialization revamp (https://openjdk.org/projects/amber/design-notes/towards-better-serialization[white paper])

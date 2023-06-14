@@ -4,7 +4,7 @@ NOTE: These notes were never refined after they were created live on stream on 1
 
 * clone the JDK codebase
 * set up a build and execute it
-* make a few simple API changes https://bugs.openjdk.java.net/browse/JDK-8201273
+* make a few simple API changes https://bugs.openjdk.org/browse/JDK-8201273
 * build our hand-made JDK and use it
 
 # Hacking Notes
@@ -36,7 +36,7 @@ configure: This might be fixed by explicitly setting --with-boot-jdk
 	~> note folder $JTREG, e.g. ~/bin/jtreg
 * run `bash configure --disable-warnings-as-errors --with-jtreg=$JTREG` in JDK project root
 	* --disable-warnings-as-errors is necessary to prevent strncopy warnings from breaking the build
-			https://bugs.openjdk.java.net/browse/JDK-8218935
+			https://bugs.openjdk.org/browse/JDK-8218935
 	~> note folder $BUILD, e.g. build/linux-x86_64-server-release
 * run `make images`
 	~> make sure build works
@@ -50,7 +50,7 @@ configure: This might be fixed by explicitly setting --with-boot-jdk
 	* set $ANT_HOME TODO
 	* `bash bin/idea.sh java.base`
 * JTReg plugin for IntelliJ
-		https://openjdk.java.net/jtreg/intellij-plugin.html
+		https://openjdk.org/jtreg/intellij-plugin.html
 	* building, installing as described
 	* configuring:
 		* JTReg Home: $JTREG
@@ -62,19 +62,19 @@ configure: This might be fixed by explicitly setting --with-boot-jdk
 # TODO
 
 * process this:
-	https://openjdk.java.net/guide/
+	https://openjdk.org/guide/
 	https://github.com/openjdk/jdk/blob/master/doc/building.md
 * more resources
 	* check AdoptOpenJDK (slack? mailing list)
 * for questions
-	* re IDE setup: http://mail.openjdk.java.net/mailman/listinfo/ide-support-dev
-	* unspecific questions: https://mail.openjdk.java.net/mailman/listinfo/discuss
+	* re IDE setup: http://mail.openjdk.org/mailman/listinfo/ide-support-dev
+	* unspecific questions: https://mail.openjdk.org/mailman/listinfo/discuss
 	* AdoptJDK
 
 # Sources
 
-http://openjdk.java.net/guide/index.html
-http://openjdk.java.net/jtreg/
-https://openjdk.java.net/jtreg/intellij-plugin.html
+https://openjdk.org/guide/index.html
+https://openjdk.org/jtreg/
+https://openjdk.org/jtreg/intellij-plugin.html
 https://github.com/openjdk/jdk/blob/master/doc/building.md
 https://github.com/openjdk/jdk/blob/master/doc/testing.md

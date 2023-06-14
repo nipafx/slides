@@ -5,9 +5,9 @@ image::images/valhalla.jpg[background, size=cover]
 
 Profile:
 
-* http://openjdk.java.net/projects/valhalla/[project] /
-https://wiki.openjdk.java.net/display/valhalla/Main[wiki] /
-http://mail.openjdk.java.net/mailman/listinfo/valhalla-dev[mailing list] /
+* https://openjdk.org/projects/valhalla/[project] /
+https://wiki.openjdk.org/display/valhalla/Main[wiki] /
+http://mail.openjdk.org/mailman/listinfo/valhalla-dev[mailing list] /
 http://jdk.java.net/valhalla/[early access builds]
 * launched July 2014
 * led by Brian Goetz and John Rose
@@ -129,9 +129,9 @@ ComplexNumber! number = // ...
 
 === Null-restriction
 
-https://openjdk.java.net/jeps/401[JEP 401]:
+https://openjdk.org/jeps/401[JEP 401]:
 
-> A variable with a https://openjdk.java.net/jeps/8303099[null-restricted type] prevents attempts to set the variable to null. Details of this behavior are described in the referenced JEP.
+> A variable with a https://openjdk.org/jeps/8303099[null-restricted type] prevents attempts to set the variable to null. Details of this behavior are described in the referenced JEP.
 
 Let's follow that reference!
 
@@ -140,7 +140,7 @@ image::images/null-restricted-jep.png[]
 
 === Null-restriction
 
-https://openjdk.java.net/jeps/401[JEP 401] (continued):
+https://openjdk.org/jeps/401[JEP 401] (continued):
 
 > The details of general-purpose null-restricted types are still under development. The most relevant feature for this JEP is that the type of a variable or method return may use a ! suffix to indicate that it does not store null. This is enforced with runtime checks.
 
@@ -264,8 +264,8 @@ ____
 === Deeper Dives
 
 * 📝 State of Valhalla
-** https://openjdk.java.net/projects/valhalla/design-notes/state-of-valhalla/01-background[Part 1: The Road to Valhalla]
-** https://openjdk.java.net/projects/valhalla/design-notes/state-of-valhalla/02-object-model[Part 2: The Language Model]
-** https://openjdk.java.net/projects/valhalla/design-notes/state-of-valhalla/03-vm-model[Part 3: The JVM Model]
+** https://openjdk.org/projects/valhalla/design-notes/state-of-valhalla/01-background[Part 1: The Road to Valhalla]
+** https://openjdk.org/projects/valhalla/design-notes/state-of-valhalla/02-object-model[Part 2: The Language Model]
+** https://openjdk.org/projects/valhalla/design-notes/state-of-valhalla/03-vm-model[Part 3: The JVM Model]
 * 🎥 https://www.youtube.com/watch?v=x1_DBqJrykM[The State of Project Valhalla with Brian Goetz] (Aug 2021)
 * 🎥 https://www.youtube.com/watch?v=1H4vmT-Va4o[Valhalla Update with Brian Goetz] (Jul 2019)

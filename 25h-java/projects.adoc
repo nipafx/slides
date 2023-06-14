@@ -10,9 +10,9 @@ image::images/amber.jpg[background, size=cover]
 Profile:
 
 * led by Brian Goetz
-* http://openjdk.java.net/projects/amber/[project] /
-https://wiki.openjdk.java.net/display/amber/Main[wiki] /
-http://mail.openjdk.java.net/mailman/listinfo/amber-dev[mailing list] /
+* https://openjdk.org/projects/amber/[project] /
+https://wiki.openjdk.org/display/amber/Main[wiki] /
+http://mail.openjdk.org/mailman/listinfo/amber-dev[mailing list] /
 talks:
 https://www.youtube.com/watch?v=A-mxj2vhVAA&t=13m58s[0],
 https://www.youtube.com/watch?v=qul2B8iPC-o[1],
@@ -36,19 +36,19 @@ Amber wants to improve that situation!
 // TODO use circled versions
 
 * local-variable type inference with `var` +
-  (https://openjdk.java.net/jeps/286[JEP 286]; in Java 10)
+  (https://openjdk.org/jeps/286[JEP 286]; in Java 10)
 * switch expressions +
-  (http://openjdk.java.net/jeps/325[JEP 325]; preview in Java 12 and 13)
+  (https://openjdk.org/jeps/325[JEP 325]; preview in Java 12 and 13)
 * text blocks +
-  (https://openjdk.java.net/jeps/355[JEP 355]; preview in Java 13)
+  (https://openjdk.org/jeps/355[JEP 355]; preview in Java 13)
 
 === Endeavors
 
-* pattern matching (http://openjdk.java.net/jeps/305[JEP 305])
-* records (https://openjdk.java.net/jeps/359[JEP 359])
-* sealed types (https://openjdk.java.net/jeps/360[JEP 360])
-* serialization revamp (http://cr.openjdk.java.net/~briangoetz/amber/serialization.html[white paper])
-* concise method bodies (http://openjdk.java.net/jeps/8209434[JEP draft])
+* pattern matching (https://openjdk.org/jeps/305[JEP 305])
+* records (https://openjdk.org/jeps/359[JEP 359])
+* sealed types (https://openjdk.org/jeps/360[JEP 360])
+* serialization revamp (https://openjdk.org/projects/amber/design-notes/towards-better-serialization[white paper])
+* concise method bodies (https://openjdk.org/jeps/8209434[JEP draft])
 * raw string literals (maybe)
 
 === Pattern matching
@@ -236,7 +236,7 @@ String regex = \"\+(\d*[.])?\d"
 
 *But:*
 
-* was planned http://openjdk.java.net/jeps/326[as preview in Java 12] +
+* was planned https://openjdk.org/jeps/326[as preview in Java 12] +
 * removed last minute
 
 Turns out, it's complicated. 😁
@@ -276,9 +276,9 @@ image::images/valhalla.jpg[background, size=cover]
 Profile:
 
 * led by Brian Goetz and John Rose
-* http://openjdk.java.net/projects/valhalla/[project] /
-https://wiki.openjdk.java.net/display/valhalla/Main[wiki] /
-http://mail.openjdk.java.net/mailman/listinfo/valhalla-dev[mailing list] /
+* https://openjdk.org/projects/valhalla/[project] /
+https://wiki.openjdk.org/display/valhalla/Main[wiki] /
+http://mail.openjdk.org/mailman/listinfo/valhalla-dev[mailing list] /
 talks:
 https://www.youtube.com/watch?v=Tc9vs_HFHVo[0],
 https://www.youtube.com/watch?v=A-mxj2vhVAA&t=35m10s[1],
@@ -412,9 +412,9 @@ image::images/loom.jpg[background, size=cover]
 Profile:
 
 * led by Ron Pressler
-* http://openjdk.java.net/projects/loom/[project] /
-https://wiki.openjdk.java.net/display/loom/Main[wiki] /
-http://mail.openjdk.java.net/mailman/listinfo/loom-dev[mailing list] /
+* https://openjdk.org/projects/loom/[project] /
+https://wiki.openjdk.org/display/loom/Main[wiki] /
+http://mail.openjdk.org/mailman/listinfo/loom-dev[mailing list] /
 talks:
 https://www.youtube.com/watch?v=fpyub8fbrVE[0],
 https://www.youtube.com/watch?v=J31o0ZMQEnI[1],
@@ -518,6 +518,6 @@ image::images/leyden.png[background, size=cover]
 Profile:
 
 * led by Mark Reinhold
-* https://mail.openjdk.java.net/pipermail/discuss/2020-April/005429.html[Call for Discussion]
+* https://mail.openjdk.org/pipermail/discuss/2020-April/005429.html[Call for Discussion]
 * first discussed in April 2020
 * not yet officially launched
