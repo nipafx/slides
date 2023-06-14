@@ -6,15 +6,13 @@ There's much more going on!
 
 Lots of API additions and changes:
 
-* better named groups in regex ⑳
+* sequenced collections ㉑ (https://openjdk.org/jeps/431[JEP 431])
 * IP address resolution SPI ⑱ (https://openjdk.java.net/jeps/418[JEP 418])
 * new random generator API ⑰ (https://openjdk.java.net/jeps/356[JEP 356])
 * Unix domain sockets ⑯ (https://openjdk.java.net/jeps/380[JEP 380])
-* small additions to +
-  `String`, `Stream`, `Math`, +
-  `CompletableFuture`, HTTP/2 API
 
-As well as lots of internal refactorings.
+As well as lots of small additions to: +
+  `String`, `Stream`, `Math`, `CompletableFuture`, regex, HTTP/2 API
 
 === Continuous improvements
 
@@ -38,10 +36,15 @@ Performance:
 * auto-generated CDS ⑲ (https://bugs.openjdk.org/browse/JDK-8261455[JDK-8261455])
 * dynamic CDS archives ⑬ (https://openjdk.java.net/jeps/350[JEP 350])
 * default CDS archives ⑫ (https://openjdk.java.net/jeps/341[JEP 341])
-* continuous improvements in all garbage collectors
+* generational ZGC ㉑ (https://openjdk.org/jeps/439[JEP 439])
+
+Continuous GC and performance improvements.
+
+=== Continuous improvements
 
 Security:
 
+* key encapsulation mechanism API ㉑ (https://openjdk.org/jeps/452[JEP 452])
 * context-specific deserialization filters ⑰ (https://openjdk.java.net/jeps/415[JEP 415])
 * Edwards-Curve Digital Signature Algorithm ⑮ (https://openjdk.java.net/jeps/339[JEP 339])
 * ongoing enhancements (https://seanjmullan.org/blog/[Sean Mullan's blog])
@@ -51,11 +54,14 @@ Security:
 
 Deprecations (for removal):
 
+* Windows 32-bit x86 port ㉑ (https://openjdk.org/jeps/449[JEP 449])
 * finalization ⑱ (https://openjdk.java.net/jeps/421[JEP 421])
 * security manager ⑰ (https://openjdk.java.net/jeps/411[JEP 411])
 * applet API ⑰ (https://openjdk.java.net/jeps/398[JEP 398])
 * primitive wrapper constructors ⑯ (https://openjdk.java.net/jeps/390[JEP 390])
 * biased locking ⑮ (https://openjdk.java.net/jeps/374[JEP 374])
+
+=== Cleaning house
 
 Already removed:
 
@@ -79,16 +85,6 @@ Then you, too, can enjoy these projects ASAP!
 === Adoption
 
 [%step]
-* Java 11 is slowly but resolutely overtaking Java 8
+* Java 11+ overtook Java 8
 * adoption of 17 (from 11) looks good
-* always using latest is uncommon but persistent
-
-////
-
-Draft JEPs
-
-* http://openjdk.java.net/jeps/8158765[isolated methods]: JVM learns about methods that are not related to a class, which improves performance and reduces memory footprint of method handle infrastructure (great for Java, but also for dynamic JVM languages)
-* http://openjdk.java.net/jeps/8201271[vector API]: creates an API that allows the definition of Single Instruction Multiple Data (SIMD) instructions that reliably compile at runtime to optimal vector hardware instructions on supported CPU architectures and thus achieve superior performance than equivalent scalar computations
-* http://openjdk.java.net/jeps/8201462[better hash codes]: adds better hash functions (general, 64bit, well-mixing bits, faster for more fields, saltable) that can be used as alternative backends for `Object::hashCode` (opt-in). Will reduce excessive hash collisions, poor use of CPU cycles, excessive memory footprint in hashed structures
-
-////
+* lots of excitement for Java 21

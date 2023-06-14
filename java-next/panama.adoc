@@ -95,19 +95,18 @@ JNI isn't ideal:
 
 Safe and performant foreign-memory API:
 
-* to allocate: +
-  `MemorySegment`, `SegmentAllocator`
+* control (de)allocation: +
+ `Arena`, `MemorySegment`, `SegmentAllocator`
 * to access/manipulate: `MemoryLayout`, `VarHandle`
-* control (de)allocation: `Arena`, `SegmentScope`
 
 === Foreign-function API
 
 Streamlined tooling/API for foreign functions +
 based on method handles:
 
+* `jextract`: generates method handles from header file
 * classes to call foreign functions +
   `Linker`, `FunctionDescriptor`, `SymbolLookup`
-* `jextract`: generates method handles from header file
 
 ////
 
@@ -122,16 +121,15 @@ Storing data off-heap is tough:
 
 Panama introduces safe and performant API:
 
-* to allocate: +
-  `MemorySegment`, `SegmentAllocator`
+* control (de)allocation: +
+ `Arena`, `MemorySegment`, `SegmentAllocator`
 * to access/manipulate: `MemoryLayout`, `VarHandle`
-* control (de)allocation: `Arena`, `SegmentScope`
 
 === Foreign-memory API
 
 ```java
 // create `Arena` to manage off-heap memory lifetime
-try (Arena offHeap = Arena.openConfined()) {
+try (Arena offHeap = Arena.ofConfined()) {
 	// [allocate off-heap memory to store pointers]
 	// [do something with off-heap data]
 	// [copy data back to heap]
@@ -200,12 +198,12 @@ MethodHandle radixSort = linker
 	.downcallHandle(stdlib.find("radixsort"), ...);
 
 String[] javaStrings = { "mouse", "cat", "dog" };
-try (Arena offHeap = Arena.openConfined()) {
+try (Arena offHeap = Arena.ofConfined()) {
 	// [move Java strings off heap]
 	// invoke foreign function
 	radixSort.invoke(
-		offHeap, javaStrings.length,
-		MemoryAddress.NULL, '\0');
+		pointers, javaStrings.length,
+		MemorySegment.NULL, '\0');
 	// [copy data back to heap]
 }
 ```
@@ -217,13 +215,14 @@ try (Arena offHeap = Arena.openConfined()) {
 
 === Timeline
 
-Official plans:
-
-JDK 21 (2023)::
-* foreign APIs (3rd preview; https://openjdk.java.net/jeps/442[JEP 442])
+JDK 21::
+* foreign APIs in 3rd preview (https://openjdk.java.net/jeps/442[JEP 442])
+* vector API in 6th incubation (https://openjdk.org/jeps/448[JEP 448])
 
 Vector API needs to wait for Valhalla's +
 primitive types and universal generics.
+
+=== Timeline
 
 My personal (!) guess (!!):
 

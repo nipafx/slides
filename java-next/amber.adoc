@@ -23,6 +23,8 @@ Amber continuously improves that situation.
 
 === Delivered
 
+* patterns in switch ㉑ (https://openjdk.java.net/jeps/441[JEP 441])
+* record patterns ㉑ (https://openjdk.java.net/jeps/440[JEP 440])
 * sealed types ⑰ (https://openjdk.java.net/jeps/409[JEP 409])
 * records ⑯ (https://openjdk.java.net/jeps/395[JEP 395])
 * type pattern matching ⑯ (https://openjdk.java.net/jeps/394[JEP 394])
@@ -36,10 +38,10 @@ Amber continuously improves that situation.
 
 Amber's main thrust is pattern matching:
 
-* sealed types
+* improved switch
 * records
-* type pattern matching
-* switch expressions
+* sealed types
+* pattern matching
 
 === Inside Java Newscast #29
 
@@ -47,6 +49,25 @@ Amber's main thrust is pattern matching:
 image::images/inside-java-newscast-29.png[]
 
 include::amber-template-strings.adoc[]
+
+=== Amber endeavors
+
+Pattern matching:
+
+* unnamed patterns/variables (https://openjdk.org/jeps/443[JEP 443])
+* primitive types in patterns (https://openjdk.org/jeps/8288476[JEP draft])
+
+=== Amber endeavors
+
+Other endeavors and conversations:
+
+* simplified main (https://openjdk.org/jeps/445[JEP 445])
+* multi-file source launcher (https://openjdk.org/jeps/8304400[JEP draft])
+* relaxed `this()`/`super()` (https://openjdk.org/jeps/447[JEP 447])
+* deconstruction assignment (https://twitter.com/BrianGoetz/status/1599000138793771010[announcement])
+* `with` expressions (https://github.com/openjdk/amber-docs/blob/master/eg-drafts/reconstruction-records-and-classes.md[design document])
+* concise method bodies (https://openjdk.java.net/jeps/8209434[JEP draft])
+* serialization revamp (https://openjdk.org/projects/amber/design-notes/towards-better-serialization[design notes])
 
 === Project Amber
 
@@ -56,17 +77,21 @@ include::amber-template-strings.adoc[]
 
 === Timeline
 
-My personal (!) guesses (!!):
-
-JDK 21 (2023)::
+JDK 21::
 * pattern matching in `switch` finalizes (https://openjdk.org/jeps/441[JEP 441])
 * record patterns finalize (https://openjdk.org/jeps/440[JEP 440])
 * template strings preview (https://openjdk.org/jeps/430[JEP 430])
-* first steps to simplified `main`
+* simplified main previews (https://openjdk.org/jeps/445[JEP 445])
+
+=== Timeline
+
+My personal (!) guesses (!!):
+
 2024::
-* more simplified `main`
+* relaxed `this()`/`super()`
 * primitive types in patterns
-* unnamed patterns
+* more deconstruction
+* multi-file source launcher
 
 === Deeper Dives
 

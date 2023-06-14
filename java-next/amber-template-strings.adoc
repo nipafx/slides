@@ -110,15 +110,17 @@ Total     $27.19
 
 Often, strings are just exchange format, e.g.:
 
-* _start with_: `String` + values
-* _validate / sanitize to_: `String`
-* _parse to_: `Statement`, `JSONObject`, ...
+* start with: `String` + values
+* validate / sanitize (i.e. parse)
+* _dumb down to:_ `String`  🤔
+* parse to: `JSONObject`, `Statement`, …
 
 Why the detour?
 
 === Custom templating
 
-Top interface:
+`STR` is a singleton instance of +
+a `Processor` implementation:
 
 ```java
 public interface Processor<RESULT, EX> {
@@ -128,55 +130,24 @@ public interface Processor<RESULT, EX> {
 
 `RESULT` can be of any type!
 
-Specializations:
-
-```java
-public interface SimpleProcessor<RESULT>
-	extends ValidatingProcessor<RESULT, RuntimeException> { }
-
-public interface StringProcessor
-	extends TemplateProcessor<String> { }
-```
-
 === Custom templating
 
 ```java
-// might throw `SQLException`
+// prevents SQL injections
 Statement query = SQL."""
 	SELECT * FROM Person p
 	WHERE p.\{property} = '\{value}'
 	""";
 
+// validates & escapes JSON
 JSONObject doc = JSON."""
 	{
-		"name":    "\{name}",
-		"phone":   "\{phone}",
-		"address": "\{address}"
-	};
+		"name": "\{name}",
+		"year": "\{bday.getYear()}"
+	}
 	""";
 ```
 
 === Template strings
 
-* https://openjdk.org/jeps/430[JEP 430]
-* targeted to JDK 21 🙌🏾
-
-=== Amber endeavors
-
-Pattern matching:
-
-* pattern matching in `switch` (https://openjdk.org/jeps/441[JEP 441])
-* record patterns (https://openjdk.org/jeps/440[JEP 440])
-* unnamed patterns/variables (https://openjdk.org/jeps/443[JEP 443])
-* primitive types in patterns (https://bugs.openjdk.org/browse/JDK-8288476[JEP draft])
-
-=== Amber endeavors
-
-Other endeavors and conversations:
-
-* simplified `main` (https://openjdk.org/jeps/8302326[JEP draft])
-* relaxed `this()`/`super()` (https://openjdk.org/jeps/8300786[JEP draft])
-* concise method bodies (https://openjdk.java.net/jeps/8209434[JEP draft])
-* deconstruction assignment (https://twitter.com/BrianGoetz/status/1599000138793771010[announcement])
-* `with` expressions (https://github.com/openjdk/amber-docs/blob/master/eg-drafts/reconstruction-records-and-classes.md[design document])
-* serialization revamp (https://openjdk.org/projects/amber/design-notes/towards-better-serialization[design notes])
+Preview feature in Java 21! 🙌🏾
