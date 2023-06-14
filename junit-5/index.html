@@ -647,7 +647,7 @@ void runsOnLinux() { /*...*/ }</code></pre></div></div></div></section><section 
 	"var today = LocalDate.now()",
 	"var tomorrow = today.plusDays(1)",
 	"tomorrow.isAfter(today)" })
-void theDayAfterTomorrow() { /*...*/ }</code></pre></div></div></div></section><section id="_scripted_conditions_2"><h2>Scripted conditions</h2><div class="slide-content"><div class="paragraph"><p>Uses Nashorn, but <a href="http://openjdk.java.net/jeps/335">Nashorn is deprecated</a>!</p></div>
+void theDayAfterTomorrow() { /*...*/ }</code></pre></div></div></div></section><section id="_scripted_conditions_2"><h2>Scripted conditions</h2><div class="slide-content"><div class="paragraph"><p>Uses Nashorn, but <a href="https://openjdk.org/jeps/335">Nashorn is deprecated</a>!</p></div>
 <div class="paragraph"><p>Other Java Scripting API engines can be specified:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">@Test
 @EnabledIf(
@@ -1217,7 +1217,7 @@ an <a href="https://reinhard.codes/2016/07/30/double-brace-initialisation-and-ja
 <div class="paragraph"><p>Access a lambda&#8217;s parameter name<br>
 with
 <a href="http://benjiweber.co.uk/blog/2015/08/17/lambda-parameter-names-with-reflection/">this one weird trick</a><br>
-(that <a href="https://bugs.openjdk.java.net/browse/JDK-8138729">stopped working</a> on Java 9).</p></div></div></section><section id="_dynamic_tests_2"><h2>Dynamic tests</h2><div class="slide-content"><h3>Summary</h3><div class="ulist"><ul><li><p>to create tests at run time:</p><div class="ulist"><ul><li><p>write method that returns collection<br>
+(that <a href="https://bugs.openjdk.org/browse/JDK-8138729">stopped working</a> on Java 9).</p></div></div></section><section id="_dynamic_tests_2"><h2>Dynamic tests</h2><div class="slide-content"><h3>Summary</h3><div class="ulist"><ul><li><p>to create tests at run time:</p><div class="ulist"><ul><li><p>write method that returns collection<br>
 of <code>DynamicTest</code>/<code>DynamicContainer</code></p></li><li><p>annotate with <code>@TestFactory</code></p></li></ul></div></li><li><p>not fully integrated in lifecycle</p></li></ul></div>
 <div class="paragraph"><p>⇝ <a href="https://blog.codefx.org/libraries/junit-5-dynamic-tests/">More about dynamic tests</a>.</p></div></div></section></section>
 <section id="_from_4_to_5"><h2>From 4 to 5</h2><div class="slide-content"><table class="toc">

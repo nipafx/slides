@@ -1186,7 +1186,7 @@ String haikuBlock = """
 		audience: "text blocks",
 	}
 	""";</code></pre></div></div>
-<div class="paragraph"><p>⇝ Way fewer escapes in HTML/JSON/SQL/etc.</p></div></div></section><section id="_more_on_text_blocks"><h2>More on Text Blocks</h2><div class="slide-content"><div class="ulist"><ul><li><p><a href="https://blog.codefx.org/java/text-blocks/">Definitive Guide To Text Blocks</a></p></li><li><p><a href="http://cr.openjdk.java.net/~jlaskey/Strings/TextBlocksGuide_v9.html">Programmer&#8217;s Guide To Text Blocks</a></p></li></ul></div></div></section></section>
+<div class="paragraph"><p>⇝ Way fewer escapes in HTML/JSON/SQL/etc.</p></div></div></section><section id="_more_on_text_blocks"><h2>More on Text Blocks</h2><div class="slide-content"><div class="ulist"><ul><li><p><a href="https://blog.codefx.org/java/text-blocks/">Definitive Guide To Text Blocks</a></p></li><li><p><a href="https://openjdk.org/projects/amber/guides/text-blocks-guide">Programmer&#8217;s Guide To Text Blocks</a></p></li></ul></div></div></section></section>
 <section><section id="_new_language_features_8"><h2>New Language Features</h2><div class="slide-content"><table class="toc">
 	<tr><td>Pattern Matching Things...</td></tr>
 	<tr><td>Records ⑯</td></tr>
@@ -1247,7 +1247,7 @@ var variable = new Constant(5);
 var names = List.of("Max", "Maria");</code></pre></div></div></div></section><section id="_what_about_readability_2"><h2>What About Readability?</h2><div class="slide-content"><div class="paragraph"><p>Still think omitting types is always bad?</p></div>
 <div class="paragraph"><p>Ever wrote a lambda without declaring types?</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">rhetoricalQuestion.answer(yes -&gt; "see my point?");</code></pre></div></div></div></section><section id="_style_guidelines"><h2>Style Guidelines</h2><div class="slide-content"><div class="paragraph"><p>Principles from the
-<a href="http://openjdk.java.net/projects/amber/LVTIstyle.html">official style guidelines</a>:</p></div>
+<a href="https://openjdk.org/projects/amber/LVTIstyle.html">official style guidelines</a>:</p></div>
 <div class="olist arabic"><ol class="arabic"><li class="fragment"><p>Reading code is more important than writing it.</p></li><li class="fragment"><p>Code should be clear from local reasoning.</p></li><li class="fragment"><p>Code readability shouldn&#8217;t depend on IDEs.</p></li><li class="fragment"><p>Explicit types are a tradeoff.</p></li></ol></div></div></section><section id="_style_guidelines_2"><h2>Style Guidelines</h2><div class="slide-content"><div class="paragraph"><p>Guidelines:</p></div>
 <div class="olist arabic"><ol class="arabic"><li class="fragment"><p>Choose variable names that provide useful info.</p></li><li class="fragment"><p>Minimize the scope of local variables.</p></li><li class="fragment"><p>Consider <code>var</code> when the initializer provides sufficient information to the reader.</p></li><li class="fragment"><p>Use <code>var</code> to break up chained or nested expressions.</p></li><li class="fragment"><p>Don&#8217;t worry too much about "programming to the interface".</p></li><li class="fragment"><p>Take care when using <code>var</code> with diamonds or generics.</p></li><li class="fragment"><p>Take care when using <code>var</code> with literals.</p></li></ol></div></div></section><section id="_style_guidelines_3"><h2>Style Guidelines</h2><div class="slide-content"><div class="olist arabic"><ol class="arabic"><li><p>Choose variable names that provide useful info.</p></li></ol></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">/* ✘ */ var u = UserRepository.findUser(id);
@@ -1311,7 +1311,7 @@ byte b = 42;
 short s = 42;
 long l = 42;</code></pre></div></div></div></section><section id="_more_on_var"><h2>More on <code>var</code></h2><div class="slide-content"><div class="ulist"><ul><li><p>First Contact With <code>var</code> In Java 10<br>
 💻 <a href="https://blog.codefx.org/java/java-10-var-type-inference/">tiny.cc/java-var</a> /
-▶ <a href="https://www.youtube.com/watch?v=Le1DbpRZdRQ&amp;index=1&amp;list=PL_-IO8LOLuNp2stY1qBUtXlfMdJW7wvfT">tiny.cc/java-var-yt</a></p></li><li><p><a href="https://snyk.io/blog/local-type-inference-java-cheat-sheet">cheat sheet</a> (<strong>⇜ print when getting started!</strong>)</p></li><li><p><a href="http://openjdk.java.net/projects/amber/LVTIstyle.html">official style guidelines</a></p></li><li><p><code>var</code> and &#8230;&#8203;</p><div class="ulist"><ul><li><p><a href="https://blog.codefx.org/java/intersection-types-var/">intersection types</a></p></li><li><p><a href="https://nipafx.dev/java-var-traits">traits</a></p></li><li><p><a href="https://blog.codefx.org/java/tricks-var-anonymous-classes/">anonymous classes</a></p></li></ul></div></li></ul></div></div></section></section>
+▶ <a href="https://www.youtube.com/watch?v=Le1DbpRZdRQ&amp;index=1&amp;list=PL_-IO8LOLuNp2stY1qBUtXlfMdJW7wvfT">tiny.cc/java-var-yt</a></p></li><li><p><a href="https://snyk.io/blog/local-type-inference-java-cheat-sheet">cheat sheet</a> (<strong>⇜ print when getting started!</strong>)</p></li><li><p><a href="https://openjdk.org/projects/amber/LVTIstyle.html">official style guidelines</a></p></li><li><p><code>var</code> and &#8230;&#8203;</p><div class="ulist"><ul><li><p><a href="https://blog.codefx.org/java/intersection-types-var/">intersection types</a></p></li><li><p><a href="https://nipafx.dev/java-var-traits">traits</a></p></li><li><p><a href="https://blog.codefx.org/java/tricks-var-anonymous-classes/">anonymous classes</a></p></li></ul></div></li></ul></div></div></section></section>
 <section><section id="_new_language_features_9"><h2>New Language Features</h2><div class="slide-content"><table class="toc">
 	<tr><td>Pattern Matching Things...</td></tr>
 	<tr><td>More Cool Things...</td></tr>
@@ -1353,18 +1353,18 @@ long l = 42;</code></pre></div></div></div></section><section id="_more_on_var">
 	<tr><td>Deprecation Warnings ⑨⑯</td></tr>
 </table><div class="paragraph"><p>Making <code>try</code>-with-resources blocks cleaner.</p></div></div></section><section id="_useless_variable"><h2>Useless Variable</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">void doSomethingWith(Connection connection)
 		throws Exception {
-	try(Connection c = connection) {
+	try (Connection c = connection) {
 		c.doSomething();
 	}
 }</code></pre></div></div>
 <div class="paragraph"><p>Why is <code>c</code> necessary?</p></div></div></section><section id="_why_is_c_necessary"><h2>Why is <code>c</code> necessary?</h2><div class="slide-content"><div class="ulist"><ul><li><p>target of <code>close()</code> must be obvious<br>
 ⇝ resource should not be reassigned</p></li><li><p>easiest if resource is final</p></li><li><p>easiest if resource must be assigned<br>
 and can be made implicitly final</p></li></ul></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">try(Connection c = connection)</code></pre></div></div></div></section><section id="_effectively_final_resource"><h2>Effectively Final Resource</h2><div class="slide-content"><div class="paragraph"><p>But since Java 8 we have <em>effectively final</em>!</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">try (Connection c = connection)</code></pre></div></div></div></section><section id="_effectively_final_resource"><h2>Effectively Final Resource</h2><div class="slide-content"><div class="paragraph"><p>But since Java 8 we have <em>effectively final</em>!</p></div>
 <div class="paragraph"><p>This works in Java 9:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">void doSomethingWith(Connection connection)
 		throws Exception {
-	try(connection) {
+	try (connection) {
 		connection.doSomething();
 	}
 }</code></pre></div></div>
@@ -1448,7 +1448,7 @@ can be applied to private methods.</p></div></div></section></section>
 	<tr><td>Diamond Operator ⑨</td></tr>
 	<tr><td>SafeVarargs ⑨</td></tr>
 	<tr class="toc-current"><td>Deprecation Warnings ⑨⑯</td></tr>
-</table><div class="paragraph"><p>Some come, some go.</p></div></div></section><section id="_new_deprecation_warnings"><h2>New Deprecation Warnings</h2><div class="slide-content"><div class="paragraph"><p><a href="https://openjdk.java.net/projects/valhalla/">Project Valhalla</a> will bring <em>primitive classes</em>:</p></div>
+</table><div class="paragraph"><p>Some come, some go.</p></div></div></section><section id="_new_deprecation_warnings"><h2>New Deprecation Warnings</h2><div class="slide-content"><div class="paragraph"><p><a href="https://openjdk.org/projects/valhalla/">Project Valhalla</a> will bring <em>primitive classes</em>:</p></div>
 <div class="ulist"><ul><li><p>code like a class, work like an <code>int</code></p></li><li><p>have no identity</p></li><li><p>allow no identity-based operations</p></li></ul></div>
 <div class="paragraph"><p><a href="https://nipafx.dev/java-value-based-classes/">Value-based classes</a> are their precursors.</p></div></div></section><section id="_identity_based"><h2>Identity-based</h2><div class="slide-content"><div class="paragraph"><p>What is <em>identity-based</em>?</p></div>
 <div class="ulist"><ul><li><p>constructor calls</p></li><li><p>mutability</p></li><li><p>synchronization</p></li><li><p>serialization</p></li></ul></div>
@@ -1827,7 +1827,7 @@ T orElseThrow()
 	throws NoSuchElementException
 T orElseThrow(
 	Supplier&lt;EX&gt; exceptionSupplier)
-	throws EX</code></pre></div></div></div></section><section id="_get_considered_harmful"><h2>Get Considered Harmful</h2><div class="slide-content"><div class="paragraph"><p><a href="https://bugs.openjdk.java.net/browse/JDK-8160606">JDK-8160606</a>
+	throws EX</code></pre></div></div></div></section><section id="_get_considered_harmful"><h2>Get Considered Harmful</h2><div class="slide-content"><div class="paragraph"><p><a href="https://bugs.openjdk.org/browse/JDK-8160606">JDK-8160606</a>
 will deprecate<br>
 <code>Optional::get</code>.</p></div>
 <div class="ulist"><ul><li><p>when?</p></li><li><p>for removal?</p></li></ul></div>
@@ -1927,9 +1927,9 @@ CompletableFuture&lt;T&gt; exceptionallyComposeAsync(
 <section><section id="_even_more_updatedapis"><h2>Even More Updated&nbsp;APIs</h2><div class="slide-content"><div class="paragraph"><p>Two great sources on<br>
 Java API changes<br>
 between versions:</p></div><div class="ulist"><ul><li><p><a href="https://javaalmanac.io/">Java Version Almanac</a></p></li><li><p><a href="https://github.com/AdoptOpenJDK/jdk-api-diff">JDK API Diff Report Generator</a></p></li></ul></div></div></section><section id="_even_more_updatedapis_2"><h2>Even More Updated&nbsp;APIs</h2><div class="slide-content"><div class="paragraph"><p><strong>In Java 9:</strong></p></div>
-<div class="ulist"><ul><li><p>OASIS XML Catalogs 1.1 (<a href="http://openjdk.java.net/jeps/268">JEP 268</a>),<br>
-Xerces 2.11.0 (<a href="http://openjdk.java.net/jeps/255">JEP 255</a>)</p></li><li><p>Unicode support in<br>
-<code>PropertyResourceBundle</code> (<a href="http://openjdk.java.net/jeps/226">JEP 226</a>)</p></li></ul></div>
+<div class="ulist"><ul><li><p>OASIS XML Catalogs 1.1 (<a href="https://openjdk.org/jeps/268">JEP 268</a>),<br>
+Xerces 2.11.0 (<a href="https://openjdk.org/jeps/255">JEP 255</a>)</p></li><li><p>Unicode support in<br>
+<code>PropertyResourceBundle</code> (<a href="https://openjdk.org/jeps/226">JEP 226</a>)</p></li></ul></div>
 <div class="paragraph"><p>Many lower-level APIs.</p></div></div></section><section id="_even_more_newiomethods"><h2>Even More New&nbsp;I/O&nbsp;Methods</h2><div class="slide-content"><div class="paragraph"><p><strong>In Java 9 to 11:</strong></p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">Path.of(String); // ~ Paths.get(String) ⑪
 
@@ -1991,7 +1991,7 @@ Objects.checkFromIndexSize(long, long, long)</code></pre></div></div></div></sec
 	<tr><td>Stack-Walking ⑨</td></tr>
 </table><div class="paragraph"><p>Make full use of your CPUs.</p></div></div></section><section id="_vector_api"><h2>Vector API</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>Express vector computations that reliably compile at run time to optimal vector hardware instructions on supported CPU architectures and thus achieve superior performance to equivalent scalar computations</p></div></blockquote><div class="attribution">&#8212; JEP 338</div></div></div></section><section id="_vector_api_2"><h2>Vector API</h2><div class="slide-content"><div class="paragraph"><p>I don&#8217;t have much on this<br>
 but others do:</p></div>
-<div class="ulist"><ul><li><p><a href="https://openjdk.java.net/jeps/338">JEP 338: Vector API (Incubator)</a></p></li><li><p><a href="https://inside.java/2020/11/17/podcast-007/">Inside Java Podcast - Episode 7</a></p></li><li><p>FizzBuzz – SIMD Style!<br>
+<div class="ulist"><ul><li><p><a href="https://openjdk.org/jeps/338">JEP 338: Vector API (Incubator)</a></p></li><li><p><a href="https://inside.java/2020/11/17/podcast-007/">Inside Java Podcast - Episode 7</a></p></li><li><p>FizzBuzz – SIMD Style!<br>
 <a href="https://www.morling.dev/blog/fizzbuzz-simd-style/">article</a> &amp;
 <a href="https://github.com/gunnarmorling/simd-fizzbuzz">repo with benchmark</a></p></li></ul></div></div></section></section>
 <section><section id="_new_apis_3"><h2>New APIs</h2><div class="slide-content"><table class="toc">
@@ -2204,11 +2204,11 @@ Line 11</code></pre></div></div></div></section><section id="_options"><h2>Optio
 <div class="ulist"><ul><li><p>file name and line number</p></li></ul></div></div></section><section id="_performance_i"><h2>Performance I</h2><div class="slide-content"><div class="imageblock diagram"><img src="../_images/stack-walker-vs-exception-d1b3a260.png" alt="stack walker vs exception"></div></div></section><section id="_performance_ii"><h2>Performance II</h2><div class="slide-content"><div class="imageblock diagram"><img src="../_images/stack-walker-limit-with-estimated-size-b413296c.png" alt="stack walker limit with estimated size"></div></div></section><section id="_performance_iii"><h2>Performance III</h2><div class="slide-content"><div class="ulist"><ul><li><p>creating <code>StackTraceElement</code> is expensive<br>
 (for file name and line number)</p></li><li><p>lazy evaluation pays off for partial traversal</p></li></ul></div>
 <div class="paragraph"><p>(Benchmarks performed by <a href="https://twitter.com/arnaudroger">Arnaud Roger</a>)</p></div></div></section></section>
-<section><section id="_even_more_new_apis"><h2>Even More New APIs</h2><div class="slide-content"><div class="paragraph"><p><strong>In Java 9:</strong></p></div><div class="ulist"><ul><li><p>multi-resolution images (<a href="http://openjdk.java.net/jeps/251">JEP 251</a>)</p></li><li><p>native desktop integration (<a href="http://openjdk.java.net/jeps/272">JEP 272</a>)</p></li><li><p>deserialization filter (<a href="http://openjdk.java.net/jeps/290">JEP 290</a>)</p></li><li><p>DTLS (<a href="http://openjdk.java.net/jeps/219">JEP 219</a>),<br>
-TLS ALPN and OCSP stapling (<a href="http://openjdk.java.net/jeps/244">JEP 244</a>)</p></li></ul></div></div></section><section id="_even_more_new_apis_2"><h2>Even More New APIs</h2><div class="slide-content"><div class="paragraph"><p><strong>In Java 12:</strong></p></div>
-<div class="ulist"><ul><li><p><code>CompactNumberFormat</code> (<a href="https://bugs.openjdk.java.net/browse/JDK-8188147">JDK-8188147</a>)</p></li></ul></div>
+<section><section id="_even_more_new_apis"><h2>Even More New APIs</h2><div class="slide-content"><div class="paragraph"><p><strong>In Java 9:</strong></p></div><div class="ulist"><ul><li><p>multi-resolution images (<a href="https://openjdk.org/jeps/251">JEP 251</a>)</p></li><li><p>native desktop integration (<a href="https://openjdk.org/jeps/272">JEP 272</a>)</p></li><li><p>deserialization filter (<a href="https://openjdk.org/jeps/290">JEP 290</a>)</p></li><li><p>DTLS (<a href="https://openjdk.org/jeps/219">JEP 219</a>),<br>
+TLS ALPN and OCSP stapling (<a href="https://openjdk.org/jeps/244">JEP 244</a>)</p></li></ul></div></div></section><section id="_even_more_new_apis_2"><h2>Even More New APIs</h2><div class="slide-content"><div class="paragraph"><p><strong>In Java 12:</strong></p></div>
+<div class="ulist"><ul><li><p><code>CompactNumberFormat</code> (<a href="https://bugs.openjdk.org/browse/JDK-8188147">JDK-8188147</a>)</p></li></ul></div>
 <div class="paragraph"><p><strong>In Java 14:</strong></p></div>
-<div class="ulist"><ul><li><p>foreign-memory access (<a href="http://openjdk.java.net/jeps/370">JEP 370</a>)</p></li><li><p>non-volatile <code>MappedByteBuffer</code> (<a href="http://openjdk.java.net/jeps/352">JEP 352</a>)</p></li></ul></div>
+<div class="ulist"><ul><li><p>foreign-memory access (<a href="https://openjdk.org/jeps/370">JEP 370</a>)</p></li><li><p>non-volatile <code>MappedByteBuffer</code> (<a href="https://openjdk.org/jeps/352">JEP 352</a>)</p></li></ul></div>
 <div class="paragraph"><p>And often lots of low-level APIs.</p></div></div></section></section>
 <section id="_jvm_features"><h2>JVM Features</h2><div class="slide-content"><table class="toc">
 	<tr><td>Packaging Tool ⑯</td></tr>
@@ -2230,7 +2230,7 @@ TLS ALPN and OCSP stapling (<a href="http://openjdk.java.net/jeps/244">JEP 244</
 	<tr><td>Redirected Platform Logging ⑨</td></tr>
 </table><div class="paragraph"><p>Creating self-contained, OS-typical Java apps.</p></div></div></section><section id="_packaging_tool"><h2>Packaging Tool</h2><div class="slide-content"><div class="paragraph"><p>I don&#8217;t have much on this<br>
 but others do:</p></div>
-<div class="ulist"><ul><li><p><a href="https://openjdk.java.net/jeps/392">JEP 392: Packaging Tool</a></p></li><li><p><a href="https://www.infoq.com/news/2019/03/jep-343-jpackage/">Building Self-Contained, Installable Java Applications</a></p></li></ul></div></div></section></section>
+<div class="ulist"><ul><li><p><a href="https://openjdk.org/jeps/392">JEP 392: Packaging Tool</a></p></li><li><p><a href="https://www.infoq.com/news/2019/03/jep-343-jpackage/">Building Self-Contained, Installable Java Applications</a></p></li></ul></div></div></section></section>
 <section><section id="_jvm_features_3"><h2>JVM Features</h2><div class="slide-content"><table class="toc">
 	<tr><td>Packaging Tool ⑯</td></tr>
 	<tr class="toc-current"><td>Strong Encapsulation ⑯</td></tr>
@@ -2454,13 +2454,13 @@ as backend for JDK logging.</p></div></div></section><section id="_loggers_and_f
         <span class="hljs-keyword">with</span> system.out.logger.SystemOutLoggerFinder;
 }</code></pre></div></div>
 <div class="paragraph"><p>Module system and JDK take care of the rest!</p></div></div></section></section>
-<section><section id="_even_more_newjvmfeatures"><h2>Even More New&nbsp;JVM&nbsp;Features</h2><div class="slide-content"><div class="paragraph"><p><strong>In Java 9:</strong></p></div><div class="ulist"><ul><li><p>new version strings (<a href="http://openjdk.java.net/jeps/223">JEP 223</a>)</p></li><li><p>GNU-style command line options (<a href="http://openjdk.java.net/jeps/293">JEP 293</a>)</p></li><li><p>command line flag validation (<a href="http://openjdk.java.net/jeps/245">JEP 245</a>)</p></li><li><p>reserved stack areas (<a href="http://openjdk.java.net/jeps/270">JEP 270</a>)</p></li><li><p>Unicode 7 &amp; 8 (JEPS <a href="http://openjdk.java.net/jeps/227">227</a> &amp; <a href="http://openjdk.java.net/jeps/267">267</a>)</p></li></ul></div></div></section><section id="_even_more_newjvmfeatures_2"><h2>Even More New&nbsp;JVM&nbsp;Features</h2><div class="slide-content"><div class="paragraph"><p><strong>In Java 10:</strong></p></div>
-<div class="ulist"><ul><li><p>alternative memory device support (<a href="http://openjdk.java.net/jeps/316">JEP 316</a>)</p></li></ul></div>
+<section><section id="_even_more_newjvmfeatures"><h2>Even More New&nbsp;JVM&nbsp;Features</h2><div class="slide-content"><div class="paragraph"><p><strong>In Java 9:</strong></p></div><div class="ulist"><ul><li><p>new version strings (<a href="https://openjdk.org/jeps/223">JEP 223</a>)</p></li><li><p>GNU-style command line options (<a href="https://openjdk.org/jeps/293">JEP 293</a>)</p></li><li><p>command line flag validation (<a href="https://openjdk.org/jeps/245">JEP 245</a>)</p></li><li><p>reserved stack areas (<a href="https://openjdk.org/jeps/270">JEP 270</a>)</p></li><li><p>Unicode 7 &amp; 8 (JEPS <a href="https://openjdk.org/jeps/227">227</a> &amp; <a href="https://openjdk.org/jeps/267">267</a>)</p></li></ul></div></div></section><section id="_even_more_newjvmfeatures_2"><h2>Even More New&nbsp;JVM&nbsp;Features</h2><div class="slide-content"><div class="paragraph"><p><strong>In Java 10:</strong></p></div>
+<div class="ulist"><ul><li><p>alternative memory device support (<a href="https://openjdk.org/jeps/316">JEP 316</a>)</p></li></ul></div>
 <div class="paragraph"><p><strong>In Java 11:</strong></p></div>
-<div class="ulist"><ul><li><p>Unicode 9 &amp; 10 (<a href="http://openjdk.java.net/jeps/327">JEP 327</a>)</p></li><li><p>Curve25519 and Curve448 (<a href="http://openjdk.java.net/jeps/324">JEP 324</a>)</p></li><li><p>ChaCha20 and Poly1305 (<a href="http://openjdk.java.net/jeps/329">JEP 329</a>)</p></li><li><p>partial TLS 1.3 support (<a href="http://openjdk.java.net/jeps/332">JEP 332</a>)</p></li></ul></div></div></section><section id="_even_more_newjvmfeatures_3"><h2>Even More New&nbsp;JVM&nbsp;Features</h2><div class="slide-content"><div class="paragraph"><p><strong>In Java 12:</strong></p></div>
-<div class="ulist"><ul><li><p>constants API (<a href="http://openjdk.java.net/jeps/334">JEP 334</a>)</p></li><li><p>HmacPBE (<a href="https://bugs.openjdk.java.net/browse/JDK-8076190">JDK-8215450</a>)</p></li><li><p>finer PKCS12 KeyStore config (<a href="https://bugs.openjdk.java.net/browse/JDK-8076190">JDK-8076190</a>)</p></li></ul></div>
+<div class="ulist"><ul><li><p>Unicode 9 &amp; 10 (<a href="https://openjdk.org/jeps/327">JEP 327</a>)</p></li><li><p>Curve25519 and Curve448 (<a href="https://openjdk.org/jeps/324">JEP 324</a>)</p></li><li><p>ChaCha20 and Poly1305 (<a href="https://openjdk.org/jeps/329">JEP 329</a>)</p></li><li><p>partial TLS 1.3 support (<a href="https://openjdk.org/jeps/332">JEP 332</a>)</p></li></ul></div></div></section><section id="_even_more_newjvmfeatures_3"><h2>Even More New&nbsp;JVM&nbsp;Features</h2><div class="slide-content"><div class="paragraph"><p><strong>In Java 12:</strong></p></div>
+<div class="ulist"><ul><li><p>constants API (<a href="https://openjdk.org/jeps/334">JEP 334</a>)</p></li><li><p>HmacPBE (<a href="https://bugs.openjdk.org/browse/JDK-8215450">JDK-8215450</a>)</p></li><li><p>finer PKCS12 KeyStore config (<a href="https://bugs.openjdk.org/browse/JDK-8076190">JDK-8076190</a>)</p></li></ul></div>
 <div class="paragraph"><p><strong>In Java 15:</strong></p></div>
-<div class="ulist"><ul><li><p>Nashorn was removed (<a href="https://openjdk.java.net/jeps/372">JEP 372</a>)</p></li></ul></div></div></section></section>
+<div class="ulist"><ul><li><p>Nashorn was removed (<a href="https://openjdk.org/jeps/372">JEP 372</a>)</p></li></ul></div></div></section></section>
 <section id="_performance"><h2>Performance</h2><div class="slide-content"><table class="toc">
 	<tr><td>Garbage Collection Improvements ◎</td></tr>
 	<tr><td>Application Class-Data Sharing ⑩⑫⑬</td></tr>
@@ -2541,7 +2541,7 @@ in software development?</p></div>
 is prefix of current path</p></li></ul></div></li></ul></div></div></section><section id="_module_path"><h2>Module Path?</h2><div class="slide-content"><div class="paragraph"><p>Class path, class path&#8230;&#8203;<br>
 what about the module path?</p></div>
 <div class="quoteblock"><blockquote><div class="paragraph"><p>In this release, CDS cannot archive classes from user-defined modules (such as those specified in <code>--module-path</code>).
-We plan to add that support in a future release.</p></div></blockquote><div class="attribution">&#8212; <a href="http://openjdk.java.net/jeps/310">JEP 310</a></div></div></div></section><section id="_more_on_appcds"><h2>More On (App)CDS</h2><div class="slide-content"><div class="paragraph"><p>For more, read this article:<br>
+We plan to add that support in a future release.</p></div></blockquote><div class="attribution">&#8212; <a href="https://openjdk.org/jeps/310">JEP 310</a></div></div></div></section><section id="_more_on_appcds"><h2>More On (App)CDS</h2><div class="slide-content"><div class="paragraph"><p>For more, read this article:<br>
 <a href="https://blog.codefx.org/java/application-class-data-sharing/">tiny.cc/app-cds</a></p></div>
 <div class="paragraph"><p>Observe sharing with<br>
 <code>-Xlog:class+load</code><br>
@@ -2593,15 +2593,15 @@ directly to new <code>byte[]</code>.</p></div></div></section><section id="_perf
 performance improvements:</p></div>
 <div class="paragraph"><p><a href="https://www.youtube.com/watch?v=wIyeOaitmWM">Aleksey Shipilëv<br>
 The Lord Of The Strings</a></p></div></div></section></section>
-<section><section id="_even_more_performance"><h2>Even More Performance</h2><div class="slide-content"><div class="paragraph"><p><strong>In Java 9:</strong></p></div><div class="ulist"><ul><li><p>cgroup-memory limits (<a href="https://bugs.openjdk.java.net/browse/JDK-8170888">JDK-8170888</a>)</p></li><li><p>contended locks (<a href="http://openjdk.java.net/jeps/143">JEP 143</a>)</p></li><li><p>security manager (<a href="http://openjdk.java.net/jeps/232">JEP 232</a>)</p></li><li><p>intern strings in CDS archives (<a href="http://openjdk.java.net/jeps/250">JEP 250</a>)</p></li><li><p>Java 2D rendering (<a href="http://openjdk.java.net/jeps/265">JEP 265</a>)</p></li><li><p>GHASH/RSA computation (<a href="http://openjdk.java.net/jeps/246">JEP 246</a>)</p></li><li><p>Java-level JVM compiler interface (<a href="http://openjdk.java.net/jeps/243">JEP 243</a>)</p></li></ul></div></div></section><section id="_even_more_performance_2"><h2>Even More Performance</h2><div class="slide-content"><div class="paragraph"><p><strong>In Java 10:</strong></p></div>
-<div class="ulist"><ul><li><p>thread-local handshakes (<a href="http://openjdk.java.net/jeps/312">JEP 312</a>)</p></li></ul></div>
+<section><section id="_even_more_performance"><h2>Even More Performance</h2><div class="slide-content"><div class="paragraph"><p><strong>In Java 9:</strong></p></div><div class="ulist"><ul><li><p>cgroup-memory limits (<a href="https://bugs.openjdk.org/browse/JDK-8170888">JDK-8170888</a>)</p></li><li><p>contended locks (<a href="https://openjdk.org/jeps/143">JEP 143</a>)</p></li><li><p>security manager (<a href="https://openjdk.org/jeps/232">JEP 232</a>)</p></li><li><p>intern strings in CDS archives (<a href="https://openjdk.org/jeps/250">JEP 250</a>)</p></li><li><p>Java 2D rendering (<a href="https://openjdk.org/jeps/265">JEP 265</a>)</p></li><li><p>GHASH/RSA computation (<a href="https://openjdk.org/jeps/246">JEP 246</a>)</p></li><li><p>Java-level JVM compiler interface (<a href="https://openjdk.org/jeps/243">JEP 243</a>)</p></li></ul></div></div></section><section id="_even_more_performance_2"><h2>Even More Performance</h2><div class="slide-content"><div class="paragraph"><p><strong>In Java 10:</strong></p></div>
+<div class="ulist"><ul><li><p>thread-local handshakes (<a href="https://openjdk.org/jeps/312">JEP 312</a>)</p></li></ul></div>
 <div class="paragraph"><p><strong>In Java 11:</strong></p></div>
-<div class="ulist"><ul><li><p>low-overhead heap profiling (<a href="http://openjdk.java.net/jeps/331">JEP 331</a>)</p></li><li><p>open-source Flight Recorder (<a href="http://openjdk.java.net/jeps/328">JEP 328</a>)</p></li></ul></div>
+<div class="ulist"><ul><li><p>low-overhead heap profiling (<a href="https://openjdk.org/jeps/331">JEP 331</a>)</p></li><li><p>open-source Flight Recorder (<a href="https://openjdk.org/jeps/328">JEP 328</a>)</p></li></ul></div>
 <div class="paragraph"><p><strong>In Java 14:</strong></p></div>
-<div class="ulist"><ul><li><p>JFR event streaming API (<a href="https://openjdk.java.net/jeps/349">JEP 349</a>)</p></li></ul></div></div></section><section id="_garbage_collectors"><h2>Garbage Collectors</h2><div class="slide-content"><div class="paragraph"><p>G1, ZGC and Shenandoah are actively developed<br>
+<div class="ulist"><ul><li><p>JFR event streaming API (<a href="https://openjdk.org/jeps/349">JEP 349</a>)</p></li></ul></div></div></section><section id="_garbage_collectors"><h2>Garbage Collectors</h2><div class="slide-content"><div class="paragraph"><p>G1, ZGC and Shenandoah are actively developed<br>
 and become faster in each release.</p></div>
-<div class="ulist"><ul><li><p>⑨: G1 is default (<a href="http://openjdk.java.net/jeps/248">JEP 248</a>)</p></li><li><p>⑮: ZGC and Shenandoah are production features<br>
-(<a href="http://openjdk.java.net/jeps/377">JEP 377</a>) and (<a href="http://openjdk.java.net/jeps/379">JEP 379</a>)</p></li></ul></div></div></section><section id="_even_more_performance_3"><h2>Even More Performance</h2><div class="slide-content"><div class="paragraph"><p>And many, many smaller changes.</p></div>
+<div class="ulist"><ul><li><p>⑨: G1 is default (<a href="https://openjdk.org/jeps/248">JEP 248</a>)</p></li><li><p>⑮: ZGC and Shenandoah are production features<br>
+(<a href="https://openjdk.org/jeps/377">JEP 377</a>) and (<a href="https://openjdk.org/jeps/379">JEP 379</a>)</p></li></ul></div></div></section><section id="_even_more_performance_3"><h2>Even More Performance</h2><div class="slide-content"><div class="paragraph"><p>And many, many smaller changes.</p></div>
 <div class="ulist"><ul><li><p>new releases are generally faster<br></p></li><li><p>in the cloud:<br>
 less CPU/memory ⇝ lower costs</p></li></ul></div>
 <div class="paragraph"><p>⇝ Updating saves money!</p></div>

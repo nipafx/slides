@@ -482,9 +482,9 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 }</code></pre></div></div></div></section><section id="_why_do_we_want_that"><h2>Why Do We Want That?</h2><div class="slide-content"><div class="paragraph"><p>To benefit from encapsulation <em>and</em><br>
 boilerplate reduction?</p></div>
 <div class="paragraph"><p>The thing is:<br>
-Records are about neither.</p></div></div></section><section id="_record_semantics"><h2>Record Semantics</h2><div class="slide-content"><div class="paragraph"><p>Core semantics (<a href="https://openjdk.java.net/jeps/395">source</a>):</p></div>
+Records are about neither.</p></div></div></section><section id="_record_semantics"><h2>Record Semantics</h2><div class="slide-content"><div class="paragraph"><p>Core semantics (<a href="https://openjdk.org/jeps/395">source</a>):</p></div>
 <div class="quoteblock"><blockquote><div class="paragraph"><p>[Records] are classes that act as transparent carriers for immutable data.</p></div></blockquote></div>
-<div class="paragraph"><p>Transparency inspires this motto for records (<a href="https://cr.openjdk.java.net/~briangoetz/amber/datum.html">source</a>):</p></div>
+<div class="paragraph"><p>Transparency inspires this motto for records (<a href="https://cr.openjdk.org/~briangoetz/amber/datum.html">source</a>):</p></div>
 <div class="quoteblock"><blockquote><div class="paragraph"><p>The API for a record models the state, the whole state, and nothing but the state.</p></div></blockquote></div></div></section><section id="_restrictions"><h2>Restrictions</h2><div class="slide-content"><div class="paragraph"><p>Transparency implies restrictions:</p></div>
 <div class="ulist"><ul><li><p>an accessor for each component<br>
 (or the API doesn&#8217;t model the state)</p></li><li><p>an accessible constructor with<br>
@@ -500,7 +500,7 @@ it must conform to the restrictions.</p></div>
 <div class="paragraph"><p>(<a href="https://nipafx.dev/java-record-semantics/#math-sorry">A bit more on the math.</a>)</p></div></div></section><section id="_ok_but_why_2"><h2>Ok, But Why?!</h2><div class="slide-content"><div class="paragraph"><p>If records are tuples,<br>
 their deconstruction becomes:</p></div>
 <div class="ulist"><ul><li><p>easy</p></li><li><p>lossless</p></li></ul></div>
-<div class="paragraph"><p>⇝ We can do a few cool things!</p></div></div></section><section id="_destructuring"><h2>Destructuring</h2><div class="slide-content"><div class="paragraph"><p><a href="https://openjdk.java.net/jeps/405">JEP 405</a> proposes <em>record patterns</em><br>
+<div class="paragraph"><p>⇝ We can do a few cool things!</p></div></div></section><section id="_destructuring"><h2>Destructuring</h2><div class="slide-content"><div class="paragraph"><p><a href="https://openjdk.org/jeps/405">JEP 405</a> proposes <em>record patterns</em><br>
 that deconstruct records:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">if (range instanceof Range(int low, int high)
 		&amp;&amp; high &lt; low)
