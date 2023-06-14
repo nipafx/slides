@@ -1811,7 +1811,7 @@ Making `try`-with-resources blocks cleaner.
 ```java
 void doSomethingWith(Connection connection)
 		throws Exception {
-	try(Connection c = connection) {
+	try (Connection c = connection) {
 		c.doSomething();
 	}
 }
@@ -1828,7 +1828,7 @@ Why is `c` necessary?
 and can be made implicitly final
 
 ```java
-try(Connection c = connection)
+try (Connection c = connection)
 ```
 
 === Effectively Final Resource
@@ -1840,7 +1840,7 @@ This works in Java 9:
 ```java
 void doSomethingWith(Connection connection)
 		throws Exception {
-	try(connection) {
+	try (connection) {
 		connection.doSomething();
 	}
 }
