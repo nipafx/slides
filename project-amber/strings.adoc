@@ -78,7 +78,7 @@ String json = """
 
 === String Templates
 
-Java 21 will preview string templates (https://openjdk.org/jeps/430[JEP 430]):
+Java 21 previews string templates (https://openjdk.org/jeps/430[JEP 430]):
 
 * allow embedding expressions
 * understand need for explicit processing +
@@ -93,7 +93,7 @@ String json = STR."""
 	""";
 ```
 
-We'd be able to "enable" variable embedding.
+We can now "enable" variable embedding.
 
 [NOTE.speaker]
 --
@@ -165,7 +165,7 @@ Statement query = SQL."""
 
 * proposed for Java 12 (https://openjdk.org/jeps/326[JEP 326])
 * withdrawn due to complexity
-* still needed in some form (e.g. for regex)
+* would be convenient in some form
 
 ```java
 String regex = "\\[\\d{2,4}\\]"; // 🤔🤔🤔
@@ -173,7 +173,7 @@ String regex = "\\[\\d{2,4}\\]"; // 🤔🤔🤔
 String rawRegex = !"\[\d{2,4}\]" // 🤔
 ```
 
-We hope that, in the future, we can "enable" rawness. 🤞 +
+Maybe, in the future, we can "enable" rawness. 🤞 +
 (But no plans at the moment.)
 
 === Summary

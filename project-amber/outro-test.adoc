@@ -4,35 +4,35 @@ Apply what you learned!
 
 === Test
 
-Up to Java 21 previews:
+Up to Java 21:
 
 * `var`
 * text blocks
 * records
 * type/record patterns
-* string templates
+* string templates (preview)
+* simpler `main` (preview)
 
 And beyond:
 
-* simpler `main`
-* deconstruction assignments
+* deconstruction assignments (idea)
 
 === Project Amber
 
 Not on the test:
 
-* pattern matching in switch
-* unnamed patterns
 * sealed types
-* `with` expression
+* pattern matching in switch
+* unnamed patterns (preview)
+* `with` expression (idea)
 
 === Project Amber
 
 Amber is doing all that +
 *AND MORE*:
 
+* relaxed `this()`/`super()` (https://openjdk.org/jeps/447[JEP 447])
 * primitive types in patterns (https://bugs.openjdk.org/browse/JDK-8288476[JEP draft])
-* relaxed `this()`/`super()` (https://openjdk.org/jeps/8300786[JEP draft])
 * concise method bodies (https://openjdk.org/jeps/8209434[JEP draft])
 * serialization revamp (https://openjdk.org/projects/amber/design-notes/towards-better-serialization[design notes])
 

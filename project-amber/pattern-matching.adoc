@@ -213,8 +213,8 @@ public static String createPageName(Page page) {
 
 === Ignoring Data
 
-With unnamed patterns (https://openjdk.org/jeps/443[JEP 443]), +
-use `_` to ignore components:
+Java 21 previews unnamed patterns (https://openjdk.org/jeps/443[JEP 443]). +
+Use `_` to ignore components:
 
 ```java
 public static String createPageName(Page page) {
