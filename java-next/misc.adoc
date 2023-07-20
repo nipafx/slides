@@ -14,41 +14,36 @@ Lots of API additions and changes:
 As well as lots of small additions to: +
   `String`, `Stream`, `Math`, `CompletableFuture`, regex, HTTP/2 API
 
-=== Continuous improvements
-
-Usability:
+=== Usability
 
 * UTF-8 by default ⑱ (https://openjdk.org/jeps/400[JEP 400])
 * simple web server ⑱ (https://openjdk.org/jeps/408[JEP 408])
 * helpful NPEs ⑭ (https://openjdk.org/jeps/358[JEP 358])
 
-Tooling:
+=== Tooling
 
+* JFR `view` command ㉑ (https://bugs.openjdk.org/browse/JDK-8306704[JDK-8306704])
 * JFR scrubbing ⑲ (https://bugs.openjdk.org/browse/JDK-8271585[JDK-8271585])
 * code snippets in Javadoc ⑱ (https://openjdk.org/jeps/413[JEP 413])
 * packaging tool ⑯ (https://openjdk.org/jeps/392[JEP 392])
 * JFR event streaming ⑭ (https://openjdk.org/jeps/349[JEP 349])
 
-=== Continuous improvements
+=== Performance
 
-Performance:
-
+* generational ZGC ㉑ (https://openjdk.org/jeps/439[JEP 439])
 * auto-generated CDS ⑲ (https://bugs.openjdk.org/browse/JDK-8261455[JDK-8261455])
 * dynamic CDS archives ⑬ (https://openjdk.org/jeps/350[JEP 350])
 * default CDS archives ⑫ (https://openjdk.org/jeps/341[JEP 341])
-* generational ZGC ㉑ (https://openjdk.org/jeps/439[JEP 439])
 
-Continuous GC and performance improvements.
+Plus continuous GC and +
+performance improvements.
 
-=== Continuous improvements
-
-Security:
+=== Security
 
 * key encapsulation mechanism API ㉑ (https://openjdk.org/jeps/452[JEP 452])
 * context-specific deserialization filters ⑰ (https://openjdk.org/jeps/415[JEP 415])
 * Edwards-Curve Digital Signature Algorithm ⑮ (https://openjdk.org/jeps/339[JEP 339])
 * ongoing enhancements (https://seanjmullan.org/blog/[Sean Mullan's blog])
-
 
 === Cleaning house
 
