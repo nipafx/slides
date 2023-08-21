@@ -1,0 +1,162 @@
+== Java 21 💣💥
+
+{toc}
+
+=== String composition
+
+Composing strings in Java is cumbersome:
+
+```java
+String property = "last_name";
+String value = "Doe";
+
+// concatenation
+String query =
+	"SELECT * FROM Person p WHERE p."
+		+ property + " = '" + value + "'";
+// formatting
+String query =
+	"SELECT * FROM Person p WHERE p.%s = '%s'"
+		.formatted(property, value);
+```
+
+[%step]
+Comes with free SQL injection! 😳
+
+=== String interpolation
+
+Why not?
+
+```java
+// (fictional syntax!)
+String query =
+	"SELECT * FROM Person p "
+		+ "WHERE p.\{property} = '\{value}'";
+```
+
+[%step]
+Also comes with free SQL injection! 😳
+
+=== String interpolation
+
+SQL injections aren't the only concern.
+
+These also need validation and sanitization:
+
+* HTML/XML
+* JSON
+* YAML
+* ...
+
+All follow format-specific rules.
+
+=== String templates
+
+_[Preview in Java 21 -- https://openjdk.org/jeps/430[JEP 430]]_
+
+
+```java
+String query = STR."""
+	SELECT * FROM Person p
+	WHERE p.\{property} = '\{value}'
+	""";
+```
+
+_Template expression_ ingredients:
+
+* _template_ with embedded expressions +
+  ~> `StringTemplate`
+* _template processor_ (e.g. `STR`): +
+  transforms `StringTemplate` into `String`*
+
+=== Template procesor STR
+
+```java
+String form = STR."""
+	Desc     Unit   Qty   Amount
+	\{desc} $\{price} \{qty} $\{price * qty}
+
+	Subtotal  $\{price * qty}
+	Tax       $\{price * qty * tax}
+	Total     $\{price * qty * (1.0 + tax)}
+	""";
+```
+```
+Desc     Unit   Qty   Amount
+hammer   $7.88  3     $23.64
+
+Subtotal  $23.64
+Tax       $3.546
+Total     $27.186
+```
+
+=== Template processor FMT
+
+```java
+String form = FMT."""
+	Desc        Unit      Qty   Amount
+	%-10s\{desc} $%5.2f\{price} %5d\{qty} $%5.2f\{price * qty}
+
+	Subtotal  $%5.2f\{price * qty}
+	Tax       $%5.2f\{price * qty * tax}
+	Total     $%5.2f\{price * qty * (1.0 + tax)}
+	""";
+```
+```
+Desc        Unit      Qty   Amount
+hammer      $ 7.88      3   $23.64
+
+Subtotal  $23.64
+Tax       $ 3.55
+Total     $27.19
+```
+
+=== Why strings?
+
+Often, strings are just exchange format, e.g.:
+
+* start with: `String` + values
+* validate / sanitize (i.e. parse)
+* _dumb down to:_ `String`  🤔
+* parse to: `JSONObject`, `Statement`, …
+
+Why the detour?
+
+=== Custom templating
+
+`STR` is a singleton instance of +
+a `Processor` implementation:
+
+```java
+public interface Processor<RESULT, EX> {
+	RESULT process(StringTemplate s) throws EX;
+}
+```
+
+`RESULT` can be of any type!
+
+=== Custom templating
+
+```java
+// prevents SQL injections
+Statement query = SQL."""
+	SELECT * FROM Person p
+	WHERE p.\{property} = '\{value}'
+	""";
+
+// validates & escapes JSON
+JSONObject doc = JSON."""
+	{
+		"name": "\{name}",
+		"year": "\{bday.getYear()}"
+	}
+	""";
+```
+
+=== Summary
+
+String templates:
+
+* simplify string concatenation
+* enable domain-specific processing
+* incentivize the "right way"

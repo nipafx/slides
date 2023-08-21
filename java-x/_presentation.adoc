@@ -84,6 +84,9 @@ include::prologue.adoc[]
 	<tr><td>Data-Oriented Programming</td></tr> \
 	<tr><td>Virtual Threads</td></tr> \
 	<tr><td>Preparing For Virtual Threads</td></tr> \
+	<tr><td>String Templates</td></tr> \
+	<tr><td>On Ramp</td></tr> \
+	<tr><td>GenZGC</td></tr> \
 </table> \
 ]
 include::pattern-matching.adoc[]
@@ -94,6 +97,9 @@ include::pattern-matching.adoc[]
 	<tr class="toc-current"><td>Data-Oriented Programming</td></tr> \
 	<tr><td>Virtual Threads</td></tr> \
 	<tr><td>Preparing For Virtual Threads</td></tr> \
+	<tr><td>String Templates</td></tr> \
+	<tr><td>On Ramp</td></tr> \
+	<tr><td>GenZGC</td></tr> \
 </table> \
 ]
 include::dop-short.adoc[]
@@ -104,6 +110,9 @@ include::dop-short.adoc[]
 	<tr><td>Data-Oriented Programming</td></tr> \
 	<tr class="toc-current"><td>Virtual Threads</td></tr> \
 	<tr><td>Preparing For Virtual Threads</td></tr> \
+	<tr><td>String Templates</td></tr> \
+	<tr><td>On Ramp</td></tr> \
+	<tr><td>GenZGC</td></tr> \
 </table> \
 ]
 include::virtual-threads.adoc[]
@@ -114,9 +123,51 @@ include::virtual-threads.adoc[]
 	<tr><td>Data-Oriented Programming</td></tr> \
 	<tr><td>Virtual Threads</td></tr> \
 	<tr class="toc-current"><td>Preparing For Virtual Threads</td></tr> \
+	<tr><td>String Templates</td></tr> \
+	<tr><td>On Ramp</td></tr> \
+	<tr><td>GenZGC</td></tr> \
 </table> \
 ]
 include::virtual-thread-details.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>Pattern Matching</td></tr> \
+	<tr><td>Data-Oriented Programming</td></tr> \
+	<tr><td>Virtual Threads</td></tr> \
+	<tr><td>Preparing For Virtual Threads</td></tr> \
+	<tr class="toc-current"><td>String Templates</td></tr> \
+	<tr><td>On Ramp</td></tr> \
+	<tr><td>GenZGC</td></tr> \
+</table> \
+]
+include::string-templates.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>Pattern Matching</td></tr> \
+	<tr><td>Data-Oriented Programming</td></tr> \
+	<tr><td>Virtual Threads</td></tr> \
+	<tr><td>Preparing For Virtual Threads</td></tr> \
+	<tr><td>String Templates</td></tr> \
+	<tr class="toc-current"><td>On Ramp</td></tr> \
+	<tr><td>GenZGC</td></tr> \
+</table> \
+]
+include::launch-protocol.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>Pattern Matching</td></tr> \
+	<tr><td>Data-Oriented Programming</td></tr> \
+	<tr><td>Virtual Threads</td></tr> \
+	<tr><td>Preparing For Virtual Threads</td></tr> \
+	<tr><td>String Templates</td></tr> \
+	<tr><td>On Ramp</td></tr> \
+	<tr class="toc-current"><td>GenZGC</td></tr> \
+</table> \
+]
+include::misc.adoc[]
 
 // include::jpms.adoc[]
 

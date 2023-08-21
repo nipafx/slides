@@ -1,0 +1,173 @@
+== Java 21 💣💥
+
+{toc}
+
+=== Starting (With) Java
+
+Java 21 makes life easier +
+for new (Java) developers.
+
+=== Why Do We Care?
+
+We all know Java, IDEs, build tools, etc.
+
+[%step]
+* do we all?
+* what about your kids?
+* what about students?
+* what about the frontend dev?
+* what about ML/AI folks?
+
+[%step]
+Java needs to be approachable! +
+Java needs an on-ramp for new (Java) developers!
+
+=== Running Java
+
+To write and run a simple Java program, you need:
+
+[%step]
+* a JDK
+* an editor (IDE?)
+* `javac` (build tool? IDE?)
+* `java` (IDE?)
+* some Java code
+
+=== Writing Java
+
+Minimal Java code:
+
+```java
+public class Main {
+	public static void main(String[] args) {
+		System.out.println("Hello, World!");
+	}
+}
+```
+
+[%step]
+* visibility
+* classes & methods
+* static vs instance
+* returns & parameters
+* statements & arguments
+
+=== Approachability
+
+That's _a lot_ of tools and concepts!
+
+Java is great for large-scale development:
+
+* detailed toolchain
+* refined programming model
+
+This make it less approachable.
+
+[%step]
+Let's change that!
+
+=== jshell
+
+Java 9 added `jshell`:
+
+* *all you need*:
+** tools: JDK, `jshell`
+** concepts: statements & arguments
+* *but*:
+** not great for beginners (IMO)
+** no progression
+
+More is needed.
+
+=== Single-file Execution
+
+Java 11 added single-file execution (https://openjdk.org/jeps/330[JEP 330]):
+
+```
+java Prog.java
+```
+
+* **removed**: `javac`
+* **but**: no progression
+
+Much better for beginners, +
+but just a section of an on-ramp.
+
+=== On-Ramp
+
+Expand single-file execution in two directions:
+
+* *simplify code*: reduce required Java concepts
+* *ease progression*: run multiple files with `java`
+
+=== Simpler Code
+
+Remove requirement of:
+
+[%step]
+* `String[] args` parameter
+* `main` being static
+* `main` being public
+* the class itself
+
+[%step]
+```java
+// all the code in Prog.java
+void main() {
+	System.out.println("Hello, World!");
+}
+```
+
+[%step]
+_[Preview in Java 21 -- https://openjdk.org/jeps/445[JEP 445]]_
+
+=== Running Multiple Files
+
+Say you have a folder:
+
+```
+MyFirstJava
+ ├─ Prog.java
+ ├─ Helper.java
+ └─ Lib
+     └─ library.jar
+```
+
+Run with:
+
+```
+java -cp 'Lib/*' Prog.java
+```
+
+(https://openjdk.org/jeps/8304400[JEP draft])
+
+=== Progression
+
+Natural progression:
+
+[%step]
+* start with `main()`
+* need arguments? ⇝ add `String[] args`
+* need to organize code? ⇝ add methods
+* need shared state? ⇝ add fields
+* need more functionality? ⇝ explore JDK APIs
+* even more? ⇝ explore simple libraries
+* need more structure? ⇝ split into multiple files
+* even more ⇝ use visibility & packages
+
+[%step]
+Doesn't even have to be that order!
+
+=== Summary
+
+Java's strengths for large-scale development +
+make it less approachable:
+
+* detailed toolchain
+* refined programming model
+
+There are new features that:
+
+* make it easier to start
+* allow gradual progression
+* entice the future dev generation

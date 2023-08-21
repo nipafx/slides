@@ -1,0 +1,32 @@
+== Java 21 💣💥
+
+{toc}
+
+=== Generational ZGC
+
+Compared to other GCs, ZGC:
+
+* optimizes ultra-low pause times
+* can have higher memory footprint or higher CPU usage
+
+In Java 21, ZGC becomes _generational_.
+
+=== Generational Hypothesis
+
+* most objects die young
+* those who don't, grow (very) old
+
+GCs can make use of this by tracking +
+_young_ and _old generations_.
+
+ZGC didn't do this, but can do it now with: +
+`-XX:+UseZGC -XX:+ZGenerational`
+
+=== Some Benchmarks
+
+A Cassandra 4 benchmark of ZGC vs GenZGC showed:
+
+* 4x throughput with a fixed heap or
+* 1/4x heap size with stable throughput
+
+(Probably not representative but very promising.)
