@@ -1,0 +1,218 @@
+== Java 21 💣💥
+
+{toc}
+
+=== A simple web request
+
+Imagine a hypothetical HTTP request:
+
+. interpret request
+. query database (_blocks_)
+. process data for response
+
+Resource utilization:
+
+* good for 1. and 3.
+* really bad for 2.
+
+How to implement that request?
+
+=== Synchronous
+
+Align application's unit of concurrency (request)  +
+with Java's unit of concurrency (thread):
+
+* use thread per request
+* simple to write, debug, profile
+* blocks threads on certain calls
+* limited number of _platform_ threads +
+  ⇝ bad resource utilization +
+  ⇝ low throughput
+
+[NOTE.speaker]
+--
+* common CPU load: 5-30%
+--
+
+=== Asynchronous
+
+Only use threads for actual computations:
+
+* use non-blocking APIs (futures / reactive streams)
+* harder to write, challenging to debug/profile
+* incompatible with synchronous code
+* shares platform threads +
+  ⇝ great resource utilization +
+  ⇝ high throughput
+
+=== Conflict!
+
+There's a conflict between:
+
+* simplicity
+* throughput
+
+=== Nota Bene
+
+There are other conflicts:
+
+* _design vs performance_ (⇝ Valhalla)
+* _explicitness vs succinctness_ (⇝ Amber)
+* _flexibility vs safety_ (⇝ Panama)
+* _optimization vs specification_ (⇝ Leyden)
+
+=== Enter virtual threads!
+
+A _virtual_ thread:
+
+* is a regular `Thread`
+* low memory footprint ([k]bytes)
+* small switching cost
+* scheduled by the Java runtime
+* requires no OS thread when waiting
+
+=== Virtual things
+
+*Virtual memory:*
+
+* maps large virtual address space +
+  to limited physical memory
+* gives illusion of plentiful memory
+
+*Virtual threads:*
+
+* map large number of virtual threads +
+  to a small number of OS threads
+* give the illusion of plentiful threads
+
+=== Virtual things
+
+Programs rarely care about virtual vs physical memory.
+
+Programs need rarely care about virtual vs platform thread.
+
+Instead:
+
+* write straightforward (blocking) code
+* runtime shares available OS threads
+* reduces the cost of blocking to near zero
+
+[state=empty,background-color=white]
+=== !
+image::images/one-million.jpg[background, size=cover]
+
+=== Example
+
+```java
+try (var executor = Executors
+		.newVirtualThreadPerTaskExecutor()) {
+	IntStream
+		.range(0, 1_000_000)
+		.forEach(number -> {
+			executor.submit(() -> {
+				Thread.sleep(Duration.ofSeconds(1));
+				return number;
+			});
+		});
+} // executor.close() is called implicitly, and waits
+```
+
+=== Effects
+
+Virtual threads:
+
+* remove "number of threads" as bottleneck
+* match app's unit of concurrency to Java's
+
+⇝ _simplicity && throughput_
+
+=== Performance
+
+Virtual threads aren't "faster threads":
+
+* same number of CPU cycles
+* each task takes the same time (same _latency_)
+
+[%step]
+So why bother?
+
+=== Parallelism vs concurrency
+
+[options="header"]
+|============================================
+|                | Parallelism  | Concurrency
+| *Task origin*  | solution     | problem
+| *Control*      | developer    | environment
+| *Resource use* | coordinated  | competitive
+| *Metric*       | latency      | throughput
+| *Abstraction*  | CPU cores    | tasks
+| *# of threads* | # of cores   | # of tasks
+|============================================
+
+=== Performance
+
+When workload is not CPU-bound:
+
+* start waiting as early as possible
+* for as many tasks as possible
+
+⇝ Virtual threads increase _throughput_:
+
+* when workload is not CPU-bound
+* when number of concurrent tasks is high
+
+[NOTE.speaker]
+--
+* maximize progress other systems can make.
+* "high": more than a few thousand
+--
+
+// TODO: Elliot's benchmarks
+
+=== Server How-To
+
+For servers:
+
+* request handling threads are started by web framework
+* frameworks will offer (easy) configuration options
+
+We're not there yet.
+
+=== Spring Boot
+
+Replace executors:
+
+```java
+@Bean
+public TomcatProtocolHandlerCustomizer<?>
+		createExecutorForSyncCalls() {
+	return handler -> handler.setExecutor(
+			Executors.newVirtualThreadPerTaskExecutor());
+}
+
+@Bean
+public AsyncTaskExecutor
+		createExecutorForAsyncCalls() {
+	return new TaskExecutorAdapter(
+			Executors.newVirtualThreadPerTaskExecutor());
+}
+```
+
+=== Quarkus
+
+Annotate request handling method:
+
+```java
+@GET
+@Path("api")
+@RunOnVirtualThread
+public String handle() {
+	// ...
+}
+```
+
+(Requires `--add-opens java.base/java.lang=ALL-UNNAMED`.)
+
+=== Virtual Threads
+
+> Go forth and multiply (your threads)

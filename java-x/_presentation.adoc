@@ -82,6 +82,8 @@ include::prologue.adoc[]
 <table class="toc"> \
 	<tr class="toc-current"><td>Pattern Matching</td></tr> \
 	<tr><td>Data-Oriented Programming</td></tr> \
+	<tr><td>Virtual Threads</td></tr> \
+	<tr><td>Preparing For Virtual Threads</td></tr> \
 </table> \
 ]
 include::pattern-matching.adoc[]
@@ -90,9 +92,31 @@ include::pattern-matching.adoc[]
 <table class="toc"> \
 	<tr><td>Pattern Matching</td></tr> \
 	<tr class="toc-current"><td>Data-Oriented Programming</td></tr> \
+	<tr><td>Virtual Threads</td></tr> \
+	<tr><td>Preparing For Virtual Threads</td></tr> \
 </table> \
 ]
 include::dop-short.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>Pattern Matching</td></tr> \
+	<tr><td>Data-Oriented Programming</td></tr> \
+	<tr class="toc-current"><td>Virtual Threads</td></tr> \
+	<tr><td>Preparing For Virtual Threads</td></tr> \
+</table> \
+]
+include::virtual-threads.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>Pattern Matching</td></tr> \
+	<tr><td>Data-Oriented Programming</td></tr> \
+	<tr><td>Virtual Threads</td></tr> \
+	<tr class="toc-current"><td>Preparing For Virtual Threads</td></tr> \
+</table> \
+]
+include::virtual-thread-details.adoc[]
 
 // include::jpms.adoc[]
 
