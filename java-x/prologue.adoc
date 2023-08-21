@@ -1,0 +1,66 @@
+=== Why upgrade?
+
+Costs of running on old versions:
+
+* support contract for Java
+* waning support in libraries / frameworks
+
+=== Why upgrade?
+
+Costs of not running on new versions:
+
+* lower productivity
+* less observability and performance +
+  (more on that later)
+* less access to talent
+* bigger upgrade costs
+
+=== Why upgrade?
+
+> Resistence is futile.
+
+=== How to upgrade?
+
+Preparations:
+
+* stick to supported APIs
+* stick to standardized behavior
+* stick to well-maintained projects
+* keep dependencies and tools up to date
+* stay ahead of removals (`jdeprscan`)
+* build on many JDK versions
+
+=== How to upgrade?
+
+Prepare by building on multiple JDK versions:
+
+* your baseline version
+* every supported version since then
+* latest version
+* EA build of next version
+
+=== How to upgrade?
+
+It's not necessary to build …
+
+* … each commit on all versions
+* … the whole project on all versions
+
+Build as much as feasible.
+
+=== What about LTS?
+
+Within OpenJDK, there is no LTS.
+
+⇝ has no impact on features, reliability, etc.
+
+It's a vendor-centric concept +
+to offer continuous fixes +
+(usually for money).
+
+> You're paying not to get new features.
+
+=== What about LTS?
+
+[link=https://www.youtube.com/watch?v=3bfR22iv8Pc]
+image::images/inside-java-newscast-52.png[]

@@ -1,4 +1,4 @@
-= Modern Java
+= Java 21 💣💥
 :backend: revealjs
 :revealjs_theme: nipa-night
 :revealjsdir: ../_reveal.js/head
@@ -18,10 +18,6 @@
 
 include::../_shared/highlight.js.adoc[]
 
-++++
-<h2>Language, Runtime, LTS</h2>
-++++
-
 :host-name: Persistence Hub
 :host-url: https://thorben-janssen.com/join-persistence-hub/
 :host-logo-url: images/logo-persistence-hub.png
@@ -37,7 +33,7 @@ include::../_shared/event-on-title-and-footer.adoc[]
 // ⇝
 
 ////
-TODOs for 19 (for many, see newscasts #21 and #27)
+TODOs for 19,20 (for many, see newscasts #21 and #27)
 
 Features:
 * UTF-8 by default - https://openjdk.org/jeps/400
@@ -60,100 +56,39 @@ Create tool section:
 
 == Let's get started!
 
-* this talk covers Java 19 +
+* this talk covers Java 21 +
   and whatever else we have time for
 * this is a showcase, not a tutorial
 // * ask questions any time or tweet at https://twitter.com/nipafx[@nipafx]
 // * tweet questions with https://twitter.com/search?q=%23jokerconf%20%23java11[#jokerconf #Java11]
-// * some features come with practical exercises, +
-//  others are just showcased
 * slides at https://slides.nipafx.dev/java-x[slides.nipafx.dev/java-x] +
   (hit "?" to get navigation help)
-* they cover Java 9 to 19+ +
-  (without module system)
 
 === Lots to talk about!
 
 ++++
 <table class="toc">
-	<tr><td>Module System</td></tr>
-	<tr><td>Language Changes</td></tr>
-	<tr><td>New and Updated APIs</td></tr>
-	<tr><td>New JVM Features</td></tr>
-	<tr><td>Performance Improvements</td></tr>
 </table>
 ++++
-
-=== Why upgrade?
-
-Costs of running on old versions:
-
-* support contract for Java
-* waning support in libraries / frameworks
-
-=== Why upgrade?
-
-Costs of not running on new versions:
-
-* lower productivity
-* less observability and performance +
-  (more on that later)
-* worse access to talent
-* bigger upgrade costs
-
-=== Why upgrade?
-
-> Resistence is futile.
-
-=== How to upgrade?
-
-Preparations:
-
-* stick to supported APIs
-* stick to standardized behavior
-* stick to well-maintained projects
-* keep dependencies and tools up to date
-* stay ahead of removals (`jdeprscan`)
-* build on each release (including EA)
-
-=== How to upgrade?
-
-If you're on...
-
-* *Java 8*: upgrade ASAP to 11
-* *Java 11*: prepare upgrade to 17
-* *Java 17*: consider upgrading to 19
-
-=== What about LTS?
-
-Within OpenJDK, there is no LTS.
-
-⇝ has no impact on features, reliability, etc.
-
-It's a vendor-centric concept +
-to offer continuous fixes +
-(usually for money).
-
-> You're paying not to get new features.
 
 
 // ####################### //
 // P R E S E N T A T I O N //
 // ####################### //
 
-// include::intro.adoc[]
+include::prologue.adoc[]
 
-include::jpms.adoc[]
+// include::jpms.adoc[]
 
-include::language.adoc[]
+// include::language.adoc[]
 
-include::apis_updated.adoc[]
+// include::apis_updated.adoc[]
 
-include::apis_new.adoc[]
+// include::apis_new.adoc[]
 
-include::jvm.adoc[]
+// include::jvm.adoc[]
 
-include::performance.adoc[]
+// include::performance.adoc[]
 
 
 // ######### //
