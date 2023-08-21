@@ -35,11 +35,11 @@ How to implement features?
 === Type checks 😱
 
 ```java
-public categorize(Page page) {
+public void categorize(Page page) {
 	if (page instanceof GitHubIssuePage) {
 		GitHubIssuePage issue = (GitHubIssuePage) page;
 		categorizeIssuePage(issue);
-	} else if (page instanceof GitHubPrPage) {
+	} else if (page instanceof GitHubPrPage pr) {
 		// ... etc. for all types
 	}
 }
@@ -58,10 +58,10 @@ They combine:
 * cast/assignment
 
 ```java
-public categorize(Page page) {
+public void categorize(Page page) {
 	if (page instanceof GitHubIssuePage issue)
 		categorizeIssuePage(issue);
-	else if (page instanceof GitHubPrPage)
+	else if (page instanceof GitHubPrPage pr)
 		// ... etc. for all types
 }
 ```
@@ -112,7 +112,7 @@ if (page instanceof
 _[Finalized in Java 21 -- https://openjdk.org/jeps/441[JEP 441]]_
 
 ```java
-public categorize(Page page) {
+public void categorize(Page page) {
 	switch (page) {
 		case GitHubIssuePage issue
 			-> categorizeIssuePage(issue);
@@ -136,7 +136,7 @@ Unlike an `if`-`else`-`if`-chain, +
 a pattern `switch` needs to be exhaustive:
 
 ```java
-public categorize(Page page) {
+public void categorize(Page page) {
 	switch (page) {
 		case GitHubIssuePage issue ->
 			categorizeIssuePage(issue);
@@ -172,7 +172,7 @@ If all subtypes of a sealed types are covered, +
 the switch is exhaustive …
 
 ```java
-public categorize(Page page) {
+public void categorize(Page page) {
 	switch (page) {
 		case GitHubIssuePage issue -> // ...
 		case GitHubPrPage pr -> // ...
@@ -219,7 +219,7 @@ public sealed interface Page
 Next stop: all switches that are no longer exhaustive.
 
 ```java
-public categorize(Page page) {
+public void categorize(Page page) {
 	switch (page) {
 		case GitHubIssuePage issue -> // ...
 		case GitHubPrPage pr -> // ...
