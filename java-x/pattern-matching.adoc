@@ -1,0 +1,331 @@
+== Java 21 💣💥
+
+{toc}
+
+=== A simple app
+
+* scrapes GitHub projects
+* creates `Page` instances:
+** `GitHubIssuePage`
+** `GitHubPrPage`
+** `ExternalPage`
+** `ErrorPage`
+* further processes pages
+
+=== A simple app
+
+Features:
+
+* display as interactive graph
+* compute graph properties
+* categorize pages by topic
+* analyze mood of interactions
+* process payment for analyses
+* etc.
+
+=== A simple architecture?
+
+How to implement features?
+
+[%step]
+* methods on `Page` 😧
+* visitor pattern 😫
+* type checks 😱
+
+=== Type checks 😱
+
+```java
+public categorize(Page page) {
+	if (page instanceof GitHubIssuePage) {
+		GitHubIssuePage issue = (GitHubIssuePage) page;
+		categorizeIssuePage(issue);
+	} else if (page instanceof GitHubPrPage) {
+		// ... etc. for all types
+	}
+}
+```
+
+Ignore the 😱 and let's work on this.
+
+=== Type patterns
+
+_[Finalized in Java 16 -- https://openjdk.org/jeps/394[JEP 394]]_
+
+They combine:
+
+* type check
+* variable declaration
+* cast/assignment
+
+```java
+public categorize(Page page) {
+	if (page instanceof GitHubIssuePage issue)
+		categorizeIssuePage(issue);
+	else if (page instanceof GitHubPrPage)
+		// ... etc. for all types
+}
+```
+
+⇝ Standardizes and eases a common pattern.
+
+=== Patterns
+
+Generally, patterns consist of three parts:
+
+* a boolean check
+* variable declaration(s)
+* extraction(s)/assignment(s)
+
+=== Records
+
+_[Finalized in Java 16 -- https://openjdk.org/jeps/395[JEP 395]]_
+
+```java
+record ExternalPage(URI url, String content) { }
+```
+
+> Transparent carriers for immutable data.
+
+* compiler understands internals
+* couples API to internals
+* reduces verbosity _a lot_
+
+=== Record Patterns
+
+_[Finalized in Java 21 -- https://openjdk.org/jeps/440[JEP 440]]_
+
+* check whether variable is of correct type
+* declare one variable per component
+* assign component values to variables
+
+```java
+if (page instanceof
+		ExternalPage(var url, var content)) {
+	// use `url` and `content`
+}
+```
+
+⇝ Standardizes and eases a common pattern.
+
+=== Patterns in switch
+
+_[Finalized in Java 21 -- https://openjdk.org/jeps/441[JEP 441]]_
+
+```java
+public categorize(Page page) {
+	switch (page) {
+		case GitHubIssuePage issue
+			-> categorizeIssuePage(issue);
+		case ExternalPage(var url, var content)
+			-> categorizeExternalUrl(url);
+		// ... etc. for all types
+	}
+}
+```
+
+But:
+
+```shell
+error: the switch expression does not cover
+       all possible input values
+```
+
+=== Exhaustiveness
+
+Unlike an `if`-`else`-`if`-chain, +
+a pattern `switch` needs to be exhaustive:
+
+```java
+public categorize(Page page) {
+	switch (page) {
+		case GitHubIssuePage issue ->
+			categorizeIssuePage(issue);
+		// ... etc. for all types
+		default ->
+			throw new IllegalArgumentException();
+	}
+}
+```
+
+That touches the 😱 nerve.
+
+=== Sealed types
+
+_[Finalized in Java 17 -- https://openjdk.org/jeps/409[JEP 409]]_
+
+Sealed types limit inheritance, +
+by only allowing specific subtypes.
+
+```java
+public sealed interface Page
+	permits GitHubIssuePage, GitHubPrPage,
+			ExternalPage, ErrorPage {
+	// ...
+}
+```
+
+⇝ `class MyPage implements Page` doesn't compile
+
+=== Sealed types in switch
+
+If all subtypes of a sealed types are covered, +
+the switch is exhaustive …
+
+```java
+public categorize(Page page) {
+	switch (page) {
+		case GitHubIssuePage issue -> // ...
+		case GitHubPrPage pr -> // ...
+		case ExternalPage external -> // ...
+		case ErrorPage error -> // ...
+	}
+}
+```
+
+… and the compiler is happy! +
+(But still watching.)
+
+=== Facing the 😱
+
+Why is switching over the type scary? +
+Because it may not be future proof!
+
+[step=1]
+*But this one is!*
+
+[step=2]
+Let's add `GitHubCommitPage implements GitHubPage`.
+
+[step=2]
+⇝ Follow the compile errors!
+
+=== Follow the errors
+
+First stop: the sealed supertype.
+
+⇝ Permit the new subtype!
+
+```java
+public sealed interface Page
+	permits GitHubIssuePage, GitHubPrPage,
+			GitHubCommitPage,
+			ExternalPage, ErrorPage {
+	// ...
+}
+```
+
+=== Follow the errors
+
+Next stop: all switches that are no longer exhaustive.
+
+```java
+public categorize(Page page) {
+	switch (page) {
+		case GitHubIssuePage issue -> // ...
+		case GitHubPrPage pr -> // ...
+		case ExternalPage external -> // ...
+		case ErrorPage error -> // ...
+		// missing case
+	}
+}
+```
+
+Bingo!
+
+(But only works without default branch.)
+
+=== Dynamic dispatch
+
+Dynamic dispatch selects the invoked method by type.
+
+As language feature:
+
+* via inheritance
+* makes method part of API
+
+What if methods shouldn't be part of the API?
+
+=== Dynamic dispatch
+
+Without methods becoming part of the API.
+
+Via visitor pattern:
+
+* makes "visitation" part of API
+* cumbersome and indirect
+
+Via pattern matching (new):
+
+* makes "sealed" part of type
+* straight-forward
+
+=== Patterns and language
+
+Design patterns make up gaps in the language.
+
+Good example is the strategy pattern:
+
+* used to be "a thing" in Java
+* you use it everytime you pass a lambda
+
+But do you still think of it a design pattern? +
+(I don't.)
+
+Pattern matching does the same for the visitor pattern.
+
+=== Pushing further
+
+Pattern matching will probably see +
+further improvements, e.g.:
+
+* unnamed patterns +
+  (https://openjdk.org/jeps/443[JEP 443], preview in Java 21)
+* deconstruction on assignment +
+  (no JEP, but https://twitter.com/BrianGoetz/status/1599000138793771010[it's coming])
+* `with` expression +
+  (https://github.com/openjdk/amber-docs/blob/master/eg-drafts/reconstruction-records-and-classes.md[design document] from Aug 2020):
+
+=== Unnamed patterns
+
+_[Preview in Java 21 -- https://openjdk.org/jeps/443[JEP 443]]_
+
+Use `_` to ignore components:
+
+```java
+public static String createPageName(Page page) {
+	return switch (page) {
+		case ErrorPage(var url, _)
+			-> "💥 ERROR: " + url.getHost();
+		case GitHubIssuePage(_, _, _, int issueNumber)
+			-> "🐈 ISSUE #" + issueNumber;
+		// ...
+	};
+}
+```
+
+⇝ Focus on what's essential.
+
+=== Unnamed patterns
+
+Use `_` to define default behavior:
+
+```java
+public static String createPageEmoji(Page page) {
+	return switch (page) {
+		case GitHubIssuePage issue -> "🐈";
+		case GitHubPrPage pr -> "🐙";
+		case ErrorPage _, ExternalPage _ -> "n.a.";
+	};
+}
+```
+
+⇝ Default behavior without `default` branch.
+
+=== Pattern matching guide
+
+When keeping functionality separate from types:
+
+* seal the supertype
+* switch over sealed types
+* enumerate all subtypes
+* avoid default branches!
