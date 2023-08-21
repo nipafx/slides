@@ -473,21 +473,21 @@ to offer continuous fixes<br>
 <div class="quoteblock"><blockquote><div class="paragraph"><p>You&#8217;re paying not to get new features.</p></div></blockquote></div></div></section><section id="_what_about_lts_2"><h2>What about LTS?</h2><div class="slide-content"><div class="imageblock"><a class="image" href="https://www.youtube.com/watch?v=3bfR22iv8Pc"><img src="../_images/inside-java-newscast-52-ad521bae.png" alt="inside java newscast 52"></a></div></div></section></section>
 <section><section id="_java_21"><h2>Java 21 💣💥</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr class="toc-current"><td>Pattern Matching</td></tr> <tr><td>Data-Oriented Programming</td></tr> <tr><td>Virtual Threads</td></tr> <tr><td>Preparing For Virtual Threads</td></tr> <tr><td>String Templates</td></tr> <tr><td>On Ramp</td></tr> <tr><td>GenZGC</td></tr> </table> </p></div></div></section><section id="_a_simple_app"><h2>A simple app</h2><div class="slide-content"><div class="ulist"><ul><li><p>scrapes GitHub projects</p></li><li><p>creates <code>Page</code> instances:</p><div class="ulist"><ul><li><p><code>GitHubIssuePage</code></p></li><li><p><code>GitHubPrPage</code></p></li><li><p><code>ExternalPage</code></p></li><li><p><code>ErrorPage</code></p></li></ul></div></li><li><p>further processes pages</p></li></ul></div></div></section><section id="_a_simple_app_2"><h2>A simple app</h2><div class="slide-content"><div class="paragraph"><p>Features:</p></div>
 <div class="ulist"><ul><li><p>display as interactive graph</p></li><li><p>compute graph properties</p></li><li><p>categorize pages by topic</p></li><li><p>analyze mood of interactions</p></li><li><p>process payment for analyses</p></li><li><p>etc.</p></li></ul></div></div></section><section id="_a_simple_architecture"><h2>A simple architecture?</h2><div class="slide-content"><div class="paragraph"><p>How to implement features?</p></div>
-<div class="ulist"><ul><li class="fragment"><p>methods on <code>Page</code> 😧</p></li><li class="fragment"><p>visitor pattern 😫</p></li><li class="fragment"><p>type checks 😱</p></li></ul></div></div></section><section id="_type_checks"><h2>Type checks 😱</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public categorize(Page page) {
+<div class="ulist"><ul><li class="fragment"><p>methods on <code>Page</code> 😧</p></li><li class="fragment"><p>visitor pattern 😫</p></li><li class="fragment"><p>type checks 😱</p></li></ul></div></div></section><section id="_type_checks"><h2>Type checks 😱</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public void categorize(Page page) {
 	if (page instanceof GitHubIssuePage) {
 		GitHubIssuePage issue = (GitHubIssuePage) page;
 		categorizeIssuePage(issue);
-	} else if (page instanceof GitHubPrPage) {
+	} else if (page instanceof GitHubPrPage pr) {
 		// ... etc. for all types
 	}
 }</code></pre></div></div>
 <div class="paragraph"><p>Ignore the 😱 and let&#8217;s work on this.</p></div></div></section><section id="_type_patterns"><h2>Type patterns</h2><div class="slide-content"><div class="paragraph"><p><em>[Finalized in Java 16&#8201;&#8212;&#8201;<a href="https://openjdk.org/jeps/394">JEP 394</a>]</em></p></div>
 <div class="paragraph"><p>They combine:</p></div>
 <div class="ulist"><ul><li><p>type check</p></li><li><p>variable declaration</p></li><li><p>cast/assignment</p></li></ul></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public categorize(Page page) {
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public void categorize(Page page) {
 	if (page instanceof GitHubIssuePage issue)
 		categorizeIssuePage(issue);
-	else if (page instanceof GitHubPrPage)
+	else if (page instanceof GitHubPrPage pr)
 		// ... etc. for all types
 }</code></pre></div></div>
 <div class="paragraph"><p>⇝ Standardizes and eases a common pattern.</p></div></div></section><section id="_patterns"><h2>Patterns</h2><div class="slide-content"><div class="paragraph"><p>Generally, patterns consist of three parts:</p></div>
@@ -501,7 +501,7 @@ to offer continuous fixes<br>
 	// use `url` and `content`
 }</code></pre></div></div>
 <div class="paragraph"><p>⇝ Standardizes and eases a common pattern.</p></div></div></section><section id="_patterns_in_switch"><h2>Patterns in switch</h2><div class="slide-content"><div class="paragraph"><p><em>[Finalized in Java 21&#8201;&#8212;&#8201;<a href="https://openjdk.org/jeps/441">JEP 441</a>]</em></p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public categorize(Page page) {
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public void categorize(Page page) {
 	switch (page) {
 		case GitHubIssuePage issue
 			-&gt; categorizeIssuePage(issue);
@@ -514,7 +514,7 @@ to offer continuous fixes<br>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-shell" data-lang="shell">error: the switch expression does not cover
        all possible input values</code></pre></div></div></div></section><section id="_exhaustiveness"><h2>Exhaustiveness</h2><div class="slide-content"><div class="paragraph"><p>Unlike an <code>if</code>-<code>else</code>-<code>if</code>-chain,<br>
 a pattern <code>switch</code> needs to be exhaustive:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public categorize(Page page) {
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public void categorize(Page page) {
 	switch (page) {
 		case GitHubIssuePage issue -&gt;
 			categorizeIssuePage(issue);
@@ -533,7 +533,7 @@ by only allowing specific subtypes.</p></div>
 }</code></pre></div></div>
 <div class="paragraph"><p>⇝ <code>class MyPage implements Page</code> doesn&#8217;t compile</p></div></div></section><section id="_sealed_types_in_switch"><h2>Sealed types in switch</h2><div class="slide-content"><div class="paragraph"><p>If all subtypes of a sealed types are covered,<br>
 the switch is exhaustive …</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public categorize(Page page) {
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public void categorize(Page page) {
 	switch (page) {
 		case GitHubIssuePage issue -&gt; // ...
 		case GitHubPrPage pr -&gt; // ...
@@ -554,7 +554,7 @@ Because it may not be future proof!</p></div>
 			ExternalPage, ErrorPage {
 	// ...
 }</code></pre></div></div></div></section><section id="_follow_the_errors_2"><h2>Follow the errors</h2><div class="slide-content"><div class="paragraph"><p>Next stop: all switches that are no longer exhaustive.</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public categorize(Page page) {
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public void categorize(Page page) {
 	switch (page) {
 		case GitHubIssuePage issue -&gt; // ...
 		case GitHubPrPage pr -&gt; // ...
