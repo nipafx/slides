@@ -81,6 +81,13 @@ I have two free tickets!
 
 ++++
 <table class="toc">
+	<tr><td>Pattern Matching</td></tr>
+	<tr><td>Data-Oriented Programming</td></tr>
+	<tr><td>Virtual Threads</td></tr>
+	<tr><td>Preparing For Virtual Threads</td></tr>
+	<tr><td>String Templates</td></tr>
+	<tr><td>On-Ramp</td></tr>
+	<tr><td>GenZGC</td></tr>
 </table>
 ++++
 
@@ -98,7 +105,7 @@ include::prologue.adoc[]
 	<tr><td>Virtual Threads</td></tr> \
 	<tr><td>Preparing For Virtual Threads</td></tr> \
 	<tr><td>String Templates</td></tr> \
-	<tr><td>On Ramp</td></tr> \
+	<tr><td>On-Ramp</td></tr> \
 	<tr><td>GenZGC</td></tr> \
 </table> \
 ]
@@ -111,7 +118,7 @@ include::pattern-matching.adoc[]
 	<tr><td>Virtual Threads</td></tr> \
 	<tr><td>Preparing For Virtual Threads</td></tr> \
 	<tr><td>String Templates</td></tr> \
-	<tr><td>On Ramp</td></tr> \
+	<tr><td>On-Ramp</td></tr> \
 	<tr><td>GenZGC</td></tr> \
 </table> \
 ]
@@ -124,7 +131,7 @@ include::dop-short.adoc[]
 	<tr class="toc-current"><td>Virtual Threads</td></tr> \
 	<tr><td>Preparing For Virtual Threads</td></tr> \
 	<tr><td>String Templates</td></tr> \
-	<tr><td>On Ramp</td></tr> \
+	<tr><td>On-Ramp</td></tr> \
 	<tr><td>GenZGC</td></tr> \
 </table> \
 ]
@@ -137,7 +144,7 @@ include::virtual-threads.adoc[]
 	<tr><td>Virtual Threads</td></tr> \
 	<tr class="toc-current"><td>Preparing For Virtual Threads</td></tr> \
 	<tr><td>String Templates</td></tr> \
-	<tr><td>On Ramp</td></tr> \
+	<tr><td>On-Ramp</td></tr> \
 	<tr><td>GenZGC</td></tr> \
 </table> \
 ]
@@ -150,7 +157,7 @@ include::virtual-thread-details.adoc[]
 	<tr><td>Virtual Threads</td></tr> \
 	<tr><td>Preparing For Virtual Threads</td></tr> \
 	<tr class="toc-current"><td>String Templates</td></tr> \
-	<tr><td>On Ramp</td></tr> \
+	<tr><td>On-Ramp</td></tr> \
 	<tr><td>GenZGC</td></tr> \
 </table> \
 ]
@@ -163,7 +170,7 @@ include::string-templates.adoc[]
 	<tr><td>Virtual Threads</td></tr> \
 	<tr><td>Preparing For Virtual Threads</td></tr> \
 	<tr><td>String Templates</td></tr> \
-	<tr class="toc-current"><td>On Ramp</td></tr> \
+	<tr class="toc-current"><td>On-Ramp</td></tr> \
 	<tr><td>GenZGC</td></tr> \
 </table> \
 ]
@@ -176,7 +183,7 @@ include::launch-protocol.adoc[]
 	<tr><td>Virtual Threads</td></tr> \
 	<tr><td>Preparing For Virtual Threads</td></tr> \
 	<tr><td>String Templates</td></tr> \
-	<tr><td>On Ramp</td></tr> \
+	<tr><td>On-Ramp</td></tr> \
 	<tr class="toc-current"><td>GenZGC</td></tr> \
 </table> \
 ]
@@ -186,7 +193,7 @@ include::misc.adoc[]
 
 // include::language.adoc[]
 
-// include::apis_updated.adoc[]
+// include::apis-updated.adoc[]
 
 // include::apis_new.adoc[]
 
