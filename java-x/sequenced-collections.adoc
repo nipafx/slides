@@ -1,0 +1,69 @@
+== Java 21 💣💥
+
+{toc}
+
+=== Order
+
+Collections with order and indexed access:
+
+* `List`
+
+Collections with order _without_ indexed access:
+
+* `SortedSet` (sort order)
+* `Deque` (insertion order)
+* `LinkedHashSet` (insertion order)
+* and more
+
+=== Sequence
+
+New interfaces capture the concept of order:
+
+* `SequencedCollection`
+* `SequencedSet`
+* `SequencedMap`
+
+Use as parameter or return type +
+and enjoy new methods.
+
+=== Get First
+
+Getting the first element:
+
+* `list.get(0)`
+* `sortedSet.first()`
+* `deque.getFirst()`
+* `linkedHashSet.iterator().next()`
+
+Now for all:
+
+`sequencedCollection.getFirst()`
+
+=== Get Last
+
+Getting the last element:
+
+* `list.get(list.size() - 1)`
+* `sortedSet.last()`
+* `deque.getLast()`
+* `linkedHashSet.🤷🏾‍♂️()`
+
+Now for all:
+
+`sequencedCollection.getLast()`
+
+=== Reversing Order
+
+* `list.listIterator()` ⇝ `ListIterator`
+* `navigableSet.descendingSet()` ⇝ `NavigableSet` (view)
+* `deque.descendingIterator()` ⇝ `Iterator`
+* `linkedHashSet.🤷🏾‍♂️()`
+
+Now for all:
+
+`sequencedCollection.reversed()` ⇝ `SequencedCollection` (view)
+
+[state="empty", background-color="white"]
+=== !
+image::images/sequenced-collections-hierarchy.png[background, size=contain]
+
