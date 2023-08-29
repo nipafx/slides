@@ -555,7 +555,7 @@ the switch is exhaustive …</p></div>
 (But still watching.)</p></div></div></section><section id="_facing_the"><h2>Facing the 😱</h2><div class="slide-content"><div class="paragraph"><p>Why is switching over the type scary?<br>
 Because it may not be future proof!</p></div>
 <div class="paragraph fragment" data-fragment-index="1"><p><strong>But this one is!</strong></p></div>
-<div class="paragraph fragment" data-fragment-index="2"><p>Let&#8217;s add <code>GitHubCommitPage implements GitHubPage</code>.</p></div>
+<div class="paragraph fragment" data-fragment-index="2"><p>Let&#8217;s add <code>GitHubCommitPage implements Page</code>.</p></div>
 <div class="paragraph fragment" data-fragment-index="2"><p>⇝ Follow the compile errors!</p></div></div></section><section id="_follow_the_errors"><h2>Follow the errors</h2><div class="slide-content"><div class="paragraph"><p>First stop: the sealed supertype.</p></div>
 <div class="paragraph"><p>⇝ Permit the new subtype!</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public sealed interface Page
