@@ -26,7 +26,7 @@ New interfaces capture the concept of order:
 Use as parameter or return type +
 and enjoy new methods.
 
-=== Get First
+=== Get first
 
 Getting the first element:
 
@@ -39,20 +39,22 @@ Now for all:
 
 `sequencedCollection.getFirst()`
 
-=== Get Last
+=== Remove last
 
-Getting the last element:
+Removing the last element:
 
-* `list.get(list.size() - 1)`
-* `sortedSet.last()`
-* `deque.getLast()`
+* `list.remove(list.size() - 1)`
+* `sortedSet.remove(sortedSet.last())`
+* `deque.removeLast()`
 * `linkedHashSet.🤷🏾‍♂️()`
 
 Now for all:
 
-`sequencedCollection.getLast()`
+`sequencedCollection.removeLast()`
 
-=== Reversing Order
+=== Reverse order
+
+Reversing order:
 
 * `list.listIterator()` ⇝ `ListIterator`
 * `navigableSet.descendingSet()` ⇝ `NavigableSet` (view)
@@ -61,7 +63,81 @@ Now for all:
 
 Now for all:
 
-`sequencedCollection.reversed()` ⇝ `SequencedCollection` (view)
+`sequencedCollection.reversed()`
+
+=== Reversed collection
+
+`sequencedCollection.reversed()` returns +
+a `SequencedCollection` view:
+
+```java
+for (E element : list.reversed())
+	// ...
+
+sortedSet
+	.reversed().stream()
+	//...
+
+deque.reversed().toArray();
+```
+
+=== Reversed view
+
+`sequencedCollection.reversed()` returns +
+a `SequencedCollection` view:
+
+```java
+var letters = new ArrayList<>(List.of("A", "B", "C"));
+	// ⇝ letters = ["A", "B", "C"]
+letters.reversed().removeFirst();
+	// ⇝ letters = ["A", "B"]
+```
+
+=== New operations
+
+```java
+void addFirst(E);
+void addLast(E);
+E getFirst();
+E getLast();
+E removeFirst();
+E removeLast();
+
+SequencedCollection<E> reversed();
+```
+
+(Analoguous for maps.)
+
+=== New ops vs sort order
+
+What happens when `addFirst|Last` is used +
+on a sorted data structure?
+
+```java
+SortedSet<String> letters = new TreeSet<>(
+	List.of("B", "A", "C"));
+	// ⇝ letters = ["A", "B", "C"]
+letters.addLast("D");
+```
+
+Options:
+
+[%step]
+* works always ⇝ breaks `SortedSet` contract
+* works if value fits ⇝ hard to predict
+* works never ⇝ `UnsupportedOperationException`
+
+=== Using types
+
+Use the most general type that:
+
+* has the API you need/support
+* plays the role you need/support
+
+For collections, that's often: `Collection` +
+(less often: `List`, `Set`).
+
+⇝ Consider new types!
 
 [state="empty", background-color="white"]
 === !
@@ -69,5 +145,5 @@ image::images/sequenced-collections-hierarchy.png[background, size=contain]
 
 === More
 
-* 📝 https://openjdk.org/jeps/431[JEP 431]
+* 📝 https://openjdk.org/jeps/431[JEP 431]: Sequenced Collections
 * 🎥 https://www.youtube.com/watch?v=9G_0el3RWPE[Java 21's New (Sequenced) Collections] (Mar 2023)
