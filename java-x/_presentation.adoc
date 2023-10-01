@@ -159,11 +159,26 @@ include::string-templates.adoc[]
 	<tr><td>String Templates</td></tr> \
 	<tr class="toc-current"><td>New & Updated APIs</td></tr> \
 		<tr class="toc-current"><td style="padding-left: 2em;">Sequenced Collections</td></tr> \
+		<tr><td style="padding-left: 2em;">Address Resolution SPI</td></tr> \
 	<tr><td>Performance & Security</td></tr> \
 	<tr><td>On-Ramp</td></tr> \
 </table> \
 ]
 include::sequenced-collections.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>Pattern Matching</td></tr> \
+	<tr><td>Virtual Threads</td></tr> \
+	<tr><td>String Templates</td></tr> \
+	<tr class="toc-current"><td>New & Updated APIs</td></tr> \
+		<tr><td style="padding-left: 2em;">Sequenced Collections</td></tr> \
+		<tr class="toc-current"><td style="padding-left: 2em;">Address Resolution SPI</td></tr> \
+	<tr><td>Performance & Security</td></tr> \
+	<tr><td>On-Ramp</td></tr> \
+</table> \
+]
+include::address-resolution.adoc[]
 
 :toc: pass:[ \
 <table class="toc"> \
