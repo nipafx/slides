@@ -14,6 +14,22 @@ Features:
 ** `ErrorPage`
 * further processes pages
 
+=== Crawling GitHub
+
+The scraping is implemented in:
+
+```java
+public class PageTreeFactory {
+
+	public static Page loadPageTree(/*...*/) {
+		// [...]
+	}
+
+}
+```
+
+(Code on https://github.com/nipafx/loom-lab[github.com/nipafx/loom-lab].)
+
 === A simple app
 
 Features:
@@ -41,7 +57,7 @@ public void categorize(Page page) {
 	if (page instanceof GitHubIssuePage) {
 		GitHubIssuePage issue = (GitHubIssuePage) page;
 		categorizeIssuePage(issue);
-	} else if (page instanceof GitHubPrPage pr) {
+	} else if (page instanceof GitHubPrPage) {
 		// ... etc. for all types
 	}
 }
@@ -59,6 +75,10 @@ They combine:
 * variable declaration
 * cast/assignment
 
+⇝ Standardizes and eases a common pattern.
+
+=== Type patterns
+
 ```java
 public void categorize(Page page) {
 	if (page instanceof GitHubIssuePage issue)
@@ -67,8 +87,6 @@ public void categorize(Page page) {
 		// ... etc. for all types
 }
 ```
-
-⇝ Standardizes and eases a common pattern.
 
 === Patterns
 
@@ -82,15 +100,27 @@ Generally, patterns consist of three parts:
 
 _[Finalized in Java 16 -- https://openjdk.org/jeps/395[JEP 395]]_
 
+> Transparent carriers for immutable data.
+
 ```java
 record ExternalPage(URI url, String content) { }
 ```
 
-> Transparent carriers for immutable data.
-
 * compiler understands internals
 * couples API to internals
 * reduces verbosity _a lot_
+
+=== Records
+
+> Transparent carriers for immutable data.
+
+* `ExternalPage` is final
+* private final fields: `URI url` and `String content`
+* constructor: `ExternalPage(URI url, String content)`
+* accessors: `URI url()` and `String content()`
+* `equals()`, `hashCode()`, `toString()` that use the two fields
+
+All method/constructor bodies can be customized.
 
 === Record Patterns
 
@@ -158,6 +188,11 @@ _[Finalized in Java 17 -- https://openjdk.org/jeps/409[JEP 409]]_
 Sealed types limit inheritance, +
 by only allowing specific subtypes.
 
+* communicates intention to developers
+* allows compiler to check exhaustiveness
+
+=== Sealed types
+
 ```java
 public sealed interface Page
 	permits GitHubIssuePage, GitHubPrPage,
@@ -171,7 +206,7 @@ public sealed interface Page
 === Sealed types in switch
 
 If all subtypes of a sealed types are covered, +
-the switch is exhaustive …
+the switch is exhaustive (without `default`) …
 
 ```java
 public void categorize(Page page) {
@@ -275,17 +310,81 @@ But do you still think of it a design pattern? +
 
 Pattern matching does the same for the visitor pattern.
 
+=== In practice
+
+Applications for records, `switch`, and pattern matching:
+
+* ad-hoc data structures
+* complex return types
+* complex domains
+
+=== Ad-hoc Data Structures
+
+Often local, throw-away types used in one class or package:
+
+```java
+record PageWithLinks(Page page, Set<URI> links) {
+
+	PageWithLinks {
+		requireNonNull(page);
+		requireNonNull(links);
+		links = new HashSet<>(links);
+	}
+
+}
+```
+
+=== Complex Return Types
+
+Return values that are deconstructed immediately:
+
+```java
+Match<User> findUser(String userName) { ... }
+
+// types
+sealed interface Match<T> { }
+
+record None<T>() implements Match<T> { }
+
+record Exact<T>(T entity) implements Match<T> { }
+
+record Fuzzies<T>(Collection<T> entities)
+	implements Match<T> { }
+```
+
+=== Complex Return Types
+
+Return values that are deconstructed immediately:
+
+```java
+// calling the method
+switch (findUser("John Doe")) {
+	case None<> none -> // ...
+	case Exact<> exact -> // ...
+	case Fuzzies<> fuzzies -> // ...
+}
+```
+
+=== Complex Domains
+
+Long-living objects that are part +
+of the program's domain.
+
+For example `Page`.
+
 === Pushing further
 
 Pattern matching will probably see +
 further improvements, e.g.:
 
-* unnamed patterns +
+* unnamed patterns
   (https://openjdk.org/jeps/443[JEP 443], preview in Java 21)
-* deconstruction on assignment +
+* primitive types in patterns
+  (https://openjdk.org/jeps/443[JEP 455])
+* deconstruction on assignment
   (no JEP, but https://twitter.com/BrianGoetz/status/1599000138793771010[it's coming])
-* `with` expression +
-  (https://github.com/openjdk/amber-docs/blob/master/eg-drafts/reconstruction-records-and-classes.md[design document] from Aug 2020):
+* `with` expression
+  (https://github.com/openjdk/amber-docs/blob/master/eg-drafts/reconstruction-records-and-classes.md[design document] from Aug 2020)
 
 === Unnamed patterns
 
@@ -294,14 +393,13 @@ _[Preview in Java 21 -- https://openjdk.org/jeps/443[JEP 443]]_
 Use `_` to ignore components:
 
 ```java
-public static String createPageName(Page page) {
-	return switch (page) {
-		case ErrorPage(var url, _)
-			-> "💥 ERROR: " + url.getHost();
-		case GitHubIssuePage(_, _, _, int issueNumber)
-			-> "🐈 ISSUE #" + issueNumber;
-		// ...
-	};
+public void categorize(Page page) {
+	switch (page) {
+		case GitHubIssuePage(_, _, int issue, _) -> // ...
+		case GitHubPrPage(_, _, int pr, _) -> // ...
+		case ExternalPage(var url, _) -> // ...
+		case ErrorPage(var url, _) -> // ...
+	}
 }
 ```
 
@@ -312,11 +410,11 @@ public static String createPageName(Page page) {
 Use `_` to define default behavior:
 
 ```java
-public static String createPageEmoji(Page page) {
-	return switch (page) {
-		case GitHubIssuePage issue -> "🐈";
-		case GitHubPrPage pr -> "🐙";
-		case ErrorPage _, ExternalPage _ -> "n.a.";
+public void categorizeGitHub(Page page) {
+	switch (page) {
+		case GitHubIssuePage(_, _, int issue, _) -> // ...
+		case GitHubPrPage(_, _, int pr, _) -> // ...
+		case ErrorPage _, ExternalPage _ -> { };
 	};
 }
 ```
