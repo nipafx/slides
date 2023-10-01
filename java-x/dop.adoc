@@ -1,0 +1,339 @@
+== Java 21 💣💥
+
+{toc}
+
+=== Programming paradigms
+
+Paradigms often come with an +
+"Everything is a ..." sentence.
+
+> The goal of any programming paradigm is to manage complexity.
+
+* complexity comes in many forms
+* not all paradigms handle all forms equally well
+
+⇝ "It depends"
+
+=== Object-oriented programming
+
+> Everything is an object
+
+* combines state and behavior
+* hinges on encapsulation
+* polymorphism through inheritance
+
+Works best when defining/upholding boundaries.
+
+[NOTE.speaker]
+--
+* maintenance boundaries
+* versioning boundaries
+* encapsulation boundaries
+* compilation boundaries
+* compatibility boundaries
+* security boundaries
+--
+
+=== Mixed programming
+
+Great use cases for OOP:
+
+* boundaries between libraries and clients
+* in large programs to enable modular reasoning
+
+Consider a data-oriented approach for:
+
+* smaller (sub)systems
+* focused on data
+
+=== Data-oriented programming
+
+Guiding principles:
+
+* model the data, the whole data, +
+  and nothing but the data
+* data is immutable
+* validate at the boundary
+* make illegal states unrepresentable
+
+From Brian Goetz' seminal article: +
+https://www.infoq.com/articles/data-oriented-programming-java/[Data Oriented Programming in Java]
+
+=== Crawling GitHub
+
+The app we just looked at:
+
+* is small
+* focusses on data (`Page`)
+* separates operations from types
+
+⇝ Perfect for data-oriented programming!
+
+=== Applying DOP
+
+> Model the data, the whole data, +
+> and nothing but the data.
+
+There are four kinds of pages:
+
+* error page
+* external page
+* GitHub issue page
+* GitHub PR page
+
+⇝ Use four records to model them!
+
+=== Modeling the data
+
+```java
+public record ErrorPage(
+	URI url, Exception ex) { }
+
+public record ExternalPage(
+	URI url, String content) { }
+
+public record GitHubIssuePage(
+	URI url, String content,
+	int issueNumber, Set<Page> links) { }
+
+public record GitHubPrPage(
+	URI url, String content,
+	int prNumber, Set<Page> links) { }
+```
+
+=== Applying DOP
+
+> Model the data, the whole data, +
+> and nothing but the data.
+
+There are additional relations between them:
+
+* a page (load) is either successful or not
+* a successful page is either external or GitHub
+* a GitHub page is either for a PR or an issue
+
+⇝ Use sealed types to model the alternatives!
+
+=== Modeling alternatives
+
+```java
+public sealed interface Page
+		permits ErrorPage, SuccessfulPage {
+	URI url();
+}
+
+public sealed interface SuccessfulPage
+		extends Page permits ExternalPage, GitHubPage {
+	String content();
+}
+
+public sealed interface GitHubPage
+		extends SuccessfulPage
+		permits GitHubIssuePage, GitHubPrPage {
+	Set<Page> links();
+	default Stream<Page> subtree() { ... }
+}
+```
+
+[state=empty,background-color=white]
+=== !
+image::images/github-crawler-types.png[background, size=contain]
+
+////
+yuml.me - https://yuml.me/nipafx/edit/github-crawler
+
+[Page|URI url() {bg:dodgerblue}]
+[ErrorPage|Exception error() {bg:orange}]
+[SuccessfulPage|String content() {bg:dodgerblue}]
+[GitHubPage|Set〈Page〉 links() {bg:dodgerblue}]
+[GitHubIssuePage|int issueNumber() {bg:orange}]
+[GitHubPrPage|int prNumber() {bg:orange}]
+
+[Page]<-[ErrorPage]
+[Page]<-[SuccessfulPage]
+[SuccessfulPage]<-[GitHubPage]
+[GitHubPage]<-[GitHubIssuePage]
+[GitHubPage]<-[GitHubPrPage]
+////
+
+=== Algebraic data types
+
+* records are _product types_
+* sealed types are _sum types_
+
+> This simple combination of mechanisms -- aggregation and choice -- is deceptively powerful
+
+=== Applying DOP
+
+> Make illegal states unrepresentable.
+
+Many are already, e.g.:
+
+* with `error` and with `content`
+* with `issueNumber` and `prNumber`
+* with `isseNumber` or `prNumber` but no `links`
+
+=== Validation
+
+> Validate at the boundary.
+
+⇝ Reject other illegal states in constructors.
+
+```java
+record ExternalPage(URI url, String content) {
+	// compact constructor
+	ExternalPage {
+		Objects.requireNonNull(url);
+		Objects.requireNonNull(content);
+		if (content.isBlank())
+			throw new IllegalArgumentException();
+	}
+}
+```
+
+=== Applying DOP
+
+> Data is immutable.
+
+Records are shallowly immutable, +
+but field types may not be.
+
+⇝ Fix that during construction.
+
+```java
+// compact constructor
+GitHubPrPage {
+	// [...]
+	links = Set.copyOf(links);
+}
+```
+
+=== Where are we?
+
+* page "type" is explicit in Java's type
+* only legal combination of data are possible
+* API is self-documenting
+* code is trivial to test
+
+But where did the operations go?
+
+=== Operations on data
+
+> Model the data, the whole data, +
+> and nothing but the data.
+
+⇝ Methods should be limited to derived quantities.
+
+```java
+public record GitHubIssuePage(
+		URI url, String content,
+		int issueNumber, Set<Page> links) {
+
+	public String toPrettyString() {
+		return "🐈 ISSUE #" + issueNumber;
+	}
+
+}
+```
+
+=== Operations on data
+
+Other operations must be defined elsewhere:
+
+* methods in other subsystems
+* use pattern matching over sealed types +
+  for polymorphic operations
+* avoid default branch
+* use record patterns to access data
+
+⇝ This is just pattern matching.
+
+=== Operations on data
+
+If `toPrettyString` were defined outside of `Page`:
+
+```java
+private static String toPrettyString(Page page) {
+	return switch (page) {
+		case ErrorPage(var url, _)
+			-> "💥 ERROR: " + url.getHost();
+		case ExternalPage(var url, _)
+			-> "💤 EXTERNAL: " + url.getHost();
+		case GitHubIssuePage(_, _, int issueNumber, _)
+			-> "🐈 ISSUE #" + issueNumber;
+		case GitHubPrPage(_, _, int prNumber, _)
+			-> "🐙 PR #" + prNumber;
+	};
+}
+```
+
+=== Functional programming?!
+
+* immutable data structures
+* methods (functions?) that operate on them
+
+Isn't this just functional programming?!
+
+[%step]
+Kind of.
+
+=== DOP vs FP
+
+**Functional programming:**
+
+> Everything is a function
+
+⇝ Focus on creating and composing functions.
+
+---
+
+**Data-oriented programming:**
+
+> Model data as data.
+
+⇝ Focus on correctly modeling the data.
+
+=== DOP vs OOP
+
+**OOP is not dead (again):**
+
+* valuable for complex entities or rich libraries
+* use whenever encapsulation is needed
+* still a good default on high level
+
+**DOP --  consider when:**
+
+* mainly handling outside data
+* working with simple or ad-hoc data
+* data and behavior should be separated
+
+=== Data-oriented programming
+
+Use Java's strong typing to model data as data:
+
+* use classes to represent data, particularly:
+** data as data with records
+** alternatives with sealed classes
+* use methods (separately) to model behavior, particularly:
+** exhaustive `switch` without `default`
+** pattern matching to destructure polymorphic data
+
+=== Guiding principles
+
+* model the data, the whole data, +
+  and nothing but the data
+* data is immutable
+* validate at the boundary
+* make illegal states unrepresentable
+
+https://www.infoq.com/articles/data-oriented-programming-java/[Data Oriented Programming in Java]
+
+=== More
+
+More on data-oriented programming:
+
+* 📝 https://www.infoq.com/articles/data-oriented-programming-java/[Data Oriented Programming in Java] +
+  (Brian Goetz on InfoQ)
+* 🎥 https://www.youtube.com/watch?v=QrwFrm1R8OY[Java21 Brings Full Pattern Matching] (Sep 2023)
+* 🎥 https://www.youtube.com/watch?v=5qYJYGvVLg8[Data-Oriented Programming]
+* 🧑‍💻 https://github.com/nipafx/loom-lab[GitHub crawler]
