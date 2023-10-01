@@ -52,7 +52,7 @@ There's a conflict between:
 * simplicity
 * throughput
 
-=== Nota Bene
+=== Nota bene
 
 There are other conflicts:
 
@@ -106,14 +106,13 @@ image::images/one-million.jpg[background, size=cover]
 ```java
 try (var executor = Executors
 		.newVirtualThreadPerTaskExecutor()) {
-	IntStream
-		.range(0, 1_000_000)
-		.forEach(number -> {
-			executor.submit(() -> {
-				Thread.sleep(Duration.ofSeconds(1));
-				return number;
-			});
+	for (int i = 0; i < 1_000_000; i++) {
+		var number = i;
+		executor.submit(() -> {
+			Thread.sleep(Duration.ofSeconds(1));
+			return number;
 		});
+	}
 } // executor.close() is called implicitly, and waits
 ```
 
@@ -169,38 +168,28 @@ When workload is not CPU-bound:
 
 // TODO: Elliot's benchmarks
 
-=== Server How-To
+=== Server how-to
 
 For servers:
 
 * request handling threads are started by web framework
 * frameworks will offer (easy) configuration options
 
-We're not there yet.
+We're getting there.
 
 === Spring Boot
 
-Replace executors:
+Set property on 3.2 (Nov 2023):
 
-```java
-@Bean
-public TomcatProtocolHandlerCustomizer<?>
-		createExecutorForSyncCalls() {
-	return handler -> handler.setExecutor(
-			Executors.newVirtualThreadPerTaskExecutor());
-}
-
-@Bean
-public AsyncTaskExecutor
-		createExecutorForAsyncCalls() {
-	return new TaskExecutorAdapter(
-			Executors.newVirtualThreadPerTaskExecutor());
-}
 ```
+spring.threads.virtual.enabled=true
+```
+
+(https://quarkus.io/guides/resteasy-reactive-virtual-threads[Source])
 
 === Quarkus
 
-Annotate request handling method:
+Annotate request handling method on 3.?:
 
 ```java
 @GET
@@ -211,7 +200,13 @@ public String handle() {
 }
 ```
 
-(Requires `--add-opens java.base/java.lang=ALL-UNNAMED`.)
+(https://quarkus.io/guides/resteasy-reactive-virtual-threads[Source])
+
+=== Helidon
+
+Just works on 4.0 (currently RC1).
+
+(https://helidon.io/nima[Source])
 
 === More
 
@@ -219,6 +214,6 @@ public String handle() {
 * 📝 https://inside.java/2021/11/30/on-parallelism-and-concurrency/[On Parallelism and Concurrency]
 * 🎥 https://www.youtube.com/watch?v=5E0LU85EnTI[Java 21 new feature: Virtual Threads] (Sep 2023)
 
-=== Virtual Threads
+=== Virtual threads
 
 > Go forth and multiply (your threads)

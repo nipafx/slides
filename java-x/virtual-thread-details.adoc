@@ -80,15 +80,6 @@ The Java runtime manages virtual threads:
 * dedicated `ForkJoinPool` in FIFO mode
 --
 
-=== Stack chunks
-
-A virtual thread stack:
-
-* when waiting, is stored on heap (_stack chunk objects_)
-* when continuing, is lazily streamed to stack
-
-This keeps switching cheap.
-
 === The simple web request
 
 Remember the hypothetical request:
@@ -187,7 +178,7 @@ public String accessResource() {
 }
 ```
 
-=== Caveat #3: thread locals
+=== Caveat #3: thread-locals
 
 Thread-locals can hinder scalability:
 
@@ -232,7 +223,7 @@ public void serve(Request request, Response response) {
 }
 ```
 
-=== Preparing your code:
+=== Preparing your code
 
 Most importantly:
 
