@@ -2,12 +2,12 @@
 
 {toc}
 
-=== Starting (With) Java
+=== Starting (with) Java
 
 Java 21 makes life easier +
 for new (Java) developers.
 
-=== Why Do We Care?
+=== Why do we care?
 
 We all know Java, IDEs, build tools, etc.
 
@@ -79,7 +79,7 @@ Java 9 added `jshell`:
 
 More is needed.
 
-=== Single-file Execution
+=== Single-file execution
 
 Java 11 added single-file execution (https://openjdk.org/jeps/330[JEP 330]):
 
@@ -100,7 +100,7 @@ Expand single-file execution in two directions:
 * *simplify code*: reduce required Java concepts
 * *ease progression*: run multiple files with `java`
 
-=== Simpler Code
+=== Simpler code
 
 Remove requirement of:
 
@@ -121,7 +121,7 @@ void main() {
 [%step]
 _[Preview in Java 21 -- https://openjdk.org/jeps/445[JEP 445]]_
 
-=== Running Multiple Files
+=== Running multiple files
 
 Say you have a folder:
 
@@ -171,3 +171,11 @@ There are new features that:
 * make it easier to start
 * allow gradual progression
 * entice the future dev generation
+
+=== More
+
+Don't miss Brian Goetz' keynote: Wed, 10:20!
+
+* 📝 https://openjdk.org/jeps/445[JEP 445] for a simpler `main`
+* 📝 https://openjdk.org/jeps/8304400[JEP draft] for launching multiple source file
+* 🎥 https://www.youtube.com/watch?v=P9JPUbG5npI[Script Java Easily in 21 and Beyond] (May 2023)
