@@ -6,7 +6,7 @@
 
 Compared to other GCs, ZGC:
 
-* optimizes ultra-low pause times
+* optimizes for ultra-low pause times
 * can have higher memory footprint or higher CPU usage
 
 In Java 21, ZGC becomes _generational_.
@@ -30,3 +30,9 @@ A Cassandra 4 benchmark of ZGC vs GenZGC showed:
 * 1/4x heap size with stable throughput
 
 (Probably not representative but very promising.)
+
+=== More
+
+* 📝 https://openjdk.org/jeps/439[JEP 439]: Generational ZGC
+* 🎥 https://www.youtube.com/watch?v=YyXjC68l8mw[Generational ZGC and Beyond] (Aug 2023)
+* 🎥 https://www.youtube.com/watch?v=U2Sx5lU0KM8[Java's Highly Scalable Low-Latency GC: ZGC] (Mar 2023)
