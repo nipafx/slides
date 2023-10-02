@@ -1,0 +1,130 @@
+== Deprecations
+image::images/surprise.gif[background, size=cover]
+
+=== Cleaning house
+
+Already removed:
+
+* RMI activation ⑰ (https://openjdk.org/jeps/407[JEP 407])
+* Nashorn ⑮ (https://openjdk.org/jeps/372[JEP 372])
+* concurrent mark sweep GC ⑭ (https://openjdk.org/jeps/363[JEP 363])
+
+=== Cleaning house
+
+Deprecations (for removal):
+
+* allowed-by-default dynamic agents ㉑ (https://openjdk.org/jeps/451[JEP 451])
+* Windows 32-bit x86 port ㉑ (https://openjdk.org/jeps/449[JEP 449])
+* finalization ⑱ (https://openjdk.org/jeps/421[JEP 421])
+* security manager ⑰ (https://openjdk.org/jeps/411[JEP 411])
+* applet API ⑰ (https://openjdk.org/jeps/398[JEP 398])
+* primitive wrapper constructors ⑯ (https://openjdk.org/jeps/390[JEP 390])
+* biased locking ⑮ (https://openjdk.org/jeps/374[JEP 374])
+
+=== Agents
+
+What it is:
+
+* a component that transforms byte code
+* uses `java.lang.instrument` or JVM TI
+* launches with JVM or attaches later ("dynamic")
+
+=== Dynamic agents
+
+What you need to know:
+
+* all mechanisms for agents remain intact
+* nothing changed yet
+* in the future, dynamic attach will be +
+  disabled by default
+* enable with `-XX:+EnableDynamicAgentLoading`
+
+=== Dynamic agents
+
+What you need to do:
+
+* run your app with `-XX:-EnableDynamicAgentLoading`
+* observe closely
+* investigate necessity of dynamic agents
+
+=== Finalization
+
+What it is:
+
+* `finalize()` methods
+* a JLS/GC machinery for them
+
+=== Finalization
+
+What you need to know:
+
+* you can disable with `--finalization=disabled`
+* in a future release, `disabled` will be the default
+* in a later release, finalization will be removed
+
+=== Finalization
+
+What you need to do:
+
+* search for `finalize()` in your code and +
+  replace with `try`-with-resources or `Cleaner` API
+* search for `finalize()` in your dependencies and +
+  help remove them
+* run your app with `--finalization=disabled` and +
+  closely monitor resource behavior (e.g. file handles)
+
+=== Security Manager
+
+What it is:
+
+* a system of checks and permissions
+* intended to safeguard security-relevant +
+  code sections
+* embodied by `SecurityManager`
+
+=== Security Manager
+
+What you need to know:
+
+* barely used but maintenance-intensive
+* already disallowed by default
+* enable with `java.security.manager=allow`
+* in a future release, it will be removed
+
+=== Security Manager
+
+What you need to do:
+
+* observe your app with default settings +
+  (⇝ security manager disallowed)
+* if used, move away from security manager
+
+=== Primitive constructors
+
+What it is:
+
+* `new Integer(42)`
+* `new Double(42)`
+* etc.
+
+=== Primitive constructors
+
+What you need to know:
+
+* Valhalla wants to turn them into value types
+* those have no identity
+* identity-based operations need to be removed
+
+=== Primitive constructors
+
+What you need to do:
+
+* `Integer.valueOf(42)`
+* `Double.valueOf(42)`
+* etc.
+
+=== More
+
+* 📝 all the aforementioned JEPs
+* 🎥 https://www.youtube.com/watch?v=3HnH6G_zcP0[Future Java - Prepare Your Codebase Now!]
+* 🎥 https://www.youtube.com/watch?v=5jIkRqBuSBs[How to Upgrade to Java 21]
