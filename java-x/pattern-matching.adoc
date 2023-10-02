@@ -102,10 +102,6 @@ _[Finalized in Java 16 -- https://openjdk.org/jeps/395[JEP 395]]_
 
 > Transparent carriers for immutable data.
 
-```java
-record ExternalPage(URI url, String content) { }
-```
-
 * compiler understands internals
 * couples API to internals
 * reduces verbosity _a lot_
@@ -113,6 +109,10 @@ record ExternalPage(URI url, String content) { }
 === Records
 
 > Transparent carriers for immutable data.
+
+```java
+record ExternalPage(URI url, String content) { }
+```
 
 * `ExternalPage` is final
 * private final fields: `URI url` and `String content`
@@ -224,21 +224,39 @@ public void categorize(Page page) {
 
 === Facing the 😱
 
-Why is switching over the type scary? +
-Because it may not be future proof!
+Why is switching over the type scary?
 
 [step=1]
+Because it may not be future proof!
+
+[step=2]
 *But this one is!*
 
-[step=2]
+[step=3]
 Let's add `GitHubCommitPage implements Page`.
 
-[step=2]
+[step=3]
 ⇝ Follow the compile errors!
 
 === Follow the errors
 
-First stop: the sealed supertype.
+Starting point:
+
+```java
+record GitHubCommitPage(/*…*/) implements Page {
+
+	// ...
+
+}
+```
+
+Compile error because supertype is sealed.
+
+⇝ Go to the sealed supertype.
+
+=== Follow the errors
+
+Next stop: the sealed supertype
 
 ⇝ Permit the new subtype!
 
@@ -290,6 +308,10 @@ Via visitor pattern:
 
 * makes "visitation" part of API
 * cumbersome and indirect
+
+=== Dynamic dispatch
+
+Without methods becoming part of the API.
 
 Via pattern matching (new):
 

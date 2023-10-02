@@ -50,9 +50,6 @@ public <T> T queryDatabase(Callable<T> query)
 }
 ```
 
-[%step]
-Where are the virtual threads? ⇝ Later.
-
 === Caveats
 
 To understand virtual thread caveats +
