@@ -557,8 +557,7 @@ public &lt;T&gt; T queryDatabase(Callable&lt;T&gt; query)
 	} finally {
 		DB_SEMAPHORE.release();
 	}
-}</code></pre></div></div>
-<div class="paragraph fragment"><p>Where are the virtual threads? ⇝ Later.</p></div></div></section><section id="_caveats"><h2>Caveats</h2><div class="slide-content"><div class="paragraph"><p>To understand virtual thread caveats<br>
+}</code></pre></div></div></div></section><section id="_caveats"><h2>Caveats</h2><div class="slide-content"><div class="paragraph"><p>To understand virtual thread caveats<br>
 we need to understand how they work.</p></div>
 <div class="paragraph"><p>(Also, it&#8217;s very interesting.)</p></div></div></section><section id="_under_the_hood"><h2>Under the hood</h2><div class="slide-content"><div class="paragraph"><p>The Java runtime manages virtual threads:</p></div>
 <div class="ulist"><ul><li class="fragment"><p>runs them on a pool of <em>carrier threads</em><br></p></li><li class="fragment"><p>on blocking call:</p><div class="ulist"><ul><li class="fragment"><p>internally calls non-blocking operation</p></li><li class="fragment"><p><strong><em>unmounts</em> from carrier thread!</strong></p></li></ul></div></li><li class="fragment"><p>when call returns:<br></p><div class="ulist"><ul><li class="fragment"><p><em>mounts</em> to (other) carrier thread</p></li><li class="fragment"><p>continues</p></li></ul></div></li></ul></div>

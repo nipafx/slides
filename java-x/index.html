@@ -455,7 +455,8 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		document.body.appendChild(document.querySelector('footer'));
 	})
 </script></div></section>
-<section><section id="_lets_get_started"><h2>Let&#8217;s get started!</h2><div class="slide-content"><div class="ulist"><ul><li><p>this talk covers Java 21</p></li><li><p>slides at <a href="https://slides.nipafx.dev/java-x">slides.nipafx.dev/java-x</a><br>
+<section><section id="_lets_get_started"><h2>Let&#8217;s get started!</h2><div class="slide-content"><div class="ulist"><ul><li><p>this session covers Java 18-21</p></li><li><p>it&#8217;s 3h but it still can&#8217;t cover everything!<br>
+go to <a href="https://youtube.com/@java">youtube.com/@java</a> for more</p></li><li><p>slides at <a href="https://slides.nipafx.dev/java-x">slides.nipafx.dev/java-x</a><br>
 (hit "?" to get navigation help)</p></li><li><p>ask questions any time or tweet at <a href="https://twitter.com/nipafx">@nipafx</a></p></li></ul></div></div></section><section id="_lots_to_talk_about"><h2>Lots to talk about!</h2><div class="slide-content"><table class="toc">
 	<tr><td>Pattern Matching</td></tr>
 	<tr><td>Virtual Threads</td></tr>
@@ -506,8 +507,8 @@ to offer continuous fixes<br>
 }</code></pre></div></div></div></section><section id="_patterns"><h2>Patterns</h2><div class="slide-content"><div class="paragraph"><p>Generally, patterns consist of three parts:</p></div>
 <div class="ulist"><ul><li><p>a boolean check</p></li><li><p>variable declaration(s)</p></li><li><p>extraction(s)/assignment(s)</p></li></ul></div></div></section><section id="_records"><h2>Records</h2><div class="slide-content"><div class="paragraph"><p><em>[Finalized in Java 16&#8201;&#8212;&#8201;<a href="https://openjdk.org/jeps/395">JEP 395</a>]</em></p></div>
 <div class="quoteblock"><blockquote><div class="paragraph"><p>Transparent carriers for immutable data.</p></div></blockquote></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">record ExternalPage(URI url, String content) { }</code></pre></div></div>
 <div class="ulist"><ul><li><p>compiler understands internals</p></li><li><p>couples API to internals</p></li><li><p>reduces verbosity <em>a lot</em></p></li></ul></div></div></section><section id="_records_2"><h2>Records</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>Transparent carriers for immutable data.</p></div></blockquote></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">record ExternalPage(URI url, String content) { }</code></pre></div></div>
 <div class="ulist"><ul><li><p><code>ExternalPage</code> is final</p></li><li><p>private final fields: <code>URI url</code> and <code>String content</code></p></li><li><p>constructor: <code>ExternalPage(URI url, String content)</code></p></li><li><p>accessors: <code>URI url()</code> and <code>String content()</code></p></li><li><p><code>equals()</code>, <code>hashCode()</code>, <code>toString()</code> that use the two fields</p></li></ul></div>
 <div class="paragraph"><p>All method/constructor bodies can be customized.</p></div></div></section><section id="_record_patterns"><h2>Record Patterns</h2><div class="slide-content"><div class="paragraph"><p><em>[Finalized in Java 21&#8201;&#8212;&#8201;<a href="https://openjdk.org/jeps/440">JEP 440</a>]</em></p></div>
 <div class="ulist"><ul><li><p>check whether variable is of correct type</p></li><li><p>declare one variable per component</p></li><li><p>assign component values to variables</p></li></ul></div>
@@ -557,18 +558,25 @@ the switch is exhaustive (without <code>default</code>) …</p></div>
 	}
 }</code></pre></div></div>
 <div class="paragraph"><p>… and the compiler is happy!<br>
-(But still watching.)</p></div></div></section><section id="_facing_the"><h2>Facing the 😱</h2><div class="slide-content"><div class="paragraph"><p>Why is switching over the type scary?<br>
-Because it may not be future proof!</p></div>
-<div class="paragraph fragment" data-fragment-index="1"><p><strong>But this one is!</strong></p></div>
-<div class="paragraph fragment" data-fragment-index="2"><p>Let&#8217;s add <code>GitHubCommitPage implements Page</code>.</p></div>
-<div class="paragraph fragment" data-fragment-index="2"><p>⇝ Follow the compile errors!</p></div></div></section><section id="_follow_the_errors"><h2>Follow the errors</h2><div class="slide-content"><div class="paragraph"><p>First stop: the sealed supertype.</p></div>
+(But still watching.)</p></div></div></section><section id="_facing_the"><h2>Facing the 😱</h2><div class="slide-content"><div class="paragraph"><p>Why is switching over the type scary?</p></div>
+<div class="paragraph fragment" data-fragment-index="1"><p>Because it may not be future proof!</p></div>
+<div class="paragraph fragment" data-fragment-index="2"><p><strong>But this one is!</strong></p></div>
+<div class="paragraph fragment" data-fragment-index="3"><p>Let&#8217;s add <code>GitHubCommitPage implements Page</code>.</p></div>
+<div class="paragraph fragment" data-fragment-index="3"><p>⇝ Follow the compile errors!</p></div></div></section><section id="_follow_the_errors"><h2>Follow the errors</h2><div class="slide-content"><div class="paragraph"><p>Starting point:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">record GitHubCommitPage(/*…*/) implements Page {
+
+	// ...
+
+}</code></pre></div></div>
+<div class="paragraph"><p>Compile error because supertype is sealed.</p></div>
+<div class="paragraph"><p>⇝ Go to the sealed supertype.</p></div></div></section><section id="_follow_the_errors_2"><h2>Follow the errors</h2><div class="slide-content"><div class="paragraph"><p>Next stop: the sealed supertype</p></div>
 <div class="paragraph"><p>⇝ Permit the new subtype!</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public sealed interface Page
 	permits GitHubIssuePage, GitHubPrPage,
 			GitHubCommitPage,
 			ExternalPage, ErrorPage {
 	// ...
-}</code></pre></div></div></div></section><section id="_follow_the_errors_2"><h2>Follow the errors</h2><div class="slide-content"><div class="paragraph"><p>Next stop: all switches that are no longer exhaustive.</p></div>
+}</code></pre></div></div></div></section><section id="_follow_the_errors_3"><h2>Follow the errors</h2><div class="slide-content"><div class="paragraph"><p>Next stop: all switches that are no longer exhaustive.</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public void categorize(Page page) {
 	switch (page) {
 		case GitHubIssuePage issue -&gt; // ...
@@ -584,7 +592,7 @@ Because it may not be future proof!</p></div>
 <div class="ulist"><ul><li><p>via inheritance</p></li><li><p>makes method part of API</p></li></ul></div>
 <div class="paragraph"><p>What if methods shouldn&#8217;t be part of the API?</p></div></div></section><section id="_dynamic_dispatch_2"><h2>Dynamic dispatch</h2><div class="slide-content"><div class="paragraph"><p>Without methods becoming part of the API.</p></div>
 <div class="paragraph"><p>Via visitor pattern:</p></div>
-<div class="ulist"><ul><li><p>makes "visitation" part of API</p></li><li><p>cumbersome and indirect</p></li></ul></div>
+<div class="ulist"><ul><li><p>makes "visitation" part of API</p></li><li><p>cumbersome and indirect</p></li></ul></div></div></section><section id="_dynamic_dispatch_3"><h2>Dynamic dispatch</h2><div class="slide-content"><div class="paragraph"><p>Without methods becoming part of the API.</p></div>
 <div class="paragraph"><p>Via pattern matching (new):</p></div>
 <div class="ulist"><ul><li><p>makes "sealed" part of type</p></li><li><p>straight-forward</p></li></ul></div></div></section><section id="_patterns_and_language"><h2>Patterns and language</h2><div class="slide-content"><div class="paragraph"><p>Design patterns make up gaps in the language.</p></div>
 <div class="paragraph"><p>Good example is the strategy pattern:</p></div>
@@ -840,8 +848,7 @@ public &lt;T&gt; T queryDatabase(Callable&lt;T&gt; query)
 	} finally {
 		DB_SEMAPHORE.release();
 	}
-}</code></pre></div></div>
-<div class="paragraph fragment"><p>Where are the virtual threads? ⇝ Later.</p></div></div></section><section id="_caveats"><h2>Caveats</h2><div class="slide-content"><div class="paragraph"><p>To understand virtual thread caveats<br>
+}</code></pre></div></div></div></section><section id="_caveats"><h2>Caveats</h2><div class="slide-content"><div class="paragraph"><p>To understand virtual thread caveats<br>
 we need to understand how they work.</p></div>
 <div class="paragraph"><p>(Also, it&#8217;s very interesting.)</p></div></div></section><section id="_under_the_hood"><h2>Under the hood</h2><div class="slide-content"><div class="paragraph"><p>The Java runtime manages virtual threads:</p></div>
 <div class="ulist"><ul><li class="fragment"><p>runs them on a pool of <em>carrier threads</em><br></p></li><li class="fragment"><p>on blocking call:</p><div class="ulist"><ul><li class="fragment"><p>internally calls non-blocking operation</p></li><li class="fragment"><p><strong><em>unmounts</em> from carrier thread!</strong></p></li></ul></div></li><li class="fragment"><p>when call returns:<br></p><div class="ulist"><ul><li class="fragment"><p><em>mounts</em> to (other) carrier thread</p></li><li class="fragment"><p>continues</p></li></ul></div></li></ul></div>
@@ -1106,7 +1113,7 @@ public Stream&lt;InetAddress&gt; lookupByName(
 public String lookupByAddress(byte[] addr) {
 	return builtinResolver.lookupByAddress(addr);
 }</code></pre></div></div></div></section><section id="_custom_resolvers"><h2>Custom resolvers</h2><div class="slide-content"><div class="paragraph"><p>Possible resolvers:</p></div>
-<div class="ulist"><ul><li><p>support for alternative protocols like QUIC, TLS, HTTPS</p></li><li><p>redirect host names to local IPs for testing</p></li><li><p>more ideas?</p></li></ul></div></div></section><section id="_more_6"><h2>More</h2><div class="slide-content"><div class="paragraph"><p>📝 <a href="https://openjdk.org/jeps/418">JEP 418</a></p></div></div></section></section>
+<div class="ulist"><ul><li><p>support for QUIC, TLS, HTTPS, etc.</p></li><li><p>redirect host names to local IPs for testing</p></li><li><p>more ideas?</p></li></ul></div></div></section><section id="_more_6"><h2>More</h2><div class="slide-content"><div class="paragraph"><p>📝 <a href="https://openjdk.org/jeps/418">JEP 418</a></p></div></div></section></section>
 <section><section id="_java_21_8"><h2>Java 21 💣💥</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr><td>Pattern Matching</td></tr> <tr><td>Virtual Threads</td></tr> <tr><td>String Templates</td></tr> <tr class="toc-current"><td>New & Updated APIs</td></tr> <tr><td style="padding-left: 2em;">Sequenced Collections</td></tr> <tr><td style="padding-left: 2em;">Address Resolution SPI</td></tr> <tr class="toc-current"><td style="padding-left: 2em;">Misc. Improvements</td></tr> <tr><td>Performance & Security</td></tr> <tr><td>On-Ramp</td></tr> </table> </p></div></div></section><section id="_collections"><h2>Collections</h2><div class="slide-content"><div class="paragraph"><p>How do you create an <code>ArrayList</code> that<br>
 can store 50 elements without resizing?</p></div>
 <div class="listingblock fragment" data-fragment-index="1"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">new ArrayList&lt;&gt;(50);</code></pre></div></div>

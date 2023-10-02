@@ -746,7 +746,7 @@ but supported by the compiler</p></li></ul></div>
 	<tr><td>What is DOP?</td></tr>
 	<tr><td>A Lengthy Example</td></tr>
 	<tr class="toc-current"><td>That was DOP!</td></tr>
-</table></div></section><section id="_algebraic_data_types"><h2>Algebraic Data-Types</h2><div class="slide-content"><div class="ulist"><ul><li><p>records are <em>product types</em></p></li><li><p>sealed types are <em>sum types</em></p></li></ul></div>
+</table></div></section><section id="_algebraic_data_types"><h2>Algebraic Data Types</h2><div class="slide-content"><div class="ulist"><ul><li><p>records are <em>product types</em></p></li><li><p>sealed types are <em>sum types</em></p></li></ul></div>
 <div class="quoteblock"><blockquote><div class="paragraph"><p>This simple combination of mechanisms&#8201;&#8212;&#8201;aggregation and choice&#8201;&#8212;&#8201;is deceptively powerful</p></div></blockquote></div></div></section><section id="_applications"><h2>Applications</h2><div class="slide-content"><div class="ulist"><ul><li><p>ad-hoc data structures</p></li><li><p>complex return types</p></li><li><p>complex domains</p></li></ul></div></div></section><section id="_ad_hoc_data_structures"><h2>Ad-hoc Data Structures</h2><div class="slide-content"><div class="paragraph"><p>Often local, throw-away types used in one class or package.</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">record PageWithLinks(Page page, Set&lt;URI&gt; links) {
 
