@@ -418,10 +418,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://vodafone.com" title="Vodafone"><img src="../_images/logo-vodafone-ba867977.jpg" alt="Logo of Vodafone" class="logo" style="{host-logo-style}"></a>
+		<a href="https://portotechhub.com/" title="Porto Tech Hub"><img src="../_images/logo-porto-tech-hub-cfc28adb.png" alt="Logo of Porto Tech Hub" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://vodafone.com" title="Vodafone website">Vodafone</a></p>
-			<p><a href="https://twitter.com/VodafoneGroup" title="Vodafone on Twitter">@VodafoneGroup</a></p>
+			<p><a href="https://portotechhub.com/" title="Porto Tech Hub website">Porto Tech Hub</a></p>
+			<p><a href="https://twitter.com/PortoTechHub" title="Porto Tech Hub on Twitter">@PortoTechHub</a></p>
 		</div>
 	</div>
 	<div class="participant">
@@ -443,10 +443,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://vodafone.com" title="Vodafone"><img src="../_images/logo-vodafone-ba867977.jpg" alt="Logo of Vodafone" class="logo" style="{host-logo-style}"></a>
+		<a href="https://portotechhub.com/" title="Porto Tech Hub"><img src="../_images/logo-porto-tech-hub-cfc28adb.png" alt="Logo of Porto Tech Hub" class="logo" style="{host-logo-style}"></a>
 		<div class="name"><p>
-			<a href="https://vodafone.com" title="Vodafone website">Vodafone</a>
-			/ <a href="https://twitter.com/VodafoneGroup" title="Vodafone on Twitter">@VodafoneGroup</a>
+			<a href="https://portotechhub.com/" title="Porto Tech Hub website">Porto Tech Hub</a>
+			/ <a href="https://twitter.com/PortoTechHub" title="Porto Tech Hub on Twitter">@PortoTechHub</a>
 		</p></div>
 	</div>
 </footer>
@@ -486,7 +486,8 @@ and nothing but the data</p></li><li><p>data is immutable</p></li><li><p>validat
 	<tr class="toc-current"><td>A Lengthy Example</td></tr>
 	<tr><td>That was DOP!</td></tr>
 </table></div></section><section id="_crawling_github"><h2>Crawling GitHub</h2><div class="slide-content"><div class="paragraph"><p>Starting with a seed URL:</p></div>
-<div class="olist arabic"><ol class="arabic"><li><p>connect to URL</p></li><li><p>identify kind of page</p></li><li><p>identify interesting section</p></li><li><p>identify outgoing links</p></li><li><p>for each link, start at 1.</p></li></ol></div></div></section><section id="_crawling_github_2"><h2>Crawling GitHub</h2><div class="slide-content"><div class="paragraph"><p>That logic is implemented in:</p></div>
+<div class="olist arabic"><ol class="arabic"><li><p>connect to URL</p></li><li><p>identify kind of page</p></li><li><p>identify interesting section</p></li><li><p>identify outgoing links</p></li><li><p>for each link, start at 1.</p></li></ol></div>
+<div class="paragraph"><p>(Code on <a href="https://github.com/nipafx/loom-lab">github.com/nipafx/loom-lab</a>.)</p></div></div></section><section id="_crawling_github_2"><h2>Crawling GitHub</h2><div class="slide-content"><div class="paragraph"><p>That logic is implemented in:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public class PageTreeFactory {
 
 	public static Page loadPageTree(/*...*/) {
@@ -494,11 +495,11 @@ and nothing but the data</p></li><li><p>data is immutable</p></li><li><p>validat
 	}
 
 }</code></pre></div></div>
-<div class="paragraph"><p>(Code on <a href="https://github.com/nipafx/loom-lab">github.com/nipafx/loom-lab</a>.)</p></div>
 <div class="paragraph"><p>What does <code>Page</code> look like?</p></div></div></section><section id="_requirements"><h2>Requirements</h2><div class="slide-content"><div class="paragraph"><p>Pages:</p></div>
-<div class="ulist"><ul><li><p>all pages have a <code>url</code></p></li><li><p>unresolved pages have an <code>error</code></p></li><li><p>resolved pages have <code>content</code></p></li><li><p>GitHub pages have:</p><div class="ulist"><ul><li><p>outgoing <code>links</code></p></li><li><p><code>issueNumber</code> or <code>prNumber</code></p></li></ul></div></li></ul></div></div></section><section id="_requirements_2"><h2>Requirements</h2><div class="slide-content"><div class="paragraph"><p>Operations on pages<br>
+<div class="ulist"><ul><li><p>all pages have a <code>url</code></p></li><li><p>unresolved pages have an <code>error</code></p></li><li><p>resolved pages have <code>content</code></p></li><li><p>GitHub pages have:</p><div class="ulist"><ul><li><p>outgoing <code>links</code></p></li><li><p><code>issueNumber</code> or <code>prNumber</code></p></li></ul></div></li></ul></div></div></section><section id="_requirements_2"><h2>Requirements</h2><div class="slide-content"><div class="paragraph"><p>Possible operations on pages<br>
 (and their subtree):</p></div>
-<div class="ulist"><ul><li><p>pretty print</p></li><li><p>evaluate statistics</p></li></ul></div></div></section><section id="_a_possible_implementation"><h2>A Possible Implementation</h2><div class="slide-content"><div class="paragraph"><p>A single <code>Page</code> class with this API:</p></div>
+<div class="ulist"><ul><li><p>display as interactive graph</p></li><li><p>compute graph properties</p></li><li><p>categorize pages by topic</p></li><li><p>analyze mood of interactions</p></li><li><p>process payment for analyses</p></li></ul></div></div></section><section id="_requirements_3"><h2>Requirements</h2><div class="slide-content"><div class="paragraph"><p>Example operations going forward:</p></div>
+<div class="ulist"><ul><li><p>evaluate statistics</p></li><li><p>create pretty string</p></li></ul></div></div></section><section id="_a_possible_implementation"><h2>A Possible Implementation</h2><div class="slide-content"><div class="paragraph"><p>A single <code>Page</code> class with this API:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public URL url();
 public Exception error();
 public String content();
@@ -508,29 +509,28 @@ public Set&lt;Page&gt; links();
 public Stream&lt;Page&gt; subtree();
 
 public Stats evaluateStatistics();
-public String printPageList();</code></pre></div></div></div></section><section id="_a_possible_implementation_2"><h2>A Possible Implementation</h2><div class="slide-content"><div class="paragraph"><p>Problems:</p></div>
+public String toPrettyString();</code></pre></div></div></div></section><section id="_a_possible_implementation_2"><h2>A Possible Implementation</h2><div class="slide-content"><div class="paragraph"><p>Problems:</p></div>
 <div class="ulist"><ul><li><p>page "type" is implicit</p></li><li><p>legal combination of fields is unclear</p></li><li><p>clients must "divine" the type</p></li><li><p>disparate operations on same class</p></li></ul></div></div></section><section id="_applying_dop"><h2>Applying DOP</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>Model the data, the whole data,<br>
 and nothing but the data.</p></div></blockquote></div>
 <div class="paragraph"><p>There are four kinds of pages:</p></div>
 <div class="ulist"><ul><li><p>error page</p></li><li><p>external page</p></li><li><p>GitHub issue page</p></li><li><p>GitHub PR page</p></li></ul></div>
 <div class="paragraph"><p>⇝ Use four records to model them!</p></div></div></section><section id="_detour_records"><h2>Detour: Records</h2><div class="slide-content"><div class="paragraph"><p><em>[Finalized in Java 16&#8201;&#8212;&#8201;<a href="https://openjdk.org/jeps/395">JEP 395</a>]</em></p></div>
-<div class="quoteblock"><blockquote><div class="paragraph"><p>Transparent carriers for immutable data</p></div></blockquote></div>
-<div class="ulist"><ul><li><p>opt out of encapsulation</p></li><li><p>allow compiler to understand internals</p></li></ul></div>
-<div class="paragraph"><p>Most obvious consequence: less boilerplate.</p></div></div></section><section id="_detour_records_2"><h2>Detour: Records</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">record ExternalPage(URI url, String content) { }</code></pre></div></div>
+<div class="quoteblock"><blockquote><div class="paragraph"><p>Transparent carriers for immutable data.</p></div></blockquote></div>
+<div class="ulist"><ul><li><p>compiler understands internals</p></li><li><p>couples API to internals</p></li><li><p>reduces verbosity <em>a lot</em></p></li></ul></div></div></section><section id="_detour_records_2"><h2>Detour: Records</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">record ExternalPage(URI url, String content) { }</code></pre></div></div>
 <div class="ulist"><ul><li><p><code>ExternalPage</code> is final</p></li><li><p>private final fields: <code>URI url</code> and <code>String content</code></p></li><li><p>constructor: <code>ExternalPage(URI url, String content)</code></p></li><li><p>accessors: <code>URI url()</code> and <code>String content()</code></p></li><li><p><code>equals()</code>, <code>hashCode()</code>, <code>toString()</code> that use the two fields</p></li></ul></div>
-<div class="paragraph"><p>All method/constructor bodies can be customized!</p></div></div></section><section id="_modeling_the_data"><h2>Modeling The Data</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public record ErrorPage(
+<div class="paragraph"><p>All method/constructor bodies can be customized.</p></div></div></section><section id="_modeling_the_data"><h2>Modeling The Data</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public record ErrorPage(
 	URI url, Exception ex) { }
 
 public record ExternalPage(
 	URI url, String content) { }
 
 public record GitHubIssuePage(
-	URI url, int issueNumber,
-	String content, Set&lt;Page&gt; links) { }
+	URI url, String content,
+	int issueNumber, Set&lt;Page&gt; links) { }
 
 public record GitHubPrPage(
-	URI url, int prNumber,
-	String content, Set&lt;Page&gt; links) { }</code></pre></div></div></div></section><section id="_applying_dop_2"><h2>Applying DOP</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>Model the data, the whole data,<br>
+	URI url, String content,
+	int prNumber, Set&lt;Page&gt; links) { }</code></pre></div></div></div></section><section id="_applying_dop_2"><h2>Applying DOP</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>Model the data, the whole data,<br>
 and nothing but the data.</p></div></blockquote></div>
 <div class="paragraph"><p>There are additional relations between them:</p></div>
 <div class="ulist"><ul><li><p>a page (load) is either successful or not</p></li><li><p>a successful page is either external or GitHub</p></li><li><p>a GitHub page is either for a PR or an issue</p></li></ul></div>
@@ -543,12 +543,7 @@ by only allowing specific subtypes.</p></div>
 }</code></pre></div></div>
 <div class="paragraph"><p>Only <code>ErrorPage</code> and <code>SuccessfulPage</code><br>
 can implement/extend <code>Page</code>.</p></div>
-<div class="paragraph"><p>⇝ <code>interface MyPage extends Page</code> doesn&#8217;t compile</p></div></div></section><section id="_detour_sealed_types_3"><h2>Detour: Sealed Types</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public sealed interface Page
-		permits ErrorPage, SuccessfulPage {
-	// ...
-}</code></pre></div></div>
-<div class="paragraph"><p>Inheriting types must be:</p></div>
-<div class="ulist"><ul><li><p>in the same module (package) as sealed type</p></li><li><p>directly inherit from sealed type</p></li><li><p><code>final</code>, <code>sealed</code>, or <code>non-sealed</code></p></li></ul></div></div></section><section id="_modeling_alternatives"><h2>Modeling Alternatives</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public sealed interface Page
+<div class="paragraph"><p>⇝ <code>interface MyPage extends Page</code> doesn&#8217;t compile</p></div></div></section><section id="_modeling_alternatives"><h2>Modeling Alternatives</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public sealed interface Page
 		permits ErrorPage, SuccessfulPage {
 	URI url();
 }
@@ -588,7 +583,7 @@ GitHubPrPage {
 and nothing but the data.</p></div></blockquote></div>
 <div class="paragraph"><p>⇝ Operations should be limited to derived quantities.</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public Stats evaluateStatistics();
-public String printPageList();</code></pre></div></div>
+public String toPrettyString();</code></pre></div></div>
 <div class="paragraph"><p>This actually applies to our operations.</p></div>
 <div class="paragraph fragment" data-fragment-index="1"><p>But what if it didn&#8217;t? 😁</p></div></div></section><section id="_operations_on_data_2"><h2>Operations On Data</h2><div class="slide-content"><div class="paragraph"><p>Pattern matching on sealed types is perfect<br>
 to apply polymorphic operations to data!</p></div>
@@ -608,8 +603,8 @@ is <code>ghPage</code> in scope.</p></div></blockquote></div>
 // do something with `ghPage` here 😈</code></pre></div></div></div></section><section id="_detour_patterns_in_switch"><h2>Detour: Patterns in Switch</h2><div class="slide-content"><div class="paragraph"><p><em>[Finalized in Java 21&#8201;&#8212;&#8201;<a href="https://openjdk.org/jeps/441">JEP 441</a>]</em></p></div>
 <div class="paragraph"><p>All patterns can be used in switches<br></p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">switch (page) {
-	case ExternalPage ext -&gt; // use `ext`
 	case GitHubPrPage pr -&gt; // use `pr`
+	case ExternalPage ext -&gt; // use `ext`
 	// ...
 };</code></pre></div></div>
 <div class="ulist"><ul><li><p>checks <code>page</code> against all listed types</p></li><li><p>executes matching branch with respective variable</p></li></ul></div></div></section><section id="_gathering_statistics"><h2>Gathering Statistics</h2><div class="slide-content"><div class="paragraph"><p>In class <code>Statistician</code>:</p></div>
@@ -628,31 +623,31 @@ private void evaluateTree(Page page) {
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">private void evaluatePage(Page page) {
 	// `numberOf...` are fields
 	switch (page) {
-		case ErrorPage __ -&gt; numberOfErrors++;
-		case ExternalPage __ -&gt; numberOfExternals++;
-		case GitHubIssuePage __ -&gt; numberOfIssues++;
-		case GitHubPrPage __ -&gt; numberOfPrs++;
+		case GitHubIssuePage issue -&gt; numberOfIssues++;
+		case GitHubPrPage pr -&gt; numberOfPrs++;
+		case ExternalPage ext -&gt; numberOfExternals++;
+		case ErrorPage err -&gt; numberOfErrors++;
 	}
-}</code></pre></div></div></div></section><section id="_printing_a_page_list"><h2>Printing A Page List</h2><div class="slide-content"><div class="paragraph"><p>In class <code>Pretty</code>:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public static String printPageList(Page rootPage) {
+}</code></pre></div></div></div></section><section id="_creating_a_pretty_string"><h2>Creating A Pretty String</h2><div class="slide-content"><div class="paragraph"><p>In class <code>Pretty</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public static String toPrettyString(Page rootPage) {
 	if (!(rootPage instanceof GitHubPage ghPage))
-		return createPageName(rootPage);
+		return createPrettyString(rootPage);
 
 	return ghPage
 			.subtree()
-			.map(Pretty::createPageName)
+			.map(Pretty::createPrettyString)
 			.collect(joining("\n"));
-}</code></pre></div></div></div></section><section id="_printing_a_page_list_2"><h2>Printing A Page List</h2><div class="slide-content"><div class="paragraph"><p>In class <code>Pretty</code>:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">private static String createPageName(Page page) {
+}</code></pre></div></div></div></section><section id="_creating_a_pretty_string_2"><h2>Creating A Pretty String</h2><div class="slide-content"><div class="paragraph"><p>In class <code>Pretty</code>:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">private static String createPrettyString(Page page) {
 	return switch (page) {
-		case ErrorPage err
-			-&gt; "💥 ERROR: " + err.url().getHost();
-		case ExternalPage ext
-			-&gt; "💤 EXTERNAL: " + ext.url().getHost();
 		case GitHubIssuePage issue
 			-&gt; "🐈 ISSUE #" + issue.issueNumber();
 		case GitHubPrPage pr
 			-&gt; "🐙 PR #" + pr.prNumber();
+		case ExternalPage ext
+			-&gt; "💤 EXTERNAL: " + ext.url().getHost();
+		case ErrorPage err
+			-&gt; "💥 ERROR: " + err.url().getHost();
 	};
 }</code></pre></div></div>
 <div class="paragraph"><p>⇝ Simpler access with record/deconstruction patterns.</p></div></div></section><section id="_detour_record_patterns"><h2>Detour: Record Patterns</h2><div class="slide-content"><div class="paragraph"><p><em>[Finalized in Java 21&#8201;&#8212;&#8201;<a href="https://openjdk.org/jeps/440">JEP 440</a>]</em></p></div>
@@ -661,77 +656,109 @@ deconstruct them in <code>if</code> and <code>switch</code>:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">record ExternalPage(URI url, String content) { }
 
 // elsewhere
-Object obj = // ...
-if (obj instanceof ExternalPage(var url, var content))
-	// use `url` and `content` here
-switch (obj) {
-	case ExternalPage(var url, var content) -&gt;
-		// use `url` and `content` here
+switch (page) {
+	case ExternalPage(var url, var content)
+		-&gt; // use `url` and `content` here
 }</code></pre></div></div></div></section><section id="_deconstructing_data"><h2>Deconstructing Data</h2><div class="slide-content"><div class="paragraph"><p>Use deconstruction patterns:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public static String createPageName(Page page) {
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public static String createPrettyString(Page page) {
 	return switch (page) {
+		case GitHubIssuePage(
+				var url, var content,
+				int issueNumber, var links)
+			-&gt; "🐈 ISSUE #" + issueNumber;
 		case ErrorPage(var url, var ex)
 			-&gt; "💥 ERROR: " + url.getHost();
-		case GitHubIssuePage(
-				var url, var content, var links,
-				int issueNumber)
-			-&gt; "🐈 ISSUE #" + issueNumber;
 		// ...
 	};
 }</code></pre></div></div>
 <div class="paragraph"><p>⇝ Even simpler access with unnamed patterns.</p></div></div></section><section id="_detour_unnamed_patterns"><h2>Detour: Unnamed Patterns</h2><div class="slide-content"><div class="paragraph"><p><em>[Preview in Java 21&#8201;&#8212;&#8201;<a href="https://openjdk.org/jeps/443">JEP 443</a>]</em></p></div>
 <div class="paragraph"><p>Replace variables you don&#8217;t need with <code>_</code>:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">case ErrorPage(var url, _)
-	-&gt; "💥 ERROR: " + url.getHost();
-case GitHubIssuePage(_, _, _, int issueNumber)
-	-&gt; "🐈 ISSUE #" + issueNumber;</code></pre></div></div></div></section><section id="_deconstructing_data_2"><h2>Deconstructing Data</h2><div class="slide-content"><div class="paragraph"><p>Use record and unnamed patterns for simple access:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">private static String createPageName(Page page) {
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">case GitHubIssuePage(_, _, int issueNumber, _)
+	-&gt; "🐈 ISSUE #" + issueNumber;
+case ErrorPage(var url, _)
+	-&gt; "💥 ERROR: " + url.getHost();</code></pre></div></div></div></section><section id="_deconstructing_data_2"><h2>Deconstructing Data</h2><div class="slide-content"><div class="paragraph"><p>Use record and unnamed patterns for simple access:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">private static String createPrettyString(Page page) {
 	return switch (page) {
-		case ErrorPage(var url, _)
-			-&gt; "💥 ERROR: " + url.getHost();
+		case GitHubIssuePage(_, _, int issueNumber, _)
+			-&gt; "🐈 ISSUE #" + issueNumber;
+		case GitHubPrPage(_, _, int prNumber, _)
+			-&gt; "🐙 PR #" + prNumber;
 		case ExternalPage(var url, _)
 			-&gt; "💤 EXTERNAL: " + url.getHost();
-		case GitHubIssuePage(_, _, _, issueNumber)
-			-&gt; "🐈 ISSUE #" + issueNumber;
-		case GitHubPrPage(_, _, _, prNumber)
-			-&gt; "🐙 PR #" + prNumber;
+		case ErrorPage(var url, _)
+			-&gt; "💥 ERROR: " + url.getHost();
 	};
 }</code></pre></div></div></div></section><section id="_operations_on_data_3"><h2>Operations On Data</h2><div class="slide-content"><div class="paragraph"><p>Looks good?</p></div>
 <div class="paragraph"><p>"Isn&#8217;t switching over types icky?"</p></div>
-<div class="paragraph"><p>Yes, but why?</p></div></div></section><section id="_extending_operations_on_data"><h2>Extending Operations On Data</h2><div class="slide-content"><div class="paragraph"><p>What happens when we add:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public record GitHubCommitPage(
-		URI url, String hash,
-		String content, Set&lt;Page&gt; links)
-	implements GitHubPage {
+<div class="paragraph"><p>Yes, but why?</p></div>
+<div class="paragraph fragment" data-fragment-index="1"><p>⇝ It fails unpredicatbly when new types are added.</p></div></div></section><section id="_extending_operations_on_data"><h2>Extending Operations On Data</h2><div class="slide-content"><div class="paragraph"><p>This approach behaves much better:</p></div>
+<div class="ulist"><ul><li><p>let&#8217;s add <code>GitHubCommitPage implements Page</code></p></li><li><p>follow the compile errors!</p></li></ul></div></div></section><section id="_follow_the_errors"><h2>Follow the errors</h2><div class="slide-content"><div class="paragraph"><p>Starting point:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">record GitHubCommitPage(/*…*/) implements Page {
 
-	// [...]
+	// ...
 
 }</code></pre></div></div>
-<div class="paragraph"><p>Follow the compile errors!</p></div></div></section><section id="_extending_operations_on_data_2"><h2>Extending Operations On Data</h2><div class="slide-content"><div class="paragraph"><p>First stop: the sealed supertype.</p></div>
+<div class="paragraph"><p>Compile error because supertype is sealed.</p></div>
+<div class="paragraph"><p>⇝ Go to the sealed supertype.</p></div></div></section><section id="_follow_the_errors_2"><h2>Follow the errors</h2><div class="slide-content"><div class="paragraph"><p>Next stop: the sealed supertype</p></div>
 <div class="paragraph"><p>⇝ Permit the new subtype!</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public sealed interface GitHubPage
 		extends SuccessfulPage
 		permits GitHubIssuePage, GitHubPrPage,
-			GitHubCommitPage {
+				GitHubCommitPage {
 	// [...]
-}</code></pre></div></div></div></section><section id="_extending_operations_on_data_3"><h2>Extending Operations On Data</h2><div class="slide-content"><div class="paragraph"><p>Next stop: all <code>switch</code> without <code>default</code>.</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// non-exhaustive ⇝ compile error
-switch (page) {
-	case ErrorPage _ -&gt; numberOfErrors++;
-	case ExternalPage _ -&gt; numberOfExternalLinks++;
-	case GitHubIssuePage _ -&gt; numberOfIssues++;
-	case GitHubPrPage _ -&gt; numberOfPrs++;
-}</code></pre></div></div></div></section><section id="_extending_operations_on_data_4"><h2>Extending Operations On Data</h2><div class="slide-content"><div class="paragraph"><p>⇝ Handle the new subtype!</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">switch (page) {
-	case ErrorPage _ -&gt; numberOfErrors++;
-	case ExternalPage _ -&gt; numberOfExternalLinks++;
-	case GitHubIssuePage _ -&gt; numberOfIssues++;
-	case GitHubPrPage _ -&gt; numberOfPrs++;
-	case GitHubCommitPage _ -&gt; numberOfCommits++;
+}</code></pre></div></div></div></section><section id="_follow_the_errors_3"><h2>Follow the errors</h2><div class="slide-content"><div class="paragraph"><p>Next stop: all switches that are no longer exhaustive.</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">private static String createPrettyString(Page page) {
+	return switch (page) {
+		case GitHubIssuePage issue -&gt; // ...
+		case GitHubPrPage pr -&gt; // ...
+		case ExternalPage external -&gt; // ...
+		case ErrorPage error -&gt; // ...
+	};
+}</code></pre></div></div>
+<div class="paragraph"><p>"Exhaustive?" 🤔</p></div></div></section><section id="_detour_exhaustiveness"><h2>Detour: Exhaustiveness</h2><div class="slide-content"><div class="paragraph"><p>Unlike an <code>if</code>-<code>else</code>-<code>if</code>-chain,<br>
+a pattern <code>switch</code> needs to cover all cases!</p></div>
+<div class="paragraph"><p>Two ways to achieve this:</p></div>
+<div class="ulist"><ul><li><p>have a default branch</p></li><li><p>enumerate all subtypes</p></li></ul></div>
+<div class="paragraph"><p>We want the compile error on new types!</p></div>
+<div class="paragraph"><p>(⇝ Avoid the default branch.)</p></div></div></section><section id="_follow_the_errors_4"><h2>Follow the errors</h2><div class="slide-content"><div class="paragraph"><p>Next stop: all switches that are no longer exhaustive.</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">private static String createPrettyString(Page page) {
+	return switch (page) {
+		case GitHubIssuePage issue -&gt; // ...
+		case GitHubPrPage pr -&gt; // ...
+		case ExternalPage external -&gt; // ...
+		case ErrorPage error -&gt; // ...
+		// missing case: GitHubCommitPage
+	};
+}</code></pre></div></div></div></section><section id="_fix_the_errors"><h2>Fix the errors</h2><div class="slide-content"><div class="paragraph"><p>⇝ Handle the new subtype!</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">private static String createPrettyString(Page page) {
+	return switch (page) {
+		case GitHubIssuePage issue -&gt; // ...
+		case GitHubPrPage pr -&gt; // ...
+		case GitHubCommitPage -&gt; // ...
+		case ExternalPage external -&gt; // ...
+		case ErrorPage error -&gt; // ...
+	};
 }</code></pre></div></div></div></section><section id="_operations_on_data_4"><h2>Operations On Data</h2><div class="slide-content"><div class="paragraph"><p>To keep operations maintainable:</p></div>
 <div class="ulist"><ul><li><p>switch over sealed types</p></li><li><p>enumerate all possible types<br>
 (even if you need to ignore some)</p></li><li><p>avoid <code>default</code> branch</p></li></ul></div>
-<div class="paragraph"><p>⇝ Compile error when new type is added.</p></div></div></section><section id="_avoiding_default"><h2>Avoiding Default</h2><div class="slide-content"><div class="paragraph"><p>Use <code>_</code> to define default behavior:</p></div>
+<div class="paragraph"><p>⇝ Compile error when new type is added.</p></div></div></section><section id="_avoiding_default"><h2>Avoiding Default</h2><div class="slide-content"><div class="paragraph"><p>Sometimes you have "defaulty" behavior:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public static String createPageEmoji(Page page) {
+	return switch (page) {
+		case GitHubIssuePage issue -&gt; "🐈";
+		case GitHubPrPage pr -&gt; "🐙";
+		default -&gt; "n.a.";
+	};
+}</code></pre></div></div>
+<div class="paragraph"><p>But we need to avoid <code>default</code>!</p></div></div></section><section id="_avoiding_default_2"><h2>Avoiding Default</h2><div class="slide-content"><div class="paragraph"><p>Write explicit branches:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public static String createPageEmoji(Page page) {
+	return switch (page) {
+		case GitHubIssuePage issue -&gt; "🐈";
+		case GitHubPrPage pr -&gt; "🐙";
+		// duplication 😢
+		case ErrorPage _ -&gt; "n.a.";
+		case ExternalPage _ -&gt; "n.a.";
+	};
+}</code></pre></div></div></div></section><section id="_avoiding_default_3"><h2>Avoiding Default</h2><div class="slide-content"><div class="paragraph"><p>Use <code>_</code> to combine "default branches":</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public static String createPageEmoji(Page page) {
 	return switch (page) {
 		case GitHubIssuePage issue -&gt; "🐈";
@@ -746,8 +773,19 @@ but supported by the compiler</p></li></ul></div>
 	<tr><td>What is DOP?</td></tr>
 	<tr><td>A Lengthy Example</td></tr>
 	<tr class="toc-current"><td>That was DOP!</td></tr>
-</table></div></section><section id="_algebraic_data_types"><h2>Algebraic Data Types</h2><div class="slide-content"><div class="ulist"><ul><li><p>records are <em>product types</em></p></li><li><p>sealed types are <em>sum types</em></p></li></ul></div>
-<div class="quoteblock"><blockquote><div class="paragraph"><p>This simple combination of mechanisms&#8201;&#8212;&#8201;aggregation and choice&#8201;&#8212;&#8201;is deceptively powerful</p></div></blockquote></div></div></section><section id="_applications"><h2>Applications</h2><div class="slide-content"><div class="ulist"><ul><li><p>ad-hoc data structures</p></li><li><p>complex return types</p></li><li><p>complex domains</p></li></ul></div></div></section><section id="_ad_hoc_data_structures"><h2>Ad-hoc Data Structures</h2><div class="slide-content"><div class="paragraph"><p>Often local, throw-away types used in one class or package.</p></div>
+</table></div></section><section id="_dynamic_dispatch"><h2>Dynamic dispatch</h2><div class="slide-content"><div class="paragraph"><p>Dynamic dispatch selects the invoked method by type.</p></div>
+<div class="paragraph"><p>As language feature:</p></div>
+<div class="ulist"><ul><li><p>via inheritance</p></li><li><p>makes method part of API</p></li></ul></div>
+<div class="paragraph"><p>What if methods shouldn&#8217;t be part of the API?</p></div></div></section><section id="_dynamic_dispatch_2"><h2>Dynamic dispatch</h2><div class="slide-content"><div class="paragraph"><p>Without methods becoming part of the API.</p></div>
+<div class="paragraph"><p>Via visitor pattern:</p></div>
+<div class="ulist"><ul><li><p>makes "visitation" part of API</p></li><li><p>cumbersome and indirect</p></li></ul></div></div></section><section id="_dynamic_dispatch_3"><h2>Dynamic dispatch</h2><div class="slide-content"><div class="paragraph"><p>Without methods becoming part of the API.</p></div>
+<div class="paragraph"><p>Via pattern matching (new):</p></div>
+<div class="ulist"><ul><li><p>makes "sealed" part of type</p></li><li><p>straight-forward</p></li></ul></div></div></section><section id="_patterns_and_language"><h2>Patterns and language</h2><div class="slide-content"><div class="paragraph"><p>Design patterns make up gaps in the language.</p></div>
+<div class="paragraph"><p>Good example is the strategy pattern:</p></div>
+<div class="ulist"><ul><li><p>used to be "a thing" in Java</p></li><li><p>you use it everytime you pass a lambda</p></li></ul></div>
+<div class="paragraph"><p>But do you still think of it a design pattern?<br>
+(I don&#8217;t.)</p></div>
+<div class="paragraph"><p>Pattern matching does the same for the visitor pattern.</p></div></div></section><section id="_applications"><h2>Applications</h2><div class="slide-content"><div class="ulist"><ul><li><p>ad-hoc data structures</p></li><li><p>complex return types</p></li><li><p>complex domains</p></li></ul></div></div></section><section id="_ad_hoc_data_structures"><h2>Ad-hoc Data Structures</h2><div class="slide-content"><div class="paragraph"><p>Often local, throw-away types used in one class or package.</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">record PageWithLinks(Page page, Set&lt;URI&gt; links) {
 
 	PageWithLinks {
@@ -780,7 +818,8 @@ switch (findUser("John Doe")) {
 	case Fuzzies&lt;&gt; fuzzies -&gt; // ...
 }</code></pre></div></div></div></section><section id="_complex_domains"><h2>Complex Domains</h2><div class="slide-content"><div class="paragraph"><p>Long-living objects that are part<br>
 of the program&#8217;s domain.</p></div>
-<div class="paragraph"><p>For example <code>Page</code>.</p></div></div></section><section id="_functional_programming"><h2>Functional Programming?!</h2><div class="slide-content"><div class="ulist"><ul><li><p>immutable data structures</p></li><li><p>methods (functions?) that operate on them</p></li></ul></div>
+<div class="paragraph"><p>For example <code>Page</code>.</p></div></div></section><section id="_algebraic_data_types"><h2>Algebraic Data Types</h2><div class="slide-content"><div class="ulist"><ul><li><p>records are <em>product types</em></p></li><li><p>sealed types are <em>sum types</em></p></li></ul></div>
+<div class="quoteblock"><blockquote><div class="paragraph"><p>This simple combination of mechanisms&#8201;&#8212;&#8201;aggregation and choice&#8201;&#8212;&#8201;is deceptively powerful</p></div></blockquote></div></div></section><section id="_functional_programming"><h2>Functional Programming?!</h2><div class="slide-content"><div class="ulist"><ul><li><p>immutable data structures</p></li><li><p>methods (functions?) that operate on them</p></li></ul></div>
 <div class="paragraph"><p>Isn&#8217;t this just functional programming?!</p></div>
 <div class="paragraph fragment"><p>Kind of.</p></div></div></section><section id="_dop_vs_fp"><h2>DOP vs FP</h2><div class="slide-content"><div class="paragraph"><p><strong>Functional programming:</strong></p></div>
 <div class="quoteblock"><blockquote><div class="paragraph"><p>Everything is a function</p></div></blockquote></div>
@@ -792,9 +831,8 @@ of the program&#8217;s domain.</p></div>
 <div class="ulist"><ul><li><p>valuable for complex entities or rich libraries</p></li><li><p>use whenever encapsulation is needed</p></li><li><p>still a good default on high level</p></li></ul></div>
 <div class="paragraph"><p><strong>DOP&#8201;&#8212;&#8201; consider when:</strong></p></div>
 <div class="ulist"><ul><li><p>mainly handling outside data</p></li><li><p>working with simple or ad-hoc data</p></li><li><p>data and behavior should be separated</p></li></ul></div></div></section><section id="_data_oriented_programming_6"><h2>Data-Oriented Programming</h2><div class="slide-content"><div class="paragraph"><p>Use Java&#8217;s strong typing to model data as data:</p></div>
-<div class="ulist"><ul><li><p>use classes to represent data, particularly:</p><div class="ulist"><ul><li><p>data as data with records</p></li><li><p>alternatives with sealed classes</p></li></ul></div></li><li><p>use methods (separately) to model behavior, particularly:</p><div class="ulist"><ul><li><p>exhaustive <code>switch</code> without <code>default</code></p></li><li><p>pattern matching to destructure polymorphic data</p></li></ul></div></li></ul></div></div></section><section id="_guiding_principles"><h2>Guiding Principles</h2><div class="slide-content"><div class="ulist"><ul><li><p>model the data, the whole data,<br>
-and nothing but the data</p></li><li><p>data is immutable</p></li><li><p>validate at the boundary</p></li><li><p>make illegal states unrepresentable</p></li></ul></div>
-<div class="paragraph"><p><a href="https://www.infoq.com/articles/data-oriented-programming-java/">Data Oriented Programming in Java</a></p></div></div></section></section>
+<div class="ulist"><ul><li><p>use classes to represent data, particularly:</p><div class="ulist"><ul><li><p>data as data with records</p></li><li><p>alternatives with sealed classes</p></li></ul></div></li><li><p>use methods (separately) to model behavior, particularly:</p><div class="ulist"><ul><li><p>exhaustive <code>switch</code> without <code>default</code></p></li><li><p>pattern matching to destructure polymorphic data</p></li></ul></div></li></ul></div></div></section><section id="_more"><h2>More</h2><div class="slide-content"><div class="paragraph"><p>More on pattern matching:</p></div>
+<div class="ulist"><ul><li><p>📝 <a href="https://www.infoq.com/articles/data-oriented-programming-java/">Data Oriented Programming in Java</a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=QrwFrm1R8OY">Java21 Brings Full Pattern Matching</a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=5qYJYGvVLg8">Data-Oriented Programming</a></p></li><li><p>📝 <a href="https://openjdk.org/projects/amber/design-notes/patterns/pattern-match-object-model">Pattern Matching in the Java Object Model</a></p></li><li><p>🧑‍💻 <a href="https://github.com/nipafx/loom-lab">GitHub crawler</a></p></li></ul></div></div></section></section>
 <section id="_so_long" data-background-image="../_images/question-mark-9644fc1f.jpg" data-background-size="cover"><h2>So long&#8230;&#8203;</h2><div class="slide-content">
 <div style="float: left; width: 45%; margin: 0;">
 	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="../_images/cover-jms-4e5e400d.png" style="margin: 0;"></a>
