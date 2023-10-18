@@ -108,8 +108,6 @@ _[Finalized in Java 16 -- https://openjdk.org/jeps/395[JEP 395]]_
 
 === Records
 
-> Transparent carriers for immutable data.
-
 ```java
 record ExternalPage(URI url, String content) { }
 ```

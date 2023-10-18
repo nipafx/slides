@@ -18,6 +18,8 @@ Starting with a seed URL:
 . identify outgoing links
 . for each link, start at 1.
 
+(Code on https://github.com/nipafx/loom-lab[github.com/nipafx/loom-lab].)
+
 === Crawling GitHub
 
 That logic is implemented in:
@@ -31,8 +33,6 @@ public class PageTreeFactory {
 
 }
 ```
-
-(Code on https://github.com/nipafx/loom-lab[github.com/nipafx/loom-lab].)
 
 What does `Page` look like?
 
@@ -49,11 +49,21 @@ Pages:
 
 === Requirements
 
-Operations on pages +
+Possible operations on pages +
 (and their subtree):
 
-* pretty print
+* display as interactive graph
+* compute graph properties
+* categorize pages by topic
+* analyze mood of interactions
+* process payment for analyses
+
+=== Requirements
+
+Example operations going forward:
+
 * evaluate statistics
+* create pretty string
 
 === A Possible Implementation
 
@@ -69,7 +79,7 @@ public Set<Page> links();
 public Stream<Page> subtree();
 
 public Stats evaluateStatistics();
-public String printPageList();
+public String toPrettyString();
 ```
 
 === A Possible Implementation
@@ -99,15 +109,11 @@ There are four kinds of pages:
 
 _[Finalized in Java 16 -- https://openjdk.org/jeps/395[JEP 395]]_
 
-[quote]
-____
-Transparent carriers for immutable data
-____
+> Transparent carriers for immutable data.
 
-* opt out of encapsulation
-* allow compiler to understand internals
-
-Most obvious consequence: less boilerplate.
+* compiler understands internals
+* couples API to internals
+* reduces verbosity _a lot_
 
 === Detour: Records
 
@@ -121,7 +127,7 @@ record ExternalPage(URI url, String content) { }
 * accessors: `URI url()` and `String content()`
 * `equals()`, `hashCode()`, `toString()` that use the two fields
 
-All method/constructor bodies can be customized!
+All method/constructor bodies can be customized.
 
 === Modeling The Data
 
@@ -133,12 +139,12 @@ public record ExternalPage(
 	URI url, String content) { }
 
 public record GitHubIssuePage(
-	URI url, int issueNumber,
-	String content, Set<Page> links) { }
+	URI url, String content,
+	int issueNumber, Set<Page> links) { }
 
 public record GitHubPrPage(
-	URI url, int prNumber,
-	String content, Set<Page> links) { }
+	URI url, String content,
+	int prNumber, Set<Page> links) { }
 ```
 
 === Applying DOP
@@ -177,21 +183,6 @@ Only `ErrorPage` and `SuccessfulPage` +
 can implement/extend `Page`.
 
 ⇝ `interface MyPage extends Page` doesn't compile
-
-=== Detour: Sealed Types
-
-```java
-public sealed interface Page
-		permits ErrorPage, SuccessfulPage {
-	// ...
-}
-```
-
-Inheriting types must be:
-
-* in the same module (package) as sealed type
-* directly inherit from sealed type
-* `final`, `sealed`, or `non-sealed`
 
 === Modeling Alternatives
 
@@ -298,7 +289,7 @@ But where did the operations go?
 
 ```java
 public Stats evaluateStatistics();
-public String printPageList();
+public String toPrettyString();
 ```
 
 This actually applies to our operations.
@@ -352,8 +343,8 @@ All patterns can be used in switches +
 
 ```java
 switch (page) {
-	case ExternalPage ext -> // use `ext`
 	case GitHubPrPage pr -> // use `pr`
+	case ExternalPage ext -> // use `ext`
 	// ...
 };
 ```
@@ -388,45 +379,45 @@ In class `Statistician`:
 private void evaluatePage(Page page) {
 	// `numberOf...` are fields
 	switch (page) {
-		case ErrorPage __ -> numberOfErrors++;
-		case ExternalPage __ -> numberOfExternals++;
-		case GitHubIssuePage __ -> numberOfIssues++;
-		case GitHubPrPage __ -> numberOfPrs++;
+		case GitHubIssuePage issue -> numberOfIssues++;
+		case GitHubPrPage pr -> numberOfPrs++;
+		case ExternalPage ext -> numberOfExternals++;
+		case ErrorPage err -> numberOfErrors++;
 	}
 }
 ```
 
-=== Printing A Page List
+=== Creating A Pretty String
 
 In class `Pretty`:
 
 ```java
-public static String printPageList(Page rootPage) {
+public static String toPrettyString(Page rootPage) {
 	if (!(rootPage instanceof GitHubPage ghPage))
-		return createPageName(rootPage);
+		return createPrettyString(rootPage);
 
 	return ghPage
 			.subtree()
-			.map(Pretty::createPageName)
+			.map(Pretty::createPrettyString)
 			.collect(joining("\n"));
 }
 ```
 
-=== Printing A Page List
+=== Creating A Pretty String
 
 In class `Pretty`:
 
 ```java
-private static String createPageName(Page page) {
+private static String createPrettyString(Page page) {
 	return switch (page) {
-		case ErrorPage err
-			-> "💥 ERROR: " + err.url().getHost();
-		case ExternalPage ext
-			-> "💤 EXTERNAL: " + ext.url().getHost();
 		case GitHubIssuePage issue
 			-> "🐈 ISSUE #" + issue.issueNumber();
 		case GitHubPrPage pr
 			-> "🐙 PR #" + pr.prNumber();
+		case ExternalPage ext
+			-> "💤 EXTERNAL: " + ext.url().getHost();
+		case ErrorPage err
+			-> "💥 ERROR: " + err.url().getHost();
 	};
 }
 ```
@@ -444,12 +435,9 @@ deconstruct them in `if` and `switch`:
 record ExternalPage(URI url, String content) { }
 
 // elsewhere
-Object obj = // ...
-if (obj instanceof ExternalPage(var url, var content))
-	// use `url` and `content` here
-switch (obj) {
-	case ExternalPage(var url, var content) ->
-		// use `url` and `content` here
+switch (page) {
+	case ExternalPage(var url, var content)
+		-> // use `url` and `content` here
 }
 ```
 
@@ -458,14 +446,14 @@ switch (obj) {
 Use deconstruction patterns:
 
 ```java
-public static String createPageName(Page page) {
+public static String createPrettyString(Page page) {
 	return switch (page) {
+		case GitHubIssuePage(
+				var url, var content,
+				int issueNumber, var links)
+			-> "🐈 ISSUE #" + issueNumber;
 		case ErrorPage(var url, var ex)
 			-> "💥 ERROR: " + url.getHost();
-		case GitHubIssuePage(
-				var url, var content, var links,
-				int issueNumber)
-			-> "🐈 ISSUE #" + issueNumber;
 		// ...
 	};
 }
@@ -480,10 +468,10 @@ _[Preview in Java 21 -- https://openjdk.org/jeps/443[JEP 443]]_
 Replace variables you don't need with `_`:
 
 ```java
+case GitHubIssuePage(_, _, int issueNumber, _)
+	-> "🐈 ISSUE #" + issueNumber;
 case ErrorPage(var url, _)
 	-> "💥 ERROR: " + url.getHost();
-case GitHubIssuePage(_, _, _, int issueNumber)
-	-> "🐈 ISSUE #" + issueNumber;
 ```
 
 
@@ -492,16 +480,16 @@ case GitHubIssuePage(_, _, _, int issueNumber)
 Use record and unnamed patterns for simple access:
 
 ```java
-private static String createPageName(Page page) {
+private static String createPrettyString(Page page) {
 	return switch (page) {
-		case ErrorPage(var url, _)
-			-> "💥 ERROR: " + url.getHost();
+		case GitHubIssuePage(_, _, int issueNumber, _)
+			-> "🐈 ISSUE #" + issueNumber;
+		case GitHubPrPage(_, _, int prNumber, _)
+			-> "🐙 PR #" + prNumber;
 		case ExternalPage(var url, _)
 			-> "💤 EXTERNAL: " + url.getHost();
-		case GitHubIssuePage(_, _, _, issueNumber)
-			-> "🐈 ISSUE #" + issueNumber;
-		case GitHubPrPage(_, _, _, prNumber)
-			-> "🐙 PR #" + prNumber;
+		case ErrorPage(var url, _)
+			-> "💥 ERROR: " + url.getHost();
 	};
 }
 ```
@@ -514,26 +502,35 @@ Looks good?
 
 Yes, but why?
 
+[step=1]
+⇝ It fails unpredicatbly when new types are added.
+
 === Extending Operations On Data
 
-What happens when we add:
+This approach behaves much better:
+
+* let's add `GitHubCommitPage implements Page`
+* follow the compile errors!
+
+=== Follow the errors
+
+Starting point:
 
 ```java
-public record GitHubCommitPage(
-		URI url, String hash,
-		String content, Set<Page> links)
-	implements GitHubPage {
+record GitHubCommitPage(/*…*/) implements Page {
 
-	// [...]
+	// ...
 
 }
 ```
 
-Follow the compile errors!
+Compile error because supertype is sealed.
 
-=== Extending Operations On Data
+⇝ Go to the sealed supertype.
 
-First stop: the sealed supertype.
+=== Follow the errors
+
+Next stop: the sealed supertype
 
 ⇝ Permit the new subtype!
 
@@ -541,36 +538,71 @@ First stop: the sealed supertype.
 public sealed interface GitHubPage
 		extends SuccessfulPage
 		permits GitHubIssuePage, GitHubPrPage,
-			GitHubCommitPage {
+				GitHubCommitPage {
 	// [...]
 }
 ```
 
-=== Extending Operations On Data
+=== Follow the errors
 
-Next stop: all `switch` without `default`.
+Next stop: all switches that are no longer exhaustive.
 
 ```java
-// non-exhaustive ⇝ compile error
-switch (page) {
-	case ErrorPage _ -> numberOfErrors++;
-	case ExternalPage _ -> numberOfExternalLinks++;
-	case GitHubIssuePage _ -> numberOfIssues++;
-	case GitHubPrPage _ -> numberOfPrs++;
+private static String createPrettyString(Page page) {
+	return switch (page) {
+		case GitHubIssuePage issue -> // ...
+		case GitHubPrPage pr -> // ...
+		case ExternalPage external -> // ...
+		case ErrorPage error -> // ...
+	};
 }
 ```
 
-=== Extending Operations On Data
+"Exhaustive?" 🤔
+
+=== Detour: Exhaustiveness
+
+Unlike an `if`-`else`-`if`-chain, +
+a pattern `switch` needs to cover all cases!
+
+Two ways to achieve this:
+
+* have a default branch
+* enumerate all subtypes
+
+We want the compile error on new types!
+
+(⇝ Avoid the default branch.)
+
+=== Follow the errors
+
+Next stop: all switches that are no longer exhaustive.
+
+```java
+private static String createPrettyString(Page page) {
+	return switch (page) {
+		case GitHubIssuePage issue -> // ...
+		case GitHubPrPage pr -> // ...
+		case ExternalPage external -> // ...
+		case ErrorPage error -> // ...
+		// missing case: GitHubCommitPage
+	};
+}
+```
+
+=== Fix the errors
 
 ⇝ Handle the new subtype!
 
 ```java
-switch (page) {
-	case ErrorPage _ -> numberOfErrors++;
-	case ExternalPage _ -> numberOfExternalLinks++;
-	case GitHubIssuePage _ -> numberOfIssues++;
-	case GitHubPrPage _ -> numberOfPrs++;
-	case GitHubCommitPage _ -> numberOfCommits++;
+private static String createPrettyString(Page page) {
+	return switch (page) {
+		case GitHubIssuePage issue -> // ...
+		case GitHubPrPage pr -> // ...
+		case GitHubCommitPage -> // ...
+		case ExternalPage external -> // ...
+		case ErrorPage error -> // ...
+	};
 }
 ```
 
@@ -587,7 +619,39 @@ To keep operations maintainable:
 
 === Avoiding Default
 
-Use `_` to define default behavior:
+Sometimes you have "defaulty" behavior:
+
+```java
+public static String createPageEmoji(Page page) {
+	return switch (page) {
+		case GitHubIssuePage issue -> "🐈";
+		case GitHubPrPage pr -> "🐙";
+		default -> "n.a.";
+	};
+}
+```
+
+But we need to avoid `default`!
+
+=== Avoiding Default
+
+Write explicit branches:
+
+```java
+public static String createPageEmoji(Page page) {
+	return switch (page) {
+		case GitHubIssuePage issue -> "🐈";
+		case GitHubPrPage pr -> "🐙";
+		// duplication 😢
+		case ErrorPage _ -> "n.a.";
+		case ExternalPage _ -> "n.a.";
+	};
+}
+```
+
+=== Avoiding Default
+
+Use `_` to combine "default branches":
 
 ```java
 public static String createPageEmoji(Page page) {

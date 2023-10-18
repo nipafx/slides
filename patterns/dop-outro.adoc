@@ -8,12 +8,48 @@
 </table>
 ++++
 
-=== Algebraic Data Types
+=== Dynamic dispatch
 
-* records are _product types_
-* sealed types are _sum types_
+Dynamic dispatch selects the invoked method by type.
 
-> This simple combination of mechanisms -- aggregation and choice -- is deceptively powerful
+As language feature:
+
+* via inheritance
+* makes method part of API
+
+What if methods shouldn't be part of the API?
+
+=== Dynamic dispatch
+
+Without methods becoming part of the API.
+
+Via visitor pattern:
+
+* makes "visitation" part of API
+* cumbersome and indirect
+
+=== Dynamic dispatch
+
+Without methods becoming part of the API.
+
+Via pattern matching (new):
+
+* makes "sealed" part of type
+* straight-forward
+
+=== Patterns and language
+
+Design patterns make up gaps in the language.
+
+Good example is the strategy pattern:
+
+* used to be "a thing" in Java
+* you use it everytime you pass a lambda
+
+But do you still think of it a design pattern? +
+(I don't.)
+
+Pattern matching does the same for the visitor pattern.
 
 === Applications
 
@@ -80,6 +116,13 @@ of the program's domain.
 
 For example `Page`.
 
+=== Algebraic Data Types
+
+* records are _product types_
+* sealed types are _sum types_
+
+> This simple combination of mechanisms -- aggregation and choice -- is deceptively powerful
+
 === Functional Programming?!
 
 * immutable data structures
@@ -145,12 +188,12 @@ Use Java's strong typing to model data as data:
 ** exhaustive `switch` without `default`
 ** pattern matching to destructure polymorphic data
 
-=== Guiding Principles
+=== More
 
-* model the data, the whole data, +
-  and nothing but the data
-* data is immutable
-* validate at the boundary
-* make illegal states unrepresentable
+More on pattern matching:
 
-https://www.infoq.com/articles/data-oriented-programming-java/[Data Oriented Programming in Java]
+* 📝 https://www.infoq.com/articles/data-oriented-programming-java/[Data Oriented Programming in Java]
+* 🎥 https://www.youtube.com/watch?v=QrwFrm1R8OY[Java21 Brings Full Pattern Matching]
+* 🎥 https://www.youtube.com/watch?v=5qYJYGvVLg8[Data-Oriented Programming]
+* 📝 https://openjdk.org/projects/amber/design-notes/patterns/pattern-match-object-model[Pattern Matching in the Java Object Model]
+* 🧑‍💻 https://github.com/nipafx/loom-lab[GitHub crawler]
