@@ -18,12 +18,12 @@
 
 include::../_shared/highlight.js.adoc[]
 
-:host-name: Vodafone
-:host-url: https://vodafone.com
-:host-logo-url: images/logo-vodafone.jpg
+:host-name: Devoxx BE
+:host-url: https://devoxx.be/
+:host-logo-url: images/logo-devoxx.png
 // :host-logo-style: background-color: transparent; border-color: transparent !important;
-:host-twitter-name: @VodafoneGroup
-:host-twitter-url: https://twitter.com/VodafoneGroup
+:host-twitter-name: @devoxx
+:host-twitter-url: https://twitter.com/devoxx
 include::../_shared/event-on-title-and-footer.adoc[]
 
 
@@ -55,7 +55,6 @@ Create tool section:
 * jshell?
 ////
 
-////
 == Let's get started!
 
 * this session covers Java 18-21
@@ -66,18 +65,17 @@ Create tool section:
 * slides at https://slides.nipafx.dev/java-x[slides.nipafx.dev/java-x] +
   (hit "?" to get navigation help)
 * ask questions any time or tweet at https://twitter.com/nipafx[@nipafx]
-////
 
-== Lots to talk about!
+=== Lots to talk about!
 
 ++++
 <table class="toc">
+	<tr><td>Pattern Matching</td></tr>
+	<tr><td>Virtual Threads</td></tr>
 	<tr><td>String Templates</td></tr>
 	<tr><td>New & Updated APIs</td></tr>
 	<tr><td>Performance</td></tr>
 	<tr><td>On-Ramp</td></tr>
-	<tr><td>(Pattern Matching)</td></tr>
-	<tr><td>(Virtual Threads)</td></tr>
 </table>
 ++++
 
@@ -88,7 +86,6 @@ Create tool section:
 
 include::prologue.adoc[]
 
-////
 :toc: pass:[ \
 <table class="toc"> \
 	<tr class="toc-current"><td>Pattern Matching</td></tr> \
@@ -144,10 +141,13 @@ include::virtual-threads.adoc[]
 </table> \
 ]
 include::virtual-thread-details.adoc[]
-////
+
+include::deprecations.adoc[]
 
 :toc: pass:[ \
 <table class="toc"> \
+	<tr><td>Pattern Matching</td></tr> \
+	<tr><td>Virtual Threads</td></tr> \
 	<tr class="toc-current"><td>String Templates</td></tr> \
 	<tr><td>New & Updated APIs</td></tr> \
 	<tr><td>Performance</td></tr> \
@@ -158,6 +158,8 @@ include::string-templates.adoc[]
 
 :toc: pass:[ \
 <table class="toc"> \
+	<tr><td>Pattern Matching</td></tr> \
+	<tr><td>Virtual Threads</td></tr> \
 	<tr><td>String Templates</td></tr> \
 	<tr class="toc-current"><td>New & Updated APIs</td></tr> \
 		<tr class="toc-current"><td style="padding-left: 2em;">Sequenced Collections</td></tr> \
@@ -171,6 +173,8 @@ include::sequenced-collections.adoc[]
 
 :toc: pass:[ \
 <table class="toc"> \
+	<tr><td>Pattern Matching</td></tr> \
+	<tr><td>Virtual Threads</td></tr> \
 	<tr><td>String Templates</td></tr> \
 	<tr class="toc-current"><td>New & Updated APIs</td></tr> \
 		<tr><td style="padding-left: 2em;">Sequenced Collections</td></tr> \
@@ -184,6 +188,8 @@ include::address-resolution.adoc[]
 
 :toc: pass:[ \
 <table class="toc"> \
+	<tr><td>Pattern Matching</td></tr> \
+	<tr><td>Virtual Threads</td></tr> \
 	<tr><td>String Templates</td></tr> \
 	<tr class="toc-current"><td>New & Updated APIs</td></tr> \
 		<tr><td style="padding-left: 2em;">Sequenced Collections</td></tr> \
@@ -197,6 +203,8 @@ include::apis-misc.adoc[]
 
 :toc: pass:[ \
 <table class="toc"> \
+	<tr><td>Pattern Matching</td></tr> \
+	<tr><td>Virtual Threads</td></tr> \
 	<tr><td>String Templates</td></tr> \
 	<tr><td>New & Updated APIs</td></tr> \
 	<tr class="toc-current"><td>Performance</td></tr> \
@@ -207,6 +215,8 @@ include::misc.adoc[]
 
 :toc: pass:[ \
 <table class="toc"> \
+	<tr><td>Pattern Matching</td></tr> \
+	<tr><td>Virtual Threads</td></tr> \
 	<tr><td>String Templates</td></tr> \
 	<tr><td>New & Updated APIs</td></tr> \
 	<tr><td>Performance</td></tr> \
@@ -214,8 +224,6 @@ include::misc.adoc[]
 </table> \
 ]
 include::launch-protocol.adoc[]
-
-include::deprecations.adoc[]
 
 // include::jpms.adoc[]
 
