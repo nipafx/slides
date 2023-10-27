@@ -509,7 +509,7 @@ Yes, but why?
 
 This approach behaves much better:
 
-* let's add `GitHubCommitPage implements Page`
+* let's add `GitHubCommitPage implements GitHubPage`
 * follow the compile errors!
 
 === Follow the errors
@@ -517,7 +517,7 @@ This approach behaves much better:
 Starting point:
 
 ```java
-record GitHubCommitPage(/*…*/) implements Page {
+record GitHubCommitPage(/*…*/) implements GitHubPage {
 
 	// ...
 
@@ -643,8 +643,8 @@ public static String createPageEmoji(Page page) {
 		case GitHubIssuePage issue -> "🐈";
 		case GitHubPrPage pr -> "🐙";
 		// duplication 😢
-		case ErrorPage _ -> "n.a.";
-		case ExternalPage _ -> "n.a.";
+		case ErrorPage err -> "n.a.";
+		case ExternalPage ext -> "n.a.";
 	};
 }
 ```
