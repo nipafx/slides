@@ -692,8 +692,8 @@ case ErrorPage(var url, _)
 <div class="paragraph"><p>"Isn&#8217;t switching over types icky?"</p></div>
 <div class="paragraph"><p>Yes, but why?</p></div>
 <div class="paragraph fragment" data-fragment-index="1"><p>⇝ It fails unpredicatbly when new types are added.</p></div></div></section><section id="_extending_operations_on_data"><h2>Extending Operations On Data</h2><div class="slide-content"><div class="paragraph"><p>This approach behaves much better:</p></div>
-<div class="ulist"><ul><li><p>let&#8217;s add <code>GitHubCommitPage implements Page</code></p></li><li><p>follow the compile errors!</p></li></ul></div></div></section><section id="_follow_the_errors"><h2>Follow the errors</h2><div class="slide-content"><div class="paragraph"><p>Starting point:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">record GitHubCommitPage(/*…*/) implements Page {
+<div class="ulist"><ul><li><p>let&#8217;s add <code>GitHubCommitPage implements GitHubPage</code></p></li><li><p>follow the compile errors!</p></li></ul></div></div></section><section id="_follow_the_errors"><h2>Follow the errors</h2><div class="slide-content"><div class="paragraph"><p>Starting point:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">record GitHubCommitPage(/*…*/) implements GitHubPage {
 
 	// ...
 
@@ -755,8 +755,8 @@ a pattern <code>switch</code> needs to cover all cases!</p></div>
 		case GitHubIssuePage issue -&gt; "🐈";
 		case GitHubPrPage pr -&gt; "🐙";
 		// duplication 😢
-		case ErrorPage _ -&gt; "n.a.";
-		case ExternalPage _ -&gt; "n.a.";
+		case ErrorPage err -&gt; "n.a.";
+		case ExternalPage ext -&gt; "n.a.";
 	};
 }</code></pre></div></div></div></section><section id="_avoiding_default_3"><h2>Avoiding Default</h2><div class="slide-content"><div class="paragraph"><p>Use <code>_</code> to combine "default branches":</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public static String createPageEmoji(Page page) {
