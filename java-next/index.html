@@ -704,14 +704,13 @@ with Java&#8217;s unit of concurrency (thread):</p></div>
 <div class="paragraph"><p>In a virtual thread:</p></div>
 <div class="ulist"><ul><li class="fragment"><p>runtime submits task to carrier thread pool</p></li><li class="fragment"><p>when 2. blocks, virtual thread yields</p></li><li class="fragment"><p>runtime hands carrier thread back to pool</p></li><li class="fragment"><p>when 2. unblocks, runtime resubmits task</p></li><li class="fragment"><p>virtual thread continues with 3.</p></li></ul></div></div></section><section id="_example"><h2>Example</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">try (var executor = Executors
 		.newVirtualThreadPerTaskExecutor()) {
-	IntStream
-		.range(0, 1_000_000)
-		.forEach(number -&gt; {
-			executor.submit(() -&gt; {
-				Thread.sleep(Duration.ofSeconds(1));
-				return number;
-			});
+	for (int i = 0; i &lt; 1_000_000; i++) {
+		var number = i;
+		executor.submit(() -&gt; {
+			Thread.sleep(Duration.ofSeconds(1));
+			return number;
 		});
+	}
 } // executor.close() is called implicitly, and waits</code></pre></div></div>
 <aside class="notes"><div class="ulist"><ul><li><p>all APIs are in flux</p></li></ul></div></aside></div></section><section id="_example_2"><h2>Example</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">void handle(Request request, Response response)
 		throws InterruptedException {

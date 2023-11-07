@@ -423,10 +423,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://www.cgi.com/en" title="CGI"><img src="../_images/logo-cgi-1bd38014.png" alt="Logo of CGI" class="logo" style="{host-logo-style}"></a>
+		<a href="https://www.meetup.com/de/Enterprise-Java-User-Group-Austria/" title="eJUG Austria"><img src="../_images/logo-ejug-austria-091f26a7.jpg" alt="Logo of eJUG Austria" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://www.cgi.com/en" title="CGI website">CGI</a></p>
-			<p><a href="https://twitter.com/cgi_global" title="CGI on Twitter">@cgi_global</a></p>
+			<p><a href="https://www.meetup.com/de/Enterprise-Java-User-Group-Austria/" title="eJUG Austria website">eJUG Austria</a></p>
+			<p><a href="https://twitter.com/eJUG" title="eJUG Austria on Twitter">@eJUG</a></p>
 		</div>
 	</div>
 	<div class="participant">
@@ -448,10 +448,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://www.cgi.com/en" title="CGI"><img src="../_images/logo-cgi-1bd38014.png" alt="Logo of CGI" class="logo" style="{host-logo-style}"></a>
+		<a href="https://www.meetup.com/de/Enterprise-Java-User-Group-Austria/" title="eJUG Austria"><img src="../_images/logo-ejug-austria-091f26a7.jpg" alt="Logo of eJUG Austria" class="logo" style="{host-logo-style}"></a>
 		<div class="name"><p>
-			<a href="https://www.cgi.com/en" title="CGI website">CGI</a>
-			/ <a href="https://twitter.com/cgi_global" title="CGI on Twitter">@cgi_global</a>
+			<a href="https://www.meetup.com/de/Enterprise-Java-User-Group-Austria/" title="eJUG Austria website">eJUG Austria</a>
+			/ <a href="https://twitter.com/eJUG" title="eJUG Austria on Twitter">@eJUG</a>
 		</p></div>
 	</div>
 </footer>
@@ -483,7 +483,7 @@ with Java&#8217;s unit of concurrency (thread):</p></div>
 ⇝ great resource utilization<br>
 ⇝ high throughput</p></li></ul></div></div></section><section id="_conflict"><h2>Conflict!</h2><div class="slide-content"><div class="paragraph"><p>There&#8217;s a conflict between:</p></div>
 <div class="ulist"><ul><li><p>simplicity</p></li><li><p>throughput</p></li></ul></div></div></section><section id="_nota_bene"><h2>Nota Bene</h2><div class="slide-content"><div class="paragraph"><p>There are other conflicts:</p></div>
-<div class="ulist"><ul><li><p><em>design vs performance</em> (⇝ Valhalla)</p></li><li><p><em>explicitness vs succinctness</em> (⇝ Amber)</p></li><li><p><em>flexibility vs safety</em> (⇝ Panama)</p></li><li><p><em>optimization vs specification</em> (⇝ Leyden)</p></li></ul></div></div></section><section id="_enter_virtual_threads"><h2>Enter virtual threads!</h2><div class="slide-content"><div class="paragraph"><p>A <em>virtual</em> thread:</p></div>
+<div class="ulist"><ul><li><p><em>design vs performance</em> (⇝ Valhalla)</p></li><li><p><em>explicitness vs succinctness</em> (⇝ Amber)</p></li><li><p><em>flexibility vs safety</em> (⇝ Panama)</p></li><li><p><em>dynamism vs performance</em> (⇝ Leyden)</p></li></ul></div></div></section><section id="_enter_virtual_threads"><h2>Enter virtual threads!</h2><div class="slide-content"><div class="paragraph"><p>A <em>virtual</em> thread:</p></div>
 <div class="ulist"><ul><li><p>is a regular <code>Thread</code></p></li><li><p>low memory footprint ([k]bytes)</p></li><li><p>small switching cost</p></li><li><p>scheduled by the Java runtime</p></li><li><p>requires no OS thread when waiting</p></li></ul></div></div></section><section id="_virtual_things"><h2>Virtual things</h2><div class="slide-content"><div class="paragraph"><p><strong>Virtual memory:</strong></p></div>
 <div class="ulist"><ul><li><p>maps large virtual address space<br>
 to limited physical memory</p></li><li><p>gives illusion of plentiful memory</p></li></ul></div>
@@ -494,15 +494,17 @@ to a small number of OS threads</p></li><li><p>give the illusion of plentiful th
 <div class="paragraph"><p>Instead:</p></div>
 <div class="ulist"><ul><li><p>write straightforward (blocking) code</p></li><li><p>runtime shares available OS threads</p></li><li><p>reduces the cost of blocking to near zero</p></li></ul></div></div></section><section data-background-color="white" data-background-image="../_images/one-million-96b61ed0.jpg" data-background-size="cover" data-state="empty"></section><section id="_example"><h2>Example</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">try (var executor = Executors
 		.newVirtualThreadPerTaskExecutor()) {
-	IntStream
-		.range(0, 1_000_000)
-		.forEach(number -&gt; {
-			executor.submit(() -&gt; {
-				Thread.sleep(Duration.ofSeconds(1));
-				return number;
-			});
+	for (int i = 0; i &lt; 1_000_000; i++) {
+		var number = i;
+		executor.submit(() -&gt; {
+			Thread.sleep(Duration.ofSeconds(1));
+			return number;
 		});
-} // executor.close() is called implicitly, and waits</code></pre></div></div></div></section><section id="_effects"><h2>Effects</h2><div class="slide-content"><div class="paragraph"><p>Virtual threads:</p></div>
+	}
+} // executor.close() is called implicitly, and waits</code></pre></div></div></div></section><section id="_example_2"><h2>Example</h2><div class="slide-content"><div class="paragraph"><p>This laptop:</p></div>
+<div class="ulist"><ul><li><p>Intel i7-1165G7 (11th Gen)</p></li><li><p>8GB for JVM (32 GB total RAM)</p></li><li><p>Gentoo Linux (kernel v6.5.7)</p></li></ul></div>
+<div class="paragraph"><p>Extremely rough measurements:</p></div>
+<table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:14.2857%"><col style="width:14.2857%"><col style="width:14.2857%"><col style="width:14.2857%"><col style="width:14.2857%"><col style="width:14.2857%"><col style="width:14.2858%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">#threads</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">1k</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">10k</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">100k</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">500k</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">1m</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">5m</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">run time</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">1.0s</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">1.1s</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">1.3s</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">3s</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">6s</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">20s</p></td></tr></table></div></section><section id="_effects"><h2>Effects</h2><div class="slide-content"><div class="paragraph"><p>Virtual threads:</p></div>
 <div class="ulist"><ul><li><p>remove "number of threads" as bottleneck</p></li><li><p>match app&#8217;s unit of concurrency to Java&#8217;s</p></li></ul></div>
 <div class="paragraph"><p>⇝ <em>simplicity &amp;&amp; throughput</em></p></div></div></section><section id="_performance"><h2>Performance</h2><div class="slide-content"><div class="paragraph"><p>Virtual threads aren&#8217;t "faster threads":</p></div>
 <div class="ulist"><ul><li><p>same number of CPU cycles</p></li><li><p>each task takes the same time (same <em>latency</em>)</p></li></ul></div>
@@ -512,20 +514,8 @@ to a small number of OS threads</p></li><li><p>give the illusion of plentiful th
 <div class="ulist"><ul><li><p>when workload is not CPU-bound</p></li><li><p>when number of concurrent tasks is high</p></li></ul></div>
 <aside class="notes"><div class="ulist"><ul><li><p>maximize progress other systems can make.</p></li><li><p>"high": more than a few thousand</p></li></ul></div></aside></div></section><section id="_server_how_to"><h2>Server How-To</h2><div class="slide-content"><div class="paragraph"><p>For servers:</p></div>
 <div class="ulist"><ul><li><p>request handling threads are started by web framework</p></li><li><p>frameworks will offer (easy) configuration options</p></li></ul></div>
-<div class="paragraph"><p>We&#8217;re not there yet.</p></div></div></section><section id="_spring_boot"><h2>Spring Boot</h2><div class="slide-content"><div class="paragraph"><p>Replace executors:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">@Bean
-public TomcatProtocolHandlerCustomizer&lt;?&gt;
-		createExecutorForSyncCalls() {
-	return handler -&gt; handler.setExecutor(
-			Executors.newVirtualThreadPerTaskExecutor());
-}
-
-@Bean
-public AsyncTaskExecutor
-		createExecutorForAsyncCalls() {
-	return new TaskExecutorAdapter(
-			Executors.newVirtualThreadPerTaskExecutor());
-}</code></pre></div></div></div></section><section id="_quarkus"><h2>Quarkus</h2><div class="slide-content"><div class="paragraph"><p>Annotate request handling method:</p></div>
+<div class="paragraph"><p>We&#8217;re not there yet.</p></div></div></section><section id="_spring_boot"><h2>Spring Boot</h2><div class="slide-content"><div class="paragraph"><p>Starting with version 3.2:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">spring.threads.virtual.enabled=true</code></pre></div></div></div></section><section id="_quarkus"><h2>Quarkus</h2><div class="slide-content"><div class="paragraph"><p>Annotate request handling method:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">@GET
 @Path("api")
 @RunOnVirtualThread
@@ -566,7 +556,12 @@ we need to understand how they work.</p></div>
 <div class="paragraph"><p>This keeps switching cheap.</p></div></div></section><section id="_the_simple_web_request"><h2>The simple web request</h2><div class="slide-content"><div class="paragraph"><p>Remember the hypothetical request:</p></div>
 <div class="olist arabic"><ol class="arabic"><li><p>interpret request</p></li><li><p>query database (<em>blocks</em>)</p></li><li><p>process data for response</p></li></ol></div>
 <div class="paragraph"><p>In a virtual thread:</p></div>
-<div class="ulist"><ul><li class="fragment"><p>runtime submits task to carrier thread pool</p></li><li class="fragment"><p>when 2. blocks, virtual thread unmounts</p></li><li class="fragment"><p>runtime hands carrier thread back to pool</p></li><li class="fragment"><p>when 2. unblocks, runtime resubmits task</p></li><li class="fragment"><p>virtual thread mounts and continues with 3.</p></li></ul></div></div></section><section id="_compatibility"><h2>Compatibility</h2><div class="slide-content"><div class="paragraph"><p>Virtual threads work correctly with everything:</p></div>
+<div class="ulist"><ul><li class="fragment"><p>runtime submits task to carrier thread pool</p></li><li class="fragment"><p>when 2. blocks, virtual thread unmounts</p></li><li class="fragment"><p>runtime hands carrier thread back to pool</p></li><li class="fragment"><p>when 2. unblocks, runtime resubmits task</p></li><li class="fragment"><p>virtual thread mounts and continues with 3.</p></li></ul></div></div></section><section id="_configuration"><h2>Configuration</h2><div class="slide-content"><div class="paragraph"><p>Carrier thread pool size<br>
+can be configured:</p></div>
+<div class="paragraph"><p><code>-Djdk.virtualThreadScheduler.maxPoolSize=&#8230;&#8203;</code></p></div>
+<div class="paragraph"><p>Let&#8217;s measure <code>Thread::sleep</code> again:</p></div>
+<div class="ulist"><ul><li><p>remember that this is a pointless benchmark</p></li><li><p>executed on a laptop!</p></li></ul></div></div></section><section id="_benchmark"><h2>"Benchmark"</h2><div class="slide-content"><div class="paragraph"><p>Carrier (rows) vs virtual (columns) threads:</p></div>
+<table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:28.5714%"><col style="width:14.2857%"><col style="width:14.2857%"><col style="width:14.2857%"><col style="width:14.2857%"><col style="width:14.2858%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"></td><td class="tableblock halign-left valign-top"><p class="tableblock">1k</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">10k</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">100k</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">500k</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">1m</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">1.0s</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">1.1s</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">1.7s</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">6s</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">12s</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">1.0s</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">1.1s</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">1.5s</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">4s</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">9s</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">4 (CPU cores)</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">1.0s</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">1.1s</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">1.3s</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">3s</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">6s</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">8 (CPU threads)</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">1.0s</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">1.1s</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">1.3s</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">3s</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">6s</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">16+</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">1.0s</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">1.1s</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">1.3s</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">3s</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">6s</p></td></tr></table></div></section><section id="_compatibility"><h2>Compatibility</h2><div class="slide-content"><div class="paragraph"><p>Virtual threads work correctly with everything:</p></div>
 <div class="ulist"><ul><li><p>all blocking operations</p></li><li><p><code>synchronized</code></p></li><li><p><code>Thread</code>, <code>currentThread</code>, etc.</p></li><li><p>thread interruption</p></li><li><p>thread-locals</p></li><li><p>native code</p></li></ul></div>
 <div class="paragraph"><p>But not all scale perfectly.</p></div></div></section><section id="_caveat_1_capture"><h2>Caveat #1: capture</h2><div class="slide-content"><div class="paragraph"><p>Despite lots of internal rework
 (e.g. JEPs <a href="https://openjdk.org/jeps/353">353</a>, <a href="https://openjdk.org/jeps/373">373</a>)<br>
@@ -686,8 +681,7 @@ across all children</p></li><li><p>create your own (explicit) policies</p></li><
 <a href="http://jdk.java.net/loom">early access builds</a></p></li><li><p>launched January 2018</p></li><li><p>led by Ron Pressler</p></li></ul></div></div></section><section id="_project_loom_2"><h2>Project Loom</h2><div class="slide-content"><div class="paragraph"><p>Virtual threads:</p></div>
 <div class="ulist"><ul><li><p>code is simple to write, debug, profile</p></li><li><p>better scalibility / higher throughput</p></li></ul></div>
 <div class="paragraph"><p>Structured concurrency:</p></div>
-<div class="ulist"><ul><li><p>clearer concurrency code</p></li><li><p>simpler failure/success policies</p></li><li><p>better debugging</p></li></ul></div></div></section><section id="_deeper_dives"><h2>Deeper Dives</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://inside.java/2021/11/30/on-parallelism-and-concurrency/">On Parallelism and Concurrency</a></p></li><li><p>📝 <a href="https://250bpm.com/blog:71/">Structured Concurrency</a></p></li><li><p>📝 <a href="https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/">Notes on structured concurrency [&#8230;&#8203;]</a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=fq0OEX0XYR8">Modern, Scalable Concurrency for the Java Platform</a><br>
-(Sep 2021)</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=KG24inClY2M">State of Project Loom with Ron Pressler</a> (Jun 2021)</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=lKSSBvRDmTg">Java 19 Virtual Threads - JEP Café #11</a> (Jun 2022)</p></li></ul></div></div></section></section>
+<div class="ulist"><ul><li><p>clearer concurrency code</p></li><li><p>simpler failure/success policies</p></li><li><p>better debugging</p></li></ul></div></div></section><section id="_deeper_dives"><h2>Deeper Dives</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://inside.java/2021/11/30/on-parallelism-and-concurrency/">On Parallelism and Concurrency</a></p></li><li><p>📝 <a href="https://250bpm.com/blog:71/">Structured Concurrency</a></p></li><li><p>📝 <a href="https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/">Notes on structured concurrency [&#8230;&#8203;]</a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=5E0LU85EnTI">Java 21 new feature: Virtual Threads</a> (Sep 2023)</p></li></ul></div></div></section></section>
 <section id="_so_long" data-background-image="../_images/question-mark-9644fc1f.jpg" data-background-size="cover"><h2>So long&#8230;&#8203;</h2><div class="slide-content">
 <div style="float: left; width: 45%; margin: 0;">
 	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="../_images/cover-jms-4e5e400d.png" style="margin: 0;"></a>
