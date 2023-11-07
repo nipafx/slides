@@ -104,14 +104,13 @@ In a virtual thread:
 ```java
 try (var executor = Executors
 		.newVirtualThreadPerTaskExecutor()) {
-	IntStream
-		.range(0, 1_000_000)
-		.forEach(number -> {
-			executor.submit(() -> {
-				Thread.sleep(Duration.ofSeconds(1));
-				return number;
-			});
+	for (int i = 0; i < 1_000_000; i++) {
+		var number = i;
+		executor.submit(() -> {
+			Thread.sleep(Duration.ofSeconds(1));
+			return number;
 		});
+	}
 } // executor.close() is called implicitly, and waits
 ```
 
