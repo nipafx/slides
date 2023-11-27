@@ -1,0 +1,19 @@
+== Java 21 💣💥
+
+{toc}
+
+=== Class-Data Sharing
+
+Use CDS to shave off 10-25% of your boot times.
+
+Recent improvements:
+
+* default CDS archives ⑫ (https://openjdk.org/jeps/341[JEP 341])
+* dynamic CDS archives ⑬ (https://openjdk.org/jeps/350[JEP 350])
+* auto-generated CDS ⑲ (https://bugs.openjdk.org/browse/JDK-8261455[JDK-8261455])
+
+And more to come from https://openjdk.org/projects/leyden[Project Leyden].
+
+=== More
+
+* 🎥 https://www.youtube.com/watch?v=vvlQv1Dh-HU[Java's Startup Booster: CDS]
