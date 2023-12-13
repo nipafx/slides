@@ -122,7 +122,7 @@ switch (obj) {
 
 === Destructuring Records
 
-Since Java 21 (https://openjdk.org/jeps/440[JEP 440]):
+Java 21 introduced record patterns (https://openjdk.org/jeps/440[JEP 440]):
 
 ```java
 if (obj instanceof Person(var name, var bday)) {
