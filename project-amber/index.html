@@ -418,10 +418,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://2023.europe.jcon.one" title="JCON Europe"><img src="../_images/logo-jcon-2023-250e0540.png" alt="Logo of JCON Europe" class="logo" style="border: none !important; background-color: unset;"></a>
+		<a href="https://www.ittage.informatik-aktuell.de/" title="IT-Tage 2023"><img src="../_images/logo-it-tage-2023-2d827cdc.png" alt="Logo of IT-Tage 2023" class="logo" style="background-color: white; border-color: transparent !important;"></a>
 		<div class="name">
-			<p><a href="https://2023.europe.jcon.one" title="JCON Europe website">JCON Europe</a></p>
-			<p><a href="https://twitter.com/jcon_conference" title="JCON Europe on Twitter">@jcon_conference</a></p>
+			<p><a href="https://www.ittage.informatik-aktuell.de/" title="IT-Tage 2023 website">IT-Tage 2023</a></p>
+			<p><a href="https://twitter.com/hashtag/ittage?f=live" title="IT-Tage 2023 on Twitter">#ittage</a></p>
 		</div>
 	</div>
 	<div class="participant">
@@ -443,10 +443,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://2023.europe.jcon.one" title="JCON Europe"><img src="../_images/logo-jcon-2023-250e0540.png" alt="Logo of JCON Europe" class="logo" style="border: none !important; background-color: unset;"></a>
+		<a href="https://www.ittage.informatik-aktuell.de/" title="IT-Tage 2023"><img src="../_images/logo-it-tage-2023-2d827cdc.png" alt="Logo of IT-Tage 2023" class="logo" style="background-color: white; border-color: transparent !important;"></a>
 		<div class="name"><p>
-			<a href="https://2023.europe.jcon.one" title="JCON Europe website">JCON Europe</a>
-			/ <a href="https://twitter.com/jcon_conference" title="JCON Europe on Twitter">@jcon_conference</a>
+			<a href="https://www.ittage.informatik-aktuell.de/" title="IT-Tage 2023 website">IT-Tage 2023</a>
+			/ <a href="https://twitter.com/hashtag/ittage?f=live" title="IT-Tage 2023 on Twitter">#ittage</a>
 		</p></div>
 	</div>
 </footer>
@@ -500,7 +500,7 @@ one of Java&#8217;s most basic types.</p></div></div></section><section id="_str
 		"name": "%s",
 		"year": "%d"
 	}
-	""".formatted(name, bday.getYear());</code></pre></div></div></div></section><section id="_string_templates"><h2>String Templates</h2><div class="slide-content"><div class="paragraph"><p>Java 21 previews string templates (<a href="https://openjdk.org/jeps/430">JEP 430</a>):</p></div>
+	""".formatted(name, bday.getYear());</code></pre></div></div></div></section><section id="_string_templates"><h2>String Templates</h2><div class="slide-content"><div class="paragraph"><p>Java 21/22 preview string templates (<a href="https://openjdk.org/jeps/430">JEP 430</a> / <a href="https://openjdk.org/jeps/459">459</a>):</p></div>
 <div class="ulist"><ul><li><p>allow embedding expressions</p></li><li><p>understand need for explicit processing<br>
 (for validation, escaping, etc.)</p></li></ul></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">String json = STR."""
@@ -585,7 +585,7 @@ switch (obj) {
 		// as above...
 	}
 	// ...
-}</code></pre></div></div></div></section><section id="_destructuring_records"><h2>Destructuring Records</h2><div class="slide-content"><div class="paragraph"><p>Since Java 21 (<a href="https://openjdk.org/jeps/440">JEP 440</a>):</p></div>
+}</code></pre></div></div></div></section><section id="_destructuring_records"><h2>Destructuring Records</h2><div class="slide-content"><div class="paragraph"><p>Java 21 introduced record patterns (<a href="https://openjdk.org/jeps/440">JEP 440</a>):</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">if (obj instanceof Person(var name, var bday)) {
 	// use `name` and `bday`
 }
@@ -702,7 +702,7 @@ public sealed interface GitHubPage
 			-&gt; "🐈 ISSUE #" + issueNumber;
 		// ...
 	};
-}</code></pre></div></div></div></section><section id="_ignoring_data"><h2>Ignoring Data</h2><div class="slide-content"><div class="paragraph"><p>Java 21 previews unnamed patterns (<a href="https://openjdk.org/jeps/443">JEP 443</a>).<br>
+}</code></pre></div></div></div></section><section id="_ignoring_data"><h2>Ignoring Data</h2><div class="slide-content"><div class="paragraph"><p>Java 22 finalizes unnamed patterns (<a href="https://openjdk.org/jeps/456">JEP 456</a>).<br>
 Use <code>_</code> to ignore components:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public static String createPageName(Page page) {
 	return switch (page) {
@@ -757,7 +757,7 @@ but just a section of an on-ramp.</p></div></div></section><section id="_on_ramp
 void main() {
 	System.out.println("Hello, World!");
 }</code></pre></div></div>
-<div class="paragraph fragment"><p>Previews in Java 21 (<a href="https://openjdk.org/jeps/445">JEP 445</a>).</p></div></div></section><section id="_running_multiple_files"><h2>Running Multiple Files</h2><div class="slide-content"><div class="paragraph"><p>Say you have a folder:</p></div>
+<div class="paragraph fragment"><p>Previews in Java 21/22 (<a href="https://openjdk.org/jeps/445">JEP 445</a> / <a href="https://openjdk.org/jeps/463">463</a>).</p></div></div></section><section id="_running_multiple_files"><h2>Running Multiple Files</h2><div class="slide-content"><div class="paragraph"><p>Say you have a folder:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code>MyFirstJava
  ├─ Prog.java
  ├─ Helper.java
@@ -765,7 +765,7 @@ void main() {
      └─ library.jar</code></pre></div></div>
 <div class="paragraph"><p>Run with:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code>java -cp 'Lib/*' Prog.java</code></pre></div></div>
-<div class="paragraph"><p>(<a href="https://openjdk.org/jeps/8304400">JEP draft</a>)</p></div></div></section><section id="_progression"><h2>Progression</h2><div class="slide-content"><div class="paragraph"><p>Natural progression:</p></div>
+<div class="paragraph"><p>Added in Java 22 (<a href="https://openjdk.org/jeps/458">JEP 458</a>).</p></div></div></section><section id="_progression"><h2>Progression</h2><div class="slide-content"><div class="paragraph"><p>Natural progression:</p></div>
 <div class="ulist"><ul><li class="fragment"><p>start with <code>main()</code></p></li><li class="fragment"><p>need arguments? ⇝ add <code>String[] args</code></p></li><li class="fragment"><p>need to organize code? ⇝ add methods</p></li><li class="fragment"><p>need shared state? ⇝ add fields</p></li><li class="fragment"><p>need more functionality? ⇝ explore JDK APIs</p></li><li class="fragment"><p>even more? ⇝ explore simple libraries</p></li><li class="fragment"><p>need more structure? ⇝ split into multiple files</p></li><li class="fragment"><p>even more ⇝ use visibility &amp; packages</p></li></ul></div>
 <div class="paragraph fragment"><p>Doesn&#8217;t even have to be that order!</p></div></div></section><section id="_summary_4"><h2>Summary</h2><div class="slide-content"><div class="paragraph"><p>Java&#8217;s strengths for large-scale development<br>
 make it less approachable:</p></div>
@@ -773,9 +773,10 @@ make it less approachable:</p></div>
 <div class="paragraph"><p>Project Amber introduces new features that:</p></div>
 <div class="ulist"><ul><li><p>make it easier to start</p></li><li><p>allow gradual progression</p></li><li><p>entice the future dev generation</p></li></ul></div></div></section></section>
 <section><section id="_project_amber_4"><h2>Project Amber</h2><div class="slide-content"><div class="paragraph"><p>Up to Java 20:</p></div><div class="ulist"><ul><li><p><code>var</code></p></li><li><p>text blocks</p></li><li><p>records</p></li><li><p>type patterns</p></li><li><p>sealed types</p></li></ul></div></div></section><section id="_project_amber_5"><h2>Project Amber</h2><div class="slide-content"><div class="paragraph"><p>In Java 21:</p></div>
-<div class="ulist"><ul><li><p>pattern matching in switch</p></li><li><p>record patterns</p></li><li><p>unnamed patterns (preview)</p></li><li><p>string templates (preview)</p></li><li><p>simpler <code>main</code> (preview)</p></li></ul></div></div></section><section id="_project_amber_6"><h2>Project Amber</h2><div class="slide-content"><div class="paragraph"><p>And beyond:</p></div>
-<div class="ulist"><ul><li><p>deconstruction assignments</p></li><li><p><code>with</code> expression</p></li></ul></div></div></section><section id="_project_amber_7"><h2>Project Amber</h2><div class="slide-content"><div class="paragraph"><p><strong>AND MORE</strong>:</p></div>
-<div class="ulist"><ul><li><p>relaxed <code>this()</code>/<code>super()</code> (<a href="https://openjdk.org/jeps/447">JEP 447</a>)</p></li><li><p>primitive types in patterns (<a href="https://bugs.openjdk.org/browse/JDK-8288476">JEP draft</a>)</p></li><li><p>concise method bodies (<a href="https://openjdk.org/jeps/8209434">JEP draft</a>)</p></li><li><p>serialization revamp (<a href="https://openjdk.org/projects/amber/design-notes/towards-better-serialization">design notes</a>)</p></li></ul></div></div></section><section id="_project_amber_8"><h2>Project Amber</h2><div class="slide-content"><div class="paragraph"><p>The solution factory</p></div>
+<div class="ulist"><ul><li><p>pattern matching in switch</p></li><li><p>record patterns</p></li><li><p>unnamed patterns (preview)</p></li><li><p>string templates (preview)</p></li><li><p>simpler <code>main</code> (preview)</p></li></ul></div></div></section><section id="_project_amber_6"><h2>Project Amber</h2><div class="slide-content"><div class="paragraph"><p>In Java 22:</p></div>
+<div class="ulist"><ul><li><p>unnamed patterns</p></li><li><p>multi-file launcher</p></li><li><p>string templates (preview)</p></li><li><p>simpler <code>main</code> (preview)</p></li></ul></div></div></section><section id="_project_amber_7"><h2>Project Amber</h2><div class="slide-content"><div class="paragraph"><p>And beyond:</p></div>
+<div class="ulist"><ul><li><p>deconstruction assignments</p></li><li><p><code>with</code> expression</p></li></ul></div></div></section><section id="_project_amber_8"><h2>Project Amber</h2><div class="slide-content"><div class="paragraph"><p><strong>AND MORE</strong>:</p></div>
+<div class="ulist"><ul><li><p>relaxed <code>this()</code>/<code>super()</code> (<a href="https://openjdk.org/jeps/447">JEP 447</a>; preview in 22)</p></li><li><p>primitive types in patterns (<a href="https://bugs.openjdk.org/browse/JDK-8288476">JEP draft</a>)</p></li><li><p>concise method bodies (<a href="https://openjdk.org/jeps/8209434">JEP draft</a>)</p></li><li><p>serialization revamp (<a href="https://openjdk.org/projects/amber/design-notes/towards-better-serialization">design notes</a>)</p></li></ul></div></div></section><section id="_project_amber_9"><h2>Project Amber</h2><div class="slide-content"><div class="paragraph"><p>The solution factory</p></div>
 <div class="paragraph"><p>to Java&#8217;s problems!</p></div></div></section></section>
 <section id="_so_long" data-background-image="../_images/question-mark-9644fc1f.jpg" data-background-size="cover"><h2>So long&#8230;&#8203;</h2><div class="slide-content">
 <div style="float: left; width: 45%; margin: 0;">
