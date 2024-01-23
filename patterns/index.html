@@ -418,10 +418,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://www.meetup.com/de-DE/jug-hamburg/" title="JUG Bielefeld"><img src="../_images/logo-jug-bielefeld-0b697f51.png" alt="Logo of JUG Bielefeld" class="logo" style="{host-logo-style}"></a>
+		<a href="https://cern.voxxeddays.com/" title="Voxxed Days CERN"><img src="../_images/logo-voxxed-days-cern-5f24213e.png" alt="Logo of Voxxed Days CERN" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://www.meetup.com/de-DE/jug-hamburg/" title="JUG Bielefeld website">JUG Bielefeld</a></p>
-			<p><a href="https://twitter.com/jug_bi" title="JUG Bielefeld on Twitter">@jug_bi</a></p>
+			<p><a href="https://cern.voxxeddays.com/" title="Voxxed Days CERN website">Voxxed Days CERN</a></p>
+			<p><a href="https://twitter.com/VoxxedCERN" title="Voxxed Days CERN on Twitter">@VoxxedCERN</a></p>
 		</div>
 	</div>
 	<div class="participant">
@@ -443,10 +443,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://www.meetup.com/de-DE/jug-hamburg/" title="JUG Bielefeld"><img src="../_images/logo-jug-bielefeld-0b697f51.png" alt="Logo of JUG Bielefeld" class="logo" style="{host-logo-style}"></a>
+		<a href="https://cern.voxxeddays.com/" title="Voxxed Days CERN"><img src="../_images/logo-voxxed-days-cern-5f24213e.png" alt="Logo of Voxxed Days CERN" class="logo" style="{host-logo-style}"></a>
 		<div class="name"><p>
-			<a href="https://www.meetup.com/de-DE/jug-hamburg/" title="JUG Bielefeld website">JUG Bielefeld</a>
-			/ <a href="https://twitter.com/jug_bi" title="JUG Bielefeld on Twitter">@jug_bi</a>
+			<a href="https://cern.voxxeddays.com/" title="Voxxed Days CERN website">Voxxed Days CERN</a>
+			/ <a href="https://twitter.com/VoxxedCERN" title="Voxxed Days CERN on Twitter">@VoxxedCERN</a>
 		</p></div>
 	</div>
 </footer>
@@ -671,7 +671,7 @@ switch (page) {
 		// ...
 	};
 }</code></pre></div></div>
-<div class="paragraph"><p>⇝ Even simpler access with unnamed patterns.</p></div></div></section><section id="_detour_unnamed_patterns"><h2>Detour: Unnamed Patterns</h2><div class="slide-content"><div class="paragraph"><p><em>[Preview in Java 21&#8201;&#8212;&#8201;<a href="https://openjdk.org/jeps/443">JEP 443</a>]</em></p></div>
+<div class="paragraph"><p>⇝ Even simpler access with unnamed patterns.</p></div></div></section><section id="_detour_unnamed_patterns"><h2>Detour: Unnamed Patterns</h2><div class="slide-content"><div class="paragraph"><p><em>[Preview in Java 21&#8201;&#8212;&#8201;<a href="https://openjdk.org/jeps/443">JEP 443</a> / Finalized in 22&#8201;&#8212;&#8201;<a href="https://openjdk.org/jeps/456">JEP 456</a>]</em></p></div>
 <div class="paragraph"><p>Replace variables you don&#8217;t need with <code>_</code>:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">case GitHubIssuePage(_, _, int issueNumber, _)
 	-&gt; "🐈 ISSUE #" + issueNumber;
