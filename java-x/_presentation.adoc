@@ -70,13 +70,11 @@ Create tool section:
 
 ++++
 <table class="toc">
-	<tr><td>New & Updated APIs</td></tr>
-	<tr><td>Performance</td></tr>
-	<tr><td>Usability</td></tr>
-	<tr><td>String Templates</td></tr>
-	<tr><td>On-Ramp</td></tr>
 	<tr><td>Pattern Matching</td></tr>
 	<tr><td>Virtual Threads</td></tr>
+	<tr><td>String Templates</td></tr>
+	<tr><td>New & Updated APIs</td></tr>
+	<tr><td>Performance & More</td></tr>
 </table>
 ++++
 
@@ -87,157 +85,169 @@ Create tool section:
 
 include::prologue.adoc[]
 
-// :toc: pass:[ \
-// <table class="toc"> \
-// 	<tr class="toc-current"><td>Pattern Matching</td></tr> \
-// 	<tr class="toc-current"><td style="padding-left: 2em;">A New Dynamic Dispatch</td></tr> \
-// 	<tr><td style="padding-left: 2em;">Data-Oriented Programming</td></tr> \
-// 	<tr><td>Virtual Threads</td></tr> \
-// 	<tr><td>String Templates</td></tr> \
-// 	<tr><td>New & Updated APIs</td></tr> \
-// 	<tr><td>Performance</td></tr> \
-// </table> \
-// ]
-// include::pattern-matching-short.adoc[]
-
-// :toc: pass:[ \
-// <table class="toc"> \
-// 	<tr class="toc-current"><td>Pattern Matching</td></tr> \
-// 		<tr><td style="padding-left: 2em;">A New Dynamic Dispatch</td></tr> \
-// 		<tr class="toc-current"><td style="padding-left: 2em;">Data-Oriented Programming</td></tr> \
-// 	<tr><td>Virtual Threads</td></tr> \
-// 	<tr><td>String Templates</td></tr> \
-// 	<tr><td>New & Updated APIs</td></tr> \
-// 	<tr><td>Performance</td></tr> \
-// </table> \
-// ]
-// include::dop-short.adoc[]
-
-// :toc: pass:[ \
-// <table class="toc"> \
-// 	<tr><td>Pattern Matching</td></tr> \
-// 	<tr class="toc-current"><td>Virtual Threads</td></tr> \
-// 		<tr class="toc-current"><td style="padding-left: 2em;">Unlimited Threads</td></tr> \
-// 		<tr><td style="padding-left: 2em;">Under The Hood</td></tr> \
-// 	<tr><td>String Templates</td></tr> \
-// 	<tr><td>New & Updated APIs</td></tr> \
-// 	<tr><td>Performance</td></tr> \
-// </table> \
-// ]
-// include::virtual-threads-short.adoc[]
-
-// :toc: pass:[ \
-// <table class="toc"> \
-// 	<tr><td>Pattern Matching</td></tr> \
-// 	<tr class="toc-current"><td>Virtual Threads</td></tr> \
-// 		<tr><td style="padding-left: 2em;">Unlimited Threads</td></tr> \
-// 		<tr class="toc-current"><td style="padding-left: 2em;">Under The Hood</td></tr> \
-// 	<tr><td>String Templates</td></tr> \
-// 	<tr><td>New & Updated APIs</td></tr> \
-// 	<tr><td>Performance</td></tr> \
-// </table> \
-// ]
-// include::virtual-thread-details.adoc[]
+:toc: pass:[ \
+<table class="toc"> \
+	<tr class="toc-current"><td>Pattern Matching</td></tr> \
+	<tr class="toc-current"><td style="padding-left: 2em;">A New Dynamic Dispatch</td></tr> \
+	<tr><td style="padding-left: 2em;">Data-Oriented Programming</td></tr> \
+	<tr><td>Virtual Threads</td></tr> \
+	<tr><td>String Templates</td></tr> \
+	<tr><td>New & Updated APIs</td></tr> \
+	<tr><td>Performance & More</td></tr> \
+</table> \
+]
+include::pattern-matching-short.adoc[]
 
 :toc: pass:[ \
 <table class="toc"> \
+	<tr class="toc-current"><td>Pattern Matching</td></tr> \
+		<tr><td style="padding-left: 2em;">A New Dynamic Dispatch</td></tr> \
+		<tr class="toc-current"><td style="padding-left: 2em;">Data-Oriented Programming</td></tr> \
+	<tr><td>Virtual Threads</td></tr> \
+	<tr><td>String Templates</td></tr> \
+	<tr><td>New & Updated APIs</td></tr> \
+	<tr><td>Performance & More</td></tr> \
+</table> \
+]
+include::dop-short.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>Pattern Matching</td></tr> \
+	<tr class="toc-current"><td>Virtual Threads</td></tr> \
+		<tr class="toc-current"><td style="padding-left: 2em;">Unlimited Threads</td></tr> \
+		<tr><td style="padding-left: 2em;">Under The Hood</td></tr> \
+	<tr><td>String Templates</td></tr> \
+	<tr><td>New & Updated APIs</td></tr> \
+	<tr><td>Performance & More</td></tr> \
+</table> \
+]
+include::virtual-threads-short.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>Pattern Matching</td></tr> \
+	<tr class="toc-current"><td>Virtual Threads</td></tr> \
+		<tr><td style="padding-left: 2em;">Unlimited Threads</td></tr> \
+		<tr class="toc-current"><td style="padding-left: 2em;">Under The Hood</td></tr> \
+	<tr><td>String Templates</td></tr> \
+	<tr><td>New & Updated APIs</td></tr> \
+	<tr><td>Performance & More</td></tr> \
+</table> \
+]
+include::virtual-thread-details.adoc[]
+
+include::deprecations.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>Pattern Matching</td></tr> \
+	<tr><td>Virtual Threads</td></tr> \
+	<tr class="toc-current"><td>String Templates</td></tr> \
+	<tr><td>New & Updated APIs</td></tr> \
+	<tr><td>Performance & More</td></tr> \
+</table> \
+]
+include::string-templates.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>Pattern Matching</td></tr> \
+	<tr><td>Virtual Threads</td></tr> \
+	<tr><td>String Templates</td></tr> \
 	<tr class="toc-current"><td>New & Updated APIs</td></tr> \
 		<tr class="toc-current"><td style="padding-left: 2em;">Sequenced Collections</td></tr> \
 		<tr><td style="padding-left: 2em;">Address Resolution SPI</td></tr> \
 		<tr><td style="padding-left: 2em;">Misc. Improvements</td></tr> \
-	<tr><td>Performance</td></tr> \
-	<tr><td>Usability</td></tr> \
-	<tr><td>String Templates</td></tr> \
-	<tr><td>On-Ramp</td></tr> \
+	<tr><td>Performance & More</td></tr> \
 </table> \
 ]
 include::sequenced-collections.adoc[]
 
 :toc: pass:[ \
 <table class="toc"> \
+	<tr><td>Pattern Matching</td></tr> \
+	<tr><td>Virtual Threads</td></tr> \
+	<tr><td>String Templates</td></tr> \
 	<tr class="toc-current"><td>New & Updated APIs</td></tr> \
 		<tr><td style="padding-left: 2em;">Sequenced Collections</td></tr> \
 		<tr class="toc-current"><td style="padding-left: 2em;">Address Resolution SPI</td></tr> \
 		<tr><td style="padding-left: 2em;">Misc. Improvements</td></tr> \
-	<tr><td>Performance</td></tr> \
-	<tr><td>Usability</td></tr> \
-	<tr><td>String Templates</td></tr> \
-	<tr><td>On-Ramp</td></tr> \
+	<tr><td>Performance & More</td></tr> \
 </table> \
 ]
 include::address-resolution.adoc[]
 
 :toc: pass:[ \
 <table class="toc"> \
+	<tr><td>Pattern Matching</td></tr> \
+	<tr><td>Virtual Threads</td></tr> \
+	<tr><td>String Templates</td></tr> \
 	<tr class="toc-current"><td>New & Updated APIs</td></tr> \
 		<tr><td style="padding-left: 2em;">Sequenced Collections</td></tr> \
 		<tr><td style="padding-left: 2em;">Address Resolution SPI</td></tr> \
 		<tr class="toc-current"><td style="padding-left: 2em;">Misc. Improvements</td></tr> \
-	<tr><td>Performance</td></tr> \
-	<tr><td>Usability</td></tr> \
-	<tr><td>String Templates</td></tr> \
-	<tr><td>On-Ramp</td></tr> \
+	<tr><td>Performance & More</td></tr> \
 </table> \
 ]
 include::apis-misc.adoc[]
 
 :toc: pass:[ \
 <table class="toc"> \
+	<tr><td>Pattern Matching</td></tr> \
+	<tr><td>Virtual Threads</td></tr> \
+	<tr><td>String Templates</td></tr> \
 	<tr><td>New & Updated APIs</td></tr> \
-	<tr class="toc-current"><td>Performance</td></tr> \
+	<tr class="toc-current"><td>Performance & More</td></tr> \
 		<tr class="toc-current"><td style="padding-left: 2em;">Generational ZGC</td></tr> \
 		<tr><td style="padding-left: 2em;">Class-Data Sharing</td></tr> \
-	<tr><td>Usability</td></tr> \
-	<tr><td>String Templates</td></tr> \
-	<tr><td>On-Ramp</td></tr> \
+		<tr><td style="padding-left: 2em;">Usability</td></tr> \
+		<tr><td style="padding-left: 2em;">On-Ramp</td></tr> \
 </table> \
 ]
 include::zgc.adoc[]
 
 :toc: pass:[ \
 <table class="toc"> \
+	<tr><td>Pattern Matching</td></tr> \
+	<tr><td>Virtual Threads</td></tr> \
+	<tr><td>String Templates</td></tr> \
 	<tr><td>New & Updated APIs</td></tr> \
-	<tr class="toc-current"><td>Performance</td></tr> \
+	<tr class="toc-current"><td>Performance & More</td></tr> \
 		<tr><td style="padding-left: 2em;">Generational ZGC</td></tr> \
 		<tr class="toc-current"><td style="padding-left: 2em;">Class-Data Sharing</td></tr> \
-	<tr><td>Usability</td></tr> \
-	<tr><td>String Templates</td></tr> \
-	<tr><td>On-Ramp</td></tr> \
+		<tr><td style="padding-left: 2em;">Usability</td></tr> \
+		<tr><td style="padding-left: 2em;">On-Ramp</td></tr> \
 </table> \
 ]
 include::cds.adoc[]
 
 :toc: pass:[ \
 <table class="toc"> \
-	<tr><td>New & Updated APIs</td></tr> \
-	<tr><td>Performance</td></tr> \
-	<tr class="toc-current"><td>Usability</td></tr> \
+	<tr><td>Pattern Matching</td></tr> \
+	<tr><td>Virtual Threads</td></tr> \
 	<tr><td>String Templates</td></tr> \
-	<tr><td>On-Ramp</td></tr> \
+	<tr><td>New & Updated APIs</td></tr> \
+	<tr class="toc-current"><td>Performance & More</td></tr> \
+		<tr><td style="padding-left: 2em;">Generational ZGC</td></tr> \
+		<tr><td style="padding-left: 2em;">Class-Data Sharing</td></tr> \
+		<tr class="toc-current"><td style="padding-left: 2em;">Usability</td></tr> \
+		<tr><td style="padding-left: 2em;">On-Ramp</td></tr> \
 </table> \
 ]
 include::usability.adoc[]
 
 :toc: pass:[ \
 <table class="toc"> \
-	<tr><td>New & Updated APIs</td></tr> \
-	<tr><td>Performance</td></tr> \
-	<tr><td>Usability</td></tr> \
-	<tr class="toc-current"><td>String Templates</td></tr> \
-	<tr><td>On-Ramp</td></tr> \
-</table> \
-]
-include::string-templates.adoc[]
-
-include::deprecations.adoc[]
-
-:toc: pass:[ \
-<table class="toc"> \
-	<tr><td>New & Updated APIs</td></tr> \
-	<tr><td>Performance</td></tr> \
-	<tr><td>Usability</td></tr> \
+	<tr><td>Pattern Matching</td></tr> \
+	<tr><td>Virtual Threads</td></tr> \
 	<tr><td>String Templates</td></tr> \
-	<tr class="toc-current"><td>On-Ramp</td></tr> \
+	<tr><td>New & Updated APIs</td></tr> \
+	<tr class="toc-current"><td>Performance & More</td></tr> \
+		<tr><td style="padding-left: 2em;">Generational ZGC</td></tr> \
+		<tr><td style="padding-left: 2em;">Class-Data Sharing</td></tr> \
+		<tr><td style="padding-left: 2em;">Usability</td></tr> \
+		<tr class="toc-current"><td style="padding-left: 2em;">On-Ramp</td></tr> \
 </table> \
 ]
 include::launch-protocol.adoc[]
