@@ -108,7 +108,7 @@ in `switch` since Java 21 (https://openjdk.org/jeps/441[JEP 441]):
 ```java
 if (obj instanceof Person person) {
 	var name = person.name();
-	var bday = person.birtday();
+	var bday = person.birthday();
 	// use `name` and `bday`
 }
 
@@ -142,7 +142,7 @@ switch (obj) {
 ```java
 var person = fetchPerson();
 var name = person.name();
-var bday = person.birtday();
+var bday = person.birthday();
 // use `name` and `bday`
 ```
 
