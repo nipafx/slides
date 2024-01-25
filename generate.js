@@ -39,6 +39,7 @@ const createPresentation = dir => {
 		safe: `unsafe`,
 		backend: `revealjs`,
 		to_file: presentation,
+		mkdirs: true,
 	}
 	asciidoctor.convertFile(`${dir}/_presentation.adoc`, options)
 	updateImagePaths(presentation, copies)
