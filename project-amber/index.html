@@ -576,7 +576,7 @@ explicitness/safety vs succinctness.</p></div></div></section><section id="_thro
 in <code>switch</code> since Java 21 (<a href="https://openjdk.org/jeps/441">JEP 441</a>):</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">if (obj instanceof Person person) {
 	var name = person.name();
-	var bday = person.birtday();
+	var bday = person.birthday();
 	// use `name` and `bday`
 }
 
@@ -597,7 +597,7 @@ switch (obj) {
 	// ...
 }</code></pre></div></div></div></section><section id="_destructuring_records_2"><h2>Destructuring Records</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">var person = fetchPerson();
 var name = person.name();
-var bday = person.birtday();
+var bday = person.birthday();
 // use `name` and `bday`</code></pre></div></div>
 <div class="paragraph"><p>In the future (no JEP, but <a href="https://twitter.com/BrianGoetz/status/1599000138793771010">it&#8217;s coming</a>):</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// speculative syntax
