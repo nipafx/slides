@@ -42,12 +42,16 @@ Ingredients:
 * type pattern matching ⑯ (https://openjdk.org/jeps/394[JEP 394])
 * sealed types ⑰ (https://openjdk.org/jeps/409[JEP 409])
 * patterns in switch ㉑ (https://openjdk.org/jeps/441[JEP 441])
+* unnamed patterns ㉒ (https://openjdk.org/jeps/443[JEP 443] / https://openjdk.org/jeps/456[JEP 456])
+
+=== Pattern Matching
 
 Approach:
 
 * make `Page` sealed
 * implement features as methods outside of `Page`
 * accept `Page` parameters and `switch` over it
+* avoid `default` branch for maintainability
 
 === Sealed Page
 
@@ -67,14 +71,10 @@ public sealed interface Page
 ```java
 public void categorize(Page page) {
 	switch (page) {
-		case GitHubIssuePage issue
-			-> categorizeIssue(issue);
-		case GitHubPrPage pr
-			-> categorizePr(pr);
-		case ExternalPage external
-			-> categorizeExternal(external);
-		case ErrorPage error
-			-> categorizeError(error);
+		case GitHubIssuePage is -> categorizeIssue(is);
+		case GitHubPrPage pr -> categorizePr(pr);
+		case ExternalPage ext -> categorizeExternal(ext);
+		case ErrorPage err -> categorizeError(err);
 	}
 }
 ```
@@ -91,6 +91,54 @@ Fulfilled by:
 * avoiding the `default` branch
 
 ⇝ Adding a new subtype causes compile error!
+
+=== Avoiding Default
+
+Sometimes you have "defaulty" behavior:
+
+```java
+public void categorize(Page page) {
+	switch (page) {
+		case GitHubIssuePage is -> categorizeIssue(is);
+		case GitHubPrPage pr -> categorizePr(pr);
+		default -> { }
+	}
+}
+```
+
+But we need to avoid `default`!
+
+=== Avoiding Default
+
+Write explicit branches:
+
+```java
+public void categorize(Page page) {
+	switch (page) {
+		case GitHubIssuePage is -> categorizeIssue(is);
+		case GitHubPrPage pr -> categorizePr(pr);
+		// duplication 😢
+		case ErrorPage err -> { };
+		case ExternalPage ext -> { };
+	};
+}
+```
+
+=== Avoiding Default
+
+Use `_` to combine "default branches":
+
+```java
+public void categorize(Page page) {
+	switch (page) {
+		case GitHubIssuePage is -> categorizeIssue(is);
+		case GitHubPrPage pr -> categorizePr(pr);
+		case ErrorPage _, ExternalPage _ -> { };
+	};
+}
+```
+
+⇝ Default behavior without `default` branch.
 
 === Dynamic dispatch
 
