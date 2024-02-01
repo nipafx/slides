@@ -73,9 +73,11 @@ Create tool section:
 
 == Let's get started!
 
-* this session covers Java 18-21
-* this is a showcase, not a tutorial +
+* this session goes over Java 18-21
+* we can't cover all details +
   ⇝ go to https://youtube.com/@java[youtube.com/@java] for more
+// * this is a showcase, not a tutorial +
+//   ⇝ go to https://youtube.com/@java[youtube.com/@java] for more
 // * tweet questions with https://twitter.com/search?q=%23jokerconf%20%23java11[#jokerconf #Java11]
 * slides at https://slides.nipafx.dev/java-x[slides.nipafx.dev/java-x] +
   (hit "?" to get navigation help)
@@ -125,7 +127,7 @@ include::pattern-matching-short.adoc[]
 	<tr><td>Performance & More</td></tr> \
 </table> \
 ]
-include::dop-short.adoc[]
+include::dop.adoc[]
 
 :toc: pass:[ \
 <table class="toc"> \
@@ -138,7 +140,7 @@ include::dop-short.adoc[]
 	<tr><td>Performance & More</td></tr> \
 </table> \
 ]
-include::virtual-threads-short.adoc[]
+include::virtual-threads.adoc[]
 
 :toc: pass:[ \
 <table class="toc"> \
@@ -153,8 +155,6 @@ include::virtual-threads-short.adoc[]
 ]
 include::virtual-thread-details.adoc[]
 
-include::deprecations.adoc[]
-
 :toc: pass:[ \
 <table class="toc"> \
 	<tr><td>Pattern Matching</td></tr> \
@@ -165,6 +165,25 @@ include::deprecations.adoc[]
 </table> \
 ]
 include::string-templates.adoc[]
+
+== Break
+
+We'll see you back here in 15 minutes with: TODO
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>Pattern Matching</td></tr> \
+	<tr><td>Virtual Threads</td></tr> \
+	<tr><td>String Templates</td></tr> \
+	<tr><td>New & Updated APIs</td></tr> \
+	<tr class="toc-current"><td>Performance & More</td></tr> \
+		<tr><td style="padding-left: 2em;">Generational ZGC</td></tr> \
+		<tr><td style="padding-left: 2em;">Class-Data Sharing</td></tr> \
+		<tr><td style="padding-left: 2em;">Usability</td></tr> \
+		<tr class="toc-current"><td style="padding-left: 2em;">On-Ramp</td></tr> \
+</table> \
+]
+include::launch-protocol.adoc[]
 
 :toc: pass:[ \
 <table class="toc"> \
@@ -180,6 +199,7 @@ include::string-templates.adoc[]
 ]
 include::sequenced-collections.adoc[]
 
+////
 :toc: pass:[ \
 <table class="toc"> \
 	<tr><td>Pattern Matching</td></tr> \
@@ -193,6 +213,7 @@ include::sequenced-collections.adoc[]
 </table> \
 ]
 include::address-resolution.adoc[]
+////
 
 :toc: pass:[ \
 <table class="toc"> \
@@ -238,6 +259,7 @@ include::zgc.adoc[]
 ]
 include::cds.adoc[]
 
+////
 :toc: pass:[ \
 <table class="toc"> \
 	<tr><td>Pattern Matching</td></tr> \
@@ -252,21 +274,17 @@ include::cds.adoc[]
 </table> \
 ]
 include::usability.adoc[]
+////
 
-:toc: pass:[ \
-<table class="toc"> \
-	<tr><td>Pattern Matching</td></tr> \
-	<tr><td>Virtual Threads</td></tr> \
-	<tr><td>String Templates</td></tr> \
-	<tr><td>New & Updated APIs</td></tr> \
-	<tr class="toc-current"><td>Performance & More</td></tr> \
-		<tr><td style="padding-left: 2em;">Generational ZGC</td></tr> \
-		<tr><td style="padding-left: 2em;">Class-Data Sharing</td></tr> \
-		<tr><td style="padding-left: 2em;">Usability</td></tr> \
-		<tr class="toc-current"><td style="padding-left: 2em;">On-Ramp</td></tr> \
-</table> \
-]
-include::launch-protocol.adoc[]
+:toc: pass:[ UTF 8 By Default ]
+include::utf-8-default.adoc[]
+
+include::deprecations.adoc[]
+
+== Break
+
+We'll see you back here in 15 minutes with: TODO
+
 
 // include::jpms.adoc[]
 
