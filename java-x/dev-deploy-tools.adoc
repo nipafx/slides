@@ -1,0 +1,314 @@
+== Java 21 💣💥
+
+{toc}
+
+=== Fast prototyping Java code with jshell
+
+[%step]
+* Quickly try, debug and learn Java and its APIs.
+* Experiment with Java by bypassing the compile stage.
+* Get immediate feedback on your code.
+* Exposes a programmatic API
+
+[NOTE.speaker]
+--
+* You can enter program elements one at a time, immediately see the result, and make adjustments as needed.
+--
+
+=== Highlighting deprecated elements, variables and keywords
+
+[%step]
+```java
+jshell> var check = new Boolean("true");
+|  Warning:
+|  Boolean(java.lang.String) in java.lang.Boolean
+|  has been deprecated and marked for removal
+|  var check = new Boolean("true");
+|              ^-----------------^
+check ==> true
+```
+
+[%step]
+_[jshell outlines deprecated elements -- https://bugs.openjdk.org/browse/JDK-8274148[JDK-8274148]]_
+
+=== JDK tool access in jshell
+
+[%step]
+
+* `jshell` supports loading scripts.
+* Scripts can be local files or one of the predefined scripts.
+* Scripts may hold any valid code snippets or `jshell` commands.
+
+=== Predefined jshell scripts
+
+[cols="25h,~"]
+|===
+|Script |Description
+
+|DEFAULT
+|Loads the default entries, which are commonly used as imports.
+
+|JAVASE
+|Imports all Java SE packages.
+
+|PRINTING
+|Defines `print,println,` and `printf` as `jshell` methods for use within the tool.
+
+|TOOLING
+|Defines `javac, jar`, and other methods for running JDK tools within `jshell`.
+
+|===
+
+
+[NOTE.speaker]
+--
+* The JShell tool for interactive exploration of Java code has been enhanced with a new predefined script, TOOLING.
+--
+
+=== Loading TOOLING script
+
+*  When you start jshell
+
+[%step]
+```
+jshell TOOLING
+```
+
+[%step]
+*  Inside a `jshell` session
+
+[%step]
+```
+jshell> /open TOOLING
+```
+[%step]
+_[JDK tools in jshell -- https://bugs.openjdk.org/browse/JDK-8306560[JDK-8306560]]_
+
+[NOTE.speaker]
+--
+* But when the same computation is done with an "+=" operator (or also with similar operators, like "-="), then this error does not occur.
+--
+
+=== Using the TOOLING script
+
+[%step]
+* Check available tools
++
+```
+jshell> tools()
+```
+* Execute a tool command in a `jshell` session
++
+```
+jshell> run("javac", "-version")
+jshell> javac("-version")
+
+javac 21
+```
+
+=== What tool would you use for local prototyping, testing or debugging a client-server setup?
+
+[%step]
+_[Introducing jwebserver -- https://openjdk.org/jeps/408[JEP 408]]_
+
+=== Use cases for jwebserver
+
+Web development testing, to simulate locally a client-server setup.
+
+```
+jwebserver
+
+Binding to loopback by default.
+For all interfaces use "-b 0.0.0.0" or "-b ::".
+Serving /cwd and subdirectories on 127.0.0.1 port 8000
+URL: http://127.0.0.1:8000/
+```
+
+=== Use cases for jwebserver
+
+Web-service prototyping or application testing.
+
+```
+jwebserver -d api -p 9000
+
+Binding to loopback by default.
+For all interfaces use "-b 0.0.0.0" or "-b ::".
+Serving /api and subdirectories on 127.0.0.1 port 9000
+URL http://127.0.0.1:9000/
+127.0.0.1 - - [01/Feb/2024:14:27:26 +0100]
+"GET /activity.json HTTP/1.1" 200 -
+```
+
+[NOTE.speaker]
+--
+* Web-service or application testing, where you use static files as API stubs in a directory structure to mirror RESTful URLs and contain dummy data.
+--
+
+=== Use cases for jwebserver
+
+Search a directory on a remote server from your local machine.
+
+```
+jwebserver -b 0.0.0.0
+
+Serving /work and subdirectories
+on 0.0.0.0 (all interfaces) port 8000
+URL http://192.168.178.41:8000/
+```
+
+[NOTE.speaker]
+--
+* Informal browsing and sharing of files across systems to, e.g., search a directory on a remote server from your local machine.
+--
+
+=== Working with the Simple Web Server API
+
+The `SimpleFileServer` class supports the creation of:
+
+* file server
+* file handler
+* an output filter
+
+[%step]
+_[Working with the Simple Web Server -- https://inside.java/2021/12/06/working-with-the-simple-web-server[inside.java article]]_
+
+
+[NOTE.speaker]
+--
+* While the command-line tool is useful, you can use the Simple Web Server (i.e., server, handler, and filter) with existing code via its API.
+--
+
+=== Distributing modular applications
+
+Let's assume the following project structure:
+
+```
+src/main/java
+├── module-info.java
+    └── example
+        └── HelloWorldFX.java
+
+cat src/main/java/module-info.java
+module hellofx {
+	requires javafx.controls;
+	requires jdk.httpserver;
+	exports example;
+}
+```
+
+[NOTE.speaker]
+--
+* Generate file with `.jmod` extension that encapsulate a set of compiled Java classes, resources and other related files.
+--
+
+=== Make performant module files
+
+`jmod` creates module files that encapsulate a set of +
+compiled Java classes, resources and other related files.
+
+[%step]
+```
+jmod create --class-path mods/helloworldfx \
+    --main-class org.example.HelloWorldFX \
+    --module-version 1.0.0 \
+    --compress zip-9 hellofx.jmod
+```
+
+=== Specify a module's compression level
+
+Use `--compress` command line option:
+
+* accepts values between `zip-[0-9]`
+* `zip-0` provides no compression,
+* `zip-9` provides the best compression
+* the default compression value is `zip-6`
+
+[%step]
+_[jmod --compress option -- https://bugs.openjdk.org/browse/JDK-8293499[JDK-8293499]]_
+
+=== Why does that matter?
+
+You can further create an optimal application image.
+
+[%step]
+```
+jlink --launcher hello=hellofx/example.HelloWorldFX \
+    --module-path $PATH_TO_JMODS:/hellofx.jmod \
+    --add-modules hellofx \
+    --output my-app
+```
+
+=== Packaging Java Applications
+image::images/stun.gif[background, size=cover]
+
+=== Intro to jpackage
+
+* Packages self-contained Java applications.
+* Prior JDK19, installing a jpackaged app was system-wide.
+* For modular applications, `jpackage` will automatically run `jlink` and generate a runtime with the modules needed.
+
+[NOTE.speaker]
+--
+* Until JDK 19, installation of a jpackaged application was system-wide because startup parameters were stored in the system-wide installation location.
+--
+
+=== Using jpackage
+
+```
+jpackage --input target/ --name JDemoApp \
+    --type app-image --main-jar JDemoApp.jar \
+    --main-class JDemoApp
+```
+
+[%step]
+```
+JDemoApp.app/
+  Contents/
+    Info.plist
+    MacOS/               // Application launchers
+      JDemoApp
+    Resources/           // Icons, etc.
+    app/
+      JDemoApp.cfg     // Config info, done by jpackage
+      JDemoApp.jar     // copied from --input directory
+    runtime/           // Java runtime image
+```
+
+=== Installation of a jpackaged application after JDK 19
+
+Application launcher will search for `.cfg` in user-specific folders.
+
+```shell
+Linux
+    ~/.local/${PACKAGE_NAME}
+    ~/.${PACKAGE_NAME}
+macOS
+    ~/Library/Application Support/${PACKAGE_NAME}
+Windows
+    %LocalAppData%\%PACKAGE_NAME%
+    %AppData%\%PACKAGE_NAME%
+
+# ${PACKAGE_NAME} and %PACKAGE_NAME%
+# refer to jpackaged application name.
+```
+
+=== Installation of a jpackaged application after JDK 19
+
+Application launcher will look up the `.cfg` file:
+[%step]
+* In user-specific directories,
+* From the installation directory if `.cfg` file is not found,
+* From the application image directory if the application launcher is executed from application image.
+
+=== More
+
+* Build a Java source browser with https://inside.java/2022/11/21/jshell-java-source-browser/[jshell API]
+* Christian Stein's article on https://sormuras.github.io/blog/2023-03-09-jshell-tooling[jshell tooling]
+* Tutorial on https://dev.java/learn/jvm/tool/jwebserver/[jwebserver]
+* jwebserver ㉑ https://openjdk.org/jeps/408[JEP 408]
+* Julia Boes' article on https://inside.java/2021/12/06/working-with-the-simple-web-server/[jwebserver API examples]
+* Tutorial on https://dev.java/learn/jvm/tool/jpackage/[jpackage]
+* How to package a JavaFX application with https://inside.java/2023/11/14/package-javafx-native-exec/[jpakckage]
+
+
+
