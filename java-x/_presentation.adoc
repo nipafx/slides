@@ -93,6 +93,7 @@ Create tool section:
 	<tr><td>String Templates</td></tr>
 	<tr><td>New & Updated APIs</td></tr>
 	<tr><td>Performance & More</td></tr>
+    <tr><td>JDK Tooling</td></tr>
 </table>
 ++++
 
@@ -112,6 +113,7 @@ include::prologue.adoc[]
 	<tr><td>String Templates</td></tr> \
 	<tr><td>New & Updated APIs</td></tr> \
 	<tr><td>Performance & More</td></tr> \
+    <tr><td>JDK Tooling</td></tr> \
 </table> \
 ]
 include::pattern-matching-short.adoc[]
@@ -125,6 +127,7 @@ include::pattern-matching-short.adoc[]
 	<tr><td>String Templates</td></tr> \
 	<tr><td>New & Updated APIs</td></tr> \
 	<tr><td>Performance & More</td></tr> \
+    <tr><td>JDK Tooling</td></tr> \
 </table> \
 ]
 include::dop.adoc[]
@@ -138,6 +141,7 @@ include::dop.adoc[]
 	<tr><td>String Templates</td></tr> \
 	<tr><td>New & Updated APIs</td></tr> \
 	<tr><td>Performance & More</td></tr> \
+    <tr><td>JDK Tooling</td></tr> \
 </table> \
 ]
 include::virtual-threads.adoc[]
@@ -151,6 +155,7 @@ include::virtual-threads.adoc[]
 	<tr><td>String Templates</td></tr> \
 	<tr><td>New & Updated APIs</td></tr> \
 	<tr><td>Performance & More</td></tr> \
+    <tr><td>JDK Tooling</td></tr> \
 </table> \
 ]
 include::virtual-thread-details.adoc[]
@@ -162,6 +167,7 @@ include::virtual-thread-details.adoc[]
 	<tr class="toc-current"><td>String Templates</td></tr> \
 	<tr><td>New & Updated APIs</td></tr> \
 	<tr><td>Performance & More</td></tr> \
+    <tr><td>JDK Tooling</td></tr> \
 </table> \
 ]
 include::string-templates.adoc[]
@@ -181,6 +187,7 @@ We'll see you back here in 15 minutes with: TODO
 		<tr><td style="padding-left: 2em;">Class-Data Sharing</td></tr> \
 		<tr><td style="padding-left: 2em;">Usability</td></tr> \
 		<tr class="toc-current"><td style="padding-left: 2em;">On-Ramp</td></tr> \
+    <tr><td>JDK Tooling</td></tr> \
 </table> \
 ]
 include::launch-protocol.adoc[]
@@ -195,6 +202,7 @@ include::launch-protocol.adoc[]
 		<tr><td style="padding-left: 2em;">Address Resolution SPI</td></tr> \
 		<tr><td style="padding-left: 2em;">Misc. Improvements</td></tr> \
 	<tr><td>Performance & More</td></tr> \
+    <tr><td>JDK Tooling</td></tr> \
 </table> \
 ]
 include::sequenced-collections.adoc[]
@@ -225,6 +233,7 @@ include::address-resolution.adoc[]
 		<tr><td style="padding-left: 2em;">Address Resolution SPI</td></tr> \
 		<tr class="toc-current"><td style="padding-left: 2em;">Misc. Improvements</td></tr> \
 	<tr><td>Performance & More</td></tr> \
+    <tr><td>JDK Tooling</td></tr> \
 </table> \
 ]
 include::apis-misc.adoc[]
@@ -240,6 +249,7 @@ include::apis-misc.adoc[]
 		<tr><td style="padding-left: 2em;">Class-Data Sharing</td></tr> \
 		<tr><td style="padding-left: 2em;">Usability</td></tr> \
 		<tr><td style="padding-left: 2em;">On-Ramp</td></tr> \
+    <tr><td>JDK Tooling</td></tr> \
 </table> \
 ]
 include::zgc.adoc[]
@@ -255,6 +265,7 @@ include::zgc.adoc[]
 		<tr class="toc-current"><td style="padding-left: 2em;">Class-Data Sharing</td></tr> \
 		<tr><td style="padding-left: 2em;">Usability</td></tr> \
 		<tr><td style="padding-left: 2em;">On-Ramp</td></tr> \
+    <tr><td>JDK Tooling</td></tr> \
 </table> \
 ]
 include::cds.adoc[]
@@ -285,6 +296,70 @@ include::deprecations.adoc[]
 
 We'll see you back here in 15 minutes with: TODO
 
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>Pattern Matching</td></tr> \
+	<tr><td>Virtual Threads</td></tr> \
+	<tr><td>String Templates</td></tr> \
+	<tr><td>New & Updated APIs</td></tr> \
+	<tr><td>Performance & More</td></tr> \
+    <tr class="toc-current"><td>JDK Tooling</td></tr> \
+		<tr class="toc-current"><td style="padding-left: 2em;">Source and Classfile Tools</td></tr> \
+		<tr><td style="padding-left: 2em;">Development and Deployment Tools</td></tr> \
+		<tr><td style="padding-left: 2em;">Security Tools</td></tr> \
+		<tr><td style="padding-left: 2em;">Monitoring Tools</td></tr> \
+</table> \
+]
+include::source-classfile-tools.adoc[]
+
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>Pattern Matching</td></tr> \
+	<tr><td>Virtual Threads</td></tr> \
+	<tr><td>String Templates</td></tr> \
+	<tr><td>New & Updated APIs</td></tr> \
+	<tr><td>Performance & More</td></tr> \
+    <tr class="toc-current"><td>JDK Tooling</td></tr> \
+		<tr><td style="padding-left: 2em;">Source and Classfile Tools</td></tr> \
+		<tr class="toc-current"><td style="padding-left: 2em;">Development and Deployment Tools</td></tr> \
+		<tr><td style="padding-left: 2em;">Security Tools</td></tr> \
+		<tr><td style="padding-left: 2em;">Monitoring Tools</td></tr> \
+</table> \
+]
+include::dev-deploy-tools.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>Pattern Matching</td></tr> \
+	<tr><td>Virtual Threads</td></tr> \
+	<tr><td>String Templates</td></tr> \
+	<tr><td>New & Updated APIs</td></tr> \
+	<tr><td>Performance & More</td></tr> \
+    <tr class="toc-current"><td>JDK Tooling</td></tr> \
+		<tr><td style="padding-left: 2em;">Source and Classfile Tools</td></tr> \
+		<tr><td style="padding-left: 2em;">Development and Deployment Tools</td></tr> \
+		<tr class="toc-current"><td style="padding-left: 2em;">Security Tools</td></tr> \
+		<tr><td style="padding-left: 2em;">Monitoring Tools</td></tr> \
+</table> \
+]
+include::security-tools.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>Pattern Matching</td></tr> \
+	<tr><td>Virtual Threads</td></tr> \
+	<tr><td>String Templates</td></tr> \
+	<tr><td>New & Updated APIs</td></tr> \
+	<tr><td>Performance & More</td></tr> \
+    <tr class="toc-current"><td>JDK Tooling</td></tr> \
+		<tr><td style="padding-left: 2em;">Source and Classfile Tools</td></tr> \
+		<tr><td style="padding-left: 2em;">Development and Deployment Tools</td></tr> \
+		<tr><td style="padding-left: 2em;">Security Tools</td></tr> \
+		<tr class="toc-current"><td style="padding-left: 2em;">Monitoring Tools</td></tr> \
+</table> \
+]
+include::monitoring-tools.adoc[]
 
 // include::jpms.adoc[]
 
@@ -303,6 +378,8 @@ We'll see you back here in 15 minutes with: TODO
 // O U T R O //
 // ######### //
 
-include::../_shared/about-slide.adoc[]
+include::about-slide.adoc[]
+
+// include::../_shared/about-slide.adoc[]
 
 include::images/sources.adoc[]
