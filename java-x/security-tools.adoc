@@ -1,0 +1,86 @@
+== Java 21 💣💥
+
+{toc}
+
+=== New version option
+
+Since JDK 18, you can check the version of `keytool` and  `jarsigner`.
+
+[%step]
+```
+keytool -version & jarsigner -version
+
+[1] 83711
+jarsigner 21
+keytool 21
+```
+
+
+[%step]
+_[Add -version option to keytool and jarsigner -- https://bugs.openjdk.org/browse/JDK-8272163[JDK-8272163]]_
+
+
+=== Updated Options for keytool
+
+As of JDK 21, `keytool` warns you when using weak password-based encryption algorithms via:
+
+* `-genseckey` option
+* `-importpass` option
+
+[%step]
+_[keytool should warn about weak PBE algorithms-- https://bugs.openjdk.org/browse/JDK-8286907[JDK-8286907]]_
+
+=== Detecting weak password-based encryption algorithms
+
+```shell
+keytool -genseckey -alias secret -keypass changeit \
+    -keyalg RC4 -keysize 128 -keystore example.p12 \
+    -storepass changeit -storetype PKCS12 -v
+```
+[%step]
+```
+Generated 128-bit ARCFOUR secret key
+[Storing example.p12]
+Warning:
+The generated secret key uses the ARCFOUR algorithm
+which is considered a security risk.
+```
+
+[NOTE.speaker]
+--
+* This enhancement takes into account the value you specify in the `-keyalg` option and issues a warning in case you attempt to use weak algorithm.
+--
+
+=== Updated Options for jarsigner
+
+* Removed in JDK 21: `-altsigner` and `-altsignerpath`
+* As of JDK 19, specify the classpath for providers +
+via `–providerPath`.
+
+[NOTE.speaker]
+--
+* The jarsigner options -altsigner and -altsignerpath have been removed, along with the underlying ContentSigner API in the com.sun.jarsigner package.
+The mechanism was deprecated in JDK 9 and marked for removal in JDK 15.
+* If you need to specify the class path of an alternate keystore implementation, you can now add it via `-providerPath` option
+--
+
+=== Loading external keystore implementations
+
+[%step]
+```
+jarsigner -keystore keystore -storetype CUSTOMKS \
+  -providerPath /path/to/test.myks \
+  -providerClass my.custom.AnotherProvider \
+  signed.jar mykey
+```
+
+[%step]
+_[Add -providerPath option to jarsigner -- https://bugs.openjdk.org/browse/JDK-8281175[JDK-8281175]]_
+
+=== More
+
+* https://dev.java/learn/jvm/tool/security/[Security Tools] tutorials
+* https://www.youtube.com/embed/nFJBVuaIsRg[Java 21 Tool enhancements] Better Across the Board
+* https://dev.java/learn/security/monitor/[Monitoring Java Application Security with JDK tools and JFR Events]
+
+
