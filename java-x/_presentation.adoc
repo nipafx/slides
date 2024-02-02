@@ -86,17 +86,29 @@ Create tool section:
 
 === Lots to talk about!
 
-++++
-<table class="toc">
-	<tr><td>Pattern Matching</td></tr>
-	<tr><td>Virtual Threads</td></tr>
-	<tr><td>String Templates</td></tr>
-	<tr><td>New & Updated APIs</td></tr>
-	<tr><td>Performance & More</td></tr>
-    <tr><td>JDK Tooling</td></tr>
-</table>
-++++
+*Part I*:
 
+* pattern matching
+* virtual threads
+* string templates
+
+=== Lots to talk about!
+
+*Part II*:
+
+* on-ramping to Java
+* sequenced collections
+* misc API improvements
+* GC, CDS, UTF-8
+
+=== Lots to talk about!
+
+*Part III*:
+
+* Source and Classfile Tools
+* Development and Deployment Tools
+* Security Tools
+* Monitoring Tools
 
 // ####################### //
 // P R E S E N T A T I O N //
@@ -105,104 +117,94 @@ Create tool section:
 include::prologue.adoc[]
 
 :toc: pass:[ \
+<h3>Part I</h3> \
 <table class="toc"> \
 	<tr class="toc-current"><td>Pattern Matching</td></tr> \
 	<tr class="toc-current"><td style="padding-left: 2em;">A New Dynamic Dispatch</td></tr> \
 	<tr><td style="padding-left: 2em;">Data-Oriented Programming</td></tr> \
 	<tr><td>Virtual Threads</td></tr> \
 	<tr><td>String Templates</td></tr> \
-	<tr><td>New & Updated APIs</td></tr> \
-	<tr><td>Performance & More</td></tr> \
-    <tr><td>JDK Tooling</td></tr> \
 </table> \
 ]
 include::pattern-matching-short.adoc[]
 
 :toc: pass:[ \
+<h3>Part I</h3> \
 <table class="toc"> \
 	<tr class="toc-current"><td>Pattern Matching</td></tr> \
 		<tr><td style="padding-left: 2em;">A New Dynamic Dispatch</td></tr> \
 		<tr class="toc-current"><td style="padding-left: 2em;">Data-Oriented Programming</td></tr> \
 	<tr><td>Virtual Threads</td></tr> \
 	<tr><td>String Templates</td></tr> \
-	<tr><td>New & Updated APIs</td></tr> \
-	<tr><td>Performance & More</td></tr> \
-    <tr><td>JDK Tooling</td></tr> \
 </table> \
 ]
 include::dop.adoc[]
 
 :toc: pass:[ \
+<h3>Part I</h3> \
 <table class="toc"> \
 	<tr><td>Pattern Matching</td></tr> \
 	<tr class="toc-current"><td>Virtual Threads</td></tr> \
 		<tr class="toc-current"><td style="padding-left: 2em;">Unlimited Threads</td></tr> \
 		<tr><td style="padding-left: 2em;">Under The Hood</td></tr> \
 	<tr><td>String Templates</td></tr> \
-	<tr><td>New & Updated APIs</td></tr> \
-	<tr><td>Performance & More</td></tr> \
-    <tr><td>JDK Tooling</td></tr> \
 </table> \
 ]
 include::virtual-threads.adoc[]
 
 :toc: pass:[ \
+<h3>Part I</h3> \
 <table class="toc"> \
 	<tr><td>Pattern Matching</td></tr> \
 	<tr class="toc-current"><td>Virtual Threads</td></tr> \
 		<tr><td style="padding-left: 2em;">Unlimited Threads</td></tr> \
 		<tr class="toc-current"><td style="padding-left: 2em;">Under The Hood</td></tr> \
 	<tr><td>String Templates</td></tr> \
-	<tr><td>New & Updated APIs</td></tr> \
-	<tr><td>Performance & More</td></tr> \
-    <tr><td>JDK Tooling</td></tr> \
 </table> \
 ]
 include::virtual-thread-details.adoc[]
 
 :toc: pass:[ \
+<h3>Part I</h3> \
 <table class="toc"> \
 	<tr><td>Pattern Matching</td></tr> \
 	<tr><td>Virtual Threads</td></tr> \
 	<tr class="toc-current"><td>String Templates</td></tr> \
-	<tr><td>New & Updated APIs</td></tr> \
-	<tr><td>Performance & More</td></tr> \
-    <tr><td>JDK Tooling</td></tr> \
 </table> \
 ]
 include::string-templates.adoc[]
 
 == Break
 
-We'll see you back here in 15 minutes with: TODO
+We'll see you back here in 15 minutes with *Part II*:
+
+* on-ramping to Java
+* sequenced collections
+* misc API improvements
+* GC, CDS, UTF-8
 
 :toc: pass:[ \
+<h3>Part II</h3> \
 <table class="toc"> \
-	<tr><td>Pattern Matching</td></tr> \
-	<tr><td>Virtual Threads</td></tr> \
-	<tr><td>String Templates</td></tr> \
-	<tr><td>New & Updated APIs</td></tr> \
-	<tr class="toc-current"><td>Performance & More</td></tr> \
-		<tr><td style="padding-left: 2em;">Generational ZGC</td></tr> \
-		<tr><td style="padding-left: 2em;">Class-Data Sharing</td></tr> \
-		<tr><td style="padding-left: 2em;">Usability</td></tr> \
-		<tr class="toc-current"><td style="padding-left: 2em;">On-Ramp</td></tr> \
-    <tr><td>JDK Tooling</td></tr> \
+	<tr class="toc-current"><td>On-Ramp</td></tr> \
+	<tr><td>Sequenced Collections</td></tr> \
+	<tr><td>Misc. API Improvements</td></tr> \
+	<tr><td>Generational ZGC</td></tr> \
+	<tr><td>Class-Data Sharing</td></tr> \
+	<tr><td>UTF-8 by Default</td></tr> \
 </table> \
 ]
 include::launch-protocol.adoc[]
 
 :toc: pass:[ \
+<h3>Part II</h3> \
 <table class="toc"> \
-	<tr><td>Pattern Matching</td></tr> \
-	<tr><td>Virtual Threads</td></tr> \
-	<tr><td>String Templates</td></tr> \
-	<tr class="toc-current"><td>New & Updated APIs</td></tr> \
-		<tr class="toc-current"><td style="padding-left: 2em;">Sequenced Collections</td></tr> \
-		<tr><td style="padding-left: 2em;">Address Resolution SPI</td></tr> \
-		<tr><td style="padding-left: 2em;">Misc. Improvements</td></tr> \
-	<tr><td>Performance & More</td></tr> \
-    <tr><td>JDK Tooling</td></tr> \
+	<tr><td>On-Ramp</td></tr> \
+	<tr class="toc-current"><td>Sequenced Collections</td></tr> \
+	<tr><td>Misc. API Improvements</td></tr> \
+	<tr><td>Generational ZGC</td></tr> \
+	<tr><td>Class-Data Sharing</td></tr> \
+	<tr><td>UTF-8 by Default</td></tr> \
 </table> \
 ]
 include::sequenced-collections.adoc[]
@@ -224,48 +226,40 @@ include::address-resolution.adoc[]
 ////
 
 :toc: pass:[ \
+<h3>Part II</h3> \
 <table class="toc"> \
-	<tr><td>Pattern Matching</td></tr> \
-	<tr><td>Virtual Threads</td></tr> \
-	<tr><td>String Templates</td></tr> \
-	<tr class="toc-current"><td>New & Updated APIs</td></tr> \
-		<tr><td style="padding-left: 2em;">Sequenced Collections</td></tr> \
-		<tr><td style="padding-left: 2em;">Address Resolution SPI</td></tr> \
-		<tr class="toc-current"><td style="padding-left: 2em;">Misc. Improvements</td></tr> \
-	<tr><td>Performance & More</td></tr> \
-    <tr><td>JDK Tooling</td></tr> \
+	<tr><td>On-Ramp</td></tr> \
+	<tr><td>Sequenced Collections</td></tr> \
+	<tr class="toc-current"><td>Misc. API Improvements</td></tr> \
+	<tr><td>Generational ZGC</td></tr> \
+	<tr><td>Class-Data Sharing</td></tr> \
+	<tr><td>UTF-8 by Default</td></tr> \
 </table> \
 ]
 include::apis-misc.adoc[]
 
 :toc: pass:[ \
+<h3>Part II</h3> \
 <table class="toc"> \
-	<tr><td>Pattern Matching</td></tr> \
-	<tr><td>Virtual Threads</td></tr> \
-	<tr><td>String Templates</td></tr> \
-	<tr><td>New & Updated APIs</td></tr> \
-	<tr class="toc-current"><td>Performance & More</td></tr> \
-		<tr class="toc-current"><td style="padding-left: 2em;">Generational ZGC</td></tr> \
-		<tr><td style="padding-left: 2em;">Class-Data Sharing</td></tr> \
-		<tr><td style="padding-left: 2em;">Usability</td></tr> \
-		<tr><td style="padding-left: 2em;">On-Ramp</td></tr> \
-    <tr><td>JDK Tooling</td></tr> \
+	<tr><td>On-Ramp</td></tr> \
+	<tr><td>Sequenced Collections</td></tr> \
+	<tr><td>Misc. API Improvements</td></tr> \
+	<tr class="toc-current"><td>Generational ZGC</td></tr> \
+	<tr><td>Class-Data Sharing</td></tr> \
+	<tr><td>UTF-8 by Default</td></tr> \
 </table> \
 ]
 include::zgc.adoc[]
 
 :toc: pass:[ \
+<h3>Part II</h3> \
 <table class="toc"> \
-	<tr><td>Pattern Matching</td></tr> \
-	<tr><td>Virtual Threads</td></tr> \
-	<tr><td>String Templates</td></tr> \
-	<tr><td>New & Updated APIs</td></tr> \
-	<tr class="toc-current"><td>Performance & More</td></tr> \
-		<tr><td style="padding-left: 2em;">Generational ZGC</td></tr> \
-		<tr class="toc-current"><td style="padding-left: 2em;">Class-Data Sharing</td></tr> \
-		<tr><td style="padding-left: 2em;">Usability</td></tr> \
-		<tr><td style="padding-left: 2em;">On-Ramp</td></tr> \
-    <tr><td>JDK Tooling</td></tr> \
+	<tr><td>On-Ramp</td></tr> \
+	<tr><td>Sequenced Collections</td></tr> \
+	<tr><td>Misc. API Improvements</td></tr> \
+	<tr><td>Generational ZGC</td></tr> \
+	<tr class="toc-current"><td>Class-Data Sharing</td></tr> \
+	<tr><td>UTF-8 by Default</td></tr> \
 </table> \
 ]
 include::cds.adoc[]
@@ -287,27 +281,36 @@ include::cds.adoc[]
 include::usability.adoc[]
 ////
 
-:toc: pass:[ UTF 8 By Default ]
+:toc: pass:[ \
+<h3>Part II</h3> \
+<table class="toc"> \
+	<tr><td>On-Ramp</td></tr> \
+	<tr><td>Sequenced Collections</td></tr> \
+	<tr><td>Misc. API Improvements</td></tr> \
+	<tr><td>Generational ZGC</td></tr> \
+	<tr><td>Class-Data Sharing</td></tr> \
+	<tr class="toc-current"><td>UTF-8 by Default</td></tr> \
+</table> \
+]
 include::utf-8-default.adoc[]
 
 include::deprecations.adoc[]
 
 == Break
 
-We'll see you back here in 15 minutes with: TODO
+We'll see you back here in 15 minutes with *Part III*:
+
+* Source and Classfile Tools
+* Development and Deployment Tools
+* Security Tools
+* Monitoring Tools
 
 :toc: pass:[ \
 <table class="toc"> \
-	<tr><td>Pattern Matching</td></tr> \
-	<tr><td>Virtual Threads</td></tr> \
-	<tr><td>String Templates</td></tr> \
-	<tr><td>New & Updated APIs</td></tr> \
-	<tr><td>Performance & More</td></tr> \
-    <tr class="toc-current"><td>JDK Tooling</td></tr> \
-		<tr class="toc-current"><td style="padding-left: 2em;">Source and Classfile Tools</td></tr> \
-		<tr><td style="padding-left: 2em;">Development and Deployment Tools</td></tr> \
-		<tr><td style="padding-left: 2em;">Security Tools</td></tr> \
-		<tr><td style="padding-left: 2em;">Monitoring Tools</td></tr> \
+	<tr class="toc-current"><td>Source and Classfile Tools</td></tr> \
+	<tr><td>Development and Deployment Tools</td></tr> \
+	<tr><td>Security Tools</td></tr> \
+	<tr><td>Monitoring Tools</td></tr> \
 </table> \
 ]
 include::source-classfile-tools.adoc[]
@@ -315,48 +318,30 @@ include::source-classfile-tools.adoc[]
 
 :toc: pass:[ \
 <table class="toc"> \
-	<tr><td>Pattern Matching</td></tr> \
-	<tr><td>Virtual Threads</td></tr> \
-	<tr><td>String Templates</td></tr> \
-	<tr><td>New & Updated APIs</td></tr> \
-	<tr><td>Performance & More</td></tr> \
-    <tr class="toc-current"><td>JDK Tooling</td></tr> \
-		<tr><td style="padding-left: 2em;">Source and Classfile Tools</td></tr> \
-		<tr class="toc-current"><td style="padding-left: 2em;">Development and Deployment Tools</td></tr> \
-		<tr><td style="padding-left: 2em;">Security Tools</td></tr> \
-		<tr><td style="padding-left: 2em;">Monitoring Tools</td></tr> \
+	<tr><td>Source and Classfile Tools</td></tr> \
+	<tr class="toc-current"><td>Development and Deployment Tools</td></tr> \
+	<tr><td>Security Tools</td></tr> \
+	<tr><td>Monitoring Tools</td></tr> \
 </table> \
 ]
 include::dev-deploy-tools.adoc[]
 
 :toc: pass:[ \
 <table class="toc"> \
-	<tr><td>Pattern Matching</td></tr> \
-	<tr><td>Virtual Threads</td></tr> \
-	<tr><td>String Templates</td></tr> \
-	<tr><td>New & Updated APIs</td></tr> \
-	<tr><td>Performance & More</td></tr> \
-    <tr class="toc-current"><td>JDK Tooling</td></tr> \
-		<tr><td style="padding-left: 2em;">Source and Classfile Tools</td></tr> \
-		<tr><td style="padding-left: 2em;">Development and Deployment Tools</td></tr> \
-		<tr class="toc-current"><td style="padding-left: 2em;">Security Tools</td></tr> \
-		<tr><td style="padding-left: 2em;">Monitoring Tools</td></tr> \
+	<tr><td>Source and Classfile Tools</td></tr> \
+	<tr><td>Development and Deployment Tools</td></tr> \
+	<tr class="toc-current"><td>Security Tools</td></tr> \
+	<tr><td>Monitoring Tools</td></tr> \
 </table> \
 ]
 include::security-tools.adoc[]
 
 :toc: pass:[ \
 <table class="toc"> \
-	<tr><td>Pattern Matching</td></tr> \
-	<tr><td>Virtual Threads</td></tr> \
-	<tr><td>String Templates</td></tr> \
-	<tr><td>New & Updated APIs</td></tr> \
-	<tr><td>Performance & More</td></tr> \
-    <tr class="toc-current"><td>JDK Tooling</td></tr> \
-		<tr><td style="padding-left: 2em;">Source and Classfile Tools</td></tr> \
-		<tr><td style="padding-left: 2em;">Development and Deployment Tools</td></tr> \
-		<tr><td style="padding-left: 2em;">Security Tools</td></tr> \
-		<tr class="toc-current"><td style="padding-left: 2em;">Monitoring Tools</td></tr> \
+	<tr><td>Source and Classfile Tools</td></tr> \
+	<tr><td>Development and Deployment Tools</td></tr> \
+	<tr><td>Security Tools</td></tr> \
+	<tr class="toc-current"><td>Monitoring Tools</td></tr> \
 </table> \
 ]
 include::monitoring-tools.adoc[]
