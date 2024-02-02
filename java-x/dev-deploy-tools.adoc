@@ -91,20 +91,17 @@ _[JDK tools in jshell -- https://bugs.openjdk.org/browse/JDK-8306560[JDK-8306560
 
 === Using the TOOLING script
 
-*  Check available tools
-
 [%step]
+* Check available tools
++
 ```
-jshell>tools()
+jshell> tools()
 ```
-
-[%step]
-*  Execute a tool command in a `jshell` session
-
-[%step]
+* Execute a tool command in a `jshell` session
++
 ```
-jshell>run("javac", "-version")
-jshell>javac("-version")
+jshell> run("javac", "-version")
+jshell> javac("-version")
 
 javac 21
 ```
