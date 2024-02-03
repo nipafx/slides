@@ -154,7 +154,7 @@ javac LintExample.java -Xlint:all
 
 === Warnings about possible this escapes
 
-After JDK 21,  the compiler has a new `-Xlint:this-escape` key:
+The compiler has a new `-Xlint:this-escape` key:
 
 ```
 javac LintExample.java -Xlint:[all|this-escape]
@@ -167,7 +167,7 @@ is fully initialized
 ```
 
 [%step]
-_[New lint check key  -- https://bugs.openjdk.org/browse/JDK-8015831[JDK-8015831]]_
+_[New lint check key ㉑ -- https://bugs.openjdk.org/browse/JDK-8015831[JDK-8015831]]_
 
 === Generate great API documentation
 image::images/manual.png[background, size=cover]
@@ -178,7 +178,7 @@ image::images/manual.png[background, size=cover]
 * Helps with product maintenance.
 * Technical users can understand your APIs goals.
 * Can increase awareness/adoption of your software.
-* Third-party developers get started quickly by trying out API examples.
+* Third-party developers can start quickly by trying out API examples.
 
 
 === Words may come easy, yet examples require extra care.
@@ -276,6 +276,6 @@ and a `<script>` element is added to every generated HTML page (except the pages
 === More
 
 * https://dev.java/learn/jvm/tools/core/[Core JDK tools] tutorials
-* https://bugs.openjdk.org/browse/JDK-8275786[JDK-8275786] about adding scripts to generated documentation
+* https://bugs.openjdk.org/browse/JDK-8275786[JDK-8275786] ⑱ about adding scripts to generated docs
 * https://openjdk.org/jeps/413[JEP 413] about code snippets in documentation
 * https://docs.oracle.com/en/java/javase/21/javadoc/programmers-guide-snippets.html[Programmer's Guide to Snippets]

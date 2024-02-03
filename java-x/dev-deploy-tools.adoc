@@ -29,7 +29,7 @@ check ==> true
 ```
 
 [%step]
-_[jshell outlines deprecated elements -- https://bugs.openjdk.org/browse/JDK-8274148[JDK-8274148]]_
+_[jshell outlines deprecated elements ⑲ -- https://bugs.openjdk.org/browse/JDK-8274148[JDK-8274148]]_
 
 === JDK tool access in jshell
 
@@ -54,7 +54,7 @@ _[jshell outlines deprecated elements -- https://bugs.openjdk.org/browse/JDK-827
 |PRINTING
 |Defines `print,println,` and `printf` as `jshell` methods for use within the tool.
 
-|TOOLING
+|TOOLING ㉑
 |Defines `javac, jar`, and other methods for running JDK tools within `jshell`.
 
 |===
@@ -82,7 +82,7 @@ jshell TOOLING
 jshell> /open TOOLING
 ```
 [%step]
-_[JDK tools in jshell -- https://bugs.openjdk.org/browse/JDK-8306560[JDK-8306560]]_
+_[JDK tools in jshell ㉑ -- https://bugs.openjdk.org/browse/JDK-8306560[JDK-8306560]]_
 
 [NOTE.speaker]
 --
@@ -109,7 +109,7 @@ javac 21
 === What tool would you use for local prototyping, testing or debugging a client-server setup?
 
 [%step]
-_[Introducing jwebserver -- https://openjdk.org/jeps/408[JEP 408]]_
+_[Introducing jwebserver ⑱ -- https://openjdk.org/jeps/408[JEP 408]]_
 
 === Use cases for jwebserver
 
@@ -185,14 +185,14 @@ Let's assume the following project structure:
 ```
 src/main/java
 ├── module-info.java
+└── org
     └── example
         └── HelloWorldFX.java
 
 cat src/main/java/module-info.java
 module hellofx {
 	requires javafx.controls;
-	requires jdk.httpserver;
-	exports example;
+	exports org.example;
 }
 ```
 
