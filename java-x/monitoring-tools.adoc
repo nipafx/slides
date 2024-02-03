@@ -114,7 +114,7 @@ java -XX:StartFlightRecording:settings=none,
 
 
 * Disabled by default in `default.jfc` and `profile.jfc`.
-* Records details about `java.security.Provider.getService(String type, String algorithm)` calls.
+* Records info on `java.security.Provider.getService(...)` calls.
 
 === Recording details about security provider instance requests
 
