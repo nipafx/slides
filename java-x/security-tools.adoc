@@ -4,7 +4,7 @@
 
 === New version option
 
-Since JDK 18, you can check the version of `keytool` and  `jarsigner`.
+You can check the version of `keytool` and  `jarsigner`.
 
 [%step]
 ```
@@ -17,7 +17,7 @@ keytool 21
 
 
 [%step]
-_[Add -version option to keytool and jarsigner -- https://bugs.openjdk.org/browse/JDK-8272163[JDK-8272163]]_
+_[Add -version option to keytool and jarsigner ⑱ -- https://bugs.openjdk.org/browse/JDK-8272163[JDK-8272163]]_
 
 
 === Updated Options for keytool
@@ -28,7 +28,7 @@ As of JDK 21, `keytool` warns you when using weak password-based encryption algo
 * `-importpass` option
 
 [%step]
-_[keytool should warn about weak PBE algorithms-- https://bugs.openjdk.org/browse/JDK-8286907[JDK-8286907]]_
+_[keytool warns about weak PBE algorithms ㉑ -- https://bugs.openjdk.org/browse/JDK-8286907[JDK-8286907]]_
 
 === Detecting weak password-based encryption algorithms
 
@@ -75,7 +75,7 @@ jarsigner -keystore keystore -storetype CUSTOMKS \
 ```
 
 [%step]
-_[Add -providerPath option to jarsigner -- https://bugs.openjdk.org/browse/JDK-8281175[JDK-8281175]]_
+_[Add -providerPath option to jarsigner ⑲ -- https://bugs.openjdk.org/browse/JDK-8281175[JDK-8281175]]_
 
 === More
 

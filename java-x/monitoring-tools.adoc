@@ -25,7 +25,7 @@
 * JDK Mission Control (JMC) is a set of tools for continuously collecting low level and detailed Java runtime information.
 --
 
-=== New jfr view command
+=== New JFR view command
 * Start JFR a recording via `-XX:StartFlightRecording` or `jcmd`.
 
 ```
@@ -39,7 +39,7 @@ java -XX:StartFlightRecording -jar imaging.jar
 NOTE: Use `jps` JDK tool to list all running Java processes.
 
 [%step]
-_[JFR view command -- https://bugs.openjdk.org/browse/JDK-8306704[JDK-8306704]]_
+_[JFR view command ㉑ -- https://bugs.openjdk.org/browse/JDK-8306704[JDK-8306704]]_
 
 [state=empty,background-color=white]
 === !
@@ -50,7 +50,7 @@ image::images/hot-methods.png[background, size=contain]
 === !
 image::images/allocation-class.png[background, size=contain]
 
-=== JDK Flight Recorder event for finalization
+=== JFR event for finalization
 
 `jdk.FinalizerStatistics`
 
@@ -61,7 +61,7 @@ image::images/allocation-class.png[background, size=contain]
 [%step]
 _[A finalization JFR event -- https://bugs.openjdk.org/browse/JDK-8266936[JDK-8266936]]_
 
-=== JDK Flight Recorder event for finalization
+=== JFR event for finalization
 
 Disable via
 
@@ -78,7 +78,7 @@ java -XX:StartFlightRecording:settings=none,
 
 [NOTE.speaker]
 --
-* A new JDK Flight Recorder Event, `jdk.FinalizerStatistics`, identifies classes at runtime that use finalizers. The event is enabled by default in the JDK (in the `default.jfc` and `profile.jfc` JFR configuration files). The event includes: the class that overrides `finalize()`, that class's `CodeSource`, the number of times the class's finalizer has run, and the number of objects still on the heap (not yet finalized)
+* A new JFR Event, `jdk.FinalizerStatistics`, identifies classes at runtime that use finalizers. The event is enabled by default in the JDK (in the `default.jfc` and `profile.jfc` JFR configuration files). The event includes: the class that overrides `finalize()`, that class's `CodeSource`, the number of times the class's finalizer has run, and the number of objects still on the heap (not yet finalized)
 --
 
 === Recording initial security properties with JFR
@@ -110,11 +110,11 @@ java -XX:StartFlightRecording:settings=none,
 
 === Recording details about security provider instance requests
 
-`jdk.SecurityProviderService`
+`jdk.SecurityProviderService`  cryptographic event
 
 
 * Disabled by default in `default.jfc` and `profile.jfc`.
-* Records details about `java.security.Provider.getService(String type, String algorithm)` calls.
+* Records info on `java.security.Provider.getService(...)` calls.
 
 === Recording details about security provider instance requests
 
