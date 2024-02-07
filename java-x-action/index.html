@@ -467,7 +467,9 @@ modern Java features</p></li><li class="fragment"><p>this is a showcase, not a t
 <div class="ulist"><ul><li><p>format with text blocks and string templates</p></li><li><p>host with simple file server</p></li></ul></div>
 <div class="paragraph"><p>(And modules for reliability.)</p></div></div></section></section>
 <section id="_code"><h2>Code!</h2><div class="slide-content"><div class="paragraph"><p><a href="https://github.com/nipafx/modern-java-demo">github.com/nipafx/modern-java-demo</a></p></div></div></section>
-<section><section id="_review"><h2>Review</h2></section><section id="_domain_model"><h2>Domain Model</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public sealed interface Page
+<section><section id="_review"><h2>Review</h2></section><section id="_what_java_was_that"><h2>What Java was <em>That</em>?!</h2><div class="slide-content"><div class="paragraph"><p>JDK 23 EA with preview features!</p></div>
+<div class="paragraph"><p>Features that aren&#8217;t final on JDK 21:</p></div>
+<div class="ulist"><ul><li><p>unnamed patterns ㉒ (<a href="https://openjdk.org/jeps/456">JEP 456</a>)</p></li><li><p><code>StructuredTaskScope</code></p></li><li><p>string templates</p></li></ul></div></div></section><section id="_domain_model"><h2>Domain Model</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public sealed interface Page
 		permits ErrorPage, SuccessfulPage {
 
 	URI url();
