@@ -1,4 +1,4 @@
-# Step 1 // main~6
+# Step 1 // main~5
 
 Records:
 * `record ExternalPage(URI url, String content)`
@@ -10,14 +10,14 @@ Records:
 	* `equals` with `instanceof`
 
 
-# Step 2 // main~5
+# Step 2 // main~4
 
 Sealed types:
 * `sealed interface Page permits ErrorPage, SuccessfulPage` with `URI url()`
 * `sealed interface SuccessfulPage extends Page permits ExternalPage, GitHubPage` with `String content()`
 * `sealed interface GitHubPage extends SuccessfulPage permits GitHubIssuePage, GitHubPrPage` with `Set<Page> links()` and `subtree()`
 
-# Step 3 // main~4
+# Step 3 // main~3
 
 Records:
 * create `record PageWithLinks(Page page, Set<URI> links)`
@@ -46,7 +46,7 @@ String templates:
 Run program with arguments `https://github.com/junit-pioneer/junit-pioneer/issues/624 10`
 
 
-# Step 4 // main~3
+# Step 4 // main~2
 
 Create `Pretty` (in `.operations`)
 

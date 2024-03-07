@@ -98,9 +98,9 @@ JDK 23 EA with preview features!
 
 Features that aren't final on JDK 21:
 
-* unnamed patterns ㉒ (https://openjdk.org/jeps/456[JEP 456])
+* unnamed patterns (22: https://openjdk.org/jeps/456[JEP 456])
+* string templates (23?: https://openjdk.org/jeps/465[JEP 465])
 * `StructuredTaskScope`
-* string templates
 
 === Domain Model
 
@@ -194,10 +194,10 @@ return client
 ```java
 try (var scope =
 		new StructuredTaskScope.ShutdownOnFailure()) {
-	var futurePages = new ArrayList<Subtask<Page>>();
-	for (URI link : links)
-		futurePages.add(
-			scope.fork(() -> createPage(link, depth)));
+	var futurePages = links.stream()
+		.map(link -> scope.fork(
+			() -> createPage(link, depth)))
+		.toList();
 
 	scope.join();
 	scope.throwIfFailed();
