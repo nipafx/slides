@@ -94,12 +94,12 @@ https://github.com/nipafx/modern-java-demo[github.com/nipafx/modern-java-demo]
 
 === What Java was _That_?!
 
-JDK 23 EA with preview features!
+JDK 22 EA with preview features!
 
 Features that aren't final on JDK 21:
 
-* unnamed patterns (22: https://openjdk.org/jeps/456[JEP 456])
-* string templates (23?: https://openjdk.org/jeps/465[JEP 465])
+* unnamed patterns (final in 22: https://openjdk.org/jeps/456[JEP 456])
+* string templates (https://mail.openjdk.org/pipermail/amber-spec-experts/2024-March/004010.html[revamp soon])
 * `StructuredTaskScope`
 
 === Domain Model
@@ -155,24 +155,6 @@ public static String pageName(Page page) {
 }
 ```
 
-////
-TODO: Use this once code formatter can handle string temnplate syntax
-```java
-public static String pageName(Page page) {
-	return switch (page) {
-		case ErrorPage(URI url, _)
-			 -> STR."💥 ERROR: \{url.getHost()}}";
-		case ExternalPage(URI url, _)
-			-> STR."💤 EXTERNAL: \{url.getHost()}";
-		case GitHubIssuePage(_, _, _, int nr)
-			-> STR."🐈 ISSUE #\{nr}";
-		case GitHubPrPage(_, _, _, int nr)
-			-> STR."🐙 PR #\{nr}";
-	};
-}
-```
-////
-
 === HTTP Client
 
 ```java
@@ -213,7 +195,7 @@ try (var scope =
 === String Templates
 
 ```java
-var html = HTML."""
+var html = asHTML(RAW."""
 	<!DOCTYPE html>
 	<html lang="en">
 		<head>
@@ -227,28 +209,7 @@ var html = HTML."""
 			</div>
 		</body>
 	</html>
-	""";
-```
-
-=== String Templates
-
-```java
-public class Html {
-
-	public static final Processor<Document, ...> HTML =
-		new JsoupHtmlProcessor();
-
-	private static class JsoupHtmlProcessor
-			implements Processor<Document, ...> {
-
-		@Override
-		public Document process(StringTemplate template) {
-			return Jsoup.parse(template.interpolate());
-		}
-
-	}
-
-}
+	""");
 ```
 
 === Simple File Server
