@@ -81,7 +81,7 @@ Fetching pages:
 
 Present results:
 
-* format with text blocks and string templates
+* format with text blocks +++<del>+++and string templates+++</del>+++
 * host with simple file server
 
 (And modules for reliability.)
@@ -99,7 +99,6 @@ JDK 22 EA with preview features!
 Features that aren't final on JDK 21:
 
 * unnamed patterns (final in 22: https://openjdk.org/jeps/456[JEP 456])
-* string templates (https://mail.openjdk.org/pipermail/amber-spec-experts/2024-March/004010.html[revamp soon])
 * `StructuredTaskScope`
 
 === Domain Model
@@ -192,26 +191,6 @@ try (var scope =
 }
 ```
 
-=== String Templates
-
-```java
-var html = asHTML(RAW."""
-	<!DOCTYPE html>
-	<html lang="en">
-		<head>
-			<meta charset="utf-8">
-			<title>\{Pretty.pageName(rootPage)}</title>
-			<link rel="stylesheet" href="style.css">
-		</head>
-		<body>
-			<div class="container">
-				\{pageTreeHtml(rootPage)}
-			</div>
-		</body>
-	</html>
-	""");
-```
-
 === Simple File Server
 
 ```java
@@ -259,7 +238,7 @@ image::images/jpackage-07.jpg[background, size=contain]
 * great domain modeling with +
   records, sealed classes, pattenr matching
 * easy, structured (and scalable) concurrency
-* on-board HTTP client and string templates
+* on-board HTTP client
 * simple web server and packaging
 
 // ######### //
