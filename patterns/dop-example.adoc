@@ -91,19 +91,21 @@ Problems:
 * clients must "divine" the type
 * disparate operations on same class
 
+=== A Better Implementation
+
+Data-oriented programming:
+
+* makes all data explicit and "obviously correct"
+* separates operations from data
+* models systems as production line
+
 === Applying DOP
 
-> Model the data, the whole data, +
-> and nothing but the data.
+> Model data immutably and transparently.
 
-There are four kinds of pages:
+We got a language construct that fits perfectly.
 
-* error page
-* external page
-* GitHub issue page
-* GitHub PR page
-
-⇝ Use four records to model them!
+(Just in case: You can achieve this with regular classes, too.)
 
 === Detour: Records
 
@@ -129,6 +131,40 @@ record ExternalPage(URI url, String content) { }
 
 All method/constructor bodies can be customized.
 
+=== Ensuring Immutability
+
+Records are shallowly immutable, +
+but field types may not be.
+
+⇝ Fix that during construction.
+
+=== Ensuring Immutability
+
+```java
+public record GitHubPrPage(..., Set<Page> links) {
+
+	// compact constructor
+	GitHubPrPage {
+		links = Set.copyOf(links);
+	}
+
+}
+```
+
+=== Applying DOP
+
+> Model the data, the whole data, +
+> and nothing but the data.
+
+There are four kinds of pages:
+
+* error page
+* external page
+* GitHub issue page
+* GitHub PR page
+
+⇝ Use four records to model them!
+
 === Modeling The Data
 
 ```java
@@ -147,10 +183,7 @@ public record GitHubPrPage(
 	int prNumber, Set<Page> links) { }
 ```
 
-=== Applying DOP
-
-> Model the data, the whole data, +
-> and nothing but the data.
+=== Modeling The Data
 
 There are additional relations between them:
 
@@ -238,36 +271,18 @@ Many are already, e.g.:
 
 === Validation
 
-> Validate at the boundary.
-
 ⇝ Reject other illegal states in constructors.
 
 ```java
 record ExternalPage(URI url, String content) {
-	// compact constructor
+
 	ExternalPage {
 		Objects.requireNonNull(url);
 		Objects.requireNonNull(content);
 		if (content.isBlank())
 			throw new IllegalArgumentException();
 	}
-}
-```
 
-=== Applying DOP
-
-> Data is immutable.
-
-Records are shallowly immutable, +
-but field types may not be.
-
-⇝ Fix that during construction.
-
-```java
-// compact constructor
-GitHubPrPage {
-	// [...]
-	links = Set.copyOf(links);
 }
 ```
 
@@ -282,10 +297,9 @@ But where did the operations go?
 
 === Operations On Data
 
-> Model the data, the whole data, +
-> and nothing but the data.
+> Separate operations from data.
 
-⇝ Operations should be limited to derived quantities.
+⇝ Record methods should be limited to derived quantities.
 
 ```java
 public Stats evaluateStatistics();
@@ -473,7 +487,6 @@ case GitHubIssuePage(_, _, int issueNumber, _)
 case ErrorPage(var url, _)
 	-> "💥 ERROR: " + url.getHost();
 ```
-
 
 === Deconstructing Data
 

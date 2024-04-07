@@ -52,15 +52,19 @@ Consider a data-oriented approach for:
 * smaller (sub)systems
 * focused on data
 
+=== Guiding principles:
+
+Brian Goetz formulated them in June 2022: +
+https://www.infoq.com/articles/data-oriented-programming-java/[Data Oriented Programming in Java]
+
+I made small changes (improvements?).
+
 === Data-Oriented Programming
 
-Guiding principles:
+Version 1.1:
 
-* model the data, the whole data, +
-  and nothing but the data
-* data is immutable
-* validate at the boundary
-* make illegal states unrepresentable
-
-From Brian Goetz' seminal article: +
-https://www.infoq.com/articles/data-oriented-programming-java/[Data Oriented Programming in Java]
+* Model data immutably and transparently.
+* Model the data, the whole data, +
+  and nothing but the data.
+* Make illegal states unrepresentable.
+* Separate operations from data.

@@ -48,15 +48,15 @@ Consider a data-oriented approach for:
 
 === Data-oriented programming
 
-Guiding principles:
+Guiding principles version 1.1:
 
-* model the data, the whole data, +
-  and nothing but the data
-* data is immutable
-* validate at the boundary
-* make illegal states unrepresentable
+* Model data immutably and transparently.
+* Model the data, the whole data, +
+  and nothing but the data.
+* Make illegal states unrepresentable.
+* Separate operations from data.
 
-From Brian Goetz' seminal article: +
+Based on Brian Goetz' seminal article: +
 https://www.infoq.com/articles/data-oriented-programming-java/[Data Oriented Programming in Java]
 
 === Crawling GitHub
@@ -68,6 +68,39 @@ The app we just looked at:
 * separates operations from types
 
 ⇝ Perfect for data-oriented programming!
+
+=== Applying DOP
+
+> Model data immutably and transparently.
+
+Records make that easy:
+
+```java
+public record ErrorPage(
+	URI url, Exception ex) { }
+```
+
+(Just in case: You can achieve this with regular classes, too.)
+
+=== Ensuring Immutability
+
+Records are shallowly immutable, +
+but field types may not be.
+
+⇝ Fix that during construction.
+
+=== Ensuring Immutability
+
+```java
+public record GitHubPrPage(..., Set<Page> links) {
+
+	// compact constructor
+	GitHubPrPage {
+		links = Set.copyOf(links);
+	}
+
+}
+```
 
 === Applying DOP
 
@@ -101,10 +134,7 @@ public record GitHubPrPage(
 	int prNumber, Set<Page> links) { }
 ```
 
-=== Applying DOP
-
-> Model the data, the whole data, +
-> and nothing but the data.
+=== Modeling the data
 
 There are additional relations between them:
 
@@ -175,8 +205,6 @@ Many are already, e.g.:
 
 === Validation
 
-> Validate at the boundary.
-
 ⇝ Reject other illegal states in constructors.
 
 ```java
@@ -191,23 +219,6 @@ record ExternalPage(URI url, String content) {
 }
 ```
 
-=== Applying DOP
-
-> Data is immutable.
-
-Records are shallowly immutable, +
-but field types may not be.
-
-⇝ Fix that during construction.
-
-```java
-// compact constructor
-GitHubPrPage {
-	// [...]
-	links = Set.copyOf(links);
-}
-```
-
 === Where are we?
 
 * page "type" is explicit in Java's type
@@ -219,10 +230,9 @@ But where did the operations go?
 
 === Operations on data
 
-> Model the data, the whole data, +
-> and nothing but the data.
+> Separate operations from data.
 
-⇝ Methods should be limited to derived quantities.
+⇝ Record methods should be limited to derived quantities.
 
 ```java
 public record GitHubIssuePage(
