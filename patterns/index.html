@@ -407,7 +407,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		hljs.initHighlightingOnLoad();
 	}
 </script>
-<h2>In Java (21)</h2>
+<h2>In Java (22)</h2>
 <div class="event">
 	<div class="participant">
 		<a href="https://nipafx.dev/nicolai-parlog" title="Nicolai"><img src="../_images/nipa-face-c9e3bd71.jpg" alt="Photo of Nicolai" class="logo"></a>
@@ -418,10 +418,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://www.ptc.com" title="PTC (India)"><img src="../_images/logo-ptc-1384cc9f.png" alt="Logo of PTC (India)" class="logo" style="{host-logo-style}"></a>
+		<a href="https://www.javaland.eu" title="JavaLand"><img src="../_images/logo-javaland-f74122a4.jpg" alt="Logo of JavaLand" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://www.ptc.com" title="PTC (India) website">PTC (India)</a></p>
-			<p><a href="https://twitter.com/PTC" title="PTC (India) on Twitter">@PTC</a></p>
+			<p><a href="https://www.javaland.eu" title="JavaLand website">JavaLand</a></p>
+			<p><a href="https://twitter.com/JavaLandConf" title="JavaLand on Twitter">@JavaLandConf</a></p>
 		</div>
 	</div>
 	<div class="participant">
@@ -443,10 +443,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://www.ptc.com" title="PTC (India)"><img src="../_images/logo-ptc-1384cc9f.png" alt="Logo of PTC (India)" class="logo" style="{host-logo-style}"></a>
+		<a href="https://www.javaland.eu" title="JavaLand"><img src="../_images/logo-javaland-f74122a4.jpg" alt="Logo of JavaLand" class="logo" style="{host-logo-style}"></a>
 		<div class="name"><p>
-			<a href="https://www.ptc.com" title="PTC (India) website">PTC (India)</a>
-			/ <a href="https://twitter.com/PTC" title="PTC (India) on Twitter">@PTC</a>
+			<a href="https://www.javaland.eu" title="JavaLand website">JavaLand</a>
+			/ <a href="https://twitter.com/JavaLandConf" title="JavaLand on Twitter">@JavaLandConf</a>
 		</p></div>
 	</div>
 </footer>
@@ -476,11 +476,11 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 <aside class="notes"><div class="ulist"><ul><li><p>maintenance boundaries</p></li><li><p>versioning boundaries</p></li><li><p>encapsulation boundaries</p></li><li><p>compilation boundaries</p></li><li><p>compatibility boundaries</p></li><li><p>security boundaries</p></li></ul></div></aside></div></section><section id="_mixed_programming"><h2>Mixed Programming</h2><div class="slide-content"><div class="paragraph"><p>Great use cases for OOP:</p></div>
 <div class="ulist"><ul><li><p>boundaries between libraries and clients</p></li><li><p>in large programs to enable modular reasoning</p></li></ul></div>
 <div class="paragraph"><p>Consider a data-oriented approach for:</p></div>
-<div class="ulist"><ul><li><p>smaller (sub)systems</p></li><li><p>focused on data</p></li></ul></div></div></section><section id="_data_oriented_programming_3"><h2>Data-Oriented Programming</h2><div class="slide-content"><div class="paragraph"><p>Guiding principles:</p></div>
-<div class="ulist"><ul><li><p>model the data, the whole data,<br>
-and nothing but the data</p></li><li><p>data is immutable</p></li><li><p>validate at the boundary</p></li><li><p>make illegal states unrepresentable</p></li></ul></div>
-<div class="paragraph"><p>From Brian Goetz' seminal article:<br>
-<a href="https://www.infoq.com/articles/data-oriented-programming-java/">Data Oriented Programming in Java</a></p></div></div></section></section>
+<div class="ulist"><ul><li><p>smaller (sub)systems</p></li><li><p>focused on data</p></li></ul></div></div></section><section id="_guiding_principles"><h2>Guiding principles:</h2><div class="slide-content"><div class="paragraph"><p>Brian Goetz formulated them in June 2022:<br>
+<a href="https://www.infoq.com/articles/data-oriented-programming-java/">Data Oriented Programming in Java</a></p></div>
+<div class="paragraph"><p>I made small changes (improvements?).</p></div></div></section><section id="_data_oriented_programming_3"><h2>Data-Oriented Programming</h2><div class="slide-content"><div class="paragraph"><p>Version 1.1:</p></div>
+<div class="ulist"><ul><li><p>Model data immutably and transparently.</p></li><li><p>Model the data, the whole data,<br>
+and nothing but the data.</p></li><li><p>Make illegal states unrepresentable.</p></li><li><p>Separate operations from data.</p></li></ul></div></div></section></section>
 <section><section id="_data_oriented_programming_4"><h2>Data-Oriented Programming</h2><div class="slide-content"><table class="toc">
 	<tr><td>What is DOP?</td></tr>
 	<tr class="toc-current"><td>A Lengthy Example</td></tr>
@@ -510,15 +510,27 @@ public Stream&lt;Page&gt; subtree();
 
 public Stats evaluateStatistics();
 public String toPrettyString();</code></pre></div></div></div></section><section id="_a_possible_implementation_2"><h2>A Possible Implementation</h2><div class="slide-content"><div class="paragraph"><p>Problems:</p></div>
-<div class="ulist"><ul><li><p>page "type" is implicit</p></li><li><p>legal combination of fields is unclear</p></li><li><p>clients must "divine" the type</p></li><li><p>disparate operations on same class</p></li></ul></div></div></section><section id="_applying_dop"><h2>Applying DOP</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>Model the data, the whole data,<br>
-and nothing but the data.</p></div></blockquote></div>
-<div class="paragraph"><p>There are four kinds of pages:</p></div>
-<div class="ulist"><ul><li><p>error page</p></li><li><p>external page</p></li><li><p>GitHub issue page</p></li><li><p>GitHub PR page</p></li></ul></div>
-<div class="paragraph"><p>⇝ Use four records to model them!</p></div></div></section><section id="_detour_records"><h2>Detour: Records</h2><div class="slide-content"><div class="paragraph"><p><em>[Finalized in Java 16&#8201;&#8212;&#8201;<a href="https://openjdk.org/jeps/395">JEP 395</a>]</em></p></div>
+<div class="ulist"><ul><li><p>page "type" is implicit</p></li><li><p>legal combination of fields is unclear</p></li><li><p>clients must "divine" the type</p></li><li><p>disparate operations on same class</p></li></ul></div></div></section><section id="_a_better_implementation"><h2>A Better Implementation</h2><div class="slide-content"><div class="paragraph"><p>Data-oriented programming:</p></div>
+<div class="ulist"><ul><li><p>makes all data explicit and "obviously correct"</p></li><li><p>separates operations from data</p></li><li><p>models systems as production line</p></li></ul></div></div></section><section id="_applying_dop"><h2>Applying DOP</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>Model data immutably and transparently.</p></div></blockquote></div>
+<div class="paragraph"><p>We got a language construct that fits perfectly.</p></div>
+<div class="paragraph"><p>(Just in case: You can achieve this with regular classes, too.)</p></div></div></section><section id="_detour_records"><h2>Detour: Records</h2><div class="slide-content"><div class="paragraph"><p><em>[Finalized in Java 16&#8201;&#8212;&#8201;<a href="https://openjdk.org/jeps/395">JEP 395</a>]</em></p></div>
 <div class="quoteblock"><blockquote><div class="paragraph"><p>Transparent carriers for immutable data.</p></div></blockquote></div>
 <div class="ulist"><ul><li><p>compiler understands internals</p></li><li><p>couples API to internals</p></li><li><p>reduces verbosity <em>a lot</em></p></li></ul></div></div></section><section id="_detour_records_2"><h2>Detour: Records</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">record ExternalPage(URI url, String content) { }</code></pre></div></div>
 <div class="ulist"><ul><li><p><code>ExternalPage</code> is final</p></li><li><p>private final fields: <code>URI url</code> and <code>String content</code></p></li><li><p>constructor: <code>ExternalPage(URI url, String content)</code></p></li><li><p>accessors: <code>URI url()</code> and <code>String content()</code></p></li><li><p><code>equals()</code>, <code>hashCode()</code>, <code>toString()</code> that use the two fields</p></li></ul></div>
-<div class="paragraph"><p>All method/constructor bodies can be customized.</p></div></div></section><section id="_modeling_the_data"><h2>Modeling The Data</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public record ErrorPage(
+<div class="paragraph"><p>All method/constructor bodies can be customized.</p></div></div></section><section id="_ensuring_immutability"><h2>Ensuring Immutability</h2><div class="slide-content"><div class="paragraph"><p>Records are shallowly immutable,<br>
+but field types may not be.</p></div>
+<div class="paragraph"><p>⇝ Fix that during construction.</p></div></div></section><section id="_ensuring_immutability_2"><h2>Ensuring Immutability</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public record GitHubPrPage(..., Set&lt;Page&gt; links) {
+
+	// compact constructor
+	GitHubPrPage {
+		links = Set.copyOf(links);
+	}
+
+}</code></pre></div></div></div></section><section id="_applying_dop_2"><h2>Applying DOP</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>Model the data, the whole data,<br>
+and nothing but the data.</p></div></blockquote></div>
+<div class="paragraph"><p>There are four kinds of pages:</p></div>
+<div class="ulist"><ul><li><p>error page</p></li><li><p>external page</p></li><li><p>GitHub issue page</p></li><li><p>GitHub PR page</p></li></ul></div>
+<div class="paragraph"><p>⇝ Use four records to model them!</p></div></div></section><section id="_modeling_the_data"><h2>Modeling The Data</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public record ErrorPage(
 	URI url, Exception ex) { }
 
 public record ExternalPage(
@@ -530,9 +542,7 @@ public record GitHubIssuePage(
 
 public record GitHubPrPage(
 	URI url, String content,
-	int prNumber, Set&lt;Page&gt; links) { }</code></pre></div></div></div></section><section id="_applying_dop_2"><h2>Applying DOP</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>Model the data, the whole data,<br>
-and nothing but the data.</p></div></blockquote></div>
-<div class="paragraph"><p>There are additional relations between them:</p></div>
+	int prNumber, Set&lt;Page&gt; links) { }</code></pre></div></div></div></section><section id="_modeling_the_data_2"><h2>Modeling The Data</h2><div class="slide-content"><div class="paragraph"><p>There are additional relations between them:</p></div>
 <div class="ulist"><ul><li><p>a page (load) is either successful or not</p></li><li><p>a successful page is either external or GitHub</p></li><li><p>a GitHub page is either for a PR or an issue</p></li></ul></div>
 <div class="paragraph"><p>⇝ Use sealed types to model the alternatives!</p></div></div></section><section id="_detour_sealed_types"><h2>Detour: Sealed Types</h2><div class="slide-content"><div class="paragraph"><p><em>[Finalized in Java 17&#8201;&#8212;&#8201;<a href="https://openjdk.org/jeps/409">JEP 409</a>]</em></p></div>
 <div class="paragraph"><p>Sealed types limit inheritance,<br>
@@ -560,28 +570,19 @@ public sealed interface GitHubPage
 	default Stream&lt;Page&gt; subtree() { ... }
 }</code></pre></div></div></div></section><section data-background-color="white" data-background-image="../_images/github-crawler-types-3c131fff.png" data-background-size="contain" data-state="empty"></section><section id="_applying_dop_3"><h2>Applying DOP</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>Make illegal states unrepresentable.</p></div></blockquote></div>
 <div class="paragraph"><p>Many are already, e.g.:</p></div>
-<div class="ulist"><ul><li><p>with <code>error</code> and with <code>content</code></p></li><li><p>with <code>issueNumber</code> and <code>prNumber</code></p></li><li><p>with <code>isseNumber</code> or <code>prNumber</code> but no <code>links</code></p></li></ul></div></div></section><section id="_validation"><h2>Validation</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>Validate at the boundary.</p></div></blockquote></div>
-<div class="paragraph"><p>⇝ Reject other illegal states in constructors.</p></div>
+<div class="ulist"><ul><li><p>with <code>error</code> and with <code>content</code></p></li><li><p>with <code>issueNumber</code> and <code>prNumber</code></p></li><li><p>with <code>isseNumber</code> or <code>prNumber</code> but no <code>links</code></p></li></ul></div></div></section><section id="_validation"><h2>Validation</h2><div class="slide-content"><div class="paragraph"><p>⇝ Reject other illegal states in constructors.</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">record ExternalPage(URI url, String content) {
-	// compact constructor
+
 	ExternalPage {
 		Objects.requireNonNull(url);
 		Objects.requireNonNull(content);
 		if (content.isBlank())
 			throw new IllegalArgumentException();
 	}
-}</code></pre></div></div></div></section><section id="_applying_dop_4"><h2>Applying DOP</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>Data is immutable.</p></div></blockquote></div>
-<div class="paragraph"><p>Records are shallowly immutable,<br>
-but field types may not be.</p></div>
-<div class="paragraph"><p>⇝ Fix that during construction.</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// compact constructor
-GitHubPrPage {
-	// [...]
-	links = Set.copyOf(links);
+
 }</code></pre></div></div></div></section><section id="_where_are_we"><h2>Where Are We?</h2><div class="slide-content"><div class="ulist"><ul><li><p>page "type" is explicit in Java&#8217;s type</p></li><li><p>only legal combination of fields are possible</p></li><li><p>API is more self-documenting</p></li><li><p>code is easier to test</p></li></ul></div>
-<div class="paragraph"><p>But where did the operations go?</p></div></div></section><section id="_operations_on_data"><h2>Operations On Data</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>Model the data, the whole data,<br>
-and nothing but the data.</p></div></blockquote></div>
-<div class="paragraph"><p>⇝ Operations should be limited to derived quantities.</p></div>
+<div class="paragraph"><p>But where did the operations go?</p></div></div></section><section id="_operations_on_data"><h2>Operations On Data</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>Separate operations from data.</p></div></blockquote></div>
+<div class="paragraph"><p>⇝ Record methods should be limited to derived quantities.</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public Stats evaluateStatistics();
 public String toPrettyString();</code></pre></div></div>
 <div class="paragraph"><p>This actually applies to our operations.</p></div>

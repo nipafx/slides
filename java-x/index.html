@@ -554,13 +554,26 @@ a pattern <code>switch</code> needs to be exhaustive.</p></div>
 <aside class="notes"><div class="ulist"><ul><li><p>maintenance boundaries</p></li><li><p>versioning boundaries</p></li><li><p>encapsulation boundaries</p></li><li><p>compilation boundaries</p></li><li><p>compatibility boundaries</p></li><li><p>security boundaries</p></li></ul></div></aside></div></section><section id="_mixed_programming"><h2>Mixed programming</h2><div class="slide-content"><div class="paragraph"><p>Great use cases for OOP:</p></div>
 <div class="ulist"><ul><li><p>boundaries between libraries and clients</p></li><li><p>in large programs to enable modular reasoning</p></li></ul></div>
 <div class="paragraph"><p>Consider a data-oriented approach for:</p></div>
-<div class="ulist"><ul><li><p>smaller (sub)systems</p></li><li><p>focused on data</p></li></ul></div></div></section><section id="_data_oriented_programming"><h2>Data-oriented programming</h2><div class="slide-content"><div class="paragraph"><p>Guiding principles:</p></div>
-<div class="ulist"><ul><li><p>model the data, the whole data,<br>
-and nothing but the data</p></li><li><p>data is immutable</p></li><li><p>validate at the boundary</p></li><li><p>make illegal states unrepresentable</p></li></ul></div>
-<div class="paragraph"><p>From Brian Goetz' seminal article:<br>
+<div class="ulist"><ul><li><p>smaller (sub)systems</p></li><li><p>focused on data</p></li></ul></div></div></section><section id="_data_oriented_programming"><h2>Data-oriented programming</h2><div class="slide-content"><div class="paragraph"><p>Guiding principles version 1.1:</p></div>
+<div class="ulist"><ul><li><p>Model data immutably and transparently.</p></li><li><p>Model the data, the whole data,<br>
+and nothing but the data.</p></li><li><p>Make illegal states unrepresentable.</p></li><li><p>Separate operations from data.</p></li></ul></div>
+<div class="paragraph"><p>Based on Brian Goetz' seminal article:<br>
 <a href="https://www.infoq.com/articles/data-oriented-programming-java/">Data Oriented Programming in Java</a></p></div></div></section><section id="_crawling_github"><h2>Crawling GitHub</h2><div class="slide-content"><div class="paragraph"><p>The app we just looked at:</p></div>
 <div class="ulist"><ul><li><p>is small</p></li><li><p>focusses on data (<code>Page</code>)</p></li><li><p>separates operations from types</p></li></ul></div>
-<div class="paragraph"><p>⇝ Perfect for data-oriented programming!</p></div></div></section><section id="_applying_dop"><h2>Applying DOP</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>Model the data, the whole data,<br>
+<div class="paragraph"><p>⇝ Perfect for data-oriented programming!</p></div></div></section><section id="_applying_dop"><h2>Applying DOP</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>Model data immutably and transparently.</p></div></blockquote></div>
+<div class="paragraph"><p>Records make that easy:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public record ErrorPage(
+	URI url, Exception ex) { }</code></pre></div></div>
+<div class="paragraph"><p>(Just in case: You can achieve this with regular classes, too.)</p></div></div></section><section id="_ensuring_immutability"><h2>Ensuring Immutability</h2><div class="slide-content"><div class="paragraph"><p>Records are shallowly immutable,<br>
+but field types may not be.</p></div>
+<div class="paragraph"><p>⇝ Fix that during construction.</p></div></div></section><section id="_ensuring_immutability_2"><h2>Ensuring Immutability</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public record GitHubPrPage(..., Set&lt;Page&gt; links) {
+
+	// compact constructor
+	GitHubPrPage {
+		links = Set.copyOf(links);
+	}
+
+}</code></pre></div></div></div></section><section id="_applying_dop_2"><h2>Applying DOP</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>Model the data, the whole data,<br>
 and nothing but the data.</p></div></blockquote></div>
 <div class="paragraph"><p>There are four kinds of pages:</p></div>
 <div class="ulist"><ul><li><p>error page</p></li><li><p>external page</p></li><li><p>GitHub issue page</p></li><li><p>GitHub PR page</p></li></ul></div>
@@ -576,9 +589,7 @@ public record GitHubIssuePage(
 
 public record GitHubPrPage(
 	URI url, String content,
-	int prNumber, Set&lt;Page&gt; links) { }</code></pre></div></div></div></section><section id="_applying_dop_2"><h2>Applying DOP</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>Model the data, the whole data,<br>
-and nothing but the data.</p></div></blockquote></div>
-<div class="paragraph"><p>There are additional relations between them:</p></div>
+	int prNumber, Set&lt;Page&gt; links) { }</code></pre></div></div></div></section><section id="_modeling_the_data_2"><h2>Modeling the data</h2><div class="slide-content"><div class="paragraph"><p>There are additional relations between them:</p></div>
 <div class="ulist"><ul><li><p>a page (load) is either successful or not</p></li><li><p>a successful page is either external or GitHub</p></li><li><p>a GitHub page is either for a PR or an issue</p></li></ul></div>
 <div class="paragraph"><p>⇝ Use sealed types to model the alternatives!</p></div></div></section><section id="_modeling_alternatives"><h2>Modeling alternatives</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public sealed interface Page
 		permits ErrorPage, SuccessfulPage {
@@ -598,8 +609,7 @@ public sealed interface GitHubPage
 }</code></pre></div></div></div></section><section data-background-color="white" data-background-image="../_images/github-crawler-types-3c131fff.png" data-background-size="contain" data-state="empty"></section><section id="_algebraic_data_types"><h2>Algebraic data types</h2><div class="slide-content"><div class="ulist"><ul><li><p>records are <em>product types</em></p></li><li><p>sealed types are <em>sum types</em></p></li></ul></div>
 <div class="quoteblock"><blockquote><div class="paragraph"><p>This simple combination of mechanisms&#8201;&#8212;&#8201;aggregation and choice&#8201;&#8212;&#8201;is deceptively powerful</p></div></blockquote></div></div></section><section id="_applying_dop_3"><h2>Applying DOP</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>Make illegal states unrepresentable.</p></div></blockquote></div>
 <div class="paragraph"><p>Many are already, e.g.:</p></div>
-<div class="ulist"><ul><li><p>with <code>error</code> and with <code>content</code></p></li><li><p>with <code>issueNumber</code> and <code>prNumber</code></p></li><li><p>with <code>isseNumber</code> or <code>prNumber</code> but no <code>links</code></p></li></ul></div></div></section><section id="_validation"><h2>Validation</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>Validate at the boundary.</p></div></blockquote></div>
-<div class="paragraph"><p>⇝ Reject other illegal states in constructors.</p></div>
+<div class="ulist"><ul><li><p>with <code>error</code> and with <code>content</code></p></li><li><p>with <code>issueNumber</code> and <code>prNumber</code></p></li><li><p>with <code>isseNumber</code> or <code>prNumber</code> but no <code>links</code></p></li></ul></div></div></section><section id="_validation"><h2>Validation</h2><div class="slide-content"><div class="paragraph"><p>⇝ Reject other illegal states in constructors.</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">record ExternalPage(URI url, String content) {
 	// compact constructor
 	ExternalPage {
@@ -608,18 +618,9 @@ public sealed interface GitHubPage
 		if (content.isBlank())
 			throw new IllegalArgumentException();
 	}
-}</code></pre></div></div></div></section><section id="_applying_dop_4"><h2>Applying DOP</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>Data is immutable.</p></div></blockquote></div>
-<div class="paragraph"><p>Records are shallowly immutable,<br>
-but field types may not be.</p></div>
-<div class="paragraph"><p>⇝ Fix that during construction.</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// compact constructor
-GitHubPrPage {
-	// [...]
-	links = Set.copyOf(links);
 }</code></pre></div></div></div></section><section id="_where_are_we"><h2>Where are we?</h2><div class="slide-content"><div class="ulist"><ul><li><p>page "type" is explicit in Java&#8217;s type</p></li><li><p>only legal combination of data are possible</p></li><li><p>API is self-documenting</p></li><li><p>code is trivial to test</p></li></ul></div>
-<div class="paragraph"><p>But where did the operations go?</p></div></div></section><section id="_operations_on_data"><h2>Operations on data</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>Model the data, the whole data,<br>
-and nothing but the data.</p></div></blockquote></div>
-<div class="paragraph"><p>⇝ Methods should be limited to derived quantities.</p></div>
+<div class="paragraph"><p>But where did the operations go?</p></div></div></section><section id="_operations_on_data"><h2>Operations on data</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>Separate operations from data.</p></div></blockquote></div>
+<div class="paragraph"><p>⇝ Record methods should be limited to derived quantities.</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public record GitHubIssuePage(
 		URI url, String content,
 		int issueNumber, Set&lt;Page&gt; links) {

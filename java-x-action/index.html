@@ -417,10 +417,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://www.oracle.com/uk/developer/devlive/london/java/" title="JavaDay London"><img src="../_images/logo-java-day-oracle-fd4eb9ac.png" alt="Logo of JavaDay London" class="logo" style="background-color: transparent; border-width: 0;"></a>
+		<a href="https://www.javaland.eu" title="JavaLand"><img src="../_images/logo-javaland-f74122a4.jpg" alt="Logo of JavaLand" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://www.oracle.com/uk/developer/devlive/london/java/" title="JavaDay London website">JavaDay London</a></p>
-			<p><a href="https://twitter.com/hashtag/OracleDevLive" title="JavaDay London on Twitter">#OracleDevLive</a></p>
+			<p><a href="https://www.javaland.eu" title="JavaLand website">JavaLand</a></p>
+			<p><a href="https://twitter.com/JavaLandConf" title="JavaLand on Twitter">@JavaLandConf</a></p>
 		</div>
 	</div>
 	<div class="participant">
@@ -442,10 +442,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://www.oracle.com/uk/developer/devlive/london/java/" title="JavaDay London"><img src="../_images/logo-java-day-oracle-fd4eb9ac.png" alt="Logo of JavaDay London" class="logo" style="background-color: transparent; border-width: 0;"></a>
+		<a href="https://www.javaland.eu" title="JavaLand"><img src="../_images/logo-javaland-f74122a4.jpg" alt="Logo of JavaLand" class="logo" style="{host-logo-style}"></a>
 		<div class="name"><p>
-			<a href="https://www.oracle.com/uk/developer/devlive/london/java/" title="JavaDay London website">JavaDay London</a>
-			/ <a href="https://twitter.com/hashtag/OracleDevLive" title="JavaDay London on Twitter">#OracleDevLive</a>
+			<a href="https://www.javaland.eu" title="JavaLand website">JavaLand</a>
+			/ <a href="https://twitter.com/JavaLandConf" title="JavaLand on Twitter">@JavaLandConf</a>
 		</p></div>
 	</div>
 </footer>
@@ -457,19 +457,18 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 </script></div></section>
 <section><section id="_lets_get_started"><h2>Let&#8217;s get started!</h2><div class="slide-content"><div class="ulist"><ul><li class="fragment"><p>we&#8217;ll implement a GitHub crawler</p></li><li class="fragment"><p>we&#8217;ll aggressively use, abuse, and overuse<br>
 modern Java features</p></li><li class="fragment"><p>this is a showcase, not a tutorial<br>
-⇝ go to <a href="https://youtube.com/@java">youtube.com/@java</a> for more</p></li><li class="fragment"><p>code <a href="https://github.com/nipafx/modern-java-demo">github.com/nipafx/modern-java-demo</a></p></li><li class="fragment"><p>slides at <a href="https://slides.nipafx.dev/java-x-action">slides.nipafx.dev</a><br>
-(hit "?" to get navigation help)</p></li><li class="fragment"><p>ask questions at any time</p></li></ul></div></div></section><section id="_crawling_github"><h2>Crawling GitHub</h2><div class="slide-content"><div class="paragraph"><p>Starting with a seed URL:</p></div>
+⇝ go to <a href="https://youtube.com/@java">youtube.com/@java</a> for more</p></li><li class="fragment"><p>code <a href="https://github.com/nipafx/modern-java-demo">github.com/nipafx/modern-java-demo</a></p></li><li class="fragment"><p>ask questions at any time</p></li></ul></div></div></section><section id="_crawling_github"><h2>Crawling GitHub</h2><div class="slide-content"><div class="paragraph"><p>Starting with a seed URL:</p></div>
 <div class="olist arabic"><ol class="arabic"><li><p>connect to URL</p></li><li><p>identify kind of page</p></li><li><p>identify interesting section</p></li><li><p>identify outgoing links</p></li><li><p>for each link, start at 1.</p></li></ol></div></div></section><section id="_crawling_github_2"><h2>Crawling GitHub</h2><div class="slide-content"><div class="paragraph"><p>Then:</p></div>
 <div class="olist arabic"><ol class="arabic"><li><p>print statistics</p></li><li><p>print page list</p></li><li><p>show pages on localhost</p></li></ol></div></div></section><section id="_gameplan"><h2>Gameplan</h2><div class="slide-content"><div class="paragraph"><p>Domain model:</p></div>
 <div class="ulist"><ul><li><p>create with records and sealed interfaces</p></li><li><p>operate on with pattern matching</p></li></ul></div>
 <div class="paragraph"><p>Fetching pages:</p></div>
 <div class="ulist"><ul><li><p>HTTP client to fetch from GitHub</p></li><li><p>virtual threads via structured concurrency</p></li></ul></div></div></section><section id="_gameplan_2"><h2>Gameplan</h2><div class="slide-content"><div class="paragraph"><p>Present results:</p></div>
-<div class="ulist"><ul><li><p>format with text blocks and string templates</p></li><li><p>host with simple file server</p></li></ul></div>
+<div class="ulist"><ul><li><p>format with text blocks <del>and string templates</del></p></li><li><p>host with simple file server</p></li></ul></div>
 <div class="paragraph"><p>(And modules for reliability.)</p></div></div></section></section>
 <section id="_code"><h2>Code!</h2><div class="slide-content"><div class="paragraph"><p><a href="https://github.com/nipafx/modern-java-demo">github.com/nipafx/modern-java-demo</a></p></div></div></section>
 <section><section id="_review"><h2>Review</h2></section><section id="_what_java_was_that"><h2>What Java was <em>That</em>?!</h2><div class="slide-content"><div class="paragraph"><p>JDK 22 EA with preview features!</p></div>
 <div class="paragraph"><p>Features that aren&#8217;t final on JDK 21:</p></div>
-<div class="ulist"><ul><li><p>unnamed patterns (final in 22: <a href="https://openjdk.org/jeps/456">JEP 456</a>)</p></li><li><p>string templates (<a href="https://mail.openjdk.org/pipermail/amber-spec-experts/2024-March/004010.html">revamp soon</a>)</p></li><li><p><code>StructuredTaskScope</code></p></li></ul></div></div></section><section id="_domain_model"><h2>Domain Model</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public sealed interface Page
+<div class="ulist"><ul><li><p>unnamed patterns (final in 22: <a href="https://openjdk.org/jeps/456">JEP 456</a>)</p></li><li><p><code>StructuredTaskScope</code></p></li></ul></div></div></section><section id="_domain_model"><h2>Domain Model</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public sealed interface Page
 		permits ErrorPage, SuccessfulPage {
 
 	URI url();
@@ -525,26 +524,12 @@ return client
 		.collect(toSet());
 } catch (ExecutionException ex) {
 	// [...]
-}</code></pre></div></div></div></section><section id="_string_templates"><h2>String Templates</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">var html = asHTML(RAW."""
-	&lt;!DOCTYPE html&gt;
-	&lt;html lang="en"&gt;
-		&lt;head&gt;
-			&lt;meta charset="utf-8"&gt;
-			&lt;title&gt;\{Pretty.pageName(rootPage)}&lt;/title&gt;
-			&lt;link rel="stylesheet" href="style.css"&gt;
-		&lt;/head&gt;
-		&lt;body&gt;
-			&lt;div class="container"&gt;
-				\{pageTreeHtml(rootPage)}
-			&lt;/div&gt;
-		&lt;/body&gt;
-	&lt;/html&gt;
-	""");</code></pre></div></div></div></section><section id="_simple_file_server"><h2>Simple File Server</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">SimpleFileServer.createFileServer(
+}</code></pre></div></div></div></section><section id="_simple_file_server"><h2>Simple File Server</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">SimpleFileServer.createFileServer(
 		address,
 		serverDir.toAbsolutePath(),
 		OutputLevel.INFO)
 	.start();</code></pre></div></div></div></section><section id="_jpackage"><h2>JPackage</h2><div class="slide-content"><div class="paragraph"><p>Let&#8217;s watch <a href="https://www.youtube.com/watch?v=-6q_MKtPL3o">Jose&#8217;s exploration</a>&#8230;&#8203;</p></div></div></section><section data-background-color="#333" data-background-image="../_images/jpackage-01-49104aa6.jpg" data-background-size="contain" data-state="empty"></section><section data-background-color="#333" data-background-image="../_images/jpackage-02-cd2d66e1.jpg" data-background-size="contain" data-background-transition="none" data-state="empty"></section><section data-background-color="#333" data-background-image="../_images/jpackage-03-008bdb9a.jpg" data-background-size="contain" data-background-transition="none" data-state="empty"></section><section data-background-color="#333" data-background-image="../_images/jpackage-04-f618556c.jpg" data-background-size="contain" data-background-transition="none" data-state="empty"></section><section data-background-color="#333" data-background-image="../_images/jpackage-05-828b39db.jpg" data-background-size="contain" data-background-transition="none" data-state="empty"></section><section data-background-color="#333" data-background-image="../_images/jpackage-06-a8ea4fae.jpg" data-background-size="contain" data-background-transition="none" data-state="empty"></section><section data-background-color="#333" data-background-image="../_images/jpackage-07-af2905da.jpg" data-background-size="contain" data-background-transition="none" data-state="empty"></section><section id="_modern_java_in_action"><h2>Modern Java In Action</h2><div class="slide-content"><div class="ulist"><ul><li><p>great domain modeling with<br>
-records, sealed classes, pattenr matching</p></li><li><p>easy, structured (and scalable) concurrency</p></li><li><p>on-board HTTP client and string templates</p></li><li><p>simple web server and packaging</p></li></ul></div></div></section></section>
+records, sealed classes, pattenr matching</p></li><li><p>easy, structured (and scalable) concurrency</p></li><li><p>on-board HTTP client</p></li><li><p>simple web server and packaging</p></li></ul></div></div></section></section>
 <section id="_so_long" data-background-image="../_images/question-mark-9644fc1f.jpg" data-background-size="cover"><h2>So long&#8230;&#8203;</h2><div class="slide-content">
 <div style="float: left; width: 45%; margin: 0;">
 	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="../_images/cover-jms-4e5e400d.png" style="margin: 0;"></a>
