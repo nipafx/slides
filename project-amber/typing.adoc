@@ -141,6 +141,20 @@ switch (obj) {
 
 ```java
 var person = fetchPerson();
+var unnamed = new Person("", person.birthday());
+```
+
+https://openjdk.org/jeps/468[JEP 468] proposes _derived record creation_:
+
+```java
+var person = fetchPerson();
+var unnamed = person with { name = ""; };
+```
+
+=== Destructuring Records
+
+```java
+var person = fetchPerson();
 var name = person.name();
 var bday = person.birthday();
 // use `name` and `bday`
@@ -152,24 +166,6 @@ In the future (no JEP, but https://twitter.com/BrianGoetz/status/159900013879377
 // speculative syntax
 Person(var name, var bday) = fetchPerson();
 // use `name` and `bday`
-```
-
-=== Destructuring Records
-
-```java
-var person = fetchPerson();
-var unnamed = new Person("", person.birthday());
-```
-
-Maybe _functional mutation_ in the future +
-(https://github.com/openjdk/amber-docs/blob/master/eg-drafts/reconstruction-records-and-classes.md[design document] from Aug 2020):
-
-```java
-// highly speculative syntax
-var person = fetchPerson();
-var unnamed = person with {
-	name = "";
-};
 ```
 
 === Summary

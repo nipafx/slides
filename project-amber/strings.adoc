@@ -84,6 +84,30 @@ Java 21/22 preview string templates (https://openjdk.org/jeps/430[JEP 430] / htt
 * understand need for explicit processing +
   (for validation, escaping, etc.)
 
+Want to "enable" variable embedding.
+
+=== String Templates
+
+But:
+
+> So, to be clear: there will be no string +
+> template feature, even with +
+> `--enable-preview`, in JDK 23.
+
+Gavin Bierman, https://mail.openjdk.org/pipermail/amber-spec-experts/2024-April/004106.html[April 5th]
+
+😭😭😭
+
+////
+
+=== String Templates
+
+Java 21/22 preview string templates (https://openjdk.org/jeps/430[JEP 430] / https://openjdk.org/jeps/459[459]):
+
+* allow embedding expressions
+* understand need for explicit processing +
+  (for validation, escaping, etc.)
+
 ```java
 String json = STR."""
 	{
@@ -160,6 +184,8 @@ Statement query = SQL."""
 	WHERE p.name = '\{name}'
 	""";
 ```
+
+////
 
 === Raw Strings
 
