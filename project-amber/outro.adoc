@@ -1,19 +1,19 @@
 == Project Amber
 
-Up to Java 20:
+Up to Java 21:
 
 * `var`
 * text blocks
 * records
 * type patterns
 * sealed types
+* pattern matching in switch
+* record patterns
 
 === Project Amber
 
 In Java 21:
 
-* pattern matching in switch
-* record patterns
 * unnamed patterns (preview)
 * +++<del>+++string templates (preview)+++</del>+++
 * simpler `main` (preview)
@@ -39,7 +39,7 @@ And beyond:
 *AND MORE*:
 
 * relaxed `this()`/`super()` (https://openjdk.org/jeps/447[JEP 447]; preview in 22)
-* primitive types in patterns (https://bugs.openjdk.org/browse/JDK-8288476[JEP draft])
+* primitive types in patterns (https://openjdk.org/jeps/455[JEP 455]; preview in 23)
 * concise method bodies (https://openjdk.org/jeps/8209434[JEP draft])
 * serialization revamp (https://openjdk.org/projects/amber/design-notes/towards-better-serialization[design notes])
 
