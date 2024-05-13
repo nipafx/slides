@@ -1,0 +1,179 @@
+== {title}
+
+{toc}
+
+Small improvements to `String`.
+
+=== Strip White Space ⑪
+
+Getting rid of white space:
+
+```java
+String strip();
+String stripLeading();
+String stripTrailing();
+```
+
+Only at beginning and end of string:
+
+```java
+" foo bar ".strip().equals("foo bar");
+```
+
+=== What About Trim?
+
+Wait, what about `trim()`?
+
+* `trim()` defines white space as:
++
+____
+any character whose codepoint +
+is less than or equal to `'U+0020'` +
+(the space character)
+____
+* `strip()` relies on `Character::isWhitespace`, +
+  which covers many more cases
+
+=== Is Blank? ⑪
+
+Is a string only white space?
+
+```java
+boolean isBlank();
+```
+
+Functionally equivalent to:
+
+```java
+string.isBlank() == string.strip().isEmpty();
+```
+
+=== Life Hack
+
+As soon as Java APIs get new method, +
+scour StackOverflow for easy karma!
+
+image::images/so-repeat-string-q.png[role="diagram"]
+
+=== Life Hack
+
+Formerly accepted answer:
+
+image::images/so-repeat-string-a-old.png[role="diagram"]
+
+😍
+
+=== Life Hack ⑪
+
+Ta-da!
+
+image::images/so-repeat-string-a.png[role="diagram"]
+
+=== Repeat on builders ㉑
+
+On `StringBuilder` and `StringBuffer`:
+
+* `repeat(int codePoint, int count)`
+* `repeat(CharSequence cs, int count)`
+
+=== Streaming Lines ⑪
+
+Processing a string's lines:
+
+```java
+Stream<String> lines();
+```
+
+* splits a string on `"\n"`, `"\r"`, `"\r\n"`
+* lines do not include terminator
+* more performant than `split("\R")`
+* lazy!
+
+=== Changing Indentation ⑫
+
+Use `String::indent` to add or remove +
+leading white space:
+
+```java
+String oneTwo = " one\n  two\n";
+oneTwo.indent(0).equals(" one\n  two\n");
+oneTwo.indent(1).equals("  one\n   two\n");
+oneTwo.indent(-1).equals("one\n two\n");
+oneTwo.indent(-2).equals("one\ntwo\n");
+```
+
+Would have been nice to pass _resulting_ indentation, +
+not _change_ in indentation.
+
+=== Changing Indentation ⑫
+
+`String::indent` normalizes line endings +
+so each line ends in `\n`:
+
+```java
+"1\n2".indent(0).equals("1\n2\n");
+"1\r\n2".indent(0).equals("1\n2\n");
+"1\r2\n".indent(0).equals("1\n2\n");
+"1\n2\n".indent(0).equals("1\n2\n");
+```
+
+=== Transforming Strings ⑫
+
+New method on `String`:
+
+```java
+public <R> R transform(Function<String, R> f) {
+	return f.apply(this);
+}
+```
+
+Use to chain calls instead of nesting them:
+
+```java
+User newUser = parse(clean(input));
+User newUser = input
+	.transform(this::clean)
+	.transform(this::parse);
+```
+
+Makes more sense at end of long call chain +
+(stream pipeline?) to chain more calls.
+
+=== Transforming things
+
+Maybe other classes get `transform`, too! +
+Great for "chain-friendly" APIs like `Stream`, `Optional`:
+
+```java
+// in a museum...
+tourists.stream()
+	.map(this::letEnter)
+	.transform(this::groupsOfFive)
+	.forEach(this::giveTour)
+
+Stream<TouristGroup> groupsOfFive(
+	Stream<Tourist> tourists) {
+	// this is not trivial,
+	// but at least possible
+}
+```
+
+⇝ Practice with `String::transform`!
+
+=== Finding substrings ㉑
+
+```java
+"String".indexOf(
+	String str, int beginIndex, int endIndex)
+```
+
+=== Emojis 💣💥 ㉑
+
+On `Character` (all `static`):
+
+* `isEmoji(int codePoint)`
+* `isEmojiPresentation(int codePoint)`
+* `isEmojiModifier(int codePoint)`
+* `isEmojiModifierBase(int codePoint)`
+* `isEmojiComponent(int codePoint)`
+

@@ -1,0 +1,206 @@
+== {title}
+
+{toc}
+
+Improving application launch times.
+
+=== Class-Data
+
+JVM steps to execute a class's bytecode:
+
+* looks up class in JAR
+* loads bytecode
+* verifies bytecode
+* stores class-data in +
+internal data structure
+
+This takes quite some time.
+
+If classes don't change, the resulting +
+class-data is always the same!
+
+=== Class-Data Sharing
+
+Idea behind class-data sharing:
+
+* create class-data once
+* dump it into an archive
+* reuse the archive in future launches +
+  (file is mapped into memory)
+
+=== Effects
+
+My experiments with a large desktop app +
+(focusing on classes required for launch):
+
+* archive has 250 MB for ~24k classes
+* launch time reduced from 15s to 12s
+
+*Bonus*: Archive can be shared across JVMs.
+
+=== Class-Data Sharing
+
+Two variants:
+
+CDS:: just for JDK classes
+AppCDS:: JDK + application classes
+
+=== CDS - Step #1
+
+Create JDK archive on Java 10/11:
+
+```sh
+# possibly as root
+java -Xshare:dump
+```
+
+Java 12+ downloads include +
+CDS archive for JDK classes.
+
+=== CDS - Step #2
+
+Use the archive:
+
+```sh
+$ java
+	-Xshare:on
+	# [... class path for app and deps ...]
+	org.example.Main
+```
+
+If archive is missing or faulty:
+
+* `-Xshare:on` fails fast
+* `-Xshare:auto` (default) ignores archive
+
+(Slides rely on default, i.e. no `-Xshare`.)
+
+=== AppCDS
+
+Create an AppCDS archive:
+
+* manually on Java 10+
+* dynamically on Java 13+
+
+First manually, then dynamically.
+
+=== AppCDS - Step #0
+
+To manually create an AppCDS archive, +
+first create a list of classes
+
+```sh
+$ java
+	-XX:DumpLoadedClassList=classes.lst
+	# [... class path for app and deps ...]
+	org.example.Main
+```
+
+Then, `classes.lst` contains +
+slash-separated names of loaded classes.
+
+=== AppCDS - Step #1
+
+Use the list to create the archive:
+
+```sh
+$ java
+	-Xshare:dump
+	-XX:SharedClassListFile=classes.lst
+	-XX:SharedArchiveFile=app-cds.jsa
+	# [... class path for app and deps ...]
+```
+
+Creates archive `app-cds.jsa`.
+
+=== AppCDS - Step #2
+
+Use the archive:
+
+```sh
+$ java
+	-XX:SharedArchiveFile=app-cds.jsa
+	# [... class path for app and deps ...]
+	org.example.Main
+```
+
+=== Dynamic AppCDS
+
+Java 13 can create archive when +
+program exits (without crash):
+
+* steps #0 and #1 are replaced by:
++
+```sh
+$ java
+	-XX:ArchiveClassesAtExit=dyn-cds.jsa
+	# [... class path for app and deps ...]
+	org.example.Main
+```
+* step #2 as before:
++
+```sh
+$ java
+	-XX:SharedArchiveFile=app-cds.jsa
+	# [... class path for app and deps ...]
+	org.example.Main
+```
+
+=== Dynamic AppCDS
+
+The dynamic archive:
+
+* builds on the JDK-archive
+* contains all loaded app/lib classes
+* including those loaded by +
+  user-defined class loaders
+
+=== Heed The Class Path
+
+What are the two biggest challenges +
+in software development?
+
+[%step]
+. naming
+. cache invalidation
+. off-by-one errors
+
+=== Heed The Class Path
+
+The archive is a cache!
+
+It's invalid when:
+
+* a JAR is updated
+* class path is reordered
+* a JAR is added +
+  (unless when appended)
+
+=== Heed The Class Path
+
+To invalidate the archive:
+
+* during creation:
+** Java stores used class path in archive
+** class path may not contain wild cards
+** class path may not contain exploded JARs
+* when used: +
+** Java checks whether stored path +
+   is prefix of current path
+
+=== Module Path?
+
+Class path, class path... +
+what about the module path?
+
+[quote, 'https://openjdk.org/jeps/310[JEP 310]']
+____
+In this release, CDS cannot archive classes from user-defined modules (such as those specified in `--module-path`).
+We plan to add that support in a future release.
+____
+
+=== More
+
+* 🎥 https://www.youtube.com/watch?v=vvlQv1Dh-HU[Java's Startup Booster: CDS]
+* observe sharing with `-Xlog:class+load` +
+(https://blog.codefx.org/java/unified-logging-with-the-xlog-option/[unified logging])

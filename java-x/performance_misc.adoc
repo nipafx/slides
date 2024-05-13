@@ -1,0 +1,86 @@
+== Even More Performance
+
+*In Java 9:*
+
+* cgroup-memory limits (https://bugs.openjdk.org/browse/JDK-8170888[JDK-8170888])
+* contended locks (https://openjdk.org/jeps/143[JEP 143])
+* security manager (https://openjdk.org/jeps/232[JEP 232])
+* intern strings in CDS archives (https://openjdk.org/jeps/250[JEP 250])
+* Java 2D rendering (https://openjdk.org/jeps/265[JEP 265])
+* GHASH/RSA computation (https://openjdk.org/jeps/246[JEP 246])
+* Java-level JVM compiler interface (https://openjdk.org/jeps/243[JEP 243])
+
+=== Even More Performance
+
+*In Java 10:*
+
+* thread-local handshakes (https://openjdk.org/jeps/312[JEP 312])
+
+*In Java 11:*
+
+* low-overhead heap profiling (https://openjdk.org/jeps/331[JEP 331])
+* open-source Flight Recorder (https://openjdk.org/jeps/328[JEP 328])
+
+*In Java 14:*
+
+* JFR event streaming API (https://openjdk.org/jeps/349[JEP 349])
+
+=== Garbage Collectors
+
+G1, ZGC and Shenandoah are actively developed +
+and become faster in each release.
+
+* ⑨: G1 is default (https://openjdk.org/jeps/248[JEP 248])
+* ⑮: ZGC and Shenandoah are production features +
+(https://openjdk.org/jeps/377[JEP 377]) and (https://openjdk.org/jeps/379[JEP 379])
+
+////
+
+*In Java 10:*
+
+* parallel full GC for G1 (https://openjdk.org/jeps/307[JEP 307])
+
+*In Java 11:*
+
+* Epsilon GC (https://openjdk.org/jeps/318[JEP 318])
+
+*In Java 12:*
+
+* Shenandoah (https://openjdk.org/jeps/189[JEP 189])
+* G1 improvements:
+** abortable mixed collections (https://openjdk.org/jeps/344[JEP 344])
+** promptly return unused memory (https://openjdk.org/jeps/346[JEP 346])
+
+*In Java 13:*
+
+* Shenandoah improvements:
+** internals (https://bugs.openjdk.org/browse/JDK-8221766[JDK-8221766], https://bugs.openjdk.org/browse/JDK-8224584[JDK-8224584])
+** more platforms (https://bugs.openjdk.org/browse/JDK-8225048[JDK-8225048], https://bugs.openjdk.org/browse/JDK-8223767[JDK-8223767])
+
+* ZGC improvements:
+** implements `-XX:SoftMaxHeapSize` (https://bugs.openjdk.org/browse/JDK-8222145[JDK-8222145])
+** max heap size of 16 TB (https://bugs.openjdk.org/browse/JDK-8221786[JDK-8221786])
+** uncommits unused memory (https://openjdk.org/jeps/351[JEP 351])
+
+*In Java 14:*
+
+* Shenadoah, G1, ZGC improvements
+
+*In Java 15:*
+
+* ZGC becomes a production feature
+* Shenandoah becomes a production feature
+
+////
+
+=== Even More Performance
+
+And many, many smaller changes.
+
+* new releases are generally faster +
+* in the cloud: +
+  less CPU/memory ⇝ lower costs
+
+⇝ Updating saves money!
+
+(And you're doing it anyway sooner or later.)

@@ -1,0 +1,89 @@
+== {title}
+
+{toc}
+
+Some come, some go.
+
+=== New Deprecation Warnings ===
+
+https://openjdk.org/projects/valhalla/[Project Valhalla] will bring _primitive classes_:
+
+* code like a class, work like an `int`
+* have no identity
+* allow no identity-based operations
+
+https://nipafx.dev/java-value-based-classes/[Value-based classes] are their precursors.
+
+=== Identity-based ===
+
+What is _identity-based_?
+
+* constructor calls
+* mutability
+* synchronization
+* serialization
+
+These need to be prevented +
+for primitive and value-based classes.
+
+=== Deprecations ===
+
+Java 16 designates primitive wrapper classes +
+(`Integer`, `Long`, `Float`, `Double`, etc) +
+as value-based classes.
+
+Warning on both lines:
+
+```java
+// use Integer::valueOf instead
+Integer answer = new Integer(42);
+// don't synchronize on values
+synchronize(answer) { /*... */ }
+```
+
+* constructors are deprecated for removal
+* synchronization yields warning
+
+=== Deprecation Warnings
+
+Should this code emit a warning?
+
+++++
+<div style="height: 350px;">
+<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">// LineNumberInputStream is deprecated
+<span class="hljs-keyword">import</span> java.io.LineNumberInputStream;
+
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DeprecatedImports</span> </span>{
+
+	LineNumberInputStream stream;
+
+}</code></pre></div></div>
+<div class="listingblock fragment current-display"><div class="content"><pre class="highlight"><code class="java language-java hljs">// LineNumberInputStream is deprecated
+<span class="hljs-keyword">import</span> java.io.LineNumberInputStream;
+
+<span class="hljs-meta">@Deprecated</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DeprecatedImports</span> </span>{
+
+	LineNumberInputStream stream;
+
+}</code></pre></div></div></div>
+++++
+
+=== Not On Imports
+
+Java 9 no longer emits warnings +
+for importing deprecated members.
+
+Warning free:
+
+```java
+import java.io.LineNumberInputStream;
+
+@Deprecated
+public class DeprecatedImports {
+
+	LineNumberInputStream stream;
+
+}
+```

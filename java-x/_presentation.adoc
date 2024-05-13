@@ -1,4 +1,4 @@
-= Java 21 Deep{nbsp}Dive
+= Java 22
 :backend: revealjs
 :revealjs_theme: nipa-night
 :revealjsdir: ../_reveal.js/head
@@ -28,7 +28,7 @@ include::../_shared/highlight.js.adoc[]
 	font-size: 1.75em;
 }
 </style>
-<h2>Better Language, Better Scalability, Better APIs, Better Tools</h2>
+<h2>Better Language, Better APIs, Better Runtime</h2>
 ++++
 
 :host-name: Jfokus
@@ -36,11 +36,7 @@ include::../_shared/highlight.js.adoc[]
 :host-logo-url: images/logo-jfokus-2024.png
 :host-twitter-name: @Jfokus
 :host-twitter-url: https://twitter.com/Jfokus
-:guest-name: Ana-Maria Mihalceanu
-:guest-photo: ana-maria.jpg
-:guest-twitter-name: @ammbra1508
-:guest-twitter-url: https://twitter.com/ammbra1508
-include::../_shared/event-on-title-and-footer-guest.adoc[]
+include::../_shared/event-on-title-and-footer.adoc[]
 
 
 // ######### //
@@ -49,31 +45,9 @@ include::../_shared/event-on-title-and-footer-guest.adoc[]
 
 // ⇝
 
-////
-TODOs for 19,20 (for many, see newscasts #21 and #27)
-
-Features:
-* UTF-8 by default - https://openjdk.org/jeps/400
-* jwebserver - https://openjdk.org/jeps/408
-* Javadoc code snippets - https://openjdk.org/jeps/413
-* Java 9 additions to `CompletableFuture`
-
-Previews:
-* add record patterns to pattern matching
-* virtual threads and structured concurrency
-* vector API (see Panama section in java-next)
-* foreign APIs
-
-Create tool section:
-* jpackage (already there)
-* simple web server
-* JFR streaming?
-* jshell?
-////
-
 == Let's get started!
 
-* this session goes over Java 18-21
+* this session focuses on Java 22
 * we can't cover all details +
   ⇝ go to https://youtube.com/@java[youtube.com/@java] for more
 // * this is a showcase, not a tutorial +
@@ -86,285 +60,20 @@ Create tool section:
 
 === Lots to talk about!
 
-*Part I*:
-
-* pattern matching
-* virtual threads
-* string templates
-
-=== Lots to talk about!
-
-*Part II*:
-
-* on-ramping to Java
-* sequenced collections
-* misc API improvements
-* GC, CDS, UTF-8
-
-=== Lots to talk about!
-
-*Part III*:
-
-* Source and Classfile Tools
-* Development and Deployment Tools
-* Security Tools
-* Monitoring Tools
+// TODO: toc
 
 // ####################### //
 // P R E S E N T A T I O N //
 // ####################### //
 
-include::prologue.adoc[]
+include::_prologue.adoc[]
 
-:toc: pass:[ \
-<h3>Part I</h3> \
-<table class="toc"> \
-	<tr class="toc-current"><td>Pattern Matching</td></tr> \
-	<tr class="toc-current"><td style="padding-left: 2em;">A New Dynamic Dispatch</td></tr> \
-	<tr><td style="padding-left: 2em;">Data-Oriented Programming</td></tr> \
-	<tr><td>Virtual Threads</td></tr> \
-	<tr><td>String Templates</td></tr> \
-</table> \
-]
-include::pattern-matching-short.adoc[]
-
-:toc: pass:[ \
-<h3>Part I</h3> \
-<table class="toc"> \
-	<tr class="toc-current"><td>Pattern Matching</td></tr> \
-		<tr><td style="padding-left: 2em;">A New Dynamic Dispatch</td></tr> \
-		<tr class="toc-current"><td style="padding-left: 2em;">Data-Oriented Programming</td></tr> \
-	<tr><td>Virtual Threads</td></tr> \
-	<tr><td>String Templates</td></tr> \
-</table> \
-]
-include::dop.adoc[]
-
-:toc: pass:[ \
-<h3>Part I</h3> \
-<table class="toc"> \
-	<tr><td>Pattern Matching</td></tr> \
-	<tr class="toc-current"><td>Virtual Threads</td></tr> \
-		<tr class="toc-current"><td style="padding-left: 2em;">Unlimited Threads</td></tr> \
-		<tr><td style="padding-left: 2em;">Under The Hood</td></tr> \
-	<tr><td>String Templates</td></tr> \
-</table> \
-]
-include::virtual-threads.adoc[]
-
-:toc: pass:[ \
-<h3>Part I</h3> \
-<table class="toc"> \
-	<tr><td>Pattern Matching</td></tr> \
-	<tr class="toc-current"><td>Virtual Threads</td></tr> \
-		<tr><td style="padding-left: 2em;">Unlimited Threads</td></tr> \
-		<tr class="toc-current"><td style="padding-left: 2em;">Under The Hood</td></tr> \
-	<tr><td>String Templates</td></tr> \
-</table> \
-]
-include::virtual-thread-details.adoc[]
-
-:toc: pass:[ \
-<h3>Part I</h3> \
-<table class="toc"> \
-	<tr><td>Pattern Matching</td></tr> \
-	<tr><td>Virtual Threads</td></tr> \
-	<tr class="toc-current"><td>String Templates</td></tr> \
-</table> \
-]
-include::string-templates.adoc[]
-
-== Break
-
-We'll see you back here in 15 minutes with *Part II*:
-
-* on-ramping to Java
-* sequenced collections
-* misc API improvements
-* GC, CDS, UTF-8
-
-:toc: pass:[ \
-<h3>Part II</h3> \
-<table class="toc"> \
-	<tr class="toc-current"><td>On-Ramp</td></tr> \
-	<tr><td>Sequenced Collections</td></tr> \
-	<tr><td>Misc. API Improvements</td></tr> \
-	<tr><td>Generational ZGC</td></tr> \
-	<tr><td>Class-Data Sharing</td></tr> \
-	<tr><td>UTF-8 by Default</td></tr> \
-</table> \
-]
-include::launch-protocol.adoc[]
-
-:toc: pass:[ \
-<h3>Part II</h3> \
-<table class="toc"> \
-	<tr><td>On-Ramp</td></tr> \
-	<tr class="toc-current"><td>Sequenced Collections</td></tr> \
-	<tr><td>Misc. API Improvements</td></tr> \
-	<tr><td>Generational ZGC</td></tr> \
-	<tr><td>Class-Data Sharing</td></tr> \
-	<tr><td>UTF-8 by Default</td></tr> \
-</table> \
-]
-include::sequenced-collections.adoc[]
-
-////
-:toc: pass:[ \
-<table class="toc"> \
-	<tr><td>Pattern Matching</td></tr> \
-	<tr><td>Virtual Threads</td></tr> \
-	<tr><td>String Templates</td></tr> \
-	<tr class="toc-current"><td>New & Updated APIs</td></tr> \
-		<tr><td style="padding-left: 2em;">Sequenced Collections</td></tr> \
-		<tr class="toc-current"><td style="padding-left: 2em;">Address Resolution SPI</td></tr> \
-		<tr><td style="padding-left: 2em;">Misc. Improvements</td></tr> \
-	<tr><td>Performance & More</td></tr> \
-</table> \
-]
-include::address-resolution.adoc[]
-////
-
-:toc: pass:[ \
-<h3>Part II</h3> \
-<table class="toc"> \
-	<tr><td>On-Ramp</td></tr> \
-	<tr><td>Sequenced Collections</td></tr> \
-	<tr class="toc-current"><td>Misc. API Improvements</td></tr> \
-	<tr><td>Generational ZGC</td></tr> \
-	<tr><td>Class-Data Sharing</td></tr> \
-	<tr><td>UTF-8 by Default</td></tr> \
-</table> \
-]
-include::apis-misc.adoc[]
-
-:toc: pass:[ \
-<h3>Part II</h3> \
-<table class="toc"> \
-	<tr><td>On-Ramp</td></tr> \
-	<tr><td>Sequenced Collections</td></tr> \
-	<tr><td>Misc. API Improvements</td></tr> \
-	<tr class="toc-current"><td>Generational ZGC</td></tr> \
-	<tr><td>Class-Data Sharing</td></tr> \
-	<tr><td>UTF-8 by Default</td></tr> \
-</table> \
-]
-include::zgc.adoc[]
-
-:toc: pass:[ \
-<h3>Part II</h3> \
-<table class="toc"> \
-	<tr><td>On-Ramp</td></tr> \
-	<tr><td>Sequenced Collections</td></tr> \
-	<tr><td>Misc. API Improvements</td></tr> \
-	<tr><td>Generational ZGC</td></tr> \
-	<tr class="toc-current"><td>Class-Data Sharing</td></tr> \
-	<tr><td>UTF-8 by Default</td></tr> \
-</table> \
-]
-include::cds.adoc[]
-
-////
-:toc: pass:[ \
-<table class="toc"> \
-	<tr><td>Pattern Matching</td></tr> \
-	<tr><td>Virtual Threads</td></tr> \
-	<tr><td>String Templates</td></tr> \
-	<tr><td>New & Updated APIs</td></tr> \
-	<tr class="toc-current"><td>Performance & More</td></tr> \
-		<tr><td style="padding-left: 2em;">Generational ZGC</td></tr> \
-		<tr><td style="padding-left: 2em;">Class-Data Sharing</td></tr> \
-		<tr class="toc-current"><td style="padding-left: 2em;">Usability</td></tr> \
-		<tr><td style="padding-left: 2em;">On-Ramp</td></tr> \
-</table> \
-]
-include::usability.adoc[]
-////
-
-:toc: pass:[ \
-<h3>Part II</h3> \
-<table class="toc"> \
-	<tr><td>On-Ramp</td></tr> \
-	<tr><td>Sequenced Collections</td></tr> \
-	<tr><td>Misc. API Improvements</td></tr> \
-	<tr><td>Generational ZGC</td></tr> \
-	<tr><td>Class-Data Sharing</td></tr> \
-	<tr class="toc-current"><td>UTF-8 by Default</td></tr> \
-</table> \
-]
-include::utf-8-default.adoc[]
-
-include::deprecations.adoc[]
-
-== Break
-
-We'll see you back here in 15 minutes with *Part III*:
-
-* Source and Classfile Tools
-* Development and Deployment Tools
-* Security Tools
-* Monitoring Tools
-
-:toc: pass:[ \
-<table class="toc"> \
-	<tr class="toc-current"><td>Source and Classfile Tools</td></tr> \
-	<tr><td>Development and Deployment Tools</td></tr> \
-	<tr><td>Security Tools</td></tr> \
-	<tr><td>Monitoring Tools</td></tr> \
-</table> \
-]
-include::source-classfile-tools.adoc[]
-
-
-:toc: pass:[ \
-<table class="toc"> \
-	<tr><td>Source and Classfile Tools</td></tr> \
-	<tr class="toc-current"><td>Development and Deployment Tools</td></tr> \
-	<tr><td>Security Tools</td></tr> \
-	<tr><td>Monitoring Tools</td></tr> \
-</table> \
-]
-include::dev-deploy-tools.adoc[]
-
-:toc: pass:[ \
-<table class="toc"> \
-	<tr><td>Source and Classfile Tools</td></tr> \
-	<tr><td>Development and Deployment Tools</td></tr> \
-	<tr class="toc-current"><td>Security Tools</td></tr> \
-	<tr><td>Monitoring Tools</td></tr> \
-</table> \
-]
-include::security-tools.adoc[]
-
-:toc: pass:[ \
-<table class="toc"> \
-	<tr><td>Source and Classfile Tools</td></tr> \
-	<tr><td>Development and Deployment Tools</td></tr> \
-	<tr><td>Security Tools</td></tr> \
-	<tr class="toc-current"><td>Monitoring Tools</td></tr> \
-</table> \
-]
-include::monitoring-tools.adoc[]
-
-// include::jpms.adoc[]
-
-// include::language.adoc[]
-
-// include::apis-updated.adoc[]
-
-// include::apis_new.adoc[]
-
-// include::jvm.adoc[]
-
-// include::performance.adoc[]
-
+// TODO: presentation
 
 // ######### //
 // O U T R O //
 // ######### //
 
-include::about-slide.adoc[]
-
-// include::../_shared/about-slide.adoc[]
+include::../_shared/about-slide.adoc[]
 
 include::images/sources.adoc[]

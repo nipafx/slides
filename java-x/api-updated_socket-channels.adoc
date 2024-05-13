@@ -1,0 +1,68 @@
+== {title}
+
+{toc}
+
+Now with Unix domain sockets!
+
+=== Socket Channels
+
+NIO API around `SocketChannel`/`ServerSocketChannel`:
+
+* communication via network sockets
+* can be non-blocking
+* allows multiplexing via selector
+
+New in Java 16: Unix domain sockets.
+
+=== Unix Domain Sockets
+
+Unix domain sockets:
+
+* work with filesystem paths
+* only for connections on same host
+* no TCP/IP stack
+
+=== Server and Client
+
+Server connecting to Unix domain socket:
+
+```java
+Path socketFile = Path
+	.of(System.getProperty("user.home"))
+	.resolve("server.socket");
+UnixDomainSocketAddress address =
+	UnixDomainSocketAddress.of(socketFile);
+
+ServerSocketChannel serverChannel = ServerSocketChannel
+	.open(StandardProtocolFamily.UNIX);
+serverChannel.bind(address);
+
+// start sending/receiving messages
+```
+
+=== Server and Client
+
+Client connecting to Unix domain socket:
+
+```java
+Path file = Path
+	.of(System.getProperty("user.home"))
+	.resolve("server.socket");
+UnixDomainSocketAddress address =
+	UnixDomainSocketAddress.of(file);
+
+SocketChannel channel = SocketChannel
+	.open(StandardProtocolFamily.INET6);
+channel.connect(address);
+
+// start sending/receiving messages
+```
+
+=== Unix Domain Sockets Vs TCP/IP
+
+Unix domain socket are safer and faster:
+
+* same host ⇝ no inbound connections
+* filesystem paths +
+  ⇝ detailed, well-understood, OS-enforced permissions
+* no TCP/IP stack ⇝ faster setup, higher throughput

@@ -1,0 +1,223 @@
+== {title}
+
+{toc}
+
+Small improvements to the streams API.
+
+=== Of Nullable ⑨
+
+Create a stream of zero or one elements:
+
+```java
+long zero = Stream.ofNullable(null).count();
+long one = Stream.ofNullable("42").count();
+```
+
+=== Iterate ⑨
+
+To use `for` even less...
+
+```java
+iterate(
+	T seed,
+	Predicate<T> hasNext,
+	UnaryOperator<T> next);
+```
+
+Example:
+
+```java
+Stream
+	.iterate(1, i -> i<=10, i -> 2*i)
+	.forEach(System.out::println);
+// output: 1 2 4 8
+```
+
+=== Iterate ⑨
+
+Counter Example:
+
+```java
+Enumeration<Integer> en = // ...
+Stream.iterate(
+		en.nextElement(),
+		el -> en.hasMoreElements(),
+		el -> en.nextElement())
+	.forEach(System.out::println);
+```
+
+* first `nextElement()`
+* then `hasMoreElements()`
+* ⇝ fail
+
+=== Take While ⑨
+
+Stream as long as a condition is true:
+
+```java
+Stream<T> takeWhile(Predicate<T> predicate);
+```
+
+Example:
+
+```java
+Stream.of("a-", "b-", "c-", "", "e-")
+	.takeWhile(s -> !s.isEmpty())
+	.forEach(System.out::print);
+
+// output: a-b-c-
+```
+
+=== Drop While ⑨
+
+Ignore as long as a condition is true:
+
+```java
+Stream<T> dropWhile(Predicate<T> predicate);
+```
+
+Example:
+
+```java
+Stream.of("a-", "b-", "c-", "de-", "f-")
+	.dropWhile(s -> s.length() <= 2)
+	.forEach(System.out::print);
+
+// output: de-f-
+```
+
+=== Collect Unmodifiable ⑩
+
+Create unmodifiable collections +
+(in the sense of `List::of` et al) +
+with `Collectors`:
+
+```java
+Collector<T, ?, List<T>> toUnmodifiableList();
+
+Collector<T, ?, Set<T>> toUnmodifiableSet();
+
+Collector<T, ?, Map<K,U>> toUnmodifiableMap(
+	Function<T, K> keyMapper,
+	Function<T, U> valueMapper);
+// plus overload with merge function
+```
+
+=== Teeing Collector ⑫
+
+Collect stream elements in two collectors +
+and combine their results:
+
+```java
+// on Collectors
+Collector<T, ?, R> teeing(
+	Collector<T, ?, R1> downstream1,
+	Collector<T, ?, R2> downstream2,
+	BiFunction<R1, R2, R> merger);
+```
+
+=== Teeing Collector ⑫
+
+Example:
+
+```java
+Statistics stats = Stream
+	.of(1, 2, 4, 5)
+	.collect(teeing(
+		// Collector<Integer, ?, Integer>
+		summingInt(i -> i),
+		// Collector<Integer, ?, Double>
+		averagingInt(i -> i),
+		// BiFunction<Integer, Double, Statistics>
+		Statistics::of));
+// stats = Statistics {sum=12, average=3.0}
+```
+
+=== Declarative Flat Map ===
+
+`Stream::flatMap` is great, but:
+
+* sometimes you can't easily +
+  map to a `Stream`
+* creating small/empty streams +
+  can harm performance
+
+For these niche (!) cases, +
+there's `Stream::mapMulti`.
+
+=== Imperative Flat Map ⑯ ===
+
+```java
+<R> Stream<R> mapMulti​(
+	BiConsumer<T, Consumer<R>> mapper)
+```
+
+`BiConsumer` is called for each element:
+
+* gets the element `T`
+* gets a `Consumer<R>`
+* can pass arbitrarily many `R`-s +
+  to the consumer
+* they show up downstream
+
+So like `flatMap`, but imperative.
+
+=== Map Multi Examples ===
+
+```java
+Stream.of(1, 2, 3, 4)
+	// changes nothing, just passes on elements
+	.mapMulti((el, ds) -> ds.accept(el));
+
+Stream
+	.of(Optional.of("0"), Optional.empty())
+	// unpacks Optionals
+	.mapMulti((el, ds) -> el.ifPresent(ds));
+
+Stream
+	.of(Optional.of("0"), Optional.empty())
+	.mapMulti(Optional::ifPresent);
+```
+
+=== Type Witness ===
+
+Unfortunately, `mapMulti` confuses +
+parametric type inference:
+
+```java
+List<String> strings = Stream
+	.of(Optional.of("0"), Optional.empty())
+	// without <String>, collect returns List<Object>
+	.<String> mapMulti(Optional::ifPresent)
+	.collect(toList());
+```
+
+
+=== Immediate To List ⑯ ===
+
+How often have you written +
+`.collect(Collectors.toList())`?
+
+Answer: too damn often!
+
+But no more:
+
+```java
+List<String> strings = Stream
+	.of("A", "B", "C")
+	// some stream stuff
+	.toList()
+```
+
+=== List Properties ===
+
+Like collection factories, +
+the returned lists are:
+
+* immutable/unmodifiable
+* https://nipafx.dev/java-value-based-classes[value-based]
+
+Unlike them:
+
+* they can contain `null`
+

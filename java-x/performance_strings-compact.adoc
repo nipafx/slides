@@ -1,0 +1,51 @@
+== {title}
+
+{toc}
+
+Going from UTF-16 to ISO-8859-1.
+
+=== Strings and memory
+
+* 20% - 30% of heap are `char[]` for `String`
+* a `char` is UTF-16 code unit ⇝ 2 bytes
+* most strings only require ISO-8859-1 ⇝ 1 byte
+
+*10% - 15% of memory is wasted!*
+
+=== Compact Strings
+
+For Java 9, `String` was changed:
+
+* uses `byte[]` instead of `char[]`
+* bytes per character:
+** 1 if _all_ characters are ISO-8859-1
+** 2 otherwise
+
+Only possible because `String` makes +
+defensive copies of all arguments.
+
+=== Performance
+
+Simple benchmark: +
+(by https://shipilev.net/[Aleksey Shipilëv])
+
+```java
+String method = generateString(size);
+
+public String work() {
+	return "Calling method \"" + method + "\"";
+}
+```
+
+Depending on circumstances:
+
+* throughput 1.4x
+* garbage less 1.85x
+
+=== More
+
+Background on `String` +
+performance improvements:
+
+https://www.youtube.com/watch?v=wIyeOaitmWM[Aleksey Shipilëv +
+The Lord Of The Strings]

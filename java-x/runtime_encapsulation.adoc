@@ -1,0 +1,111 @@
+== {title}
+
+{toc}
+
+JDK internals - hidden by default.
+
+=== Strong Encapsulation
+
+Recap:
+
+* all JDK code is in modules
+* only public classes/members in +
+  exported packages can be accessed
+* static or reflective access to others is illegal
+
+But...
+
+=== Permitted Illegal Access
+
+But JVM can make an exception for:
+
+* code on the class path
+* that accesses pre-JDK-9 packages
+
+Can be configured with `--illegal-access`.
+
+[source,bash]
+----
+$ java --class-path 'mods/*'
+	--illegal-access=deny
+	org.example.Main
+----
+
+=== Illegal Access Modes
+
+Four modes:
+
+* `permit`: warning on _first_ reflective access to package
+* `warn`: warning on _each_ reflective access
+* `debug`: like `warn` plus stack trace
+* `deny`: illegal access denied (static + reflective)
+
+First three permit static access.
+
+=== Configure Illegal Access
+
+Configuration:
+
+* *Java 9-15*: `permit` is default
+* *Java 16*: `deny` is default
+* *Java 17*: `--illegal-access` is no-op
+* *Java ??*: the option will be removed
+
+=== Illegal Access Recommendations
+
+I recommend:
+
+* `--illegal-access=deny` +
+  to prevent unnoticed access +
+  (before Java 16)
+* `--add-exports`/`--add-opens` +
+  for specific exceptions
+
+=== Add Exports
+
+A common case:
+
+Code needs types that +
+the owning module doesn't export.
+
+**Export them with `--add-exports`:**
+
+[source,bash]
+----
+$ java --class-path 'mods/*'
+#   --add-exports <module>/<package>=<target>
+#                        class path ~ ALL-UNNAMED
+	--add-exports java.base/java.util=ALL-UNNAMED
+	org.example.Main
+----
+
+(Works for `javac` and `java`.)
+
+=== Open Packages
+
+Another common case:
+
+A module reflects on types from a package that +
+the owning module doesn't open.
+
+**Open packages with `add-opens`:**
+
+[source,bash]
+----
+$ java --class-path 'mods/*'
+#   --add-opens <module>/<package>=<target>
+#                        class path ~ ALL-UNNAMED
+	--add-opens java.base/java.util=ALL-UNNAMED
+	org.example.Main
+----
+
+(Works for `java`.)
+
+=== Illegal Access Recommendations
+
+These command line flags +
+mark technical debt.
+
+*⇝ Work hard to get rid of them ASAP!*
+
+And henceworth enjoy strong encapsulation!

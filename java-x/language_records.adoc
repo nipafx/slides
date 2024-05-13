@@ -1,0 +1,292 @@
+== {title}
+
+{toc}
+
+Simple classes ~> simple code
+
+=== Spilling Beans
+
+Typical Java Bean:
+
+```java
+public class Range {
+
+	// part I 😀
+
+	private final int low;
+	private final int high;
+
+	public Range(int low, int high) {
+		this.low = low;
+		this.high = high;
+	}
+
+}
+```
+
+=== Spilling Beans
+
+```java
+public class Range {
+
+	// part II 🙄
+
+	public int getLow() {
+		return low;
+	}
+
+	public int getHigh() {
+		return high;
+	}
+
+}
+```
+
+=== Spilling Beans
+
+```java
+public class Range {
+
+	// part III 🤨
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Range range = (Range) o;
+		return low == range.low &&
+				high == range.high;
+	}
+
+}
+```
+
+=== Spilling Beans
+
+```java
+public class Range {
+
+	// part IV 🥴
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(low, high);
+	}
+
+}
+```
+
+=== Spilling Beans
+
+```java
+public class Range {
+
+	// part V 😭
+
+	@Override
+	public String toString() {
+		return "[" + low + "; " + high + "]";
+	}
+
+}
+```
+
+=== "Java is Verbose"
+
+`Range.java` is simple:
+
+* declares type `Range`
+* declares two components, `low` and `high`
+
+Takes 44 lines!
+
+* verbose
+* room for error
+* unexpressive
+
+=== Records
+
+```java
+//                these are "components"
+public record Range(int low, int high) {
+
+	// compiler generates:
+	//  * (final) fields
+	//  * canonical constructor
+	//  * accessors low(), high()
+	//  * equals, hashCode, toString
+
+}
+```
+
+=== Records
+
+> The API for a record models the state, the whole state, and nothing but the state.
+
+The deal:
+
+* give up encapsulation
+* couple API to internal state
+* get API for free
+
+=== Records
+
+The benefits:
+
+* no boilerplate for plain "data carriers"
+* no room for error
+* makes Java more expressive
+
+On to the details!
+
+=== Limited Records
+
+Records are limited classes:
+
+* no inheritance
+** can't use `extends`
+** are `final`
+* component fields are `final`
+* no additional fields
+
+=== Customizable Records
+
+Records can be customized:
+
+* override constructor
+* add constructors and +
+  static factory methods
+* override accessors
+* add other methods
+* override `Object` methods
+* implement interfaces
+* make serializable
+
+=== Override Constructors
+
+```java
+public Range(int low, int high) {
+	if (high < low)
+		throw new IllegalArgumentException();
+	this.low = low;
+	this.high = high;
+}
+```
+
+=== Override Constructors
+
+Compact canonical constructor:
+
+```java
+// executed before fields are assigned
+public Range {
+	if (high < low)
+		throw new IllegalArgumentException();
+}
+
+// arguments can be reassigned
+public Range {
+	if (high < low)
+		high = low;
+}
+```
+
+=== Override Constructors
+
+* implicit constructor has same visibility as record
+* explicit constructors can't reduce visibility
+* can't assign fields in compact form +
+(happens automatically after its execution)
+
+=== Add Constructors
+
+Additional constructors work as usual:
+
+```java
+public Range(int high) {
+	this(0, high);
+}
+```
+
+(Compact canonical constructor can't delegate.)
+
+=== Add Static Factories
+
+Additional static factories work as usual:
+
+```java
+public static Range open(int low, int high) {
+	return new Range(low, high + 1);
+}
+```
+
+Can't reduce constructor visibility, though.
+
+```java
+@Deprecated
+// use static factory method instead
+public Range { }
+```
+
+=== Override Accessors
+
+Accessors can be overridden:
+
+```java
+@Override
+public low() {
+	return Math.max(0, low);
+}
+```
+
+Not a good example!
+
+> The API for a record models the state, the whole state, and nothing but the state.
+
+=== Implement Interfaces
+
+```java
+public record Range(int low, int high)
+		implements Comparable<Range> {
+
+	@Override
+	public int compareTo(Range other) {
+		return this.low == other.low
+			? this.high - other.high
+			: this.low - other.low;
+	}
+
+}
+```
+
+=== Serializable Records
+
+```java
+public record Range(int low, int high)
+		implements Serializable { }
+```
+
+* has default `serialVersionUID` 0
+* uses `FileOutputStream` and +
+  `FileInputStream` as usual
+* deserializaton calls constructor 🙌
+* framework support is growing +
+  (e.g. https://github.com/FasterXML/jackson[Jackson], https://johnzon.apache.org/[Apache Johnzon])
+
+////
+TODO
+* method-local classes
+* inner records are effectively static
+* inner classes can now contain static member
+////
+
+=== Summary
+
+* use records to replace data carriers
+* it's not anti-boilerplate pixie dust +
+  ⇝ use only when "the deal" makes sense
+* beware of limitations
+* beware of class-building facilites
+* observe ecosystem for adoption

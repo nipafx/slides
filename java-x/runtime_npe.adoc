@@ -1,0 +1,32 @@
+== {title}
+
+{toc}
+
+Finally can NPEs be helpful!
+
+=== Typical NPEs
+
+```sh
+java.lang.NullPointerException
+		at dev.nipafx.Regular.doing(Regular.java:28)
+		at dev.nipafx.Business.its(Business.java:20)
+		at dev.nipafx.Code.thing(Code.java:11)
+```
+
+Ok-ish for coders, but suck for everybody else.
+
+=== Helpful NPEs
+
+Since JDK 14*/15:
+
+```sh
+java.lang.NullPointerException:
+	Cannot invoke "String.length()" because the return
+	value of "dev.nipafx.Irregular.doing()"
+	is null
+		at dev.nipafx.Regular.doing(Regular.java:28)
+		at dev.nipafx.Business.its(Business.java:20)
+		at dev.nipafx.Code.thing(Code.java:11)
+```
+
+(* with `-XX:+ShowCodeDetailsInExceptionMessages`)

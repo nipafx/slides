@@ -1,0 +1,245 @@
+== {title}
+
+{toc}
+
+////
+=== Even More Updated&nbsp;APIs
+
+*In Java 9:*
+
+* OASIS XML Catalogs 1.1 (https://openjdk.org/jeps/268[JEP 268]), +
+Xerces 2.11.0 (https://openjdk.org/jeps/255[JEP 255])
+* Unicode support in +
+`PropertyResourceBundle` (https://openjdk.org/jeps/226[JEP 226])
+
+Many lower-level APIs.
+
+=== Even More New&nbsp;I/O&nbsp;Methods
+
+*In Java 9 to 11:*
+
+```java
+Path.of(String); // ~ Paths.get(String) ⑪
+
+Files.readString(Path); // ⑪
+Files.writeString(Path, CharSequence, ...); // ⑪
+
+Reader.transferTo(Writer); // ⑩
+InputStream.transferTo(OutputStream); // ⑨
+
+Reader.nullReader(); // ⑪
+Writer.nullWriter(); // ⑪
+InputStream.nullInputStream(); // ⑪
+OutputStream.nullOutputStream(); // ⑪
+```
+
+=== Even More New&nbsp;I/O&nbsp;Methods
+
+*In Java 12 and 13:*
+
+```java
+Files.mismatch(Path, Path); // ⑫
+
+FileSystems.newFileSystem(Path, ...); // ⑬
+
+ByteBuffer.get(int, ...) // ⑬
+ByteBuffer.put(int, ...) // ⑬
+```
+
+=== Even More New&nbsp;Math&nbsp;Methods
+
+```java
+// in Java 14
+StrictMath.decrementExact(int);
+StrictMath.decrementExact(long);
+StrictMath.incrementExact(int);
+StrictMath.incrementExact(long);
+StrictMath.negateExact(int);
+StrictMath.negateExact(long);
+
+// in Java 15
+Math.absExact(int)
+Math.absExact(long)
+StrictMath.absExact(int)
+StrictMath.absExact(long)
+```
+
+=== Even More New&nbsp;Methods
+
+*In Java 10:*
+
+```java
+DateTimeFormatter.localizedBy(Locale);
+```
+
+*In Java 11:*
+
+```java
+Collection.toArray(IntFunction<T[]>);
+Predicate.not(Predicate<T>); // static
+Pattern.asMatchPredicate(); // ⇝ Predicate<String>
+```
+
+=== Even More New&nbsp;Methods
+
+*In Java 12:*
+
+* `NumberFormat::getCompactNumberInstance`
+
+*In Java 15:*
+
+```java
+// instance version of String::format
+String.formatted(Object... args);
+```
+
+=== Even More New&nbsp;Methods
+
+*In Java 16:*
+
+```java
+Objects.checkIndex(long, long)
+Objects.checkFromToIndex(long, long, long)
+Objects.checkFromIndexSize(long, long, long)
+```
+////
+
+// TODO: mark versions
+
+=== Collections
+
+How do you create an `ArrayList` that +
+can store 50 elements without resizing?
+
+[step=1]
+```java
+new ArrayList<>(50);
+```
+
+[step=2]
+How do you create a `HashMap` that +
+can store 50 pairs without resizing?
+
+[step=3]
+```java
+new HashMap<>(64, 0.8f);
+new HashMap<>(128);
+```
+
+[step=3]
+🤔
+
+=== Collections
+
+Right-sizing hashing data structures:
+
+* `HashMap.newHashMap(int numMappings)`
+* `HashSet.newHashSet(int numElements)`
+* `LinkedHashMap.newLinkedHashMap(int numMappings)`
+* `LinkedHashSet.newLinkedHashSet(int numElements)`
+
+=== Math
+
+Lots of new methods on `Math`:
+
+* for `int`/`long` division with different modes for:
+** rounding
+** overflow handling
+* for ceiling modulus (`5 ⌈%⌉ 3 = -1`)
+* for clamping
+
+=== Localizing DateTimes
+
+Options for formatting dates/times with `DateTimeFormatter`:
+
+* with a fixed pattern: `ofPattern`
+* with a localized style: `ofLocalizedDate` +
+  (`FULL`, `LONG`, `MEDIUM`, `SHORT`)
+
+What about a localized result with custom elements?
+
+⇝ `DateTimeFormatter.ofLocalizedPattern`
+
+=== Localized patterns
+
+`DateTimeFormatter.ofLocalizedPattern`:
+
+* you include what you want to show up +
+  (e.g. year + month with `"yMM"`)
+* result will depend on locale +
+  (e.g. `"10/2023"` in USA)
+
+=== Pattern comparison
+
+```java
+var now = ZonedDateTime.now();
+for (var locale : List.of(
+		Locale.of("en", "US"),
+		Locale.of("be", "BE"),
+		Locale.of("vi", "VN"))) {
+	Locale.setDefault(locale);
+
+	var custom = DateTimeFormatter
+		.ofPattern("y-MM-dd");
+	var local = DateTimeFormatter
+		.ofLocalizedDate(FormatStyle.SHORT);
+	var customLocal = DateTimeFormatter
+		.ofLocalizedPattern("yMM");
+
+	// pretty print
+}
+```
+
+=== Pattern comparison
+
+[%header,cols="6,10,10,12"]
+|===
+| locale |   custom   |  local     |   both
+| en_US  | `2023-10-02` | `10/2/23`    | `10/2023`
+| be_BE  | `2023-10-02` | `2.10.23`    | `10.2023`
+| vi_VN  | `2023-10-02` | `02/10/2023` | `tháng 10, 2023`
+|===
+
+=== Localized patterns
+
+Analogue methods were added to `DateTimeFormatterBuilder`:
+
+```java
+DateTimeFormatterBuilder appendLocalized(
+	String requestedTemplate);
+
+static String getLocalizedDateTimePattern(
+	String requestedTemplate,
+	Chronology chrono, Locale locale)
+```
+
+=== More AutoCloseable
+
+These types now implemnet `AutoCloseable`:
+
+* `HttpClient`
+* `ExecutorService`
+* `ForkJoinPool`
+
+=== A better future
+
+Additions to `Future<T>`:
+
+* `T resultNow()`
+* `Throwable exceptionNow`
+* `State state()`
+
+New:
+
+```java
+enum State {
+	RUNNING, SUCCESS, FAILED, CANCELLED
+}
+```
+
+=== More
+
+There are many more additions like this.
+
+Find a few more in +
+🎥 https://www.youtube.com/watch?v=4mPd2eL0wYQ[Java 21 API New Features] (Sep 2023)

@@ -1,0 +1,54 @@
+== {title}
+
+{toc}
+
+A little more type inference.
+
+=== Diamond Operator
+
+Maybe the best example:
+
+```java
+List<String> strings = new ArrayList<>();
+```
+
+* used at a constructor call
+* tells Java to infer the parametric type
+
+
+=== Anonymous Classes
+
+Diamond did not work with anonymous classes:
+
+```java
+<T> Box<T> createBox(T content) {
+	// we have to put the `T` here :(
+	return new Box<T>(content) { };
+}
+```
+
+Reason are non-denotable types:
+
+* might be inferred by compiler +
+  for anonymous classes
+* can not be expressed by JVM
+
+=== Infer Denotable Types
+
+Java 9 infers denotable types:
+
+```java
+<T> Box<T> createBox(T content) {
+	return new Box<>(content) { };
+}
+```
+
+Gives compile error if type is non-denotable:
+
+```java
+Box<?> createCrazyBox(Object content) {
+	List<?> innerList = Arrays.asList(content);
+	// compile error
+	return new Box<>(innerList) { };
+}
+```

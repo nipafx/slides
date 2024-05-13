@@ -1,0 +1,163 @@
+== {title}
+
+{toc}
+
+Small improvements to `Optional`.
+
+=== Or ⑨
+
+Choose a non-empty `Optional`:
+
+```java
+Optional<T> or(Supplier<Optional<T>> supplier);
+```
+
+=== Find in Many Places
+
+```java
+public interface Search {
+	Optional<Customer> inMemory(String id);
+	Optional<Customer> onDisk(String id);
+	Optional<Customer> remotely(String id);
+
+	default Optional<Customer> anywhere(String id) {
+		return inMemory(id)
+			.or(() -> onDisk(id))
+			.or(() -> remotely(id));
+	}
+
+}
+```
+
+=== If Present Or Else ⑨
+
+Like `ifPresent` but do something if empty:
+
+```java
+void ifPresentOrElse(
+	Consumer<T> action,
+	Runnable emptyAction);
+```
+
+Example:
+
+```java
+void logLogin(String id) {
+	findCustomer(id)
+		.ifPresentOrElse(
+			this::logCustomerLogin,
+			() -> logUnknownLogin(id));
+}
+```
+
+=== Stream ⑨
+
+Turns an `Optional` into a `Stream` +
+of zero or one elements:
+
+```java
+Stream<T> stream();
+```
+
+=== Filter-Map ...
+
+```java
+private Optional<Customer> findCustomer(String id) {
+	// ...
+}
+
+Stream<Customer> findCustomers(List<String> ids) {
+	return ids.stream()
+		.map(this::findCustomer)
+		// now we have a Stream<Optional<Customer>>
+		.filter(Optional::isPresent)
+		.map(Optional::get)
+}
+```
+
+[transition=none]
+=== ... in one Step
+
+```java
+private Optional<Customer> findCustomer(String id) {
+	// ...
+}
+
+Stream<Customer> findCustomers(List<String> ids) {
+	return ids.stream()
+		.map(this::findCustomer)
+		// now we have a Stream<Optional<Customer>>
+		// we can now filter-map in one step
+		.flatMap(Optional::stream)
+}
+```
+
+=== From Eager to Lazy
+
+`List<Order> getOrders(Customer c)` is expensive:
+
+```java
+List<Order> findOrdersForCustomer(String id) {
+	return findCustomer(id)
+		.map(this::getOrders) // eager
+		.orElse(new ArrayList<>());
+}
+
+Stream<Order> findOrdersForCustomer(String id) {
+	return findCustomer(id)
+		.stream()
+		.map(this::getOrders) // lazy
+		.flatMap(List::stream);
+}
+```
+
+=== Or Else Throw ⑩
+
+`Optional::get` invites misuse +
+by calling it reflexively.
+
+Maybe `get` wasn't the best name? +
+New:
+
+```java
+T orElseThrow()
+```
+
+Works exactly as `get`, +
+but more self-documenting.
+
+=== Aligned Names
+
+Name in line with other accessors:
+
+```java
+T orElse(T other)
+T orElseGet(Supplier<T> supplier)
+T orElseThrow()
+	throws NoSuchElementException
+T orElseThrow(
+	Supplier<EX> exceptionSupplier)
+	throws EX
+```
+
+=== Get Considered Harmful
+
+https://bugs.openjdk.org/browse/JDK-8160606[JDK-8160606]
+will deprecate +
+`Optional::get`.
+
+* when?
+* for removal?
+
+We'll see...
+
+=== Is Empty ⑪
+
+No more `!foo.isPresent()`:
+
+```java
+boolean isEmpty()
+```
+
+Does exactly what +
+you think it does.

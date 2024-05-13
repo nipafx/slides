@@ -1,0 +1,84 @@
+== {title}
+
+{toc}
+
+Examining the stack faster and easier.
+
+=== `StackWalker::forEach`
+
+```java
+void forEach (Consumer<StackFrame>);
+```
+
+```java
+public static void main(String[] args) { one(); }
+static void one() { two(); }
+static void two() {
+	StackWalker.getInstance()
+		.forEach(System.out::println);
+}
+
+// output
+StackWalkingExample.two(StackWalking.java:14)
+StackWalkingExample.one(StackWalking.java:11)
+StackWalkingExample.main(StackWalking.java:10)
+```
+
+=== `StackWalker::walk`
+
+```java
+T walk (Function<Stream<StackFrame>, T>);
+```
+
+```java
+static void three() {
+	String line = StackWalker.getInstance().walk(
+		frames -> frames
+			.filter(f -> f.getMethodName().contains("one"))
+			.findFirst()
+			.map(f -> "Line " + f.getLineNumber())
+			.orElse("Unknown line");
+	);
+	System.out.println(line);
+}
+
+// output
+Line 11
+```
+
+=== Options
+
+`getInstance` takes options as arguments:
+
+* `SHOW_REFLECT_FRAMES` for reflection frames
+* `SHOW_HIDDEN_FRAMES` e.g. for lambda frames
+* `RETAIN_CLASS_REFERENCE` for `Class<?>`
+
+=== Frames and Traces
+
+`forEach` and `walk` operate on `StackFrame`:
+
+* class and method name
+* class as `Class<?>`
+* bytecode index and isNative
+
+Can upgrade to `StackTraceElement` (expensive):
+
+* file name and line number
+
+=== Performance I
+
+image::images/stack-walker-vs-exception.png[role="diagram"]
+
+=== Performance II
+
+image::images/stack-walker-limit-with-estimated-size.png[role="diagram"]
+
+=== Performance III
+
+* creating `StackTraceElement` is expensive +
+(for file name and line number)
+* lazy evaluation pays off for partial traversal
+
+(Benchmarks performed by https://twitter.com/arnaudroger[Arnaud Roger])
+

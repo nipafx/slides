@@ -1,0 +1,174 @@
+== {title}
+
+{toc}
+
+=== A simple app
+
+Features:
+
+* scrapes GitHub projects
+* creates `Page` instances:
+** `GitHubIssuePage`
+** `GitHubPrPage`
+** `ExternalPage`
+** `ErrorPage`
+* further processes pages
+
+=== A simple app
+
+Features:
+
+* display as interactive graph
+* compute graph properties
+* categorize pages by topic
+* analyze mood of interactions
+* process payment for analyses
+* etc.
+
+=== A simple architecture?
+
+How to implement features?
+
+[%step]
+* methods on `Page` 😧
+* visitor pattern 😫
+* pattern matching 🥳
+
+=== Pattern Matching
+
+Ingredients:
+
+* switch expressions ⑭ (https://openjdk.org/jeps/361[JEP 361])
+* type pattern matching ⑯ (https://openjdk.org/jeps/394[JEP 394])
+* sealed types ⑰ (https://openjdk.org/jeps/409[JEP 409])
+* patterns in switch ㉑ (https://openjdk.org/jeps/441[JEP 441])
+* unnamed patterns ㉒ (https://openjdk.org/jeps/443[JEP 443] / https://openjdk.org/jeps/456[JEP 456])
+
+=== Pattern Matching
+
+Approach:
+
+* make `Page` sealed
+* implement features as methods outside of `Page`
+* accept `Page` parameters and `switch` over it
+* avoid `default` branch for maintainability
+
+=== Sealed Page
+
+Sealed types limit inheritance, +
+by only allowing specific subtypes.
+
+```java
+public sealed interface Page
+	permits GitHubIssuePage, GitHubPrPage,
+			ExternalPage, ErrorPage {
+	// ...
+}
+```
+
+=== Switch over Page
+
+```java
+public void categorize(Page page) {
+	switch (page) {
+		case GitHubIssuePage is -> categorizeIssue(is);
+		case GitHubPrPage pr -> categorizePr(pr);
+		case ExternalPage ext -> categorizeExternal(ext);
+		case ErrorPage err -> categorizeError(err);
+	}
+}
+```
+
+=== Maintainability
+
+Unlike an `if`-`else`-`if`-chain, +
+a pattern `switch` needs to be exhaustive.
+
+Fulfilled by:
+
+* switching over a sealed types
+* a `case` per subtype
+* avoiding the `default` branch
+
+⇝ Adding a new subtype causes compile error!
+
+=== Avoiding Default
+
+Sometimes you have "defaulty" behavior:
+
+```java
+public void categorize(Page page) {
+	switch (page) {
+		case GitHubIssuePage is -> categorizeIssue(is);
+		case GitHubPrPage pr -> categorizePr(pr);
+		default -> { }
+	}
+}
+```
+
+But we need to avoid `default`!
+
+=== Avoiding Default
+
+Write explicit branches:
+
+```java
+public void categorize(Page page) {
+	switch (page) {
+		case GitHubIssuePage is -> categorizeIssue(is);
+		case GitHubPrPage pr -> categorizePr(pr);
+		// duplication 😢
+		case ErrorPage err -> { };
+		case ExternalPage ext -> { };
+	};
+}
+```
+
+=== Avoiding Default
+
+Use `_` to combine "default branches":
+
+```java
+public void categorize(Page page) {
+	switch (page) {
+		case GitHubIssuePage is -> categorizeIssue(is);
+		case GitHubPrPage pr -> categorizePr(pr);
+		case ErrorPage _, ExternalPage _ -> { };
+	};
+}
+```
+
+⇝ Default behavior without `default` branch.
+
+=== Dynamic dispatch
+
+Dynamic dispatch selects the invoked method by type.
+
+As language feature:
+
+* via inheritance
+* makes method part of API
+
+What if methods shouldn't be part of the API?
+
+=== Dynamic dispatch
+
+Without methods becoming part of the API.
+
+Via visitor pattern:
+
+* makes "visitation" part of API
+* cumbersome and indirect
+
+Via pattern matching (new):
+
+* makes "sealed" part of type
+* straight-forward
+
+=== More
+
+More on pattern matching:
+
+* 📝 https://openjdk.org/projects/amber/design-notes/patterns/pattern-match-object-model[Pattern Matching in the Java Object Model]
+* 🎥 https://www.youtube.com/watch?v=QrwFrm1R8OY[Java 21 Brings Full Pattern Matching] (Sep 2023)
+* 🧑‍💻 https://github.com/nipafx/loom-lab[GitHub crawler]

@@ -1,0 +1,23 @@
+== {title}
+
+{toc}
+
+Make full use of your CPUs.
+
+=== Vector API
+
+[quote,JEP 338]
+____
+Express vector computations that reliably compile at run time to optimal vector hardware instructions on supported CPU architectures and thus achieve superior performance to equivalent scalar computations
+____
+
+=== Vector API
+
+I don't have much on this +
+but others do:
+
+* https://openjdk.org/jeps/338[JEP 338: Vector API (Incubator)]
+* https://inside.java/2020/11/17/podcast-007/[Inside Java Podcast - Episode 7]
+* FizzBuzz – SIMD Style! +
+  https://www.morling.dev/blog/fizzbuzz-simd-style/[article] &
+  https://github.com/gunnarmorling/simd-fizzbuzz[repo with benchmark]

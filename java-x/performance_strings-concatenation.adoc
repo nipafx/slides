@@ -1,0 +1,80 @@
+== {title}
+
+{toc}
+
+`"Improving" + "String" + "Concatenation"`
+
+=== String Concatenation
+
+What happens when you run:
+
+```java
+String s = greeting + ", " + place + "!";
+```
+
+* bytecode uses `StringBuilder`
+* JIT may (!) recognize and optimize +
+by writing content directly to new `byte[]`
+* breaks down quickly +
+(e.g. with `long` or `double`)
+
+=== Why Not Create Better Bytecode?
+
+* new optimizations create new bytecode
+* new optimizations require recompile
+* test matrix _JVMs vs bytecodes_ explodes
+
+=== Why Not Call `String::concat`?
+
+There is no such method.
+
+* `concat(String... args)` requires `toString`
+* `concat(Object... args)` requires boxing
+
+Nothing fancy can be done +
+because compiler must use public API.
+
+=== Invokedynamic
+
+Invokedynamic came in Java 7:
+
+* compiler creates a recipe
+* runtime has to process it
+* defers decisions from compiler to runtime
+
+(Used for lambda expressions and in Nashorn.)
+
+=== Indy To The Rescue
+
+With Indy compiler can express +
+_"concat these things"_ +
+(without boxing!)
+
+JVM executes by writing content +
+directly to new `byte[]`.
+
+=== Performance
+
+Depending on circumstances:
+
+* throughput 2.6x
+* garbage less 3.4x
+
+(Benchmarks by https://shipilev.net/[Aleksey Shipilëv])
+
+=== Performance Of Indified Compact String Concat
+
+Depending on circumstances:
+
+* throughput 2.9x
+* garbage less 6.4x
+
+(Benchmarks by https://shipilev.net/[Aleksey Shipilëv])
+
+=== More
+
+Background on `String` +
+performance improvements:
+
+https://www.youtube.com/watch?v=wIyeOaitmWM[Aleksey Shipilëv +
+The Lord Of The Strings]

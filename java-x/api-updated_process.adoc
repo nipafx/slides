@@ -1,0 +1,52 @@
+== {title}
+
+{toc}
+
+Improving interaction with OS processes.
+
+=== Simple Example
+
+```shell
+ls /home/nipa/tmp | grep pdf
+```
+
+```java
+Path dir = Paths.get("/home/nipa/tmp");
+ProcessBuilder ls = new ProcessBuilder()
+		.command("ls")
+		.directory(dir.toFile());
+ProcessBuilder grepPdf = new ProcessBuilder()
+		.command("grep", "pdf")
+		.redirectOutput(Redirect.INHERIT);
+List<Process> lsThenGrep = ProcessBuilder
+		.startPipeline(List.of(ls, grepPdf));
+```
+
+=== Extended `Process`
+
+Cool new methods on `Process`:
+
+* `boolean supportsNormalTermination();`
+* `long pid();`
+* `CompletableFuture<Process> onExit();`
+* `Stream<ProcessHandle> children();`
+* `Stream<ProcessHandle> descendants();`
+* `ProcessHandle toHandle();`
+
+=== New `ProcessHandle`
+
+New functionality actually comes from `ProcessHandle`.
+
+Interesting `static` methods:
+
+* `Stream<ProcessHandle> allProcesses();`
+* `Optional<ProcessHandle> of(long pid);`
+* `ProcessHandle current();`
+
+=== More Information
+
+`ProcessHandle` can return `Info`:
+
+* command, arguments
+* start time
+* CPU time

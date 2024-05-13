@@ -1,0 +1,124 @@
+== {title}
+
+{toc}
+
+Observing the JVM at work.
+
+=== Unified Logging
+
+New logging infrastructure for the JVM +
+(e.g. OS interaction, threading, GC, etc.):
+
+* JVM log messages pass through new mechanism +
+* works similar to known logging frameworks:
+** textual messages
+** log level
+** time stamps
+** meta information (like subsystem)
+* output can be configured with `-Xlog`
+
+=== Unified Logging
+
+image::images/unified-logging.png[role="diagram"]
+
+=== First Try
+
+Plain use of `-Xlog`:
+
+```sh
+$ java -Xlog -version
+
+# truncated a few messages
+> [0.002s][info][os       ] HotSpot is running ...
+# truncated a lot of messages
+```
+
+You can see:
+
+* JVM uptime (2ms)
+* log level (`info`)
+* tags (`os`)
+* message
+
+=== Configuring `-Xlog`
+
+This can be configured:
+
+* which messages to show
+* where messages go
+* what messages should say
+
+How? `-Xlog:help` lists all options.
+
+=== Which Messages?
+
+Configure with _selectors_: `$TAG_SET=$LEVEL`:
+
+```sh
+# "exactly gc" on "warning"
+-Xlog:gc=warning
+# "including gc" on "warning"
+-Xlog:gc*=warning
+# "exactly gc and os" on "debug"
+-Xlog:gc+os=debug
+# "gc" on "debug" and "os" on warning
+-Xlog:gc=debug,os=warning
+```
+
+Defaults:
+
+```sh
+-Xlog       # the same as -Xlog:all
+-Xlog:$TAG  # same as -Xlog:$TAG=info
+```
+
+=== Where Do Messages Go?
+
+Three possible locations:
+
+* `stdout` (default)
+* `stderr`
+* `file=$FILENAME` +
+  (file rotation is possible)
+
+Example:
+
+```sh
+# all debug messages into application.log
+-Xlog:all=debug:file=application.log
+```
+
+=== Which Information?
+
+_Decorators_ define what is shown:
+
+* `time`: time and date (also in ms and ns)
+* `uptime`: time since JVM start (also in ms and ns)
+* `pid`: process identifier
+* `tid`: thread identifier
+* `level`: log level
+* `tags`: tag-set
+
+Example:
+
+```sh
+# show uptime in ms and level
+-Xlog:all:stdout:level,uptimemillis
+```
+
+=== Put Together
+
+Formal syntax:
+
+```sh
+-Xlog:$SELECTORS:$OUTPUT:$DECORATORS:$OUTPUT_OPTS
+```
+
+* `$SELECTORS` are pairs of tag sets and log levels +
+  (the docs call this _what-expression_)
+* `$OUTPUT` is `stdout`, `stderr`, or `file=<filename>`
+* `$DECORATORS` define what is shown
+* `$OUTPUT_OPTS` configure file rotation
+
+Elements have to be defined from left to right. +
+(But can be empty, e.g. `-Xlog::stderr`.)

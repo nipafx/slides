@@ -1,0 +1,47 @@
+== {title}
+
+{toc}
+
+The JDK as common ground for reactive stream libraries.
+
+=== Reactive Types
+
+`Publisher`::
+* produces items to consume
+* can be subscribed to
+`Subscriber`::
+* subscribes to publisher
+* `onNext`, `onError`, `onComplete`
+`Subscription`::
+* connection from subscriber to publisher
+* `request`, `cancel`
+
+=== Reactive Flow
+==== Subscribing
+
+* create `Publisher pub` and `Subscriber sub`
+* call `pub.subscribe(sub)`
+* pub creates `Subscription script` +
+and calls `sub.onSubscription(script)`
+* `sub` can store `script`
+
+=== Reactive Flow
+==== Streaming
+
+* `sub` calls `script.request(10)`
+* `pub` calls `sub.onNext(element)` (max 10x)
+
+==== Canceling
+
+* `pub` may call `sub.OnError(err)` +
+or `sub.onComplete()`
+* `sub` may call `script.cancel()`
+
+=== Reactive APIs?
+
+JDK only provides three interfaces +
+and one simple implementation.
+
+(Also called *Flow API*.)
+
+So far, only reactive HTTP/2 API ⑪ uses Flow.

@@ -1,0 +1,77 @@
+== {title}
+
+{toc}
+
+"Do this on Java X, do that on Java Y."
+
+=== Version Dependence
+
+`Main` calls `Version`:
+
+```java
+public class Main {
+
+	public static void main(String[] args) {
+		System.out.println(new Version().get());
+	}
+
+}
+```
+
+=== Version Dependence
+
+`Version` exists twice:
+
+```java
+public class Version {
+
+	public String get() { return "Java 8"; }
+
+}
+
+public class Version {
+
+	public String get() { return "Java 21+"; }
+
+}
+```
+
+(Btw, IDEs hate this!)
+
+=== Creating A Multi&#8209;Release&nbsp;JAR
+
+Now, here's the magic:
+
+* compile `Main` and `Version[8]` to `out/java-8`
+* compile `Version[21]` to `out/java-21`
+* use new `jar` flag `--release`:
++
+```bash
+jar --create --file out/mr.jar
+	-C out/java-8 .
+	--release 21 -C out/java-21 .
+```
+
+=== JAR Content
+
+```bash
+└ dev
+  └ nipafx ... (moar folders)
+    ├ Main.class
+    └ Version.class # 8
+└ META-INF
+  └ versions
+    └ 21
+      └ dev
+        └ nipafx ... (moar folders)
+          └ Version.class # 21
+```
+
+=== Run!
+
+With `java -cp out/mr.jar ...Main`:
+
+* prints `"Java 8"` on Java 8
+* prints `"Java 21+"` on Java 21 and later
+
+Great Success!

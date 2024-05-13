@@ -1,0 +1,82 @@
+== {title}
+
+{toc}
+
+One less warning you couldn't do anything about.
+
+=== Heap Pollution
+
+Innocent looking code...
+
+```java
+private <T> Optional<T> firstNonNull(T... args) {
+	return stream(args)
+			.filter(Objects::nonNull)
+			.findFirst();
+}
+```
+
+Compiler warns (on call site, too):
+
+```
+Possible heap pollution from
+parameterized vararg type
+```
+
+=== Heap Pollution?
+
+For generic varargs argument `T... args`, +
+you *must not* depend on it being a `T[]`!
+
+```java
+private <T> T[] replaceTwoNulls(
+		T value, T first, T second) {
+	return replaceAllNulls(value, first, second);
+}
+
+private <T> T[] replaceAllNulls(T value, T... args) {
+	// loop over `args`, replacing `null` with `value`
+	return args;
+}
+```
+
+=== Compiler Warning
+
+Compiler is aware of the problem and warns you.
+
+If you think, everything's under control:
+
+```java
+@SafeVarargs
+private <T> Optional<T> firstNonNull(T... args) {
+	return // [...]
+}
+```
+
+Or not... In Java 8 this is a compile error!
+
+```
+Invalid SafeVarargs annotation. Instance
+method <T>firstNonNull(T...) is not final.
+```
+
+=== But Why?
+
+The `@SafeVarargs` annotation:
+
+* tells _the caller_ that all is fine
+* only makes sense on methods +
+that can not be overriden
+
+Which methods can't be overriden? +
+⇝ `final` methods
+
+What about `private` methods? +
+⇝ Damn! 😭
+
+=== @SafeVarargs on Private&nbsp;Methods
+
+Looong story, here's the point:
+
+In Java 9 `@SafeVarargs` +
+can be applied to private methods.

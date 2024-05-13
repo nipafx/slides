@@ -1,0 +1,296 @@
+== {title}
+
+{toc}
+
+Type inference with `var`. +
+Less typing, but still strongly typed.
+
+
+=== Type Duplication
+
+We're used to duplicating +
+type information:
+
+```java
+URL nipafx = new URL("https://nipafx.dev");
+URLConnection connection = nipafx.openConnection();
+Reader reader = new BufferedReader(
+	new InputStreamReader(
+		connection.getInputStream()));
+```
+
+Not so bad?
+
+=== Type Duplication
+
+What about this?
+
+```java
+No no = new No();
+AmountIncrease<BigDecimal> more =
+	new BigDecimalAmountIncrease();
+HorizontalConnection<LinePosition, LinePosition>
+	jumping =
+		new HorizontalLinePositionConnection();
+Variable variable = new Constant(5);
+List<String> names = List.of("Max", "Maria");
+```
+
+=== Type Deduplication
+
+Can't somebody else do that? +
+Compiler knows the types!
+
+Enter `var`:
+
+```java
+var nipafx = new URL("https://nipafx.dev");
+var connection = nipafx.openConnection();
+var reader = new BufferedReader(
+	new InputStreamReader(
+		connection.getInputStream()));
+```
+
+=== Locality
+
+How much information is used for inference?
+
+* type inference can be +
+  arbitrarily complex/powerful
+* critical resource is not +
+  compiler but developer
+* code should be readable +
+  (without compiler/IDE)
+
+⇝ Better to keep it simple!
+
+=== "Action at a distance"
+
+```java
+// inferred as `int`
+var id = 123;
+if (id < 100) {
+	// very long branch
+} else {
+	// oh boy, much more code...
+}
+
+// now we add this line:
+id = "124";
+```
+
+What type should `id` be?
+
+Where does the error show up?
+
+=== Rules of `var`
+
+Hence, `var` only works in limited scopes:
+
+[%step]
+* compiler infers type from right-hand side +
+  ⇝ rhs has to *exist* and *define a type*
+* only works for local variables, `for`, `try` +
+  ⇝ no `var` on fields or in method signatures
+* also on lambda parameters ⑪ +
+  ⇝ annotate inferred type on lambda parameters
+
+=== Rules of `var`
+
+Two more:
+
+* not a keyword, but a _reserved type name_ +
+  ⇝ variables/fields can be named `var`
+* compiler writes type into bytecode +
+  ⇝ no run-time component
+
+=== What About Readability?
+
+This *is* about readability!
+
+* less redundancy
+* more intermediate variables
+* more focus on variable names
+* aligned variable names
+
+=== Aligned Variable Names
+
+```java
+var no = new No();
+var more = new BigDecimalAmountIncrease();
+var jumping = new HorizontalLinePositionConnection();
+var variable = new Constant(5);
+var names = List.of("Max", "Maria");
+```
+
+=== What About Readability?
+
+Still think omitting types is always bad?
+
+Ever wrote a lambda without declaring types?
+
+```java
+rhetoricalQuestion.answer(yes -> "see my point?");
+```
+
+=== Style Guidelines
+
+Principles from the
+https://openjdk.org/projects/amber/LVTIstyle.html[official style guidelines]:
+
+[%step]
+. Reading code is more important than writing it.
+. Code should be clear from local reasoning.
+. Code readability shouldn't depend on IDEs.
+. Explicit types are a tradeoff.
+
+=== Style Guidelines
+
+Guidelines:
+
+[%step]
+. Choose variable names that provide useful info.
+. Minimize the scope of local variables.
+. Consider `var` when the initializer provides sufficient information to the reader.
+. Use `var` to break up chained or nested expressions.
+. Don't worry too much about "programming to the interface".
+. Take care when using `var` with diamonds or generics.
+. Take care when using `var` with literals.
+
+=== Style Guidelines
+
+1. Choose variable names that provide useful info.
+
+```java
+/* ✘ */ var u = UserRepository.findUser(id);
+/* ✔ */ var user = UserRepository.findUser(id);
+/* 👍*/ var userToLogIn = UserRepository.findUser(id);
+```
+
+=== Style Guidelines
+
+[start=2]
+. Minimize the scope of local variables.
+
+```java
+// ✘
+var id = 123;
+if (id < 100) {
+	// very long branch
+} else {
+	// oh boy, much more code...
+}
+LOGGER.info("... " + id);
+
+// ✔ replace branches with method calls
+```
+
+=== Style Guidelines
+
+[start=3]
+. Consider `var` when the initializer provides +
+  sufficient information to the reader.
+
+```java
+/* ✘ */ var user = Repository.find(id);
+/* ✔ */ var user = UserRepository.findUser(id);
+/* 👍*/ var user = new User(id);
+```
+
+=== Style Guidelines
+
+[start=4]
+. Use `var` to break up chained or nested expressions.
+
+```java
+// ✘
+return Canvas
+	.activeCanvas()
+	.drawings()
+	.filter(Drawing::isLine)
+	.map(drawing -> (HorizontalConnection) drawing)
+		// now we have lines
+	.filter(line -> length(line) == 7)
+	.map(this::generateSquare)
+		// now we have squares
+	.map(this::createRandomColoredSquare)
+	.map(this::createRandomBorderedSquare)
+	.collect(toList());
+```
+
+=== Style Guidelines
+
+[start=4]
+. Use `var` to break up chained or nested expressions.
+
+```java
+// ✔
+var lines = Canvas
+	.activeCanvas()
+	.drawings()
+	.filter(Drawing::isLine)
+	.map(drawing -> (HorizontalConnection) drawing)
+var squares = lines
+	.filter(line -> length(line) == 7)
+	.map(this::generateSquare);
+return squares
+	.map(this::createRandomColoredSquare)
+	.map(this::createRandomBorderedSquare)
+	.collect(toList());
+```
+
+=== Style Guidelines
+
+[start=5]
+. Don't worry too much about +
+  "programming to the interface".
+
+```java
+// inferred as `ArrayList` (not `List`),
+// but that's ok
+var users = new ArrayList<User>();
+```
+
+Careful when refactoring:
+
+* extracting methods that use `var`-ed variables +
+  puts concrete types into method signatures
+* look out and replace with most general type
+
+=== Style Guidelines
+
+[start=6]
+. Take care when using `var` with diamonds or generics.
+
+```java
+// ✘ infers `ArrayList<Object>`
+var users = new ArrayList<>();
+
+// ✔ infers `ArrayList<User>`
+var users = new ArrayList<User>();
+```
+
+=== Style Guidelines
+
+[start=7]
+. Take care when using `var` with literals.
+
+```java
+// ✘ when used with `var`, these
+//   variables become `int`
+byte b = 42;
+short s = 42;
+long l = 42;
+```
+
+=== More on `var`
+
+* First Contact With `var` In Java 10 +
+💻 https://blog.codefx.org/java/java-10-var-type-inference/[tiny.cc/java-var] /
+▶ https://www.youtube.com/watch?v=Le1DbpRZdRQ&index=1&list=PL_-IO8LOLuNp2stY1qBUtXlfMdJW7wvfT[tiny.cc/java-var-yt]
+* https://snyk.io/blog/local-type-inference-java-cheat-sheet[cheat sheet] (*⇜ print when getting started!*)
+* https://openjdk.org/projects/amber/LVTIstyle.html[official style guidelines]
+* `var` and ...
+** https://blog.codefx.org/java/intersection-types-var/[intersection types]
+** https://nipafx.dev/java-var-traits[traits]
+** https://blog.codefx.org/java/tricks-var-anonymous-classes/[anonymous classes]

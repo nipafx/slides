@@ -1,0 +1,66 @@
+== {title}
+
+{toc}
+
+Use your logging framework of choice +
+as backend for JDK logging.
+
+=== Loggers and Finders
+
+New logging infrastructure for the core libraries +
+(i.e. this does not apply to JVM log messages!)
+
+* new interface `System.Logger`
+* used by JDK classes
+* instances created by `System.LoggerFinder`
+
+The interesting bit:
+
+*`LoggerFinder` is a service!*
+
+=== Creating a `Logger`
+
+```java
+public class SystemOutLogger implements Logger {
+
+	public String getName() { return "SystemOut"; }
+
+	public boolean isLoggable(Level level) { return true; }
+
+	public void log(
+			Level level, ResourceBundle bundle,
+			String format, Object... params) {
+		System.out.println(/* ...*/);
+	}
+
+	// another, similar `log` method
+
+}
+```
+
+=== Creating a `LoggerFinder`
+
+```java
+public class SystemOutLoggerFinder
+		extends LoggerFinder {
+
+	public Logger getLogger(
+			String name, Module module) {
+		return new SystemOutLogger();
+	}
+
+}
+```
+
+=== Registering the Service
+
+Module descriptor for _system.out.logger_:
+
+++++
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="java language-java hljs"><span class="hljs-keyword">module</span> system.out.logger {
+    <span class="hljs-keyword">provides</span> java.lang.System.LoggerFinder
+        <span class="hljs-keyword">with</span> system.out.logger.SystemOutLoggerFinder;
+}</code></pre></div></div>
+++++
+
+Module system and JDK take care of the rest!

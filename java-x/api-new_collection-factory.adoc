@@ -1,0 +1,68 @@
+== {title}
+
+{toc}
+
+Easy creation of ad-hoc collections.
+
+=== Hope is Pain
+
+Wouldn't this be awesome?
+
+```java
+List<String> list = [ "a", "b", "c" ];
+Map<String, Integer> map = [ "one" = 1, "two" = 2 ];
+```
+
+Not gonna happen!
+
+* language change is costly
+* binds language to collection framework
+* strongly favors specific collections
+
+=== Next Best Thing ⑨
+
+```java
+List<String> list = List.of("a", "b", "c");
+Map<String, Integer> mapImmediate = Map.of(
+		"one", 1,
+		"two", 2,
+		"three", 3);
+Map<String, Integer> mapEntries = Map.ofEntries(
+		Map.entry("one", 1),
+		Map.entry("two", 2),
+		Map.entry("three", 3));
+```
+
+[NOTE.speaker]
+--
+Q: Where does `entry` come from? `Map`
+Q: Overloads on `of`? 10
+Q: Overloads on `Map::ofEntries`? 1
+--
+
+=== Interesting Details
+
+* collections are immutable +
+(no immutability in types, though)
+* collections are https://nipafx.dev/java-value-based-classes[value-based]
+* `null` elements/keys/values are forbidden
+* iteration order is random between JVM starts +
+(except for lists, of course!)
+
+=== Immutable Copies ⑩
+
+Creating immutable copies:
+
+```java
+/* on List */ List<E> copyOf(Collection<E> coll);
+/* on Set */ Set<E> copyOf(Collection<E> coll);
+/* on Map */ Map<K, V> copyOf(Map<K,V> map);
+```
+
+Great for defensive copies:
+
+```java
+public Customer(List<Order> orders) {
+	this.orders = List.copyOf(orders);
+}
+```
