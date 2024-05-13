@@ -2,132 +2,73 @@
 
 {toc}
 
-=== Starting (with) Java
+Keeping Java approachable.
 
-Java 21 makes life easier +
-for new (Java) developers.
+=== A Mature Ecosystem
 
-=== Why do we care?
+Java is very mature:
 
-We all know Java, IDEs, build tools, etc.
+* refined programming model
+* detailed toolchain
+* rich ecosystem
 
-[%step]
-* do we all?
-* what about your kids?
-* what about students?
-* what about the frontend dev?
-* what about ML/AI folks?
+But this can make it hard to learn for new (Java) developers.
 
-[%step]
-Java needs to be approachable! +
+=== Approachable Java
+
+But Java needs to be approachable:
+
+* for kids
+* for students
+* for the frontend dev
+* for ML/AI folks
+* etc.
+
 Java needs an on-ramp for new (Java) developers!
 
-=== Running Java
+=== On-Ramp to Java
 
-To write and run a simple Java program, you need:
+On-ramp:
 
-[%step]
-* a JDK
-* an editor (IDE?)
-* `javac` (build tool? IDE?)
-* `java` (IDE?)
-* some Java code
+* simplified `main` method and class
+* single-source-file execution
+* multi-source-file execution
 
-=== Writing Java
-
-Minimal Java code:
-
-```java
-public class Main {
-	public static void main(String[] args) {
-		System.out.println("Hello, World!");
-	}
-}
-```
-
-[%step]
-* visibility
-* classes & methods
-* static vs instance
-* returns & parameters
-* statements & arguments
-
-=== Approachability
-
-That's _a lot_ of tools and concepts!
-
-Java is great for large-scale development:
-
-* detailed toolchain
-* refined programming model
-
-This make it less approachable.
-
-[%step]
-Let's change that!
-
-=== jshell
-
-Java 9 added `jshell`:
-
-* *all you need*:
-** tools: JDK, `jshell`
-** concepts: statements & arguments
-* *but*:
-** not great for beginners (IMO)
-** no progression
-
-More is needed.
-
-=== Single-file execution
-
-Java 11 added single-file execution (https://openjdk.org/jeps/330[JEP 330]):
-
-```
-java Prog.java
-```
-
-* **removed**: `javac`
-* **but**: no progression
-
-Much better for beginners, +
-but just a section of an on-ramp.
-
-=== On-Ramp
-
-Expand single-file execution in two directions:
-
-* *simplify code*: reduce required Java concepts
-* *ease progression*: run multiple files with `java`
-
-=== Simpler code
+=== Simpler Code
 
 Remove requirement of:
 
-[%step]
 * `String[] args` parameter
 * `main` being static
 * `main` being public
 * the class itself
 
-[%step]
 ```java
-// all the code in Prog.java
+// smallest viable Main.java
 void main() {
 	System.out.println("Hello, World!");
 }
 ```
 
-[%step]
-_[Preview in Java 21 -- https://openjdk.org/jeps/445[JEP 445]]_
+_[Preview in Java 22 -- https://openjdk.org/jeps/463[JEP 463]]_
 
-=== Running multiple files
+=== Single-File Execution
 
-Say you have a folder:
+It's easy to execute that file:
+
+```
+java Main.java
+```
+
+_[Introduced in Java 11 -- (https://openjdk.org/jeps/330[JEP 330]]_
+
+=== Multi-File Execution
+
+The program can expand:
 
 ```
 MyFirstJava
- ├─ Prog.java
+ ├─ Main.java
  ├─ Helper.java
  └─ Lib
      └─ library.jar
@@ -136,11 +77,10 @@ MyFirstJava
 Run with:
 
 ```
-java -cp 'Lib/*' Prog.java
+java -cp 'Lib/*' Main.java
 ```
 
-[%step]
-_[Preview in Java 22 -- https://openjdk.org/jeps/458[JEP 458]]_
+_[Introduced in Java 22 -- (https://openjdk.org/jeps/458[JEP 458]]_
 
 === Progression
 
@@ -159,22 +99,9 @@ Natural progression:
 [%step]
 Doesn't even have to be that order!
 
-=== Summary
-
-Java's strengths for large-scale development +
-make it less approachable:
-
-* detailed toolchain
-* refined programming model
-
-There are new features that:
-
-* make it easier to start
-* allow gradual progression
-* entice the future dev generation
-
 === More
 
-* 📝 https://openjdk.org/jeps/445[JEP 445] for a simpler `main`
 * 📝 https://openjdk.org/jeps/458[JEP 458] for launching multiple source file
+* 🎥 https://www.youtube.com/watch?v=q2MFE3DVkH0[Does Java 22 Kill Build Tools?]
+* 📝 https://openjdk.org/jeps/463[JEP 463] for a simpler `main`
 * 🎥 https://www.youtube.com/watch?v=P9JPUbG5npI[Script Java Easily in 21 and Beyond] (May 2023)
