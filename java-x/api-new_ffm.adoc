@@ -1,0 +1,119 @@
+== {title}
+
+{toc}
+
+Cutting the Isthmus between Java and native code.
+
+=== Foreign memory
+
+Storing data off-heap is tough:
+
+* `ByteBuffer` is limited (2GB) and inefficient
+* `Unsafe` is... unsafe and not supported
+
+=== Foreign-memory API
+
+Panama introduces safe and performant API:
+
+* control (de)allocation: +
+ `Arena`, `MemorySegment`, `SegmentAllocator`
+* to access/manipulate: `MemoryLayout`, `VarHandle`
+
+=== Foreign-memory API
+
+```java
+// create `Arena` to manage off-heap memory lifetime
+try (Arena offHeap = Arena.ofConfined()) {
+	// [allocate off-heap memory to store pointers]
+	// [do something with off-heap data]
+	// [copy data back to heap]
+} // off-heap memory is deallocated here
+```
+
+=== Foreign-memory API
+
+Allocate off-heap memory to store pointers:
+
+```java
+String[] javaStrings = { "mouse", "cat", "dog" };
+// Arena offHeap = ...
+
+MemorySegment pointers = offHeap.allocateArray(
+	ValueLayout.ADDRESS, javaStrings.length);
+for (int i = 0; i < javaStrings.length; i++) {
+	// allocate off-heap & store a pointer
+	MemorySegment cString = offHeap
+		.allocateUtf8String(javaStrings[i]);
+	pointers
+		.setAtIndex(ValueLayout.ADDRESS, i, cString);
+}
+```
+
+=== Foreign-memory API
+
+Copy data back to heap:
+
+```java
+// String[] javaStrings = ...
+// MemorySegment pointers =
+
+for (int i = 0; i < javaStrings.length; i++) {
+	MemorySegment cString = pointers
+		.getAtIndex(ValueLayout.ADDRESS, i);
+	javaStrings[i] = cString.getUtf8String(0);
+}
+```
+
+=== Foreign functions
+
+JNI isn't ideal:
+
+* involves several tedious artifacts (header file, impl, ...)
+* can only interoperate with languages that align +
+  with OS/architecture the JVM was built for
+* doesn't reconcile Java/C type systems
+
+=== Foreign-function API
+
+Panama introduces streamlined tooling/API +
+based on method handles:
+
+* `jextract`: generates method handles from header file
+* classes to call foreign functions +
+`Linker`, `FunctionDescriptor`, `SymbolLookup`
+
+=== Foreign-function API
+
+```java
+// find foreign function on the C library path
+Linker linker = Linker.nativeLinker();
+SymbolLookup stdlib = linker.defaultLookup();
+MethodHandle radixSort = linker
+	.downcallHandle(stdlib.find("radixsort"), ...);
+
+String[] javaStrings = { "mouse", "cat", "dog" };
+try (Arena offHeap = Arena.ofConfined()) {
+	// [move Java strings off heap]
+	// invoke foreign function
+	radixSort.invoke(
+		pointers, javaStrings.length,
+		MemorySegment.NULL, '\0');
+	// [copy data back to heap]
+}
+```
+
+=== Finally final!
+
+Java 22 finalizes the FFM API, but there's more to do:
+
+* user-friendly and performant mapping from +
+  native memory to Java records/interfaces
+* improving jextract and surrounding tooling
+
+And more.
+
+=== More
+
+* 📝 https://openjdk.org/jeps/454[JEP 454]
+* 🎥 https://www.youtube.com/watch?v=kUFysMkMS00[Project Panama - Foreign Function & Memory API]
+* 📨 https://mail.openjdk.org/mailman/listinfo/panama-dev[Project Panama mailing list]
