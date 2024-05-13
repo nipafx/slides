@@ -1,0 +1,163 @@
+== {title}
+
+{toc}
+
+Like `collect`, but intermediate.
+
+=== Missing Stream Ops
+
+Streams are great, but some +
+intermediate operations are missing:
+
+* sliding windows
+* fixed groups
+* take-while-including
+* scanning
+* increasing sequences
+* etc
+
+=== Missing Terminal Ops
+
+Streams also don't have all possible terminal operations.
+
+Instead:
+
+* generalization for terminal ops ⇝ collectors
+* a few implementations, e.g. `Collectors.toSet()`
+* extension point for them: `Stream::collect`
+
+Let's do the same for intermediate ops!
+
+=== Introducing Gatherers
+
+The gatherers API consists of:
+
+* generalization for intermediate ops ⇝ gatherers
+* a few implementations, e.g. `Gatherers.scan(…)`
+* extension point for them: `Stream::gather`
+
+=== Gatherer Building Blocks
+
+One required building block:
+
+Integrator::
+* accepts `(state, element, downstream)`
+* has the task to combine `state` and `element`
+** to update the `state`
+** to emit 0+ result(s) to `downstream`
+
+=== Integrator Example
+
+Does nothing:
+
+```java
+static <T> Gatherer<T, ?, T> doNothing() {
+	Integrator<Void, T, T> integrator = (_, el, ds)
+		-> ds.push(el);
+	return Gatherer.of(integrator);
+}
+```
+
+=== Integrator Example
+
+Reimplements `Stream::map`:
+
+```java
+static <T, R> Gatherer<T, ?, R> map(Function<T, R> f) {
+	Integrator<Void, T, R> integrator = (_, el, ds) -> {
+		R newEl = f.apply(el);
+		return ds.push(newEl);
+	};
+	return Gatherer.of(integrator);
+}
+```
+
+=== Gatherer Building Blocks
+
+Three optional building blocks:
+
+Initializer: :: creates instance(s) of `state`
+Finisher: ::
+* accepts `(state, downstream)`
+* emits 0+ element(s) to `downstream`
+Combiner: :: combines to `states` into one
+
+=== Fixed-Sized Groups
+
+Create groups of fixed size:
+
+* input: "A", "C", "F", "B", "S"
+* output: ["A", "C"], ["F", "B"], ["S"]
+
+We need:
+
+* an initializer to create empty group list
+* an integrator that emits when group is full
+* a finisher to emit incomplete group
+
+=== Fixed-Sized Group Initializer
+
+```java
+Supplier<List<T>> initializer = ArrayList::new;
+```
+
+=== Fixed-Sized Group Integrator
+
+```java
+Integrator<List<T>, T, List<T>> integrator =
+	(state, el, ds) -> {
+		state.add(el);
+
+		if (state.size() < size)
+			return true;
+		else {
+			var group = List.copyOf(state);
+			state.clear();
+			return ds.push(group);
+		}
+	};
+```
+
+=== Fixed-Sized Group Finisher
+
+```java
+BiConsumer<List<T>, Downstream<List<T>>> finisher =
+	(state, ds) -> {
+		var group = List.copyOf(state);
+		ds.push(group);
+	};
+```
+
+=== Fixed-Sized Group Gatherer
+
+```java
+static <T> Gatherer<T, ?, List<T>> groups(int size) {
+	Supplier<...> initializer = // ...
+	Integrator<...> integrator = // ...
+	BiConsumer<...> finisher = // ...
+
+	return Gatherer.ofSequential(
+		initializer, integrator, finisher);
+}
+```
+
+=== Fixed-Sized Group Gatherer
+
+Using our gatherer:
+
+```java
+Stream.of("A", "C", "F", "B", "S")
+	.gather(groups(2))
+	.forEach(System.out::println);
+
+// [A, C]
+// [F, B]
+// [S]
+```
+
+=== More
+
+* 📝 https://openjdk.org/jeps/461[JEP 461]
+* 🎥 https://www.youtube.com/watch?v=8fMFa6OqlY8[Teaching Old Streams New Tricks]
+* 🎥 https://www.youtube.com/watch?v=epgJm2dZTSg[Better Java Streams with Gatherers]
+* 🎥 https://www.youtube.com/watch?v=pNQ5OXMXDbY[Implementing New Java Stream Operations]
