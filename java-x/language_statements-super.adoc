@@ -1,0 +1,264 @@
+== {title}
+
+{toc}
+
+A quality-of-life improvement.
+
+=== Constructor Chaining
+
+With multiple constructors, it's good practice +
+to have one constructor that:
+
+* checks all arguments
+* assigns all fields
+
+Other constructors just forward (if possible).
+
+=== Constructor Chaining
+
+```java
+class Name {
+
+	private final String first;
+	private final String last;
+
+	Name(String first, String last) {
+		// [... checks for null, etc. ...]
+		this.first = first;
+		this.last = last;
+	}
+
+	Name(String last) {
+		this("", last);
+	}
+
+}
+```
+
+=== Inheritance
+
+With superclasses, chaining is enforced:
+
+```java
+class ThreePartName extends Name {
+
+	private final String middle;
+
+	ThreePartName(
+			String first, String middle, String last) {
+		// doesn't compile without this call
+		super(first, last);
+		this.middle = middle;
+	}
+
+}
+```
+
+=== Limitations
+
+**But**:
+
+Java allows no statements before +
+`super(...)` / `this(...)`!
+
+=== Why?
+
+No statements before `super(...)` / `this(...)`:
+
+* superclass should be initialized +
+  before subclass runs any code +
+  ⇝ no code before `super(...)`
+* code before `this(...)` would +
+  run before `super(...)` +
+  ⇝ no code before `this(...)`
+
+=== Limitations
+
+This is a problem when you want to:
+
+* check arguments
+* prepare arguments
+* split/share arguments
+
+=== Splitting Arguments
+
+```java
+class Name {
+
+	// fields and constructor as before
+
+	Name(String full) {
+		// does the same work twice
+		this(
+			full.split(" ")[0],
+			full.split(" ")[1]);
+	}
+
+}
+```
+
+=== Splitting Arguments
+
+```java
+class Name {
+
+	// fields and constructor as before
+
+	// avoids two splits but "costs"
+	// duplicated argument validation
+	Name(String full) {
+		String[] names = full.split(" ");
+		// [... checks for null, etc. ...]
+		this.first = names[0];
+		this.last = names[1];
+	}
+
+}
+```
+
+=== Splitting Arguments
+
+```java
+class Name {
+
+	// fields and constructor as before
+
+	// avoids two splits but "costs"
+	// an additional constructor
+	Name(String full) {
+		this(full.split(" "));
+	}
+
+	private Name(String[] names) {
+		this(names[0], names[1]);
+	}
+
+}
+```
+
+=== Splitting Arguments
+
+```java
+class Name {
+
+	// fields and constructor as before
+
+	// avoids two splits but "costs"
+	// an additional construction protocol
+	static Name fromFullName(String full) {
+		String[] names = full.split(" ");
+		return new Name(names[0], names[1]);
+	}
+
+}
+```
+
+=== Limitations - Record Edition
+
+To enforce a uniform construction protocol:
+
+Records require all custom constructors +
+to (eventually) call the canonical constructor.
+
+=== Limitations - Record Edition
+
+```java
+record Name(String first, String last) {
+
+	// nope
+	Name(String full) {
+		String[] names = full.split(" ");
+		// [... checks for null, etc. ...]
+		this.first = names[0];
+		this.last = names[1];
+	}
+
+}
+```
+
+=== Splitting Arguments
+
+What we want to write:
+
+```java
+record Name {
+
+	Name(String full) {
+		String[] names = full.split(" ");
+		this(names[0], names[1]);
+	}
+
+}
+```
+
+(Analogous for classes.)
+
+=== Statements Before ...
+
+Java 22 previews statements +
+before `super(...)` and `this(...)`.
+
+Great to...
+
+=== Check Arguments
+
+```java
+class ThreePartName extends Name {
+
+	private final String middle;
+
+	ThreePartName(
+			String first, String middle, String last) {
+		// can't have a middle name without a first name
+		requireNonNullNonEmpty(first);
+		super(first, last);
+		this.middle = middle;
+	}
+
+}
+```
+
+=== Prepare Arguments
+
+```java
+class ThreePartName extends Name {
+
+	private final String middle;
+
+	ThreePartName(
+			String first, String middle, String last) {
+		// shorten first if middle is given
+		var short1st = middle.length() == 1
+				? first.substring(0, 1)
+				: first;
+		super(first, last);
+		this.middle = middle;
+	}
+
+}
+```
+
+=== Split Arguments
+
+```java
+class ThreePartName extends Name {
+
+	private final String middle;
+
+	ThreePartName(String full) {
+		// split "first middle last" on space (once 🙌🏾)
+		var names = full.split(" ");
+		super(names[0], names[2]);
+		this.middle = names[1];
+	}
+
+}
+```
+
+=== More
+
+* 📝 https://openjdk.org/jeps/447[JEP 447]
+* 🎥 https://www.youtube.com/watch?v=cI-fY9YlmH4[Statements Before `super(...)` and `this(...)`]
+
+
+
