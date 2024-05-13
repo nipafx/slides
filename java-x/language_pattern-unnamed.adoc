@@ -2,6 +2,8 @@
 
 {toc}
 
+Avoiding `default` in `switch`.
+
 === A simple app
 
 Features:
@@ -92,6 +94,24 @@ Fulfilled by:
 
 ⇝ Adding a new subtype causes compile error!
 
+=== New Page Type
+
+If `GitHubCommitPage` is added:
+
+```java
+public void categorize(Page page) {
+	// error:
+	//     "the switch statement does not cover
+	//      all possible input values"
+	switch (page) {
+		case GitHubIssuePage is -> categorizeIssue(is);
+		case GitHubPrPage pr -> categorizePr(pr);
+		case ExternalPage ext -> categorizeExternal(ext);
+		case ErrorPage err -> categorizeError(err);
+	}
+}
+```
+
 === Avoiding Default
 
 Sometimes you have "defaulty" behavior:
@@ -108,7 +128,7 @@ public void categorize(Page page) {
 
 But we need to avoid `default`!
 
-=== Avoiding Default
+=== Avoiding Default in Java 21
 
 Write explicit branches:
 
@@ -124,7 +144,10 @@ public void categorize(Page page) {
 }
 ```
 
-=== Avoiding Default
+This is the state-of-the-art in Java 21 +
+(without preview features).
+
+=== Avoiding Default in Java 22
 
 Use `_` to combine "default branches":
 
@@ -138,37 +161,9 @@ public void categorize(Page page) {
 }
 ```
 
-⇝ Default behavior without `default` branch.
-
-=== Dynamic dispatch
-
-Dynamic dispatch selects the invoked method by type.
-
-As language feature:
-
-* via inheritance
-* makes method part of API
-
-What if methods shouldn't be part of the API?
-
-=== Dynamic dispatch
-
-Without methods becoming part of the API.
-
-Via visitor pattern:
-
-* makes "visitation" part of API
-* cumbersome and indirect
-
-Via pattern matching (new):
-
-* makes "sealed" part of type
-* straight-forward
+⇝ Default behavior without `default` branch. 🥳
 
 === More
 
-More on pattern matching:
-
-* 📝 https://openjdk.org/projects/amber/design-notes/patterns/pattern-match-object-model[Pattern Matching in the Java Object Model]
-* 🎥 https://www.youtube.com/watch?v=QrwFrm1R8OY[Java 21 Brings Full Pattern Matching] (Sep 2023)
-* 🧑‍💻 https://github.com/nipafx/loom-lab[GitHub crawler]
+* 📝 https://openjdk.org/jeps/456[JEP 456]
+* 🎥 https://www.youtube.com/watch?v=QrwFrm1R8OY[Java 21 Pattern Matching Tutorial]
