@@ -14,7 +14,7 @@ intermediate operations are missing:
 * take-while-including
 * scanning
 * increasing sequences
-* etc
+* etc.
 
 === Missing Terminal Ops
 
@@ -36,6 +36,13 @@ The gatherers API consists of:
 * a few implementations, e.g. `Gatherers.scan(…)`
 * extension point for them: `Stream::gather`
 
+[%step]
+```java
+Stream.of("A", "C", "F", "B", "S")
+	.gather(scan(...))
+	.forEach(System.out::println);
+```
+
 === Gatherer Building Blocks
 
 One required building block:
@@ -48,10 +55,10 @@ Integrator::
 
 === Integrator Example
 
-Does nothing:
+Behaves transparently:
 
 ```java
-static <T> Gatherer<T, ?, T> doNothing() {
+static <T> Gatherer<T, ?, T> transparent() {
 	Integrator<Void, T, T> integrator = (_, el, ds)
 		-> ds.push(el);
 	return Gatherer.of(integrator);
@@ -86,8 +93,8 @@ Combiner: :: combines to `states` into one
 
 Create groups of fixed size:
 
-* input: "A", "C", "F", "B", "S"
-* output: ["A", "C"], ["F", "B"], ["S"]
+* stream input: "A", "C", "F", "B", "S"
+* output of `groups(2)`: ["A", "C"], ["F", "B"], ["S"]
 
 We need:
 
@@ -158,6 +165,6 @@ Stream.of("A", "C", "F", "B", "S")
 === More
 
 * 📝 https://openjdk.org/jeps/461[JEP 461]
-* 🎥 https://www.youtube.com/watch?v=8fMFa6OqlY8[Teaching Old Streams New Tricks]
+* 🎥 https://www.youtube.com/watch?v=8fMFa6OqlY8[Teaching Old Streams New Tricks] (Viktor Klang)
 * 🎥 https://www.youtube.com/watch?v=epgJm2dZTSg[Better Java Streams with Gatherers]
 * 🎥 https://www.youtube.com/watch?v=pNQ5OXMXDbY[Implementing New Java Stream Operations]

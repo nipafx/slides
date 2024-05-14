@@ -101,7 +101,7 @@ Steps to select an algorithm by properties:
 . call static method `all()` to get +
   `Stream<RandomGeneratorFactory>`
 . use methods to filter by properties, e.g.:
-* `isStreamable()`, `isSplittable()`, etc
+* `isStreamable()`, `isSplittable()`, etc.
 * `isStatistical()`, `isStochastic()`
 * `isHardware()`
 * `period()`, `stateBits()`

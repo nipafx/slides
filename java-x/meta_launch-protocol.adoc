@@ -16,7 +16,7 @@ But this can make it hard to learn for new (Java) developers.
 
 === Approachable Java
 
-But Java needs to be approachable:
+Java needs to be approachable:
 
 * for kids
 * for students
@@ -60,7 +60,7 @@ It's easy to execute that file:
 java Main.java
 ```
 
-_[Introduced in Java 11 -- (https://openjdk.org/jeps/330[JEP 330]]_
+_[Introduced in Java 11 -- https://openjdk.org/jeps/330[JEP 330]]_
 
 === Multi-File Execution
 
@@ -80,7 +80,7 @@ Run with:
 java -cp 'Lib/*' Main.java
 ```
 
-_[Introduced in Java 22 -- (https://openjdk.org/jeps/458[JEP 458]]_
+_[Introduced in Java 22 -- https://openjdk.org/jeps/458[JEP 458]]_
 
 === Progression
 
@@ -101,7 +101,17 @@ Doesn't even have to be that order!
 
 === More
 
+Simple `main`:
+
+* 📝 https://openjdk.org/jeps/463[JEP 463] for a simpler `main`
+* 🎥 https://www.youtube.com/watch?v=P9JPUbG5npI[Script Java Easily in 21 and Beyond]
+
+Single-source-file execution:
+
+* 📝 https://openjdk.org/jeps/330[JEP 330]
+* 📝 https://nipafx.dev/scripting-java-shebang/[Scripting Java 11, Shebang And All]
+
+Multi-source-file execution:
+
 * 📝 https://openjdk.org/jeps/458[JEP 458] for launching multiple source file
 * 🎥 https://www.youtube.com/watch?v=q2MFE3DVkH0[Does Java 22 Kill Build Tools?]
-* 📝 https://openjdk.org/jeps/463[JEP 463] for a simpler `main`
-* 🎥 https://www.youtube.com/watch?v=P9JPUbG5npI[Script Java Easily in 21 and Beyond] (May 2023)

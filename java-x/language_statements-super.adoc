@@ -74,7 +74,7 @@ No statements before `super(...)` / `this(...)`:
 
 === Limitations
 
-This is a problem when you want to:
+This is inconvenient when you want to:
 
 * check arguments
 * prepare arguments
@@ -259,6 +259,3 @@ class ThreePartName extends Name {
 
 * 📝 https://openjdk.org/jeps/447[JEP 447]
 * 🎥 https://www.youtube.com/watch?v=cI-fY9YlmH4[Statements Before `super(...)` and `this(...)`]
-
-
-
