@@ -1,4 +1,4 @@
-# Step 1 // main~6
+# Step 1 // main~7
 
 Records:
 * `record ExternalPage(URI url, String content)`
@@ -10,7 +10,7 @@ Records:
 	* `equals` with `instanceof`
 
 
-# Step 2 // main~5
+# Step 2 // main~6
 
 Sealed types:
 * `sealed interface Page permits ErrorPage, SuccessfulPage` with `URI url()`
@@ -18,31 +18,31 @@ Sealed types:
 * `sealed interface GitHubPage extends SuccessfulPage permits GitHubIssuePage, GitHubPrPage` with `Set<Page> links()` and `subtree()`
 
 
-# Step 3 // main~4
+# Step 3 // main~5
 
 Operations:
-* implement methods in `Pretty`:
-* implement `Statistician::evaluatePage`:
+* implement methods in `Pretty`
+* implement `Statistician::evaluatePage`
 
 Run `GitHubCrawl`.
 
 
-# Step 4 // main~3
+# Step 4 // main~4
 
 Records:
 * create `record PageWithLinks(Page page, Set<URI> links)`
 	* additional constructor without `links`
 
 Modules:
-* fix errors in `PageFactory`: `requires java.desktop;`
+* fix errors in `PageFactory`: `requires org.jsoup;`
 * fix errors in `PageTreeFactory`: `requires java.net.http;`
 
 HTTP client:
-* instantiate `HttpClient` in `GitHubCrawl`:
-* `PageTreeFactory::fetchPageAsString`:
+* instantiate `HttpClient` in `GitHubCrawl`
+* `PageTreeFactory::fetchPageAsString`
 
 Structured Concurrency:
-* `PageTreeFactory::resolveLinks`:
+* `PageTreeFactory::resolveLinks`
 
 Run:
 * add breakpoint for issue #740
@@ -52,12 +52,19 @@ Run:
 
 # Step 5 // main~2
 
-String templates:
-* change output in `GitHubCrawl::main` to:
-* add info in `ResultServer::pageHtml`:
-* add `Util::asHTML` and use in `ResultServer::serve`:
+Simple server:
+* `ResultServer::launchWebServer`
 
 
 # Step 6 // main~1
 
-Simple server:
+Launch from terminal:
+* close IDE
+* verify existence of `jar/org.jsoup...jar`
+* launch with:
+
+```sh
+java -p jars --enable-preview \
+	src/main/java/dev/nipafx/demo/modern/GitHubCrawl.java \
+	https://github.com/junit-pioneer/junit-pioneer/issues/624 10
+```

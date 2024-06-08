@@ -41,7 +41,7 @@ include::../_shared/event-on-title-and-footer.adoc[]
   modern Java features
 * this is a showcase, not a tutorial +
   ⇝ go to https://youtube.com/@java[youtube.com/@java] for more
-* code https://github.com/nipafx/modern-java-demo[github.com/nipafx/modern-java-demo]
+* code: https://github.com/nipafx/modern-java-demo[github.com/nipafx/modern-java-demo]
 * ask questions at any time
 
 === Crawling GitHub
@@ -91,12 +91,13 @@ https://github.com/nipafx/modern-java-demo[github.com/nipafx/modern-java-demo]
 
 === What Java was _That_?!
 
-JDK 22 EA with preview features!
+JDK 23 EA with preview features!
 
-Features that aren't final on JDK 21:
+Features that aren't final in JDK 21:
 
-* unnamed patterns (final in 22: https://openjdk.org/jeps/456[JEP 456])
-* `StructuredTaskScope`
+* launch multi-file programs (https://openjdk.org/jeps/458[final in 22])
+* unnamed patterns (https://openjdk.org/jeps/456[final in 22])
+* `StructuredTaskScope` (https://openjdk.org/jeps/462[preview in 21-23])
 
 === Domain Model
 
@@ -198,6 +199,12 @@ SimpleFileServer.createFileServer(
 	.start();
 ```
 
+=== Source-Code Programs
+
+```sh
+java -p jars $mainClass $args
+```
+
 === JPackage
 
 Let's watch https://www.youtube.com/watch?v=-6q_MKtPL3o[Jose's exploration]...
@@ -233,10 +240,10 @@ image::images/jpackage-07.jpg[background, size=contain]
 === Modern Java In Action
 
 * great domain modeling with +
-  records, sealed classes, pattenr matching
+  records, sealed classes, pattern matching
 * easy, structured (and scalable) concurrency
-* on-board HTTP client
-* simple web server and packaging
+* on-board HTTP client and simple web server
+* easy experimentation and packaging
 
 // ######### //
 // O U T R O //
