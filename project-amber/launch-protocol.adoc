@@ -126,17 +126,19 @@ Remove requirement of:
 * `main` being static
 * `main` being public
 * the class itself
+* `System.out`
+* imports for _java.base_
 
-[%step]
+=== Simpler Code
+
 ```java
 // all the code in Prog.java
 void main() {
-	System.out.println("Hello, World!");
+	println(List.of("Hello", "World!"));
 }
 ```
 
-[%step]
-Previews in Java 21/22 (https://openjdk.org/jeps/445[JEP 445] / https://openjdk.org/jeps/463[463]).
+Previews (in this form) in Java 23 (https://openjdk.org/jeps/477[JEP 477]).
 
 === Progression
 

@@ -86,17 +86,18 @@ Java 21/22 preview string templates (https://openjdk.org/jeps/430[JEP 430] / htt
 
 Want to "enable" variable embedding.
 
-=== String Templates
+=== But:
 
-But:
-
-> So, to be clear: there will be no string +
-> template feature, even with +
-> `--enable-preview`, in JDK 23.
-
-Gavin Bierman, https://mail.openjdk.org/pipermail/amber-spec-experts/2024-April/004106.html[April 5th]
+image::images/string-template-removal.png[width=80%]
 
 😭😭😭
+
+=== String Templates
+
+* `STR."..."`-syntax is unique
+* design goals may be achievable without it
+
+⇝ Back to the drawing board.
 
 ////
 

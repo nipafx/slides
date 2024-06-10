@@ -20,26 +20,27 @@ In Java 21:
 
 === Project Amber
 
-In Java 22:
+Since then:
 
-* unnamed patterns
-* multi-file launcher
+* unnamed patterns (final in 22; https://openjdk.org/jeps/456[JEP 456])
+* multi-file launcher (final in 22; https://openjdk.org/jeps/458[JEP 458])
 * +++<del>+++string templates (preview)+++</del>+++
-* simpler `main` (preview)
+* simpler `main` (preview in 23; https://openjdk.org/jeps/477[JEP 477])
+* primitive types in patterns (preview in 23; https://openjdk.org/jeps/455[JEP 455])
 
 === Project Amber
 
 And beyond:
 
-* deconstruction assignments
 * `with` expression
+* deconstruction assignments
 
 === Project Amber
 
 *AND MORE*:
 
-* relaxed `this()`/`super()` (https://openjdk.org/jeps/447[JEP 447]; preview in 22)
-* primitive types in patterns (https://openjdk.org/jeps/455[JEP 455]; preview in 23)
+* flexible constructor bodies (preview in 23; https://openjdk.org/jeps/447[JEP 482])
+* module imports (preview in 23; https://openjdk.org/jeps/476[JEP 476])
 * concise method bodies (https://openjdk.org/jeps/8209434[JEP draft])
 * serialization revamp (https://openjdk.org/projects/amber/design-notes/towards-better-serialization[design notes])
 
