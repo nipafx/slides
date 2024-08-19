@@ -1,4 +1,4 @@
-= Pattern Matching
+= Data-Oriented Programming
 :backend: revealjs
 :revealjs_theme: nipa-night
 :revealjsdir: ../_reveal.js/head
@@ -9,8 +9,8 @@
 :revealjs_center: true
 :revealjs_transition: fade
 :revealjs_backgroundTransition: fade
-:revealjs_parallaxBackgroundImage: images/pattern.jpg
-:revealjs_parallaxBackgroundSize: 6670px 4447px
+:revealjs_parallaxBackgroundImage: images/heart.jpg
+:revealjs_parallaxBackgroundSize: 6024px 4023px
 :revealjs_totalTime: 2700
 :docinfo: shared
 :docinfodir: ../_shared
@@ -20,7 +20,7 @@
 include::../_shared/highlight.js.adoc[]
 
 ++++
-<h2>In Java</h2>
+<h2>In Java (22)</h2>
 ++++
 
 :host-name: JavaLand
@@ -37,11 +37,23 @@ include::../_shared/event-on-title-and-footer.adoc[]
 
 // ⇝
 
-include::pattern-intro.adoc[]
+== Data-Oriented Programming
 
-include::pattern-matching.adoc[]
+++++
+<table class="toc">
+	<tr><td>What is DOP?</td></tr>
+	<tr><td>A Lengthy Example</td></tr>
+	<tr><td>That was DOP!</td></tr>
+</table>
+++++
 
-include::pattern-outro.adoc[]
+Slides at https://slides.nipafx.dev/[slides.nipafx.dev].
+
+include::dop-intro.adoc[]
+
+include::dop-example.adoc[]
+
+include::dop-outro.adoc[]
 
 include::../_shared/about-slide.adoc[]
 
