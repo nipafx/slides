@@ -9,7 +9,7 @@ Compared to other GCs, ZGC:
 * optimizes for ultra-low pause times
 * can have higher memory footprint or higher CPU usage
 
-In Java 21, ZGC becomes _generational_.
+In JDK 21, ZGC became _generational_.
 
 === Generational Hypothesis
 
@@ -19,20 +19,32 @@ In Java 21, ZGC becomes _generational_.
 GCs can make use of this by tracking +
 _young_ and _old generations_.
 
-ZGC didn't do this, but can do it now with: +
-`-XX:+UseZGC -XX:+ZGenerational`
+ZGC didn't do this, but can do it now.
 
-=== Some Benchmarks
+=== Reports
 
-A Cassandra 4 benchmark of ZGC vs GenZGC showed:
+Netflix published https://netflixtechblog.com/bending-pause-times-to-your-will-with-generational-zgc-256629c9386b[a blog post] in their adoption.
 
-* 4x throughput with a fixed heap or
-* 1/4x heap size with stable throughput
+Out of context graphs (vs. G1):
 
-(Probably not representative but very promising.)
+image::images/netflix-genzgc-memory.webp[role="diagram"]
+
+=== Reports
+
+image::images/netflix-genzgc-gc-pause.webp[role="diagram"]
+
+=== Default
+
+In JDK 23, generational mode is the default for ZGC:
+
+`-XX:+UseZGC`
+
+(Default GC is still G1.)
 
 === More
 
 * 📝 https://openjdk.org/jeps/439[JEP 439]: Generational ZGC
+* 📝 https://openjdk.org/jeps/474[JEP 474]: ZGC: Generational Mode by Default
+* 📝 https://netflixtechblog.com/bending-pause-times-to-your-will-with-generational-zgc-256629c9386b[Bending pause times to your will with Generational ZGC]
 * 🎥 https://www.youtube.com/watch?v=YyXjC68l8mw[Generational ZGC and Beyond] (Aug 2023)
 * 🎥 https://www.youtube.com/watch?v=U2Sx5lU0KM8[Java's Highly Scalable Low-Latency GC: ZGC] (Mar 2023)
