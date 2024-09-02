@@ -54,13 +54,31 @@ All follow format-specific rules.
 
 _[Preview in Java 21 and 22 -- https://openjdk.org/jeps/430[JEP 430], https://openjdk.org/jeps/459[JEP 459]]_
 
-
 ```java
-String query = STR."""
+Statement query = SQL."""
 	SELECT * FROM Person p
 	WHERE p.\{property} = '\{value}'
 	""";
 ```
+
+[%step]
+Special `SQL."..."` syntax was too much.
+
+=== Quo Vadis?
+
+* string templates were removed from JDK 23 +
+  (not even a preview)
+* the feature needs a redesign
+* timing is unknown
+
+😞
+
+=== More
+
+* 📨 https://mail.openjdk.org/pipermail/amber-spec-experts/2024-March/thread.html[mailing list discussion]
+* 🎥 https://www.youtube.com/watch?v=c6L4Ef9owuQ[What Happened to Java's String Templates?]
+
+////
 
 _Template expression_ ingredients:
 
@@ -160,3 +178,5 @@ String templates:
 * simplify string concatenation
 * enable domain-specific processing
 * incentivize the "right way"
+
+////
