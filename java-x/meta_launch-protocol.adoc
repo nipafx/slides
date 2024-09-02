@@ -46,11 +46,26 @@ Remove requirement of:
 ```java
 // smallest viable Main.java
 void main() {
-	System.out.println("Hello, World!");
+	// ...
 }
 ```
 
-_[Preview in Java 22 -- https://openjdk.org/jeps/463[JEP 463]]_
+_[Preview in Java 23 -- https://openjdk.org/jeps/477[JEP 477]]_
+
+=== Simpler Code
+
+Implicitly declared classes, implicitly import:
+
+* `java.io.IO` 's methods `print`, `println`, and `readln`
+* public top-level classes in packages exported by _java.base_
+
+```java
+// complete Main.java
+void main() {
+	var letters = List.of("A", "B", "C");
+	println(letters);
+}
+```
 
 === Single-File Execution
 
@@ -103,7 +118,7 @@ Doesn't even have to be that order!
 
 Simple `main`:
 
-* 📝 https://openjdk.org/jeps/463[JEP 463] for a simpler `main`
+* 📝 https://openjdk.org/jeps/477[JEP 477] for a simpler `main`
 * 🎥 https://www.youtube.com/watch?v=P9JPUbG5npI[Script Java Easily in 21 and Beyond]
 
 Single-source-file execution:
