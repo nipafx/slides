@@ -1,4 +1,4 @@
-= Java 22
+= Java 23
 :backend: revealjs
 :revealjs_theme: nipa-night
 :revealjsdir: ../_reveal.js/head
@@ -38,7 +38,7 @@ include::../_shared/highlight.js.adoc[]
 :host-twitter-url: https://twitter.com/javazone
 include::../_shared/event-on-title-and-footer.adoc[]
 
-:title: Java 22
+:title: Java 23
 
 // ######### //
 // I N T R O //
@@ -48,7 +48,7 @@ include::../_shared/event-on-title-and-footer.adoc[]
 
 == Let's get started!
 
-* this session focuses on Java 22
+* this session focuses on Java 23
 * we can't cover all details +
   ⇝ go to https://youtube.com/@java[youtube.com/@java] for more
 // * this is a showcase, not a tutorial +
@@ -61,16 +61,27 @@ include::../_shared/event-on-title-and-footer.adoc[]
 
 === Lots to talk about!
 
+Final features in Java 23:
+
+* Markdown in JavaDoc
+* generational ZGC by default
+
+New preview features:
+
+* primitive patterns
+* module imports
+
+=== Lots to talk about!
+
 Final features in Java 22:
 
 * unnamed patterns
 * FFM API
 * multi-source-file programs
 
-=== Lots to talk about!
+Ongoing preview features:
 
-New previews features in Java 22:
-
+* +++<s>string templates</s>+++
 * statements before `super`
 * stream gatherers
 * class-file API
@@ -79,45 +90,116 @@ New previews features in Java 22:
 // P R E S E N T A T I O N //
 // ####################### //
 
-include::_prologue.adoc[]
+// include::_prologue.adoc[]
 
 :toc: pass:[ \
 <table class="toc"> \
-	<tr class="toc-current"><td>Final Features</td></tr> \
+	<tr class="toc-current"><td>Java 23 Features</td></tr> \
+	<tr class="toc-current"><td style="padding-left: 2em;">Markdown in JavaDoc</td></tr> \
+	<tr><td style="padding-left: 2em;">GenZGC by Default</td></tr> \
+	<tr><td>New Preview Features</td></tr> \
+	<tr><td>Java 22 Features</td></tr> \
+	<tr><td>Ongoing Preview Features</td></tr> \
+</table> \
+]
+include::tools_javadoc_markdown.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr class="toc-current"><td>Java 23 Features</td></tr> \
+	<tr><td style="padding-left: 2em;">Markdown in JavaDoc</td></tr> \
+	<tr class="toc-current"><td style="padding-left: 2em;">GenZGC by Default</td></tr> \
+	<tr><td>New Preview Features</td></tr> \
+	<tr><td>Java 22 Features</td></tr> \
+	<tr><td>Ongoing Preview Features</td></tr> \
+</table> \
+]
+include::performance_gc-zgc.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>Java 23 Features</td></tr> \
+	<tr class="toc-current"><td>New Preview Features</td></tr> \
+	<tr class="toc-current"><td style="padding-left: 2em;">Primitive Patterns</td></tr> \
+	<tr><td style="padding-left: 2em;">Module Imports</td></tr> \
+	<tr><td>Java 22 Features</td></tr> \
+	<tr><td>Ongoing Preview Features</td></tr> \
+</table> \
+]
+include::language_pattern-primitive.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>Java 23 Features</td></tr> \
+	<tr class="toc-current"><td>New Preview Features</td></tr> \
+	<tr><td style="padding-left: 2em;">Primitive Patterns</td></tr> \
+	<tr class="toc-current"><td style="padding-left: 2em;">Module Imports</td></tr> \
+	<tr><td>Java 22 Features</td></tr> \
+	<tr><td>Ongoing Preview Features</td></tr> \
+</table> \
+]
+include::modules_imports.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>Java 23 Features</td></tr> \
+	<tr><td>New Preview Features</td></tr> \
+	<tr class="toc-current"><td>Java 22 Features</td></tr> \
 	<tr class="toc-current"><td style="padding-left: 2em;">Unnamed Patterns</td></tr> \
 	<tr><td style="padding-left: 2em;">FFM API</td></tr> \
 	<tr><td style="padding-left: 2em;">Launch Multi-File Programs</td></tr> \
-	<tr><td>New Preview Features</td></tr> \
+	<tr><td>Ongoing Preview Features</td></tr> \
 </table> \
 ]
 include::language_pattern-unnamed.adoc[]
 
 :toc: pass:[ \
 <table class="toc"> \
-	<tr class="toc-current"><td>Final Features</td></tr> \
+	<tr><td>Java 23 Features</td></tr> \
+	<tr><td>New Preview Features</td></tr> \
+	<tr class="toc-current"><td>Java 22 Features</td></tr> \
 	<tr><td style="padding-left: 2em;">Unnamed Patterns</td></tr> \
 	<tr class="toc-current"><td style="padding-left: 2em;">FFM API</td></tr> \
 	<tr><td style="padding-left: 2em;">Launch Multi-File Programs</td></tr> \
-	<tr><td>New Preview Features</td></tr> \
+	<tr><td>Ongoing Preview Features</td></tr> \
 </table> \
 ]
 include::api-new_ffm.adoc[]
 
 :toc: pass:[ \
 <table class="toc"> \
-	<tr class="toc-current"><td>Final Features</td></tr> \
+	<tr><td>Java 23 Features</td></tr> \
+	<tr><td>New Preview Features</td></tr> \
+	<tr class="toc-current"><td>Java 22 Features</td></tr> \
 	<tr><td style="padding-left: 2em;">Unnamed Patterns</td></tr> \
 	<tr><td style="padding-left: 2em;">FFM API</td></tr> \
 	<tr class="toc-current"><td style="padding-left: 2em;">Launch Multi-File Programs</td></tr> \
-	<tr><td>New Preview Features</td></tr> \
+	<tr><td>Ongoing Preview Features</td></tr> \
 </table> \
 ]
 include::meta_launch-protocol.adoc[]
 
 :toc: pass:[ \
 <table class="toc"> \
-	<tr><td>Final Features</td></tr> \
-	<tr class="toc-current"><td>New Preview Features</td></tr> \
+	<tr><td>Java 23 Features</td></tr> \
+	<tr><td>New Preview Features</td></tr> \
+	<tr><td>Java 22 Features</td></tr> \
+	<tr class="toc-current"><td>Ongoing Preview Features</td></tr> \
+	<tr class="toc-current"><td style="padding-left: 2em;"><s>String Templates</s></td></tr> \
+	<tr><td style="padding-left: 2em;">Statements Before Super</td></tr> \
+	<tr><td style="padding-left: 2em;">Stream Gatherers</td></tr> \
+	<tr><td style="padding-left: 2em;">Class-File API</td></tr> \
+</table> \
+]
+include::language_string-templates.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>Java 23 Features</td></tr> \
+	<tr><td>Java 22 Features</td></tr> \
+	<tr><td>New Preview Features</td></tr> \
+	<tr class="toc-current"><td>Ongoing Preview Features</td></tr> \
+	<tr><td style="padding-left: 2em;"><s>String Templates</s></td></tr> \
 	<tr class="toc-current"><td style="padding-left: 2em;">Statements Before Super</td></tr> \
 	<tr><td style="padding-left: 2em;">Stream Gatherers</td></tr> \
 	<tr><td style="padding-left: 2em;">Class-File API</td></tr> \
@@ -127,8 +209,11 @@ include::language_statements-super.adoc[]
 
 :toc: pass:[ \
 <table class="toc"> \
-	<tr><td>Final Features</td></tr> \
-	<tr class="toc-current"><td>New Preview Features</td></tr> \
+	<tr><td>Java 23 Features</td></tr> \
+	<tr><td>Java 22 Features</td></tr> \
+	<tr><td>New Preview Features</td></tr> \
+	<tr class="toc-current"><td>Ongoing Preview Features</td></tr> \
+	<tr><td style="padding-left: 2em;"><s>String Templates</s></td></tr> \
 	<tr><td style="padding-left: 2em;">Statements Before Super</td></tr> \
 	<tr class="toc-current"><td style="padding-left: 2em;">Stream Gatherers</td></tr> \
 	<tr><td style="padding-left: 2em;">Class-File API</td></tr> \
@@ -138,8 +223,11 @@ include::api-updated_stream-gatherers.adoc[]
 
 :toc: pass:[ \
 <table class="toc"> \
-	<tr><td>Final Features</td></tr> \
-	<tr class="toc-current"><td>New Preview Features</td></tr> \
+	<tr><td>Java 23 Features</td></tr> \
+	<tr><td>Java 22 Features</td></tr> \
+	<tr><td>New Preview Features</td></tr> \
+	<tr class="toc-current"><td>Ongoing Preview Features</td></tr> \
+	<tr><td style="padding-left: 2em;"><s>String Templates</s></td></tr> \
 	<tr><td style="padding-left: 2em;">Statements Before Super</td></tr> \
 	<tr><td style="padding-left: 2em;">Stream Gatherers</td></tr> \
 	<tr class="toc-current"><td style="padding-left: 2em;">Class-File API</td></tr> \
@@ -147,45 +235,43 @@ include::api-updated_stream-gatherers.adoc[]
 ]
 include::api-new_class-file.adoc[]
 
-// TODO: presentation
-
 // ######### //
 // O U T R O //
 // ######### //
 
-== Java 22
+== Java 23
 
 In a few slides...
 
-=== Java 22 Finalizes
+=== Java 23 Finalizes
 
-* https://openjdk.org/jeps/456[Unnamed Variables & Patterns]
-* https://openjdk.org/jeps/454[Foreign Function & Memory API]
-* https://openjdk.org/jeps/458[Launch Multi-File Source-Code Programs]
-* https://openjdk.org/jeps/423[Region Pinning for G1]
+* https://openjdk.org/jeps/467[Markdown in JavaDoc]
+* https://openjdk.org/jeps/474[GenZGC by Default]
 
-=== Java 22 Continues
+=== Java 23 Previews
 
-* https://openjdk.org/jeps/463[Simpler Main]
+* https://openjdk.org/jeps/455[Primitive Patterns]
+* https://openjdk.org/jeps/476[Module Imports]
+
+=== Java 23 Continues
+
+* https://openjdk.org/jeps/466[Class-File API]
+* https://openjdk.org/jeps/469[Vector API]
+* https://openjdk.org/jeps/473[Stream Gatherers]
+* https://openjdk.org/jeps/477[Simpler Main]
+* https://openjdk.org/jeps/480[Structured Concurrency]
+* https://openjdk.org/jeps/481[Scoped Values]
+* https://openjdk.org/jeps/482[Flexible Constructor Bodies]
 * +++<del>+++ https://openjdk.org/jeps/459[String Templates] +++</del>+++
-* https://openjdk.org/jeps/462[Structured Concurrency]
-* https://openjdk.org/jeps/464[Scoped Values]
-* https://openjdk.org/jeps/460[Vector API]
 
-=== Java 22 Previews
+=== Java 23
 
-* https://openjdk.org/jeps/447[Statements before super(...)]
-* https://openjdk.org/jeps/461[Stream Gatherers]
-* https://openjdk.org/jeps/457[Class-File API]
-
-=== Java 22
-
-Not explosive like Java 21, +
+Not explosive like Java 23, +
 but no slouch either.
 
 Continues Java's evolution.
 
-Get it at https://jdk.java.net/22/[jdk.java.net/22].
+Get it at https://jdk.java.net/23/[jdk.java.net/23].
 
 include::../_shared/about-slide.adoc[]
 
