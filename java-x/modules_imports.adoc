@@ -2,6 +2,138 @@
 
 {toc}
 
+=== Imports
+
+Which one do you prefer?
+
+```java
+// option A
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+// option B
+import java.util.*;
+```
+
+=== Star Imports
+
+Upsides:
+
+* more succinct
+* easier to manage manually
+
+Downsides:
+
+* less clear
+* chance of conflicts
+* arbitrary slice of API
+
+=== Module Imports
+
+```java
+import module $mod;
+```
+
+* imports public API of `$mod`
+* your code does not need to be in a module
+
+_[Preview in Java 23 -- https://openjdk.org/jeps/476[JEP 476]]_
+
+=== Module Import Details
+
+```java
+import module $mod;
+```
+
+Imports all public top-level types in:
+
+* packages exported by `$mod`
+* packages exported by `$mod` to your module +
+  (_qualified exports_)
+* packages exported by modules that `$mod` +
+  requires transitively (_implied readability_)
+
+=== Conflicts
+
+```java
+import module java.base;
+import module java.desktop;
+import module java.sql;
+
+public class Example {
+
+	public void example() {
+		// error: reference to Date is ambiguous
+		var outdated = new Date(1997, 1, 18);
+		// error: reference to List is ambiguous
+		var letters = List.of("I", "J", "N");
+	}
+
+}
+```
+
+=== Resolving Conflicts
+
+```java
+import module java.base;
+import module java.desktop;
+import module java.sql;
+
+import java.util.Date;
+import java.util.List;
+
+public class Example {
+
+	public void example() {
+		var outdated = new Date(1997, 1, 18);
+		var letters = List.of("I", "J", "N");
+	}
+
+}
+```
+
+=== Module Imports
+
+Upsides:
+
+* much more succinct
+* trivial to manage manually
+
+Downsides:
+
+* less detailed
+* conflicts are more likely
+
+=== Use Cases
+
+Consider using module imports, when:
+
+* you're already using star imports
+* you're writing scripts, experiments, demos, etc.
+
+=== Default Import
+
+Implicitly declared classes, implicitly import _java.base_:
+
+```java
+// complete Main.java - no explicit imports!
+void main() {
+	List<?> dates = Stream
+		.of(1, 2, 23, 29)
+		.map(BigDecimal::new)
+		.map(day -> LocalDate.of(
+			2024,
+			RandomGenerator.getDefault()
+				.nextInt(11) + 1,
+			day.intValue()))
+		.toList();
+
+	System.out.println(dates);
+}
+```
+
 === More
 
 * 📝 https://openjdk.org/jeps/476[JEP 476]: Module Import Declarations
