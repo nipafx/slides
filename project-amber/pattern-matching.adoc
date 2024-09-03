@@ -80,20 +80,20 @@ can implement/extend `Page`.
 
 ```java
 public sealed interface Page
-        permits ErrorPage, SuccessfulPage {
-    URI url();
+		permits ErrorPage, SuccessfulPage {
+	URI url();
 }
 
 public sealed interface SuccessfulPage
-        extends Page permits ExternalPage, GitHubPage {
-    String content();
+		extends Page permits ExternalPage, GitHubPage {
+	String content();
 }
 
 public sealed interface GitHubPage
-        extends SuccessfulPage
-        permits GitHubIssuePage, GitHubPrPage {
-    Set<Page> links();
-    default Stream<Page> subtree() { ... }
+		extends SuccessfulPage
+		permits GitHubIssuePage, GitHubPrPage {
+	Set<Page> links();
+	default Stream<Page> subtree() { ... }
 }
 ```
 
