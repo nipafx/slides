@@ -608,20 +608,20 @@ public record GitHubPrPage(
 <div class="paragraph"><p>Only <code>ErrorPage</code> and <code>SuccessfulPage</code><br>
 can implement/extend <code>Page</code>.</p></div>
 <div class="paragraph"><p>⇝ <code>interface MyPage extends Page</code> doesn&#8217;t compile</p></div></div></section><section id="_modeling_alternatives_2"><h2>Modeling Alternatives</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public sealed interface Page
-        permits ErrorPage, SuccessfulPage {
-    URI url();
+		permits ErrorPage, SuccessfulPage {
+	URI url();
 }
 
 public sealed interface SuccessfulPage
-        extends Page permits ExternalPage, GitHubPage {
-    String content();
+		extends Page permits ExternalPage, GitHubPage {
+	String content();
 }
 
 public sealed interface GitHubPage
-        extends SuccessfulPage
-        permits GitHubIssuePage, GitHubPrPage {
-    Set&lt;Page&gt; links();
-    default Stream&lt;Page&gt; subtree() { ... }
+		extends SuccessfulPage
+		permits GitHubIssuePage, GitHubPrPage {
+	Set&lt;Page&gt; links();
+	default Stream&lt;Page&gt; subtree() { ... }
 }</code></pre></div></div></div></section><section data-background-color="white" data-background-image="../_images/github-crawler-types-3c131fff.png" data-background-size="contain" data-state="empty"><div class="slide-content">
 <aside class="notes"><div class="ulist"><ul><li><p>this hierarchy is completely sealed</p></li><li><p>no new types can be added</p></li></ul></div></aside></div></section><section id="_illegal_states"><h2>Illegal States</h2><div class="slide-content"><div class="paragraph"><p>"Make illegal states unrepresentable." ✅</p></div>
 <div class="paragraph"><p>Combine:</p></div>
