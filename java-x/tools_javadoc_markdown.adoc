@@ -2,6 +2,103 @@
 
 {toc}
 
+=== Writing JavaDoc
+
+Writing simple JavaDoc is great!
+
+Writing more complex documentation...
+
+* where does `<p>` go?
+* do we need `</p>`?
+* code snippets/blocks are cumbersome
+* lists are verbose
+* tables are terrible
+* ...
+
+[%step]
+I blame HTML!
+
+=== Markdown
+
+Markdown is more pleasant to write:
+
+* no `<p>` nor `</p>`
+* code snippts/blocks are simple
+* lists are simple
+* tables are terrible (but less so)
+* embedding HTML is straightforward
+
+Markdown is widely used and known.
+
+=== Markdown in JavaDoc
+
+Java now allows Markdown JavaDoc:
+
+* each line starts with `///`
+* most Commonmark 0.3 syntax works
+* links to program elements use extended +
+  reference link syntax: `[text][element]`
+* JavaDoc tags work as usual
+
+_[Preview in Java 23 -- https://openjdk.org/jeps/467[JEP 467]]_
+
+[state="empty",background-color="white"]
+=== !
+image::images/javadoc-markdown-diff.png[background, size=contain]
+
+=== Why /// ?
+
+Wouldn't this be nice:
+
+```java
+/**md
+ *
+ * Markdown here...
+ *
+ */
+```
+
+=== Why /// ?
+
+No - example #1:
+
+```java
+/**md
+ *
+ * Here's a list:
+ *
+    * item #1
+    * item #1
+ *
+ */
+```
+
+(The leading `*` in JavaDoc is optional.)
+
+=== Why /// ?
+
+No - example #1:
+
+```java
+/**md
+ *
+ * ```java
+ * /* a Java inline comment */
+ * ```
+ *
+ */
+```
+
+(`/****` can't contain `*/`.)
+
+=== Why /// ?
+
+`///`:
+
+* no such issues
+* doesn't require new Java syntax +
+  (`//` already "escapes" parsing)
+
 === More
 
 * 📝 https://openjdk.org/jeps/467[JEP 467]: Markdown Documentation Comments
