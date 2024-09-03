@@ -55,6 +55,18 @@ Imports all public top-level types in:
 * packages exported by modules that `$mod` +
   requires transitively (_implied readability_)
 
+=== Module Imports
+
+Upsides:
+
+* much more succinct
+* trivial to manage manually
+
+Downsides:
+
+* less detailed
+* conflicts are more likely
+
 === Conflicts
 
 ```java
@@ -93,18 +105,6 @@ public class Example {
 
 }
 ```
-
-=== Module Imports
-
-Upsides:
-
-* much more succinct
-* trivial to manage manually
-
-Downsides:
-
-* less detailed
-* conflicts are more likely
 
 === Use Cases
 

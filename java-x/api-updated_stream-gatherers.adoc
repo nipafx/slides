@@ -112,14 +112,14 @@ Supplier<List<T>> initializer = ArrayList::new;
 
 ```java
 Integrator<List<T>, T, List<T>> integrator =
-	(state, el, ds) -> {
-		state.add(el);
+	(list, el, ds) -> {
+		list.add(el);
 
-		if (state.size() < size)
+		if (list.size() < size)
 			return true;
 		else {
-			var group = List.copyOf(state);
-			state.clear();
+			var group = List.copyOf(list);
+			list.clear();
 			return ds.push(group);
 		}
 	};
@@ -129,8 +129,8 @@ Integrator<List<T>, T, List<T>> integrator =
 
 ```java
 BiConsumer<List<T>, Downstream<List<T>>> finisher =
-	(state, ds) -> {
-		var group = List.copyOf(state);
+	(list, ds) -> {
+		var group = List.copyOf(list);
 		ds.push(group);
 	};
 ```

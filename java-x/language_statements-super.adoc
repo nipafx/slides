@@ -255,7 +255,14 @@ class ThreePartName extends Name {
 }
 ```
 
+=== Surprising Cameo
+
+* Project Valhalla ponders non-nullable types
+* has to work with `super()`
+* subclass sets non-null fields before `super()`
+
 === More
 
 * 📝 https://openjdk.org/jeps/482[JEP 482]: Flexible Constructor Bodies
 * 🎥 https://www.youtube.com/watch?v=cI-fY9YlmH4[Statements Before `super(...)` and `this(...)`]
+* 🎥 https://www.youtube.com/watch?v=IF9l8fYfSnI[Valhalla - Where Are We?] (Brian Goetz - Aug 2024)
