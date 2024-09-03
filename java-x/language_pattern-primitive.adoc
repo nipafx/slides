@@ -2,6 +2,96 @@
 
 {toc}
 
+=== Patterns so far...
+
+In `instanceof` and `switch`, patterns can:
+
+* match against reference types
+* deconstruct records
+* nest patterns
+* ignore parts of a pattern
+
+In `switch`:
+
+* refine the selection with guarded patterns
+
+=== Patterns so far...
+
+That (plus sealed types) are +
+the pattern matching _basics_.
+
+This will be:
+
+* built up with more features
+* built out to re-balance the language
+
+=== Case in Point
+
+The `x instanceof Y` operation:
+
+* meant: "is `x` of type `Y`?"
+* now means: "does `x` match the pattern `Y`?"
+
+For primitives:
+
+* old semantics made no sense +
+  ⇝ no `x instanceof $primitive`
+* new semantics _can_ make sense
+
+=== Bound Checks
+
+Example: `int number = 0;`
+
+[%step]
+Can `number` be an instance of `byte`?
+
+[%step]
+No, it's an `ìnt`.
+
+[%step]
+But can its value be a `byte`?
+
+[%step]
+Yes!
+
+=== Bound Checks
+
+```java
+int x = 0;
+if (x instanceof byte b)
+	System.out.println(b + " in [-128, 127]");
+else
+	System.out.println(x + " not in [-128, 127]");
+```
+
+=== More Checks
+
+What's special about 16_777_216?
+
+[%step]
+Smallest positive `int` that `float` can't represent.
+
+=== Precision Checks
+
+```java
+int x = 16_777_216;
+if (x instanceof float f)
+	// use `f`
+```
+
+=== Tri-state Boolean
+
+```java
+Boolean bool = // ...
+var emoji = switch (bool) {
+	case null -> ""
+	case true -> "✅";
+	case false -> "❌";
+}
+```
+
+(Bugged in 23; fixed in 23.0.1 and 24-EA.)
+
 === More
 
 * 📝 https://openjdk.org/jeps/455[JEP 455]: Primitive Types in Patterns, instanceof, and switch
