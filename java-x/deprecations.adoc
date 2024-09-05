@@ -13,6 +13,7 @@ Already removed:
 
 Deprecations (for removal):
 
+* memory access via `Unsafe` ㉓ (https://openjdk.org/jeps/471[JEP 471])
 * allowed-by-default dynamic agents ㉑ (https://openjdk.org/jeps/451[JEP 451])
 * Windows 32-bit x86 port ㉑ (JEPs https://openjdk.org/jeps/449[449], https://openjdk.org/jeps/479[479])
 * finalization ⑱ (https://openjdk.org/jeps/421[JEP 421])
@@ -20,6 +21,31 @@ Deprecations (for removal):
 * applet API ⑰ (https://openjdk.org/jeps/398[JEP 398])
 * primitive wrapper constructors ⑯ (https://openjdk.org/jeps/390[JEP 390])
 * biased locking ⑮ (https://openjdk.org/jeps/374[JEP 374])
+
+=== Unsafe
+
+Methods for memory access have been superseeded +
+(VarHandles via https://openjdk.org/jeps/193[JEP 193]; FFM via https://openjdk.org/jeps/454[JEP 454]).
+
+Will be phased out:
+
+* deprecation and compile-time warning ㉓
+* run-time warning ~㉕
+* exception on invocation ~㉖
+* remove methods
+
+=== Unsafe
+
+You're probably not using it directly, +
+but your dependencies may.
+
+Find them with `--sun-misc-unsafe-memory-access`:
+
+* `warn`: to get run-time warnings today
+* `debug`: same with more info
+* `deny`: throws exception
+
+Report and help fix!
 
 === Agents
 
