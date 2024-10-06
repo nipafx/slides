@@ -4,6 +4,25 @@
 
 // Avoiding `default` in `switch`.
 
+=== Underscore
+
+Use `_` to mark a (pattern) variable as unused, e.g.:
+
+```java
+BiConsumer<String, Double> = (s, _) -> // use `s`
+
+Object obj = // ...
+if (obj instanceof User(var name, _))
+	// use `name`
+
+switch (obj) {
+	case User _ -> userCount++;
+	case Admin _ -> adminCount++;
+}
+```
+
+That last one is very important!
+
 === A simple app
 
 Features:
@@ -71,8 +90,8 @@ public sealed interface Page
 === Switch over Page
 
 ```java
-public void categorize(Page page) {
-	switch (page) {
+public Category categorize(Page page) {
+	return switch (page) {
 		case GitHubIssuePage is -> categorizeIssue(is);
 		case GitHubPrPage pr -> categorizePr(pr);
 		case ExternalPage ext -> categorizeExternal(ext);
@@ -80,6 +99,23 @@ public void categorize(Page page) {
 	}
 }
 ```
+
+=== Default Behavior
+
+Sometimes you have "defaulty" behavior:
+
+```java
+public Category categorize(Page page) {
+	return switch (page) {
+		// categorize only GitHub pages
+		case GitHubIssuePage is -> categorizeIssue(is);
+		case GitHubPrPage pr -> categorizePr(pr);
+		// return Category.NONE for other page types
+	}
+}
+```
+
+How to handle remaining cases?
 
 === Maintainability
 
@@ -88,75 +124,108 @@ a pattern `switch` needs to be exhaustive.
 
 Fulfilled by:
 
-* switching over a sealed types
-* a `case` per subtype
-* avoiding the `default` branch
+1. a `default` branch
+2. explicit branches:
+** switching over a sealed types
+** a `case` per subtype
 
-⇝ Adding a new subtype causes compile error!
+=== Default Branches
 
-=== New Page Type
+Option 1:
+
+```java
+public Category categorize(Page page) {
+	return switch (page) {
+		case GitHubIssuePage is -> categorizeIssue(is);
+		case GitHubPrPage pr -> categorizePr(pr);
+		default -> Category.NONE;
+	}
+}
+```
+
+=== Default Branches
 
 If `GitHubCommitPage` is added:
 
 ```java
-public void categorize(Page page) {
-	// error:
-	//     "the switch statement does not cover
-	//      all possible input values"
-	switch (page) {
+public Category categorize(Page page) {
+	return switch (page) {
 		case GitHubIssuePage is -> categorizeIssue(is);
 		case GitHubPrPage pr -> categorizePr(pr);
-		case ExternalPage ext -> categorizeExternal(ext);
-		case ErrorPage err -> categorizeError(err);
+		// `GitHubCommitPage` gets no category!
+		default -> Category.NONE;
 	}
 }
 ```
 
-=== Avoiding Default
+⇝ Adding a new subtype causes no compile error! ❌
 
-Sometimes you have "defaulty" behavior:
+=== Explicit Branches In Java 21
 
-```java
-public void categorize(Page page) {
-	switch (page) {
-		case GitHubIssuePage is -> categorizeIssue(is);
-		case GitHubPrPage pr -> categorizePr(pr);
-		default -> { }
-	}
-}
-```
-
-But we need to avoid `default`!
-
-=== Avoiding Default in Java 21
-
-Write explicit branches:
+Option 2 in Java 21 +
+(without preview features):
 
 ```java
-public void categorize(Page page) {
-	switch (page) {
+public Category categorize(Page page) {
+	return switch (page) {
 		case GitHubIssuePage is -> categorizeIssue(is);
 		case GitHubPrPage pr -> categorizePr(pr);
 		// duplication 😢
-		case ErrorPage err -> { };
-		case ExternalPage ext -> { };
+		case ErrorPage err -> Category.NONE;
+		case ExternalPage ext -> Category.NONE;
 	};
 }
 ```
 
-This is the state-of-the-art in Java 21 +
-(without preview features).
+=== Explicit Branches In Java 21
 
-=== Avoiding Default in Java 22
+If `GitHubCommitPage` is added:
+
+```java
+public Category categorize(Page page) {
+	// error:
+	//     "the switch expression does not cover
+	//      all possible input values"
+	return switch (page) {
+		case GitHubIssuePage is -> categorizeIssue(is);
+		case GitHubPrPage pr -> categorizePr(pr);
+		case ErrorPage err -> Category.NONE;
+		case ExternalPage ext -> Category.NONE;
+	}
+}
+```
+
+⇝ Adding a new subtype causes a compile error! ✅
+
+=== Explicit Branches
+
+Would be nice to combine branches:
+
+```java
+public Category categorize(Page page) {
+	return switch (page) {
+		case GitHubIssuePage is -> categorizeIssue(is);
+		case GitHubPrPage pr -> categorizePr(pr);
+		case ErrorPage err, ExternalPage ext
+			-> Category.NONE;
+	};
+}
+```
+
+Doesn't make sense. +
+(Neither `err` nor `ext` would be in scope.)
+
+=== Explicit Branches in Java 22
 
 Use `_` to combine "default branches":
 
 ```java
-public void categorize(Page page) {
-	switch (page) {
+public Category categorize(Page page) {
+	return switch (page) {
 		case GitHubIssuePage is -> categorizeIssue(is);
 		case GitHubPrPage pr -> categorizePr(pr);
-		case ErrorPage _, ExternalPage _ -> { };
+		case ErrorPage _, ExternalPage _
+			-> Category.NONE;
 	};
 }
 ```
