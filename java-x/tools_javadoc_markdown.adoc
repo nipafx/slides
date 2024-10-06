@@ -22,10 +22,10 @@ I blame HTML!
 
 Markdown is more pleasant to write:
 
-* no `<p>` nor `</p>`
+* neither `<p>` nor `</p>`
 * code snippts/blocks are simple
 * lists are simple
-* tables are terrible (but less so)
+* tables are less terrible
 * embedding HTML is straightforward
 
 Markdown is widely used and known.
@@ -35,7 +35,7 @@ Markdown is widely used and known.
 Java now allows Markdown JavaDoc:
 
 * each line starts with `///`
-* most Commonmark 0.3 syntax works
+* CommonMark 0.30
 * links to program elements use extended +
   reference link syntax: `[text][element]`
 * JavaDoc tags work as usual
@@ -98,6 +98,85 @@ No - reason #2:
 * no such issues
 * doesn't require new Java syntax +
   (`//` already "escapes" parsing)
+
+=== Code
+
+Inline code with `{empty}`backticks`{empty}`.
+
+Code blocks with fences, e.g.:
+
+	```java
+	public void example() { }
+	```
+
+A language tag is set as a CSS class +
+for JS-based highlighting in the frontend.
+
+(Add a library with `javadoc --add-script ...`.)
+
+=== Links
+
+Use a simple reference link to directly link program elements:
+
+```java
+/// - the module [java.base/]
+/// - the package [java.util]
+/// - the class [String]
+/// - the field [String#CASE_INSENSITIVE_ORDER]
+/// - the method [String#chars()]
+```
+
+Output:
+
+* the module https://docs.oracle.com/en/java/javase/23/docs/api/java.base/module-summary.html[`java.base`]
+* the package https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/util/package-summary.html[`java.util`]
+* ...
+
+=== Links
+
+Use full reference link to add text:
+
+```java
+/// - [the _java.base_ module][java.base/]
+/// - [the `java.util` package][java.util]
+/// - [the `String` class][String]
+/// - [the `String#CASE_INSENSITIVE_ORDER` field][String#CASE_INSENSITIVE_ORDER]
+/// - [the `String#chars()` method][String#chars()]
+```
+
+Output:
+
+* https://docs.oracle.com/en/java/javase/23/docs/api/java.base/module-summary.html[the _java.base_ module]
+* https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/util/package-summary.html[the `java.util` package]
+* ...
+
+=== Tables
+
+Markdown tables:
+
+* better than HTML tables
+* still uncomfortable to create manually
+* use something like https://www.tablesgenerator.com[tablesgenerator.com]
+
+Advanced tables:
+
+* for features unsupported in Markdown, +
+  create HTML tables
+
+=== Tags
+
+JavaDoc tags work as expected:
+
+* can be used in Markdown comments
+* if they contain text, Markdown syntax works
+
+```java
+/// For more information on comments,
+/// see {@jls 3.7 Comments}.
+///
+/// @implSpec this implementation does _nothing_
+public void doSomething() { }
+```
 
 === More
 
