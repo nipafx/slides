@@ -231,7 +231,7 @@ class ThreePartName extends Name {
 		var short1st = middle.length() == 1
 				? first.substring(0, 1)
 				: first;
-		super(first, last);
+		super(short1st, last);
 		this.middle = middle;
 	}
 

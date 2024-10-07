@@ -66,7 +66,7 @@ else
 
 === More Checks
 
-What's special about 16_777_216?
+What's special about 16_777_217?
 
 [%step]
 Smallest positive `int` that `float` can't represent.
@@ -84,7 +84,7 @@ if (x instanceof float f)
 ```java
 Boolean bool = // ...
 var emoji = switch (bool) {
-	case null -> ""
+	case null -> "";
 	case true -> "✅";
 	case false -> "❌";
 }
