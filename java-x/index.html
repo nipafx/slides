@@ -773,12 +773,12 @@ the pattern matching <em>basics</em>.</p></div>
 if (x instanceof byte b)
 	System.out.println(b + " in [-128, 127]");
 else
-	System.out.println(x + " not in [-128, 127]");</code></pre></div></div></div></section><section id="_more_checks"><h2>More Checks</h2><div class="slide-content"><div class="paragraph"><p>What&#8217;s special about 16_777_216?</p></div>
+	System.out.println(x + " not in [-128, 127]");</code></pre></div></div></div></section><section id="_more_checks"><h2>More Checks</h2><div class="slide-content"><div class="paragraph"><p>What&#8217;s special about 16_777_217?</p></div>
 <div class="paragraph fragment"><p>Smallest positive <code>int</code> that <code>float</code> can&#8217;t represent.</p></div></div></section><section id="_precision_checks"><h2>Precision Checks</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">int x = 16_777_216;
 if (x instanceof float f)
 	// use `f`</code></pre></div></div></div></section><section id="_tri_state_boolean"><h2>Tri-state Boolean</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">Boolean bool = // ...
 var emoji = switch (bool) {
-	case null -&gt; ""
+	case null -&gt; "";
 	case true -&gt; "✅";
 	case false -&gt; "❌";
 }</code></pre></div></div>
@@ -1006,7 +1006,7 @@ before <code>super(&#8230;&#8203;)</code> and <code>this(&#8230;&#8203;)</code>.
 		var short1st = middle.length() == 1
 				? first.substring(0, 1)
 				: first;
-		super(first, last);
+		super(short1st, last);
 		this.middle = middle;
 	}
 
