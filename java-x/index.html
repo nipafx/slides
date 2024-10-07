@@ -426,10 +426,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://2024.javazone.no/" title="JavaZone"><img src="../_images/logo-javazone-2024-b68482fd.png" alt="Logo of JavaZone" class="logo" style="{host-logo-style}"></a>
+		<a href="https://devoxx.be/" title="Devoxx BE"><img src="../_images/logo-devoxx-c0dcfc14.png" alt="Logo of Devoxx BE" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://2024.javazone.no/" title="JavaZone website">JavaZone</a></p>
-			<p><a href="https://twitter.com/javazone" title="JavaZone on Twitter">@javazone</a></p>
+			<p><a href="https://devoxx.be/" title="Devoxx BE website">Devoxx BE</a></p>
+			<p><a href="https://twitter.com/devoxx" title="Devoxx BE on Twitter">@devoxx</a></p>
 		</div>
 	</div>
 	<div class="participant">
@@ -451,10 +451,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://2024.javazone.no/" title="JavaZone"><img src="../_images/logo-javazone-2024-b68482fd.png" alt="Logo of JavaZone" class="logo" style="{host-logo-style}"></a>
+		<a href="https://devoxx.be/" title="Devoxx BE"><img src="../_images/logo-devoxx-c0dcfc14.png" alt="Logo of Devoxx BE" class="logo" style="{host-logo-style}"></a>
 		<div class="name"><p>
-			<a href="https://2024.javazone.no/" title="JavaZone website">JavaZone</a>
-			/ <a href="https://twitter.com/javazone" title="JavaZone on Twitter">@javazone</a>
+			<a href="https://devoxx.be/" title="Devoxx BE website">Devoxx BE</a>
+			/ <a href="https://twitter.com/devoxx" title="Devoxx BE on Twitter">@devoxx</a>
 		</p></div>
 	</div>
 </footer>
@@ -464,22 +464,202 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		document.body.appendChild(document.querySelector('footer'));
 	})
 </script></div></section>
-<section><section id="_lets_get_started"><h2>Let&#8217;s get started!</h2><div class="slide-content"><div class="ulist"><ul><li><p>this session focuses on Java 23</p></li><li><p>we can&#8217;t cover all details<br>
-⇝ go to <a href="https://youtube.com/@java">youtube.com/@java</a> for more</p></li><li><p>slides at <a href="https://slides.nipafx.dev/java-x">slides.nipafx.dev/java-x</a><br>
-(hit "?" to get navigation help)</p></li><li><p>ask questions any time</p></li></ul></div></div></section><section id="_lots_to_talk_about"><h2>Lots to talk about!</h2><div class="slide-content"><div class="paragraph"><p>Final features in Java 23:</p></div>
-<div class="ulist"><ul><li><p>Markdown in JavaDoc</p></li><li><p>generational ZGC by default</p></li></ul></div>
-<div class="paragraph"><p>New preview features:</p></div>
-<div class="ulist"><ul><li><p>primitive patterns</p></li><li><p>module imports</p></li></ul></div></div></section><section id="_lots_to_talk_about_2"><h2>Lots to talk about!</h2><div class="slide-content"><div class="paragraph"><p>Final features in Java 22:</p></div>
-<div class="ulist"><ul><li><p>unnamed patterns</p></li><li><p>FFM API</p></li><li><p>multi-source-file programs</p></li></ul></div>
-<div class="paragraph"><p>Ongoing preview features:</p></div>
-<div class="ulist"><ul><li><p><s>string templates</s></p></li><li><p>statements before <code>super</code></p></li><li><p>stream gatherers</p></li><li><p>class-file API</p></li></ul></div></div></section></section>
-<section><section id="_java_23"><h2>Java 23</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr class="toc-current"><td>Java 23 Features</td></tr> <tr class="toc-current"><td style="padding-left: 2em;">Markdown in JavaDoc</td></tr> <tr><td style="padding-left: 2em;">GenZGC by Default</td></tr> <tr><td>New Preview Features</td></tr> <tr><td>Java 22 Features</td></tr> <tr><td>Ongoing Preview Features</td></tr> </table> </p></div></div></section><section id="_writing_javadoc"><h2>Writing JavaDoc</h2><div class="slide-content"><div class="paragraph"><p>Writing simple JavaDoc is great!</p></div>
+<section><section id="_lets_get_started"><h2>Let&#8217;s get started!</h2><div class="slide-content"><div class="ulist"><ul><li><p>this session focuses on Java 22 and 23</p></li><li><p>slides at <a href="https://slides.nipafx.dev/java-x">slides.nipafx.dev/java-x</a><br>
+(hit "?" to get navigation help)</p></li><li><p>ask questions any time</p></li></ul></div></div></section><section id="_lots_to_talk_about"><h2>Lots to talk about!</h2><div class="slide-content"><div class="paragraph"><p>Final features in Java 22 and 23:</p></div>
+<div class="ulist"><ul><li><p>unnamed patterns ㉒</p></li><li><p>FFM API ㉒</p></li><li><p>multi-source-file programs ㉒</p></li><li><p>Markdown in JavaDoc ㉓</p></li><li><p>generational ZGC by default ㉓</p></li></ul></div></div></section><section id="_lots_to_talk_about_2"><h2>Lots to talk about!</h2><div class="slide-content"><div class="paragraph"><p>Preview features:</p></div>
+<div class="ulist"><ul><li><p>primitive patterns</p></li><li><p>module imports</p></li><li><p><s>string templates</s></p></li><li><p>flexible constructor bodies</p></li><li><p>stream gatherers</p></li><li><p>class-file API</p></li></ul></div></div></section></section>
+<section><section id="_java_23"><h2>Java 23</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr class="toc-current"><td>Final Features</td></tr> <tr class="toc-current"><td style="padding-left: 2em;">Unnamed Patterns</td></tr> <tr><td style="padding-left: 2em;">FFM API</td></tr> <tr><td style="padding-left: 2em;">Launch Multi-File Programs</td></tr> <tr><td style="padding-left: 2em;">Markdown in JavaDoc</td></tr> <tr><td style="padding-left: 2em;">GenZGC by Default</td></tr> <tr><td>Preview Features</td></tr> </table> </p></div></div></section><section id="_underscore"><h2>Underscore</h2><div class="slide-content"><div class="paragraph"><p>Use <code>_</code> to mark a (pattern) variable as unused, e.g.:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">BiConsumer&lt;String, Double&gt; = (s, _) -&gt; // use `s`
+
+Object obj = // ...
+if (obj instanceof User(var name, _))
+	// use `name`
+
+switch (obj) {
+	case User _ -&gt; userCount++;
+	case Admin _ -&gt; adminCount++;
+}</code></pre></div></div>
+<div class="paragraph"><p>That last one is very important!</p></div></div></section><section id="_a_simple_app"><h2>A simple app</h2><div class="slide-content"><div class="paragraph"><p>Features:</p></div>
+<div class="ulist"><ul><li><p>scrapes GitHub projects</p></li><li><p>creates <code>Page</code> instances:</p><div class="ulist"><ul><li><p><code>GitHubIssuePage</code></p></li><li><p><code>GitHubPrPage</code></p></li><li><p><code>ExternalPage</code></p></li><li><p><code>ErrorPage</code></p></li></ul></div></li><li><p>further processes pages</p></li></ul></div></div></section><section id="_a_simple_app_2"><h2>A simple app</h2><div class="slide-content"><div class="paragraph"><p>Features:</p></div>
+<div class="ulist"><ul><li><p>display as interactive graph</p></li><li><p>compute graph properties</p></li><li><p>categorize pages by topic</p></li><li><p>analyze mood of interactions</p></li><li><p>process payment for analyses</p></li><li><p>etc.</p></li></ul></div></div></section><section id="_a_simple_architecture"><h2>A simple architecture?</h2><div class="slide-content"><div class="paragraph"><p>How to implement features?</p></div>
+<div class="ulist"><ul><li class="fragment"><p>methods on <code>Page</code> 😧</p></li><li class="fragment"><p>visitor pattern 😫</p></li><li class="fragment"><p>pattern matching 🥳</p></li></ul></div></div></section><section id="_pattern_matching"><h2>Pattern Matching</h2><div class="slide-content"><div class="paragraph"><p>Ingredients:</p></div>
+<div class="ulist"><ul><li><p>switch expressions ⑭ (<a href="https://openjdk.org/jeps/361">JEP 361</a>)</p></li><li><p>type pattern matching ⑯ (<a href="https://openjdk.org/jeps/394">JEP 394</a>)</p></li><li><p>sealed types ⑰ (<a href="https://openjdk.org/jeps/409">JEP 409</a>)</p></li><li><p>patterns in switch ㉑ (<a href="https://openjdk.org/jeps/441">JEP 441</a>)</p></li><li><p>unnamed patterns ㉒ (<a href="https://openjdk.org/jeps/456">JEP 456</a>)</p></li></ul></div></div></section><section id="_pattern_matching_2"><h2>Pattern Matching</h2><div class="slide-content"><div class="paragraph"><p>Approach:</p></div>
+<div class="ulist"><ul><li><p>make <code>Page</code> sealed</p></li><li><p>implement features as methods outside of <code>Page</code></p></li><li><p>accept <code>Page</code> parameters and <code>switch</code> over it</p></li><li><p>avoid <code>default</code> branch for maintainability</p></li></ul></div></div></section><section id="_sealed_page"><h2>Sealed Page</h2><div class="slide-content"><div class="paragraph"><p>Sealed types limit inheritance,<br>
+by only allowing specific subtypes.</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public sealed interface Page
+	permits GitHubIssuePage, GitHubPrPage,
+			ExternalPage, ErrorPage {
+	// ...
+}</code></pre></div></div></div></section><section id="_switch_over_page"><h2>Switch over Page</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public Category categorize(Page page) {
+	return switch (page) {
+		case GitHubIssuePage is -&gt; categorizeIssue(is);
+		case GitHubPrPage pr -&gt; categorizePr(pr);
+		case ExternalPage ext -&gt; categorizeExternal(ext);
+		case ErrorPage err -&gt; categorizeError(err);
+	}
+}</code></pre></div></div></div></section><section id="_default_behavior"><h2>Default Behavior</h2><div class="slide-content"><div class="paragraph"><p>Sometimes you have "defaulty" behavior:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public Category categorize(Page page) {
+	return switch (page) {
+		// categorize only GitHub pages
+		case GitHubIssuePage is -&gt; categorizeIssue(is);
+		case GitHubPrPage pr -&gt; categorizePr(pr);
+		// return Category.NONE for other page types
+	}
+}</code></pre></div></div>
+<div class="paragraph"><p>How to handle remaining cases?</p></div></div></section><section id="_maintainability"><h2>Maintainability</h2><div class="slide-content"><div class="paragraph"><p>Unlike an <code>if</code>-<code>else</code>-<code>if</code>-chain,<br>
+a pattern <code>switch</code> needs to be exhaustive.</p></div>
+<div class="paragraph"><p>Fulfilled by:</p></div>
+<div class="olist arabic"><ol class="arabic"><li><p>a <code>default</code> branch</p></li><li><p>explicit branches:</p><div class="ulist"><ul><li><p>switching over a sealed types</p></li><li><p>a <code>case</code> per subtype</p></li></ul></div></li></ol></div></div></section><section id="_default_branches"><h2>Default Branches</h2><div class="slide-content"><div class="paragraph"><p>Option 1:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public Category categorize(Page page) {
+	return switch (page) {
+		case GitHubIssuePage is -&gt; categorizeIssue(is);
+		case GitHubPrPage pr -&gt; categorizePr(pr);
+		default -&gt; Category.NONE;
+	}
+}</code></pre></div></div></div></section><section id="_default_branches_2"><h2>Default Branches</h2><div class="slide-content"><div class="paragraph"><p>If <code>GitHubCommitPage</code> is added:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public Category categorize(Page page) {
+	return switch (page) {
+		case GitHubIssuePage is -&gt; categorizeIssue(is);
+		case GitHubPrPage pr -&gt; categorizePr(pr);
+		// `GitHubCommitPage` gets no category!
+		default -&gt; Category.NONE;
+	}
+}</code></pre></div></div>
+<div class="paragraph"><p>⇝ Adding a new subtype causes no compile error! ❌</p></div></div></section><section id="_explicit_branches_in_java_21"><h2>Explicit Branches In Java 21</h2><div class="slide-content"><div class="paragraph"><p>Option 2 in Java 21<br>
+(without preview features):</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public Category categorize(Page page) {
+	return switch (page) {
+		case GitHubIssuePage is -&gt; categorizeIssue(is);
+		case GitHubPrPage pr -&gt; categorizePr(pr);
+		// duplication 😢
+		case ErrorPage err -&gt; Category.NONE;
+		case ExternalPage ext -&gt; Category.NONE;
+	};
+}</code></pre></div></div></div></section><section id="_explicit_branches_in_java_21_2"><h2>Explicit Branches In Java 21</h2><div class="slide-content"><div class="paragraph"><p>If <code>GitHubCommitPage</code> is added:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public Category categorize(Page page) {
+	// error:
+	//     "the switch expression does not cover
+	//      all possible input values"
+	return switch (page) {
+		case GitHubIssuePage is -&gt; categorizeIssue(is);
+		case GitHubPrPage pr -&gt; categorizePr(pr);
+		case ErrorPage err -&gt; Category.NONE;
+		case ExternalPage ext -&gt; Category.NONE;
+	}
+}</code></pre></div></div>
+<div class="paragraph"><p>⇝ Adding a new subtype causes a compile error! ✅</p></div></div></section><section id="_explicit_branches"><h2>Explicit Branches</h2><div class="slide-content"><div class="paragraph"><p>Would be nice to combine branches:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public Category categorize(Page page) {
+	return switch (page) {
+		case GitHubIssuePage is -&gt; categorizeIssue(is);
+		case GitHubPrPage pr -&gt; categorizePr(pr);
+		case ErrorPage err, ExternalPage ext
+			-&gt; Category.NONE;
+	};
+}</code></pre></div></div>
+<div class="paragraph"><p>Doesn&#8217;t make sense.<br>
+(Neither <code>err</code> nor <code>ext</code> would be in scope.)</p></div></div></section><section id="_explicit_branches_in_java_22"><h2>Explicit Branches in Java 22</h2><div class="slide-content"><div class="paragraph"><p>Use <code>_</code> to combine "default branches":</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public Category categorize(Page page) {
+	return switch (page) {
+		case GitHubIssuePage is -&gt; categorizeIssue(is);
+		case GitHubPrPage pr -&gt; categorizePr(pr);
+		case ErrorPage _, ExternalPage _
+			-&gt; Category.NONE;
+	};
+}</code></pre></div></div>
+<div class="paragraph"><p>⇝ Default behavior without <code>default</code> branch. 🥳</p></div></div></section><section id="_more"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/456">JEP 456</a>: Unnamed Variables &amp; Patterns</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=QrwFrm1R8OY">Java 21 Pattern Matching Tutorial</a></p></li></ul></div></div></section></section>
+<section><section id="_java_23_2"><h2>Java 23</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr class="toc-current"><td>Final Features</td></tr> <tr><td style="padding-left: 2em;">Unnamed Patterns</td></tr> <tr class="toc-current"><td style="padding-left: 2em;">FFM API</td></tr> <tr><td style="padding-left: 2em;">Launch Multi-File Programs</td></tr> <tr><td style="padding-left: 2em;">Markdown in JavaDoc</td></tr> <tr><td style="padding-left: 2em;">GenZGC by Default</td></tr> <tr><td>Preview Features</td></tr> </table> </p></div></div></section><section id="_foreign_memory"><h2>Foreign memory</h2><div class="slide-content"><div class="paragraph"><p>Storing data off-heap is tough:</p></div>
+<div class="ulist"><ul><li><p><code>ByteBuffer</code> is limited (2GB) and inefficient</p></li><li><p><code>Unsafe</code> is&#8230;&#8203; unsafe and not supported</p></li></ul></div></div></section><section id="_foreign_memory_api"><h2>Foreign-memory API</h2><div class="slide-content"><div class="paragraph"><p>Panama introduces safe and performant API:</p></div>
+<div class="ulist"><ul><li><p>control (de)allocation:<br>
+<code>Arena</code>, <code>MemorySegment</code>, <code>SegmentAllocator</code></p></li><li><p>to access/manipulate: <code>MemoryLayout</code>, <code>VarHandle</code></p></li></ul></div></div></section><section id="_foreign_memory_api_2"><h2>Foreign-memory API</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// create `Arena` to manage off-heap memory lifetime
+try (Arena offHeap = Arena.ofConfined()) {
+	// [allocate off-heap memory to store pointers]
+	// [do something with off-heap data]
+	// [copy data back to heap]
+} // off-heap memory is deallocated here</code></pre></div></div></div></section><section id="_foreign_memory_api_3"><h2>Foreign-memory API</h2><div class="slide-content"><div class="paragraph"><p>Allocate off-heap memory to store pointers:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">String[] javaStrings = { "mouse", "cat", "dog" };
+// Arena offHeap = ...
+
+MemorySegment pointers = offHeap.allocateArray(
+	ValueLayout.ADDRESS, javaStrings.length);
+for (int i = 0; i &lt; javaStrings.length; i++) {
+	// allocate off-heap &amp; store a pointer
+	MemorySegment cString = offHeap
+		.allocateUtf8String(javaStrings[i]);
+	pointers
+		.setAtIndex(ValueLayout.ADDRESS, i, cString);
+}</code></pre></div></div></div></section><section id="_foreign_memory_api_4"><h2>Foreign-memory API</h2><div class="slide-content"><div class="paragraph"><p>Copy data back to heap:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// String[] javaStrings = ...
+// MemorySegment pointers =
+
+for (int i = 0; i &lt; javaStrings.length; i++) {
+	MemorySegment cString = pointers
+		.getAtIndex(ValueLayout.ADDRESS, i);
+	javaStrings[i] = cString.getUtf8String(0);
+}</code></pre></div></div></div></section><section id="_foreign_functions"><h2>Foreign functions</h2><div class="slide-content"><div class="paragraph"><p>JNI isn&#8217;t ideal:</p></div>
+<div class="ulist"><ul><li><p>involves several tedious artifacts (header file, impl, &#8230;&#8203;)</p></li><li><p>can only interoperate with languages that align<br>
+with OS/architecture the JVM was built for</p></li><li><p>doesn&#8217;t reconcile Java/C type systems</p></li></ul></div></div></section><section id="_foreign_function_api"><h2>Foreign-function API</h2><div class="slide-content"><div class="paragraph"><p>Panama introduces streamlined tooling/API<br>
+based on method handles:</p></div>
+<div class="ulist"><ul><li><p><code>jextract</code>: generates method handles from header file</p></li><li><p>classes to call foreign functions<br>
+<code>Linker</code>, <code>FunctionDescriptor</code>, <code>SymbolLookup</code></p></li></ul></div></div></section><section id="_foreign_function_api_2"><h2>Foreign-function API</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// find foreign function on the C library path
+Linker linker = Linker.nativeLinker();
+SymbolLookup stdlib = linker.defaultLookup();
+MethodHandle radixSort = linker
+	.downcallHandle(stdlib.find("radixsort"), ...);
+
+String[] javaStrings = { "mouse", "cat", "dog" };
+try (Arena offHeap = Arena.ofConfined()) {
+	// [move Java strings off heap]
+	// invoke foreign function
+	radixSort.invoke(
+		pointers, javaStrings.length,
+		MemorySegment.NULL, '\0');
+	// [copy data back to heap]
+}</code></pre></div></div></div></section><section id="_finally_final"><h2>Finally final!</h2><div class="slide-content"><div class="paragraph"><p>Java 22 finalizes the FFM API, but there&#8217;s more to do:</p></div>
+<div class="ulist"><ul><li><p>user-friendly and performant mapping from<br>
+native memory to Java records/interfaces</p></li><li><p>improving jextract and surrounding tooling</p></li></ul></div>
+<div class="paragraph"><p>And more.</p></div></div></section><section id="_more_2"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/454">JEP 454</a>: Foreign Function &amp; Memory API</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=kUFysMkMS00">Project Panama - Foreign Function &amp; Memory API</a> (Maurizio Cimadamore)</p></li><li><p>📨 <a href="https://mail.openjdk.org/mailman/listinfo/panama-dev">Project Panama mailing list</a></p></li></ul></div></div></section></section>
+<section><section id="_java_23_3"><h2>Java 23</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr class="toc-current"><td>Final Features</td></tr> <tr><td style="padding-left: 2em;">Unnamed Patterns</td></tr> <tr><td style="padding-left: 2em;">FFM API</td></tr> <tr class="toc-current"><td style="padding-left: 2em;">Launch Multi-File Programs</td></tr> <tr><td style="padding-left: 2em;">Markdown in JavaDoc</td></tr> <tr><td style="padding-left: 2em;">GenZGC by Default</td></tr> <tr><td>Preview Features</td></tr> </table> </p></div></div></section><section id="_a_mature_ecosystem"><h2>A Mature Ecosystem</h2><div class="slide-content"><div class="paragraph"><p>Java is very mature:</p></div>
+<div class="ulist"><ul><li><p>refined programming model</p></li><li><p>detailed toolchain</p></li><li><p>rich ecosystem</p></li></ul></div>
+<div class="paragraph"><p>But this can make it hard to learn for new (Java) developers.</p></div></div></section><section id="_approachable_java"><h2>Approachable Java</h2><div class="slide-content"><div class="paragraph"><p>Java needs to be approachable:</p></div>
+<div class="ulist"><ul><li><p>for kids</p></li><li><p>for students</p></li><li><p>for the frontend dev</p></li><li><p>for ML/AI folks</p></li><li><p>etc.</p></li></ul></div>
+<div class="paragraph"><p>Java needs an on-ramp for new (Java) developers!</p></div></div></section><section id="_on_ramp_to_java"><h2>On-Ramp to Java</h2><div class="slide-content"><div class="paragraph"><p>On-ramp:</p></div>
+<div class="ulist"><ul><li><p>simplified <code>main</code> method and class</p></li><li><p>single-source-file execution</p></li><li><p>multi-source-file execution</p></li></ul></div></div></section><section id="_simpler_code"><h2>Simpler Code</h2><div class="slide-content"><div class="paragraph"><p>Remove requirement of:</p></div>
+<div class="ulist"><ul><li><p><code>String[] args</code> parameter</p></li><li><p><code>main</code> being static</p></li><li><p><code>main</code> being public</p></li><li><p>the class itself</p></li></ul></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// smallest viable Main.java
+void main() {
+	// ...
+}</code></pre></div></div>
+<div class="paragraph"><p><em>[Preview in Java 23&#8201;&#8212;&#8201;<a href="https://openjdk.org/jeps/477">JEP 477</a>]</em></p></div></div></section><section id="_simpler_code_2"><h2>Simpler Code</h2><div class="slide-content"><div class="paragraph"><p>Implicitly declared classes, implicitly import:</p></div>
+<div class="ulist"><ul><li><p><code>java.io.IO</code> 's methods <code>print</code>, <code>println</code>, and <code>readln</code></p></li><li><p>public top-level classes in packages exported by <em>java.base</em></p></li></ul></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// complete Main.java
+void main() {
+	var letters = List.of("A", "B", "C");
+	println(letters);
+}</code></pre></div></div></div></section><section id="_single_file_execution"><h2>Single-File Execution</h2><div class="slide-content"><div class="paragraph"><p>It&#8217;s easy to execute that file:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code>java Main.java</code></pre></div></div>
+<div class="paragraph"><p><em>[Introduced in Java 11&#8201;&#8212;&#8201;<a href="https://openjdk.org/jeps/330">JEP 330</a>]</em></p></div></div></section><section id="_multi_file_execution"><h2>Multi-File Execution</h2><div class="slide-content"><div class="paragraph"><p>The program can expand:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code>MyFirstJava
+ ├─ Main.java
+ ├─ Helper.java
+ └─ Lib
+     └─ library.jar</code></pre></div></div>
+<div class="paragraph"><p>Run with:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code>java -cp 'Lib/*' Main.java</code></pre></div></div>
+<div class="paragraph"><p><em>[Introduced in Java 22&#8201;&#8212;&#8201;<a href="https://openjdk.org/jeps/458">JEP 458</a>]</em></p></div></div></section><section id="_progression"><h2>Progression</h2><div class="slide-content"><div class="paragraph"><p>Natural progression:</p></div>
+<div class="ulist"><ul><li class="fragment"><p>start with <code>main()</code></p></li><li class="fragment"><p>need arguments? ⇝ add <code>String[] args</code></p></li><li class="fragment"><p>need to organize code? ⇝ add methods</p></li><li class="fragment"><p>need shared state? ⇝ add fields</p></li><li class="fragment"><p>need more functionality? ⇝ explore JDK APIs</p></li><li class="fragment"><p>even more? ⇝ explore simple libraries</p></li><li class="fragment"><p>need more structure? ⇝ split into multiple files</p></li><li class="fragment"><p>even more ⇝ use visibility &amp; packages</p></li></ul></div>
+<div class="paragraph fragment"><p>Doesn&#8217;t even have to be that order!</p></div></div></section><section id="_more_3"><h2>More</h2><div class="slide-content"><div class="paragraph"><p>Simplified <code>main</code>:</p></div>
+<div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/477">JEP 477</a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=P9JPUbG5npI">Script Java Easily in 21 and Beyond</a></p></li></ul></div>
+<div class="paragraph"><p>Single-source-file execution:</p></div>
+<div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/330">JEP 330</a></p></li><li><p>📝 <a href="https://nipafx.dev/scripting-java-shebang/">Scripting Java 11, Shebang And All</a></p></li></ul></div>
+<div class="paragraph"><p>Multi-source-file execution:</p></div>
+<div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/458">JEP 458</a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=q2MFE3DVkH0">Does Java 22 Kill Build Tools?</a></p></li></ul></div></div></section></section>
+<section><section id="_java_23_4"><h2>Java 23</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr class="toc-current"><td>Final Features</td></tr> <tr><td style="padding-left: 2em;">Unnamed Patterns</td></tr> <tr><td style="padding-left: 2em;">FFM API</td></tr> <tr><td style="padding-left: 2em;">Launch Multi-File Programs</td></tr> <tr class="toc-current"><td style="padding-left: 2em;">Markdown in JavaDoc</td></tr> <tr><td style="padding-left: 2em;">GenZGC by Default</td></tr> <tr><td>Preview Features</td></tr> </table> </p></div></div></section><section id="_writing_javadoc"><h2>Writing JavaDoc</h2><div class="slide-content"><div class="paragraph"><p>Writing simple JavaDoc is great!</p></div>
 <div class="paragraph"><p>Writing more complex documentation&#8230;&#8203;</p></div>
 <div class="ulist"><ul><li><p>where does <code>&lt;p&gt;</code> go?</p></li><li><p>do we need <code>&lt;/p&gt;</code>?</p></li><li><p>code snippets/blocks are cumbersome</p></li><li><p>lists are verbose</p></li><li><p>tables are terrible</p></li><li><p>&#8230;&#8203;</p></li></ul></div>
 <div class="paragraph fragment"><p>I blame HTML!</p></div></div></section><section id="_markdown"><h2>Markdown</h2><div class="slide-content"><div class="paragraph"><p>Markdown is more pleasant to write:</p></div>
-<div class="ulist"><ul><li><p>no <code>&lt;p&gt;</code> nor <code>&lt;/p&gt;</code></p></li><li><p>code snippts/blocks are simple</p></li><li><p>lists are simple</p></li><li><p>tables are terrible (but less so)</p></li><li><p>embedding HTML is straightforward</p></li></ul></div>
+<div class="ulist"><ul><li><p>neither <code>&lt;p&gt;</code> nor <code>&lt;/p&gt;</code></p></li><li><p>code snippts/blocks are simple</p></li><li><p>lists are simple</p></li><li><p>tables are less terrible</p></li><li><p>embedding HTML is straightforward</p></li></ul></div>
 <div class="paragraph"><p>Markdown is widely used and known.</p></div></div></section><section id="_markdown_in_javadoc"><h2>Markdown in JavaDoc</h2><div class="slide-content"><div class="paragraph"><p>Java now allows Markdown JavaDoc:</p></div>
-<div class="ulist"><ul><li><p>each line starts with <code>///</code></p></li><li><p>most Commonmark 0.3 syntax works</p></li><li><p>links to program elements use extended<br>
+<div class="ulist"><ul><li><p>each line starts with <code>///</code></p></li><li><p>CommonMark 0.30</p></li><li><p>links to program elements use extended<br>
 reference link syntax: <code>[text][element]</code></p></li><li><p>JavaDoc tags work as usual</p></li></ul></div>
 <div class="paragraph"><p><em>[Introduced in Java 23&#8201;&#8212;&#8201;<a href="https://openjdk.org/jeps/467">JEP 467</a>]</em></p></div></div></section><section data-background-color="white" data-background-image="../_images/javadoc-markdown-diff-e7945ae5.png" data-background-size="contain" data-state="empty"></section><section id="_why"><h2>Why /// ?</h2><div class="slide-content"><div class="paragraph"><p>Wouldn&#8217;t this be nice:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">/**md
@@ -505,8 +685,39 @@ reference link syntax: <code>[text][element]</code></p></li><li><p>JavaDoc tags 
  */</code></pre></div></div>
 <div class="paragraph"><p>(<code>/<strong>*</strong>*</code> can&#8217;t contain <code>*/</code>.)</p></div></div></section><section id="_why_4"><h2>Why /// ?</h2><div class="slide-content"><div class="paragraph"><p><code>///</code>:</p></div>
 <div class="ulist"><ul><li><p>no such issues</p></li><li><p>doesn&#8217;t require new Java syntax<br>
-(<code>//</code> already "escapes" parsing)</p></li></ul></div></div></section><section id="_more"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/467">JEP 467</a>: Markdown Documentation Comments</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=AvAIFq4fLPw">JavaDoc Hits the Markdown on Comments</a></p></li></ul></div></div></section></section>
-<section><section id="_java_23_2"><h2>Java 23</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr class="toc-current"><td>Java 23 Features</td></tr> <tr><td style="padding-left: 2em;">Markdown in JavaDoc</td></tr> <tr class="toc-current"><td style="padding-left: 2em;">GenZGC by Default</td></tr> <tr><td>New Preview Features</td></tr> <tr><td>Java 22 Features</td></tr> <tr><td>Ongoing Preview Features</td></tr> </table> </p></div></div></section><section id="_generational_zgc"><h2>Generational ZGC</h2><div class="slide-content"><div class="paragraph"><p>Compared to other GCs, ZGC:</p></div>
+(<code>//</code> already "escapes" parsing)</p></li></ul></div></div></section><section id="_code"><h2>Code</h2><div class="slide-content"><div class="paragraph"><p>Inline code with <code>`backticks</code>`.</p></div>
+<div class="paragraph"><p>Code blocks with fences, e.g.:</p></div>
+<div class="literalblock"><div class="content"><pre>```java
+public void example() { }
+```</pre></div></div>
+<div class="paragraph"><p>A language tag is set as a CSS class<br>
+for JS-based highlighting in the frontend.</p></div>
+<div class="paragraph"><p>(Add a library with <code>javadoc --add-script &#8230;&#8203;</code>.)</p></div></div></section><section id="_links"><h2>Links</h2><div class="slide-content"><div class="paragraph"><p>Use a simple reference link to directly link program elements:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">/// - the module [java.base/]
+/// - the package [java.util]
+/// - the class [String]
+/// - the field [String#CASE_INSENSITIVE_ORDER]
+/// - the method [String#chars()]</code></pre></div></div>
+<div class="paragraph"><p>Output:</p></div>
+<div class="ulist"><ul><li><p>the module <a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/module-summary.html"><code>java.base</code></a></p></li><li><p>the package <a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/util/package-summary.html"><code>java.util</code></a></p></li><li><p>&#8230;&#8203;</p></li></ul></div></div></section><section id="_links_2"><h2>Links</h2><div class="slide-content"><div class="paragraph"><p>Use full reference link to add text:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">/// - [the _java.base_ module][java.base/]
+/// - [the `java.util` package][java.util]
+/// - [the `String` class][String]
+/// - [the `String#CASE_INSENSITIVE_ORDER` field][String#CASE_INSENSITIVE_ORDER]
+/// - [the `String#chars()` method][String#chars()]</code></pre></div></div>
+<div class="paragraph"><p>Output:</p></div>
+<div class="ulist"><ul><li><p><a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/module-summary.html">the <em>java.base</em> module</a></p></li><li><p><a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/util/package-summary.html">the <code>java.util</code> package</a></p></li><li><p>&#8230;&#8203;</p></li></ul></div></div></section><section id="_tables"><h2>Tables</h2><div class="slide-content"><div class="paragraph"><p>Markdown tables:</p></div>
+<div class="ulist"><ul><li><p>better than HTML tables</p></li><li><p>still uncomfortable to create manually</p></li><li><p>use something like <a href="https://www.tablesgenerator.com">tablesgenerator.com</a></p></li></ul></div>
+<div class="paragraph"><p>Advanced tables:</p></div>
+<div class="ulist"><ul><li><p>for features unsupported in Markdown,<br>
+create HTML tables</p></li></ul></div></div></section><section id="_tags"><h2>Tags</h2><div class="slide-content"><div class="paragraph"><p>JavaDoc tags work as expected:</p></div>
+<div class="ulist"><ul><li><p>can be used in Markdown comments</p></li><li><p>if they contain text, Markdown syntax works</p></li></ul></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">/// For more information on comments,
+/// see {@jls 3.7 Comments}.
+///
+/// @implSpec this implementation does _nothing_
+public void doSomething() { }</code></pre></div></div></div></section><section id="_more_4"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/467">JEP 467</a>: Markdown Documentation Comments</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=AvAIFq4fLPw">JavaDoc Hits the Markdown on Comments</a></p></li></ul></div></div></section></section>
+<section><section id="_java_23_5"><h2>Java 23</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr class="toc-current"><td>Final Features</td></tr> <tr><td style="padding-left: 2em;">Unnamed Patterns</td></tr> <tr><td style="padding-left: 2em;">FFM API</td></tr> <tr><td style="padding-left: 2em;">Launch Multi-File Programs</td></tr> <tr><td style="padding-left: 2em;">Markdown in JavaDoc</td></tr> <tr class="toc-current"><td style="padding-left: 2em;">GenZGC by Default</td></tr> <tr><td>Preview Features</td></tr> </table> </p></div></div></section><section id="_generational_zgc"><h2>Generational ZGC</h2><div class="slide-content"><div class="paragraph"><p>Compared to other GCs, ZGC:</p></div>
 <div class="ulist"><ul><li><p>optimizes for ultra-low pause times</p></li><li><p>can have higher memory footprint or higher CPU usage</p></li></ul></div>
 <div class="paragraph"><p>In JDK 21, ZGC became <em>generational</em>.</p></div></div></section><section id="_generational_hypothesis"><h2>Generational Hypothesis</h2><div class="slide-content"><div class="ulist"><ul><li><p>most objects die young</p></li><li><p>those who don&#8217;t, grow (very) old</p></li></ul></div>
 <div class="paragraph"><p>GCs can make use of this by tracking<br>
@@ -515,8 +726,36 @@ reference link syntax: <code>[text][element]</code></p></li><li><p>JavaDoc tags 
 <div class="paragraph"><p>Out of context graphs (vs. G1):</p></div>
 <div class="imageblock diagram"><img src="../_images/netflix-genzgc-memory-0969177e.webp" alt="netflix genzgc memory"></div></div></section><section id="_reports_2"><h2>Reports</h2><div class="slide-content"><div class="imageblock diagram"><img src="../_images/netflix-genzgc-gc-pause-49d71111.webp" alt="netflix genzgc gc pause"></div></div></section><section id="_default"><h2>Default</h2><div class="slide-content"><div class="paragraph"><p>In JDK 23, generational mode is the default for ZGC:</p></div>
 <div class="paragraph"><p><code>-XX:+UseZGC</code></p></div>
-<div class="paragraph"><p>(Default GC is still G1.)</p></div></div></section><section id="_more_2"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/439">JEP 439</a>: Generational ZGC</p></li><li><p>📝 <a href="https://openjdk.org/jeps/474">JEP 474</a>: ZGC: Generational Mode by Default</p></li><li><p>📝 <a href="https://netflixtechblog.com/bending-pause-times-to-your-will-with-generational-zgc-256629c9386b">Bending pause times to your will with Generational ZGC</a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=YyXjC68l8mw">Generational ZGC and Beyond</a> (Aug 2023)</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=U2Sx5lU0KM8">Java&#8217;s Highly Scalable Low-Latency GC: ZGC</a> (Mar 2023)</p></li></ul></div></div></section></section>
-<section><section id="_java_23_3"><h2>Java 23</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr><td>Java 23 Features</td></tr> <tr class="toc-current"><td>New Preview Features</td></tr> <tr class="toc-current"><td style="padding-left: 2em;">Primitive Patterns</td></tr> <tr><td style="padding-left: 2em;">Module Imports</td></tr> <tr><td>Java 22 Features</td></tr> <tr><td>Ongoing Preview Features</td></tr> </table> </p></div></div></section><section id="_patterns_so_far"><h2>Patterns so far&#8230;&#8203;</h2><div class="slide-content"><div class="paragraph"><p>In <code>instanceof</code> and <code>switch</code>, patterns can:</p></div>
+<div class="paragraph"><p>(Default GC is still G1.)</p></div></div></section><section id="_more_5"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/439">JEP 439</a>: Generational ZGC</p></li><li><p>📝 <a href="https://openjdk.org/jeps/474">JEP 474</a>: ZGC: Generational Mode by Default</p></li><li><p>📝 <a href="https://netflixtechblog.com/bending-pause-times-to-your-will-with-generational-zgc-256629c9386b">Bending pause times to your will with Generational ZGC</a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=YyXjC68l8mw">Generational ZGC and Beyond</a> (Aug 2023)</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=U2Sx5lU0KM8">Java&#8217;s Highly Scalable Low-Latency GC: ZGC</a> (Mar 2023)</p></li></ul></div></div></section></section>
+<section><section id="_deprecations" data-background-image="images/surprise.gif" data-background-size="cover"><h2>Deprecations</h2><div class="slide-content"></div></section><section id="_cleaning_house"><h2>Cleaning house</h2><div class="slide-content"><div class="paragraph"><p>Already removed:</p></div>
+<div class="ulist"><ul><li><p>RMI activation ⑰ (<a href="https://openjdk.org/jeps/407">JEP 407</a>)</p></li><li><p>Nashorn ⑮ (<a href="https://openjdk.org/jeps/372">JEP 372</a>)</p></li><li><p>concurrent mark sweep GC ⑭ (<a href="https://openjdk.org/jeps/363">JEP 363</a>)</p></li></ul></div></div></section><section id="_cleaning_house_2"><h2>Cleaning house</h2><div class="slide-content"><div class="paragraph"><p>Deprecations (for removal):</p></div>
+<div class="ulist"><ul><li><p>memory access via <code>Unsafe</code> ㉓ (<a href="https://openjdk.org/jeps/471">JEP 471</a>)</p></li><li><p>allowed-by-default dynamic agents ㉑ (<a href="https://openjdk.org/jeps/451">JEP 451</a>)</p></li><li><p>Windows 32-bit x86 port ㉑ (JEPs <a href="https://openjdk.org/jeps/449">449</a>, <a href="https://openjdk.org/jeps/479">479</a>)</p></li><li><p>finalization ⑱ (<a href="https://openjdk.org/jeps/421">JEP 421</a>)</p></li><li><p>security manager ⑰ (<a href="https://openjdk.org/jeps/411">JEP 411</a>)</p></li><li><p>applet API ⑰ (<a href="https://openjdk.org/jeps/398">JEP 398</a>)</p></li><li><p>primitive wrapper constructors ⑯ (<a href="https://openjdk.org/jeps/390">JEP 390</a>)</p></li><li><p>biased locking ⑮ (<a href="https://openjdk.org/jeps/374">JEP 374</a>)</p></li></ul></div></div></section><section id="_unsafe"><h2>Unsafe</h2><div class="slide-content"><div class="paragraph"><p>Methods for memory access have been superseeded<br>
+(VarHandles via <a href="https://openjdk.org/jeps/193">JEP 193</a>; FFM via <a href="https://openjdk.org/jeps/454">JEP 454</a>).</p></div>
+<div class="paragraph"><p>Will be phased out:</p></div>
+<div class="ulist"><ul><li><p>deprecation and compile-time warning ㉓</p></li><li><p>run-time warning ~㉕</p></li><li><p>exception on invocation ~㉖</p></li><li><p>remove methods</p></li></ul></div></div></section><section id="_unsafe_2"><h2>Unsafe</h2><div class="slide-content"><div class="paragraph"><p>You&#8217;re probably not using it directly,<br>
+but your dependencies may.</p></div>
+<div class="paragraph"><p>Find them with <code>--sun-misc-unsafe-memory-access</code>:</p></div>
+<div class="ulist"><ul><li><p><code>warn</code>: to get run-time warnings today</p></li><li><p><code>debug</code>: same with more info</p></li><li><p><code>deny</code>: throws exception</p></li></ul></div>
+<div class="paragraph"><p>Report and help fix!</p></div></div></section><section id="_agents"><h2>Agents</h2><div class="slide-content"><div class="paragraph"><p>What it is:</p></div>
+<div class="ulist"><ul><li><p>a component that transforms byte code</p></li><li><p>uses <code>java.lang.instrument</code> or JVM TI</p></li><li><p>launches with JVM or attaches later ("dynamic")</p></li></ul></div></div></section><section id="_dynamic_agents"><h2>Dynamic agents</h2><div class="slide-content"><div class="paragraph"><p>What you need to know:</p></div>
+<div class="ulist"><ul><li><p>all mechanisms for agents remain intact</p></li><li><p>nothing changed yet</p></li><li><p>in the future, dynamic attach will be<br>
+disabled by default</p></li><li><p>enable with <code>-XX:+EnableDynamicAgentLoading</code></p></li></ul></div></div></section><section id="_dynamic_agents_2"><h2>Dynamic agents</h2><div class="slide-content"><div class="paragraph"><p>What you need to do:</p></div>
+<div class="ulist"><ul><li><p>run your app with <code>-XX:-EnableDynamicAgentLoading</code></p></li><li><p>observe closely</p></li><li><p>investigate necessity of dynamic agents</p></li></ul></div></div></section><section id="_finalization"><h2>Finalization</h2><div class="slide-content"><div class="paragraph"><p>What it is:</p></div>
+<div class="ulist"><ul><li><p><code>finalize()</code> methods</p></li><li><p>a JLS/GC machinery for them</p></li></ul></div></div></section><section id="_finalization_2"><h2>Finalization</h2><div class="slide-content"><div class="paragraph"><p>What you need to know:</p></div>
+<div class="ulist"><ul><li><p>you can disable with <code>--finalization=disabled</code></p></li><li><p>in a future release, <code>disabled</code> will be the default</p></li><li><p>in a later release, finalization will be removed</p></li></ul></div></div></section><section id="_finalization_3"><h2>Finalization</h2><div class="slide-content"><div class="paragraph"><p>What you need to do:</p></div>
+<div class="ulist"><ul><li><p>search for <code>finalize()</code> in your code and<br>
+replace with <code>try</code>-with-resources or <code>Cleaner</code> API</p></li><li><p>search for <code>finalize()</code> in your dependencies and<br>
+help remove them</p></li><li><p>run your app with <code>--finalization=disabled</code> and<br>
+closely monitor resource behavior (e.g. file handles)</p></li></ul></div></div></section><section id="_security_manager"><h2>Security Manager</h2><div class="slide-content"><div class="paragraph"><p>What it is:</p></div>
+<div class="ulist"><ul><li><p>a system of checks and permissions</p></li><li><p>intended to safeguard security-relevant<br>
+code sections</p></li><li><p>embodied by <code>SecurityManager</code></p></li></ul></div></div></section><section id="_security_manager_2"><h2>Security Manager</h2><div class="slide-content"><div class="paragraph"><p>What you need to know:</p></div>
+<div class="ulist"><ul><li><p>barely used but maintenance-intensive</p></li><li><p>already disallowed by default</p></li><li><p>enable with <code>java.security.manager=allow</code></p></li><li><p>in a future release, it will be removed</p></li></ul></div></div></section><section id="_security_manager_3"><h2>Security Manager</h2><div class="slide-content"><div class="paragraph"><p>What you need to do:</p></div>
+<div class="ulist"><ul><li><p>observe your app with default settings<br>
+(⇝ security manager disallowed)</p></li><li><p>if used, move away from security manager</p></li></ul></div></div></section><section id="_primitive_constructors"><h2>Primitive constructors</h2><div class="slide-content"><div class="paragraph"><p>What it is:</p></div>
+<div class="ulist"><ul><li><p><code>new Integer(42)</code></p></li><li><p><code>new Double(42)</code></p></li><li><p>etc.</p></li></ul></div></div></section><section id="_primitive_constructors_2"><h2>Primitive constructors</h2><div class="slide-content"><div class="paragraph"><p>What you need to know:</p></div>
+<div class="ulist"><ul><li><p>Valhalla wants to turn them into value types</p></li><li><p>those have no identity</p></li><li><p>identity-based operations need to be removed</p></li></ul></div></div></section><section id="_primitive_constructors_3"><h2>Primitive constructors</h2><div class="slide-content"><div class="paragraph"><p>What you need to do:</p></div>
+<div class="ulist"><ul><li><p><code>Integer.valueOf(42)</code></p></li><li><p><code>Double.valueOf(42)</code></p></li><li><p>etc.</p></li></ul></div></div></section><section id="_more_6"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 all the aforementioned JEPs</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=3HnH6G_zcP0">Future Java - Prepare Your Codebase Now!</a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=5jIkRqBuSBs">How to Upgrade to Java 21</a></p></li></ul></div></div></section></section>
+<section><section id="_java_23_6"><h2>Java 23</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr><td>Final Features</td></tr> <tr class="toc-current"><td>Preview Features</td></tr> <tr class="toc-current"><td style="padding-left: 2em;">Primitive Patterns</td></tr> <tr><td style="padding-left: 2em;">Module Imports</td></tr> <tr><td style="padding-left: 2em;"><s>String Templates</s></td></tr> <tr><td style="padding-left: 2em;">Flexible Constructor Bodies</td></tr> <tr><td style="padding-left: 2em;">Stream Gatherers</td></tr> <tr><td style="padding-left: 2em;">Class-File API</td></tr> </table> </p></div></div></section><section id="_patterns_so_far"><h2>Patterns so far&#8230;&#8203;</h2><div class="slide-content"><div class="paragraph"><p>In <code>instanceof</code> and <code>switch</code>, patterns can:</p></div>
 <div class="ulist"><ul><li><p>match against reference types</p></li><li><p>deconstruct records</p></li><li><p>nest patterns</p></li><li><p>ignore parts of a pattern</p></li></ul></div>
 <div class="paragraph"><p>In <code>switch</code>:</p></div>
 <div class="ulist"><ul><li><p>refine the selection with guarded patterns</p></li></ul></div></div></section><section id="_patterns_so_far_2"><h2>Patterns so far&#8230;&#8203;</h2><div class="slide-content"><div class="paragraph"><p>That (plus sealed types) are<br>
@@ -543,8 +782,8 @@ var emoji = switch (bool) {
 	case true -&gt; "✅";
 	case false -&gt; "❌";
 }</code></pre></div></div>
-<div class="paragraph"><p>(Bugged in 23; fixed in 23.0.1 and 24-EA.)</p></div></div></section><section id="_more_3"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/455">JEP 455</a>: Primitive Types in Patterns, instanceof, and switch</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=_afECXGjfDI">Restoring the Balance with Primitive Patterns</a></p></li></ul></div></div></section></section>
-<section><section id="_java_23_4"><h2>Java 23</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr><td>Java 23 Features</td></tr> <tr class="toc-current"><td>New Preview Features</td></tr> <tr><td style="padding-left: 2em;">Primitive Patterns</td></tr> <tr class="toc-current"><td style="padding-left: 2em;">Module Imports</td></tr> <tr><td>Java 22 Features</td></tr> <tr><td>Ongoing Preview Features</td></tr> </table> </p></div></div></section><section id="_imports"><h2>Imports</h2><div class="slide-content"><div class="paragraph"><p>Which one do you prefer?</p></div>
+<div class="paragraph"><p>(Bugged in 23; fixed in 23.0.1 and 24-EA.)</p></div></div></section><section id="_more_7"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/455">JEP 455</a>: Primitive Types in Patterns, instanceof, and switch</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=_afECXGjfDI">Restoring the Balance with Primitive Patterns</a></p></li></ul></div></div></section></section>
+<section><section id="_java_23_7"><h2>Java 23</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr><td>Final Features</td></tr> <tr class="toc-current"><td>Preview Features</td></tr> <tr><td style="padding-left: 2em;">Primitive Patterns</td></tr> <tr class="toc-current"><td style="padding-left: 2em;">Module Imports</td></tr> <tr><td style="padding-left: 2em;"><s>String Templates</s></td></tr> <tr><td style="padding-left: 2em;">Flexible Constructor Bodies</td></tr> <tr><td style="padding-left: 2em;">Stream Gatherers</td></tr> <tr><td style="padding-left: 2em;">Class-File API</td></tr> </table> </p></div></div></section><section id="_imports"><h2>Imports</h2><div class="slide-content"><div class="paragraph"><p>Which one do you prefer?</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// option A
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -606,183 +845,8 @@ void main() {
 		.toList();
 
 	System.out.println(dates);
-}</code></pre></div></div></div></section><section id="_more_4"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/476">JEP 476</a>: Module Import Declarations</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=WHknBEhzB0k">Module Imports in Java 23</a></p></li></ul></div></div></section></section>
-<section><section id="_deprecations" data-background-image="images/surprise.gif" data-background-size="cover"><h2>Deprecations</h2><div class="slide-content"></div></section><section id="_cleaning_house"><h2>Cleaning house</h2><div class="slide-content"><div class="paragraph"><p>Already removed:</p></div>
-<div class="ulist"><ul><li><p>RMI activation ⑰ (<a href="https://openjdk.org/jeps/407">JEP 407</a>)</p></li><li><p>Nashorn ⑮ (<a href="https://openjdk.org/jeps/372">JEP 372</a>)</p></li><li><p>concurrent mark sweep GC ⑭ (<a href="https://openjdk.org/jeps/363">JEP 363</a>)</p></li></ul></div></div></section><section id="_cleaning_house_2"><h2>Cleaning house</h2><div class="slide-content"><div class="paragraph"><p>Deprecations (for removal):</p></div>
-<div class="ulist"><ul><li><p>memory access via <code>Unsafe</code> ㉓ (<a href="https://openjdk.org/jeps/471">JEP 471</a>)</p></li><li><p>allowed-by-default dynamic agents ㉑ (<a href="https://openjdk.org/jeps/451">JEP 451</a>)</p></li><li><p>Windows 32-bit x86 port ㉑ (JEPs <a href="https://openjdk.org/jeps/449">449</a>, <a href="https://openjdk.org/jeps/479">479</a>)</p></li><li><p>finalization ⑱ (<a href="https://openjdk.org/jeps/421">JEP 421</a>)</p></li><li><p>security manager ⑰ (<a href="https://openjdk.org/jeps/411">JEP 411</a>)</p></li><li><p>applet API ⑰ (<a href="https://openjdk.org/jeps/398">JEP 398</a>)</p></li><li><p>primitive wrapper constructors ⑯ (<a href="https://openjdk.org/jeps/390">JEP 390</a>)</p></li><li><p>biased locking ⑮ (<a href="https://openjdk.org/jeps/374">JEP 374</a>)</p></li></ul></div></div></section><section id="_unsafe"><h2>Unsafe</h2><div class="slide-content"><div class="paragraph"><p>Methods for memory access have been superseeded<br>
-(VarHandles via <a href="https://openjdk.org/jeps/193">JEP 193</a>; FFM via <a href="https://openjdk.org/jeps/454">JEP 454</a>).</p></div>
-<div class="paragraph"><p>Will be phased out:</p></div>
-<div class="ulist"><ul><li><p>deprecation and compile-time warning ㉓</p></li><li><p>run-time warning ~㉕</p></li><li><p>exception on invocation ~㉖</p></li><li><p>remove methods</p></li></ul></div></div></section><section id="_unsafe_2"><h2>Unsafe</h2><div class="slide-content"><div class="paragraph"><p>You&#8217;re probably not using it directly,<br>
-but your dependencies may.</p></div>
-<div class="paragraph"><p>Find them with <code>--sun-misc-unsafe-memory-access</code>:</p></div>
-<div class="ulist"><ul><li><p><code>warn</code>: to get run-time warnings today</p></li><li><p><code>debug</code>: same with more info</p></li><li><p><code>deny</code>: throws exception</p></li></ul></div>
-<div class="paragraph"><p>Report and help fix!</p></div></div></section><section id="_agents"><h2>Agents</h2><div class="slide-content"><div class="paragraph"><p>What it is:</p></div>
-<div class="ulist"><ul><li><p>a component that transforms byte code</p></li><li><p>uses <code>java.lang.instrument</code> or JVM TI</p></li><li><p>launches with JVM or attaches later ("dynamic")</p></li></ul></div></div></section><section id="_dynamic_agents"><h2>Dynamic agents</h2><div class="slide-content"><div class="paragraph"><p>What you need to know:</p></div>
-<div class="ulist"><ul><li><p>all mechanisms for agents remain intact</p></li><li><p>nothing changed yet</p></li><li><p>in the future, dynamic attach will be<br>
-disabled by default</p></li><li><p>enable with <code>-XX:+EnableDynamicAgentLoading</code></p></li></ul></div></div></section><section id="_dynamic_agents_2"><h2>Dynamic agents</h2><div class="slide-content"><div class="paragraph"><p>What you need to do:</p></div>
-<div class="ulist"><ul><li><p>run your app with <code>-XX:-EnableDynamicAgentLoading</code></p></li><li><p>observe closely</p></li><li><p>investigate necessity of dynamic agents</p></li></ul></div></div></section><section id="_finalization"><h2>Finalization</h2><div class="slide-content"><div class="paragraph"><p>What it is:</p></div>
-<div class="ulist"><ul><li><p><code>finalize()</code> methods</p></li><li><p>a JLS/GC machinery for them</p></li></ul></div></div></section><section id="_finalization_2"><h2>Finalization</h2><div class="slide-content"><div class="paragraph"><p>What you need to know:</p></div>
-<div class="ulist"><ul><li><p>you can disable with <code>--finalization=disabled</code></p></li><li><p>in a future release, <code>disabled</code> will be the default</p></li><li><p>in a later release, finalization will be removed</p></li></ul></div></div></section><section id="_finalization_3"><h2>Finalization</h2><div class="slide-content"><div class="paragraph"><p>What you need to do:</p></div>
-<div class="ulist"><ul><li><p>search for <code>finalize()</code> in your code and<br>
-replace with <code>try</code>-with-resources or <code>Cleaner</code> API</p></li><li><p>search for <code>finalize()</code> in your dependencies and<br>
-help remove them</p></li><li><p>run your app with <code>--finalization=disabled</code> and<br>
-closely monitor resource behavior (e.g. file handles)</p></li></ul></div></div></section><section id="_security_manager"><h2>Security Manager</h2><div class="slide-content"><div class="paragraph"><p>What it is:</p></div>
-<div class="ulist"><ul><li><p>a system of checks and permissions</p></li><li><p>intended to safeguard security-relevant<br>
-code sections</p></li><li><p>embodied by <code>SecurityManager</code></p></li></ul></div></div></section><section id="_security_manager_2"><h2>Security Manager</h2><div class="slide-content"><div class="paragraph"><p>What you need to know:</p></div>
-<div class="ulist"><ul><li><p>barely used but maintenance-intensive</p></li><li><p>already disallowed by default</p></li><li><p>enable with <code>java.security.manager=allow</code></p></li><li><p>in a future release, it will be removed</p></li></ul></div></div></section><section id="_security_manager_3"><h2>Security Manager</h2><div class="slide-content"><div class="paragraph"><p>What you need to do:</p></div>
-<div class="ulist"><ul><li><p>observe your app with default settings<br>
-(⇝ security manager disallowed)</p></li><li><p>if used, move away from security manager</p></li></ul></div></div></section><section id="_primitive_constructors"><h2>Primitive constructors</h2><div class="slide-content"><div class="paragraph"><p>What it is:</p></div>
-<div class="ulist"><ul><li><p><code>new Integer(42)</code></p></li><li><p><code>new Double(42)</code></p></li><li><p>etc.</p></li></ul></div></div></section><section id="_primitive_constructors_2"><h2>Primitive constructors</h2><div class="slide-content"><div class="paragraph"><p>What you need to know:</p></div>
-<div class="ulist"><ul><li><p>Valhalla wants to turn them into value types</p></li><li><p>those have no identity</p></li><li><p>identity-based operations need to be removed</p></li></ul></div></div></section><section id="_primitive_constructors_3"><h2>Primitive constructors</h2><div class="slide-content"><div class="paragraph"><p>What you need to do:</p></div>
-<div class="ulist"><ul><li><p><code>Integer.valueOf(42)</code></p></li><li><p><code>Double.valueOf(42)</code></p></li><li><p>etc.</p></li></ul></div></div></section><section id="_more_5"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 all the aforementioned JEPs</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=3HnH6G_zcP0">Future Java - Prepare Your Codebase Now!</a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=5jIkRqBuSBs">How to Upgrade to Java 21</a></p></li></ul></div></div></section></section>
-<section><section id="_java_23_5"><h2>Java 23</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr><td>Java 23 Features</td></tr> <tr><td>New Preview Features</td></tr> <tr class="toc-current"><td>Java 22 Features</td></tr> <tr class="toc-current"><td style="padding-left: 2em;">Unnamed Patterns</td></tr> <tr><td style="padding-left: 2em;">FFM API</td></tr> <tr><td style="padding-left: 2em;">Launch Multi-File Programs</td></tr> <tr><td>Ongoing Preview Features</td></tr> </table> </p></div></div></section><section id="_a_simple_app"><h2>A simple app</h2><div class="slide-content"><div class="paragraph"><p>Features:</p></div>
-<div class="ulist"><ul><li><p>scrapes GitHub projects</p></li><li><p>creates <code>Page</code> instances:</p><div class="ulist"><ul><li><p><code>GitHubIssuePage</code></p></li><li><p><code>GitHubPrPage</code></p></li><li><p><code>ExternalPage</code></p></li><li><p><code>ErrorPage</code></p></li></ul></div></li><li><p>further processes pages</p></li></ul></div></div></section><section id="_a_simple_app_2"><h2>A simple app</h2><div class="slide-content"><div class="paragraph"><p>Features:</p></div>
-<div class="ulist"><ul><li><p>display as interactive graph</p></li><li><p>compute graph properties</p></li><li><p>categorize pages by topic</p></li><li><p>analyze mood of interactions</p></li><li><p>process payment for analyses</p></li><li><p>etc.</p></li></ul></div></div></section><section id="_a_simple_architecture"><h2>A simple architecture?</h2><div class="slide-content"><div class="paragraph"><p>How to implement features?</p></div>
-<div class="ulist"><ul><li class="fragment"><p>methods on <code>Page</code> 😧</p></li><li class="fragment"><p>visitor pattern 😫</p></li><li class="fragment"><p>pattern matching 🥳</p></li></ul></div></div></section><section id="_pattern_matching"><h2>Pattern Matching</h2><div class="slide-content"><div class="paragraph"><p>Ingredients:</p></div>
-<div class="ulist"><ul><li><p>switch expressions ⑭ (<a href="https://openjdk.org/jeps/361">JEP 361</a>)</p></li><li><p>type pattern matching ⑯ (<a href="https://openjdk.org/jeps/394">JEP 394</a>)</p></li><li><p>sealed types ⑰ (<a href="https://openjdk.org/jeps/409">JEP 409</a>)</p></li><li><p>patterns in switch ㉑ (<a href="https://openjdk.org/jeps/441">JEP 441</a>)</p></li><li><p>unnamed patterns ㉒ (<a href="https://openjdk.org/jeps/456">JEP 456</a>)</p></li></ul></div></div></section><section id="_pattern_matching_2"><h2>Pattern Matching</h2><div class="slide-content"><div class="paragraph"><p>Approach:</p></div>
-<div class="ulist"><ul><li><p>make <code>Page</code> sealed</p></li><li><p>implement features as methods outside of <code>Page</code></p></li><li><p>accept <code>Page</code> parameters and <code>switch</code> over it</p></li><li><p>avoid <code>default</code> branch for maintainability</p></li></ul></div></div></section><section id="_sealed_page"><h2>Sealed Page</h2><div class="slide-content"><div class="paragraph"><p>Sealed types limit inheritance,<br>
-by only allowing specific subtypes.</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public sealed interface Page
-	permits GitHubIssuePage, GitHubPrPage,
-			ExternalPage, ErrorPage {
-	// ...
-}</code></pre></div></div></div></section><section id="_switch_over_page"><h2>Switch over Page</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public void categorize(Page page) {
-	switch (page) {
-		case GitHubIssuePage is -&gt; categorizeIssue(is);
-		case GitHubPrPage pr -&gt; categorizePr(pr);
-		case ExternalPage ext -&gt; categorizeExternal(ext);
-		case ErrorPage err -&gt; categorizeError(err);
-	}
-}</code></pre></div></div></div></section><section id="_maintainability"><h2>Maintainability</h2><div class="slide-content"><div class="paragraph"><p>Unlike an <code>if</code>-<code>else</code>-<code>if</code>-chain,<br>
-a pattern <code>switch</code> needs to be exhaustive.</p></div>
-<div class="paragraph"><p>Fulfilled by:</p></div>
-<div class="ulist"><ul><li><p>switching over a sealed types</p></li><li><p>a <code>case</code> per subtype</p></li><li><p>avoiding the <code>default</code> branch</p></li></ul></div>
-<div class="paragraph"><p>⇝ Adding a new subtype causes compile error!</p></div></div></section><section id="_new_page_type"><h2>New Page Type</h2><div class="slide-content"><div class="paragraph"><p>If <code>GitHubCommitPage</code> is added:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public void categorize(Page page) {
-	// error:
-	//     "the switch statement does not cover
-	//      all possible input values"
-	switch (page) {
-		case GitHubIssuePage is -&gt; categorizeIssue(is);
-		case GitHubPrPage pr -&gt; categorizePr(pr);
-		case ExternalPage ext -&gt; categorizeExternal(ext);
-		case ErrorPage err -&gt; categorizeError(err);
-	}
-}</code></pre></div></div></div></section><section id="_avoiding_default"><h2>Avoiding Default</h2><div class="slide-content"><div class="paragraph"><p>Sometimes you have "defaulty" behavior:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public void categorize(Page page) {
-	switch (page) {
-		case GitHubIssuePage is -&gt; categorizeIssue(is);
-		case GitHubPrPage pr -&gt; categorizePr(pr);
-		default -&gt; { }
-	}
-}</code></pre></div></div>
-<div class="paragraph"><p>But we need to avoid <code>default</code>!</p></div></div></section><section id="_avoiding_default_in_java_21"><h2>Avoiding Default in Java 21</h2><div class="slide-content"><div class="paragraph"><p>Write explicit branches:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public void categorize(Page page) {
-	switch (page) {
-		case GitHubIssuePage is -&gt; categorizeIssue(is);
-		case GitHubPrPage pr -&gt; categorizePr(pr);
-		// duplication 😢
-		case ErrorPage err -&gt; { };
-		case ExternalPage ext -&gt; { };
-	};
-}</code></pre></div></div>
-<div class="paragraph"><p>This is the state-of-the-art in Java 21<br>
-(without preview features).</p></div></div></section><section id="_avoiding_default_in_java_22"><h2>Avoiding Default in Java 22</h2><div class="slide-content"><div class="paragraph"><p>Use <code>_</code> to combine "default branches":</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public void categorize(Page page) {
-	switch (page) {
-		case GitHubIssuePage is -&gt; categorizeIssue(is);
-		case GitHubPrPage pr -&gt; categorizePr(pr);
-		case ErrorPage _, ExternalPage _ -&gt; { };
-	};
-}</code></pre></div></div>
-<div class="paragraph"><p>⇝ Default behavior without <code>default</code> branch. 🥳</p></div></div></section><section id="_more_6"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/456">JEP 456</a>: Unnamed Variables &amp; Patterns</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=QrwFrm1R8OY">Java 21 Pattern Matching Tutorial</a></p></li></ul></div></div></section></section>
-<section><section id="_java_23_6"><h2>Java 23</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr><td>Java 23 Features</td></tr> <tr><td>New Preview Features</td></tr> <tr class="toc-current"><td>Java 22 Features</td></tr> <tr><td style="padding-left: 2em;">Unnamed Patterns</td></tr> <tr class="toc-current"><td style="padding-left: 2em;">FFM API</td></tr> <tr><td style="padding-left: 2em;">Launch Multi-File Programs</td></tr> <tr><td>Ongoing Preview Features</td></tr> </table> </p></div></div></section><section id="_foreign_memory"><h2>Foreign memory</h2><div class="slide-content"><div class="paragraph"><p>Storing data off-heap is tough:</p></div>
-<div class="ulist"><ul><li><p><code>ByteBuffer</code> is limited (2GB) and inefficient</p></li><li><p><code>Unsafe</code> is&#8230;&#8203; unsafe and not supported</p></li></ul></div></div></section><section id="_foreign_memory_api"><h2>Foreign-memory API</h2><div class="slide-content"><div class="paragraph"><p>Panama introduces safe and performant API:</p></div>
-<div class="ulist"><ul><li><p>control (de)allocation:<br>
-<code>Arena</code>, <code>MemorySegment</code>, <code>SegmentAllocator</code></p></li><li><p>to access/manipulate: <code>MemoryLayout</code>, <code>VarHandle</code></p></li></ul></div></div></section><section id="_foreign_memory_api_2"><h2>Foreign-memory API</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// create `Arena` to manage off-heap memory lifetime
-try (Arena offHeap = Arena.ofConfined()) {
-	// [allocate off-heap memory to store pointers]
-	// [do something with off-heap data]
-	// [copy data back to heap]
-} // off-heap memory is deallocated here</code></pre></div></div></div></section><section id="_foreign_memory_api_3"><h2>Foreign-memory API</h2><div class="slide-content"><div class="paragraph"><p>Allocate off-heap memory to store pointers:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">String[] javaStrings = { "mouse", "cat", "dog" };
-// Arena offHeap = ...
-
-MemorySegment pointers = offHeap.allocateArray(
-	ValueLayout.ADDRESS, javaStrings.length);
-for (int i = 0; i &lt; javaStrings.length; i++) {
-	// allocate off-heap &amp; store a pointer
-	MemorySegment cString = offHeap
-		.allocateUtf8String(javaStrings[i]);
-	pointers
-		.setAtIndex(ValueLayout.ADDRESS, i, cString);
-}</code></pre></div></div></div></section><section id="_foreign_memory_api_4"><h2>Foreign-memory API</h2><div class="slide-content"><div class="paragraph"><p>Copy data back to heap:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// String[] javaStrings = ...
-// MemorySegment pointers =
-
-for (int i = 0; i &lt; javaStrings.length; i++) {
-	MemorySegment cString = pointers
-		.getAtIndex(ValueLayout.ADDRESS, i);
-	javaStrings[i] = cString.getUtf8String(0);
-}</code></pre></div></div></div></section><section id="_foreign_functions"><h2>Foreign functions</h2><div class="slide-content"><div class="paragraph"><p>JNI isn&#8217;t ideal:</p></div>
-<div class="ulist"><ul><li><p>involves several tedious artifacts (header file, impl, &#8230;&#8203;)</p></li><li><p>can only interoperate with languages that align<br>
-with OS/architecture the JVM was built for</p></li><li><p>doesn&#8217;t reconcile Java/C type systems</p></li></ul></div></div></section><section id="_foreign_function_api"><h2>Foreign-function API</h2><div class="slide-content"><div class="paragraph"><p>Panama introduces streamlined tooling/API<br>
-based on method handles:</p></div>
-<div class="ulist"><ul><li><p><code>jextract</code>: generates method handles from header file</p></li><li><p>classes to call foreign functions<br>
-<code>Linker</code>, <code>FunctionDescriptor</code>, <code>SymbolLookup</code></p></li></ul></div></div></section><section id="_foreign_function_api_2"><h2>Foreign-function API</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// find foreign function on the C library path
-Linker linker = Linker.nativeLinker();
-SymbolLookup stdlib = linker.defaultLookup();
-MethodHandle radixSort = linker
-	.downcallHandle(stdlib.find("radixsort"), ...);
-
-String[] javaStrings = { "mouse", "cat", "dog" };
-try (Arena offHeap = Arena.ofConfined()) {
-	// [move Java strings off heap]
-	// invoke foreign function
-	radixSort.invoke(
-		pointers, javaStrings.length,
-		MemorySegment.NULL, '\0');
-	// [copy data back to heap]
-}</code></pre></div></div></div></section><section id="_finally_final"><h2>Finally final!</h2><div class="slide-content"><div class="paragraph"><p>Java 22 finalizes the FFM API, but there&#8217;s more to do:</p></div>
-<div class="ulist"><ul><li><p>user-friendly and performant mapping from<br>
-native memory to Java records/interfaces</p></li><li><p>improving jextract and surrounding tooling</p></li></ul></div>
-<div class="paragraph"><p>And more.</p></div></div></section><section id="_more_7"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/454">JEP 454</a>: Foreign Function &amp; Memory API</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=kUFysMkMS00">Project Panama - Foreign Function &amp; Memory API</a> (Maurizio Cimadamore)</p></li><li><p>📨 <a href="https://mail.openjdk.org/mailman/listinfo/panama-dev">Project Panama mailing list</a></p></li></ul></div></div></section></section>
-<section><section id="_java_23_7"><h2>Java 23</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr><td>Java 23 Features</td></tr> <tr><td>New Preview Features</td></tr> <tr class="toc-current"><td>Java 22 Features</td></tr> <tr><td style="padding-left: 2em;">Unnamed Patterns</td></tr> <tr><td style="padding-left: 2em;">FFM API</td></tr> <tr class="toc-current"><td style="padding-left: 2em;">Launch Multi-File Programs</td></tr> <tr><td>Ongoing Preview Features</td></tr> </table> </p></div></div></section><section id="_a_mature_ecosystem"><h2>A Mature Ecosystem</h2><div class="slide-content"><div class="paragraph"><p>Java is very mature:</p></div>
-<div class="ulist"><ul><li><p>refined programming model</p></li><li><p>detailed toolchain</p></li><li><p>rich ecosystem</p></li></ul></div>
-<div class="paragraph"><p>But this can make it hard to learn for new (Java) developers.</p></div></div></section><section id="_approachable_java"><h2>Approachable Java</h2><div class="slide-content"><div class="paragraph"><p>Java needs to be approachable:</p></div>
-<div class="ulist"><ul><li><p>for kids</p></li><li><p>for students</p></li><li><p>for the frontend dev</p></li><li><p>for ML/AI folks</p></li><li><p>etc.</p></li></ul></div>
-<div class="paragraph"><p>Java needs an on-ramp for new (Java) developers!</p></div></div></section><section id="_on_ramp_to_java"><h2>On-Ramp to Java</h2><div class="slide-content"><div class="paragraph"><p>On-ramp:</p></div>
-<div class="ulist"><ul><li><p>simplified <code>main</code> method and class</p></li><li><p>single-source-file execution</p></li><li><p>multi-source-file execution</p></li></ul></div></div></section><section id="_simpler_code"><h2>Simpler Code</h2><div class="slide-content"><div class="paragraph"><p>Remove requirement of:</p></div>
-<div class="ulist"><ul><li><p><code>String[] args</code> parameter</p></li><li><p><code>main</code> being static</p></li><li><p><code>main</code> being public</p></li><li><p>the class itself</p></li></ul></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// smallest viable Main.java
-void main() {
-	// ...
-}</code></pre></div></div>
-<div class="paragraph"><p><em>[Preview in Java 23&#8201;&#8212;&#8201;<a href="https://openjdk.org/jeps/477">JEP 477</a>]</em></p></div></div></section><section id="_simpler_code_2"><h2>Simpler Code</h2><div class="slide-content"><div class="paragraph"><p>Implicitly declared classes, implicitly import:</p></div>
-<div class="ulist"><ul><li><p><code>java.io.IO</code> 's methods <code>print</code>, <code>println</code>, and <code>readln</code></p></li><li><p>public top-level classes in packages exported by <em>java.base</em></p></li></ul></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// complete Main.java
-void main() {
-	var letters = List.of("A", "B", "C");
-	println(letters);
-}</code></pre></div></div></div></section><section id="_single_file_execution"><h2>Single-File Execution</h2><div class="slide-content"><div class="paragraph"><p>It&#8217;s easy to execute that file:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code>java Main.java</code></pre></div></div>
-<div class="paragraph"><p><em>[Introduced in Java 11&#8201;&#8212;&#8201;<a href="https://openjdk.org/jeps/330">JEP 330</a>]</em></p></div></div></section><section id="_multi_file_execution"><h2>Multi-File Execution</h2><div class="slide-content"><div class="paragraph"><p>The program can expand:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code>MyFirstJava
- ├─ Main.java
- ├─ Helper.java
- └─ Lib
-     └─ library.jar</code></pre></div></div>
-<div class="paragraph"><p>Run with:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code>java -cp 'Lib/*' Main.java</code></pre></div></div>
-<div class="paragraph"><p><em>[Introduced in Java 22&#8201;&#8212;&#8201;<a href="https://openjdk.org/jeps/458">JEP 458</a>]</em></p></div></div></section><section id="_progression"><h2>Progression</h2><div class="slide-content"><div class="paragraph"><p>Natural progression:</p></div>
-<div class="ulist"><ul><li class="fragment"><p>start with <code>main()</code></p></li><li class="fragment"><p>need arguments? ⇝ add <code>String[] args</code></p></li><li class="fragment"><p>need to organize code? ⇝ add methods</p></li><li class="fragment"><p>need shared state? ⇝ add fields</p></li><li class="fragment"><p>need more functionality? ⇝ explore JDK APIs</p></li><li class="fragment"><p>even more? ⇝ explore simple libraries</p></li><li class="fragment"><p>need more structure? ⇝ split into multiple files</p></li><li class="fragment"><p>even more ⇝ use visibility &amp; packages</p></li></ul></div>
-<div class="paragraph fragment"><p>Doesn&#8217;t even have to be that order!</p></div></div></section><section id="_more_8"><h2>More</h2><div class="slide-content"><div class="paragraph"><p>Simplified <code>main</code>:</p></div>
-<div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/477">JEP 477</a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=P9JPUbG5npI">Script Java Easily in 21 and Beyond</a></p></li></ul></div>
-<div class="paragraph"><p>Single-source-file execution:</p></div>
-<div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/330">JEP 330</a></p></li><li><p>📝 <a href="https://nipafx.dev/scripting-java-shebang/">Scripting Java 11, Shebang And All</a></p></li></ul></div>
-<div class="paragraph"><p>Multi-source-file execution:</p></div>
-<div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/458">JEP 458</a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=q2MFE3DVkH0">Does Java 22 Kill Build Tools?</a></p></li></ul></div></div></section></section>
-<section><section id="_java_23_8"><h2>Java 23</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr><td>Java 23 Features</td></tr> <tr><td>New Preview Features</td></tr> <tr><td>Java 22 Features</td></tr> <tr class="toc-current"><td>Ongoing Preview Features</td></tr> <tr class="toc-current"><td style="padding-left: 2em;"><s>String Templates</s></td></tr> <tr><td style="padding-left: 2em;">Statements Before Super</td></tr> <tr><td style="padding-left: 2em;">Stream Gatherers</td></tr> <tr><td style="padding-left: 2em;">Class-File API</td></tr> </table> </p></div></div></section><section id="_string_composition"><h2>String composition</h2><div class="slide-content"><div class="paragraph"><p>Composing strings in Java is cumbersome:</p></div>
+}</code></pre></div></div></div></section><section id="_more_8"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/476">JEP 476</a>: Module Import Declarations</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=WHknBEhzB0k">Module Imports in Java 23</a></p></li></ul></div></div></section></section>
+<section><section id="_java_23_8"><h2>Java 23</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr><td>Final Features</td></tr> <tr class="toc-current"><td>Preview Features</td></tr> <tr><td style="padding-left: 2em;">Primitive Patterns</td></tr> <tr><td style="padding-left: 2em;">Module Imports</td></tr> <tr class="toc-current"><td style="padding-left: 2em;"><s>String Templates</s></td></tr> <tr><td style="padding-left: 2em;">Flexible Constructor Bodies</td></tr> <tr><td style="padding-left: 2em;">Stream Gatherers</td></tr> <tr><td style="padding-left: 2em;">Class-File API</td></tr> </table> </p></div></div></section><section id="_string_composition"><h2>String composition</h2><div class="slide-content"><div class="paragraph"><p>Composing strings in Java is cumbersome:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">String property = "last_name";
 String value = "Doe";
 
@@ -810,7 +874,7 @@ String query =
 <div class="paragraph fragment"><p>Special <code>SQL."&#8230;&#8203;"</code> syntax was too much.</p></div></div></section><section id="_quo_vadis"><h2>Quo Vadis?</h2><div class="slide-content"><div class="ulist"><ul><li><p>string templates were removed from JDK 23<br>
 (not even a preview)</p></li><li><p>the feature needs a redesign</p></li><li><p>timing is unknown</p></li></ul></div>
 <div class="paragraph"><p>😞</p></div></div></section><section id="_more_9"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📨 <a href="https://mail.openjdk.org/pipermail/amber-spec-experts/2024-March/thread.html">mailing list discussion</a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=c6L4Ef9owuQ">What Happened to Java&#8217;s String Templates?</a></p></li></ul></div></div></section></section>
-<section><section id="_java_23_9"><h2>Java 23</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr><td>Java 23 Features</td></tr> <tr><td>Java 22 Features</td></tr> <tr><td>New Preview Features</td></tr> <tr class="toc-current"><td>Ongoing Preview Features</td></tr> <tr><td style="padding-left: 2em;"><s>String Templates</s></td></tr> <tr class="toc-current"><td style="padding-left: 2em;">Statements Before Super</td></tr> <tr><td style="padding-left: 2em;">Stream Gatherers</td></tr> <tr><td style="padding-left: 2em;">Class-File API</td></tr> </table> </p></div></div></section><section id="_constructor_chaining"><h2>Constructor Chaining</h2><div class="slide-content"><div class="paragraph"><p>With multiple constructors, it&#8217;s good practice<br>
+<section><section id="_java_23_9"><h2>Java 23</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr><td>Final Features</td></tr> <tr class="toc-current"><td>Preview Features</td></tr> <tr><td style="padding-left: 2em;">Primitive Patterns</td></tr> <tr><td style="padding-left: 2em;">Module Imports</td></tr> <tr><td style="padding-left: 2em;"><s>String Templates</s></td></tr> <tr class="toc-current"><td style="padding-left: 2em;">Flexible Constructor Bodies</td></tr> <tr><td style="padding-left: 2em;">Stream Gatherers</td></tr> <tr><td style="padding-left: 2em;">Class-File API</td></tr> </table> </p></div></div></section><section id="_constructor_chaining"><h2>Constructor Chaining</h2><div class="slide-content"><div class="paragraph"><p>With multiple constructors, it&#8217;s good practice<br>
 to have one constructor that:</p></div>
 <div class="ulist"><ul><li><p>checks all arguments</p></li><li><p>assigns all fields</p></li></ul></div>
 <div class="paragraph"><p>Other constructors just forward (if possible).</p></div></div></section><section id="_constructor_chaining_2"><h2>Constructor Chaining</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">class Name {
@@ -958,7 +1022,7 @@ before <code>super(&#8230;&#8203;)</code> and <code>this(&#8230;&#8203;)</code>.
 	}
 
 }</code></pre></div></div></div></section><section id="_surprising_cameo"><h2>Surprising Cameo</h2><div class="slide-content"><div class="ulist"><ul><li><p>Project Valhalla ponders non-nullable types</p></li><li><p>has to work with <code>super()</code></p></li><li><p>subclass sets non-null fields before <code>super()</code></p></li></ul></div></div></section><section id="_more_10"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/482">JEP 482</a>: Flexible Constructor Bodies</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=cI-fY9YlmH4">Statements Before <code>super(&#8230;&#8203;)</code> and <code>this(&#8230;&#8203;)</code></a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=IF9l8fYfSnI">Valhalla - Where Are We?</a> (Brian Goetz - Aug 2024)</p></li></ul></div></div></section></section>
-<section><section id="_java_23_10"><h2>Java 23</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr><td>Java 23 Features</td></tr> <tr><td>Java 22 Features</td></tr> <tr><td>New Preview Features</td></tr> <tr class="toc-current"><td>Ongoing Preview Features</td></tr> <tr><td style="padding-left: 2em;"><s>String Templates</s></td></tr> <tr><td style="padding-left: 2em;">Statements Before Super</td></tr> <tr class="toc-current"><td style="padding-left: 2em;">Stream Gatherers</td></tr> <tr><td style="padding-left: 2em;">Class-File API</td></tr> </table> </p></div></div></section><section id="_missing_stream_ops"><h2>Missing Stream Ops</h2><div class="slide-content"><div class="paragraph"><p>Streams are great, but some<br>
+<section><section id="_java_23_10"><h2>Java 23</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr><td>Final Features</td></tr> <tr class="toc-current"><td>Preview Features</td></tr> <tr><td style="padding-left: 2em;">Primitive Patterns</td></tr> <tr><td style="padding-left: 2em;">Module Imports</td></tr> <tr><td style="padding-left: 2em;"><s>String Templates</s></td></tr> <tr><td style="padding-left: 2em;">Flexible Constructor Bodies</td></tr> <tr class="toc-current"><td style="padding-left: 2em;">Stream Gatherers</td></tr> <tr><td style="padding-left: 2em;">Class-File API</td></tr> </table> </p></div></div></section><section id="_missing_stream_ops"><h2>Missing Stream Ops</h2><div class="slide-content"><div class="paragraph"><p>Streams are great, but some<br>
 intermediate operations are missing:</p></div>
 <div class="ulist"><ul><li><p>sliding windows</p></li><li><p>fixed groups</p></li><li><p>take-while-including</p></li><li><p>scanning</p></li><li><p>increasing sequences</p></li><li><p>etc.</p></li></ul></div></div></section><section id="_missing_terminal_ops"><h2>Missing Terminal Ops</h2><div class="slide-content"><div class="paragraph"><p>Streams also don&#8217;t have all possible terminal operations.</p></div>
 <div class="paragraph"><p>Instead:</p></div>
@@ -1014,7 +1078,7 @@ intermediate operations are missing:</p></div>
 // [A, C]
 // [F, B]
 // [S]</code></pre></div></div></div></section><section id="_more_11"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/473">JEP 473</a>: Stream Gatherers</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=8fMFa6OqlY8">Teaching Old Streams New Tricks</a> (Viktor Klang)</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=epgJm2dZTSg">Better Java Streams with Gatherers</a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=pNQ5OXMXDbY">Implementing New Java Stream Operations</a></p></li></ul></div></div></section></section>
-<section><section id="_java_23_11"><h2>Java 23</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr><td>Java 23 Features</td></tr> <tr><td>Java 22 Features</td></tr> <tr><td>New Preview Features</td></tr> <tr class="toc-current"><td>Ongoing Preview Features</td></tr> <tr><td style="padding-left: 2em;"><s>String Templates</s></td></tr> <tr><td style="padding-left: 2em;">Statements Before Super</td></tr> <tr><td style="padding-left: 2em;">Stream Gatherers</td></tr> <tr class="toc-current"><td style="padding-left: 2em;">Class-File API</td></tr> </table> </p></div></div></section><section id="_bytecode_basics"><h2>Bytecode Basics</h2><div class="slide-content"><div class="paragraph"><p>Bytecode is instruction set for JVM:</p></div>
+<section><section id="_java_23_11"><h2>Java 23</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr><td>Final Features</td></tr> <tr class="toc-current"><td>Preview Features</td></tr> <tr><td style="padding-left: 2em;">Primitive Patterns</td></tr> <tr><td style="padding-left: 2em;">Module Imports</td></tr> <tr><td style="padding-left: 2em;"><s>String Templates</s></td></tr> <tr><td style="padding-left: 2em;">Flexible Constructor Bodies</td></tr> <tr><td style="padding-left: 2em;">Stream Gatherers</td></tr> <tr class="toc-current"><td style="padding-left: 2em;">Class-File API</td></tr> </table> </p></div></div></section><section id="_bytecode_basics"><h2>Bytecode Basics</h2><div class="slide-content"><div class="paragraph"><p>Bytecode is instruction set for JVM:</p></div>
 <div class="ulist"><ul><li><p>creating objects and arrays</p></li><li><p>copying variable values or references<br>
 between stack and registers</p></li><li><p>invoking methods</p></li><li><p>computing arithmetic operations</p></li><li><p>etc.</p></li></ul></div></div></section><section id="_bytecode_basics_2"><h2>Bytecode Basics</h2><div class="slide-content"><div class="paragraph"><p>Basic lifecycle:</p></div>
 <div class="ulist"><ul><li><p>generated by javac</p></li><li><p>stored in <code>.class</code> files</p></li><li><p>loaded, parsed, verified by class loader</p></li><li><p>executed by JVM</p></li></ul></div></div></section><section id="_bytecode_beyond_basics"><h2>Bytecode Beyond Basics</h2><div class="slide-content"><div class="paragraph"><p>In real life, much more happens:</p></div>
@@ -1034,10 +1098,10 @@ analyzing and manipulating bytecode:</p></div>
 <div class="ulist"><ul><li><p>stable API in JDK</p></li><li><p>always up-to-date</p></li></ul></div>
 <div class="paragraph"><p>When JDK is updated:</p></div>
 <div class="ulist"><ul><li><p>it may read new bytecodes</p></li><li><p>but that&#8217;s ok for most use cases</p></li></ul></div></div></section><section data-background-color="white" data-background-image="../_images/class-file-api-web-app-b841bb18.png" data-background-size="contain" data-state="empty"></section><section id="_more_12"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/466">JEP 466</a>: Class-File API</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=pcg-E_qyMOI">A Classfile API for the JDK</a> (Brian Goetz)</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=bQ2Rwpyj_Ks">New Class-File API Will Make Java Updates Easier</a></p></li></ul></div></div></section></section>
-<section><section id="_java_23_12"><h2>Java 23</h2><div class="slide-content"><div class="paragraph"><p>In a few slides&#8230;&#8203;</p></div></div></section><section id="_java_23_introduces"><h2>Java 23 Introduces</h2><div class="slide-content"><div class="ulist"><ul><li><p><a href="https://openjdk.org/jeps/467">Markdown in JavaDoc</a></p></li><li><p><a href="https://openjdk.org/jeps/474">GenZGC by Default</a></p></li></ul></div></div></section><section id="_java_23_previews"><h2>Java 23 Previews</h2><div class="slide-content"><div class="ulist"><ul><li><p><a href="https://openjdk.org/jeps/455">Primitive Patterns</a></p></li><li><p><a href="https://openjdk.org/jeps/476">Module Imports</a></p></li></ul></div></div></section><section id="_java_23_continues"><h2>Java 23 Continues</h2><div class="slide-content"><div class="ulist"><ul><li><p><a href="https://openjdk.org/jeps/466">Class-File API</a></p></li><li><p><a href="https://openjdk.org/jeps/469">Vector API</a></p></li><li><p><a href="https://openjdk.org/jeps/473">Stream Gatherers</a></p></li><li><p><a href="https://openjdk.org/jeps/477">Simpler Main</a></p></li><li><p><a href="https://openjdk.org/jeps/480">Structured Concurrency</a></p></li><li><p><a href="https://openjdk.org/jeps/481">Scoped Values</a></p></li><li><p><a href="https://openjdk.org/jeps/482">Flexible Constructor Bodies</a></p></li><li><p><del> <a href="https://openjdk.org/jeps/459">String Templates</a> </del></p></li></ul></div></div></section><section id="_java_23_13"><h2>Java 23</h2><div class="slide-content"><div class="paragraph"><p>Not explosive like Java 23,<br>
-but no slouch either.</p></div>
-<div class="paragraph"><p>Continues Java&#8217;s evolution.</p></div>
-<div class="paragraph"><p>Get it at <a href="https://jdk.java.net/23/">jdk.java.net/23</a>.</p></div></div></section></section>
+<section><section id="_java_2223"><h2>Java 22/23</h2><div class="slide-content"><div class="paragraph"><p>In a few slides&#8230;&#8203;</p></div></div></section><section id="_java_2223_introduce"><h2>Java 22/23 Introduce</h2><div class="slide-content"><div class="ulist"><ul><li><p><a href="https://openjdk.org/jeps/454">Foreign Function &amp; Memory API</a></p></li><li><p><a href="https://openjdk.org/jeps/456">Unnamed Variables &amp; Patterns</a></p></li><li><p><a href="https://openjdk.org/jeps/458">Multi-source-file Execution</a></p></li><li><p><a href="https://openjdk.org/jeps/467">Markdown in JavaDoc</a></p></li><li><p><a href="https://openjdk.org/jeps/474">GenZGC by Default</a></p></li></ul></div></div></section><section id="_java_23_previews"><h2>Java 23 Previews</h2><div class="slide-content"><div class="ulist"><ul><li><p><a href="https://openjdk.org/jeps/455">Primitive Patterns</a></p></li><li><p><a href="https://openjdk.org/jeps/476">Module Imports</a></p></li></ul></div></div></section><section id="_java_23_continues"><h2>Java 23 Continues</h2><div class="slide-content"><div class="ulist"><ul><li><p><a href="https://openjdk.org/jeps/466">Class-File API</a></p></li><li><p><a href="https://openjdk.org/jeps/469">Vector API</a></p></li><li><p><a href="https://openjdk.org/jeps/473">Stream Gatherers</a></p></li><li><p><a href="https://openjdk.org/jeps/477">Simpler Main</a></p></li><li><p><a href="https://openjdk.org/jeps/480">Structured Concurrency</a></p></li><li><p><a href="https://openjdk.org/jeps/481">Scoped Values</a></p></li><li><p><a href="https://openjdk.org/jeps/482">Flexible Constructor Bodies</a></p></li><li><p><del> <a href="https://openjdk.org/jeps/459">String Templates</a> </del></p></li></ul></div></div></section><section id="_java_2223_2"><h2>Java 22/23</h2><div class="slide-content"><div class="paragraph"><p>Not explosive like Java 21,<br>
+but no slouches either.</p></div>
+<div class="paragraph"><p>Continue Java&#8217;s evolution.</p></div>
+<div class="paragraph"><p>Get JDK 23 at <a href="https://jdk.java.net/23/">jdk.java.net/23</a>.</p></div></div></section></section>
 <section id="_so_long" data-background-image="../_images/question-mark-9644fc1f.jpg" data-background-size="cover"><h2>So long&#8230;&#8203;</h2><div class="slide-content">
 <div style="float: left; width: 45%; margin: 0;">
 	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="../_images/cover-jms-4e5e400d.png" style="margin: 0;"></a>
