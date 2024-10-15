@@ -1,0 +1,52 @@
+== Teaching Java
+
++++
+<table class="toc">
+	<tr><td>Teaching the Language</td></tr>
+	<tr><td>Teaching the Tools</td></tr>
+	<tr><td>Teaching the Concepts</td></tr>
+	<tr class="toc-current"><td>Teaching Java</td></tr>
+</table>
++++
+
+=== Starting Point
+
+Take first steps in the playground.
+
+To get started "for real":
+
+* tools: JDK, text editor
+* code: simple `main` and `IO`
+* execution with `java Prog.java`
+
+=== Progression
+
+[%step]
+* need arguments? ⇝ add `String[] args`
+* need to organize code? ⇝ add methods
+* need more functionality? ⇝ explore JDK APIs: +
+  e.g. NIO.2 or HTTP/2 client
+* need to capture data? ⇝ define records
+* need shared state? ⇝ add fields
+* need even more functionality? ⇝ explore simple libraries: +
+  e.g. JavaFX for visualization
+* need more structure? ⇝ split into multiple files
+* even more ⇝ use visibility & packages
+
+=== Progression
+
+Java can do better is some areas:
+
+* managing dependencies without build tool
+* steering away from outdated APIs
+* support more data formats out of the box
+* simplify (data) visualization
+
+=== Progression
+
+At some point:
+
+* a more powerful editor would be helpful ⇝ IDE
+* testing or delivering becomes necessary ⇝ build tool
+
+Welcome to full Java!

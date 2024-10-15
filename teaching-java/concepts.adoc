@@ -1,0 +1,148 @@
+== Teaching the Concepts
+
++++
+<table class="toc">
+	<tr><td>Teaching the Language</td></tr>
+	<tr><td>Teaching the Tools</td></tr>
+	<tr class="toc-current"><td>Teaching the Concepts</td></tr>
+	<tr><td>Teaching Java</td></tr>
+</table>
++++
+
+
+=== Programming Concepts
+
+Java is a great OOP language.
+
+OOP is a great paradigm for large systems.
+
+But is OOP the best paradigm to learn first?
+
+=== Object-Oriented Programming
+
+OOP hinges on:
+
+* abstraction of the domain through classes
+* combination of state and behavior
+* encapsulation and visibility
+* inheritance (at least of types)
+
+Neither easy nor necessary for simple programs.
+
+=== Simple Programs
+
+Programming can be immediately useful:
+
+* automation
+* data analysis
+* visualization
+* interactive media
+
+Let learners write simple, useful programs!
+
+⇝ Such programs rarely need OOP.
+
+=== Terminal Interaction
+
+Simple programs usually interact via terminal.
+
+Use `IO` instead of `System.{in|out}`:
+
+* `void print(Object)` & `void println(Object)` to write
+* `String readln(String)` to read input
+
+(Auto-imported in a simple source file.)
+
+=== Focusing on Data
+
+Simple programs often focus on data:
+
+* reading data from disk or remote
+* parsing various data formats
+* representation of data as types
+* mass-processing data
+* visualizing data
+* writing data to disk or a remote
+
+=== Reading Local Data
+
+NIO.2 makes reading text files straightforward:
+
+```java
+var transactions = Path.of("transactions.csv");
+for (var line : Files.readAllLines(transactions)) {
+	// ...
+}
+```
+
+=== Reading Remote Data
+
+HTTP/2 client makes reading remote data +
+(relatively) straightforward:
+
+```java
+var client = HttpClient.newHttpClient();
+var request = HttpRequest
+		.newBuilder(URI.create("http://example.org/"))
+		.build();
+var body = client
+		.send(request, BodyHandlers.ofString())
+		.body();
+```
+
+=== Parsing Data
+
+Java has out-of-the-box support for:
+
+* XML
+
+😬
+
+Clearly room for improvement!
+
+=== Representing Data
+
+Records make simple types simple:
+
+```java
+record Transaction(
+	LocalDate date, long cents,
+	TransactionType type) { }
+
+enum TransactionType { PRIVATE, BUSINESS }
+```
+
+=== Processing Data
+
+`for`-loops, `if` statements, etc. are simplest.
+
+But once functions are introduced, streams become available.
+
+=== Visualizing Data
+
+JavaFX is powerful but not simple to get started with.
+
+Java lacks beginner-level visualization tools.
+
+=== Writing Data
+
+NIO.2 makes writing data very simple:
+
+```java
+var analysis = "...";
+var file = Path.of("analysis.txt");
+Files.writeString(file, analysis);
+```
+
+=== Progression
+
+Natural progression:
+
+* start with simple terminal interaction
+* use NIO.2 to read and write local data
+* use HTTP/2 client to access remote data
+* use records to model data
+* use common statements to analyze data
+* potentially upgrade to streams
+
+Go into more OOP as problems get more complex.

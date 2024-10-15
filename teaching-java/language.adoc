@@ -1,0 +1,77 @@
+== Teaching the Language
+
++++
+<table class="toc">
+	<tr class="toc-current"><td>Teaching the Language</td></tr>
+	<tr><td>Teaching the Tools</td></tr>
+	<tr><td>Teaching the Concepts</td></tr>
+	<tr><td>Teaching Java</td></tr>
+</table>
++++
+
+=== Language Constructs
+
+Minimal Java code:
+
+```java
+import java.util.List;
+public class Prog {
+	public static void main(String[] args) {
+		System.out.println(List.of("Hello", "World!"));
+	}
+}
+```
+
+* imports & visibility
+* classes & methods
+* static vs instance
+* returns & parameters
+* statements & arguments
+
+=== Simplification
+
+Beginners should be able to:
+
+* start with a minimal set of language constructs
+* achieve first results quickly
+* learn as they go without "delearning"
+
+=== Simplification
+
+Remove requirement of:
+
+* `String[] args` parameter
+* `main` being static
+* `main` being public
+* the class itself
+* `System.out` (use `IO` instead)
+* imports for _java.base_
+
+=== Simpler Code
+
+Previews in Java 23 (https://openjdk.org/jeps/477[JEP 477]):
+
+```java
+// all the code in Prog.java
+void main() {
+	println(List.of("Hello", "World!"));
+}
+```
+
+* +++<s>+++imports & visibility+++</s>+++
+* +++<s>+++classes &+++</s>+++ methods
+* +++<s>+++static vs instance+++</s>+++
+* +++<s>+++returns & parameters+++</s>+++
+* statements & arguments
+
+=== Progression
+
+Natural progression:
+
+* start with `main()`
+* add `String[] args` for arguments
+* add methods to organize code
+* add fields to share state
+* explore JDK APIs for more functionality
+
+Ramp up to full language.
