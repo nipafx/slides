@@ -426,10 +426,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://jfall.nl/" title="J-Fall"><img src="../_images/logo-j-fall-38b9b4a4.jpg" alt="Logo of J-Fall" class="logo" style="{host-logo-style}"></a>
+		<a href="https://www.ittage.informatik-aktuell.de/" title="IT-Tage 2024"><img src="../_images/logo-it-tage-2024-a8e5ffc7.png" alt="Logo of IT-Tage 2024" class="logo" style="background-color: white; border-color: transparent !important;"></a>
 		<div class="name">
-			<p><a href="https://jfall.nl/" title="J-Fall website">J-Fall</a></p>
-			<p><a href="https://twitter.com/jfallconf" title="J-Fall on Twitter">@jfallconf</a></p>
+			<p><a href="https://www.ittage.informatik-aktuell.de/" title="IT-Tage 2024 website">IT-Tage 2024</a></p>
+			<p><a href="https://twitter.com/hashtag/ittage?f=liveinclude::../_shared/event-on-title-and-footer.adoc[]" title="IT-Tage 2024 on Twitter">#ittage</a></p>
 		</div>
 	</div>
 	<div class="participant">
@@ -451,10 +451,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://jfall.nl/" title="J-Fall"><img src="../_images/logo-j-fall-38b9b4a4.jpg" alt="Logo of J-Fall" class="logo" style="{host-logo-style}"></a>
+		<a href="https://www.ittage.informatik-aktuell.de/" title="IT-Tage 2024"><img src="../_images/logo-it-tage-2024-a8e5ffc7.png" alt="Logo of IT-Tage 2024" class="logo" style="background-color: white; border-color: transparent !important;"></a>
 		<div class="name"><p>
-			<a href="https://jfall.nl/" title="J-Fall website">J-Fall</a>
-			/ <a href="https://twitter.com/jfallconf" title="J-Fall on Twitter">@jfallconf</a>
+			<a href="https://www.ittage.informatik-aktuell.de/" title="IT-Tage 2024 website">IT-Tage 2024</a>
+			/ <a href="https://twitter.com/hashtag/ittage?f=liveinclude::../_shared/event-on-title-and-footer.adoc[]" title="IT-Tage 2024 on Twitter">#ittage</a>
 		</p></div>
 	</div>
 </footer>
@@ -725,18 +725,19 @@ public void doSomething() { }</code></pre></div></div></div></section><section i
 <em>young</em> and <em>old generations</em>.</p></div>
 <div class="paragraph"><p>ZGC didn&#8217;t do this, but can do it now.</p></div></div></section><section id="_reports"><h2>Reports</h2><div class="slide-content"><div class="paragraph"><p>Netflix published <a href="https://netflixtechblog.com/bending-pause-times-to-your-will-with-generational-zgc-256629c9386b">a blog post</a> on their adoption.</p></div>
 <div class="paragraph"><p>Out of context graphs (vs. G1):</p></div>
-<div class="imageblock diagram"><img src="../_images/netflix-genzgc-memory-0969177e.webp" alt="netflix genzgc memory"></div></div></section><section id="_reports_2"><h2>Reports</h2><div class="slide-content"><div class="imageblock diagram"><img src="../_images/netflix-genzgc-gc-pause-49d71111.webp" alt="netflix genzgc gc pause"></div></div></section><section id="_default"><h2>Default</h2><div class="slide-content"><div class="paragraph"><p>In JDK 23, generational mode is the default for ZGC:</p></div>
+<div class="imageblock diagram"><img src="../_images/netflix-genzgc-memory-0969177e.webp" alt="netflix genzgc memory"></div></div></section><section id="_reports_2"><h2>Reports</h2><div class="slide-content"><div class="imageblock diagram"><img src="../_images/netflix-genzgc-gc-pause-49d71111.webp" alt="netflix genzgc gc pause"></div></div></section><section id="_default"><h2>Default</h2><div class="slide-content"><div class="paragraph"><p>Generational mode is:</p></div>
+<div class="ulist"><ul><li><p>the default on JDK 23</p></li><li><p>the only mode on JDK 24+</p></li></ul></div>
 <div class="paragraph"><p><code>-XX:+UseZGC</code></p></div>
 <div class="paragraph"><p>(Default GC is still G1.)</p></div></div></section><section id="_more_5"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/439">JEP 439</a>: Generational ZGC</p></li><li><p>📝 <a href="https://openjdk.org/jeps/474">JEP 474</a>: ZGC: Generational Mode by Default</p></li><li><p>📝 <a href="https://netflixtechblog.com/bending-pause-times-to-your-will-with-generational-zgc-256629c9386b">Bending pause times to your will with Generational ZGC</a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=YyXjC68l8mw">Generational ZGC and Beyond</a> (Aug 2023)</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=U2Sx5lU0KM8">Java&#8217;s Highly Scalable Low-Latency GC: ZGC</a> (Mar 2023)</p></li></ul></div></div></section></section>
 <section><section id="_deprecations" data-background-image="images/surprise.gif" data-background-size="cover"><h2>Deprecations</h2><div class="slide-content"></div></section><section id="_cleaning_house"><h2>Cleaning house</h2><div class="slide-content"><div class="paragraph"><p>Already removed:</p></div>
 <div class="ulist"><ul><li><p>RMI activation ⑰ (<a href="https://openjdk.org/jeps/407">JEP 407</a>)</p></li><li><p>Nashorn ⑮ (<a href="https://openjdk.org/jeps/372">JEP 372</a>)</p></li><li><p>concurrent mark sweep GC ⑭ (<a href="https://openjdk.org/jeps/363">JEP 363</a>)</p></li></ul></div></div></section><section id="_cleaning_house_2"><h2>Cleaning house</h2><div class="slide-content"><div class="paragraph"><p>Deprecations (for removal):</p></div>
-<div class="ulist"><ul><li><p>memory access via <code>Unsafe</code> ㉓ (<a href="https://openjdk.org/jeps/471">JEP 471</a>)</p></li><li><p>allowed-by-default dynamic agents ㉑ (<a href="https://openjdk.org/jeps/451">JEP 451</a>)</p></li><li><p>Windows 32-bit x86 port ㉑ (JEPs <a href="https://openjdk.org/jeps/449">449</a>, <a href="https://openjdk.org/jeps/479">479</a>)</p></li><li><p>finalization ⑱ (<a href="https://openjdk.org/jeps/421">JEP 421</a>)</p></li><li><p>security manager ⑰ (<a href="https://openjdk.org/jeps/411">JEP 411</a>)</p></li><li><p>applet API ⑰ (<a href="https://openjdk.org/jeps/398">JEP 398</a>)</p></li><li><p>primitive wrapper constructors ⑯ (<a href="https://openjdk.org/jeps/390">JEP 390</a>)</p></li><li><p>biased locking ⑮ (<a href="https://openjdk.org/jeps/374">JEP 374</a>)</p></li></ul></div></div></section><section id="_unsafe"><h2>Unsafe</h2><div class="slide-content"><div class="paragraph"><p>Methods for memory access have been superseeded<br>
+<div class="ulist"><ul><li><p>memory access via <code>Unsafe</code> ㉔ (<a href="https://openjdk.org/jeps/498">JEP 498</a>)</p></li><li><p>allowed-by-default dynamic agents ㉑ (<a href="https://openjdk.org/jeps/451">JEP 451</a>)</p></li><li><p>32-bit x86 ports ㉑㉔ (JEPs <a href="https://openjdk.org/jeps/449">449</a>, <a href="https://openjdk.org/jeps/479">479</a>, <a href="https://openjdk.org/jeps/501">501</a>)</p></li><li><p>finalization ⑱ (<a href="https://openjdk.org/jeps/421">JEP 421</a>)</p></li><li><p>security manager ⑰㉔ (JEPs <a href="https://openjdk.org/jeps/411">411</a>, <a href="https://openjdk.org/jeps/486">486</a>)</p></li><li><p>applet API ⑰ (<a href="https://openjdk.org/jeps/398">JEP 398</a>)</p></li><li><p>primitive wrapper constructors ⑯ (<a href="https://openjdk.org/jeps/390">JEP 390</a>)</p></li><li><p>biased locking ⑮ (<a href="https://openjdk.org/jeps/374">JEP 374</a>)</p></li></ul></div></div></section><section id="_unsafe"><h2>Unsafe</h2><div class="slide-content"><div class="paragraph"><p>Methods for memory access have been superseeded<br>
 (VarHandles via <a href="https://openjdk.org/jeps/193">JEP 193</a>; FFM via <a href="https://openjdk.org/jeps/454">JEP 454</a>).</p></div>
 <div class="paragraph"><p>Will be phased out:</p></div>
-<div class="ulist"><ul><li><p>deprecation and compile-time warning ㉓</p></li><li><p>run-time warning ~㉕</p></li><li><p>exception on invocation ~㉖</p></li><li><p>remove methods</p></li></ul></div></div></section><section id="_unsafe_2"><h2>Unsafe</h2><div class="slide-content"><div class="paragraph"><p>You&#8217;re probably not using it directly,<br>
+<div class="ulist"><ul><li><p>deprecation and compile-time warning ㉓</p></li><li><p>run-time warning ㉔</p></li><li><p>exception on invocation ~㉖</p></li><li><p>remove methods</p></li></ul></div></div></section><section id="_unsafe_2"><h2>Unsafe</h2><div class="slide-content"><div class="paragraph"><p>You&#8217;re probably not using it directly,<br>
 but your dependencies may.</p></div>
 <div class="paragraph"><p>Find them with <code>--sun-misc-unsafe-memory-access</code>:</p></div>
-<div class="ulist"><ul><li><p><code>warn</code>: to get run-time warnings today</p></li><li><p><code>debug</code>: same with more info</p></li><li><p><code>deny</code>: throws exception</p></li></ul></div>
+<div class="ulist"><ul><li><p><code>warn</code>: to get run-time warnings</p></li><li><p><code>debug</code>: same with more info</p></li><li><p><code>deny</code>: throws exception</p></li></ul></div>
 <div class="paragraph"><p>Report and help fix!</p></div></div></section><section id="_agents"><h2>Agents</h2><div class="slide-content"><div class="paragraph"><p>What it is:</p></div>
 <div class="ulist"><ul><li><p>a component that transforms byte code</p></li><li><p>uses <code>java.lang.instrument</code> or JVM TI</p></li><li><p>launches with JVM or attaches later ("dynamic")</p></li></ul></div></div></section><section id="_dynamic_agents"><h2>Dynamic agents</h2><div class="slide-content"><div class="paragraph"><p>What you need to know:</p></div>
 <div class="ulist"><ul><li><p>all mechanisms for agents remain intact</p></li><li><p>nothing changed yet</p></li><li><p>in the future, dynamic attach will be<br>
