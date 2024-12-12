@@ -13,11 +13,11 @@ Already removed:
 
 Deprecations (for removal):
 
-* memory access via `Unsafe` ㉓ (https://openjdk.org/jeps/471[JEP 471])
+* memory access via `Unsafe` ㉔ (https://openjdk.org/jeps/498[JEP 498])
 * allowed-by-default dynamic agents ㉑ (https://openjdk.org/jeps/451[JEP 451])
-* Windows 32-bit x86 port ㉑ (JEPs https://openjdk.org/jeps/449[449], https://openjdk.org/jeps/479[479])
+* 32-bit x86 ports ㉑㉔ (JEPs https://openjdk.org/jeps/449[449], https://openjdk.org/jeps/479[479], https://openjdk.org/jeps/501[501])
 * finalization ⑱ (https://openjdk.org/jeps/421[JEP 421])
-* security manager ⑰ (https://openjdk.org/jeps/411[JEP 411])
+* security manager ⑰㉔ (JEPs https://openjdk.org/jeps/411[411], https://openjdk.org/jeps/486[486])
 * applet API ⑰ (https://openjdk.org/jeps/398[JEP 398])
 * primitive wrapper constructors ⑯ (https://openjdk.org/jeps/390[JEP 390])
 * biased locking ⑮ (https://openjdk.org/jeps/374[JEP 374])
@@ -30,7 +30,7 @@ Methods for memory access have been superseeded +
 Will be phased out:
 
 * deprecation and compile-time warning ㉓
-* run-time warning ~㉕
+* run-time warning ㉔
 * exception on invocation ~㉖
 * remove methods
 
@@ -41,7 +41,7 @@ but your dependencies may.
 
 Find them with `--sun-misc-unsafe-memory-access`:
 
-* `warn`: to get run-time warnings today
+* `warn`: to get run-time warnings
 * `debug`: same with more info
 * `deny`: throws exception
 

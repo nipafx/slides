@@ -35,7 +35,10 @@ image::images/netflix-genzgc-gc-pause.webp[role="diagram"]
 
 === Default
 
-In JDK 23, generational mode is the default for ZGC:
+Generational mode is:
+
+* the default on JDK 23
+* the only mode on JDK 24+
 
 `-XX:+UseZGC`
 
