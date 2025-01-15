@@ -193,7 +193,7 @@ record Name {
 
 (Analogous for classes.)
 
-=== Statements Before ...
+=== Flexible Constructor Bodies
 
 Java 23 previews statements +
 before `super(...)` and `this(...)`.
@@ -257,7 +257,7 @@ class ThreePartName extends Name {
 
 === Surprising Cameo
 
-* Project Valhalla ponders non-nullable types
+* Project Valhalla ponders null-restricted types
 * has to work with `super()`
 * subclass sets non-null fields before `super()`
 

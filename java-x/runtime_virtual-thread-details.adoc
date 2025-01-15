@@ -115,10 +115,7 @@ Despite lots of internal rework
 (e.g. JEPs https://openjdk.org/jeps/353[353], https://openjdk.org/jeps/373[373]) +
 not all blocking operations unmount.
 
-Some _capture_ platform thread:
-
-* `Object::wait`
-* file I/O (⇝ _io_uring_)
+Specifically, file I/O _captures_ platform threads.
 
 ⇝ Compensated by temporarily growing carrier pool.
 
@@ -130,7 +127,6 @@ Some operations _pin_ (operations don't unmount):
 
 * native method call (JNI)
 * foreign function call (FFM)
-* `synchronized` block (for now)
 
 ⇝ No compensation
 
@@ -147,33 +143,6 @@ If possible:
 * avoid pinning operations
 * remove blocking operations +
   from pinning code sections.
-
-=== With synchronization
-
-```java
-// guarantees sequential access, but pins (for now) 👎🏾
-public synchronized String accessResource() {
-	return access();
-}
-```
-
-=== With lock
-
-```java
-// guarantees sequential access without pinning 👍🏾
-private static final ReentrantLock LOCK =
-	new ReentrantLock();
-
-public String accessResource() {
-	// lock guarantees sequential access
-	LOCK.lock();
-	try {
-		return access();
-	} finally {
-		LOCK.unlock();
-	}
-}
-```
 
 === Caveat #3: thread-locals
 

@@ -5,22 +5,49 @@ image::images/surprise.gif[background, size=cover]
 
 Already removed:
 
+* security manager ㉔ (https://openjdk.org/jeps/486[JEP 486])
+* Windows 32-bit x86 port ㉔ (https://openjdk.org/jeps/479[JEP 479])
+* biased locking ⑱ (https://openjdk.org/jeps/374[JEP 374], https://bugs.openjdk.org/browse/JDK-8256425[JDK-8256425])
 * RMI activation ⑰ (https://openjdk.org/jeps/407[JEP 407])
 * Nashorn ⑮ (https://openjdk.org/jeps/372[JEP 372])
 * concurrent mark sweep GC ⑭ (https://openjdk.org/jeps/363[JEP 363])
+
+=== Security Manager
+
+What it was:
+
+* a system of checks and permissions
+* intended to safeguard security-relevant +
+  code sections
+* embodied by `SecurityManager`
+
+=== Security Manager
+
+What you need to know:
+
+* barely used but maintenance-intensive
+* already disallowed by default
+* enable with `java.security.manager=allow`
+* in a future release, it will be removed
+
+=== Security Manager
+
+What you need to do:
+
+* observe your app with security manager disabled
+* if used, move away from security manager
 
 === Cleaning house
 
 Deprecations (for removal):
 
 * memory access via `Unsafe` ㉔ (https://openjdk.org/jeps/498[JEP 498])
+* Linux 32-bit x86 port ㉔ (https://openjdk.org/jeps/501[JEP 501])
+* allowed-by-default JNI ㉔ (https://openjdk.org/jeps/472[JEP 472])
 * allowed-by-default dynamic agents ㉑ (https://openjdk.org/jeps/451[JEP 451])
-* 32-bit x86 ports ㉑㉔ (JEPs https://openjdk.org/jeps/449[449], https://openjdk.org/jeps/479[479], https://openjdk.org/jeps/501[501])
 * finalization ⑱ (https://openjdk.org/jeps/421[JEP 421])
-* security manager ⑰㉔ (JEPs https://openjdk.org/jeps/411[411], https://openjdk.org/jeps/486[486])
-* applet API ⑰ (https://openjdk.org/jeps/398[JEP 398])
+* applet API ⑰ (https://openjdk.org/jeps/398[JEP 398], https://bugs.openjdk.org/browse/JDK-8345525[JDK-8345525] 👀)
 * primitive wrapper constructors ⑯ (https://openjdk.org/jeps/390[JEP 390])
-* biased locking ⑮ (https://openjdk.org/jeps/374[JEP 374])
 
 === Unsafe
 
@@ -46,6 +73,28 @@ Find them with `--sun-misc-unsafe-memory-access`:
 * `deny`: throws exception
 
 Report and help fix!
+
+=== JNI
+
+Native code can undermine Java's integrity.
+
+App owner should opt in knowingly:
+
+* use `--enable-native-access` to allow +
+  access to restricted JNI/FFM methods
+* use `--illegal-native-access` for other code
+
+=== JNI
+
+Three options for illegal native access:
+
+* `allow`
+* `warn` (default on JDK 24)
+* `deny`
+
+In some future release, `deny` will become the only mode.
+
+Prepare now by setting `--illegal-native-access=deny`.
 
 === Agents
 
@@ -98,32 +147,6 @@ What you need to do:
   help remove them
 * run your app with `--finalization=disabled` and +
   closely monitor resource behavior (e.g. file handles)
-
-=== Security Manager
-
-What it is:
-
-* a system of checks and permissions
-* intended to safeguard security-relevant +
-  code sections
-* embodied by `SecurityManager`
-
-=== Security Manager
-
-What you need to know:
-
-* barely used but maintenance-intensive
-* already disallowed by default
-* enable with `java.security.manager=allow`
-* in a future release, it will be removed
-
-=== Security Manager
-
-What you need to do:
-
-* observe your app with default settings +
-  (⇝ security manager disallowed)
-* if used, move away from security manager
 
 === Primitive constructors
 

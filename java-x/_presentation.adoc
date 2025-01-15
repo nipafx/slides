@@ -47,6 +47,13 @@ include::../_shared/event-on-title-and-footer.adoc[]
 
 // ⇝
 
+////
+TODO
+* JEP 483: AOT class loading & linking
+* JEP 487: scoped values
+* JEP 493: smaller JDK images
+////
+
 == Let's get started!
 
 * this session focuses on Java 22 and 23
@@ -80,6 +87,15 @@ Preview features:
 * flexible constructor bodies
 * stream gatherers
 * class-file API
+
+////
+=== Lots to talk about!
+
+Smaller or under-the-hood changes:
+
+* virtual threads don't pin on object monitors
+* smaller runtime images (possibly)
+////
 
 // ####################### //
 // P R E S E N T A T I O N //
