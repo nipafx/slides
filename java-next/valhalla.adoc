@@ -10,7 +10,7 @@ https://wiki.openjdk.org/display/valhalla/Main[wiki] /
 http://mail.openjdk.org/mailman/listinfo/valhalla-dev[mailing list] /
 http://jdk.java.net/valhalla/[early access builds]
 * launched July 2014
-* led by Brian Goetz and John Rose
+* led by Brian Goetz
 
 === Motivation
 
@@ -53,7 +53,7 @@ But not all custom types need that!
 
 === Project Valhalla
 
-Valhalla's goals is to unify the type system:
+Valhalla's goal is to unify the type system:
 
 * _value types_ (disavow identity)
 * _null-restriction_ + _implicit constructors_ +
@@ -65,9 +65,10 @@ Valhalla's goals is to unify the type system:
 
 [source,java]
 ----
-value class RationalNumber {
-	private long nominator;
-	private long denominator;
+value class ComplexNumber {
+
+	private double real;
+	private double imaginary;
 
 	// constructor, etc.
 }
@@ -116,58 +117,21 @@ How do we get rid of them?
 
 === Null-restriction
 
-No references = no `null`!
+Details are in flux, but possibly:
 
-⇝ Restrict variables to non-`null` values:
-
+* null-restructed variables and fields:
++
 ```java
 // number can't be null
 ComplexNumber! number = // ...
 ```
+* implicit constructor marks good _default instance_
 
-🤯🤯🤯
-
-=== Null-restriction
-
-https://openjdk.org/jeps/401[JEP 401]:
-
-> A variable with a https://openjdk.org/jeps/8303099[null-restricted type] prevents attempts to set the variable to null. Details of this behavior are described in the referenced JEP.
-
-Let's follow that reference!
-
-[%step]
-image::images/null-restricted-jep.png[]
-
-=== Null-restriction
-
-https://openjdk.org/jeps/401[JEP 401] (continued):
-
-> The details of general-purpose null-restricted types are still under development. The most relevant feature for this JEP is that the type of a variable or method return may use a ! suffix to indicate that it does not store null. This is enforced with runtime checks.
-
-[%step]
-_stuffing_brain_back_into_head.gif_
-
-=== Null-restriction
-
-Variable can't be null:
-
-```java
-ComplexNumber! number = // ...
-```
-
-But can `ComplexNumber` cope?
-
-=== Default instances
-
-The type needs a _default instance_:
-
-* implicit constructor
-* without code
-
-=== Implicit constructor
+=== Implicit constructors
 
 ```java
 value class ComplexNumber {
+
 	private double real;
 	private double imaginary;
 
@@ -248,18 +212,14 @@ Makes Java more expressive and performant.
 
 🤷🏾‍♂️
 
-[quote,Brian Goetz]
-____
-At most one more iteration.
-____
+(All effort is focussed on JEP 401.)
 
 === Deeper Dives
 
-* https://openjdk.org/jeps/8277163[JEP draft]: Value Objects
-* https://openjdk.org/jeps/401[JEP 401]: Flattened Heap Layouts for Value Objects
-* https://openjdk.org/jeps/8277163[JEP draft 🥷🏾]: Null-restricted Types (?)
+* https://openjdk.org/jeps/401[JEP 401]: Value Classes and Objects
+* https://openjdk.org/jeps/8316779[JEP draft]: Null-restricted Value Types
 * https://openjdk.org/jeps/402[JEP 402]: Enhanced Primitive Boxing
-* https://openjdk.org/jeps/8261529[JEP draft]: Universal Generics
+* https://openjdk.org/jeps/8277163[JEP draft]: Value Objects
 
 === Deeper Dives
 
@@ -267,5 +227,4 @@ ____
 ** https://openjdk.org/projects/valhalla/design-notes/state-of-valhalla/01-background[Part 1: The Road to Valhalla]
 ** https://openjdk.org/projects/valhalla/design-notes/state-of-valhalla/02-object-model[Part 2: The Language Model]
 ** https://openjdk.org/projects/valhalla/design-notes/state-of-valhalla/03-vm-model[Part 3: The JVM Model]
-* 🎥 https://www.youtube.com/watch?v=x1_DBqJrykM[The State of Project Valhalla with Brian Goetz] (Aug 2021)
-* 🎥 https://www.youtube.com/watch?v=1H4vmT-Va4o[Valhalla Update with Brian Goetz] (Jul 2019)
+* 🎥 https://www.youtube.com/watch?v=Dhn-JgZaBWo[Valhalla - Java's Epic Refactor] (Aug 2021)
