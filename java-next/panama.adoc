@@ -6,8 +6,7 @@ image::images/panama-canal.jpg[background, size=cover]
 Profile:
 
 * https://openjdk.org/projects/panama/[project] /
-https://mail.openjdk.org/mailman/listinfo/panama-dev[mailing list] /
-https://jdk.java.net/panama/[early access builds]
+https://mail.openjdk.org/mailman/listinfo/panama-dev[mailing list]
 * launched July 2014
 * led by Maurizio Cimadamore
 
@@ -26,6 +25,7 @@ compute `c = - (a² + b²)`:
 // a, b, c have same length
 void compute(float[] a, float[] b, float[] c) {
 	for (int i = 0; i < a.length; i++) {
+		// c = -(a² + b²)
 		c[i] = (a[i] * a[i] + b[i] * b[i]) * -1.0f;
 	}
 }
@@ -55,9 +55,10 @@ static final VectorSpecies<Float> VS =
 // a, b, c length is multiple of vector length
 void compute(float[] a, float[] b, float[] c) {
 	int upperBound = VS.loopBound(a.length);
-	for (i = 0; i < upperBound; i += VS.length()) {
+	for (int i = 0; i < upperBound; i += VS.length()) {
 		var va = FloatVector.fromArray(VS, a, i);
 		var vb = FloatVector.fromArray(VS, b, i);
+		// c = -(a² + b²)
 		var vc = va.mul(va)
 			.add(vb.mul(vb))
 			.neg();
@@ -85,24 +86,34 @@ include::panama-ffm-short.adoc[]
 
 === Timeline
 
-JDK 21::
+JDK 21:
+
 * foreign APIs in 3rd preview (https://openjdk.org/jeps/442[JEP 442])
 * vector API in 6th incubation (https://openjdk.org/jeps/448[JEP 448])
 
-Vector API needs to wait for Valhalla's +
-primitive types and universal generics.
+JDK 22:
+
+* foreign APIs finalize (https://openjdk.org/jeps/454[JEP 454])
+
+JDK 24:
+
+* vector API in 9th incubation (https://openjdk.org/jeps/489[JEP 489]), +
+  still waiting for Valhalla's value types
 
 === Timeline
 
-My personal (!) guess (!!):
+Current work:
 
-* foreign APIs finalize in 2024
+* improve memory access performance
+* reduce startup/warmup cost
+* refine record mappers
+* improve `jextract`
 
 === Deeper Dives
 
 Vector API:
 
-* 📝 https://openjdk.org/jeps/448[JEP 448: Vector API (Sixth Incubator)]
+* 📝 https://openjdk.org/jeps/489[JEP 489: Vector API (Ninth Incubator)]
 * 🎥 https://www.youtube.com/watch?v=42My8Yfzwbg[Fast Java Code with the Vector API] (Mar 2023)
 * 🎥 https://www.youtube.com/watch?v=1JeoNr6-pZw&list=PLX8CzqL3ArzWe2uQhE-TeAayRtjvBNyNn&index=8[The Vector API in JDK 17] (Sep 2021)
 * 📝 https://www.morling.dev/blog/fizzbuzz-simd-style/[FizzBuzz – SIMD Style!] (Mar 2021)
