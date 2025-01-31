@@ -7,54 +7,21 @@ Profile:
 
 * https://openjdk.org/projects/loom/[project] /
 https://wiki.openjdk.org/display/loom/Main[wiki] /
-http://mail.openjdk.org/mailman/listinfo/loom-dev[mailing list] /
-http://jdk.java.net/loom[early access builds]
+http://mail.openjdk.org/mailman/listinfo/loom-dev[mailing list]
 * launched January 2018
 * led by Ron Pressler
 
 === Motivation
 
-Imagine a hypothetical HTTP request:
+An application with many blocking operations +
+had two options:
 
-. interpret request
-. query database (_blocks_)
-. process data for response
-
-Resource utilization:
-
-* good for 1. and 3.
-* really bad for 2.
-
-How to implement that request?
-
-=== Synchronous
-
-Align application's unit of concurrency (request)  +
-with Java's unit of concurrency (thread):
-
-* use thread per request
-* simple to write, debug, profile
-* blocks threads on certain calls
-* limited number of _platform_ threads +
-  ⇝ bad resource utilization +
-  ⇝ low throughput
-
-[NOTE.speaker]
---
-* common CPU load: 5-30%
---
-
-=== Asynchronous
-
-Only use threads for actual computations:
-
-* use non-blocking APIs +
-  (with futures / reactive streams)
-* harder to write, challenging to debug/profile
-* incompatible with synchronous code
-* shares platform threads +
-  ⇝ great resource utilization +
-  ⇝ high throughput
+* block platform (OS) threads until task completion:
+** simple-to-use programming paradigm
+** can limit throughput
+* use asnychronous programming
+** harder to write and harder still to debug
+** allows higher throughput
 
 === Motivation
 
@@ -68,111 +35,70 @@ Resolve the conflict between:
 A _virtual_ thread:
 
 * is a regular `Thread`
-* low memory footprint ([k]bytes)
+* low memory footprint (stack + bytes)
 * small switching cost
 * scheduled by the Java runtime
-* requires no OS thread when waiting
+* executes on platform thread
+* waits in memory +
+  (no platform thread blocked)
 
-=== Virtual thread management
+=== Exceptions
 
-The runtime manages virtual threads:
+Pinning: ::
+* a _pinned_ VT will block the PT
+* caused by object monitors, +
+  native calls, class initialization
 
-* runs them on a pool of _carrier threads_
-* makes them _yield_ on blocking calls +
-(*frees the carrier thread!*)
-* _continues_ them when calls return
+Capture: ::
+* a _captured_ VT blocks the PT
+* caused by file I/O
 
-=== Virtual thread example
+=== Object monitor pinning
 
-Remember the hypothetical request:
+Object monitor implementation:
 
-. interpret request
-. query database (_blocks_)
-. process data for response
+* was bound to OS threads
+* required deep refactoring +
+  to work with VTs
+* fix ships with JDK 24
 
-In a virtual thread:
+⇝ No more pinning for `synchronized`.
 
-[%step]
-* runtime submits task to carrier thread pool
-* when 2. blocks, virtual thread yields
-* runtime hands carrier thread back to pool
-* when 2. unblocks, runtime resubmits task
-* virtual thread continues with 3.
+=== Native code pinning
 
-=== Example
+Cause:
 
-```java
-try (var executor = Executors
-		.newVirtualThreadPerTaskExecutor()) {
-	for (int i = 0; i < 1_000_000; i++) {
-		var number = i;
-		executor.submit(() -> {
-			Thread.sleep(Duration.ofSeconds(1));
-			return number;
-		});
-	}
-} // executor.close() is called implicitly, and waits
-```
+* native code works on PT's stack
+* switching PTs would wreak havoc
 
+Fix:
 
-[NOTE.speaker]
---
-* all APIs are in flux
---
+* possible in the JVM, but expensive
+* fairly easy to avoid
 
-=== Example
+⇝ Don't call native code, then back to Java, then block.
 
-```java
-void handle(Request request, Response response)
-		throws InterruptedException {
-	try (var executor = Executors
-			.newVirtualThreadPerTaskExecutor()) {
-		var futureA = executor.submit(this::taskA);
-		var futureB = executor.submit(this::taskB);
-		response.send(futureA.get() + futureB.get());
-	} catch (ExecutionException ex) {
-		response.fail(ex);
-	}
-}
-```
+=== File I/O capture
+
+File I/O capture is caused by JVM/OS limitations.
+
+Linux `io_uring` allows async I/O but:
+
+* adoption incurrs overhead
+* considerable compared to cached SSD-reads
+* cost/benefit is not good
+
+⇝ No fix for now.
 
 === Performance
 
 Virtual threads aren't "faster threads": +
 Each task takes the same time (same _latency_).
 
-So why bother?
+Virtual threads increase _throughput_:
 
-=== Parallelism vs concurrency
-
-[options="header"]
-|============================================
-|                | Parallelism  | Concurrency
-| *Task origin*  | solution     | problem
-| *Control*      | developer    | environment
-| *Resource use* | coordinated  | competitive
-| *Metric*       | latency      | throughput
-| *Abstraction*  | CPU cores    | tasks
-| *# of threads* | # of cores   | # of tasks
-|============================================
-
-=== Performance
-
-When workload is not CPU-bound:
-
-* start waiting as early as possible
-* for as many tasks as possible
-
-⇝ Virtual threads increase _throughput_:
-
+* when workload is not CPU-bound _and_
 * when number of concurrent tasks is high
-* when workload is not CPU-bound
-
-[NOTE.speaker]
---
-* maximize progress other systems can make.
-* "high": more than a few thousand
---
 
 === Use Cases
 
@@ -185,23 +111,11 @@ Virtual threads are cheap and plentiful:
 
 ⇝ Enables new concurrency programming models.
 
-[NOTE.speaker]
---
-* "thread per task" covers earlier example
-* "thread per subtask" comes next
---
-
-=== Structured concurrency
-
-Structured programming:
+=== Structured programming
 
 * prescribes single entry point +
   and clearly defined exit points
 * influenced languages and runtimes
-
-Simlarly, structured concurrency prescribes:
-
-> When the flow of execution splits into multiple concurrent flows, they rejoin in the same code block.
 
 === Structured concurrency
 
@@ -215,6 +129,7 @@ Simlarly, structured concurrency prescribes:
 ⇝ Enables parent-child/sibling relationships +
   and logical grouping of threads.
 
+////
 === Unstructured concurrency
 
 ```java
@@ -234,42 +149,145 @@ void handle(Request request, Response response)
 	}
 }
 ```
+////
 
 === Structured concurrency
 
 ```java
 void handle(Request request, Response response)
 		throws InterruptedException {
-	// define explicit success/error handling
-	try (var scope = new StructuredTaskScope
-			.ShutdownOnFailure()) {
-		var futureA = scope.fork(() -> doA(request));
-		var futureB = scope.fork(() -> doB(request));
-		// wait explicitly until success criteria met
+	// implicitly short-circuits on error
+	try (var scope = StructuredTaskScope.open()) {
+		var subtaskA = scope.fork(this::taskA);
+		var subtaskB = scope.fork(this::taskB);
+		// wait explicitly for success
+		// (throws errors if there were any)
 		scope.join();
-		scope.throwIfFailed();
 
-		response.send(futureA.get() + futureB.get());
+		response.send(subtaskA.get() + subtaskB.get());
 	} catch (ExecutionException ex) {
 		response.fail(ex);
 	}
 }
 ```
 
+=== Completion
+
+Use `Joiner` to configure completion:
+
+* how are results collected?
+* when are subtasks cancelled?
+* when does `join` throw?
+
+Pass to `StructuredTaskScope.open(Joiner)`.
+
+=== Joiners
+
+Existing joiners for heterogeneous results:
+
+* `awaitAllSuccessfulOrThrow()`:
+** cancels/throws on first error
+** default behavior of `open()`
+* `awaitAll()`:
+** never cancels/throws
+
+////
+=== Await All
+
+```java
+try (var scope = StructuredTaskScope
+		.open(Joiners.awaitAll())) {
+	var subtask = scope.fork(this::task);
+	// never throws:
+	scope.join();
+	switch (subtask.state()) {
+		case SUCCESS -> // ...
+		case FAILED -> // ...
+		case UNAVAILABLE -> // ...
+	}
+} catch (ExecutionException ex) {
+	// [error handling]
+}
+```
+////
+
+=== Joiners
+
+Existing joiners for homogeneous results:
+
+* `allSuccessfulOrThrow()`:
+** cancels/throws on first error
+** returns `Stream<RESULT>`
+* `anySuccessfulResultOrThrow()`
+** cancels/throws if all fail
+** returns `RESULT`
+
 === Structured concurrency
 
-* forked tasks are children of the scope
+* forked tasks are children of the scope +
+  (visible in thread dumps)
 * creates relationship between threads
 * success/failure policy can be defined +
   across all children
+
+=== Sharing data
+
+With `ThreadLocal`:
+
+```java
+static final ThreadLocal<Principal> PRINCIPAL =
+	new ThreadLocal<>();
+
+public void serve(Request request, Response response) {
+	var level = request.isAdmin() ? ADMIN : GUEST;
+	var principal = new Principal(level);
+	PRINCIPAL.set(principal);
+	Application.handle(request, response);
+}
+
+// elsewhere
+PRINCIPAL.get()
+```
+
+=== Sharing data
+
+`ThreadLocal` downsides:
+
+* unconstrained mutability
+* unbounded lifetime
+* expensive inheritance
+
+`ScopedValues` improve on that:
+
+* write-once (per thread)
+* clearly scoped
+* free inheritance
+
+=== With scoped value
+
+```java
+static final ScopedValue<Principal> PRINCIPAL =
+	new ScopedValue<>();
+
+public void serve(Request request, Response response) {
+	var level = request.isAdmin() ? ADMIN : GUEST;
+	var principal = new Principal(level);
+	ScopedValue
+		.where(PRINCIPAL, principal)
+		.run(() -> Application
+			.handle(request, response));
+}
+
+// elsewhere
+PRINCIPAL.get()
+```
 
 === Project Loom
 
 Virtual threads:
 
 * code is simple to write, debug, profile
-* high throughput
-* new programing model
+* allows high throughput
 
 Structured concurrency:
 
@@ -277,21 +295,37 @@ Structured concurrency:
 * simpler failure/success policies
 * better debugging
 
+Scoped values:
+
+* safer, more scalable data sharing
+
 === Timeline
 
-JDK 21::
+JDK 21:
+
 * virtual threads finalize (https://openjdk.org/jeps/444[JEP 444])
-* structured concurrency previews (https://openjdk.org/jeps/437[JEP 453])
+* structured concurrency previews (https://openjdk.org/jeps/453[JEP 453])
 * scoped values preview (https://openjdk.org/jeps/446[JEP 446])
 
+JDK 24:
+
+* object monitors no longer pin virtual threads (https://openjdk.org/jeps/491[JEP 491])
+* structured concurrency in 4th preview (https://openjdk.org/jeps/499[JEP 499])
+* scoped values in 4th preview (https://openjdk.org/jeps/446[JEP 487])
+
 === Timeline
 
-My personal (!) guesses (!!):
+Current work:
 
-2024::
-* structured concurrency and +
-  scoped vlaues finalize
-* maybe more structured concurrency APIs
+* finalize structured concurrency and +
+  scoped values APIs
+* reduce pinning during class initialization
+* improve lock info in thread dumps
+
+JDK 25:
+
+* structured concurrency in 5th preview (https://openjdk.org/jeps/499[JEP 499])
+* scoped values 🤷🏾‍♂️
 
 === Deeper Dives
 
