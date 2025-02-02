@@ -1,13 +1,219 @@
 == Project Leyden
-image::images/leyden.png[background, size=cover]
+image::images/leyden.jpg[background, size=cover]
 
 > Faster startup, shorter time to peak performance, smaller footprint
 
 Profile:
 
+* https://openjdk.org/projects/leyden/[project] /
+https://mail.openjdk.org/mailman/listinfo/leyden-dev[mailing list] /
+https://jdk.java.net/leyden[early access builds]
+* launched May 2022
 * led by Mark Reinhold
-* https://mail.openjdk.org/pipermail/discuss/2020-April/005429.html[Call for Discussion]
-* first discussed in April 2020
-* not yet officially launched
 
-// TODO: more details
+=== Motivation
+
+Java has really good peak performance, +
+but also tends to have:
+
+* slow startup time
+* slow warmup time
+* large footprint
+
+For now, Leyden focusses on startup/warmup.
+
+=== Computation
+
+Two kinds of computation:
+
+* expressed by the program
+* done on behalf of the program, e.g.:
+** class-loading
+** JIT compilation
+** garbage collection
+
+For now, Leyden focusses in the latter.
+
+=== Startup & Warmup
+
+Early computation on behalf of the program:
+
+* class loading
+* callsite linkage
+* constant pool resolution
+* interpretation
+* profile gathering
+* JIT compilation (C1, C2)
+
+=== Shifting Computation
+
+Java already shifts computation:
+
+* compile-time constant folding
+* class loading
+* garbage collection
+* out-of-order execution
+
+Let's shift more computation ahead of time!
+
+[%step]
+What computation?
+
+[state=empty,background-color="white"]
+=== !
+image::images/aot-all-the-things.jpg[background, size=contain]
+
+=== Shifting Everything
+
+Shift _everything_ ahead of time?
+
+* class loading & linking
+* JIT compilation
+* method profiling
+* lambda resolution
+* dead-code elimination
+* ...
+
+But...
+
+=== Dynamic Java
+
+Java is highly dynamic:
+
+* class loading
+* class redefinition
+* linkage
+* access control
+* method dispatch
+* run-time typing (e.g. casting)
+* introspection
+* JIT compilation, decompilation
+
+[%step]
+How to AOT everything?
+
+[state=empty]
+=== !
+image::images/crystal-ball.jpg[background, size=cover]
+
+[state=empty]
+=== !
+image::images/training-run.jpg[background, size=cover]
+
+=== Enter AOTCache
+
+Leyden introduces _AOTCache_:
+
+* observe JVM
+* capture decisions in AOTCache +
+  (expansion of _CDS Archive_)
+* use as "initial state" during future run
+* fall back to live observation/optimization +
+  if necessary and possible
+
+=== AOT workflow
+
+```sh
+# training run (⇝ profile)
+$ java -XX:AOTMode=record
+       -XX:AOTConfiguration=app.aotconf
+       -cp app.jar com.example.App ...
+# assembly phase (profile ⇝ AOTCache)
+$ java -XX:AOTMode=create
+       -XX:AOTConfiguration=app.aotconf
+       -XX:AOTCache=app.aot
+       -cp app.jar
+# production run (AOTCache ⇝ performance)
+$ java -XX:AOTCache=app.aot
+       -cp app.jar com.example.App ...
+```
+
+(Open to improvements.)
+
+=== AOT class loading & linking
+
+Introduced by https://openjdk.org/jeps/483[JEP 483]:
+
+> Improve startup time by making the classes of an application instantly available, in a loaded and linked state, when the HotSpot JVM starts.
+
+Spring PetClinic benchmarks:
+
+* up to ~40% startup time reduction
+* AOT cache size of ~130 MB
+
+=== AOT class loading & linking
+
+Limitation:
+
+* same JDK release / hardware / OS
+* consistent class path for training and production
+* consistent module options
+* limited use of JVMTI agents
+
+Otherwise, AOTCache is ignored.
+
+=== AOT everything
+
+Leyden's early access builds AOT more:
+
+* method profiling
+* constant resolution
+* code compilation
+* dynamic proxies
+* reflection data
+* unfound classes
+
+Benchmarks show ~70% startup time reduction.
+
+=== Beyond Fallback
+
+Most cached data can be:
+
+* validated at runtime
+* replaced with more accurate +
+  or better data (e.g. JIT code)
+
+More optimizations are possible:
+
+* if dynamism is constrained
+* if program is constrained
+
+=== Constraining Dynamism
+
+Let developers accept constraints, e.g.:
+
+* limited class redefinition
+* closed-world assumption
+* fixed program configuration
+
+Let Java apply suitable optimizations.
+
+⇝ Performance is an emergent property.
+
+=== Project Leyden
+
+* improves Java's overall footprint
+* for now: focusses on startup/warmup time +
+  by caching early JVM work
+* in the future: explores stricter constraints +
+  for more aggressive optimization
+
+=== Timeline
+
+JDK 24:
+
+* AOT class loading & linking (https://openjdk.org/jeps/483[JEP 483])
+
+Current work:
+
+* AOT code compilation (https://openjdk.org/jeps/8335368[JEP draft])
+* AOT method profiling (https://openjdk.org/jeps/8325147[JEP draft])
+* work towards more limiting constraints
+
+=== Deeper Dives
+
+* 📝 https://openjdk.org/projects/leyden/notes/02-shift-and-constrain[Selectively Shifting and Constraining Computation]
+* 📝 https://openjdk.org/projects/leyden/notes/05-training-runs[Thoughts on Training Runs]
+* 🎥 https://www.youtube.com/watch?v=z9XgILeSwzk[A Preview of What's Coming in Project Leyden] (Oct 2024)
+* 🎥 https://www.youtube.com/watch?v=NlJK5BKXtHI[Project Leyden: Capturing Lightning in a Bottle] (Feb 2024)
+* 🎥 https://www.youtube.com/watch?v=OOPSU4LnKg0[Project Leyden Update #JVMLS] (August 2024)
