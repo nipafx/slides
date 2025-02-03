@@ -23,6 +23,8 @@ Amber continuously improves that situation.
 
 === Delivered
 
+* multi-file source launcher ㉒ (https://openjdk.org/jeps/458[JEP 458])
+* unnamed variables and patterns ㉒ (https://openjdk.org/jeps/456[JEP 456])
 * patterns in switch ㉑ (https://openjdk.org/jeps/441[JEP 441])
 * record patterns ㉑ (https://openjdk.org/jeps/440[JEP 440])
 * sealed types ⑰ (https://openjdk.org/jeps/409[JEP 409])
@@ -38,36 +40,37 @@ Amber continuously improves that situation.
 
 Amber's main thrust is pattern matching:
 
-* improved switch
 * records
 * sealed types
-* pattern matching
+* improved switch
+* patterns
 
-=== Inside Java Newscast #29
+=== Sum &gt; Parts
 
 [link=https://www.youtube.com/watch?v=5qYJYGvVLg8]
-image::images/inside-java-newscast-29.png[]
+image::images/inside-java-newscast-29.png[width=80%]
 
-include::amber-template-strings.adoc[]
-
-=== Amber endeavors
-
-Pattern matching:
-
-* unnamed patterns/variables (https://openjdk.org/jeps/443[JEP 443])
-* primitive types in patterns (https://openjdk.org/jeps/455[JEP 455])
+Inside Java Newscast #29
 
 === Amber endeavors
 
 Other endeavors and conversations:
 
-* simplified main (https://openjdk.org/jeps/445[JEP 445])
-* multi-file source launcher (https://openjdk.org/jeps/8304400[JEP draft])
-* relaxed `this()`/`super()` (https://openjdk.org/jeps/447[JEP 447])
+* primitive types in patterns (https://openjdk.org/jeps/488[JEP 488])
+* simplified main (https://openjdk.org/jeps/495[JEP 495])
+* flexible constructor bodies (https://openjdk.org/jeps/492[JEP 492])
+* deconstruction of classes
+* derived record creation ("withers") (https://openjdk.org/jeps/468[JEP 468])
 * deconstruction assignment (https://twitter.com/BrianGoetz/status/1599000138793771010[announcement])
-* `with` expressions (https://github.com/openjdk/amber-docs/blob/master/eg-drafts/reconstruction-records-and-classes.md[design document])
+* serialization 2.0 (https://www.youtube.com/watch?v=fbqAyRJoQO0[talk at Devoxx BE])
 * concise method bodies (https://openjdk.org/jeps/8209434[JEP draft])
-* serialization revamp (https://openjdk.org/projects/amber/design-notes/towards-better-serialization[design notes])
+
+=== String Templates?
+
+[link=https://www.youtube.com/watch?v=c6L4Ef9owuQ]
+image::images/inside-java-newscast-71.jpg[width=80%]
+
+Inside Java Newscast #71
 
 === Project Amber
 
@@ -77,27 +80,29 @@ Other endeavors and conversations:
 
 === Timeline
 
-JDK 21::
-* pattern matching in `switch` finalizes (https://openjdk.org/jeps/441[JEP 441])
-* record patterns finalize (https://openjdk.org/jeps/440[JEP 440])
-* template strings preview (https://openjdk.org/jeps/430[JEP 430])
-* simplified main previews (https://openjdk.org/jeps/445[JEP 445])
+JDK 21:
+
+* records & sealed types
+* pattern matching basics
+* text blocks
+* single-file source launcher
+
+JDK 22:
+
+* unnamed patterns
+* multi-file source launcher
 
 === Timeline
 
-My personal (!) guesses (!!):
+Current work:
 
-2024::
-* relaxed `this()`/`super()`
-* primitive types in patterns
-* more deconstruction
-* multi-file source launcher
+* simplified main (https://openjdk.org/jeps/495[JEP 495])
+* flexible constructor bodies (https://openjdk.org/jeps/492[JEP 492])
+* primitive types in patterns (https://openjdk.org/jeps/488[JEP 488])
+* deconstruction
 
 === Deeper Dives
 
 * 📝 https://openjdk.org/projects/amber/design-notes/patterns/pattern-match-object-model[Pattern Matching in the Java Object Model]
-* 🎥 https://www.youtube.com/watch?v=qul2B8iPC-o[Java Language Futures: All Aboard Project Amber] +
-  (Nov 2017)
-* 🎥 https://www.youtube.com/watch?v=hDV6G1MbUH8[Java Language Futures: Late 2021 Edition] (Sep 2021)
-* 🎥 https://www.youtube.com/watch?v=UlFFKkq6fyU[Pattern Matching in Java (17)] (Sep 2021)
-* 🎥 https://www.youtube.com/watch?v=a8OdwUiSnXw[State of Pattern Matching with Brian Goetz] (Feb 2022)
+* 🎥 https://www.youtube.com/watch?v=QrwFrm1R8OY[Java 21 Pattern Matching Tutorial] (Sep 2023)
+* 🎥 https://www.youtube.com/watch?v=NNPN5tvjzqA[Java Language Futures: Fall 2024 Edition] (Oct 2024)
