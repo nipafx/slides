@@ -26,15 +26,15 @@ What it was:
 What you need to know:
 
 * barely used but maintenance-intensive
-* already disallowed by default
-* enable with `java.security.manager=allow`
-* in a future release, it will be removed
+* disallowed by default since JDK 18
+* removed in JDK 24
 
 === Security Manager
 
 What you need to do:
 
-* observe your app with security manager disabled
+* observe your app with security manager disabled +
+  (`java.security.manager=disallow` on JDK 12+)
 * if used, move away from security manager
 
 === Cleaning house

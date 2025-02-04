@@ -1,0 +1,106 @@
+== {title}
+
+{toc}
+
+=== Java Performance
+
+Java has really good peak performance, +
+but also tends to have:
+
+* slow startup time
+* slow warmup time
+
+=== Startup & Warmup
+
+Early work by the runtime:
+
+* class loading
+* callsite linkage
+* constant pool resolution
+* interpretation
+* profile gathering
+* JIT compilation (C1, C2)
+
+Ca we do this ahead of time?
+
+[state=empty,background-color="white"]
+=== !
+image::images/aot-all-the-things.jpg[background, size=contain]
+
+=== Dynamic Java
+
+But Java is highly dynamic:
+
+* class loading
+* class redefinition
+* linkage
+* access control
+* method dispatch
+* run-time typing (e.g. casting)
+* introspection
+* JIT compilation, decompilation
+
+How to AOT everything?
+
+[state=empty]
+=== !
+image::images/crystal-ball.jpg[background, size=cover]
+
+[state=empty]
+=== !
+image::images/training-run.jpg[background, size=cover]
+
+=== Enter AOTCache
+
+Project Leyden introduces _AOTCache_:
+
+* observe JVM
+* capture decisions in AOTCache +
+  (expansion of _CDS Archive_)
+* use as "initial state" during future run
+* fall back to live observation/optimization +
+  if necessary and possible
+
+=== AOT workflow
+
+```sh
+# training run (⇝ profile)
+$ java -XX:AOTMode=record
+       -XX:AOTConfiguration=app.aotconf
+       -cp app.jar com.example.App ...
+# assembly phase (profile ⇝ AOTCache)
+$ java -XX:AOTMode=create
+       -XX:AOTConfiguration=app.aotconf
+       -XX:AOTCache=app.aot
+       -cp app.jar
+# production run (AOTCache ⇝ performance)
+$ java -XX:AOTCache=app.aot
+       -cp app.jar com.example.App ...
+```
+
+(Open to improvements.)
+
+=== AOT class loading & linking
+
+> Improve startup time by making the classes of an application instantly available, in a loaded and linked state, when the HotSpot JVM starts.
+
+Spring PetClinic benchmarks:
+
+* up to ~40% startup time reduction
+* AOT cache size of ~130 MB
+
+=== AOT class loading & linking
+
+Limitation:
+
+* same JDK release / hardware / OS
+* consistent class path for training and production
+* consistent module options
+* limited use of JVMTI agents
+
+Otherwise, AOTCache is ignored.
+
+=== More
+
+* 📝 https://openjdk.org/jeps/483[JEP 483]: AOT Class Loading and Linking
+* 🎥 https://www.youtube.com/watch?v=z9XgILeSwzk[A Preview of What's Coming in Project Leyden] (Oct 2024)

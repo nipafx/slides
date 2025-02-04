@@ -1,0 +1,42 @@
+== {title}
+
+{toc}
+
+=== Virtual Threads
+
+A _virtual_ thread:
+
+* is a regular `Thread`
+* low memory footprint (stack + bytes)
+* small switching cost
+* scheduled by the Java runtime
+* executes on platform thread
+* waits in memory +
+  (no platform thread blocked)
+
+=== Exceptions
+
+Pinning: ::
+* a _pinned_ VT will block the PT
+* caused by **object monitors**, +
+  native calls, class initialization
+
+Capture: ::
+* a _captured_ VT blocks the PT
+* caused by file I/O
+
+=== Object monitor pinning
+
+Object monitor implementation:
+
+* was bound to OS threads
+* required deep refactoring +
+  to work with VTs
+* fix ships with JDK 24
+
+⇝ No more pinning for `synchronized`.
+
+=== More
+
+* 📝 https://openjdk.org/jeps/491[JEP 491]: Synchronize Virtual Threads without Pinning
+* 🎥 https://www.youtube.com/watch?v=QDk1c0ifoNo[Java 24 Stops Pinning Virtual Threads (Almost)] (Nov 2024)
