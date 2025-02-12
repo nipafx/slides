@@ -18,25 +18,10 @@ but also tends to have:
 
 * slow startup time
 * slow warmup time
-* large footprint
-
-For now, Leyden focusses on startup/warmup.
-
-=== Computation
-
-Two kinds of computation:
-
-* expressed by the program
-* done on behalf of the program, e.g.:
-** class-loading
-** JIT compilation
-** garbage collection
-
-For now, Leyden focusses in the latter.
 
 === Startup & Warmup
 
-Early computation on behalf of the program:
+Early work by the runtime:
 
 * class loading
 * callsite linkage
@@ -44,6 +29,8 @@ Early computation on behalf of the program:
 * interpretation
 * profile gathering
 * JIT compilation (C1, C2)
+
+Can we shift this work?
 
 === Shifting Computation
 
@@ -53,32 +40,17 @@ Java already shifts computation:
 * class loading
 * garbage collection
 * out-of-order execution
+* ...
 
 Let's shift more computation ahead of time!
-
-[%step]
-What computation?
 
 [state=empty,background-color="white"]
 === !
 image::images/aot-all-the-things.jpg[background, size=contain]
 
-=== Shifting Everything
-
-Shift _everything_ ahead of time?
-
-* class loading & linking
-* JIT compilation
-* method profiling
-* lambda resolution
-* dead-code elimination
-* ...
-
-But...
-
 === Dynamic Java
 
-Java is highly dynamic:
+But Java is highly dynamic:
 
 * class loading
 * class redefinition
@@ -89,7 +61,6 @@ Java is highly dynamic:
 * introspection
 * JIT compilation, decompilation
 
-[%step]
 How to AOT everything?
 
 [state=empty]
