@@ -57,7 +57,7 @@ Valhalla's goal is to unify the type system:
 
 * _value types_ (disavow identity)
 * _null-restriction_ + _implicit constructors_ +
-  (disavow identity + references)
+  (disavow references)
 * _universal generics_ (`ArrayList<int>`)
 * _specialized generics_ (backed by `int[]`)
 
@@ -76,7 +76,7 @@ value class ComplexNumber {
 
 Codes (almost) like a class - exceptions:
 
-* class and fields are implcitly final
+* class and fields are implicitly final
 * superclasses are limited
 
 [NOTE.speaker]
@@ -227,4 +227,4 @@ Makes Java more expressive and performant.
 ** https://openjdk.org/projects/valhalla/design-notes/state-of-valhalla/01-background[Part 1: The Road to Valhalla]
 ** https://openjdk.org/projects/valhalla/design-notes/state-of-valhalla/02-object-model[Part 2: The Language Model]
 ** https://openjdk.org/projects/valhalla/design-notes/state-of-valhalla/03-vm-model[Part 3: The JVM Model]
-* 🎥 https://www.youtube.com/watch?v=Dhn-JgZaBWo[Valhalla - Java's Epic Refactor] (Aug 2021)
+* 🎥 https://www.youtube.com/watch?v=Dhn-JgZaBWo[Valhalla - Java's Epic Refactor] (Dev 2024)
