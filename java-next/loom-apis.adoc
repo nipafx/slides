@@ -1,0 +1,167 @@
+=== Structured programming
+
+* prescribes single entry point +
+  and clearly defined exit points
+* influenced languages and runtimes
+
+=== Unstructured concurrency
+
+```java
+void handle(Request request, Response response)
+		throws InterruptedException {
+	try (var executor = Executors
+			.newVirtualThreadPerTaskExecutor()) {
+		// what's the relationship between
+		// this and the two spawned threads?
+		// what happens when one of them fails?
+		var futureA = executor.submit(this::taskA);
+		var futureB = executor.submit(this::taskB);
+		// what if we only need the faster one?
+		response.send(futureA.get() + futureB.get());
+	} catch (ExecutionException ex) {
+		response.fail(ex);
+	}
+}
+```
+
+=== Structured concurrency
+
+> When the flow of execution splits into multiple concurrent flows, they rejoin in the same code block.
+
+⇝ Threads are short-lived:
+
+* start when task begins
+* end on completion
+
+⇝ Enables parent-child/sibling relationships +
+  and logical grouping of threads.
+
+=== Structured concurrency
+
+```java
+void handle(Request request, Response response)
+		throws InterruptedException {
+	// implicitly short-circuits on error
+	try (var scope = StructuredTaskScope.open()) {
+		var subtaskA = scope.fork(this::taskA);
+		var subtaskB = scope.fork(this::taskB);
+		// wait explicitly for success
+		// (throws errors if there were any)
+		scope.join();
+
+		response.send(subtaskA.get() + subtaskB.get());
+	} catch (ExecutionException ex) {
+		response.fail(ex);
+	}
+}
+```
+
+=== Completion
+
+Use `Joiner` to configure completion:
+
+* how are results collected?
+* when are subtasks cancelled?
+* when does `join` throw?
+
+Pass to `StructuredTaskScope.open(Joiner)`.
+
+=== Joiners
+
+Existing joiners for heterogeneous results:
+
+* `awaitAllSuccessfulOrThrow()`:
+** cancels/throws on first error
+** default behavior of `open()`
+* `awaitAll()`:
+** never cancels/throws
+
+=== Await All
+
+```java
+try (var scope = StructuredTaskScope
+		.open(Joiners.awaitAll())) {
+	var subtask = scope.fork(this::task);
+	// never throws:
+	scope.join();
+	switch (subtask.state()) {
+		case SUCCESS -> // ...
+		case FAILED -> // ...
+		case UNAVAILABLE -> // ...
+	}
+} catch (ExecutionException ex) {
+	// [error handling]
+}
+```
+
+=== Joiners
+
+Existing joiners for homogeneous results:
+
+* `allSuccessfulOrThrow()`:
+** cancels/throws on first error
+** returns `Stream<RESULT>`
+* `anySuccessfulResultOrThrow()`
+** cancels/throws if all fail
+** returns `RESULT`
+
+=== Structured concurrency
+
+* forked tasks are children of the scope +
+  (visible in thread dumps)
+* creates relationship between threads
+* success/failure policy can be defined +
+  across all children
+
+=== Sharing data
+
+With `ThreadLocal`:
+
+```java
+static final ThreadLocal<Principal> PRINCIPAL =
+	new ThreadLocal<>();
+
+public void serve(Request request, Response response) {
+	var level = request.isAdmin() ? ADMIN : GUEST;
+	var principal = new Principal(level);
+	PRINCIPAL.set(principal);
+	Application.handle(request, response);
+}
+
+// elsewhere
+PRINCIPAL.get()
+```
+
+=== Sharing data
+
+`ThreadLocal` downsides:
+
+* unconstrained mutability
+* unbounded lifetime
+* expensive inheritance
+
+`ScopedValues` improve on that:
+
+* write-once (per thread)
+* clearly scoped
+* free inheritance
+
+=== With scoped value
+
+```java
+static final ScopedValue<Principal> PRINCIPAL =
+	new ScopedValue<>();
+
+public void serve(Request request, Response response) {
+	var level = request.isAdmin() ? ADMIN : GUEST;
+	var principal = new Principal(level);
+	ScopedValue
+		.where(PRINCIPAL, principal)
+		.run(() -> Application
+			.handle(request, response));
+}
+
+// elsewhere
+PRINCIPAL.get()
+```
+

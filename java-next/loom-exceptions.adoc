@@ -1,0 +1,47 @@
+=== Exceptions
+
+Pinning: ::
+* a _pinned_ VT will block the PT
+* caused by object monitors, +
+  native calls, class initialization
+
+Capture: ::
+* a _captured_ VT blocks the PT
+* caused by file I/O
+
+=== Object monitor pinning
+
+Object monitor implementation:
+
+* was bound to OS threads
+* required deep refactoring +
+  to work with VTs
+* fix ships with JDK 24
+
+⇝ No more pinning for `synchronized`.
+
+=== Native code pinning
+
+Cause:
+
+* native code works on PT's stack
+* switching PTs would wreak havoc
+
+Fix:
+
+* possible in the JVM, but expensive
+* fairly easy to avoid
+
+⇝ Don't call native code, then back to Java, then block.
+
+=== File I/O capture
+
+File I/O capture is caused by JVM/OS limitations.
+
+Linux `io_uring` allows async I/O but:
+
+* adoption incurrs overhead
+* considerable compared to cached SSD-reads
+* cost/benefit is not good
+
+⇝ No fix for now.

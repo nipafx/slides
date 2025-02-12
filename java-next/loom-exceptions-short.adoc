@@ -1,0 +1,12 @@
+=== Exceptions
+
+Pinning: ::
+* a _pinned_ VT will block the PT
+* caused by:
+** +++<s>object monitors (<code><span class="hljs-keyword">synchronized</span></code>)</s>+++ ⇜ JDK 24
+** class initialization
+** native calls
+
+Capture: ::
+* a _captured_ VT blocks the PT
+* caused by file I/O
