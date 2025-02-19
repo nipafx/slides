@@ -30,7 +30,7 @@ image::images/playground.png[background, size=cover]
 
 === The Java Playground
 
-Oracle's Java Platform Group developed https://dev.java/playground/[the Java Playground]:
+Oracle's Java Platform Group developed https://dev.java/playground/[dev.java/playground]:
 
 * *all you need*:
 ** tools: browser
@@ -39,6 +39,7 @@ Oracle's Java Platform Group developed https://dev.java/playground/[the Java Pla
 ** limited capabilities +
    (e.g. no file I/O or network)
 ** no persistence
+** no progression
 
 === jshell
 
@@ -109,7 +110,14 @@ Added in Java 22 (https://openjdk.org/jeps/458[JEP 458]).
 
 But where do you get dependencies from?
 
-This is an open problem.
+At the moment, only via third-party tools, e.g. https://github.com/codejive/java-jpm[jpm]:
+
+```sh
+$ jpm install com.github.lalyos:jfiglet:0.0.9
+Artifacts new: 1, updated: 0, deleted: 0
+```
+
+An on-board solution would be great!
 
 === Progression
 

@@ -53,6 +53,22 @@ Use `IO` instead of `System.{in|out}`:
 
 (Auto-imported in a simple source file.)
 
+=== Terminal Interaction
+
+```java
+void main() {
+	String name = readln("Please enter your name: ");
+	print("Pleased to meet you, ");
+	println(name);
+}
+```
+
+```sh
+$ java --enable-preview Main.java
+> Please enter your name: Nicolai
+> Pleased to meet you, Nicolai
+```
+
 === Focusing on Data
 
 Simple programs often focus on data:
@@ -106,7 +122,8 @@ Records make simple types simple:
 
 ```java
 record Transaction(
-	LocalDate date, long cents,
+	LocalDate date,
+	long cents,
 	TransactionType type) { }
 
 enum TransactionType { PRIVATE, BUSINESS }
