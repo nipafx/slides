@@ -39,15 +39,18 @@ What you need to do:
 
 === Cleaning house
 
-Deprecations (for removal):
+Deprecated (for removal)
 
 * memory access via `Unsafe` ㉔ (https://openjdk.org/jeps/498[JEP 498])
 * Linux 32-bit x86 port ㉔ (https://openjdk.org/jeps/501[JEP 501])
-* allowed-by-default JNI ㉔ (https://openjdk.org/jeps/472[JEP 472])
-* allowed-by-default dynamic agents ㉑ (https://openjdk.org/jeps/451[JEP 451])
 * finalization ⑱ (https://openjdk.org/jeps/421[JEP 421])
 * applet API ⑰ (https://openjdk.org/jeps/398[JEP 398], https://bugs.openjdk.org/browse/JDK-8345525[JDK-8345525] 👀)
-* primitive wrapper constructors ⑯ (https://openjdk.org/jeps/390[JEP 390])
+// * primitive wrapper constructors ⑯ (https://openjdk.org/jeps/390[JEP 390])
+
+Disallow by default:
+
+* JNI ㉔ (https://openjdk.org/jeps/472[JEP 472])
+* dynamic agents ㉑ (https://openjdk.org/jeps/451[JEP 451])
 
 === Unsafe
 
@@ -148,6 +151,7 @@ What you need to do:
 * run your app with `--finalization=disabled` and +
   closely monitor resource behavior (e.g. file handles)
 
+////
 === Primitive constructors
 
 What it is:
@@ -171,6 +175,7 @@ What you need to do:
 * `Integer.valueOf(42)`
 * `Double.valueOf(42)`
 * etc.
+////
 
 === More
 
