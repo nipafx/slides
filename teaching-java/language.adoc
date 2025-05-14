@@ -11,8 +11,6 @@
 
 === Language Constructs
 
-Minimal Java code:
-
 ```java
 import java.util.List;
 public class Prog {
@@ -26,6 +24,7 @@ public class Prog {
 * classes & methods
 * static vs instance
 * returns & parameters
+* command-line arguments
 * statements & arguments
 
 === Simplification
@@ -49,12 +48,12 @@ Remove requirement of:
 
 === Simpler Code
 
-Previews in Java 24 (https://openjdk.org/jeps/495[JEP 495]):
+Final in Java 25 (https://openjdk.org/jeps/512[JEP 512]):
 
 ```java
 // all the code in Prog.java
 void main() {
-	println(List.of("Hello", "World!"));
+	IO.println(List.of("Hello", "World!"));
 }
 ```
 
@@ -62,6 +61,7 @@ void main() {
 * +++<s>+++classes &+++</s>+++ methods
 * +++<s>+++static vs instance+++</s>+++
 * +++<s>+++returns & parameters+++</s>+++
+* +++<s>+++command-line arguments+++</s>+++
 * statements & arguments
 
 === Progression

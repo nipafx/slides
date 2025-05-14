@@ -20,6 +20,8 @@ But is OOP the best paradigm to learn first?
 
 === Object-Oriented Programming
 
+// argue via benefits of OOP (why you would reach for those tools) instead of mechanics
+
 OOP hinges on:
 
 * abstraction of the domain through classes
@@ -46,27 +48,25 @@ Let learners write simple, useful programs!
 
 Simple programs usually interact via terminal.
 
-Use `IO` instead of `System.{in|out}`:
+Use `java.lang.IO` instead of `System.{in|out}`:
 
 * `void print(Object)` & `void println(Object)` to write
 * `String readln(String)` to read input
-
-(Auto-imported in a simple source file.)
 
 === Terminal Interaction
 
 ```java
 void main() {
-	String name = readln("Please enter your name: ");
-	print("Pleased to meet you, ");
-	println(name);
+	var name = IO.readln("Please enter your name: ");
+	IO.println("Nice to meet you, " + name);
 }
 ```
 
 ```sh
-$ java --enable-preview Main.java
+# on JDK 25
+$ java Main.java
 > Please enter your name: Nicolai
-> Pleased to meet you, Nicolai
+> Nice to meet you, Nicolai
 ```
 
 === Focusing on Data
@@ -135,11 +135,12 @@ enum TransactionType { PRIVATE, BUSINESS }
 
 But once functions are introduced, streams become available.
 
-=== Visualizing Data
+=== Visualization and Interaction
 
-JavaFX is powerful but not simple to get started with.
+JavaFX is powerful but not simple to get started with:
 
-Java lacks beginner-level visualization tools.
+* lacks beginner-level visualization tools
+* doesn't make interactive media easy
 
 === Writing Data
 
