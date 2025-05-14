@@ -475,21 +475,20 @@ APIs, and tools</p></li><li><p>features that allow quick achievements</p></li><l
 	<tr><td>Teaching the Concepts</td></tr>
 	<tr><td>Teaching Java</td></tr>
 </table>
-</p></div></div></section><section id="_language_constructs"><h2>Language Constructs</h2><div class="slide-content"><div class="paragraph"><p>Minimal Java code:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">import java.util.List;
+</p></div></div></section><section id="_language_constructs"><h2>Language Constructs</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">import java.util.List;
 public class Prog {
 	public static void main(String[] args) {
 		System.out.println(List.of("Hello", "World!"));
 	}
 }</code></pre></div></div>
-<div class="ulist"><ul><li><p>imports &amp; visibility</p></li><li><p>classes &amp; methods</p></li><li><p>static vs instance</p></li><li><p>returns &amp; parameters</p></li><li><p>statements &amp; arguments</p></li></ul></div></div></section><section id="_simplification"><h2>Simplification</h2><div class="slide-content"><div class="paragraph"><p>Beginners should be able to:</p></div>
+<div class="ulist"><ul><li><p>imports &amp; visibility</p></li><li><p>classes &amp; methods</p></li><li><p>static vs instance</p></li><li><p>returns &amp; parameters</p></li><li><p>command-line arguments</p></li><li><p>statements &amp; arguments</p></li></ul></div></div></section><section id="_simplification"><h2>Simplification</h2><div class="slide-content"><div class="paragraph"><p>Beginners should be able to:</p></div>
 <div class="ulist"><ul><li><p>start with a minimal set of language constructs</p></li><li><p>achieve first results quickly</p></li><li><p>learn as they go without "delearning"</p></li></ul></div></div></section><section id="_simplification_2"><h2>Simplification</h2><div class="slide-content"><div class="paragraph"><p>Remove requirement of:</p></div>
-<div class="ulist"><ul><li><p><code>String[] args</code> parameter</p></li><li><p><code>main</code> being static</p></li><li><p><code>main</code> being public</p></li><li><p>the class itself</p></li><li><p><code>System.out</code> (use <code>IO</code> instead)</p></li><li><p>imports for <em>java.base</em></p></li></ul></div></div></section><section id="_simpler_code"><h2>Simpler Code</h2><div class="slide-content"><div class="paragraph"><p>Previews in Java 24 (<a href="https://openjdk.org/jeps/495">JEP 495</a>):</p></div>
+<div class="ulist"><ul><li><p><code>String[] args</code> parameter</p></li><li><p><code>main</code> being static</p></li><li><p><code>main</code> being public</p></li><li><p>the class itself</p></li><li><p><code>System.out</code> (use <code>IO</code> instead)</p></li><li><p>imports for <em>java.base</em></p></li></ul></div></div></section><section id="_simpler_code"><h2>Simpler Code</h2><div class="slide-content"><div class="paragraph"><p>Final in Java 25 (<a href="https://openjdk.org/jeps/512">JEP 512</a>):</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// all the code in Prog.java
 void main() {
-	println(List.of("Hello", "World!"));
+	IO.println(List.of("Hello", "World!"));
 }</code></pre></div></div>
-<div class="ulist"><ul><li><p><s>imports &amp; visibility</s></p></li><li><p><s>classes &amp;</s> methods</p></li><li><p><s>static vs instance</s></p></li><li><p><s>returns &amp; parameters</s></p></li><li><p>statements &amp; arguments</p></li></ul></div></div></section><section id="_progression"><h2>Progression</h2><div class="slide-content"><div class="paragraph"><p>Natural progression:</p></div>
+<div class="ulist"><ul><li><p><s>imports &amp; visibility</s></p></li><li><p><s>classes &amp;</s> methods</p></li><li><p><s>static vs instance</s></p></li><li><p><s>returns &amp; parameters</s></p></li><li><p><s>command-line arguments</s></p></li><li><p>statements &amp; arguments</p></li></ul></div></div></section><section id="_progression"><h2>Progression</h2><div class="slide-content"><div class="paragraph"><p>Natural progression:</p></div>
 <div class="ulist"><ul><li><p>start with <code>main()</code></p></li><li><p>add <code>String[] args</code> for arguments</p></li><li><p>add methods to organize code</p></li><li><p>add fields to share state</p></li><li><p>explore JDK APIs for more functionality</p></li></ul></div>
 <div class="paragraph"><p>Ramp up to full language.</p></div></div></section></section>
 <section><section id="_teaching_the_tools"><h2>Teaching the Tools</h2><div class="slide-content"><div class="paragraph"><p>
@@ -502,7 +501,8 @@ void main() {
 </p></div></div></section><section id="_starting_with_java"><h2>Starting (with) Java</h2><div class="slide-content"><div class="paragraph"><p>To write and run a simple Java program, you need:</p></div>
 <div class="ulist"><ul><li><p>a JDK</p></li><li><p>an editor (IDE?)</p></li><li><p><code>javac</code> (build tool? IDE?)</p></li><li><p><code>java</code> (IDE?)</p></li></ul></div></div></section><section id="_simplification_3"><h2>Simplification</h2><div class="slide-content"><div class="paragraph"><p>Beginners should be able to run<br>
 simple Java programs with<br>
-no/fewer/simpler tools!</p></div></div></section><section data-background-image="../_images/playground-f2237222.png" data-background-size="cover" data-state="empty"></section><section id="_the_java_playground"><h2>The Java Playground</h2><div class="slide-content"><div class="paragraph"><p>Oracle&#8217;s Java Platform Group developed <a href="https://dev.java/playground/">dev.java/playground</a>:</p></div>
+no/fewer/simpler tools!</p></div></div></section><section data-background-image="../_images/playground-06383014.png" data-background-size="cover" data-state="empty"></section><section id="_the_java_playground"><h2>The Java Playground</h2><div class="slide-content"><div class="paragraph"><p>Oracle&#8217;s Java Platform Group developed<br>
+<a href="https://dev.java/playground/">dev.java/playground</a>:</p></div>
 <div class="ulist"><ul><li><p><strong>all you need</strong>:</p><div class="ulist"><ul><li><p>tools: browser</p></li><li><p>concepts: statements &amp; arguments</p></li></ul></div></li><li><p><strong>but</strong>:</p><div class="ulist"><ul><li><p>limited capabilities<br>
 (e.g. no file I/O or network)</p></li><li><p>no persistence</p></li><li><p>no progression</p></li></ul></div></li></ul></div></div></section><section id="_jshell"><h2>jshell</h2><div class="slide-content"><div class="paragraph"><p>Java 9 added <code>jshell</code>:</p></div>
 <div class="ulist"><ul><li><p><strong>all you need</strong>:</p><div class="ulist"><ul><li><p>tools: JDK, <code>jshell</code></p></li><li><p>concepts: statements &amp; arguments</p></li></ul></div></li><li><p><strong>but</strong>:</p><div class="ulist"><ul><li><p>no syntax highlighting</p></li><li><p>no (smooth) persistence</p></li><li><p>no progression</p></li></ul></div></li></ul></div></div></section><section id="_ide_vs_editor"><h2>IDE vs Editor</h2><div class="slide-content"><div class="paragraph"><p>An IDE:</p></div>
@@ -542,16 +542,15 @@ Artifacts new: 1, updated: 0, deleted: 0</code></pre></div></div>
 <div class="ulist"><ul><li><p>automation</p></li><li><p>data analysis</p></li><li><p>visualization</p></li><li><p>interactive media</p></li></ul></div>
 <div class="paragraph"><p>Let learners write simple, useful programs!</p></div>
 <div class="paragraph"><p>⇝ Such programs rarely need OOP.</p></div></div></section><section id="_terminal_interaction"><h2>Terminal Interaction</h2><div class="slide-content"><div class="paragraph"><p>Simple programs usually interact via terminal.</p></div>
-<div class="paragraph"><p>Use <code>IO</code> instead of <code>System.{in|out}</code>:</p></div>
-<div class="ulist"><ul><li><p><code>void print(Object)</code> &amp; <code>void println(Object)</code> to write</p></li><li><p><code>String readln(String)</code> to read input</p></li></ul></div>
-<div class="paragraph"><p>(Auto-imported in a simple source file.)</p></div></div></section><section id="_terminal_interaction_2"><h2>Terminal Interaction</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">void main() {
-	String name = readln("Please enter your name: ");
-	print("Pleased to meet you, ");
-	println(name);
+<div class="paragraph"><p>Use <code>java.lang.IO</code> instead of <code>System.{in|out}</code>:</p></div>
+<div class="ulist"><ul><li><p><code>void print(Object)</code> &amp; <code>void println(Object)</code> to write</p></li><li><p><code>String readln(String)</code> to read input</p></li></ul></div></div></section><section id="_terminal_interaction_2"><h2>Terminal Interaction</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">void main() {
+	var name = IO.readln("Please enter your name: ");
+	IO.println("Nice to meet you, " + name);
 }</code></pre></div></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-sh" data-lang="sh">$ java --enable-preview Main.java
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-sh" data-lang="sh"># on JDK 25
+$ java Main.java
 &gt; Please enter your name: Nicolai
-&gt; Pleased to meet you, Nicolai</code></pre></div></div></div></section><section id="_focusing_on_data"><h2>Focusing on Data</h2><div class="slide-content"><div class="paragraph"><p>Simple programs often focus on data:</p></div>
+&gt; Nice to meet you, Nicolai</code></pre></div></div></div></section><section id="_focusing_on_data"><h2>Focusing on Data</h2><div class="slide-content"><div class="paragraph"><p>Simple programs often focus on data:</p></div>
 <div class="ulist"><ul><li><p>reading data from disk or remote</p></li><li><p>parsing various data formats</p></li><li><p>representation of data as types</p></li><li><p>mass-processing data</p></li><li><p>visualizing data</p></li><li><p>writing data to disk or a remote</p></li></ul></div></div></section><section id="_reading_local_data"><h2>Reading Local Data</h2><div class="slide-content"><div class="paragraph"><p>NIO.2 makes reading text files straightforward:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">var transactions = Path.of("transactions.csv");
 for (var line : Files.readAllLines(transactions)) {
@@ -574,8 +573,8 @@ var body = client
 	TransactionType type) { }
 
 enum TransactionType { PRIVATE, BUSINESS }</code></pre></div></div></div></section><section id="_processing_data"><h2>Processing Data</h2><div class="slide-content"><div class="paragraph"><p><code>for</code>-loops, <code>if</code> statements, etc. are simplest.</p></div>
-<div class="paragraph"><p>But once functions are introduced, streams become available.</p></div></div></section><section id="_visualizing_data"><h2>Visualizing Data</h2><div class="slide-content"><div class="paragraph"><p>JavaFX is powerful but not simple to get started with.</p></div>
-<div class="paragraph"><p>Java lacks beginner-level visualization tools.</p></div></div></section><section id="_writing_data"><h2>Writing Data</h2><div class="slide-content"><div class="paragraph"><p>NIO.2 makes writing data very simple:</p></div>
+<div class="paragraph"><p>But once functions are introduced, streams become available.</p></div></div></section><section id="_visualization_and_interaction"><h2>Visualization and Interaction</h2><div class="slide-content"><div class="paragraph"><p>JavaFX is powerful but not simple to get started with:</p></div>
+<div class="ulist"><ul><li><p>lacks beginner-level visualization tools</p></li><li><p>doesn&#8217;t make interactive media easy</p></li></ul></div></div></section><section id="_writing_data"><h2>Writing Data</h2><div class="slide-content"><div class="paragraph"><p>NIO.2 makes writing data very simple:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">var analysis = "...";
 var file = Path.of("analysis.txt");
 Files.writeString(file, analysis);</code></pre></div></div></div></section><section id="_progression_3"><h2>Progression</h2><div class="slide-content"><div class="paragraph"><p>Natural progression:</p></div>
@@ -590,10 +589,10 @@ Files.writeString(file, analysis);</code></pre></div></div></div></section><sect
 </table>
 </p></div></div></section><section id="_starting_point"><h2>Starting Point</h2><div class="slide-content"><div class="paragraph"><p>Take first steps in the playground.</p></div>
 <div class="paragraph"><p>To get started "for real":</p></div>
-<div class="ulist"><ul><li><p>tools: JDK, text editor</p></li><li><p>code: simple <code>main</code> and <code>IO</code></p></li><li><p>execution with <code>java --enable-preview Prog.java</code></p></li></ul></div></div></section><section id="_progression_4"><h2>Progression</h2><div class="slide-content"><div class="ulist"><ul><li class="fragment"><p>need arguments? ⇝ add <code>String[] args</code></p></li><li class="fragment"><p>need to organize code? ⇝ add methods</p></li><li class="fragment"><p>need more functionality? ⇝ explore JDK APIs:<br>
+<div class="ulist"><ul><li><p>tools: JDK, text editor</p></li><li><p>code: simple <code>main</code> and <code>IO</code></p></li><li><p>execution with <code>java Prog.java</code></p></li></ul></div></div></section><section id="_progression_4"><h2>Progression</h2><div class="slide-content"><div class="ulist"><ul><li class="fragment"><p>need arguments? ⇝ add <code>String[] args</code></p></li><li class="fragment"><p>need to organize code? ⇝ add methods</p></li><li class="fragment"><p>need more functionality? ⇝ explore JDK APIs:<br>
 e.g. NIO.2 or HTTP/2 client</p></li><li class="fragment"><p>need to capture data? ⇝ define records</p></li><li class="fragment"><p>need shared state? ⇝ add fields</p></li><li class="fragment"><p>need even more functionality? ⇝ explore simple libraries:<br>
 e.g. JavaFX for visualization</p></li><li class="fragment"><p>need more structure? ⇝ split into multiple files</p></li><li class="fragment"><p>even more ⇝ use visibility &amp; packages &amp; modules</p></li></ul></div></div></section><section id="_progression_5"><h2>Progression</h2><div class="slide-content"><div class="paragraph"><p>Java can do better is some areas:</p></div>
-<div class="ulist"><ul><li><p>managing dependencies without build tool</p></li><li><p>steering away from outdated APIs</p></li><li><p>support more data formats out of the box</p></li><li><p>simplify (data) visualization</p></li></ul></div></div></section><section id="_progression_6"><h2>Progression</h2><div class="slide-content"><div class="paragraph"><p>At some point:</p></div>
+<div class="ulist"><ul><li><p>managing dependencies without build tool</p></li><li><p>steering away from outdated APIs</p></li><li><p>support more data formats out of the box</p></li><li><p>simplify (data) visualization and interaction</p></li></ul></div></div></section><section id="_progression_6"><h2>Progression</h2><div class="slide-content"><div class="paragraph"><p>At some point:</p></div>
 <div class="ulist"><ul><li><p>a more powerful editor would be helpful ⇝ IDE</p></li><li><p>testing or delivering becomes necessary ⇝ build tool</p></li></ul></div>
 <div class="paragraph"><p>Welcome to full Java!</p></div></div></section></section>
 <section id="_so_long" data-background-image="../_images/question-mark-9644fc1f.jpg" data-background-size="cover"><h2>So long&#8230;&#8203;</h2><div class="slide-content">
