@@ -121,6 +121,7 @@ Current preview/incubating/experimental features:
 	<tr class="toc-current"><td style="padding-left: 2em;">Module Imports</td></tr> \
 	<tr><td style="padding-left: 2em;">Simplified Main</td></tr> \
 	<tr><td style="padding-left: 2em;">Flexible Constructor Bodies</td></tr> \
+	<tr><td style="padding-left: 2em;">Ahead-of-Time Computation</td></tr> \
 	<tr><td>Final in Java 24, 23, 22</td></tr> \
 	<tr><td>Preview in Java 25</td></tr> \
 </table> \
@@ -133,6 +134,7 @@ include::modules_imports.adoc[]
 	<tr><td style="padding-left: 2em;">Module Imports</td></tr> \
 	<tr class="toc-current"><td style="padding-left: 2em;">Simplified Main</td></tr> \
 	<tr><td style="padding-left: 2em;">Flexible Constructor Bodies</td></tr> \
+	<tr><td style="padding-left: 2em;">Ahead-of-Time Computation</td></tr> \
 	<tr><td>Final in Java 24, 23, 22</td></tr> \
 	<tr><td>Preview in Java 25</td></tr> \
 </table> \
@@ -145,11 +147,25 @@ include::meta_launch-protocol.adoc[]
 	<tr><td style="padding-left: 2em;">Module Imports</td></tr> \
 	<tr><td style="padding-left: 2em;">Simplified Main</td></tr> \
 	<tr class="toc-current"><td style="padding-left: 2em;">Flexible Constructor Bodies</td></tr> \
+	<tr><td style="padding-left: 2em;">Ahead-of-Time Computation</td></tr> \
 	<tr><td>Final in Java 24, 23, 22</td></tr> \
 	<tr><td>Preview in Java 25</td></tr> \
 </table> \
 ]
 include::language_statements-super.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr class="toc-current"><td>Final in Java 25</td></tr> \
+	<tr><td style="padding-left: 2em;">Module Imports</td></tr> \
+	<tr><td style="padding-left: 2em;">Simplified Main</td></tr> \
+	<tr><td style="padding-left: 2em;">Flexible Constructor Bodies</td></tr> \
+	<tr class="toc-current"><td style="padding-left: 2em;">Ahead-of-Time Computation</td></tr> \
+	<tr><td>Final in Java 24, 23, 22</td></tr> \
+	<tr><td>Preview in Java 25</td></tr> \
+</table> \
+]
+include::performance_aot-computation.adoc[]
 
 include::deprecations.adoc[]
 
@@ -167,21 +183,6 @@ include::deprecations.adoc[]
 * +++<s>string templates ⊕</s>+++
 
 // JAVA 24
-
-:toc: pass:[ \
-<table class="toc"> \
-	<tr><td>Final in Java 25</td></tr> \
-	<tr class="toc-current"><td>Final in Java 24</td></tr> \
-	<tr class="toc-current"><td style="padding-left: 2em;">AOT Class Loading & Linking</td></tr> \
-	<tr><td style="padding-left: 2em;">Less Virtual Thread Pinning</td></tr> \
-	<tr><td style="padding-left: 2em;">Stream Gatherers</td></tr> \
-	<tr><td style="padding-left: 2em;">Class-File API</td></tr> \
-	<tr><td>Final in Java 23</td></tr> \
-	<tr><td>Final in Java 22</td></tr> \
-	<tr><td>Preview in Java 25</td></tr> \
-</table> \
-]
-include::performance_aot-class-loading.adoc[]
 
 :toc: pass:[ \
 <table class="toc"> \

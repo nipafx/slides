@@ -78,7 +78,18 @@ $ java -XX:AOTCache=app.aot
        -cp app.jar com.example.App ...
 ```
 
-(Open to improvements.)
+=== AOT workflow
+
+Shortcut for most cases:
+
+```sh
+# training run (⇝ AOTCache)
+$ java -XX:AOTCacheOutput=app.aot
+       -cp app.jar com.example.App ...
+# production run (AOTCache ⇝ performance)
+$ java -XX:AOTCache=app.aot
+       -cp app.jar com.example.App ...
+```
 
 === AOT class loading & linking
 
@@ -89,9 +100,18 @@ Spring PetClinic benchmarks:
 * up to ~40% startup time reduction
 * AOT cache size of ~130 MB
 
-=== AOT class loading & linking
+=== AOT method profiling
 
-Limitation:
+> Improve warmup time by making method-execution profiles from a previous run of an application instantly available, when the HotSpot Java Virtual Machine starts.
+
+Benchmark of a 100_000x loop over a simple stream:
+
+* ~20% run time reduction
+* AOT cache size increased by ~2.5%
+
+=== AOT limitations
+
+Limitation so far:
 
 * same JDK release / hardware / OS
 * consistent class path for training and production
@@ -102,5 +122,7 @@ Otherwise, AOTCache is ignored.
 
 === More
 
-* 📝 https://openjdk.org/jeps/483[JEP 483]: AOT Class Loading and Linking
+* 📝 https://openjdk.org/jeps/483[JEP 483]: AOT Class Loading and Linking ㉔
+* 📝 https://openjdk.org/jeps/515[JEP 515]: AOT Method Profiling ㉕
+* 📝 https://openjdk.org/jeps/514[JEP 514]: AOT CLI Ergonomics ㉕
 * 🎥 https://www.youtube.com/watch?v=z9XgILeSwzk[A Preview of What's Coming in Project Leyden] (Oct 2024)
