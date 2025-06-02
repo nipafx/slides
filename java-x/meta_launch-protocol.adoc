@@ -50,20 +50,38 @@ void main() {
 }
 ```
 
-_[Preview in Java 24 -- https://openjdk.org/jeps/495[JEP 495]]_
+=== Simpler Terminal Interaction
 
-=== Simpler Code
+Use `java.lang.IO` instead of `System.{in|out}`:
 
-Implicitly declared classes, implicitly import:
-
-* `java.io.IO` 's methods `print`, `println`, and `readln`
-* public top-level classes in packages exported by _java.base_
+* `void print(Object)` & `void println(Object)` to write
+* `String readln(String)` to read input
 
 ```java
-// complete Main.java
 void main() {
-	var letters = List.of("A", "B", "C");
-	println(letters);
+	var name = IO.readln("Please enter your name: ");
+	IO.println("Nice to meet you, " + name);
+}
+```
+
+=== Simpler Imports
+
+Compact source files implicitly import _java.base_:
+
+```java
+// complete Main.java - no explicit imports!
+void main() {
+	List<?> dates = Stream
+		.of(1, 2, 23, 29)
+		.map(BigDecimal::new)
+		.map(day -> LocalDate.of(
+			2024,
+			RandomGenerator.getDefault()
+				.nextInt(11) + 1,
+			day.intValue()))
+		.toList();
+
+	System.out.println(dates);
 }
 ```
 
@@ -74,8 +92,6 @@ It's easy to execute that file:
 ```
 java Main.java
 ```
-
-_[Introduced in Java 11 -- https://openjdk.org/jeps/330[JEP 330]]_
 
 === Multi-File Execution
 
@@ -94,8 +110,6 @@ Run with:
 ```
 java -cp 'Lib/*' Main.java
 ```
-
-_[Introduced in Java 22 -- https://openjdk.org/jeps/458[JEP 458]]_
 
 === Progression
 
@@ -118,15 +132,15 @@ Doesn't even have to be that order!
 
 Simplified `main`:
 
-* 📝 https://openjdk.org/jeps/495[JEP 495]
-* 🎥 https://www.youtube.com/watch?v=P9JPUbG5npI[Script Java Easily in 21 and Beyond]
+* 📝 https://openjdk.org/jeps/512[JEP 512]: Compact Source Files & Instance Main Methods
+* 🎥 https://www.youtube.com/watch?v=4WjXTe_FKO4[Finalizing the Java On-ramp]
 
 Single-source-file execution:
 
-* 📝 https://openjdk.org/jeps/330[JEP 330]
+* 📝 https://openjdk.org/jeps/330[JEP 330]: Launch Single-File Source-Code Programs
 * 📝 https://nipafx.dev/scripting-java-shebang/[Scripting Java 11, Shebang And All]
 
 Multi-source-file execution:
 
-* 📝 https://openjdk.org/jeps/458[JEP 458]
+* 📝 https://openjdk.org/jeps/458[JEP 458]: Launch Multi-File Source-Code Programs
 * 🎥 https://www.youtube.com/watch?v=q2MFE3DVkH0[Does Java 22 Kill Build Tools?]

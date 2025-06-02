@@ -6,8 +6,8 @@
 
 === Constructor Chaining
 
-With multiple constructors, it's good practice +
-to have one constructor that:
+With multiple constructors, +
+it's good practice to have one constructor that:
 
 * checks all arguments
 * assigns all fields
@@ -19,20 +19,17 @@ Other constructors just forward (if possible).
 ```java
 class Name {
 
-	private final String first;
-	private final String last;
+	protected final String first, last;
 
 	Name(String first, String last) {
-		// [... checks for null, etc. ...]
-		this.first = first;
-		this.last = last;
+		// [... checks, assignments, etc. ...]
 	}
 
-	Name(String last) {
-		this("", last);
+	Name(String fst, String mid, String lst) {
+		this(fst + " " + mid, lst);
 	}
-
 }
+
 ```
 
 === Inheritance
@@ -42,28 +39,19 @@ With superclasses, chaining is enforced:
 ```java
 class ThreePartName extends Name {
 
-	private final String middle;
+	protected final String middle;
 
-	ThreePartName(
-			String first, String middle, String last) {
+	ThreePartName(String fst, String mid, String lst) {
 		// doesn't compile without this call
-		super(first, last);
-		this.middle = middle;
+		super(fst, lst);
+		this.middle = mid;
 	}
-
 }
 ```
 
 === Limitations
 
 **But**:
-
-Java allows no statements before +
-`super(...)` / `this(...)`!
-
-=== Why?
-
-No statements before `super(...)` / `this(...)`:
 
 * superclass should be initialized +
   before subclass runs any code +
@@ -72,9 +60,41 @@ No statements before `super(...)` / `this(...)`:
   run before `super(...)` +
   ⇝ no code before `this(...)`
 
-=== Limitations
+So: no statements before `super(...)` / `this(...)`!
 
-This is inconvenient when you want to:
+=== Consequence
+
+With:
+
+* `class A`
+* `class B extends A`
+* `class C extends B`
+
+Effective constructor execution for `new C()`:
+
+`Object` ⇝ `A` ⇝ `B` ⇝ `C`
+
+=== Irregularities
+
+```java
+Name(String first, String last) {
+	this.first = first;
+	this.last = last;
+	IO.println(this);
+}
+
+ThreePartName(String fst, String mid, String lst) {
+	super(fst, lst);
+	this.middle = mid;
+}
+
+new ThreePartName("Jane", "Jennifer", "Doe");
+// prints: "Jane null Doe" 😖
+```
+
+=== Inconveniences
+
+Limitation is inconvenient when you want to:
 
 * check arguments
 * prepare arguments
@@ -85,73 +105,29 @@ This is inconvenient when you want to:
 ```java
 class Name {
 
-	// fields and constructor as before
+	protected final String first;
+	protected final String last;
+
+	Name(String first, String last) {
+		this.first = first;
+		this.last = last;
+	}
 
 	Name(String full) {
 		// does the same work twice
-		this(
-			full.split(" ")[0],
-			full.split(" ")[1]);
+		this(full.split(" ")[0], full.split(" ")[1]);
 	}
 
 }
 ```
 
-=== Splitting Arguments
+=== Inconveniences
 
-```java
-class Name {
+Workarounds:
 
-	// fields and constructor as before
-
-	// avoids two splits but "costs"
-	// duplicated argument validation
-	Name(String full) {
-		String[] names = full.split(" ");
-		// [... checks for null, etc. ...]
-		this.first = names[0];
-		this.last = names[1];
-	}
-
-}
-```
-
-=== Splitting Arguments
-
-```java
-class Name {
-
-	// fields and constructor as before
-
-	// avoids two splits but "costs"
-	// an additional constructor
-	Name(String full) {
-		this(full.split(" "));
-	}
-
-	private Name(String[] names) {
-		this(names[0], names[1]);
-	}
-
-}
-```
-
-=== Splitting Arguments
-
-```java
-class Name {
-
-	// fields and constructor as before
-
-	// avoids two splits but "costs"
-	// an additional construction protocol
-	static Name fromFullName(String full) {
-		String[] names = full.split(" ");
-		return new Name(names[0], names[1]);
-	}
-
-}
-```
+* duplicate argument validation & field assignment
+* add an "internal" constructor to forward to
+* add static factory method
 
 === Limitations - Record Edition
 
@@ -160,28 +136,16 @@ To enforce a uniform construction protocol:
 Records require all custom constructors +
 to (eventually) call the canonical constructor.
 
-=== Limitations - Record Edition
-
-```java
-record Name(String first, String last) {
-
-	// nope
-	Name(String full) {
-		String[] names = full.split(" ");
-		// [... checks for null, etc. ...]
-		this.first = names[0];
-		this.last = names[1];
-	}
-
-}
-```
+⇝ Further limits options.
 
 === Splitting Arguments
 
 What we want to write:
 
 ```java
-record Name {
+class Name {
+
+	// [... fields, constructor as before ...]
 
 	Name(String full) {
 		String[] names = full.split(" ");
@@ -191,28 +155,60 @@ record Name {
 }
 ```
 
-(Analogous for classes.)
+(Analogous for records.)
 
 === Flexible Constructor Bodies
 
-Java 23 previews statements +
-before `super(...)` and `this(...)`.
+Flexible constructor bodies allow just that!
 
-Great to...
+```java
+Constructor(...) {
+	// prologue
+	// call to this(...) or super(...)
+	// epilogue
+}
+```
+
+Prologue:
+
+* can't touch `this`
+* except to assign fields
+
+=== Consequence
+
+With:
+
+* `class A`
+* `class B extends A`
+* `class C extends B`
+
+Effective constructor execution for `new C()`:
+
+`prologue C` ⇝ `prologue B` ⇝ `prologue A` +
+⇝ `Object` ⇝ +
+`epilogue A` ⇝ `epilogue B` ⇝ `epilogue C`
+
+=== Prologue
+
+Great to:
+
+* check arguments
+* prepare arguments
+* split/share arguments
+* assign fields
 
 === Check Arguments
 
 ```java
 class ThreePartName extends Name {
 
-	private final String middle;
+	protected final String middle;
 
-	ThreePartName(
-			String first, String middle, String last) {
+	ThreePartName(String fst, String mid, String lst) {
 		// can't have a middle name without a first name
-		requireNonNullNonEmpty(first);
-		super(first, last);
-		this.middle = middle;
+		requireNonNullNonEmpty(fst);
+		this.middle = mid;
+		super(fst, lst);
 	}
 
 }
@@ -223,16 +219,15 @@ class ThreePartName extends Name {
 ```java
 class ThreePartName extends Name {
 
-	private final String middle;
+	protected final String middle;
 
-	ThreePartName(
-			String first, String middle, String last) {
+	ThreePartName(String fst, String mid, String lst) {
+		this.middle = mid;
 		// shorten first if middle is given
-		var short1st = middle.length() == 1
-				? first.substring(0, 1)
-				: first;
-		super(short1st, last);
-		this.middle = middle;
+		var shortFst = mid.length() == 1
+				? fst.substring(0, 1)
+				: fst;
+		super(shortFst, lst);
 	}
 
 }
@@ -243,13 +238,13 @@ class ThreePartName extends Name {
 ```java
 class ThreePartName extends Name {
 
-	private final String middle;
+	protected final String middle;
 
 	ThreePartName(String full) {
 		// split "first middle last" on space (once 🙌🏾)
 		var names = full.split(" ");
-		super(names[0], names[2]);
 		this.middle = names[1];
+		super(names[0], names[2]);
 	}
 
 }
@@ -257,12 +252,13 @@ class ThreePartName extends Name {
 
 === Surprising Cameo
 
-* Project Valhalla ponders null-restricted types
+* Project Valhalla ponders null-restricted fields
+* code must never observe such a field being `null`
 * has to work with `super()`
 * subclass sets non-null fields before `super()`
 
 === More
 
-* 📝 https://openjdk.org/jeps/482[JEP 482]: Flexible Constructor Bodies
+* 📝 https://openjdk.org/jeps/513[JEP 513]: Flexible Constructor Bodies
 * 🎥 https://www.youtube.com/watch?v=cI-fY9YlmH4[Statements Before `super(...)` and `this(...)`]
 * 🎥 https://www.youtube.com/watch?v=IF9l8fYfSnI[Valhalla - Where Are We?] (Brian Goetz - Aug 2024)

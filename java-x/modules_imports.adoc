@@ -39,8 +39,6 @@ import module $mod;
 * imports public API of `$mod`
 * your code does not need to be in a module
 
-_[Preview in Java 23 -- https://openjdk.org/jeps/476[JEP 476]]_
-
 === Module Import Details
 
 ```java
@@ -115,7 +113,7 @@ Consider using module imports, when:
 
 === Default Import
 
-Implicitly declared classes, implicitly import _java.base_:
+Compact source files implicitly import _java.base_:
 
 ```java
 // complete Main.java - no explicit imports!
@@ -136,5 +134,5 @@ void main() {
 
 === More
 
-* 📝 https://openjdk.org/jeps/476[JEP 476]: Module Import Declarations
+* 📝 https://openjdk.org/jeps/511[JEP 511]: Module Import Declarations
 * 🎥 https://www.youtube.com/watch?v=WHknBEhzB0k[Module Imports in Java 23]
