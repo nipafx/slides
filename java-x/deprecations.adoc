@@ -5,8 +5,8 @@ image::images/surprise.gif[background, size=cover]
 
 Already removed:
 
+* 32-bit x86 ports ㉕ (https://openjdk.org/jeps/503[JEP 503])
 * security manager ㉔ (https://openjdk.org/jeps/486[JEP 486])
-* Windows 32-bit x86 port ㉔ (https://openjdk.org/jeps/479[JEP 479])
 * biased locking ⑱ (https://openjdk.org/jeps/374[JEP 374], https://bugs.openjdk.org/browse/JDK-8256425[JDK-8256425])
 * RMI activation ⑰ (https://openjdk.org/jeps/407[JEP 407])
 * Nashorn ⑮ (https://openjdk.org/jeps/372[JEP 372])
@@ -28,6 +28,9 @@ What you need to know:
 * barely used but maintenance-intensive
 * disallowed by default since JDK 18
 * removed in JDK 24
+** command-line flags cause errors
+** `SecurityManager` still exists
+** all calls are no-ops
 
 === Security Manager
 
@@ -42,7 +45,6 @@ What you need to do:
 Deprecated (for removal)
 
 * memory access via `Unsafe` ㉔ (https://openjdk.org/jeps/498[JEP 498])
-* Linux 32-bit x86 port ㉔ (https://openjdk.org/jeps/501[JEP 501])
 * finalization ⑱ (https://openjdk.org/jeps/421[JEP 421])
 * applet API ⑰ (https://openjdk.org/jeps/398[JEP 398], https://bugs.openjdk.org/browse/JDK-8345525[JDK-8345525] 👀)
 // * primitive wrapper constructors ⑯ (https://openjdk.org/jeps/390[JEP 390])
@@ -76,6 +78,32 @@ Find them with `--sun-misc-unsafe-memory-access`:
 * `deny`: throws exception
 
 Report and help fix!
+
+=== Finalization
+
+What it is:
+
+* `finalize()` methods
+* a JLS/GC machinery for them
+
+=== Finalization
+
+What you need to know:
+
+* you can disable with `--finalization=disabled`
+* in a future release, `disabled` will be the default
+* in a later release, finalization will be removed
+
+=== Finalization
+
+What you need to do:
+
+* search for `finalize()` in your code and +
+  replace with `try`-with-resources or `Cleaner` API
+* search for `finalize()` in your dependencies and +
+  help remove them
+* run your app with `--finalization=disabled` and +
+  closely monitor resource behavior (e.g. file handles)
 
 === JNI
 
@@ -125,32 +153,6 @@ What you need to do:
 * observe closely
 * investigate necessity of dynamic agents
 
-=== Finalization
-
-What it is:
-
-* `finalize()` methods
-* a JLS/GC machinery for them
-
-=== Finalization
-
-What you need to know:
-
-* you can disable with `--finalization=disabled`
-* in a future release, `disabled` will be the default
-* in a later release, finalization will be removed
-
-=== Finalization
-
-What you need to do:
-
-* search for `finalize()` in your code and +
-  replace with `try`-with-resources or `Cleaner` API
-* search for `finalize()` in your dependencies and +
-  help remove them
-* run your app with `--finalization=disabled` and +
-  closely monitor resource behavior (e.g. file handles)
-
 ////
 === Primitive constructors
 
@@ -180,5 +182,7 @@ What you need to do:
 === More
 
 * 📝 all the aforementioned JEPs
+* 📝 https://openjdk.org/jeps/8305968[JEP draft: Integrity by Default]
+* 🎥 https://www.youtube.com/watch?v=ucdzGd-f8as[Why Is Integrity by Default So Important?]
 * 🎥 https://www.youtube.com/watch?v=3HnH6G_zcP0[Future Java - Prepare Your Codebase Now!]
 * 🎥 https://www.youtube.com/watch?v=5jIkRqBuSBs[How to Upgrade to Java 21]
