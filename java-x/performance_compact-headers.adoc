@@ -1,0 +1,108 @@
+== {title}
+
+{toc}
+
+=== Object information
+
+Runtime needs to track information per object:
+
+* *garbage collection*: forwarding pointers and object ages
+* *type system*: object's class
+* *locking*: unlocked, light-weight, or heavy-weight locks
+* *hashing*: identity hash code, once computed
+
+This is stored in the _object header_.
+
+=== Object header
+
+On 64bit hardware:
+
+```
+95-64 .........................HHHHHHH
+63-32 HHHHHHHHHHHHHHHHHHHHHHHH.AAAA.TT
+31- 0 CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+```
+
+* `A`: GC age
+* `C`: class word (compressed)
+* `H`: hash code
+* `T`: tag bits
+
+=== Object Overhead
+
+This incurs overhead:
+
+* objects tend to be small +
+  (many workloads average 256-512 bits)
+* header size is noticable +
+  (15-30% on such workloads)
+
+⇝ This is worth optimizing.
+
+=== Complications
+
+The aforementioned subsystems are +
+complicated _and_ performance-sensitive.
+
+I've only told you the easy part of object headers: +
+locking operations can override upper 62 bits.
+
+=== Compressed headers
+
+Project Lilliput achieved first milestone:
+
+```
+63-32 CCCCCCCCCCCCCCCCCCCCCCHHHHHHHHHH
+31- 0 HHHHHHHHHHHHHHHHHHHHHVVVVAAAASTT
+```
+
+* `A`: GC age
+* `C`: class word
+* `H`: hash code
+* `S`: self-forwarding
+* `T`: tag bits
+* `V`: Valhalla bits
+
+=== Effects
+
+These changes have several downstream effects:
+
+* locking operations no longer override
+* class word is now much smaller and encded differently
+* GC forwarding operations become more complex
+
+In special cases, these may be detrimental to performance.
+
+=== Benchmarks
+
+> * In one setting, the SPECjbb2015 benchmark uses https://github.com/rkennke/talks/blob/master/Lilliput-FOSDEM-2025.pdf[22% less heap space and 8% less CPU time.]
+> * In another setting, the number of garbage collections done by SPECjbb2015 is https://bugs.openjdk.org/browse/JDK-8350457?focusedId=14766358&page=com.atlassian.jira.plugin.system.issuetabpanels%3Acomment-tabpanel#comment-14766358[reduced by 15%], with both the G1 and Parallel collectors.
+> * A highly parallel JSON parser benchmark runs in https://www.reddit.com/r/scala/comments/1jptiv3/xxusecompactobjectheaders_is_your_new_turbo/?rdt=40432[10% less time].
+
+=== Try it out!
+
+Add flag:
+
+```
+-XX:+UseCompactObjectHeaders
+```
+
+Report observations to https://mail.openjdk.org/mailman/listinfo/hotspot-dev[hotspot-dev]!
+
+This is vital to:
+
+* improve performance, specifically edge cases
+* decide whether this becomes default/only header encoding
+
+=== Note
+
+Interaction with other features:
+
+* compressed class pointers must be enabled (default)
+* stack locking must be disabled (default)
+
+=== More
+
+* 📝 https://openjdk.org/jeps/450[JEP 450]: Compact Object Headers (Experimental) ㉔
+* 📝 https://openjdk.org/jeps/519[JEP 519]: Compact Object Headers ㉕
+* 🎥 https://www.youtube.com/watch?v=r2G4ed2E4QY[Save 10-20% Memory With Compact Headers]
