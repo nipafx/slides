@@ -580,12 +580,12 @@ a pattern `switch` needs to cover all cases!
 
 Two ways to achieve this:
 
-* have a default branch
 * enumerate all subtypes
+* have a default branch
 
 We want the compile error on new types!
 
-(⇝ Avoid the default branch.)
+⇝ Avoid the default branch.
 
 === Follow the errors
 
@@ -603,9 +603,9 @@ private static String createPrettyString(Page page) {
 }
 ```
 
-=== Fix the errors
-
 ⇝ Handle the new subtype!
+
+=== Fix the errors
 
 ```java
 private static String createPrettyString(Page page) {
