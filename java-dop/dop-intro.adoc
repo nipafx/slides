@@ -8,46 +8,17 @@
 </table>
 ++++
 
-=== Programming Paradigms
+=== Data-Oriented Programming
 
-> The goal of any programming paradigm is to manage complexity.
+Data-oriented programming:
 
-* complexity comes in many forms
-* not all paradigms handle all forms equally well
+* focusses on data (Duh!) 
+* views programs as series of transformations
 
-⇝ "It depends"
-
-=== Object-Oriented Programming
-
-> Everything is an object
-
-* combines state and behavior
-* hinges on encapsulation
-* polymorphism through inheritance
-
-Works best when defining/upholding boundaries.
-
-[NOTE.speaker]
---
-* maintenance boundaries
-* versioning boundaries
-* encapsulation boundaries
-* compilation boundaries
-* compatibility boundaries
-* security boundaries
---
-
-=== Mixed Programming
-
-Great use cases for OOP:
-
-* boundaries between libraries and clients
-* in large programs to enable modular reasoning
-
-Consider a data-oriented approach for:
+Consider it for:
 
 * smaller (sub)systems
-* focused on data
+* that mainly process input to putput
 
 === Guiding Principles
 

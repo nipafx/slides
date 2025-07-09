@@ -103,33 +103,13 @@ Data-oriented programming:
 
 > Model data immutably and transparently.
 
-We got a language construct that fits perfectly.
-
-(Just in case: You can achieve this with regular classes, too.)
-
-=== Detour: Records
-
-_[Finalized in Java 16 -- https://openjdk.org/jeps/395[JEP 395]]_
-
-> Transparent carriers for immutable data.
-
-* compiler understands internals
-* couples API to internals
-* reduces verbosity _a lot_
-
-=== Detour: Records
+Records fit perfectly:
 
 ```java
 record ExternalPage(URI url, String content) { }
 ```
 
-* `ExternalPage` is final
-* private final fields: `URI url` and `String content`
-* constructor: `ExternalPage(URI url, String content)`
-* accessors: `URI url()` and `String content()`
-* `equals()`, `hashCode()`, `toString()` that use the two fields
-
-All method/constructor bodies can be customized.
+(Just in case: You can achieve this with regular classes, too.)
 
 === Ensuring Immutability
 
@@ -192,30 +172,6 @@ There are additional relations between them:
 * a GitHub page is either for a PR or an issue
 
 ⇝ Use sealed types to model the alternatives!
-
-=== Detour: Sealed Types
-
-_[Finalized in Java 17 -- https://openjdk.org/jeps/409[JEP 409]]_
-
-Sealed types limit inheritance, +
-by only allowing specific subtypes.
-
-* communicates intention to developers
-* allows compiler to check exhaustiveness
-
-=== Detour: Sealed Types
-
-```java
-public sealed interface Page
-		permits ErrorPage, SuccessfulPage {
-	// ...
-}
-```
-
-Only `ErrorPage` and `SuccessfulPage` +
-can implement/extend `Page`.
-
-⇝ `interface MyPage extends Page` doesn't compile
 
 === Modeling Alternatives
 
@@ -319,53 +275,6 @@ to apply polymorphic operations to data!
 And records eschew encapsulation, +
 so everything is accessible.
 
-=== Detour: Type Patterns
-
-_[Finalized in Java 16 -- https://openjdk.org/jeps/394[JEP 394]]_
-
-Typecheck, cast, and declaration all in one.
-
-```java
-if (rootPage instanceof GitHubPage ghPage)
-	// do something with `ghPage`
-```
-
-* checks `rootPage instanceof GitHubPage`
-* declares variable `GitHubPage ghPage`
-
-Only where the check is passed, is `ghPage` in scope. +
-(_Flow-scoping_)
-
-=== Detour: Flow Scoping
-
-> Only where the check is passed, +
-> is `ghPage` in scope.
-
-```java
-if (!(rootPage instanceof GitHubPage ghPage))
-	// can't use `ghPage` here
-	return;
-
-// do something with `ghPage` here 😈
-```
-
-=== Detour: Patterns in Switch
-
-_[Finalized in Java 21 -- https://openjdk.org/jeps/441[JEP 441]]_
-
-All patterns can be used in switches +
-
-```java
-switch (page) {
-	case GitHubPrPage pr -> // use `pr`
-	case ExternalPage ext -> // use `ext`
-	// ...
-};
-```
-
-* checks `page` against all listed types
-* executes matching branch with respective variable
-
 === Gathering Statistics
 
 In class `Statistician`:
@@ -438,23 +347,6 @@ private static String createPrettyString(Page page) {
 
 ⇝ Simpler access with record/deconstruction patterns.
 
-=== Detour: Record Patterns
-
-_[Finalized in Java 21 -- https://openjdk.org/jeps/440[JEP 440]]_
-
-Records are transparent, so you can +
-deconstruct them in `if` and `switch`:
-
-```java
-record ExternalPage(URI url, String content) { }
-
-// elsewhere
-switch (page) {
-	case ExternalPage(var url, var content)
-		-> // use `url` and `content` here
-}
-```
-
 === Deconstructing Data
 
 Use deconstruction patterns:
@@ -474,19 +366,6 @@ public static String createPrettyString(Page page) {
 ```
 
 ⇝ Even simpler access with unnamed patterns.
-
-=== Detour: Unnamed Patterns
-
-_[Preview in Java 21 -- https://openjdk.org/jeps/443[JEP 443] / Finalized in 22 -- https://openjdk.org/jeps/456[JEP 456]]_
-
-Replace variables you don't need with `_`:
-
-```java
-case GitHubIssuePage(_, _, int issueNumber, _)
-	-> "🐈 ISSUE #" + issueNumber;
-case ErrorPage(var url, _)
-	-> "💥 ERROR: " + url.getHost();
-```
 
 === Deconstructing Data
 
@@ -571,9 +450,7 @@ private static String createPrettyString(Page page) {
 }
 ```
 
-"Exhaustive?" 🤔
-
-=== Detour: Exhaustiveness
+=== Exhaustiveness
 
 Unlike an `if`-`else`-`if`-chain, +
 a pattern `switch` needs to cover all cases!
