@@ -1,0 +1,105 @@
+== Structured Concurrency in&nbsp;Action
+
+{toc}
+
+=== Virtual thread potential
+
+Virtual threads are cheap and plentiful:
+
+* no pooling necessary
+* allow thread per task
+* allow liberal creation +
+  of threads for subtasks
+
+⇝ Enable new concurrency programming model.
+
+=== A first step
+
+Whenever you need concurrent subtasks, +
+spawn virtual threads for each:
+
+```java
+private static final ExecutorService VIRTUAL =
+	Executors.newVirtualThreadPerTaskExecutor()
+
+void handle(Request request, Response response)
+		throws InterruptedException {
+	var taskA = VIRTUAL.submit(this::doA);
+	var taskB = VIRTUAL.submit(this::doB);
+	response.send(taskA.get() + taskB.get());
+}
+```
+
+[%step]
+But we can do (much) better!
+
+=== Structured programming
+
+Emerged when the sea of statements and GOTOs +
+became unmaintainable:
+
+* prescribes control structures
+* prescribes single entry point +
+  and clearly defined exit points
+* influenced languages and runtimes
+
+The stricter approach made code (much) clearer!
+
+=== Unstructured concurrency
+
+```java
+private static final ExecutorService VIRTUAL =
+	Executors.newVirtualThreadPerTaskExecutor()
+
+void handle(Request request, Response response)
+		throws InterruptedException {
+
+	// what's the relationship between
+	// this and the two spawned threads?
+	// what happens when one of them fails?
+	var taskA = VIRTUAL.submit(this::doA);
+	var taskB = VIRTUAL.submit(this::doB);
+
+	// what if we only need the faster one?
+	response.send(taskA.get() + taskB.get());
+}
+```
+
+=== Structured concurrency
+
+> When the flow of execution splits +
+> into multiple concurrent flows, +
+> they rejoin in the same code block.
+
+⇝ Thread lifecycle is simple:
+
+* starts when task begins
+* ends on completion
+
+⇝ Enables parent-child/sibling relationships +
+  and logical grouping of threads.
+
+=== In action
+
+To put the API into action, we will perform tasks, +
+that are represented by _our_ (!) class `Task`.
+
+Methods:
+
+* `public void run(Behavior)`: changes state
+* `public String compute(Behavior)`:
+** changes state
+** returns result
+* `public void rollBack()`: resets state
+
+`Behavior` can be `Run`, `Fail`, etc.
+
+=== Task states
+
+States and transitions of our tasks:
+
+image::images/task-states.png[role="diagram"]
+
+=== Code
+
+Code, code, code, code

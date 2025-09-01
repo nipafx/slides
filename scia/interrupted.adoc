@@ -1,0 +1,51 @@
+== Structured Concurrency in&nbsp;Action
+
+{toc}
+
+=== Blocking methods
+
+Two kinds of methods:
+
+* most depend on local resources
+* some depend on an external event ⇝ _blocking_
+
+External events may never happen, +
+so blocking methods should be cancelable.
+
+=== Interruption
+
+_Interruption_ is that cancellation mechanism:
+
+* on the level of threads
+* cooperative
+* interrupted method determines +
+  how to handle interruption
+
+=== Interruption API
+
+Interrupted status is represented by a boolean flag.
+
+Methods on `Thread`:
+
+* ⚡️ `interrupt()` interrupts the thread
+* 🔍 `isInterrupted()` queries the flag
+* ⚠️ `interrupted()` queries _and clears_ the flag
+
+Also: `InterruptedException`.
+
+=== InterruptedException
+
+Thrown by well-behaved blocking methods. +
+(JDK methods reset interrupted status.)
+
+When catching `InterruptedException`:
+
+* clean up (quickly)
+* cede computation
+* if possible, rethrow
+* otherwise, reinterrupt thread +
+  (with `interrupt()`)
+
+=== Code
+
+Code, code, code, code

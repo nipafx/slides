@@ -1,0 +1,82 @@
+== Structured Concurrency in&nbsp;Action
+
+{toc}
+
+=== Caveat
+
+As we enter the reactive section, note:
+
+* I'm far from an expert in reactive programming.
+* Take what I say with a grain of salt. 🧂
+* If I make a mistake, let me know.
+
+=== Backpressure
+
+In situations where *work items* are *produced faster* +
+than they can be *consumed*, *_backpressure_* prevents +
+the consumer from getting overwhelmed.
+
+Three kinds of situations:
+
+* between operations
+* between threads
+* between processes
+
+=== Between Operations
+
+If producer and consumer are consecutive blocking statements, +
+overwhelming is impossible and backpressure automatic, e.g.:
+
+```java
+var item = produce();
+consume(item);
+```
+
+(This is not true if `consume` is asynchronous.)
+
+=== Between Threads
+
+If producer and consumer run in separate threads, +
+concurrent data structures can provide backpressure, e.g.:
+
+```java
+var queue = new ArrayBlockingQueue<T>();
+
+// producer thread
+var item = produce();
+queue.put(item);
+
+// consumer thread
+var item = queue.take();
+consume(item);
+```
+
+(More on queues in a minute.)
+
+=== Between Processes
+
+If producer and consumer are separate processes, +
+backpressure is implemented on the protocol level.
+
+Concurrent data structures can be used on intake, e.g.:
+
+* service accepts new connections in a loop
+* uses semaphore to limit accepted connections
+* producer will notice connection requests timing out
+
+=== Backpressure Strategies
+
+Buffering is common - variants:
+
+* when buffer full, block producer
+* when buffer full, signal to producer
+* when buffer full, drop items
+
+Consumer may be more performant +
+if items are windowed/batched.
+
+⇝ Queues do this well!
+
+=== Code
+
+Code, code, code, code

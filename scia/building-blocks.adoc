@@ -1,0 +1,33 @@
+== Structured Concurrency in&nbsp;Action
+
+{toc}
+
+=== Caveat
+
+I haven't learned much since the last caveat. 🧂🧂
+
+=== Reactive Streams
+
+Typical properties:
+
+* non-blocking (asynchronous)
+* event-based
+* backpressure strategies
+* streaming API
+* many reusable operators
+
+Virtual threads with blocking data structures +
+can replace much of that.
+
+=== Reusable Operators
+
+Reactive APIs come with many reusable operators.
+
+* some map to language constructs
+* some map to data structures
+* some are avilable in other libraries
+* some may need to be (re)implemented
+
+=== Code
+
+Code, code, code, code
