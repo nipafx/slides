@@ -46,6 +46,16 @@ When catching `InterruptedException`:
 * otherwise, reinterrupt thread +
   (with `interrupt()`)
 
+=== Cancellation
+
+`StructuredTaskScope` supports cancellation:
+
+* joiners can cancel a scope (e.g. on subtask failure)
+* a canceled scope interrupts child threads
+
+This allows structured cancellation. +
+But requires proper handling of interrupts!
+
 === Code
 
 Code, code, code, code
