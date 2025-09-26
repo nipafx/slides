@@ -5,6 +5,7 @@ image::images/surprise.gif[background, size=cover]
 
 Already removed:
 
+* applet API ㉖ (https://openjdk.org/jeps/504[JEP 504])
 * 32-bit x86 ports ㉕ (https://openjdk.org/jeps/503[JEP 503])
 * security manager ㉔ (https://openjdk.org/jeps/486[JEP 486])
 * biased locking ⑱ (https://openjdk.org/jeps/374[JEP 374], https://bugs.openjdk.org/browse/JDK-8256425[JDK-8256425])
@@ -30,7 +31,7 @@ What you need to know:
 * removed in JDK 24
 ** command-line flags cause errors
 ** `SecurityManager` still exists
-** all calls are no-ops
+** all calls are "no-ops"
 
 === Security Manager
 
@@ -38,46 +39,14 @@ What you need to do:
 
 * observe your app with security manager disabled +
   (`java.security.manager=disallow` on JDK 12+)
-* if used, move away from security manager
+* if used, move away from it
 
 === Cleaning house
 
 Deprecated (for removal)
 
-* memory access via `Unsafe` ㉔ (https://openjdk.org/jeps/498[JEP 498])
 * finalization ⑱ (https://openjdk.org/jeps/421[JEP 421])
-* applet API ⑰ (https://openjdk.org/jeps/398[JEP 398], https://bugs.openjdk.org/browse/JDK-8345525[JDK-8345525] 👀)
 // * primitive wrapper constructors ⑯ (https://openjdk.org/jeps/390[JEP 390])
-
-Disallow by default:
-
-* JNI ㉔ (https://openjdk.org/jeps/472[JEP 472])
-* dynamic agents ㉑ (https://openjdk.org/jeps/451[JEP 451])
-
-=== Unsafe
-
-Methods for memory access have been superseeded +
-(VarHandles via https://openjdk.org/jeps/193[JEP 193]; FFM via https://openjdk.org/jeps/454[JEP 454]).
-
-Will be phased out:
-
-* deprecation and compile-time warning ㉓
-* run-time warning ㉔
-* exception on invocation ~㉖
-* remove methods
-
-=== Unsafe
-
-You're probably not using it directly, +
-but your dependencies may.
-
-Find them with `--sun-misc-unsafe-memory-access`:
-
-* `warn`: to get run-time warnings
-* `debug`: same with more info
-* `deny`: throws exception
-
-Report and help fix!
 
 === Finalization
 
@@ -104,6 +73,68 @@ What you need to do:
   help remove them
 * run your app with `--finalization=disabled` and +
   closely monitor resource behavior (e.g. file handles)
+
+////
+=== Primitive constructors
+
+What it is:
+
+* `new Integer(42)`
+* `new Double(42)`
+* etc.
+
+=== Primitive constructors
+
+What you need to know:
+
+* Valhalla wants to turn them into value types
+* those have no identity
+* identity-based operations need to be removed
+
+=== Primitive constructors
+
+What you need to do:
+
+* `Integer.valueOf(42)`
+* `Double.valueOf(42)`
+* etc.
+////
+
+=== Integrity by Default
+
+Deprecated (for removal)
+
+* memory access via `Unsafe` ㉔ (https://openjdk.org/jeps/498[JEP 498])
+
+Disallow by default:
+
+* JNI ㉔ (https://openjdk.org/jeps/472[JEP 472])
+* dynamic agents ㉑ (https://openjdk.org/jeps/451[JEP 451])
+
+=== Unsafe
+
+Methods for memory access have been superseeded +
+(VarHandles via https://openjdk.org/jeps/193[JEP 193]; FFM via https://openjdk.org/jeps/454[JEP 454]).
+
+Will be phased out:
+
+. deprecation and compile-time warning ㉓
+. run-time warning ㉔
+. exception on invocation ~㉖
+. remove methods
+
+=== Unsafe
+
+You're probably not using it directly, +
+but your dependencies may.
+
+Find them with `--sun-misc-unsafe-memory-access`:
+
+* `warn`: to get run-time warnings
+* `debug`: same with more info
+* `deny`: throws exception
+
+Report and help fix!
 
 === JNI
 
@@ -153,36 +184,10 @@ What you need to do:
 * observe closely
 * investigate necessity of dynamic agents
 
-////
-=== Primitive constructors
-
-What it is:
-
-* `new Integer(42)`
-* `new Double(42)`
-* etc.
-
-=== Primitive constructors
-
-What you need to know:
-
-* Valhalla wants to turn them into value types
-* those have no identity
-* identity-based operations need to be removed
-
-=== Primitive constructors
-
-What you need to do:
-
-* `Integer.valueOf(42)`
-* `Double.valueOf(42)`
-* etc.
-////
-
 === More
 
 * 📝 all the aforementioned JEPs
 * 📝 https://openjdk.org/jeps/8305968[JEP draft: Integrity by Default]
 * 🎥 https://www.youtube.com/watch?v=ucdzGd-f8as[Why Is Integrity by Default So Important?]
 * 🎥 https://www.youtube.com/watch?v=3HnH6G_zcP0[Future Java - Prepare Your Codebase Now!]
-* 🎥 https://www.youtube.com/watch?v=5jIkRqBuSBs[How to Upgrade to Java 21]
+* 🎥 https://www.youtube.com/watch?v=5jIkRqBuSBs[How to Upgrade to Java 21] and https://www.youtube.com/watch?v=9azNjz7s1Ck[Java 25]
