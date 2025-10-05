@@ -1,0 +1,212 @@
+== {title}
+
+{toc}
+
+=== Unstructured concurrency
+
+Common way to organize concurrency:
+
+* have long-running `ExecutorService` instances
+* submit new tasks wherever necessary
+* enqueue follow-up computations wherever convenient
+* wait for results wherever needed
+
+Concurrency is "all over the place".
+
+=== Unstructured concurrency
+
+Makes it more difficult to:
+
+* express/identify relationships between threads
+* organize overarching result/error handling
+* analyze control flow
+* debug issues that span multiple threads
+
+=== Structured programming
+
+We have seen this before with GOTOs.
+
+Structured programming was the solution:
+
+* prescribes single entry point +
+  and clearly defined exit points
+* influenced languages and runtimes
+
+[NOTE.speaker]
+--
+* term coined by Dijkstra
+* "Go To Statement Considered Harmful", 1968
+--
+
+=== Structured concurrency
+
+> When the flow of execution splits into multiple concurrent flows, they rejoin in the same code block.
+
+Term coined/refined by:
+
+* Martin Sustrik in https://www.250bpm.com/p/structured-concurrency[Structured Concurrency]
+* Nathaniel J. Smith in https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/[Notes on structured concurrency [...\]]
+
+=== Structured concurrency
+
+```java
+// implicitly short-circuits on error
+try (var scope = StructuredTaskScope.open()) {
+	// spawns new (virtual) threads
+	var subtaskA = scope.fork(this::taskA);
+	var subtaskB = scope.fork(this::taskB);
+
+	// waits explicitly for success
+	// (throws error if there was one)
+	scope.join();
+
+	return subtaskA.get() + subtaskB.get();
+} catch (ExecutionException ex) {
+	// TODO: handle task errors
+} // waits until all tasks/threads complete
+```
+
+=== Properties
+
+Threads are short-lived:
+
+* start when task begins
+* end on completion
+
+⇝ Establishes parent-child/sibling relationships +
+  and logical grouping of tasks/threads.
+
+=== Benefits
+
+Structured concurrency:
+
+* defines a scope for concurrency
+* simplifies control flow
+* simplifies grouped result/error handling
+* makes thread relationships visible +
+  (in thread dumps and soon🤞 debuggers)
+
+=== Completion
+
+Use `Joiner` to configure result/error handling:
+
+* how are results collected?
+* when are subtasks cancelled?
+* what does `join` return?
+* when does `join` throw?
+
+Pass to `StructuredTaskScope.open(Joiner)`.
+
+=== Joiners
+
+Existing joiners for heterogeneous results:
+
+* `awaitAllSuccessfulOrThrow()`:
+** cancels/throws on first error
+** default behavior of `open()`
+* `awaitAll()`:
+** never cancels/throws
+
+=== Await All
+
+```java
+try (var scope = StructuredTaskScope
+		.open(Joiners.awaitAll())) {
+	var subtask = scope.fork(this::task);
+	// never throws:
+	scope.join();
+	switch (subtask.state()) {
+		case SUCCESS -> // ...
+		case FAILED -> // ...
+		case UNAVAILABLE -> // ...
+	}
+} catch (ExecutionException ex) {
+	// TODO: handle task errors
+}
+```
+
+=== Joiners
+
+Existing joiners for homogeneous results:
+
+* `allSuccessfulOrThrow()`:
+** cancels/throws on first error
+** returns `Stream<RESULT>`
+* `anySuccessfulResultOrThrow()`
+** cancels/throws if all fail
+** returns `RESULT`
+
+=== Any Successful
+
+```java
+try (var scope = StructuredTaskScope.open(
+		Joiners.<String>anySuccessfulResultOrThrow())) {
+	// no need to grab the `Subtask` instances
+	scope.fork(this::taskA);
+	scope.fork(this::taskB);
+	
+	// returns the first successful result (`String`)
+	return scope.join();
+} catch (ExecutionException ex) {
+	// TODO: handle task errors
+}
+```
+
+=== Custom joiners
+
+Implement and pass to `StructuredTaskScope::open`:
+
+```java
+interface Joiner<T, R> {
+
+	boolean onFork(Subtask<? extends T> subtask);
+
+	boolean onComplete(Subtask<? extends T> subtask);
+
+	R result() throws Throwable;
+
+}
+```
+
+=== Error propagation
+
+If joiner cancels scope:
+
+* all child threads get interrupted
+* `join` returns or throws
+
+But `StructuredTaskScope.close()` waits +
+until all child threds complete.
+
+⇝ Handle `InterruptedException` properly!
+
+=== Sharing data
+
+Structured concurrency being scoped allows +
+inheriting scoped values to child threads.
+
+=== Scoped values
+
+```java
+ScopedValue.where(ANSWER, 42).run(() -> {// scope ──┐
+	try (var scope = StructuredTaskScope    //      │
+			.open() {                       //      │
+		               // child threads' scope ──┐  │
+		var subA = scope.fork(ANSWER::get); //   │  │
+		var subB = scope.fork(ANSWER::get); //   │  │
+		                                    //   │  │
+		scope.join();                       //   │  │
+		                                    //   │  │
+		var result = subA.get()+subB.get(); //   │  │
+		IO.println(result);  // "84"        //   │  │
+	}           // all child threads completed ──┘  │
+	IO.println(ANSWER.get()) // "42"        //      │
+}                                           // ─────┘
+```
+
+=== More
+
+* 📝 https://openjdk.org/jeps/505[JEP 505]: Structured Concurrency
+* 📝 https://www.250bpm.com/p/structured-concurrency[Structured Concurrency]
+* 📝 https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/[Notes on structured concurrency [...\]]
+* 🎥 https://www.youtube.com/watch?v=vLJDPmXufQw[Structured Concurrency Revamp in Java 25]

@@ -220,6 +220,7 @@ include::deprecations.adoc[]
 * FFM API ㉒
 * primitive patterns ⊕
 * +++<s>string templates ⊕</s>+++
+* structured concurrency ⊕
 
 // JAVA 24
 
@@ -324,22 +325,32 @@ include::api-new_ffm.adoc[]
 	<tr class="toc-current"><td>Preview in Java 25</td></tr> \
 	<tr class="toc-current"><td style="padding-left: 2em;">Primitive Patterns</td></tr> \
 	<tr><td style="padding-left: 2em;"><s>String Templates</s></td></tr> \
+	<tr><td style="padding-left: 2em;">Structured Concurrency</td></tr> \
 </table> \
 ]
 include::language_pattern-primitive.adoc[]
 
 :toc: pass:[ \
 <table class="toc"> \
-	<tr><td>Final in Java 25</td></tr> \
-	<tr><td>Final in Java 24</td></tr> \
-	<tr><td>Final in Java 23</td></tr> \
-	<tr><td>Final in Java 22</td></tr> \
+	<tr><td>Final in Java 25, 24, 23, 22</td></tr> \
 	<tr class="toc-current"><td>Preview in Java 25</td></tr> \
 	<tr><td style="padding-left: 2em;">Primitive Patterns</td></tr> \
 	<tr class="toc-current"><td style="padding-left: 2em;"><s>String Templates</s></td></tr> \
+	<tr><td style="padding-left: 2em;">Structured Concurrency</td></tr> \
 </table> \
 ]
 include::language_string-templates.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>Final in Java 25, 24, 23, 22</td></tr> \
+	<tr class="toc-current"><td>Preview in Java 25</td></tr> \
+	<tr><td style="padding-left: 2em;">Primitive Patterns</td></tr> \
+	<tr><td style="padding-left: 2em;"><s>String Templates</s></td></tr> \
+	<tr class="toc-current"><td style="padding-left: 2em;">Structured Concurrency</td></tr> \
+</table> \
+]
+include::api-new_structured-concurrency.adoc[]
 
 // ######### //
 // O U T R O //
