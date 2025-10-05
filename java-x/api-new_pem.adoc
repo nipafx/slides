@@ -1,0 +1,98 @@
+== {title}
+
+{toc}
+
+=== PEM texts
+
+Representations of cryptographic objects +
+(keys, certificates, certificate revocation lists):
+
+```
+-----BEGIN PUBLIC KEY-----
+MFkwEwYHKoZIzj0CAQYIKoZIzj
+0DAQcDQgAEi/kRGOL7wCPTN4KJ
+2ppeSt5UYB6ucPjjuKDtFTXbgu
+OIFDdZ65O/8HTUqS/sVzRF+dg7
+H3/tkQ/36KdtuADbwQ==
+-----END PUBLIC KEY-----
+```
+
+=== Privacy-enhanced... Mail?!
+
+Was introduced for exchange via email +
+but moved way beyond:
+
+* development platforms (e.g. GitHub)
+* certificate authorities
+* cryptographic libraries (e.g. OpenSSL)
+* security-sensitive applications (e.g. OpenSSL)
+* hardware authentication devices (e.g. YubiKeys)
+* your applications
+
+⇝ Very helpful if Java handled them easily.
+
+=== PEM API
+
+New PEM API is straightforward to use:
+
+```java
+X509Certificate cert = // ...
+
+PEMEncoder pe = PEMEncoder.of();
+String pem = pe.encodeToString(cert);
+
+PEMDecoder pd = PEMDecoder.of();
+DEREncodable cert2 = pd.decode(pem);
+```
+
+=== Endcoder/Decoder
+
+Instances of `PEMEncoder` and `PEMDecoder` are:
+
+* immutable
+* thread-safe 
+* reusable
+
+Can encrypt/decrypt with `withEncryption`:
+
+```java
+var pd = PEMDecoder.of().withEncryption(pass);
+```
+
+=== Encodable
+
+All implementations of `DEREncodable` can be encoded:
+
+* `AsymmetricKey` +
+  (DH, DSA, EC, RSA, etc.)
+* `KeyPair`
+* `PKCS8EncodedKeySpec`
+* `X509EncodedKeySpec`
+* `X509Certificate`
+* `X509CRL`
+* `EncryptedPrivateKeyInfo`
+* `PEMRecord`
+
+=== Decoding
+
+For decoding:
+
+* if the object type is known, call +
+  `decode(String, Class<T extends DEREncodable>)`
+* otherwise, `switch`/`instanceof` over +
+  return value of `decode(String)` 
+
+(Overloads for `InputStream` exist.)
+
+=== Unknown objects
+
+Unknown cryptographic objects are decoded to `PEMRecord`:
+
+* `String type` (header text)
+* `String content` (Base64-encoded body)
+* `byte[] leadingData` (data preceding the header)
+
+=== More
+
+* 📝 https://openjdk.org/jeps/470[JEP 470]: PEM Encodings of Cryptographic Objects
+* 🎥 https://www.youtube.com/watch?v=hqvMn2SwKiI[Java 25 Encodes PEM]
