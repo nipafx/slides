@@ -71,7 +71,14 @@ void handle(Request request, Response response)
 > into multiple concurrent flows, +
 > they rejoin in the same code block.
 
-⇝ Thread lifecycle is simple:
+Term coined/refined by:
+
+* Martin Sustrik in https://www.250bpm.com/p/structured-concurrency[Structured Concurrency]
+* Nathaniel J. Smith in https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/[Notes on structured concurrency [...\]]
+
+=== Structured concurrency
+
+Thread lifecycle is simple:
 
 * starts when task begins
 * ends on completion
