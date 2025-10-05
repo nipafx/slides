@@ -108,6 +108,7 @@ Deprecated (for removal)
 
 Disallow by default:
 
+* mutating final fields (https://openjdk.org/jeps/500[JEP 500])
 * JNI ㉔ (https://openjdk.org/jeps/472[JEP 472])
 * dynamic agents ㉑ (https://openjdk.org/jeps/451[JEP 451])
 
@@ -135,6 +136,18 @@ Find them with `--sun-misc-unsafe-memory-access`:
 * `deny`: throws exception
 
 Report and help fix!
+
+=== Final Fields
+
+Non-record final fields can be mutated through reflection.
+
+This causes issues for:
+
+* correctness
+* performance (e.g. constant folding)
+
+A future Java version will require an option +
+to allow final field mutation.
 
 === JNI
 
