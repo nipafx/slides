@@ -1,0 +1,56 @@
+== {title}
+
+{toc}
+
+=== Smaller API Additions
+
+Since Java 21:
+
+* `Console`: `Locale` overloads for +
+  `format`, `printf`, `readLine`, `readPassword`
+* `Console`: `isTerminal`
+* `Reader`: `readLines`, `readAllAsString`
+* `Math`, `StrictMath`: more exact overloads, +
+  e.g. `unsignedMultiplyExact(int, int)`
+* `Instant`: `until(Instant)`
+* `ForkJoinPool`: `schedule...` and more
+* `BodyHandlers`, `BodySubscribers`: `limiting`
+
+=== Performance improvements
+
+Every Java release improves performance, e.g.:
+
+* JDK 25 vs 8: +113%/+31% critical/max jOPS in SPECjbb 2015
+* JDK 25 vs 21: +10%/+5% critical/max jOPS in SPECjbb 2015
+* JDK 25 vs 21: +70-75% requests/s on Helidon
+
+=== JFR improvements
+
+JDK Flight Recorder also got better:
+
+* cooperative sampling (https://openjdk.org/jeps/518[JEP 518])
+* method timing & tracing (https://openjdk.org/jeps/520[JEP 520])
+* CPU-time profiling (https://openjdk.org/jeps/509[JEP 509], experimental)
+
+=== !
+
+image::images/rt25-performance.webp[]
+
+🎥 https://www.youtube.com/watch?v=renTMvh51iM[Java 21 ⮕ 25: Performance and Runtime Enhancement]
+
+=== Security enhancements
+
+Many enhancements between Java 21 and 25:
+
+* improved security configurations +
+  (https://bugs.openjdk.org/browse/JDK-8051959[JDK-8051959], https://bugs.openjdk.org/browse/JDK-8281658[JDK-8281658], https://bugs.openjdk.org/browse/JDK-8311596[JDK-8311596], https://inside.java/2024/12/10/quality-heads-up/[file inclusion])
+* quantum-resistant cryptography +
+  (https://openjdk.org/jeps/486[JEP 486], https://openjdk.org/jeps/496[JEP 496], https://openjdk.org/jeps/497[JEP 497], https://openjdk.org/jeps/510[JEP 510])
+* API for PEM texts (https://openjdk.org/jeps/470[JEP 470], preview)
+* various improvements in cryptographic algorithms
+
+=== !
+
+image::images/rt25-security.webp[]
+
+🎥 https://www.youtube.com/watch?v=xeOuEqorY8g[How to Handle Security Changes in Java 25]

@@ -126,8 +126,7 @@ Current preview/incubating/experimental features:
 	<tr><td style="padding-left: 2em;">Scoped Values</td></tr> \
 	<tr><td style="padding-left: 2em;">Ahead-of-Time Computation</td></tr> \
 	<tr><td style="padding-left: 2em;">Compact Object Headers</td></tr> \
-	<tr><td>Final in Java 24, 23, 22</td></tr> \
-	<tr><td>Preview in Java 25</td></tr> \
+	<tr><td style="padding-left: 2em;">...</td></tr> \
 </table> \
 ]
 include::modules_imports.adoc[]
@@ -141,8 +140,7 @@ include::modules_imports.adoc[]
 	<tr><td style="padding-left: 2em;">Scoped Values</td></tr> \
 	<tr><td style="padding-left: 2em;">Ahead-of-Time Computation</td></tr> \
 	<tr><td style="padding-left: 2em;">Compact Object Headers</td></tr> \
-	<tr><td>Final in Java 24, 23, 22</td></tr> \
-	<tr><td>Preview in Java 25</td></tr> \
+	<tr><td style="padding-left: 2em;">...</td></tr> \
 </table> \
 ]
 include::meta_launch-protocol.adoc[]
@@ -156,8 +154,7 @@ include::meta_launch-protocol.adoc[]
 	<tr><td style="padding-left: 2em;">Scoped Values</td></tr> \
 	<tr><td style="padding-left: 2em;">Ahead-of-Time Computation</td></tr> \
 	<tr><td style="padding-left: 2em;">Compact Object Headers</td></tr> \
-	<tr><td>Final in Java 24, 23, 22</td></tr> \
-	<tr><td>Preview in Java 25</td></tr> \
+	<tr><td style="padding-left: 2em;">...</td></tr> \
 </table> \
 ]
 include::language_statements-super.adoc[]
@@ -171,8 +168,7 @@ include::language_statements-super.adoc[]
 	<tr class="toc-current"><td style="padding-left: 2em;">Scoped Values</td></tr> \
 	<tr><td style="padding-left: 2em;">Ahead-of-Time Computation</td></tr> \
 	<tr><td style="padding-left: 2em;">Compact Object Headers</td></tr> \
-	<tr><td>Final in Java 24, 23, 22</td></tr> \
-	<tr><td>Preview in Java 25</td></tr> \
+	<tr><td style="padding-left: 2em;">...</td></tr> \
 </table> \
 ]
 include::api-new_scoped-value.adoc[]
@@ -186,8 +182,7 @@ include::api-new_scoped-value.adoc[]
 	<tr><td style="padding-left: 2em;">Scoped Values</td></tr> \
 	<tr class="toc-current"><td style="padding-left: 2em;">Ahead-of-Time Computation</td></tr> \
 	<tr><td style="padding-left: 2em;">Compact Object Headers</td></tr> \
-	<tr><td>Final in Java 24, 23, 22</td></tr> \
-	<tr><td>Preview in Java 25</td></tr> \
+	<tr><td style="padding-left: 2em;">...</td></tr> \
 </table> \
 ]
 include::performance_aot-computation.adoc[]
@@ -201,11 +196,24 @@ include::performance_aot-computation.adoc[]
 	<tr><td style="padding-left: 2em;">Scoped Values</td></tr> \
 	<tr><td style="padding-left: 2em;">Ahead-of-Time Computation</td></tr> \
 	<tr class="toc-current"><td style="padding-left: 2em;">Compact Object Headers</td></tr> \
-	<tr><td>Final in Java 24, 23, 22</td></tr> \
-	<tr><td>Preview in Java 25</td></tr> \
+	<tr><td style="padding-left: 2em;">...</td></tr> \
 </table> \
 ]
 include::performance_compact-headers.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr class="toc-current"><td>Final in Java 25</td></tr> \
+	<tr><td style="padding-left: 2em;">Module Imports</td></tr> \
+	<tr><td style="padding-left: 2em;">Simplified Main</td></tr> \
+	<tr><td style="padding-left: 2em;">Flexible Constructor Bodies</td></tr> \
+	<tr><td style="padding-left: 2em;">Scoped Values</td></tr> \
+	<tr><td style="padding-left: 2em;">Ahead-of-Time Computation</td></tr> \
+	<tr><td style="padding-left: 2em;">Compact Object Headers</td></tr> \
+	<tr class="toc-current"><td style="padding-left: 2em;">...</td></tr> \
+</table> \
+]
+include::misc.adoc[]
 
 include::deprecations.adoc[]
 
