@@ -418,10 +418,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</div>
 	</div>
 	<div class="participant">
-		<a href="http://javazone.no/" title="JavaZone"><img src="../_images/logo-javazone-2025-42c8ae84.png" alt="Logo of JavaZone" class="logo" style="{host-logo-style}"></a>
+		<a href="https://devoxx.be/" title="Devoxx BE"><img src="../_images/logo-devoxx-c0dcfc14.png" alt="Logo of Devoxx BE" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="http://javazone.no/" title="JavaZone website">JavaZone</a></p>
-			<p><a href="https://twitter.com/javazone" title="JavaZone on Twitter">@javazone</a></p>
+			<p><a href="https://devoxx.be/" title="Devoxx BE website">Devoxx BE</a></p>
+			<p><a href="https://twitter.com/devoxx" title="Devoxx BE on Twitter">@devoxx</a></p>
 		</div>
 	</div>
 	<div class="participant">
@@ -443,10 +443,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="http://javazone.no/" title="JavaZone"><img src="../_images/logo-javazone-2025-42c8ae84.png" alt="Logo of JavaZone" class="logo" style="{host-logo-style}"></a>
+		<a href="https://devoxx.be/" title="Devoxx BE"><img src="../_images/logo-devoxx-c0dcfc14.png" alt="Logo of Devoxx BE" class="logo" style="{host-logo-style}"></a>
 		<div class="name"><p>
-			<a href="http://javazone.no/" title="JavaZone website">JavaZone</a>
-			/ <a href="https://twitter.com/javazone" title="JavaZone on Twitter">@javazone</a>
+			<a href="https://devoxx.be/" title="Devoxx BE website">Devoxx BE</a>
+			/ <a href="https://twitter.com/devoxx" title="Devoxx BE on Twitter">@devoxx</a>
 		</p></div>
 	</div>
 </footer>
@@ -460,7 +460,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 (hit "?" to get navigation help)</p></li><li><p>code: <a href="https://github.com/nipafx/scia">github.com/nipafx/scia</a></p></li><li><p>ask questions at any time</p></li></ul></div></div></section><section id="_before_we_get_started_2"><h2>Before we get started</h2><div class="slide-content"><div class="paragraph"><p>Structured concurrency is a preview API in Java 25.</p></div>
 <div class="paragraph"><p>If you get the chance:</p></div>
 <div class="ulist"><ul><li><p>try it out (ideally in a production code base)</p></li><li><p>give feedback to the <a href="https://mail.openjdk.org/mailman/listinfo/loom-dev">loom-dev mailing list</a></p></li></ul></div>
-<div class="paragraph"><p>JDK 25 EA: <a href="https://jdk.java.net/25/">jdk.java.net/25/</a></p></div></div></section></section>
+<div class="paragraph"><p>JDK 25: <a href="https://jdk.java.net/25">jdk.java.net/25</a></p></div></div></section></section>
 <section><section id="_structured_concurrency_inaction"><h2>Structured Concurrency in&nbsp;Action</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr class="toc-current"><td>API Overview</td></tr> <tr><td>Cancellation</td></tr> <tr><td>Backpressure</td></tr> <tr><td>Building Blocks</td></tr> </table> </p></div></div></section><section id="_virtual_thread_potential"><h2>Virtual thread potential</h2><div class="slide-content"><div class="paragraph"><p>Virtual threads are cheap and plentiful:</p></div>
 <div class="ulist"><ul><li><p>no pooling necessary</p></li><li><p>allow thread per task</p></li><li><p>allow liberal creation<br>
 of threads for subtasks</p></li></ul></div>
@@ -496,7 +496,8 @@ void handle(Request request, Response response)
 }</code></pre></div></div></div></section><section id="_structured_concurrency"><h2>Structured concurrency</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>When the flow of execution splits<br>
 into multiple concurrent flows,<br>
 they rejoin in the same code block.</p></div></blockquote></div>
-<div class="paragraph"><p>⇝ Thread lifecycle is simple:</p></div>
+<div class="paragraph"><p>Term coined/refined by:</p></div>
+<div class="ulist"><ul><li><p>Martin Sustrik in <a href="https://www.250bpm.com/p/structured-concurrency">Structured Concurrency</a></p></li><li><p>Nathaniel J. Smith in <a href="https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/">Notes on structured concurrency [&#8230;&#8203;]</a></p></li></ul></div></div></section><section id="_structured_concurrency_2"><h2>Structured concurrency</h2><div class="slide-content"><div class="paragraph"><p>Thread lifecycle is simple:</p></div>
 <div class="ulist"><ul><li><p>starts when task begins</p></li><li><p>ends on completion</p></li></ul></div>
 <div class="paragraph"><p>⇝ Enables parent-child/sibling relationships<br>
   and logical grouping of threads.</p></div></div></section><section id="_in_action"><h2>In action</h2><div class="slide-content"><div class="paragraph"><p>To put the API into action, we will perform tasks,<br>
