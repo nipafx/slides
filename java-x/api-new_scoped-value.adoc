@@ -1,0 +1,136 @@
+== {title}
+
+{toc}
+
+=== Passing Data
+
+Method inputs are usually instance fields or arguments, +
+but sometimes:
+
+* arguments are sensitive or inconvenient
+* data is thread-specific
+* each thread needs to mutate its own instance
+* ...
+
+Common solution: `ThreadLocal`.
+
+=== ThreadLocal Example
+
+```java
+static final ThreadLocal<Integer> ANSWER =
+	new ThreadLocal<>();
+
+void main() {
+	ANSWER.set(42);
+	IO.println(ANSWER.get());     // "42"
+	new Thread(() -> {
+		IO.println(ANSWER.get()); // "null"
+	}).start();
+	IO.println(ANSWER.get());     // "42"
+}
+```
+
+=== ThreadLocal Properties
+
+Challenges when using `ThreadLocal`:
+
+* requires manual clean-up
+* data flow is two-way and possibly complex
+* inheriting data to child threads can be expensive
+
+`ScopedValue` addresses all that.
+
+=== ScopedValue Example
+
+```java
+static final ScopedValue<Integer> ANSWER =
+	ScopedValue.newInstance();
+
+void main() {
+	ScopedValue //      ⬐ VALUE
+		.where(ANSWER, 42)
+		//  |<---------- SCOPE ----------->|
+		.run(() -> IO.println(ANSWER.get())); // "42"
+
+	// OUT OF SCOPE
+	ANSWER.get(); // ⚡️ NoSuchElementException
+}
+```
+
+=== ScopedValue Properties
+
+Central properties:
+
+* data is only available in `run`
+* data flow is one-way
+* inheriting data to child threads is cheap +
+  (because `ThreadLocal` can be mutated)
+
+This comes at the cost of less flexible data flow.
+
+=== Rebinding ScopedValue
+
+A scoped value can be rebound for a nested scope:
+
+```java
+static final ScopedValue<Integer> ANSWER =
+	ScopedValue.newInstance();
+
+void a() {
+	ScopedValue
+		.where(ANSWER, 42)
+		.run(this::b);
+}
+```
+
+=== Rebinding ScopedValue
+
+```java
+void b() {
+	IO.println(ANSWER.get()); // "42"
+	ScopedValue
+		.where(ANSWER, ANSWER.get() + 1)
+		.run(this::c);
+	IO.println(ANSWER.get()); // "42"
+}
+
+void c() {
+	IO.println(ANSWER.get()); // "43"
+}
+```
+
+=== Cheap Inheritance
+
+Because scoped values are immutable +
+no copies are needed _within_ a scope.
+
+Structured concurrency is inherently scoped.
+
+⇝ Tasks/threads of a `StructuredTaskScope` +
+inherit scoped values.
+
+(Only this inheritance is possible.)
+
+=== Scoped Inheritance
+
+```java
+ScopedValue.where(ANSWER, 42).run(() -> {// scope ──┐
+	try (var scope = StructuredTaskScope    //      │
+			.open() {                       //      │
+		               // child threads' scope ──┐  │
+		var subA = scope.fork(ANSWER::get); //   │  │
+		var subB = scope.fork(ANSWER::get); //   │  │
+		                                    //   │  │
+		scope.join();                       //   │  │
+		                                    //   │  │
+		var result = subA.get()+subB.get(); //   │  │
+		IO.println(result);  // "84"        //   │  │
+	}           // all child threads completed ──┘  │
+	IO.println(ANSWER.get()) // "42"        //      │
+}                                           // ─────┘
+```
+
+=== More
+
+* 📝 https://openjdk.org/jeps/506[JEP 506]: Scoped Values
+* 🎥 https://www.youtube.com/watch?v=7tfUJLUbZiM[Scoped Values in Java 24]
