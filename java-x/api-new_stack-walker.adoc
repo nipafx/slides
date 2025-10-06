@@ -15,7 +15,7 @@ public static void main(String[] args) { one(); }
 static void one() { two(); }
 static void two() {
 	StackWalker.getInstance()
-		.forEach(System.out::println);
+		.forEach(IO::println);
 }
 
 // output
@@ -39,7 +39,7 @@ static void three() {
 			.map(f -> "Line " + f.getLineNumber())
 			.orElse("Unknown line");
 	);
-	System.out.println(line);
+	IO.println(line);
 }
 
 // output

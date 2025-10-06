@@ -40,7 +40,7 @@ The gatherers API consists of:
 ```java
 Stream.of("A", "C", "F", "B", "S")
 	.gather(scan(...))
-	.forEach(System.out::println);
+	.forEach(IO::println);
 ```
 
 === Gatherer Building Blocks
@@ -156,7 +156,7 @@ Using our gatherer:
 ```java
 Stream.of("A", "C", "F", "B", "S")
 	.gather(groups(2))
-	.forEach(System.out::println);
+	.forEach(IO::println);
 
 // [A, C]
 // [F, B]

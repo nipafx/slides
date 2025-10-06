@@ -207,12 +207,12 @@ the arrow form has no fall-through:
 ```java
 switch (ternaryBool) {
 	case TRUE, FALSE ->
-		System.out.println("Bool was sane");
+		IO.println("Bool was sane");
 	// in colon-form, if `ternaryBool` is `TRUE`
 	// or `FALSE`, we would see both messages;
 	// in arrow-form, only one branch is executed
 	default ->
-		System.out.println("Bool was insane");
+		IO.println("Bool was insane");
 }
 ```
 
@@ -224,11 +224,11 @@ the arrow form can use statement blocks:
 ```java
 boolean result = switch (ternaryBoolean) {
 	case TRUE -> {
-		System.out.println("Bool true");
+		IO.println("Bool true");
 		yield true;
 	}
 	case FALSE -> {
-		System.out.println("Bool false");
+		IO.println("Bool false");
 		yield false;
 	}
 	// cases `FILE_NOT_FOUND` and `default`

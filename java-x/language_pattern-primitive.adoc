@@ -59,9 +59,9 @@ Yes!
 ```java
 int x = 0;
 if (x instanceof byte b)
-	System.out.println(b + " in [-128, 127]");
+	IO.println(b + " in [-128, 127]");
 else
-	System.out.println(x + " not in [-128, 127]");
+	IO.println(x + " not in [-128, 127]");
 ```
 
 === More Checks
