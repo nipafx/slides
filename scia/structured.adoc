@@ -19,15 +19,12 @@ Whenever you need concurrent subtasks, +
 spawn virtual threads for each:
 
 ```java
-private static final ExecutorService VIRTUAL =
-	Executors.newVirtualThreadPerTaskExecutor()
+var threads = Executors
+	.newVirtualThreadPerTaskExecutor()
 
-void handle(Request request, Response response)
-		throws InterruptedException {
-	var taskA = VIRTUAL.submit(this::doA);
-	var taskB = VIRTUAL.submit(this::doB);
-	response.send(taskA.get() + taskB.get());
-}
+var subtaskA = threads.submit(this::taskA);
+var subtaskB = threads.submit(this::taskB);
+var result = subtaskA.get() + subtaskB.get();
 ```
 
 [%step]
@@ -48,21 +45,17 @@ The stricter approach made code (much) clearer!
 === Unstructured concurrency
 
 ```java
-private static final ExecutorService VIRTUAL =
-	Executors.newVirtualThreadPerTaskExecutor()
+var threads = Executors
+	.newVirtualThreadPerTaskExecutor()
 
-void handle(Request request, Response response)
-		throws InterruptedException {
+// what's the relationship between
+// this and the two spawned threads?
+// what happens when one of them fails?
+var subtaskA = threads.submit(this::taskA);
+var subtaskB = threads.submit(this::taskB);
 
-	// what's the relationship between
-	// this and the two spawned threads?
-	// what happens when one of them fails?
-	var taskA = VIRTUAL.submit(this::doA);
-	var taskB = VIRTUAL.submit(this::doB);
-
-	// what if we only need the faster one?
-	response.send(taskA.get() + taskB.get());
-}
+// what if we only need the faster one?
+var result = subtaskA.get() + subtaskB.get();
 ```
 
 === Structured concurrency
@@ -93,8 +86,9 @@ that are represented by _our_ (!) class `Task`.
 
 Methods:
 
-* `public void run(Behavior)`: changes state
-* `public String compute(Behavior)`:
+* `public void run(Behavior) throws IOException`: +
+** changes state
+* `public String compute(Behavior) throws IOException`:
 ** changes state
 ** returns result
 * `public void rollBack()`: resets state
