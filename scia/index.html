@@ -466,34 +466,27 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 of threads for subtasks</p></li></ul></div>
 <div class="paragraph"><p>⇝ Enable new concurrency programming model.</p></div></div></section><section id="_a_first_step"><h2>A first step</h2><div class="slide-content"><div class="paragraph"><p>Whenever you need concurrent subtasks,<br>
 spawn virtual threads for each:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">private static final ExecutorService VIRTUAL =
-	Executors.newVirtualThreadPerTaskExecutor()
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">var threads = Executors
+	.newVirtualThreadPerTaskExecutor()
 
-void handle(Request request, Response response)
-		throws InterruptedException {
-	var taskA = VIRTUAL.submit(this::doA);
-	var taskB = VIRTUAL.submit(this::doB);
-	response.send(taskA.get() + taskB.get());
-}</code></pre></div></div>
+var subtaskA = threads.submit(this::taskA);
+var subtaskB = threads.submit(this::taskB);
+var result = subtaskA.get() + subtaskB.get();</code></pre></div></div>
 <div class="paragraph fragment"><p>But we can do (much) better!</p></div></div></section><section id="_structured_programming"><h2>Structured programming</h2><div class="slide-content"><div class="paragraph"><p>Emerged when the sea of statements and GOTOs<br>
 became unmaintainable:</p></div>
 <div class="ulist"><ul><li><p>prescribes control structures</p></li><li><p>prescribes single entry point<br>
 and clearly defined exit points</p></li><li><p>influenced languages and runtimes</p></li></ul></div>
-<div class="paragraph"><p>The stricter approach made code (much) clearer!</p></div></div></section><section id="_unstructured_concurrency"><h2>Unstructured concurrency</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">private static final ExecutorService VIRTUAL =
-	Executors.newVirtualThreadPerTaskExecutor()
+<div class="paragraph"><p>The stricter approach made code (much) clearer!</p></div></div></section><section id="_unstructured_concurrency"><h2>Unstructured concurrency</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">var threads = Executors
+	.newVirtualThreadPerTaskExecutor()
 
-void handle(Request request, Response response)
-		throws InterruptedException {
+// what's the relationship between
+// this and the two spawned threads?
+// what happens when one of them fails?
+var subtaskA = threads.submit(this::taskA);
+var subtaskB = threads.submit(this::taskB);
 
-	// what's the relationship between
-	// this and the two spawned threads?
-	// what happens when one of them fails?
-	var taskA = VIRTUAL.submit(this::doA);
-	var taskB = VIRTUAL.submit(this::doB);
-
-	// what if we only need the faster one?
-	response.send(taskA.get() + taskB.get());
-}</code></pre></div></div></div></section><section id="_structured_concurrency"><h2>Structured concurrency</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>When the flow of execution splits<br>
+// what if we only need the faster one?
+var result = subtaskA.get() + subtaskB.get();</code></pre></div></div></div></section><section id="_structured_concurrency"><h2>Structured concurrency</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>When the flow of execution splits<br>
 into multiple concurrent flows,<br>
 they rejoin in the same code block.</p></div></blockquote></div>
 <div class="paragraph"><p>Term coined/refined by:</p></div>
@@ -503,7 +496,7 @@ they rejoin in the same code block.</p></div></blockquote></div>
   and logical grouping of threads.</p></div></div></section><section id="_in_action"><h2>In action</h2><div class="slide-content"><div class="paragraph"><p>To put the API into action, we will perform tasks,<br>
 that are represented by <em>our</em> (!) class <code>Task</code>.</p></div>
 <div class="paragraph"><p>Methods:</p></div>
-<div class="ulist"><ul><li><p><code>public void run(Behavior)</code>: changes state</p></li><li><p><code>public String compute(Behavior)</code>:</p><div class="ulist"><ul><li><p>changes state</p></li><li><p>returns result</p></li></ul></div></li><li><p><code>public void rollBack()</code>: resets state</p></li></ul></div>
+<div class="ulist"><ul><li><p><code>public void run(Behavior) throws IOException</code>:<br></p><div class="ulist"><ul><li><p>changes state</p></li></ul></div></li><li><p><code>public String compute(Behavior) throws IOException</code>:</p><div class="ulist"><ul><li><p>changes state</p></li><li><p>returns result</p></li></ul></div></li><li><p><code>public void rollBack()</code>: resets state</p></li></ul></div>
 <div class="paragraph"><p><code>Behavior</code> can be <code>Run</code>, <code>Fail</code>, etc.</p></div></div></section><section id="_task_states"><h2>Task states</h2><div class="slide-content"><div class="paragraph"><p>States and transitions of our tasks:</p></div>
 <div class="imageblock diagram"><img src="../_images/task-states-7aa99cd4.png" alt="task states"></div></div></section><section id="_code"><h2>Code</h2><div class="slide-content"><div class="paragraph"><p>Code, code, code, code</p></div></div></section></section>
 <section><section id="_structured_concurrency_inaction_2"><h2>Structured Concurrency in&nbsp;Action</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr><td>API Overview</td></tr> <tr class="toc-current"><td>Cancellation</td></tr> <tr><td>Backpressure</td></tr> <tr><td>Building Blocks</td></tr> </table> </p></div></div></section><section id="_blocking_methods"><h2>Blocking methods</h2><div class="slide-content"><div class="paragraph"><p>Two kinds of methods:</p></div>
