@@ -19,7 +19,7 @@ Other constructors just forward (if possible).
 ```java
 class Name {
 
-	protected final String first, last;
+	private final String first, last;
 
 	Name(String first, String last) {
 		// [... checks, assignments, etc. ...]
@@ -28,26 +28,20 @@ class Name {
 	Name(String fst, String mid, String lst) {
 		this(fst + " " + mid, lst);
 	}
-}
 
-```
-
-=== Inheritance
-
-With superclasses, chaining is enforced:
-
-```java
-class ThreePartName extends Name {
-
-	protected final String middle;
-
-	ThreePartName(String fst, String mid, String lst) {
-		// doesn't compile without this call
-		super(fst, lst);
-		this.middle = mid;
-	}
 }
 ```
+
+=== Forced Constructor Chaining
+
+Superclasses::
+To ensure superclass initialization, chaining +
+through `super(...)` is enforced.
+
+Records::
+To enforce a uniform construction protocol, +
+chaining through `this(...)` to the canonical +
+constructor is enforced.
 
 === Limitations
 
@@ -105,8 +99,7 @@ Limitation is inconvenient when you want to:
 ```java
 class Name {
 
-	protected final String first;
-	protected final String last;
+	private final String first, last;
 
 	Name(String first, String last) {
 		this.first = first;
@@ -114,33 +107,15 @@ class Name {
 	}
 
 	Name(String full) {
-		// does the same work twice
+		// less readable & does the same work twice
 		this(full.split(" ")[0], full.split(" ")[1]);
 	}
 
 }
 ```
-
-=== Inconveniences
-
-Workarounds:
-
-* duplicate argument validation & field assignment
-* add an "internal" constructor to forward to
-* add static factory method
-
-=== Limitations - Record Edition
-
-To enforce a uniform construction protocol:
-
-Records require all custom constructors +
-to (eventually) call the canonical constructor.
-
-⇝ Further limits options.
-
 === Splitting Arguments
 
-What we want to write:
+Workarounds exist, but what we want to write:
 
 ```java
 class Name {
@@ -154,8 +129,6 @@ class Name {
 
 }
 ```
-
-(Analogous for records.)
 
 === Flexible Constructor Bodies
 
@@ -195,50 +168,17 @@ Great to:
 * check arguments
 * prepare arguments
 * split/share arguments
-* assign fields
+* assign fields (!)
 
-=== Check Arguments
-
-```java
-class ThreePartName extends Name {
-
-	protected final String middle;
-
-	ThreePartName(String fst, String mid, String lst) {
-		// can't have a middle name without a first name
-		requireNonNullNonEmpty(fst);
-		this.middle = mid;
-		super(fst, lst);
-	}
-
-}
-```
-
-=== Prepare Arguments
-
-```java
-class ThreePartName extends Name {
-
-	protected final String middle;
-
-	ThreePartName(String fst, String mid, String lst) {
-		this.middle = mid;
-		// shorten first if middle is given
-		var shortFst = mid.length() == 1
-				? fst.substring(0, 1)
-				: fst;
-		super(shortFst, lst);
-	}
-
-}
-```
+Fully initializing state in the prologue +
+prevents escape of ill-formed instances.
 
 === Split Arguments
 
 ```java
 class ThreePartName extends Name {
 
-	protected final String middle;
+	private final String middle;
 
 	ThreePartName(String full) {
 		// split "first middle last" on space (once 🙌🏾)
@@ -250,15 +190,19 @@ class ThreePartName extends Name {
 }
 ```
 
-=== Surprising Cameo
+=== Future Expansion
 
-* Project Valhalla ponders null-restricted fields
-* code must never observe such a field being `null`
-* has to work with `super()`
-* subclass sets non-null fields before `super()`
+JEP 401 ("Value Classes and Objects") may make +
+constructor "prologue by default" for:
+
+* value classes
+* all records
+
+Also "anticipates" that regular classes can opt in.
 
 === More
 
 * 📝 https://openjdk.org/jeps/513[JEP 513]: Flexible Constructor Bodies
+* 📝 https://openjdk.org/jeps/401#Safe-construction-for-value-classes[JEP 401]: Value Classes and Objects ⇝ Safe Construction
 * 🎥 https://www.youtube.com/watch?v=cI-fY9YlmH4[Statements Before `super(...)` and `this(...)`]
 * 🎥 https://www.youtube.com/watch?v=IF9l8fYfSnI[Valhalla - Where Are We?] (Brian Goetz - Aug 2024)
