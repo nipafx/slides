@@ -426,10 +426,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://jug-karlsruhe.de/" title="JUG Karlsruhe"><img src="../_images/logo-jug-ka-d5d27614.png" alt="Logo of JUG Karlsruhe" class="logo" style="{host-logo-style}"></a>
+		<a href="https://jfall.nl/" title="J-Fall"><img src="../_images/logo-j-fall-38b9b4a4.jpg" alt="Logo of J-Fall" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://jug-karlsruhe.de/" title="JUG Karlsruhe website">JUG Karlsruhe</a></p>
-			<p><a href="https://ijug.social/@jugka" title="JUG Karlsruhe on Twitter">@jugka@ijug.social</a></p>
+			<p><a href="https://jfall.nl/" title="J-Fall website">J-Fall</a></p>
+			<p><a href="https://twitter.com/jfallconf" title="J-Fall on Twitter">@jfallconf</a></p>
 		</div>
 	</div>
 	<div class="participant">
@@ -451,10 +451,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://jug-karlsruhe.de/" title="JUG Karlsruhe"><img src="../_images/logo-jug-ka-d5d27614.png" alt="Logo of JUG Karlsruhe" class="logo" style="{host-logo-style}"></a>
+		<a href="https://jfall.nl/" title="J-Fall"><img src="../_images/logo-j-fall-38b9b4a4.jpg" alt="Logo of J-Fall" class="logo" style="{host-logo-style}"></a>
 		<div class="name"><p>
-			<a href="https://jug-karlsruhe.de/" title="JUG Karlsruhe website">JUG Karlsruhe</a>
-			/ <a href="https://ijug.social/@jugka" title="JUG Karlsruhe on Twitter">@jugka@ijug.social</a>
+			<a href="https://jfall.nl/" title="J-Fall website">J-Fall</a>
+			/ <a href="https://twitter.com/jfallconf" title="J-Fall on Twitter">@jfallconf</a>
 		</p></div>
 	</div>
 </footer>
@@ -581,7 +581,7 @@ it&#8217;s good practice to have one constructor that:</p></div>
 <div class="ulist"><ul><li><p>checks all arguments</p></li><li><p>assigns all fields</p></li></ul></div>
 <div class="paragraph"><p>Other constructors just forward (if possible).</p></div></div></section><section id="_constructor_chaining_2"><h2>Constructor Chaining</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">class Name {
 
-	protected final String first, last;
+	private final String first, last;
 
 	Name(String first, String last) {
 		// [... checks, assignments, etc. ...]
@@ -590,17 +590,11 @@ it&#8217;s good practice to have one constructor that:</p></div>
 	Name(String fst, String mid, String lst) {
 		this(fst + " " + mid, lst);
 	}
-}</code></pre></div></div></div></section><section id="_inheritance"><h2>Inheritance</h2><div class="slide-content"><div class="paragraph"><p>With superclasses, chaining is enforced:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">class ThreePartName extends Name {
 
-	protected final String middle;
-
-	ThreePartName(String fst, String mid, String lst) {
-		// doesn't compile without this call
-		super(fst, lst);
-		this.middle = mid;
-	}
-}</code></pre></div></div></div></section><section id="_limitations"><h2>Limitations</h2><div class="slide-content"><div class="paragraph"><p><strong>But</strong>:</p></div>
+}</code></pre></div></div></div></section><section id="_forced_constructor_chaining"><h2>Forced Constructor Chaining</h2><div class="slide-content"><div class="dlist"><dl><dt class="hdlist1">Superclasses</dt><dd><p>To ensure superclass initialization, chaining<br>
+through <code>super(&#8230;&#8203;)</code> is enforced.</p></dd><dt class="hdlist1">Records</dt><dd><p>To enforce a uniform construction protocol,<br>
+chaining through <code>this(&#8230;&#8203;)</code> to the canonical<br>
+constructor is enforced.</p></dd></dl></div></div></section><section id="_limitations"><h2>Limitations</h2><div class="slide-content"><div class="paragraph"><p><strong>But</strong>:</p></div>
 <div class="ulist"><ul><li><p>superclass should be initialized<br>
 before subclass runs any code<br>
 ⇝ no code before <code>super(&#8230;&#8203;)</code></p></li><li><p>code before <code>this(&#8230;&#8203;)</code> would<br>
@@ -624,8 +618,7 @@ new ThreePartName("Jane", "Jennifer", "Doe");
 // prints: "Jane null Doe" 😖</code></pre></div></div></div></section><section id="_inconveniences"><h2>Inconveniences</h2><div class="slide-content"><div class="paragraph"><p>Limitation is inconvenient when you want to:</p></div>
 <div class="ulist"><ul><li><p>check arguments</p></li><li><p>prepare arguments</p></li><li><p>split/share arguments</p></li></ul></div></div></section><section id="_splitting_arguments"><h2>Splitting Arguments</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">class Name {
 
-	protected final String first;
-	protected final String last;
+	private final String first, last;
 
 	Name(String first, String last) {
 		this.first = first;
@@ -633,15 +626,11 @@ new ThreePartName("Jane", "Jennifer", "Doe");
 	}
 
 	Name(String full) {
-		// does the same work twice
+		// less readable &amp; does the same work twice
 		this(full.split(" ")[0], full.split(" ")[1]);
 	}
 
-}</code></pre></div></div></div></section><section id="_inconveniences_2"><h2>Inconveniences</h2><div class="slide-content"><div class="paragraph"><p>Workarounds:</p></div>
-<div class="ulist"><ul><li><p>duplicate argument validation &amp; field assignment</p></li><li><p>add an "internal" constructor to forward to</p></li><li><p>add static factory method</p></li></ul></div></div></section><section id="_limitations_record_edition"><h2>Limitations - Record Edition</h2><div class="slide-content"><div class="paragraph"><p>To enforce a uniform construction protocol:</p></div>
-<div class="paragraph"><p>Records require all custom constructors<br>
-to (eventually) call the canonical constructor.</p></div>
-<div class="paragraph"><p>⇝ Further limits options.</p></div></div></section><section id="_splitting_arguments_2"><h2>Splitting Arguments</h2><div class="slide-content"><div class="paragraph"><p>What we want to write:</p></div>
+}</code></pre></div></div></div></section><section id="_splitting_arguments_2"><h2>Splitting Arguments</h2><div class="slide-content"><div class="paragraph"><p>Workarounds exist, but what we want to write:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">class Name {
 
 	// [... fields, constructor as before ...]
@@ -651,8 +640,7 @@ to (eventually) call the canonical constructor.</p></div>
 		this(names[0], names[1]);
 	}
 
-}</code></pre></div></div>
-<div class="paragraph"><p>(Analogous for records.)</p></div></div></section><section id="_flexible_constructor_bodies"><h2>Flexible Constructor Bodies</h2><div class="slide-content"><div class="paragraph"><p>Flexible constructor bodies allow just that!</p></div>
+}</code></pre></div></div></div></section><section id="_flexible_constructor_bodies"><h2>Flexible Constructor Bodies</h2><div class="slide-content"><div class="paragraph"><p>Flexible constructor bodies allow just that!</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">Constructor(...) {
 	// prologue
 	// call to this(...) or super(...)
@@ -665,33 +653,11 @@ to (eventually) call the canonical constructor.</p></div>
 <div class="paragraph"><p><code>prologue C</code> ⇝ <code>prologue B</code> ⇝ <code>prologue A</code><br>
 ⇝ <code>Object</code> ⇝<br>
 <code>epilogue A</code> ⇝ <code>epilogue B</code> ⇝ <code>epilogue C</code></p></div></div></section><section id="_prologue"><h2>Prologue</h2><div class="slide-content"><div class="paragraph"><p>Great to:</p></div>
-<div class="ulist"><ul><li><p>check arguments</p></li><li><p>prepare arguments</p></li><li><p>split/share arguments</p></li><li><p>assign fields</p></li></ul></div></div></section><section id="_check_arguments"><h2>Check Arguments</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">class ThreePartName extends Name {
+<div class="ulist"><ul><li><p>check arguments</p></li><li><p>prepare arguments</p></li><li><p>split/share arguments</p></li><li><p>assign fields (!)</p></li></ul></div>
+<div class="paragraph"><p>Fully initializing state in the prologue<br>
+prevents escape of ill-formed instances.</p></div></div></section><section id="_split_arguments"><h2>Split Arguments</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">class ThreePartName extends Name {
 
-	protected final String middle;
-
-	ThreePartName(String fst, String mid, String lst) {
-		// can't have a middle name without a first name
-		requireNonNullNonEmpty(fst);
-		this.middle = mid;
-		super(fst, lst);
-	}
-
-}</code></pre></div></div></div></section><section id="_prepare_arguments"><h2>Prepare Arguments</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">class ThreePartName extends Name {
-
-	protected final String middle;
-
-	ThreePartName(String fst, String mid, String lst) {
-		this.middle = mid;
-		// shorten first if middle is given
-		var shortFst = mid.length() == 1
-				? fst.substring(0, 1)
-				: fst;
-		super(shortFst, lst);
-	}
-
-}</code></pre></div></div></div></section><section id="_split_arguments"><h2>Split Arguments</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">class ThreePartName extends Name {
-
-	protected final String middle;
+	private final String middle;
 
 	ThreePartName(String full) {
 		// split "first middle last" on space (once 🙌🏾)
@@ -700,7 +666,10 @@ to (eventually) call the canonical constructor.</p></div>
 		super(names[0], names[2]);
 	}
 
-}</code></pre></div></div></div></section><section id="_surprising_cameo"><h2>Surprising Cameo</h2><div class="slide-content"><div class="ulist"><ul><li><p>Project Valhalla ponders null-restricted fields</p></li><li><p>code must never observe such a field being <code>null</code></p></li><li><p>has to work with <code>super()</code></p></li><li><p>subclass sets non-null fields before <code>super()</code></p></li></ul></div></div></section><section id="_more_3"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/513">JEP 513</a>: Flexible Constructor Bodies</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=cI-fY9YlmH4">Statements Before <code>super(&#8230;&#8203;)</code> and <code>this(&#8230;&#8203;)</code></a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=IF9l8fYfSnI">Valhalla - Where Are We?</a> (Brian Goetz - Aug 2024)</p></li></ul></div></div></section></section>
+}</code></pre></div></div></div></section><section id="_future_expansion"><h2>Future Expansion</h2><div class="slide-content"><div class="paragraph"><p>JEP 401 ("Value Classes and Objects") may make<br>
+constructor "prologue by default" for:</p></div>
+<div class="ulist"><ul><li><p>value classes</p></li><li><p>all records</p></li></ul></div>
+<div class="paragraph"><p>Also "anticipates" that regular classes can opt in.</p></div></div></section><section id="_more_3"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/513">JEP 513</a>: Flexible Constructor Bodies</p></li><li><p>📝 <a href="https://openjdk.org/jeps/401#Safe-construction-for-value-classes">JEP 401</a>: Value Classes and Objects ⇝ Safe Construction</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=cI-fY9YlmH4">Statements Before <code>super(&#8230;&#8203;)</code> and <code>this(&#8230;&#8203;)</code></a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=IF9l8fYfSnI">Valhalla - Where Are We?</a> (Brian Goetz - Aug 2024)</p></li></ul></div></div></section></section>
 <section><section id="_java_25_4"><h2>Java 25</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr class="toc-current"><td>Final in Java 25</td></tr> <tr><td style="padding-left: 2em;">Module Imports</td></tr> <tr><td style="padding-left: 2em;">Simplified Main</td></tr> <tr><td style="padding-left: 2em;">Flexible Constructor Bodies</td></tr> <tr class="toc-current"><td style="padding-left: 2em;">Scoped Values</td></tr> <tr><td style="padding-left: 2em;">Ahead-of-Time Computation</td></tr> <tr><td style="padding-left: 2em;">Compact Object Headers</td></tr> <tr><td style="padding-left: 2em;">&#8230;&#8203;</td></tr> </table> </p></div></div></section><section id="_passing_data"><h2>Passing Data</h2><div class="slide-content"><div class="paragraph"><p>Method inputs are usually instance fields or arguments,<br>
 but sometimes:</p></div>
 <div class="ulist"><ul><li><p>arguments are sensitive or inconvenient</p></li><li><p>data is thread-specific</p></li><li><p>each thread needs to mutate its own instance</p></li><li><p>&#8230;&#8203;</p></li></ul></div>
@@ -834,7 +803,7 @@ e.g. <code>unsignedMultiplyExact(int, int)</code></p></li><li><p><code>Instant</
 <div class="ulist"><ul><li><p>improved security configurations<br>
 (<a href="https://bugs.openjdk.org/browse/JDK-8051959">JDK-8051959</a>, <a href="https://bugs.openjdk.org/browse/JDK-8281658">JDK-8281658</a>, <a href="https://bugs.openjdk.org/browse/JDK-8311596">JDK-8311596</a>, <a href="https://inside.java/2024/12/10/quality-heads-up/">file inclusion</a>)</p></li><li><p>quantum-resistant cryptography<br>
 (<a href="https://openjdk.org/jeps/486">JEP 486</a>, <a href="https://openjdk.org/jeps/496">JEP 496</a>, <a href="https://openjdk.org/jeps/497">JEP 497</a>, <a href="https://openjdk.org/jeps/510">JEP 510</a>)</p></li><li><p>API for PEM texts (<a href="https://openjdk.org/jeps/470">JEP 470</a>, preview)</p></li><li><p>various improvements in cryptographic algorithms</p></li></ul></div></div></section><section><div class="slide-content"><div class="imageblock"><img src="../_images/rt25-security-ca0e2cee.webp" alt="rt25 security"></div>
-<div class="paragraph"><p>🎥 <a href="https://www.youtube.com/watch?v=xeOuEqorY8g">How to Handle Security Changes in Java 25</a></p></div></div></section></section>
+<div class="paragraph"><p>🎥 <a href="https://www.youtube.com/watch?v=xeOuEqorY8g">How to Handle Security Changes in Java 25</a></p></div></div></section><section id="_more_7"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://dev.java/">dev.java</a></p></li><li><p>📝 <a href="https://inside.java/">inside.java</a></p></li><li><p>🎥 <a href="https://youtube.com/java">youtube.com/java</a></p></li></ul></div></div></section></section>
 <section><section id="_deprecations" data-background-image="images/surprise.gif" data-background-size="cover"><h2>Deprecations</h2><div class="slide-content"></div></section><section id="_cleaning_house"><h2>Cleaning house</h2><div class="slide-content"><div class="paragraph"><p>Already removed:</p></div>
 <div class="ulist"><ul><li><p>applet API ㉖ (<a href="https://openjdk.org/jeps/504">JEP 504</a>)</p></li><li><p>32-bit x86 ports ㉕ (<a href="https://openjdk.org/jeps/503">JEP 503</a>)</p></li><li><p>security manager ㉔ (<a href="https://openjdk.org/jeps/486">JEP 486</a>)</p></li><li><p>biased locking ⑱ (<a href="https://openjdk.org/jeps/374">JEP 374</a>, <a href="https://bugs.openjdk.org/browse/JDK-8256425">JDK-8256425</a>)</p></li><li><p>RMI activation ⑰ (<a href="https://openjdk.org/jeps/407">JEP 407</a>)</p></li><li><p>Nashorn ⑮ (<a href="https://openjdk.org/jeps/372">JEP 372</a>)</p></li><li><p>concurrent mark sweep GC ⑭ (<a href="https://openjdk.org/jeps/363">JEP 363</a>)</p></li></ul></div></div></section><section id="_security_manager"><h2>Security Manager</h2><div class="slide-content"><div class="paragraph"><p>What it was:</p></div>
 <div class="ulist"><ul><li><p>a system of checks and permissions</p></li><li><p>intended to safeguard security-relevant<br>
@@ -872,7 +841,7 @@ access to restricted JNI/FFM methods</p></li><li><p>use <code>--illegal-native-a
 <div class="ulist"><ul><li><p>a component that transforms byte code</p></li><li><p>uses <code>java.lang.instrument</code> or JVM TI</p></li><li><p>launches with JVM or attaches later ("dynamic")</p></li></ul></div></div></section><section id="_dynamic_agents"><h2>Dynamic agents</h2><div class="slide-content"><div class="paragraph"><p>What you need to know:</p></div>
 <div class="ulist"><ul><li><p>all mechanisms for agents remain intact</p></li><li><p>nothing changed yet</p></li><li><p>in the future, dynamic attach will be<br>
 disabled by default</p></li><li><p>enable with <code>-XX:+EnableDynamicAgentLoading</code></p></li></ul></div></div></section><section id="_dynamic_agents_2"><h2>Dynamic agents</h2><div class="slide-content"><div class="paragraph"><p>What you need to do:</p></div>
-<div class="ulist"><ul><li><p>run your app with <code>-XX:-EnableDynamicAgentLoading</code></p></li><li><p>observe closely</p></li><li><p>investigate necessity of dynamic agents</p></li></ul></div></div></section><section id="_more_7"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 all the aforementioned JEPs</p></li><li><p>📝 <a href="https://openjdk.org/jeps/8305968">JEP draft: Integrity by Default</a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=ucdzGd-f8as">Why Is Integrity by Default So Important?</a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=3HnH6G_zcP0">Future Java - Prepare Your Codebase Now!</a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=5jIkRqBuSBs">How to Upgrade to Java 21</a> and <a href="https://www.youtube.com/watch?v=9azNjz7s1Ck">Java 25</a></p></li></ul></div></div></section></section>
+<div class="ulist"><ul><li><p>run your app with <code>-XX:-EnableDynamicAgentLoading</code></p></li><li><p>observe closely</p></li><li><p>investigate necessity of dynamic agents</p></li></ul></div></div></section><section id="_more_8"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 all the aforementioned JEPs</p></li><li><p>📝 <a href="https://openjdk.org/jeps/8305968">JEP draft: Integrity by Default</a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=ucdzGd-f8as">Why Is Integrity by Default So Important?</a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=3HnH6G_zcP0">Future Java - Prepare Your Codebase Now!</a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=5jIkRqBuSBs">How to Upgrade to Java 21</a> and <a href="https://www.youtube.com/watch?v=9azNjz7s1Ck">Java 25</a></p></li></ul></div></div></section></section>
 <section data-background-image="../_images/javaone-2026-a11f3cd9.jpg" data-background-size="cover" data-state="empty"></section>
 <section><section id="_whats_next"><h2>What&#8217;s next?</h2><div class="slide-content"><div class="ulist"><ul><li><p>less virtual thread pinning ㉔</p></li><li><p>stream gatherers ㉔</p></li><li><p>class-file API ㉔</p></li><li><p>generational ZGC, only ㉔</p></li><li><p>Markdown in JavaDoc ㉓</p></li><li><p>unnamed patterns ㉒</p></li><li><p>FFM API ㉒</p></li></ul></div></div></section><section id="_whats_next_2"><h2>What&#8217;s next?</h2><div class="slide-content"><div class="ulist"><ul><li><p>primitive patterns ⊕</p></li><li><p><s>string templates ⊕</s></p></li><li><p>structured concurrency ⊕</p></li><li><p>PEM encoding ⊕</p></li></ul></div></div></section></section>
 <section><section id="_java_25_8"><h2>Java 25</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr><td>Final in Java 25</td></tr> <tr class="toc-current"><td>Final in Java 24</td></tr> <tr class="toc-current"><td style="padding-left: 2em;">Less Virtual Thread Pinning</td></tr> <tr><td style="padding-left: 2em;">Stream Gatherers</td></tr> <tr><td style="padding-left: 2em;">Class-File API</td></tr> <tr><td style="padding-left: 2em;">GenZGC, Only</td></tr> <tr><td>Final in Java 23, 22</td></tr> <tr><td>Preview in Java 25</td></tr> </table> </p></div></div></section><section id="_virtual_threads"><h2>Virtual Threads</h2><div class="slide-content"><div class="paragraph"><p>A <em>virtual</em> thread:</p></div>
@@ -881,7 +850,7 @@ disabled by default</p></li><li><p>enable with <code>-XX:+EnableDynamicAgentLoad
 native calls, class initialization</p></li></ul></div></dd><dt class="hdlist1">Capture: </dt><dd><div class="ulist"><ul><li><p>a <em>captured</em> VT blocks the PT</p></li><li><p>caused by file I/O</p></li></ul></div></dd></dl></div></div></section><section id="_object_monitor_pinning"><h2>Object monitor pinning</h2><div class="slide-content"><div class="paragraph"><p>Object monitor implementation:</p></div>
 <div class="ulist"><ul><li><p>was bound to OS threads</p></li><li><p>required deep refactoring<br>
 to work with VTs</p></li><li><p>fix ships with JDK 24</p></li></ul></div>
-<div class="paragraph"><p>⇝ No more pinning for <code>synchronized</code>.</p></div></div></section><section id="_more_8"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/491">JEP 491</a>: Synchronize Virtual Threads without Pinning</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=QDk1c0ifoNo">Java 24 Stops Pinning Virtual Threads (Almost)</a> (Nov 2024)</p></li></ul></div></div></section></section>
+<div class="paragraph"><p>⇝ No more pinning for <code>synchronized</code>.</p></div></div></section><section id="_more_9"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/491">JEP 491</a>: Synchronize Virtual Threads without Pinning</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=QDk1c0ifoNo">Java 24 Stops Pinning Virtual Threads (Almost)</a> (Nov 2024)</p></li></ul></div></div></section></section>
 <section><section id="_java_25_9"><h2>Java 25</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr><td>Final in Java 25</td></tr> <tr class="toc-current"><td>Final in Java 24</td></tr> <tr><td style="padding-left: 2em;">Less Virtual Thread Pinning</td></tr> <tr class="toc-current"><td style="padding-left: 2em;">Stream Gatherers</td></tr> <tr><td style="padding-left: 2em;">Class-File API</td></tr> <tr><td style="padding-left: 2em;">GenZGC, Only</td></tr> <tr><td>Final in Java 23, 22</td></tr> <tr><td>Preview in Java 25</td></tr> </table> </p></div></div></section><section id="_missing_stream_ops"><h2>Missing Stream Ops</h2><div class="slide-content"><div class="paragraph"><p>Streams are great, but some<br>
 intermediate operations are missing:</p></div>
 <div class="ulist"><ul><li><p>sliding windows</p></li><li><p>fixed groups</p></li><li><p>take-while-including</p></li><li><p>scanning</p></li><li><p>increasing sequences</p></li><li><p>etc.</p></li></ul></div></div></section><section id="_missing_terminal_ops"><h2>Missing Terminal Ops</h2><div class="slide-content"><div class="paragraph"><p>Streams also don&#8217;t have all possible terminal operations.</p></div>
@@ -937,7 +906,7 @@ intermediate operations are missing:</p></div>
 
 // [A, C]
 // [F, B]
-// [S]</code></pre></div></div></div></section><section id="_more_9"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/485">JEP 485</a>: Stream Gatherers</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=8fMFa6OqlY8">Teaching Old Streams New Tricks</a> (Viktor Klang)</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=epgJm2dZTSg">Better Java Streams with Gatherers</a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=pNQ5OXMXDbY">Implementing New Java Stream Operations</a></p></li></ul></div></div></section></section>
+// [S]</code></pre></div></div></div></section><section id="_more_10"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/485">JEP 485</a>: Stream Gatherers</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=8fMFa6OqlY8">Teaching Old Streams New Tricks</a> (Viktor Klang)</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=epgJm2dZTSg">Better Java Streams with Gatherers</a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=pNQ5OXMXDbY">Implementing New Java Stream Operations</a></p></li></ul></div></div></section></section>
 <section><section id="_java_25_10"><h2>Java 25</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr><td>Final in Java 25</td></tr> <tr class="toc-current"><td>Final in Java 24</td></tr> <tr><td style="padding-left: 2em;">Less Virtual Thread Pinning</td></tr> <tr><td style="padding-left: 2em;">Stream Gatherers</td></tr> <tr class="toc-current"><td style="padding-left: 2em;">Class-File API</td></tr> <tr><td style="padding-left: 2em;">GenZGC, Only</td></tr> <tr><td>Final in Java 23, 22</td></tr> <tr><td>Preview in Java 25</td></tr> </table> </p></div></div></section><section id="_bytecode_basics"><h2>Bytecode Basics</h2><div class="slide-content"><div class="paragraph"><p>Bytecode is instruction set for JVM:</p></div>
 <div class="ulist"><ul><li><p>creating objects and arrays</p></li><li><p>copying variable values or references<br>
 between stack and registers</p></li><li><p>invoking methods</p></li><li><p>computing arithmetic operations</p></li><li><p>etc.</p></li></ul></div></div></section><section id="_bytecode_basics_2"><h2>Bytecode Basics</h2><div class="slide-content"><div class="paragraph"><p>Basic lifecycle:</p></div>
@@ -956,7 +925,7 @@ update all dependencies.</p></div></blockquote></div>
 analyzing and manipulating bytecode:</p></div>
 <div class="ulist"><ul><li><p>stable API in JDK</p></li><li><p>always up-to-date</p></li></ul></div>
 <div class="paragraph"><p>When JDK is updated:</p></div>
-<div class="ulist"><ul><li><p>it may read new bytecodes</p></li><li><p>but that&#8217;s ok for most use cases</p></li></ul></div></div></section><section data-background-color="white" data-background-image="../_images/class-file-api-web-app-b841bb18.png" data-background-size="contain" data-state="empty"></section><section id="_more_10"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/484">JEP 484</a>: Class-File API</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=pcg-E_qyMOI">A Classfile API for the JDK</a> (Brian Goetz)</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=bQ2Rwpyj_Ks">New Class-File API Will Make Java Updates Easier</a></p></li></ul></div></div></section></section>
+<div class="ulist"><ul><li><p>it may read new bytecodes</p></li><li><p>but that&#8217;s ok for most use cases</p></li></ul></div></div></section><section data-background-color="white" data-background-image="../_images/class-file-api-web-app-b841bb18.png" data-background-size="contain" data-state="empty"></section><section id="_more_11"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/484">JEP 484</a>: Class-File API</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=pcg-E_qyMOI">A Classfile API for the JDK</a> (Brian Goetz)</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=bQ2Rwpyj_Ks">New Class-File API Will Make Java Updates Easier</a></p></li></ul></div></div></section></section>
 <section><section id="_java_25_11"><h2>Java 25</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr><td>Final in Java 25</td></tr> <tr class="toc-current"><td>Final in Java 24</td></tr> <tr><td style="padding-left: 2em;">Less Virtual Thread Pinning</td></tr> <tr><td style="padding-left: 2em;">Stream Gatherers</td></tr> <tr><td style="padding-left: 2em;">Class-File API</td></tr> <tr class="toc-current"><td style="padding-left: 2em;">GenZGC, Only</td></tr> <tr><td>Final in Java 23, 22</td></tr> <tr><td>Preview in Java 25</td></tr> </table> </p></div></div></section><section id="_generational_zgc"><h2>Generational ZGC</h2><div class="slide-content"><div class="paragraph"><p>Compared to other GCs, ZGC:</p></div>
 <div class="ulist"><ul><li><p>optimizes for ultra-low pause times</p></li><li><p>can have higher memory footprint or higher CPU usage</p></li></ul></div>
 <div class="paragraph"><p>In JDK 21, ZGC became <em>generational</em>.</p></div></div></section><section id="_generational_hypothesis"><h2>Generational Hypothesis</h2><div class="slide-content"><div class="ulist"><ul><li><p>most objects die young</p></li><li><p>those who don&#8217;t, grow (very) old</p></li></ul></div>
@@ -967,7 +936,7 @@ analyzing and manipulating bytecode:</p></div>
 <div class="imageblock diagram"><img src="../_images/netflix-genzgc-memory-0969177e.webp" alt="netflix genzgc memory"></div></div></section><section id="_reports_2"><h2>Reports</h2><div class="slide-content"><div class="imageblock diagram"><img src="../_images/netflix-genzgc-gc-pause-49d71111.webp" alt="netflix genzgc gc pause"></div></div></section><section id="_default"><h2>Default</h2><div class="slide-content"><div class="paragraph"><p>Generational mode is:</p></div>
 <div class="ulist"><ul><li><p>the default on JDK 23</p></li><li><p>the only mode on JDK 24+</p></li></ul></div>
 <div class="paragraph"><p><code>-XX:+UseZGC</code></p></div>
-<div class="paragraph"><p>(Default GC is still G1.)</p></div></div></section><section id="_more_11"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/439">JEP 439</a>: Generational ZGC</p></li><li><p>📝 <a href="https://openjdk.org/jeps/474">JEP 474</a>: ZGC: Generational Mode by Default</p></li><li><p>📝 <a href="https://openjdk.org/jeps/490">JEP 490</a>: ZGC: Remove the Non-Generational Mode</p></li><li><p>📝 <a href="https://netflixtechblog.com/bending-pause-times-to-your-will-with-generational-zgc-256629c9386b">Bending pause times to your will with Generational ZGC</a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=YyXjC68l8mw">Generational ZGC and Beyond</a> (Aug 2023)</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=U2Sx5lU0KM8">Java&#8217;s Highly Scalable Low-Latency GC: ZGC</a> (Mar 2023)</p></li></ul></div></div></section></section>
+<div class="paragraph"><p>(Default GC is still G1.)</p></div></div></section><section id="_more_12"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/439">JEP 439</a>: Generational ZGC</p></li><li><p>📝 <a href="https://openjdk.org/jeps/474">JEP 474</a>: ZGC: Generational Mode by Default</p></li><li><p>📝 <a href="https://openjdk.org/jeps/490">JEP 490</a>: ZGC: Remove the Non-Generational Mode</p></li><li><p>📝 <a href="https://netflixtechblog.com/bending-pause-times-to-your-will-with-generational-zgc-256629c9386b">Bending pause times to your will with Generational ZGC</a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=YyXjC68l8mw">Generational ZGC and Beyond</a> (Aug 2023)</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=U2Sx5lU0KM8">Java&#8217;s Highly Scalable Low-Latency GC: ZGC</a> (Mar 2023)</p></li></ul></div></div></section></section>
 <section><section id="_java_25_12"><h2>Java 25</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr><td>Final in Java 25, 24</td></tr> <tr class="toc-current"><td>Final in Java 23</td></tr> <tr class="toc-current"><td style="padding-left: 2em;">Markdown in JavaDoc</td></tr> <tr><td>Final in Java 22</td></tr> <tr><td>Preview in Java 25</td></tr> </table> </p></div></div></section><section id="_writing_javadoc"><h2>Writing JavaDoc</h2><div class="slide-content"><div class="paragraph"><p>Writing simple JavaDoc is great!</p></div>
 <div class="paragraph"><p>Writing more complex documentation&#8230;&#8203;</p></div>
 <div class="ulist"><ul><li><p>where does <code>&lt;p&gt;</code> go?</p></li><li><p>do we need <code>&lt;/p&gt;</code>?</p></li><li><p>code snippets/blocks are cumbersome</p></li><li><p>lists are verbose</p></li><li><p>tables are terrible</p></li><li><p>&#8230;&#8203;</p></li></ul></div>
@@ -1030,7 +999,7 @@ create HTML tables</p></li></ul></div></div></section><section id="_tags"><h2>Ta
 /// see {@jls 3.7 Comments}.
 ///
 /// @implSpec this implementation does _nothing_
-public void doSomething() { }</code></pre></div></div></div></section><section id="_more_12"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/467">JEP 467</a>: Markdown Documentation Comments</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=AvAIFq4fLPw">JavaDoc Hits the Markdown on Comments</a></p></li></ul></div></div></section></section>
+public void doSomething() { }</code></pre></div></div></div></section><section id="_more_13"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/467">JEP 467</a>: Markdown Documentation Comments</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=AvAIFq4fLPw">JavaDoc Hits the Markdown on Comments</a></p></li></ul></div></div></section></section>
 <section><section id="_java_25_13"><h2>Java 25</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr><td>Final in Java 25, 24, 23</td></tr> <tr class="toc-current"><td>Final in Java 22</td></tr> <tr class="toc-current"><td style="padding-left: 2em;">Unnamed Patterns</td></tr> <tr><td style="padding-left: 2em;">FFM API</td></tr> <tr><td>Preview in Java 25</td></tr> </table> </p></div></div></section><section id="_underscore"><h2>Underscore</h2><div class="slide-content"><div class="paragraph"><p>Use <code>_</code> to mark a (pattern) variable as unused, e.g.:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">BiConsumer&lt;String, Double&gt; = (s, _) -&gt; // use `s`
 
@@ -1129,7 +1098,7 @@ a pattern <code>switch</code> needs to be exhaustive.</p></div>
 			-&gt; Category.NONE;
 	};
 }</code></pre></div></div>
-<div class="paragraph"><p>⇝ Default behavior without <code>default</code> branch. 🥳</p></div></div></section><section id="_more_13"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/456">JEP 456</a>: Unnamed Variables &amp; Patterns</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=QrwFrm1R8OY">Java 21 Pattern Matching Tutorial</a></p></li></ul></div></div></section></section>
+<div class="paragraph"><p>⇝ Default behavior without <code>default</code> branch. 🥳</p></div></div></section><section id="_more_14"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/456">JEP 456</a>: Unnamed Variables &amp; Patterns</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=QrwFrm1R8OY">Java 21 Pattern Matching Tutorial</a></p></li></ul></div></div></section></section>
 <section><section id="_java_25_14"><h2>Java 25</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr><td>Final in Java 25, 24, 23</td></tr> <tr class="toc-current"><td>Final in Java 22</td></tr> <tr><td style="padding-left: 2em;">Unnamed Patterns</td></tr> <tr class="toc-current"><td style="padding-left: 2em;">FFM API</td></tr> <tr><td>Preview in Java 25</td></tr> </table> </p></div></div></section><section id="_foreign_memory"><h2>Foreign memory</h2><div class="slide-content"><div class="paragraph"><p>Storing data off-heap is tough:</p></div>
 <div class="ulist"><ul><li><p><code>ByteBuffer</code> is limited (2GB) and inefficient</p></li><li><p><code>Unsafe</code> is&#8230;&#8203; unsafe and not supported</p></li></ul></div></div></section><section id="_foreign_memory_api"><h2>Foreign-memory API</h2><div class="slide-content"><div class="paragraph"><p>Panama introduces safe and performant API:</p></div>
 <div class="ulist"><ul><li><p>control (de)allocation:<br>
@@ -1180,7 +1149,7 @@ try (Arena offHeap = Arena.ofConfined()) {
 }</code></pre></div></div></div></section><section id="_finally_final"><h2>Finally final!</h2><div class="slide-content"><div class="paragraph"><p>Java 22 finalizes the FFM API, but there&#8217;s more to do:</p></div>
 <div class="ulist"><ul><li><p>user-friendly and performant mapping from<br>
 native memory to Java records/interfaces</p></li><li><p>improving jextract and surrounding tooling</p></li></ul></div>
-<div class="paragraph"><p>And more.</p></div></div></section><section id="_more_14"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/454">JEP 454</a>: Foreign Function &amp; Memory API</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=kUFysMkMS00">Project Panama - Foreign Function &amp; Memory API</a> (Maurizio Cimadamore)</p></li><li><p>📨 <a href="https://mail.openjdk.org/mailman/listinfo/panama-dev">Project Panama mailing list</a></p></li></ul></div></div></section></section>
+<div class="paragraph"><p>And more.</p></div></div></section><section id="_more_15"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/454">JEP 454</a>: Foreign Function &amp; Memory API</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=kUFysMkMS00">Project Panama - Foreign Function &amp; Memory API</a> (Maurizio Cimadamore)</p></li><li><p>📨 <a href="https://mail.openjdk.org/mailman/listinfo/panama-dev">Project Panama mailing list</a></p></li></ul></div></div></section></section>
 <section><section id="_java_25_15"><h2>Java 25</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr><td>Final in Java 25, 24, 23, 22</td></tr> <tr class="toc-current"><td>Preview in Java 25</td></tr> <tr class="toc-current"><td style="padding-left: 2em;">Primitive Patterns</td></tr> <tr><td style="padding-left: 2em;"><s>String Templates</s></td></tr> <tr><td style="padding-left: 2em;">Structured Concurrency</td></tr> <tr><td style="padding-left: 2em;">PEM Encoding</td></tr> </table> </p></div></div></section><section id="_patterns_so_far"><h2>Patterns so far&#8230;&#8203;</h2><div class="slide-content"><div class="paragraph"><p>In <code>instanceof</code> and <code>switch</code>, patterns can:</p></div>
 <div class="ulist"><ul><li><p>match against reference types</p></li><li><p>deconstruct records</p></li><li><p>nest patterns</p></li><li><p>ignore parts of a pattern</p></li></ul></div>
 <div class="paragraph"><p>In <code>switch</code>:</p></div>
@@ -1208,7 +1177,7 @@ var emoji = switch (bool) {
 	case true -&gt; "✅";
 	case false -&gt; "❌";
 }</code></pre></div></div>
-<div class="paragraph"><p>(Bugged in 23; fixed in 23.0.1 and 24-EA.)</p></div></div></section><section id="_more_15"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/455">JEP 455</a>: Primitive Types in Patterns, instanceof, and switch</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=_afECXGjfDI">Restoring the Balance with Primitive Patterns</a></p></li></ul></div></div></section></section>
+<div class="paragraph"><p>(Bugged in 23; fixed in 23.0.1 and 24-EA.)</p></div></div></section><section id="_more_16"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/455">JEP 455</a>: Primitive Types in Patterns, instanceof, and switch</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=_afECXGjfDI">Restoring the Balance with Primitive Patterns</a></p></li></ul></div></div></section></section>
 <section><section id="_java_25_16"><h2>Java 25</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr><td>Final in Java 25, 24, 23, 22</td></tr> <tr class="toc-current"><td>Preview in Java 25</td></tr> <tr><td style="padding-left: 2em;">Primitive Patterns</td></tr> <tr class="toc-current"><td style="padding-left: 2em;"><s>String Templates</s></td></tr> <tr><td style="padding-left: 2em;">Structured Concurrency</td></tr> <tr><td style="padding-left: 2em;">PEM Encoding</td></tr> </table> </p></div></div></section><section id="_string_composition"><h2>String composition</h2><div class="slide-content"><div class="paragraph"><p>Composing strings in Java is cumbersome:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">String property = "last_name";
 String value = "Doe";
@@ -1236,7 +1205,7 @@ String query =
 	""";</code></pre></div></div>
 <div class="paragraph fragment"><p>Special <code>SQL."&#8230;&#8203;"</code> syntax was too much.</p></div></div></section><section id="_quo_vadis"><h2>Quo Vadis?</h2><div class="slide-content"><div class="ulist"><ul><li><p>string templates were removed from JDK 23<br>
 (not even a preview)</p></li><li><p>the feature needs a redesign</p></li><li><p>timing is unknown</p></li></ul></div>
-<div class="paragraph"><p>😞</p></div></div></section><section id="_more_16"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📨 <a href="https://mail.openjdk.org/pipermail/amber-spec-experts/2024-March/thread.html">mailing list discussion</a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=c6L4Ef9owuQ">What Happened to Java&#8217;s String Templates?</a></p></li></ul></div></div></section></section>
+<div class="paragraph"><p>😞</p></div></div></section><section id="_more_17"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📨 <a href="https://mail.openjdk.org/pipermail/amber-spec-experts/2024-March/thread.html">mailing list discussion</a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=c6L4Ef9owuQ">What Happened to Java&#8217;s String Templates?</a></p></li></ul></div></div></section></section>
 <section><section id="_java_25_17"><h2>Java 25</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr><td>Final in Java 25, 24, 23, 22</td></tr> <tr class="toc-current"><td>Preview in Java 25</td></tr> <tr><td style="padding-left: 2em;">Primitive Patterns</td></tr> <tr><td style="padding-left: 2em;"><s>String Templates</s></td></tr> <tr class="toc-current"><td style="padding-left: 2em;">Structured Concurrency</td></tr> <tr><td style="padding-left: 2em;">PEM Encoding</td></tr> </table> </p></div></div></section><section id="_unstructured_concurrency"><h2>Unstructured concurrency</h2><div class="slide-content"><div class="paragraph"><p>Common way to organize concurrency:</p></div>
 <div class="ulist"><ul><li><p>have long-running <code>ExecutorService</code> instances</p></li><li><p>submit new tasks wherever necessary</p></li><li><p>enqueue follow-up computations wherever convenient</p></li><li><p>wait for results wherever needed</p></li></ul></div>
 <div class="paragraph"><p>Concurrency is "all over the place".</p></div></div></section><section id="_unstructured_concurrency_2"><h2>Unstructured concurrency</h2><div class="slide-content"><div class="paragraph"><p>Makes it more difficult to:</p></div>
@@ -1317,7 +1286,7 @@ inheriting scoped values to child threads.</p></div></div></section><section id=
 		IO.println(result);  // "84"        //   │  │
 	}           // all child threads completed ──┘  │
 	IO.println(ANSWER.get()) // "42"        //      │
-}                                           // ─────┘</code></pre></div></div></div></section><section id="_more_17"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/505">JEP 505</a>: Structured Concurrency</p></li><li><p>📝 <a href="https://www.250bpm.com/p/structured-concurrency">Structured Concurrency</a></p></li><li><p>📝 <a href="https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/">Notes on structured concurrency [&#8230;&#8203;]</a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=vLJDPmXufQw">Structured Concurrency Revamp in Java 25</a></p></li></ul></div></div></section></section>
+}                                           // ─────┘</code></pre></div></div></div></section><section id="_more_18"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/505">JEP 505</a>: Structured Concurrency</p></li><li><p>📝 <a href="https://www.250bpm.com/p/structured-concurrency">Structured Concurrency</a></p></li><li><p>📝 <a href="https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/">Notes on structured concurrency [&#8230;&#8203;]</a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=vLJDPmXufQw">Structured Concurrency Revamp in Java 25</a></p></li></ul></div></div></section></section>
 <section><section id="_java_25_18"><h2>Java 25</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr><td>Final in Java 25, 24, 23, 22</td></tr> <tr class="toc-current"><td>Preview in Java 25</td></tr> <tr><td style="padding-left: 2em;">Primitive Patterns</td></tr> <tr><td style="padding-left: 2em;"><s>String Templates</s></td></tr> <tr><td style="padding-left: 2em;">Structured Concurrency</td></tr> <tr class="toc-current"><td style="padding-left: 2em;">PEM Encoding</td></tr> </table> </p></div></div></section><section id="_pem_texts"><h2>PEM texts</h2><div class="slide-content"><div class="paragraph"><p>Representations of cryptographic objects<br>
 (keys, certificates, certificate revocation lists):</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code>-----BEGIN PUBLIC KEY-----
@@ -1346,7 +1315,7 @@ DEREncodable cert2 = pd.decode(pem);</code></pre></div></div></div></section><se
 <code>decode(String, Class&lt;T extends DEREncodable&gt;)</code></p></li><li><p>otherwise, <code>switch</code>/<code>instanceof</code> over<br>
 return value of <code>decode(String)</code></p></li></ul></div>
 <div class="paragraph"><p>(Overloads for <code>InputStream</code> exist.)</p></div></div></section><section id="_unknown_objects"><h2>Unknown objects</h2><div class="slide-content"><div class="paragraph"><p>Unknown cryptographic objects are decoded to <code>PEMRecord</code>:</p></div>
-<div class="ulist"><ul><li><p><code>String type</code> (header text)</p></li><li><p><code>String content</code> (Base64-encoded body)</p></li><li><p><code>byte[] leadingData</code> (data preceding the header)</p></li></ul></div></div></section><section id="_more_18"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/470">JEP 470</a>: PEM Encodings of Cryptographic Objects</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=hqvMn2SwKiI">Java 25 Encodes PEM</a></p></li></ul></div></div></section></section>
+<div class="ulist"><ul><li><p><code>String type</code> (header text)</p></li><li><p><code>String content</code> (Base64-encoded body)</p></li><li><p><code>byte[] leadingData</code> (data preceding the header)</p></li></ul></div></div></section><section id="_more_19"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/470">JEP 470</a>: PEM Encodings of Cryptographic Objects</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=hqvMn2SwKiI">Java 25 Encodes PEM</a></p></li></ul></div></div></section></section>
 <section><section id="_java_22_25"><h2>Java 22-25</h2><div class="slide-content"><div class="paragraph"><p>In a few slides&#8230;&#8203;</p></div></div></section><section id="_java_22_25_introduce"><h2>Java 22-25 Introduce</h2><div class="slide-content"><div class="paragraph"><p>Language features:</p></div>
 <div class="ulist"><ul><li><p><a href="https://openjdk.org/jeps/456">Unnamed Variables &amp; Patterns</a></p></li><li><p><a href="https://openjdk.org/jeps/511">Module Imports</a></p></li><li><p><a href="https://openjdk.org/jeps/512">Simpler Main</a></p></li><li><p><a href="https://openjdk.org/jeps/513">Flexible Constructor Bodies</a></p></li></ul></div></div></section><section id="_java_22_25_introduce_2"><h2>Java 22-25 Introduce</h2><div class="slide-content"><div class="paragraph"><p>New APIs:</p></div>
 <div class="ulist"><ul><li><p><a href="https://openjdk.org/jeps/454">Foreign Function &amp; Memory</a></p></li><li><p><a href="https://openjdk.org/jeps/484">Class-File</a></p></li><li><p><a href="https://openjdk.org/jeps/485">Stream Gatherers</a></p></li><li><p><a href="https://openjdk.org/jeps/506">Scoped Values</a></p></li><li><p><a href="https://openjdk.org/jeps/510">Key Derivation Function</a></p></li></ul></div></div></section><section id="_java_22_25_introduce_3"><h2>Java 22-25 Introduce</h2><div class="slide-content"><div class="paragraph"><p>Runtime improvements:</p></div>
