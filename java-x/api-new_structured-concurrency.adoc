@@ -61,7 +61,7 @@ try (var scope = StructuredTaskScope.open()) {
 	scope.join();
 
 	return subtaskA.get() + subtaskB.get();
-} catch (ExecutionException ex) {
+} catch (FailedException ex) {
 	// TODO: handle task errors
 } // waits until all tasks/threads complete
 ```
@@ -120,7 +120,7 @@ try (var scope = StructuredTaskScope
 		case FAILED -> // ...
 		case UNAVAILABLE -> // ...
 	}
-} catch (ExecutionException ex) {
+} catch (FailedException ex) {
 	// TODO: handle task errors
 }
 ```
@@ -147,7 +147,7 @@ try (var scope = StructuredTaskScope.open(
 	
 	// returns the first successful result (`String`)
 	return scope.join();
-} catch (ExecutionException ex) {
+} catch (FailedException ex) {
 	// TODO: handle task errors
 }
 ```

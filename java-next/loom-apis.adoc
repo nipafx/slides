@@ -6,6 +6,7 @@
 
 === Unstructured concurrency
 
+// TODO: update use of StructuredTaskScope (e.g. ExecutionException -> FailedException)
 ```java
 void handle(Request request, Response response)
 		throws InterruptedException {

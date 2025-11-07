@@ -43,6 +43,7 @@
 	```
 
 * use virtual threads and structured concurrency in `Main::createGenealogy`:
+	<!-- TODO: update use of StructuredTaskScope (e.g. ExecutionException -> FailedException) -->
 	```java
 	List<Future<? extends Post>> futurePosts = new ArrayList<>();
 

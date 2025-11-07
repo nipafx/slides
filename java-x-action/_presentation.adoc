@@ -170,6 +170,7 @@ return client
 
 === Structured Concurrency
 
+// TODO: update use of StructuredTaskScope (e.g. ExecutionException -> FailedException)
 ```java
 try (var scope =
 		new StructuredTaskScope.ShutdownOnFailure()) {
