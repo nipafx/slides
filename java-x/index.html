@@ -426,10 +426,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://jfall.nl/" title="J-Fall"><img src="../_images/logo-j-fall-38b9b4a4.jpg" alt="Logo of J-Fall" class="logo" style="{host-logo-style}"></a>
+		<a href="https://www.ittage.informatik-aktuell.de/" title="IT-Tage 2025"><img src="../_images/logo-it-tage-2025-38786754.png" alt="Logo of IT-Tage 2025" class="logo" style="background-color: white; border-color: transparent !important;"></a>
 		<div class="name">
-			<p><a href="https://jfall.nl/" title="J-Fall website">J-Fall</a></p>
-			<p><a href="https://twitter.com/jfallconf" title="J-Fall on Twitter">@jfallconf</a></p>
+			<p><a href="https://www.ittage.informatik-aktuell.de/" title="IT-Tage 2025 website">IT-Tage 2025</a></p>
+			<p><a href="https://twitter.com/hashtag/ittage?f=liveinclude::../_shared/event-on-title-and-footer.adoc[]" title="IT-Tage 2025 on Twitter">#ittage</a></p>
 		</div>
 	</div>
 	<div class="participant">
@@ -451,10 +451,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://jfall.nl/" title="J-Fall"><img src="../_images/logo-j-fall-38b9b4a4.jpg" alt="Logo of J-Fall" class="logo" style="{host-logo-style}"></a>
+		<a href="https://www.ittage.informatik-aktuell.de/" title="IT-Tage 2025"><img src="../_images/logo-it-tage-2025-38786754.png" alt="Logo of IT-Tage 2025" class="logo" style="background-color: white; border-color: transparent !important;"></a>
 		<div class="name"><p>
-			<a href="https://jfall.nl/" title="J-Fall website">J-Fall</a>
-			/ <a href="https://twitter.com/jfallconf" title="J-Fall on Twitter">@jfallconf</a>
+			<a href="https://www.ittage.informatik-aktuell.de/" title="IT-Tage 2025 website">IT-Tage 2025</a>
+			/ <a href="https://twitter.com/hashtag/ittage?f=liveinclude::../_shared/event-on-title-and-footer.adoc[]" title="IT-Tage 2025 on Twitter">#ittage</a>
 		</p></div>
 	</div>
 </footer>
@@ -1226,7 +1226,7 @@ try (var scope = StructuredTaskScope.open()) {
 	scope.join();
 
 	return subtaskA.get() + subtaskB.get();
-} catch (ExecutionException ex) {
+} catch (FailedException ex) {
 	// TODO: handle task errors
 } // waits until all tasks/threads complete</code></pre></div></div></div></section><section id="_properties"><h2>Properties</h2><div class="slide-content"><div class="paragraph"><p>Threads are short-lived:</p></div>
 <div class="ulist"><ul><li><p>start when task begins</p></li><li><p>end on completion</p></li></ul></div>
@@ -1246,7 +1246,7 @@ try (var scope = StructuredTaskScope.open()) {
 		case FAILED -&gt; // ...
 		case UNAVAILABLE -&gt; // ...
 	}
-} catch (ExecutionException ex) {
+} catch (FailedException ex) {
 	// TODO: handle task errors
 }</code></pre></div></div></div></section><section id="_joiners_2"><h2>Joiners</h2><div class="slide-content"><div class="paragraph"><p>Existing joiners for homogeneous results:</p></div>
 <div class="ulist"><ul><li><p><code>allSuccessfulOrThrow()</code>:</p><div class="ulist"><ul><li><p>cancels/throws on first error</p></li><li><p>returns <code>Stream&lt;RESULT&gt;</code></p></li></ul></div></li><li><p><code>anySuccessfulResultOrThrow()</code></p><div class="ulist"><ul><li><p>cancels/throws if all fail</p></li><li><p>returns <code>RESULT</code></p></li></ul></div></li></ul></div></div></section><section id="_any_successful"><h2>Any Successful</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">try (var scope = StructuredTaskScope.open(
@@ -1257,7 +1257,7 @@ try (var scope = StructuredTaskScope.open()) {
 
 	// returns the first successful result (`String`)
 	return scope.join();
-} catch (ExecutionException ex) {
+} catch (FailedException ex) {
 	// TODO: handle task errors
 }</code></pre></div></div></div></section><section id="_custom_joiners"><h2>Custom joiners</h2><div class="slide-content"><div class="paragraph"><p>Implement and pass to <code>StructuredTaskScope::open</code>:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">interface Joiner&lt;T, R&gt; {
