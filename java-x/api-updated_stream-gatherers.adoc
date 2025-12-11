@@ -88,7 +88,7 @@ Initializer: :: creates instance(s) of `state`
 Finisher: ::
 * accepts `(state, downstream)`
 * emits 0+ element(s) to `downstream`
-Combiner: :: combines to `states` into one
+Combiner: :: combines two `states` into one
 
 === Fixed-Sized Groups
 
