@@ -11,26 +11,7 @@ http://mail.openjdk.org/mailman/listinfo/loom-dev[mailing list]
 * launched January 2018
 * led by Ron Pressler
 
-=== Motivation
-
-An application with many blocking operations +
-had two options:
-
-* block platform (OS) threads until task completion:
-** simple-to-use programming paradigm
-** can limit throughput
-* use asnychronous programming
-** harder to write and harder still to debug
-** allows higher throughput
-
-=== Motivation
-
-Resolve the conflict between:
-
-* simplicity
-* throughput
-
-=== Enter virtual threads!
+=== Virtual threads
 
 A _virtual_ thread:
 
@@ -42,9 +23,18 @@ A _virtual_ thread:
 * waits in memory +
   (no platform thread blocked)
 
-
 include::loom-exceptions-short.adoc[]
 
+=== Virtual threads
+
+Resolve the conflict between:
+
+Simplicity::
+* simple-to-use, blocking programming
+* aligns with platform (tooling, debugging, …)
+Throughput::
+* minimizes overhead while waiting
+* removes number-of-threads as bottleneck
 
 === Performance
 
@@ -96,25 +86,19 @@ JDK 21:
 * structured concurrency previews (https://openjdk.org/jeps/453[JEP 453])
 * scoped values preview (https://openjdk.org/jeps/446[JEP 446])
 
-JDK 24:
+JDK 25:
 
-* object monitors no longer pin virtual threads (https://openjdk.org/jeps/491[JEP 491])
-* structured concurrency in 4th preview (https://openjdk.org/jeps/499[JEP 499])
-* scoped values in 4th preview (https://openjdk.org/jeps/446[JEP 487])
+* object monitors don't pin virtual threads (https://openjdk.org/jeps/491[JEP 491])
+* structured concurrency preview revamp (https://openjdk.org/jeps/499[JEP 499])
+* scoped values finalize (https://openjdk.org/jeps/506[JEP 506])
 
 === Timeline
 
 Current work:
 
-* finalize structured concurrency and +
-  scoped values APIs
+* finalize structured concurrency
 * reduce pinning during class initialization
 * improve lock info in thread dumps
-
-JDK 25:
-
-* structured concurrency in 5th preview (https://openjdk.org/jeps/499[JEP 499])
-* scoped values 🤷🏾‍♂️
 
 === Deeper Dives
 

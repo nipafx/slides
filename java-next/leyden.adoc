@@ -99,11 +99,22 @@ $ java -XX:AOTCache=app.aot
        -cp app.jar com.example.App ...
 ```
 
-(Open to improvements.)
+=== AOT workflow
+
+Shortcut for most cases:
+
+```sh
+# training run (⇝ AOTCache)
+$ java -XX:AOTCacheOutput=app.aot
+       -cp app.jar com.example.App ...
+# production run (AOTCache ⇝ performance)
+$ java -XX:AOTCache=app.aot
+       -cp app.jar com.example.App ...
+```
+
+(Open to further improvements.)
 
 === AOT class loading & linking
-
-Introduced by https://openjdk.org/jeps/483[JEP 483]:
 
 > Improve startup time by making the classes of an application instantly available, in a loaded and linked state, when the HotSpot JVM starts.
 
@@ -112,22 +123,30 @@ Spring PetClinic benchmarks:
 * up to ~40% startup time reduction
 * AOT cache size of ~130 MB
 
-=== AOT class loading & linking
+=== AOT method profiling
 
-Limitation:
+> Improve warmup time by making method-execution profiles from a previous run of an application instantly available, when the HotSpot Java Virtual Machine starts.
+
+Benchmark of a 100_000x loop over a simple stream:
+
+* ~20% run time reduction
+* AOT cache size increased by ~2.5%
+
+=== AOT limitations
+
+Limitation so far:
 
 * same JDK release / architecture / OS
 * consistent class path for training and production
 * consistent module options
 * limited use of JVMTI agents
 
-Otherwise, AOTCache is ignored.
+Otherwise, AOT cache is ignored.
 
 === AOT everything
 
 Leyden's early access builds AOT more:
 
-* method profiling
 * constant resolution
 * code compilation
 * dynamic proxies
@@ -136,50 +155,29 @@ Leyden's early access builds AOT more:
 
 Benchmarks show ~70% startup time reduction.
 
-=== Beyond Fallback
-
-Most cached data can be:
-
-* validated at runtime
-* replaced with more accurate +
-  or better data (e.g. JIT code)
-
-More optimizations are possible:
-
-* if dynamism is constrained
-* if program is constrained
-
-=== Constraining Dynamism
-
-Let developers accept constraints, e.g.:
-
-* limited class redefinition
-* closed-world assumption
-* fixed program configuration
-
-Let Java apply suitable optimizations.
-
-⇝ Performance is an emergent property.
-
 === Project Leyden
 
 * improves Java's overall footprint
-* for now: focusses on startup/warmup time +
+* focusses on startup/warmup time +
   by caching early JVM work
-* in the future: explores stricter constraints +
+* may explore stricter constraints +
   for more aggressive optimization
 
 === Timeline
 
-JDK 24:
+JDK 25:
 
 * AOT class loading & linking (https://openjdk.org/jeps/483[JEP 483])
+* AOT method profiling (https://openjdk.org/jeps/515[JEP 515])
+
+JDK 26:
+
+* AOT with any GC (https://openjdk.org/jeps/516[JEP 516])
 
 Current work:
 
 * AOT code compilation (https://openjdk.org/jeps/8335368[JEP draft])
-* AOT method profiling (https://openjdk.org/jeps/8325147[JEP draft])
-* work towards more limiting constraints
+* inclusion of more dynamic information
 
 === Deeper Dives
 

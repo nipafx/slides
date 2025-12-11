@@ -58,6 +58,10 @@ Valhalla's goal is to unify the type system:
 * _value types_ (disavow identity)
 * _null-restriction_ + _implicit constructors_ +
   (disavow references)
+
+Potential follow-up work:
+
+* _type classes_ (limited operator overloading)
 * _universal generics_ (`ArrayList<int>`)
 * _specialized generics_ (backed by `int[]`)
 
@@ -170,6 +174,23 @@ Instead:
 
 Performance emerges from domain decisions!
 
+=== Type classes
+
+For value types to feel like primitives, +
+we need to use them with operators.
+
+Maybe (!) Java will let us define common operations +
+for suitale types (with type classes):
+
+```java
+var one = new ComplexNumber(1, 0);
+var i = new ComplexNumber(0, 1);
+
+var x = one + i; // maybe
+var y = one * i; // maybe
+var z = one $ i; // NO!
+```
+
 === Universal generics
 
 When everybody creates their own value classes, +
@@ -227,4 +248,5 @@ Makes Java more expressive and performant.
 ** https://openjdk.org/projects/valhalla/design-notes/state-of-valhalla/01-background[Part 1: The Road to Valhalla]
 ** https://openjdk.org/projects/valhalla/design-notes/state-of-valhalla/02-object-model[Part 2: The Language Model]
 ** https://openjdk.org/projects/valhalla/design-notes/state-of-valhalla/03-vm-model[Part 3: The JVM Model]
-* 🎥 https://www.youtube.com/watch?v=Dhn-JgZaBWo[Valhalla - Java's Epic Refactor] (Dev 2024)
+* 🎥 https://www.youtube.com/watch?v=Dhn-JgZaBWo[Valhalla - Java's Epic Refactor] (Dec 2024)
+* 🎥 https://www.youtube.com/watch?v=Gz7Or9C0TpM[Growing the Java Language] (Aug 2025)

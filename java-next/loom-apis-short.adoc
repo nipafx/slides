@@ -18,34 +18,24 @@
 
 === Structured concurrency
 
-// TODO: update use of StructuredTaskScope (e.g. ExecutionException -> FailedException)
 ```java
-void handle(Request request, Response response)
-		throws InterruptedException {
+String executeTasks() throws InterruptedException {
 	// implicitly short-circuits on error
 	try (var scope = StructuredTaskScope.open()) {
-		var subtaskA = scope.fork(this::taskA);
-		var subtaskB = scope.fork(this::taskB);
+		Subtask<String> taskA = scope.fork(this::doA);
+		Subtask<String> taskB = scope.fork(this::doB);
+
 		// wait explicitly for success
 		// (throws errors if there were any)
 		scope.join();
 
-		response.send(subtaskA.get() + subtaskB.get());
-	} catch (ExecutionException ex) {
-		response.fail(ex);
+		// all tasks succeeded
+		return taskA.get() + taskB.get();
+	} catch (FailedException ex) {
+		return ex.getMessage();
 	}
 }
 ```
-
-=== Completion
-
-Use `Joiner` to configure completion:
-
-* how are results collected?
-* when are subtasks cancelled?
-* when does `join` throw?
-
-Pass to `StructuredTaskScope.open(Joiner)`.
 
 === Structured concurrency
 
@@ -54,3 +44,13 @@ Pass to `StructuredTaskScope.open(Joiner)`.
 * creates relationship between threads
 * success/failure policy can be defined +
   across all children
+
+=== Joiner
+
+Use `Joiner` to configure success/failure policy:
+
+* how are results collected?
+* when are subtasks cancelled?
+* when does `join` throw?
+
+Pass to `StructuredTaskScope.open(Joiner)`.

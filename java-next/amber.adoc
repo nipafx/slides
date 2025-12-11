@@ -23,16 +23,22 @@ Amber continuously improves that situation.
 
 === Delivered
 
-* multi-file source launcher ㉒ (https://openjdk.org/jeps/458[JEP 458])
-* unnamed variables and patterns ㉒ (https://openjdk.org/jeps/456[JEP 456])
-* patterns in switch ㉑ (https://openjdk.org/jeps/441[JEP 441])
-* record patterns ㉑ (https://openjdk.org/jeps/440[JEP 440])
-* sealed types ⑰ (https://openjdk.org/jeps/409[JEP 409])
-* records ⑯ (https://openjdk.org/jeps/395[JEP 395])
-* type pattern matching ⑯ (https://openjdk.org/jeps/394[JEP 394])
-* text blocks ⑮ (https://openjdk.org/jeps/378[JEP 378])
+* local-variable type inference ⑩ (https://openjdk.org/jeps/286[JEP 286])
 * switch expressions ⑭ (https://openjdk.org/jeps/361[JEP 361])
-* local-variable type inference with `var` ⑩ (https://openjdk.org/jeps/286[JEP 286])
+* text blocks ⑮ (https://openjdk.org/jeps/378[JEP 378])
+* type pattern matching ⑯ (https://openjdk.org/jeps/394[JEP 394])
+* records ⑯ (https://openjdk.org/jeps/395[JEP 395])
+* sealed types ⑰ (https://openjdk.org/jeps/409[JEP 409])
+* record patterns ㉑ (https://openjdk.org/jeps/440[JEP 440])
+* patterns in switch ㉑ (https://openjdk.org/jeps/441[JEP 441])
+
+=== Delivered
+
+* unnamed variables and patterns ㉒ (https://openjdk.org/jeps/456[JEP 456])
+* multi-file source launcher ㉒ (https://openjdk.org/jeps/458[JEP 458])
+* module imports ㉕ (https://openjdk.org/jeps/511[JEP 511])
+* simplified `main` ㉕ (https://openjdk.org/jeps/512[JEP 512])
+* flexible constructor bodies ㉕ (https://openjdk.org/jeps/513[JEP 513])
 
 // include::amber-pattern-matching.adoc[]
 
@@ -50,19 +56,17 @@ Amber's main thrust is pattern matching:
 [link=https://www.youtube.com/watch?v=5qYJYGvVLg8]
 image::images/inside-java-newscast-29.png[width=80%]
 
-Inside Java Newscast #29
+https://www.youtube.com/watch?v=5qYJYGvVLg8[Data-Oriented Programming]
 
 === Amber endeavors
 
 Other endeavors and conversations:
 
-* primitive types in patterns (https://openjdk.org/jeps/488[JEP 488])
-* simplified main (https://openjdk.org/jeps/495[JEP 495])
-* flexible constructor bodies (https://openjdk.org/jeps/492[JEP 492])
+* primitive types in patterns (https://openjdk.org/jeps/530[JEP 530])
 * deconstruction of classes
 * derived record creation ("withers") (https://openjdk.org/jeps/468[JEP 468])
 * deconstruction assignment (https://twitter.com/BrianGoetz/status/1599000138793771010[announcement])
-* serialization 2.0 (https://www.youtube.com/watch?v=fbqAyRJoQO0[talk at Devoxx BE])
+* serialization 2.0 (talks https://www.youtube.com/watch?v=fbqAyRJoQO0[#1], https://www.youtube.com/watch?v=R8Xubleffr8[#2])
 * concise method bodies (https://openjdk.org/jeps/8209434[JEP draft])
 
 === String Templates?
@@ -70,7 +74,7 @@ Other endeavors and conversations:
 [link=https://www.youtube.com/watch?v=c6L4Ef9owuQ]
 image::images/inside-java-newscast-71.jpg[width=80%]
 
-Inside Java Newscast #71
+https://www.youtube.com/watch?v=c6L4Ef9owuQ[🎥 What Happened to Java's String Templates?]
 
 === Project Amber
 
@@ -87,18 +91,18 @@ JDK 21:
 * text blocks
 * single-file source launcher
 
-JDK 22:
+JDK 25:
 
-* unnamed patterns
+* unnamed variables and patterns
 * multi-file source launcher
+* simplified `main` & module imports
+* flexible constructor bodies
 
 === Timeline
 
 Current work:
 
-* simplified main (https://openjdk.org/jeps/495[JEP 495])
-* flexible constructor bodies (https://openjdk.org/jeps/492[JEP 492])
-* primitive types in patterns (https://openjdk.org/jeps/488[JEP 488])
+* primitive types in patterns (https://openjdk.org/jeps/530[JEP 530])
 * deconstruction
 
 === Deeper Dives
