@@ -418,10 +418,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://devoxx.be/" title="Devoxx BE"><img src="../_images/logo-devoxx-c0dcfc14.png" alt="Logo of Devoxx BE" class="logo" style="{host-logo-style}"></a>
+		<a href="https://www.meetup.com/de-DE/jug-hamburg/" title="JUG Hamburg"><img src="../_images/logo-jug-hamburg-b5c030c6.png" alt="Logo of JUG Hamburg" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://devoxx.be/" title="Devoxx BE website">Devoxx BE</a></p>
-			<p><a href="https://twitter.com/devoxx" title="Devoxx BE on Twitter">@devoxx</a></p>
+			<p><a href="https://www.meetup.com/de-DE/jug-hamburg/" title="JUG Hamburg website">JUG Hamburg</a></p>
+			<p><a href="https://twitter.com/jughh" title="JUG Hamburg on Twitter">@jughh</a></p>
 		</div>
 	</div>
 	<div class="participant">
@@ -443,10 +443,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://devoxx.be/" title="Devoxx BE"><img src="../_images/logo-devoxx-c0dcfc14.png" alt="Logo of Devoxx BE" class="logo" style="{host-logo-style}"></a>
+		<a href="https://www.meetup.com/de-DE/jug-hamburg/" title="JUG Hamburg"><img src="../_images/logo-jug-hamburg-b5c030c6.png" alt="Logo of JUG Hamburg" class="logo" style="{host-logo-style}"></a>
 		<div class="name"><p>
-			<a href="https://devoxx.be/" title="Devoxx BE website">Devoxx BE</a>
-			/ <a href="https://twitter.com/devoxx" title="Devoxx BE on Twitter">@devoxx</a>
+			<a href="https://www.meetup.com/de-DE/jug-hamburg/" title="JUG Hamburg website">JUG Hamburg</a>
+			/ <a href="https://twitter.com/jughh" title="JUG Hamburg on Twitter">@jughh</a>
 		</p></div>
 	</div>
 </footer>
@@ -499,6 +499,7 @@ that are represented by <em>our</em> (!) class <code>Task</code>.</p></div>
 <div class="ulist"><ul><li><p><code>public void run(Behavior) throws IOException</code>:<br></p><div class="ulist"><ul><li><p>changes state</p></li></ul></div></li><li><p><code>public String compute(Behavior) throws IOException</code>:</p><div class="ulist"><ul><li><p>changes state</p></li><li><p>returns result</p></li></ul></div></li><li><p><code>public void rollBack()</code>: resets state</p></li></ul></div>
 <div class="paragraph"><p><code>Behavior</code> can be <code>Run</code>, <code>Fail</code>, etc.</p></div></div></section><section id="_task_states"><h2>Task states</h2><div class="slide-content"><div class="paragraph"><p>States and transitions of our tasks:</p></div>
 <div class="imageblock diagram"><img src="../_images/task-states-7aa99cd4.png" alt="task states"></div></div></section><section id="_code"><h2>Code</h2><div class="slide-content"><div class="paragraph"><p>Code, code, code, code</p></div></div></section></section>
+<section data-background-image="../_images/javaone-2026--architects-c21d960d.jpg" data-background-size="cover" data-state="empty"></section>
 <section><section id="_structured_concurrency_inaction_2"><h2>Structured Concurrency in&nbsp;Action</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr><td>API Overview</td></tr> <tr class="toc-current"><td>Cancellation</td></tr> <tr><td>Backpressure</td></tr> <tr><td>Building Blocks</td></tr> </table> </p></div></div></section><section id="_blocking_methods"><h2>Blocking methods</h2><div class="slide-content"><div class="paragraph"><p>Two kinds of methods:</p></div>
 <div class="ulist"><ul><li><p>most depend on local resources</p></li><li><p>some depend on an external event ⇝ <em>blocking</em></p></li></ul></div>
 <div class="paragraph"><p>External events may never happen,<br>
@@ -510,7 +511,7 @@ how to handle interruption</p></li></ul></div></div></section><section id="_inte
 <div class="paragraph"><p>Also: <code>InterruptedException</code>.</p></div></div></section><section id="_interruptedexception"><h2>InterruptedException</h2><div class="slide-content"><div class="paragraph"><p>Thrown by well-behaved blocking methods.<br>
 (JDK methods reset interrupted status.)</p></div>
 <div class="paragraph"><p>When catching <code>InterruptedException</code>:</p></div>
-<div class="ulist"><ul><li><p>clean up (quickly)</p></li><li><p>cede computation</p></li><li><p>if possible, rethrow</p></li><li><p>otherwise, reinterrupt thread<br>
+<div class="ulist"><ul><li><p>clean up (quickly)</p></li><li><p>cease computation</p></li><li><p>if possible, rethrow</p></li><li><p>otherwise, reinterrupt thread<br>
 (with <code>interrupt()</code>)</p></li></ul></div></div></section><section id="_cancellation"><h2>Cancellation</h2><div class="slide-content"><div class="paragraph"><p><code>StructuredTaskScope</code> supports cancellation:</p></div>
 <div class="ulist"><ul><li><p>joiners can cancel a scope (e.g. on subtask failure)</p></li><li><p>a canceled scope interrupts child threads</p></li></ul></div>
 <div class="paragraph"><p>This allows structured cancellation.<br>
