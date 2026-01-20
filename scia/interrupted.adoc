@@ -41,7 +41,7 @@ Thrown by well-behaved blocking methods. +
 When catching `InterruptedException`:
 
 * clean up (quickly)
-* cede computation
+* cease computation
 * if possible, rethrow
 * otherwise, reinterrupt thread +
   (with `interrupt()`)
