@@ -426,10 +426,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://jug-pb.gitlab.io/" title="JUG Paderborn"><img src="../_images/logo-jug-paderborn-e59b1ce9.png" alt="Logo of JUG Paderborn" class="logo" style="background-color: white; border-color: transparent !important;"></a>
+		<a href="http://www.jug-ostfalen.de/" title="JUG Ostfalen"><img src="../_images/logo-jug-ostfalen-11977a5d.jpg" alt="Logo of JUG Ostfalen" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://jug-pb.gitlab.io/" title="JUG Paderborn website">JUG Paderborn</a></p>
-			<p><a href="https://twitter.com/jugpaderborn" title="JUG Paderborn on Twitter">@jugpaderborn</a></p>
+			<p><a href="http://www.jug-ostfalen.de/" title="JUG Ostfalen website">JUG Ostfalen</a></p>
+			<p><a href="https://twitter.com/jug_ostfalen" title="JUG Ostfalen on Twitter">@jug_ostfalen</a></p>
 		</div>
 	</div>
 	<div class="participant">
@@ -451,10 +451,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://jug-pb.gitlab.io/" title="JUG Paderborn"><img src="../_images/logo-jug-paderborn-e59b1ce9.png" alt="Logo of JUG Paderborn" class="logo" style="background-color: white; border-color: transparent !important;"></a>
+		<a href="http://www.jug-ostfalen.de/" title="JUG Ostfalen"><img src="../_images/logo-jug-ostfalen-11977a5d.jpg" alt="Logo of JUG Ostfalen" class="logo" style="{host-logo-style}"></a>
 		<div class="name"><p>
-			<a href="https://jug-pb.gitlab.io/" title="JUG Paderborn website">JUG Paderborn</a>
-			/ <a href="https://twitter.com/jugpaderborn" title="JUG Paderborn on Twitter">@jugpaderborn</a>
+			<a href="http://www.jug-ostfalen.de/" title="JUG Ostfalen website">JUG Ostfalen</a>
+			/ <a href="https://twitter.com/jug_ostfalen" title="JUG Ostfalen on Twitter">@jug_ostfalen</a>
 		</p></div>
 	</div>
 </footer>
@@ -786,7 +786,7 @@ locking operations can override upper 62 bits.</p></div></div></section><section
 <div class="listingblock"><div class="content"><pre class="highlight"><code>63-32 CCCCCCCCCCCCCCCCCCCCCCHHHHHHHHHH
 31- 0 HHHHHHHHHHHHHHHHHHHHHVVVVAAAASTT</code></pre></div></div>
 <div class="ulist"><ul><li><p><code>A</code>: GC age</p></li><li><p><code>C</code>: class word</p></li><li><p><code>H</code>: hash code</p></li><li><p><code>S</code>: self-forwarding</p></li><li><p><code>T</code>: tag bits</p></li><li><p><code>V</code>: Valhalla bits</p></li></ul></div></div></section><section id="_effects"><h2>Effects</h2><div class="slide-content"><div class="paragraph"><p>These changes have several downstream effects:</p></div>
-<div class="ulist"><ul><li><p>locking operations no longer override</p></li><li><p>class word is now much smaller and encded differently</p></li><li><p>GC forwarding operations become more complex</p></li></ul></div>
+<div class="ulist"><ul><li><p>locking operations no longer override</p></li><li><p>class word is now much smaller and encoded differently</p></li><li><p>GC forwarding operations become more complex</p></li></ul></div>
 <div class="paragraph"><p>In special cases, these may be detrimental to performance.</p></div></div></section><section id="_benchmarks"><h2>Benchmarks</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="ulist"><ul><li><p>In one setting, the SPECjbb2015 benchmark uses <a href="https://github.com/rkennke/talks/blob/master/Lilliput-FOSDEM-2025.pdf">22% less heap space and 8% less CPU time.</a></p></li><li><p>In another setting, the number of garbage collections done by SPECjbb2015 is <a href="https://bugs.openjdk.org/browse/JDK-8350457?focusedId=14766358&amp;page=com.atlassian.jira.plugin.system.issuetabpanels%3Acomment-tabpanel#comment-14766358">reduced by 15%</a>, with both the G1 and Parallel collectors.</p></li><li><p>A highly parallel JSON parser benchmark runs in <a href="https://www.reddit.com/r/scala/comments/1jptiv3/xxusecompactobjectheaders_is_your_new_turbo/?rdt=40432">10% less time</a>.</p></li></ul></div></blockquote></div></div></section><section id="_try_it_out"><h2>Try it out!</h2><div class="slide-content"><div class="paragraph"><p>Add flag:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code>-XX:+UseCompactObjectHeaders</code></pre></div></div>
 <div class="paragraph"><p>Report observations to <a href="https://mail.openjdk.org/mailman/listinfo/hotspot-dev">hotspot-dev</a>!</p></div>
