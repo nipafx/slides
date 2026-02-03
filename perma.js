@@ -188,6 +188,9 @@ const annotate = (talk, date, eventName, presentationSlug) => {
 }
 
 const push = () => {
+	// if the new tag and the gh-pages branch get pushed together,
+	// GitHub doesn't trigger the GH Page deploy, so push them separately
+	proc.execSync(`git push --tags`)
 	proc.execSync(`git push --all`)
 	console.log(`✅  Done.`)
 }
