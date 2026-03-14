@@ -46,7 +46,7 @@ Example: `int number = 0;`
 Can `number` be an instance of `byte`?
 
 [%step]
-No, it's an `ìnt`.
+No, it's an `int`.
 
 [%step]
 But can its value be a `byte`?
@@ -74,7 +74,7 @@ Smallest positive `int` that `float` can't represent.
 === Precision Checks
 
 ```java
-int x = 16_777_216;
+int x = 16_777_217;
 if (x instanceof float f)
 	// use `f`
 ```
@@ -90,9 +90,7 @@ var emoji = switch (bool) {
 }
 ```
 
-(Bugged in 23; fixed in 23.0.1 and 24-EA.)
-
 === More
 
-* 📝 https://openjdk.org/jeps/455[JEP 455]: Primitive Types in Patterns, instanceof, and switch
+* 📝 https://openjdk.org/jeps/530[JEP 530]: Primitive Types in Patterns
 * 🎥 https://www.youtube.com/watch?v=_afECXGjfDI[Restoring the Balance with Primitive Patterns]
