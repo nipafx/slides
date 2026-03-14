@@ -17,7 +17,7 @@ H3/tkQ/36KdtuADbwQ==
 -----END PUBLIC KEY-----
 ```
 
-=== Privacy-enhanced... Mail?!
+=== Privacy-enhanced... mail?!
 
 Was introduced for exchange via email +
 but moved way beyond:
@@ -29,7 +29,21 @@ but moved way beyond:
 * hardware authentication devices (e.g. YubiKeys)
 * your applications
 
-⇝ Very helpful if Java handled them easily.
+⇝ Very helpful if Java handled them.
+
+=== Manual En-/Decoding
+
+To *encode*:
+
+* create binary representation of object
+* Base64-encode it
+* surround string with `BEGIN`/`END` lines
+
+To *decode*: reverse that.
+
+⇝ Java has all the building blocks, but +
+combining them is cumbersome.
+
 
 === PEM API
 
@@ -38,11 +52,15 @@ New PEM API is straightforward to use:
 ```java
 X509Certificate cert = // ...
 
-PEMEncoder pe = PEMEncoder.of();
-String pem = pe.encodeToString(cert);
+// encode
+PEMEncoder encoder = PEMEncoder.of();
+String pem = encoder.encodeToString(cert);
 
-PEMDecoder pd = PEMDecoder.of();
-DEREncodable cert2 = pd.decode(pem);
+// decode
+PEMDecoder decoder = PEMDecoder.of();
+DEREncodable cert2 = decoder.decode(pem);
+
+assert cert.equals(cert2);
 ```
 
 === Endcoder/Decoder
@@ -52,12 +70,6 @@ Instances of `PEMEncoder` and `PEMDecoder` are:
 * immutable
 * thread-safe 
 * reusable
-
-Can encrypt/decrypt with `withEncryption`:
-
-```java
-var pd = PEMDecoder.of().withEncryption(pass);
-```
 
 === Encodable
 
@@ -71,14 +83,18 @@ All implementations of `DEREncodable` can be encoded:
 * `X509Certificate`
 * `X509CRL`
 * `EncryptedPrivateKeyInfo`
-* `PEMRecord`
+* `PEM`
 
 === Decoding
 
 For decoding:
 
 * if the object type is known, call +
-  `decode(String, Class<T extends DEREncodable>)`
+  `decode(String, Class<T extends DEREncodable>)`:
++
+```java
+KeyPair kp = decoder.decode(pem, KeyPair.class);
+```
 * otherwise, `switch`/`instanceof` over +
   return value of `decode(String)` 
 
@@ -86,13 +102,34 @@ For decoding:
 
 === Unknown objects
 
-Unknown cryptographic objects are decoded to `PEMRecord`:
+Unknown cryptographic objects are decoded to `PEM`:
 
 * `String type` (header text)
 * `String content` (Base64-encoded body)
 * `byte[] leadingData` (data preceding the header)
 
+=== Encryption
+
+`PrivateKey`, `KeyPair`, `PKCS8EncodedKeySpec` +
+instances can be encrypted/decrypted:
+
+```java
+PrivateKey key = // ...
+char[] pass = // ...
+
+String pem = encoder
+	.withEncryption(pass)
+	.encodeToString(key);
+DEREncodable der = decoder
+	.withDecryption(pass)
+	.decode(pem);
+```
+
+(Custom parameters/providers can be configured.)
+
 === More
 
-* 📝 https://openjdk.org/jeps/470[JEP 470]: PEM Encodings of Cryptographic Objects
+Second preview in JDK 26.
+
+* 📝 https://openjdk.org/jeps/524[JEP 524]: PEM Encodings of Cryptographic Objects
 * 🎥 https://www.youtube.com/watch?v=hqvMn2SwKiI[Java 25 Encodes PEM]
