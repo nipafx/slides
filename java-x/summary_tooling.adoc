@@ -1,0 +1,30 @@
+== {title}
+
+{toc}
+
+=== JFR improvements
+
+JDK Flight Recorder got better:
+
+* cooperative sampling (https://openjdk.org/jeps/518[JEP 518])
+* method timing & tracing (https://openjdk.org/jeps/520[JEP 520])
+* CPU-time profiling (https://openjdk.org/jeps/509[JEP 509], experimental)
+
+=== !
+
+image::images/rt25-performance.webp[]
+
+🎥 https://www.youtube.com/watch?v=renTMvh51iM[Java 21 ⮕ 25: Performance and Runtime Enhancement]
+
+=== Markdown in Javadoc
+
+```java
+/// Returns `true` if, and only if,
+/// [#length()] is `0`.
+///
+/// @return `true` if [#length()] is `0`,
+//          otherwise `false`
+/// @since 1.6
+@Override
+public boolean isEmpty() { /* ... */ }
+```
