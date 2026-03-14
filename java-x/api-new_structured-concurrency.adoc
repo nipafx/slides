@@ -44,8 +44,8 @@ Structured programming was the solution:
 
 Term coined/refined by:
 
-* Martin Sustrik in https://www.250bpm.com/p/structured-concurrency[Structured Concurrency]
-* Nathaniel J. Smith in https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/[Notes on structured concurrency [...\]]
+* Martin Sustrik, https://www.250bpm.com/p/structured-concurrency[Structured Concurrency]
+* Nathaniel J. Smith, https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/[Notes on structured concurrency [...\]]
 
 === Structured concurrency
 
@@ -53,14 +53,14 @@ Term coined/refined by:
 // implicitly short-circuits on error
 try (var scope = StructuredTaskScope.open()) {
 	// spawns new (virtual) threads
-	var subtaskA = scope.fork(this::taskA);
-	var subtaskB = scope.fork(this::taskB);
+	Subtask<String> a = scope.fork(this::taskA);
+	Subtast<String> b = scope.fork(this::taskB);
 
 	// waits explicitly for success
 	// (throws error if there was one)
 	scope.join();
 
-	return subtaskA.get() + subtaskB.get();
+	return a.get() + b.get();
 } catch (FailedException ex) {
 	// TODO: handle task errors
 } // waits until all tasks/threads complete
@@ -110,8 +110,8 @@ Existing joiners for heterogeneous results:
 === Await All
 
 ```java
-try (var scope = StructuredTaskScope
-		.open(Joiners.awaitAll())) {
+try (var scope = StructuredTaskScope.open(
+		Joiner.awaitAll())) {
 	var subtask = scope.fork(this::task);
 	// never throws:
 	scope.join();
@@ -131,8 +131,8 @@ Existing joiners for homogeneous results:
 
 * `allSuccessfulOrThrow()`:
 ** cancels/throws on first error
-** returns `Stream<RESULT>`
-* `anySuccessfulResultOrThrow()`
+** returns `List<RESULT>`
+* `anySuccessfulOrThrow()`
 ** cancels/throws if all fail
 ** returns `RESULT`
 
@@ -140,12 +140,12 @@ Existing joiners for homogeneous results:
 
 ```java
 try (var scope = StructuredTaskScope.open(
-		Joiners.<String>anySuccessfulResultOrThrow())) {
+		Joiner.<String> anySuccessfulOrThrow())) {
 	// no need to grab the `Subtask` instances
 	scope.fork(this::taskA);
 	scope.fork(this::taskB);
 	
-	// returns the first successful result (`String`)
+	// returns the first successful result
 	return scope.join();
 } catch (FailedException ex) {
 	// TODO: handle task errors
@@ -163,8 +163,38 @@ interface Joiner<T, R> {
 
 	boolean onComplete(Subtask<? extends T> subtask);
 
+	void onTimeout();
+
 	R result() throws Throwable;
 
+}
+```
+
+=== Configuration
+
+Further configuration options:
+
+* the scope's name
+* a timeout
+* a custom thread factory
+
+Pass `UnaryOperator<Configuration>` to `StructuredTaskScope::open`.
+
+=== Timeouts
+
+```java
+var timeout = Duration.ofSeconds(3);
+try (var scope = StructuredTaskScope.open(
+		Joiner.<String> anySuccessfulOrThrow(),
+		cfg -> cfg.withTimeout(timeout))) {
+	// [... forks ...]
+
+	// throws when timeout expires
+	return scope.join();
+} catch (TimeoutException ex) {
+	// TODO: handle timeout
+} catch (FailedException ex) {
+	// TODO: handle task errors
 }
 ```
 
@@ -206,7 +236,9 @@ ScopedValue.where(ANSWER, 42).run(() -> {// scope ──┐
 
 === More
 
-* 📝 https://openjdk.org/jeps/505[JEP 505]: Structured Concurrency
+Sixth preview in JDK 26.
+
+* 📝 https://openjdk.org/jeps/525[JEP 525]: Structured Concurrency
 * 📝 https://www.250bpm.com/p/structured-concurrency[Structured Concurrency]
 * 📝 https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/[Notes on structured concurrency [...\]]
 * 🎥 https://www.youtube.com/watch?v=vLJDPmXufQw[Structured Concurrency Revamp in Java 25]
