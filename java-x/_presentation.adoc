@@ -1,4 +1,4 @@
-= Java 25
+= Java 26
 :backend: revealjs
 :revealjs_theme: nipa-oracle
 :revealjsdir: ../_reveal.js/head
@@ -39,7 +39,7 @@ include::../_shared/highlight.js.adoc[]
 include::../_shared/event-on-title-and-footer.adoc[]
 
 
-:title: Java 25
+:title: Java 26
 
 // ######### //
 // I N T R O //
@@ -49,77 +49,20 @@ include::../_shared/event-on-title-and-footer.adoc[]
 
 == Let's get started!
 
-JDK 25: https://jdk.java.net/25[jdk.java.net/25]
+*JDK 26* was released _today_: +
+https://jdk.java.net/26[jdk.java.net/26]
 
-* this session is only on Java 25 +
-  (no time for 24, 23, 22)
-// * this is a showcase, not a tutorial +
-//   ⇝ go to https://youtube.com/@java[youtube.com/@java] for more
-// * tweet questions with https://twitter.com/search?q=%23jokerconf%20%23java11[#jokerconf #Java11]
-* slides at https://slides.nipafx.dev/java-x[slides.nipafx.dev/java-x] +
-  (hit "?" to get navigation help)
-* ask questions any time
-//   or tweet at https://twitter.com/nipafx[@nipafx]
+*This session*:
 
-=== !
-image::images/java-25-no-lts.webp[]
+* briefly summarizes Java 22 to 25
+* goes into more detail on Java 26
+* is a showcase, not a tutorial
 
-🎥 https://www.youtube.com/watch?v=x6-kyQCYhNo[Java 25 is ALSO no LTS Version]
+*Slides* at https://slides.nipafx.dev/java-x[slides.nipafx.dev/java-x] (⇝ hit "?")
 
-=== !
-image::images/rt25-upgrade.webp[]
+Ask *questions* at any time.
 
-🎥 https://www.youtube.com/watch?v=9azNjz7s1Ck[How to Upgrade to Java 25]
-
-////
-=== Lots to talk about!
-
-Most final features in Java 25:
-
-* module imports
-* simplified main
-* flexible constructor bodies
-* scoped values
-* AOT method profiling & easier CLI
-* JFR improvements
-* compact object headers
-
-=== Lots to talk about!
-
-Most final features in Java 24:
-
-* stream gatherers
-* class-file API
-* less virtual thread pinning
-* AOT class loading & linking
-* generational ZGC, only
-
-=== Lots to talk about!
-
-Final features in Java 23:
-
-* Markdown in JavaDoc
-
-=== Lots to talk about!
-
-Most final features in Java 22:
-
-* unnamed patterns
-* FFM API
-* multi-source-file programs
-
-=== Lots to talk about!
-
-Current preview/incubating/experimental features:
-
-* primitive patterns
-* +++<s>string templates</s>+++
-* vector API
-* structured concurrency
-* stable values
-* PEM encoding
-* JFR CPU-time profiling
-////
+*Follow up* in other sessions!
 
 // ####################### //
 // P R E S E N T A T I O N //
@@ -127,322 +70,58 @@ Current preview/incubating/experimental features:
 
 // include::_prologue.adoc[]
 
-// JAVA 25
+include::summary.adoc[]
 
 :toc: pass:[ \
 <table class="toc"> \
-	<tr class="toc-current"><td>Final in Java 25</td></tr> \
-	<tr class="toc-current"><td style="padding-left: 2em;">Module Imports</td></tr> \
-	<tr><td style="padding-left: 2em;">Simplified Main</td></tr> \
-	<tr><td style="padding-left: 2em;">Flexible Constructor Bodies</td></tr> \
-	<tr><td style="padding-left: 2em;">Scoped Values</td></tr> \
-	<tr><td style="padding-left: 2em;">Ahead-of-Time Computation</td></tr> \
-	<tr><td style="padding-left: 2em;">Compact Object Headers</td></tr> \
-	<tr><td style="padding-left: 2em;">...</td></tr> \
-</table> \
-]
-include::modules_imports.adoc[]
-
-:toc: pass:[ \
-<table class="toc"> \
-	<tr class="toc-current"><td>Final in Java 25</td></tr> \
-	<tr><td style="padding-left: 2em;">Module Imports</td></tr> \
-	<tr class="toc-current"><td style="padding-left: 2em;">Simplified Main</td></tr> \
-	<tr><td style="padding-left: 2em;">Flexible Constructor Bodies</td></tr> \
-	<tr><td style="padding-left: 2em;">Scoped Values</td></tr> \
-	<tr><td style="padding-left: 2em;">Ahead-of-Time Computation</td></tr> \
-	<tr><td style="padding-left: 2em;">Compact Object Headers</td></tr> \
-	<tr><td style="padding-left: 2em;">...</td></tr> \
-</table> \
-]
-include::meta_launch-protocol.adoc[]
-
-:toc: pass:[ \
-<table class="toc"> \
-	<tr class="toc-current"><td>Final in Java 25</td></tr> \
-	<tr><td style="padding-left: 2em;">Module Imports</td></tr> \
-	<tr><td style="padding-left: 2em;">Simplified Main</td></tr> \
-	<tr class="toc-current"><td style="padding-left: 2em;">Flexible Constructor Bodies</td></tr> \
-	<tr><td style="padding-left: 2em;">Scoped Values</td></tr> \
-	<tr><td style="padding-left: 2em;">Ahead-of-Time Computation</td></tr> \
-	<tr><td style="padding-left: 2em;">Compact Object Headers</td></tr> \
-	<tr><td style="padding-left: 2em;">...</td></tr> \
-</table> \
-]
-include::language_flexible-constructors.adoc[]
-
-:toc: pass:[ \
-<table class="toc"> \
-	<tr class="toc-current"><td>Final in Java 25</td></tr> \
-	<tr><td style="padding-left: 2em;">Module Imports</td></tr> \
-	<tr><td style="padding-left: 2em;">Simplified Main</td></tr> \
-	<tr><td style="padding-left: 2em;">Flexible Constructor Bodies</td></tr> \
-	<tr class="toc-current"><td style="padding-left: 2em;">Scoped Values</td></tr> \
-	<tr><td style="padding-left: 2em;">Ahead-of-Time Computation</td></tr> \
-	<tr><td style="padding-left: 2em;">Compact Object Headers</td></tr> \
-	<tr><td style="padding-left: 2em;">...</td></tr> \
-</table> \
-]
-include::api-new_scoped-value.adoc[]
-
-:toc: pass:[ \
-<table class="toc"> \
-	<tr class="toc-current"><td>Final in Java 25</td></tr> \
-	<tr><td style="padding-left: 2em;">Module Imports</td></tr> \
-	<tr><td style="padding-left: 2em;">Simplified Main</td></tr> \
-	<tr><td style="padding-left: 2em;">Flexible Constructor Bodies</td></tr> \
-	<tr><td style="padding-left: 2em;">Scoped Values</td></tr> \
-	<tr class="toc-current"><td style="padding-left: 2em;">Ahead-of-Time Computation</td></tr> \
-	<tr><td style="padding-left: 2em;">Compact Object Headers</td></tr> \
-	<tr><td style="padding-left: 2em;">...</td></tr> \
-</table> \
-]
-include::performance_aot-computation.adoc[]
-
-:toc: pass:[ \
-<table class="toc"> \
-	<tr class="toc-current"><td>Final in Java 25</td></tr> \
-	<tr><td style="padding-left: 2em;">Module Imports</td></tr> \
-	<tr><td style="padding-left: 2em;">Simplified Main</td></tr> \
-	<tr><td style="padding-left: 2em;">Flexible Constructor Bodies</td></tr> \
-	<tr><td style="padding-left: 2em;">Scoped Values</td></tr> \
-	<tr><td style="padding-left: 2em;">Ahead-of-Time Computation</td></tr> \
-	<tr class="toc-current"><td style="padding-left: 2em;">Compact Object Headers</td></tr> \
-	<tr><td style="padding-left: 2em;">...</td></tr> \
-</table> \
-]
-include::performance_compact-headers.adoc[]
-
-:toc: pass:[ \
-<table class="toc"> \
-	<tr class="toc-current"><td>Final in Java 25</td></tr> \
-	<tr><td style="padding-left: 2em;">Module Imports</td></tr> \
-	<tr><td style="padding-left: 2em;">Simplified Main</td></tr> \
-	<tr><td style="padding-left: 2em;">Flexible Constructor Bodies</td></tr> \
-	<tr><td style="padding-left: 2em;">Scoped Values</td></tr> \
-	<tr><td style="padding-left: 2em;">Ahead-of-Time Computation</td></tr> \
-	<tr><td style="padding-left: 2em;">Compact Object Headers</td></tr> \
-	<tr class="toc-current"><td style="padding-left: 2em;">...</td></tr> \
-</table> \
-]
-include::misc.adoc[]
-
-include::deprecations.adoc[]
-
-
-== What's next?
-
-* less virtual thread pinning ㉔
-* stream gatherers ㉔
-* class-file API ㉔
-* generational ZGC, only ㉔
-* Markdown in JavaDoc ㉓
-* unnamed patterns ㉒
-* FFM API ㉒
-
-=== What's next?
-
-* primitive patterns ⊕
-* +++<s>string templates ⊕</s>+++
-* structured concurrency ⊕
-* PEM encoding ⊕
-
-// JAVA 24
-
-:toc: pass:[ \
-<table class="toc"> \
-	<tr><td>Final in Java 25</td></tr> \
-	<tr class="toc-current"><td>Final in Java 24</td></tr> \
-	<tr class="toc-current"><td style="padding-left: 2em;">Less Virtual Thread Pinning</td></tr> \
-	<tr><td style="padding-left: 2em;">Stream Gatherers</td></tr> \
-	<tr><td style="padding-left: 2em;">Class-File API</td></tr> \
-	<tr><td style="padding-left: 2em;">GenZGC, Only</td></tr> \
-	<tr><td>Final in Java 23, 22</td></tr> \
-	<tr><td>Preview in Java 25</td></tr> \
-</table> \
-]
-include::runtime_virtual-threads-synchronized.adoc[]
-
-:toc: pass:[ \
-<table class="toc"> \
-	<tr><td>Final in Java 25</td></tr> \
-	<tr class="toc-current"><td>Final in Java 24</td></tr> \
-	<tr><td style="padding-left: 2em;">Less Virtual Thread Pinning</td></tr> \
-	<tr class="toc-current"><td style="padding-left: 2em;">Stream Gatherers</td></tr> \
-	<tr><td style="padding-left: 2em;">Class-File API</td></tr> \
-	<tr><td style="padding-left: 2em;">GenZGC, Only</td></tr> \
-	<tr><td>Final in Java 23, 22</td></tr> \
-	<tr><td>Preview in Java 25</td></tr> \
-</table> \
-]
-include::api-updated_stream-gatherers.adoc[]
-
-:toc: pass:[ \
-<table class="toc"> \
-	<tr><td>Final in Java 25</td></tr> \
-	<tr class="toc-current"><td>Final in Java 24</td></tr> \
-	<tr><td style="padding-left: 2em;">Less Virtual Thread Pinning</td></tr> \
-	<tr><td style="padding-left: 2em;">Stream Gatherers</td></tr> \
-	<tr class="toc-current"><td style="padding-left: 2em;">Class-File API</td></tr> \
-	<tr><td style="padding-left: 2em;">GenZGC, Only</td></tr> \
-	<tr><td>Final in Java 23, 22</td></tr> \
-	<tr><td>Preview in Java 25</td></tr> \
-</table> \
-]
-include::api-new_class-file.adoc[]
-
-:toc: pass:[ \
-<table class="toc"> \
-	<tr><td>Final in Java 25</td></tr> \
-	<tr class="toc-current"><td>Final in Java 24</td></tr> \
-	<tr><td style="padding-left: 2em;">Less Virtual Thread Pinning</td></tr> \
-	<tr><td style="padding-left: 2em;">Stream Gatherers</td></tr> \
-	<tr><td style="padding-left: 2em;">Class-File API</td></tr> \
-	<tr class="toc-current"><td style="padding-left: 2em;">GenZGC, Only</td></tr> \
-	<tr><td>Final in Java 23, 22</td></tr> \
-	<tr><td>Preview in Java 25</td></tr> \
-</table> \
-]
-include::performance_gc-zgc.adoc[]
-
-// JAVA 23
-
-:toc: pass:[ \
-<table class="toc"> \
-	<tr><td>Final in Java 25, 24</td></tr> \
-	<tr class="toc-current"><td>Final in Java 23</td></tr> \
-	<tr class="toc-current"><td style="padding-left: 2em;">Markdown in JavaDoc</td></tr> \
-	<tr><td>Final in Java 22</td></tr> \
-	<tr><td>Preview in Java 25</td></tr> \
-</table> \
-]
-include::tools_javadoc_markdown.adoc[]
-
-// JAVA 22
-
-:toc: pass:[ \
-<table class="toc"> \
-	<tr><td>Final in Java 25, 24, 23</td></tr> \
-	<tr class="toc-current"><td>Final in Java 22</td></tr> \
-	<tr class="toc-current"><td style="padding-left: 2em;">Unnamed Patterns</td></tr> \
-	<tr><td style="padding-left: 2em;">FFM API</td></tr> \
-	<tr><td>Preview in Java 25</td></tr> \
-</table> \
-]
-include::language_pattern-unnamed.adoc[]
-
-:toc: pass:[ \
-<table class="toc"> \
-	<tr><td>Final in Java 25, 24, 23</td></tr> \
-	<tr class="toc-current"><td>Final in Java 22</td></tr> \
-	<tr><td style="padding-left: 2em;">Unnamed Patterns</td></tr> \
-	<tr class="toc-current"><td style="padding-left: 2em;">FFM API</td></tr> \
-	<tr><td>Preview in Java 25</td></tr> \
-</table> \
-]
-include::api-new_ffm.adoc[]
-
-// PREVIEWS
-
-:toc: pass:[ \
-<table class="toc"> \
-	<tr><td>Final in Java 25, 24, 23, 22</td></tr> \
-	<tr class="toc-current"><td>Preview in Java 25</td></tr> \
+	<tr><td>Java 22 to 25</td></tr> \
+	<tr class="toc-current"><td>Java 26</td></tr> \
 	<tr class="toc-current"><td style="padding-left: 2em;">Primitive Patterns</td></tr> \
-	<tr><td style="padding-left: 2em;"><s>String Templates</s></td></tr> \
 	<tr><td style="padding-left: 2em;">Structured Concurrency</td></tr> \
 	<tr><td style="padding-left: 2em;">PEM Encoding</td></tr> \
+	<tr><td>Deprecations & Removals</td></tr> \
 </table> \
 ]
 include::language_pattern-primitive.adoc[]
 
 :toc: pass:[ \
 <table class="toc"> \
-	<tr><td>Final in Java 25, 24, 23, 22</td></tr> \
-	<tr class="toc-current"><td>Preview in Java 25</td></tr> \
+	<tr><td>Java 22 to 25</td></tr> \
+	<tr class="toc-current"><td>Java 26</td></tr> \
 	<tr><td style="padding-left: 2em;">Primitive Patterns</td></tr> \
-	<tr class="toc-current"><td style="padding-left: 2em;"><s>String Templates</s></td></tr> \
-	<tr><td style="padding-left: 2em;">Structured Concurrency</td></tr> \
-	<tr><td style="padding-left: 2em;">PEM Encoding</td></tr> \
-</table> \
-]
-include::language_string-templates.adoc[]
-
-:toc: pass:[ \
-<table class="toc"> \
-	<tr><td>Final in Java 25, 24, 23, 22</td></tr> \
-	<tr class="toc-current"><td>Preview in Java 25</td></tr> \
-	<tr><td style="padding-left: 2em;">Primitive Patterns</td></tr> \
-	<tr><td style="padding-left: 2em;"><s>String Templates</s></td></tr> \
 	<tr class="toc-current"><td style="padding-left: 2em;">Structured Concurrency</td></tr> \
 	<tr><td style="padding-left: 2em;">PEM Encoding</td></tr> \
+	<tr><td>Deprecations & Removals</td></tr> \
 </table> \
 ]
 include::api-new_structured-concurrency.adoc[]
 
 :toc: pass:[ \
 <table class="toc"> \
-	<tr><td>Final in Java 25, 24, 23, 22</td></tr> \
-	<tr class="toc-current"><td>Preview in Java 25</td></tr> \
+	<tr><td>Java 22 to 25</td></tr> \
+	<tr class="toc-current"><td>Java 26</td></tr> \
 	<tr><td style="padding-left: 2em;">Primitive Patterns</td></tr> \
-	<tr><td style="padding-left: 2em;"><s>String Templates</s></td></tr> \
 	<tr><td style="padding-left: 2em;">Structured Concurrency</td></tr> \
 	<tr class="toc-current"><td style="padding-left: 2em;">PEM Encoding</td></tr> \
+	<tr><td>Deprecations & Removals</td></tr> \
 </table> \
 ]
 include::api-new_pem.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>Java 22 to 25</td></tr> \
+	<tr><td>Java 26</td></tr> \
+	<tr class="toc-current"><td>Deprecations & Removals</td></tr> \
+</table> \
+]
+include::deprecations.adoc[]
 
 // ######### //
 // O U T R O //
 // ######### //
 
-== Java 22-25
-
-In a few slides...
-
-=== Java 22-25 Introduce
-
-Language features:
-
-* https://openjdk.org/jeps/456[Unnamed Variables & Patterns]
-* https://openjdk.org/jeps/511[Module Imports]
-* https://openjdk.org/jeps/512[Simpler Main]
-* https://openjdk.org/jeps/513[Flexible Constructor Bodies]
-
-=== Java 22-25 Introduce
-
-New APIs:
-
-* https://openjdk.org/jeps/454[Foreign Function & Memory]
-* https://openjdk.org/jeps/484[Class-File]
-* https://openjdk.org/jeps/485[Stream Gatherers]
-* https://openjdk.org/jeps/506[Scoped Values]
-* https://openjdk.org/jeps/510[Key Derivation Function]
-
-=== Java 22-25 Introduce
-
-Runtime improvements:
-
-* https://openjdk.org/jeps/474[GenZGC by Default]
-* https://openjdk.org/jeps/458[Multi-source-file Execution]
-* https://openjdk.org/jeps/467[Markdown in JavaDoc]
-* https://openjdk.org/jeps/491[Less Virtual Thread Pinning]
-* https://openjdk.org/jeps/493[Smaller Run-Time Images (Maybe)]
-* https://openjdk.org/jeps/519[Compact Object Headers]
-* AOT https://openjdk.org/jeps/515[Method Profiles], https://openjdk.org/jeps/483[Class Loading & Linking]
-* JFR https://openjdk.org/jeps/520[Method Timing & Tracing] & https://openjdk.org/jeps/518[Cooperative Sampling]
-
-=== Java 25 Previews
-
-* https://openjdk.org/jeps/507[Primitive Patterns]
-* +++<del>+++ https://openjdk.org/jeps/459[String Templates] +++</del>+++
-* https://openjdk.org/jeps/508[Vector API]
-* https://openjdk.org/jeps/505[Structured Concurrency]
-* https://openjdk.org/jeps/502[Stable Values]
-* https://openjdk.org/jeps/470[PEM Encoding]
-* https://openjdk.org/jeps/520[JFR CPU-Time Profiling]
-
-=== Java 22-25
+== Java 22-26
 
 Major achievements:
 
@@ -451,7 +130,7 @@ Major achievements:
 * improve tooling and performance
 * introduce AOT workflow
 
-Get JDK 25 at https://jdk.java.net/25/[jdk.java.net/25].
+Get JDK 26 at https://jdk.java.net/26/[jdk.java.net/26].
 
 
 include::../_shared/about-slide.adoc[]
