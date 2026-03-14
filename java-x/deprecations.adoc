@@ -1,5 +1,11 @@
 == Deprecations
-image::images/surprise.gif[background, size=cover]
+
+Java is cleaning house and +
+moving towards integrity by default.
+
+// --------
+// REMOVALS
+// --------
 
 === Cleaning house
 
@@ -31,7 +37,8 @@ What you need to know:
 * removed in JDK 24
 ** command-line flags cause errors
 ** `SecurityManager` still exists
-** all calls are "no-ops"
+** calls are "no-ops" (where possible) +
+   or "no" (otherwise)
 
 === Security Manager
 
@@ -46,7 +53,6 @@ What you need to do:
 Deprecated (for removal)
 
 * finalization ⑱ (https://openjdk.org/jeps/421[JEP 421])
-// * primitive wrapper constructors ⑯ (https://openjdk.org/jeps/390[JEP 390])
 
 === Finalization
 
@@ -59,7 +65,8 @@ What it is:
 
 What you need to know:
 
-* you can disable with `--finalization=disabled`
+* causes GC overhead and better alternatives exist
+* you can disable it with `--finalization=disabled`
 * in a future release, `disabled` will be the default
 * in a later release, finalization will be removed
 
@@ -74,86 +81,110 @@ What you need to do:
 * run your app with `--finalization=disabled` and +
   closely monitor resource behavior (e.g. file handles)
 
-////
-=== Primitive constructors
-
-What it is:
-
-* `new Integer(42)`
-* `new Double(42)`
-* etc.
-
-=== Primitive constructors
-
-What you need to know:
-
-* Valhalla wants to turn them into value types
-* those have no identity
-* identity-based operations need to be removed
-
-=== Primitive constructors
-
-What you need to do:
-
-* `Integer.valueOf(42)`
-* `Double.valueOf(42)`
-* etc.
-////
+// ---------
+// INTEGRITY
+// ---------
 
 === Integrity by Default
 
-Deprecated (for removal)
+Deprecated (for removal):
 
 * memory access via `Unsafe` ㉔ (https://openjdk.org/jeps/498[JEP 498])
 
 Disallow by default:
 
-* mutating final fields (https://openjdk.org/jeps/500[JEP 500])
+* mutating final fields ㉖ (https://openjdk.org/jeps/500[JEP 500])
 * JNI ㉔ (https://openjdk.org/jeps/472[JEP 472])
 * dynamic agents ㉑ (https://openjdk.org/jeps/451[JEP 451])
 
-=== Unsafe
+=== Unsafe Memory Access
 
-Methods for memory access have been superseeded +
-(VarHandles via https://openjdk.org/jeps/193[JEP 193]; FFM via https://openjdk.org/jeps/454[JEP 454]).
+What it is:
 
-Will be phased out:
+* methods on `sun.misc.Unsafe`
+* allow direct memory access
 
-. deprecation and compile-time warning ㉓
-. run-time warning ㉔
-. exception on invocation ~㉖
-. remove methods
+=== Unsafe Memory Access
 
-=== Unsafe
+What you need to know:
 
-You're probably not using it directly, +
-but your dependencies may.
+* superseeded by +
+  VarHandles (https://openjdk.org/jeps/193[JEP 193])
+  and FFM (https://openjdk.org/jeps/454[JEP 454])
+* will be phased out:
+	. deprecation and compile-time warning ㉓
+	. run-time warning ㉔
+	. exception on invocation
+	. methods removed
 
-Find them with `--sun-misc-unsafe-memory-access`:
+=== Unsafe Memory Access
 
-* `warn`: to get run-time warnings
+What you need to do:
+
+* find with `--sun-misc-unsafe-memory-access`:
+** `warn`: issue run-time warnings ㉔
+** `debug`: same with more info
+** `deny`: throw exceptions
+* report and help fix!
+
+=== Final Field Mutation
+
+What it is:
+
+* parts of the reflecion API (⇝ `setAccessible`)
+* can change values of most final fields
+
+=== Final Field Mutation
+
+What you need to know:
+
+* causes issues for:
+** correctness (any code can change any field)
+** performance (e.g. constant folding)
+* remains intact but app owner should opt in
+* Java 26 issues warnings on final field muation, +
+  except where explicitly enabled
+* a future version will disallow it where not enabled
+
+=== Final Field Mutation
+
+What you need to do:
+
+* use `--enable-final-field-mutation` to allow +
+  specified modules to mutate final fields
+* use `--illegal-final-field-mutation` for other code
+
+=== Final Field Mutation
+
+Three options for illegal mutation:
+
+* `allow`: allow without warning
+* `warn`: issue run-time warnings ㉖
 * `debug`: same with more info
-* `deny`: throws exception
+* `deny`: throw exceptions
 
-Report and help fix!
+In a future release, `deny` will become the only mode.
 
-=== Final Fields
-
-Non-record final fields can be mutated through reflection.
-
-This causes issues for:
-
-* correctness
-* performance (e.g. constant folding)
-
-A future Java version will require an option +
-to allow final field mutation.
+Prepare now by enabling mutation where necessary +
+plus `--illegal-final-field-mutation=deny`.
 
 === JNI
 
-Native code can undermine Java's integrity.
+What it is:
 
-App owner should opt in knowingly:
+* machinery that allows Java programs +
+  to interact with native libraries
+
+=== JNI
+
+What you need to know:
+
+* native code can undermine Java's integrity
+* remains intact but app owner should opt in
+
+=== JNI
+
+What you need to do:
 
 * use `--enable-native-access` to allow +
   access to restricted JNI/FFM methods
@@ -163,13 +194,14 @@ App owner should opt in knowingly:
 
 Three options for illegal native access:
 
-* `allow`
-* `warn` (default on JDK 24)
-* `deny`
+* `allow`: allow without warning
+* `warn`: issue run-time warnings ㉔
+* `deny`: throw exceptions
 
-In some future release, `deny` will become the only mode.
+In a future release, `deny` will become the only mode.
 
-Prepare now by setting `--illegal-native-access=deny`.
+Prepare now by enabling native access where necessary +
+plus `--illegal-native-access=deny`.
 
 === Agents
 
@@ -183,9 +215,9 @@ What it is:
 
 What you need to know:
 
-* all mechanisms for agents remain intact
+* remains intact but app owner should opt in
 * nothing changed yet
-* in the future, dynamic attach will be +
+* in a future release, dynamic attach will be +
   disabled by default
 * enable with `-XX:+EnableDynamicAgentLoading`
 
