@@ -1,0 +1,119 @@
+== {title}
+
+{toc}
+
+=== Laziness
+
+Deferring computation is interesting...
+
+* if it takes long
+* if later execution creates better results
+* if we may not need to do it
+
+But has tradeoffs:
+
+* more complexity
+* increased tail-end latency
+
+Java and our programs are lazy in many regards.
+
+=== Laziness in Java
+
+Program infrastructure is built on fields.
+
+Lazy field initialization:
+
+* is harder to get right
+* prevents `final`:
+** less maintainable
+**  no constant folding
+
+=== Double-checked Locking
+
+```java
+private volatile LoginService login;
+
+private LoginService getLogin() {
+	var login = this.login;
+	if (login == null) {
+		synchronized (this) {
+			login = this.login;
+			if (login == null)
+				this.login = login =
+					LoginService.initialize();
+		}
+	}
+	return login;
+}
+```
+
+=== Lazy constants
+
+```java
+public class UserController {
+
+	private final LazyConstant<LoginService> login;
+
+	public UserController() {
+		this.login = LazyConstant
+			.of(LoginService::initialize);
+		// using `login` later...
+		IO.println(login.get());
+	}
+
+}
+```
+
+=== Properties
+
+Lazy constants:
+
+* are easy to use
+* are truly final +
+ ⇝ allow constant folding
+
+Best of both worlds.
+
+=== Behavior
+
+Details:
+
+* initializer executes at most once (successfully)
+* `equals` compares `LazyConstant` identity
+
+Error cases:
+
+* rejects `null`
+* `IllegalStateException` on cycles
+* if initializer fails:
+** `get` throws its exception
+** next `get` will try again
+* no cancellation/timeout
+
+=== Lazy collections
+
+```java
+var list = List.ofLazy(2, index -> "" + index);
+var map = Map.ofLazy(Set.of(0, 1), key -> "" + key);
+```
+
+Coming in JDK 27: `Set::ofLazy`.`
+
+=== Lazy collections
+
+Details:
+
+* initializer executes at most once +
+  _per element_ (successfully)
+* collections are unmodifiable
+* `equals` evaluates all elements +
+  (`Collection` requires this)
+
+Error cases like before.
+
+=== More
+
+Second preview in JDK 26.
+
+* 📝 https://openjdk.org/jeps/526[JEP 526]: Lazy Constants
+* 🎥 https://www.youtube.com/watch?v=BZlXZyXA4jY[LazyConstants in JDK 26]
