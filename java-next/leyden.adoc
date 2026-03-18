@@ -9,7 +9,7 @@ Profile:
 https://mail.openjdk.org/mailman/listinfo/leyden-dev[mailing list] /
 https://jdk.java.net/leyden[early access builds]
 * launched May 2022
-* led by Mark Reinhold
+* led by Mark Reinhold and John Rose
 
 === Motivation
 
@@ -50,17 +50,14 @@ image::images/aot-all-the-things.jpg[background, size=contain]
 
 === Dynamic Java
 
-But Java is highly dynamic:
+Early work depends on:
 
-* class loading
-* class redefinition
-* linkage
-* access control
-* method dispatch
-* run-time typing (e.g. casting)
-* introspection
-* JIT compilation, decompilation
+* class/module path content
+* command line options, +
+  particularly module options
+* run-time hardware and behavior
 
+Only known during execution. +
 How to AOT everything?
 
 [state=empty]
@@ -114,7 +111,7 @@ $ java -XX:AOTCache=app.aot
 
 (Open to further improvements.)
 
-=== AOT class loading & linking
+=== Class loading & linking
 
 > Improve startup time by making the classes of an application instantly available, in a loaded and linked state, when the HotSpot JVM starts.
 
@@ -123,7 +120,7 @@ Spring PetClinic benchmarks:
 * up to ~40% startup time reduction
 * AOT cache size of ~130 MB
 
-=== AOT method profiling
+=== Method profiling
 
 > Improve warmup time by making method-execution profiles from a previous run of an application instantly available, when the HotSpot Java Virtual Machine starts.
 
@@ -132,10 +129,26 @@ Benchmark of a 100_000x loop over a simple stream:
 * ~20% run time reduction
 * AOT cache size increased by ~2.5%
 
+=== Streaming cached objects
+
+> Making it possible to load cached Java objects sequentially into memory from a neutral, GC-agnostic format.
+
+* allows use of any garbage collector
+* does not block when initializing heap
+* takes longer for warm starts and +
+  requires a CPU core
+
+(Note: The cache contains _no_ application instances.)
+
+[state="empty",background-color="#011f2a"]
+=== !
+image::images/leyden-speedup.jpg[background, size=contain]
+
 === AOT limitations
 
 Limitation so far:
 
+* +++<s>requires Serial GC, Parallel GC, or G1</s>+++ ㉖
 * same JDK release / architecture / OS
 * consistent class path for training and production
 * consistent module options
@@ -174,10 +187,13 @@ JDK 26:
 
 * AOT with any GC (https://openjdk.org/jeps/516[JEP 516])
 
-Current work:
+=== Current work
 
-* AOT code compilation (https://openjdk.org/jeps/8335368[JEP draft])
-* inclusion of more dynamic information
+* code compilation (https://openjdk.org/jeps/8335368[JDK-833536])
+* allow tradeoff between +
+  portability and peak performance
+* iterative training
+* better inspectability of training data
 
 === Deeper Dives
 
