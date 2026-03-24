@@ -57,9 +57,7 @@ Virtual threads are cheap and plentiful:
 
 ⇝ Enables new concurrency programming models.
 
-
 include::loom-apis-short.adoc[]
-
 
 === Project Loom
 
@@ -86,18 +84,23 @@ JDK 21:
 * structured concurrency previews (https://openjdk.org/jeps/453[JEP 453])
 * scoped values preview (https://openjdk.org/jeps/446[JEP 446])
 
+=== Timeline
+
 JDK 25:
 
 * object monitors don't pin virtual threads (https://openjdk.org/jeps/491[JEP 491])
 * structured concurrency preview revamp (https://openjdk.org/jeps/499[JEP 499])
 * scoped values finalize (https://openjdk.org/jeps/506[JEP 506])
 
+JDK 26:
+
+* class initialization doesn't pin (https://bugs.openjdk.org/browse/JDK-8369238[JDK-8369238])
+
 === Timeline
 
 Current work:
 
 * finalize structured concurrency
-* reduce pinning during class initialization
 * improve lock info in thread dumps
 
 === Deeper Dives
