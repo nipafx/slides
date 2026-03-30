@@ -54,7 +54,7 @@ Term coined/refined by:
 try (var scope = StructuredTaskScope.open()) {
 	// spawns new (virtual) threads
 	Subtask<String> a = scope.fork(this::taskA);
-	Subtast<String> b = scope.fork(this::taskB);
+	Subtask<String> b = scope.fork(this::taskB);
 
 	// waits explicitly for success
 	// (throws error if there was one)
