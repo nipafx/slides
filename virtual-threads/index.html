@@ -418,15 +418,13 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		<a href="https://nipafx.dev/nicolai-parlog" title="Nicolai"><img src="../_images/nipa-face-c9e3bd71.jpg" alt="Photo of Nicolai" class="logo"></a>
 		<div class="name">
 			<p><a href="https://nipafx.dev/nicolai-parlog" title="About Nicolai">Nicolai Parlog</a></p>
-			<p><a href="https://nipafx.dev" title="Nicolai's website">nipafx.dev</a>
-				/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a></p>
+			<p><a href="https://nipafx.dev" title="Nicolai's website">nipafx.dev</a></p>
 		</div>
 	</div>
 	<div class="participant">
 		<a href="https://www.ittage.informatik-aktuell.de/" title="IT-Tage 2023"><img src="../_images/logo-it-tage-2023-2d827cdc.png" alt="Logo of IT-Tage 2023" class="logo" style="background-color: white; border-color: transparent !important;"></a>
 		<div class="name">
 			<p><a href="https://www.ittage.informatik-aktuell.de/" title="IT-Tage 2023 website">IT-Tage 2023</a></p>
-			<p><a href="https://twitter.com/hashtag/ittage?f=live" title="IT-Tage 2023 on Twitter">#ittage</a></p>
 		</div>
 	</div>
 	<div class="participant">
@@ -444,14 +442,12 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		<div class="name"><p>
 			<a href="https://nipafx.dev/nicolai-parlog" title="About Nicolai">Nicolai Parlog</a>
 			/ <a href="https://nipafx.dev" title="Nicolai's website">nipafx.dev</a>
-			/ <a href="https://twitter.com/nipafx" title="Nicolai on Twitter">@nipafx</a>
 		</p></div>
 	</div>
 	<div class="participant">
 		<a href="https://www.ittage.informatik-aktuell.de/" title="IT-Tage 2023"><img src="../_images/logo-it-tage-2023-2d827cdc.png" alt="Logo of IT-Tage 2023" class="logo" style="background-color: white; border-color: transparent !important;"></a>
 		<div class="name"><p>
 			<a href="https://www.ittage.informatik-aktuell.de/" title="IT-Tage 2023 website">IT-Tage 2023</a>
-			/ <a href="https://twitter.com/hashtag/ittage?f=live" title="IT-Tage 2023 on Twitter">#ittage</a>
 		</p></div>
 	</div>
 </footer>
@@ -624,7 +620,7 @@ of threads for subtasks</p></li></ul></div>
 <div class="paragraph"><p>⇝ Enables new concurrency programming model.</p></div></div></section><section id="_a_first_step"><h2>A first step</h2><div class="slide-content"><div class="paragraph"><p>Whenever you need concurrent subtasks,<br>
 spawn virtual threads for each:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">private static final ExecutorService VIRTUAL =
-	Executors.newVirtualThreadPerTaskExecutor()
+	Executors.newVirtualThreadPerTaskExecutor();
 
 void handle(Request request, Response response)
 		throws InterruptedException {
@@ -637,7 +633,7 @@ became unmaintainable:</p></div>
 <div class="ulist"><ul><li><p>prescribes control structures</p></li><li><p>prescribes single entry point<br>
 and clearly defined exit points</p></li><li><p>influenced languages and runtimes</p></li></ul></div>
 <div class="paragraph"><p>The stricter approach made code (much) clearer!</p></div></div></section><section id="_unstructured_concurrency"><h2>Unstructured concurrency</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">private static final ExecutorService VIRTUAL =
-	Executors.newVirtualThreadPerTaskExecutor()
+	Executors.newVirtualThreadPerTaskExecutor();
 
 void handle(Request request, Response response)
 		throws InterruptedException {
