@@ -20,7 +20,7 @@ spawn virtual threads for each:
 
 ```java
 var threads = Executors
-	.newVirtualThreadPerTaskExecutor()
+	.newVirtualThreadPerTaskExecutor();
 
 var subtaskA = threads.submit(this::taskA);
 var subtaskB = threads.submit(this::taskB);
@@ -46,7 +46,7 @@ The stricter approach made code (much) clearer!
 
 ```java
 var threads = Executors
-	.newVirtualThreadPerTaskExecutor()
+	.newVirtualThreadPerTaskExecutor();
 
 // what's the relationship between
 // this and the two spawned threads?

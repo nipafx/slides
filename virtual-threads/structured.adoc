@@ -20,7 +20,7 @@ spawn virtual threads for each:
 
 ```java
 private static final ExecutorService VIRTUAL =
-	Executors.newVirtualThreadPerTaskExecutor()
+	Executors.newVirtualThreadPerTaskExecutor();
 
 void handle(Request request, Response response)
 		throws InterruptedException {
@@ -49,7 +49,7 @@ The stricter approach made code (much) clearer!
 
 ```java
 private static final ExecutorService VIRTUAL =
-	Executors.newVirtualThreadPerTaskExecutor()
+	Executors.newVirtualThreadPerTaskExecutor();
 
 void handle(Request request, Response response)
 		throws InterruptedException {
