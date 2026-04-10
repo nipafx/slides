@@ -206,7 +206,7 @@ If joiner cancels scope:
 * `join` returns or throws
 
 But `StructuredTaskScope.close()` waits +
-until all child threds complete.
+until all child threads complete.
 
 ⇝ Handle `InterruptedException` properly!
 

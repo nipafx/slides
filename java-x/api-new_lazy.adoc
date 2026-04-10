@@ -97,7 +97,7 @@ var list = List.ofLazy(2, index -> "" + index);
 var map = Map.ofLazy(Set.of(0, 1), key -> "" + key);
 ```
 
-Coming in JDK 27: `Set::ofLazy`.`
+Coming in JDK 27: `Set::ofLazy`.
 
 === Lazy collections
 

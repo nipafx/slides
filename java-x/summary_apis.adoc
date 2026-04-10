@@ -18,7 +18,7 @@ Stream.of("A", "C", "F", "B", "S")
 
 === Scoped Values
 
-Simpler, more scalable, one-way alternative to `TheadLocal`:
+Simpler, more scalable, one-way alternative to `ThreadLocal`:
 
 ```java
 static final ScopedValue<Integer> ANSWER =
