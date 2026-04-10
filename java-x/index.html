@@ -519,7 +519,7 @@ void main() {
 
 // [A, C]
 // [F, B]
-// [S]</code></pre></div></div></div></section><section id="_scoped_values"><h2>Scoped Values</h2><div class="slide-content"><div class="paragraph"><p>Simpler, more scalable, one-way alternative to <code>TheadLocal</code>:</p></div>
+// [S]</code></pre></div></div></div></section><section id="_scoped_values"><h2>Scoped Values</h2><div class="slide-content"><div class="paragraph"><p>Simpler, more scalable, one-way alternative to <code>ThreadLocal</code>:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">static final ScopedValue&lt;Integer&gt; ANSWER =
 	ScopedValue.newInstance();
 
@@ -556,7 +556,7 @@ e.g. <code>unsignedMultiplyExact(int, int)</code></p></li><li><p><code>Instant</
  └─ Lib
      └─ library.jar</code></pre></div></div>
 <div class="paragraph"><p>Run with:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code>java -cp 'Lib/*' Main.java</code></pre></div></div></div></section><section id="_aot_computation"><h2>AOT computation</h2><div class="slide-content"><div class="paragraph"><p>Reduce your applicationss' startup and warmup times<br>
+<div class="listingblock"><div class="content"><pre class="highlight"><code>java -cp 'Lib/*' Main.java</code></pre></div></div></div></section><section id="_aot_computation"><h2>AOT computation</h2><div class="slide-content"><div class="paragraph"><p>Reduce your applications' startup and warmup times<br>
 with ahead-of-time computation:</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-sh" data-lang="sh"># training run (⇝ AOTCache)
 $ java -XX:AOTCacheOutput=app.aot
@@ -656,7 +656,7 @@ private LoginService getLogin() {
 <div class="paragraph"><p>Error cases:</p></div>
 <div class="ulist"><ul><li><p>rejects <code>null</code></p></li><li><p><code>IllegalStateException</code> on cycles</p></li><li><p>if initializer fails:</p><div class="ulist"><ul><li><p><code>get</code> throws its exception</p></li><li><p>next <code>get</code> will try again</p></li></ul></div></li><li><p>no cancellation/timeout</p></li></ul></div></div></section><section id="_lazy_collections"><h2>Lazy collections</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">var list = List.ofLazy(2, index -&gt; "" + index);
 var map = Map.ofLazy(Set.of(0, 1), key -&gt; "" + key);</code></pre></div></div>
-<div class="paragraph"><p>Coming in JDK 27: <code>Set::ofLazy</code>.`</p></div></div></section><section id="_lazy_collections_2"><h2>Lazy collections</h2><div class="slide-content"><div class="paragraph"><p>Details:</p></div>
+<div class="paragraph"><p>Coming in JDK 27: <code>Set::ofLazy</code>.</p></div></div></section><section id="_lazy_collections_2"><h2>Lazy collections</h2><div class="slide-content"><div class="paragraph"><p>Details:</p></div>
 <div class="ulist"><ul><li><p>initializer executes at most once<br>
 <em>per element</em> (successfully)</p></li><li><p>collections are unmodifiable</p></li><li><p><code>equals</code> evaluates all elements<br>
 (<code>Collection</code> requires this)</p></li></ul></div>
@@ -771,7 +771,7 @@ try (var scope = StructuredTaskScope.open(
 }</code></pre></div></div></div></section><section id="_error_propagation"><h2>Error propagation</h2><div class="slide-content"><div class="paragraph"><p>If joiner cancels scope:</p></div>
 <div class="ulist"><ul><li><p>all child threads get interrupted</p></li><li><p><code>join</code> returns or throws</p></li></ul></div>
 <div class="paragraph"><p>But <code>StructuredTaskScope.close()</code> waits<br>
-until all child threds complete.</p></div>
+until all child threads complete.</p></div>
 <div class="paragraph"><p>⇝ Handle <code>InterruptedException</code> properly!</p></div></div></section><section id="_sharing_data"><h2>Sharing data</h2><div class="slide-content"><div class="paragraph"><p>Structured concurrency being scoped allows<br>
 inheriting scoped values to child threads.</p></div></div></section><section id="_scoped_values_2"><h2>Scoped values</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">ScopedValue.where(ANSWER, 42).run(() -&gt; {// scope ──┐
 	try (var scope = StructuredTaskScope    //      │
