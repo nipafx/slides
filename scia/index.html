@@ -417,9 +417,9 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://www.entwicklertag.de/" title="Karlsruher Entwicklertag"><img src="../_images/logo-karlsruher-entwicklertag-9de7812b.png" alt="Logo of Karlsruher Entwicklertag" class="logo" style="{host-logo-style}"></a>
+		<a href="https://devoxx.pl/" title="Devoxx PL"><img src="../_images/logo-devoxx-pl-a72425c9.png" alt="Logo of Devoxx PL" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://www.entwicklertag.de/" title="Karlsruher Entwicklertag website">Karlsruher Entwicklertag</a></p>
+			<p><a href="https://devoxx.pl/" title="Devoxx PL website">Devoxx PL</a></p>
 		</div>
 	</div>
 	<div class="participant">
@@ -440,9 +440,9 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://www.entwicklertag.de/" title="Karlsruher Entwicklertag"><img src="../_images/logo-karlsruher-entwicklertag-9de7812b.png" alt="Logo of Karlsruher Entwicklertag" class="logo" style="{host-logo-style}"></a>
+		<a href="https://devoxx.pl/" title="Devoxx PL"><img src="../_images/logo-devoxx-pl-a72425c9.png" alt="Logo of Devoxx PL" class="logo" style="{host-logo-style}"></a>
 		<div class="name"><p>
-			<a href="https://www.entwicklertag.de/" title="Karlsruher Entwicklertag website">Karlsruher Entwicklertag</a>
+			<a href="https://devoxx.pl/" title="Devoxx PL website">Devoxx PL</a>
 		</p></div>
 	</div>
 </footer>
@@ -453,10 +453,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 	})
 </script></div></section>
 <section><section id="_before_we_get_started"><h2>Before we get started</h2><div class="slide-content"><div class="ulist"><ul><li><p>slides at <a href="https://slides.nipafx.dev/scia">slides.nipafx.dev/scia</a><br>
-(hit "?" to get navigation help)</p></li><li><p>code: <a href="https://github.com/nipafx/scia">github.com/nipafx/scia</a></p></li><li><p>ask questions at any time</p></li></ul></div></div></section><section id="_before_we_get_started_2"><h2>Before we get started</h2><div class="slide-content"><div class="paragraph"><p>Structured concurrency is a preview API in Java 25.</p></div>
+(hit "?" to get navigation help)</p></li><li><p>code: <a href="https://github.com/nipafx/scia">github.com/nipafx/scia</a></p></li><li><p>ask questions at any time</p></li></ul></div></div></section><section id="_before_we_get_started_2"><h2>Before we get started</h2><div class="slide-content"><div class="paragraph"><p>Structured concurrency is a preview API in Java 27.</p></div>
 <div class="paragraph"><p>If you get the chance:</p></div>
-<div class="ulist"><ul><li><p>try it out (ideally in a production code base)</p></li><li><p>give feedback to the <a href="https://mail.openjdk.org/mailman/listinfo/loom-dev">loom-dev mailing list</a></p></li></ul></div>
-<div class="paragraph"><p>JDK 25: <a href="https://jdk.java.net/25">jdk.java.net/25</a></p></div></div></section></section>
+<div class="ulist"><ul><li><p>try it out</p><div class="ulist"><ul><li><p>ideally in a production code base</p></li><li><p>the preview in JDK 25 is similar</p></li></ul></div></li><li><p>give feedback to the <a href="https://mail.openjdk.org/mailman/listinfo/loom-dev">loom-dev mailing list</a></p></li></ul></div>
+<div class="paragraph"><p>JDK 27: <a href="https://jdk.java.net/27">jdk.java.net/27</a></p></div></div></section></section>
 <section><section id="_structured_concurrency_inaction"><h2>Structured Concurrency in&nbsp;Action</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr class="toc-current"><td>API Overview</td></tr> <tr><td>Cancellation</td></tr> <tr><td>Backpressure</td></tr> <tr><td>Building Blocks</td></tr> </table> </p></div></div></section><section id="_virtual_thread_potential"><h2>Virtual thread potential</h2><div class="slide-content"><div class="paragraph"><p>Virtual threads are cheap and plentiful:</p></div>
 <div class="ulist"><ul><li><p>no pooling necessary</p></li><li><p>allow thread per task</p></li><li><p>allow liberal creation<br>
 of threads for subtasks</p></li></ul></div>
