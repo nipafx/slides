@@ -616,7 +616,8 @@ var emoji = switch (bool) {
 	case null -&gt; "";
 	case true -&gt; "✅";
 	case false -&gt; "❌";
-}</code></pre></div></div></div></section><section id="_more_2"><h2>More</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/530">JEP 530</a>: Primitive Types in Patterns</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=_afECXGjfDI">Restoring the Balance with Primitive Patterns</a></p></li></ul></div></div></section></section>
+}</code></pre></div></div></div></section><section id="_more_2"><h2>More</h2><div class="slide-content"><div class="paragraph"><p>Fourth preview in JDK 26.</p></div>
+<div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/jeps/530">JEP 530</a>: Primitive Types in Patterns</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=_afECXGjfDI">Restoring the Balance with Primitive Patterns</a></p></li></ul></div></div></section></section>
 <section><section id="_java_26_7"><h2>Java 26</h2><div class="slide-content"><div class="paragraph"><p> <table class="toc"> <tr><td>Java 22 to 25</td></tr> <tr class="toc-current"><td>Java 26</td></tr> <tr><td style="padding-left: 2em;">Primitive Patterns</td></tr> <tr class="toc-current"><td style="padding-left: 2em;">Lazy Constants</td></tr> <tr><td style="padding-left: 2em;">HTTP/3</td></tr> <tr><td style="padding-left: 2em;">Structured Concurrency</td></tr> <tr><td style="padding-left: 2em;">PEM Encoding</td></tr> <tr><td>Deprecations & Removals</td></tr> </table> </p></div></div></section><section id="_laziness"><h2>Laziness</h2><div class="slide-content"><div class="paragraph"><p>Deferring computation is interesting&#8230;&#8203;</p></div>
 <div class="ulist"><ul><li><p>if it takes long</p></li><li><p>if later execution creates better results</p></li><li><p>if we may not need to do it</p></li></ul></div>
 <div class="paragraph"><p>But has tradeoffs:</p></div>
