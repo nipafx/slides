@@ -1,0 +1,46 @@
+== Project Loom
+image::images/loom.jpg[background, size=cover]
+
+> Support easy-to-use, high-throughput, lightweight concurrency and new programming models
+
+Deliverables:
+
+* virtual threads
+* scoped values
+* structured concurrency
+
+=== Timeline
+
+JDK 21:
+
+* virtual threads finalize (https://openjdk.org/jeps/444[JEP 444])
+* structured concurrency previews (https://openjdk.org/jeps/453[JEP 453])
+* scoped values preview (https://openjdk.org/jeps/446[JEP 446])
+
+JDK 25:
+
+* object monitors don't pin virtual threads (https://openjdk.org/jeps/491[JEP 491])
+* structured concurrency preview revamp (https://openjdk.org/jeps/499[JEP 499])
+* scoped values finalize (https://openjdk.org/jeps/506[JEP 506])
+
+=== Timeline
+
+JDK 26:
+
+* class initialization doesn't pin (https://bugs.openjdk.org/browse/JDK-8369238[JDK-8369238])
+
+JDK 27:
+
+* structured concurrency in 7th preview (https://openjdk.org/jeps/533[JEP 533])
+
+Current work:
+
+* finalize structured concurrency
+* improve lock info in thread dumps
+
+=== Deeper Dives
+
+* 📝 https://inside.java/2021/11/30/on-parallelism-and-concurrency/[On Parallelism and Concurrency]
+* 📝 https://www.250bpm.com/p/structured-concurrency[Structured Concurrency]
+* 📝 https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/[Notes on structured concurrency [...\]]
+* 🎥 https://www.youtube.com/watch?v=IosvCU9qM5M[Structured Concurrency in Action] (Oct 2025)

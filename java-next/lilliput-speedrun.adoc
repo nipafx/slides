@@ -1,0 +1,28 @@
+== Project Lilliput
+image::images/lilliput.jpg[background, size=cover]
+
+> Explore techniques to downsize Java object headers in the Hotspot JVM from 128 bits to 64 bits or less
+
+Deliverables:
+
+* compact object headers (⇝ 64 bits)
+* even more compact object headers (⇝ 32 bits)
+
+=== Timeline
+
+JDK 25:
+
+* compact object headers (https://openjdk.org/jeps/519[JEP 519])
+
+JDK 27:
+
+* compact object headers by default (https://openjdk.org/jeps/534[JEP 534])
+
+Maybe:
+
+* 32-bit object headers (https://openjdk.org/jeps/8349069[JEP draft])
+
+=== Deeper Dives
+
+* 📝 https://openjdk.org/jeps/450[JEP 450: Compact Object Headers (Experimental)]
+* 🎥 https://www.youtube.com/watch?v=r2G4ed2E4QY[Save 10-20% Memory With Compact Headers]

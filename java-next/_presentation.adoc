@@ -23,7 +23,7 @@ include::../_shared/highlight.js.adoc[]
 	font-size: 1.5em;
 }
 </style>
-<h2>Amber to Valhalla, Loom to Leyden, Babylon to Panama</h2>
+<h2>Amber to Valhalla, Leyden to Babylon</h2>
 ++++
 
 :host-name: Sunnyvale JUG
@@ -43,12 +43,11 @@ include::../_shared/event-on-title-and-footer.adoc[]
 
 ++++
 <table class="toc">
-	<tr><td>Project Panama</td></tr>
-	<tr><td>Project Loom</td></tr>
 	<tr><td>Project Amber</td></tr>
 	<tr><td>Project Leyden</td></tr>
 	<tr><td>Project Valhalla</td></tr>
 	<tr><td>Project Babylon</td></tr>
+	<tr><td>Project Speedrun</td></tr>
 </table>
 ++++
 
@@ -58,12 +57,6 @@ Slides at https://slides.nipafx.dev/java-next[slides.nipafx.dev/java-next].
 // P R E S E N T A T I O N //
 // ####################### //
 
-include::panama.adoc[]
-
-include::loom.adoc[]
-
-// include::misc.adoc[]
-
 include::amber.adoc[]
 
 include::leyden.adoc[]
@@ -71,6 +64,19 @@ include::leyden.adoc[]
 include::valhalla.adoc[]
 
 include::babylon.adoc[]
+
+== Project Speedrun
+image::images/speed.jpg[background, size=cover]
+
+> Not actually a project
+
+include::loom-speedrun.adoc[]
+
+include::panama-speedrun.adoc[]
+
+include::lilliput-speedrun.adoc[]
+
+include::detroit-speedrun.adoc[]
 
 // ######### //
 // O U T R O //
