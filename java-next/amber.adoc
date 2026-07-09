@@ -58,7 +58,7 @@ image::images/inside-java-newscast-29.png[width=80%]
 
 https://www.youtube.com/watch?v=5qYJYGvVLg8[Data-Oriented Programming]
 
-=== Amber endeavors
+=== Amber Endeavors
 
 Other endeavors and conversations:
 
@@ -69,12 +69,50 @@ Other endeavors and conversations:
 * serialization 2.0 (talks https://www.youtube.com/watch?v=fbqAyRJoQO0[#1], https://www.youtube.com/watch?v=R8Xubleffr8[#2])
 * concise method bodies (https://openjdk.org/jeps/8209434[JEP draft])
 
-=== String Templates?
+=== Primitive Patterns
 
-[link=https://www.youtube.com/watch?v=c6L4Ef9owuQ]
-image::images/inside-java-newscast-71.jpg[width=80%]
+Rounds out the language +
+by allowing primitives in patterns:
 
-https://www.youtube.com/watch?v=c6L4Ef9owuQ[🎥 What Happened to Java's String Templates?]
+```java
+int x = 16_777_217;
+if (x instanceof float f)
+	// lossless; use `f`
+else
+	// lossy
+```
+
+=== "Withers"
+
+Deriving new record instances +
+from existing ones:
+
+```java
+record Point(int x, int y) { }
+
+var p0 = new Point(0, 0);
+var p1 = p0 with { x = 1; };
+```
+
+(Strawman syntax.)
+
+=== Deconstructible Classes
+
+```java
+// ↙ CLASS        ↙ state description
+class Point(int x, int y) {
+
+	// fields
+	// constructors
+	//     if one matches the state description,
+	//     the class can be "withered"
+	// accessors
+	// equals, hashCode, etc.
+
+}
+```
+
+(Strawman syntax.)
 
 === Project Amber
 
