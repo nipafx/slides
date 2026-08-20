@@ -1,0 +1,110 @@
+= Valhalla, Now!
+:title: Valhalla, Now!
+:backend: revealjs
+:revealjs_theme: nipa-night
+:revealjsdir: ../_reveal.js/head
+:revealjs_controls: false
+:revealjs_progress: false
+:revealjs_slideNumber: false
+:revealjs_history: true
+:revealjs_center: true
+:revealjs_transition: fade
+:revealjs_backgroundTransition: fade
+:revealjs_parallaxBackgroundImage: images/valhalla.jpg
+:revealjs_parallaxBackgroundSize: 6039px 3887px
+:revealjs_totalTime: 2700
+:docinfo: shared
+:docinfodir: ../_shared
+
+:imagedir: images
+
+include::../_shared/highlight.js.adoc[]
+
+:host-name: JJUG
+:host-url: https://www.java-users.jp/
+:host-logo-url: images/logo-jjug.png
+include::../_shared/event-on-title-and-footer.adoc[]
+
+// ######### //
+// I N T R O //
+// ######### //
+
+// ⇝
+
+include::intro.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr class="toc-current"><td>Object Identity</td></tr> \
+	<tr><td>Value Types</td></tr> \
+	<tr><td>Declaration</td></tr> \
+	<tr><td>Behavior</td></tr> \
+	<tr><td>Recommendations</td></tr> \
+	<tr><td>Optimization</td></tr> \
+</table> \
+]
+include::pre-values.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>Object Identity</td></tr> \
+	<tr class="toc-current"><td>Value Types</td></tr> \
+	<tr><td>Declaration</td></tr> \
+	<tr><td>Behavior</td></tr> \
+	<tr><td>Recommendations</td></tr> \
+	<tr><td>Optimization</td></tr> \
+</table> \
+]
+include::values.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>Object Identity</td></tr> \
+	<tr><td>Value Types</td></tr> \
+	<tr class="toc-current"><td>Declaration</td></tr> \
+	<tr><td>Behavior</td></tr> \
+	<tr><td>Recommendations</td></tr> \
+	<tr><td>Optimization</td></tr> \
+</table> \
+]
+include::declaration.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>Object Identity</td></tr> \
+	<tr><td>Value Types</td></tr> \
+	<tr><td>Declaration</td></tr> \
+	<tr class="toc-current"><td>Behavior</td></tr> \
+	<tr><td>Recommendations</td></tr> \
+	<tr><td>Optimization</td></tr> \
+</table> \
+]
+include::behavior.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>Object Identity</td></tr> \
+	<tr><td>Value Types</td></tr> \
+	<tr><td>Declaration</td></tr> \
+	<tr><td>Behavior</td></tr> \
+	<tr class="toc-current"><td>Recommendations</td></tr> \
+	<tr><td>Optimization</td></tr> \
+</table> \
+]
+include::recommendations.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>Object Identity</td></tr> \
+	<tr><td>Value Types</td></tr> \
+	<tr><td>Declaration</td></tr> \
+	<tr><td>Behavior</td></tr> \
+	<tr><td>Recommendations</td></tr> \
+	<tr class="toc-current"><td>Optimization</td></tr> \
+</table> \
+]
+include::optimization.adoc[]
+
+include::../_shared/about-slide.adoc[]
+
+include::images/sources.adoc[]

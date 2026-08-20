@@ -1,0 +1,43 @@
+== Reset
+
+You've probably heard a lot about Project Valhalla:
+
+* indirection and flattening
+* object headers and density
+* identity and custom primitives
+* universal and specialized generics
+* performance benefits
+
+_Forget all that for now!_
+
+We will start where Java stands today.
+
+=== Value Classes
+
+Then we discuss:
+
+* JDK value classes
+* custom value classes
+* restrictions and behavior
+* optimization opportunities
+
+=== Value Classes in JDK 28
+
+All that is available in JDK 28:
+
+https://jdk.java.net/28/[jdk.java.net/28/]
+
+But only with `--enable-preview`.
+
+(Otherwise, even JDK value classes are regular classes.)
+
+=== Nota Bene
+
+All quotes come from https://openjdk.org/jeps/401[JEP 401: Value Objects (Preview)].
+
+A _must-read_ before you start using value classes!
+
+=== Outlook
+
+At the end, we can discuss +
+upcoming features from Project Valhalla.

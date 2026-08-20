@@ -1,0 +1,99 @@
+== {title}
+
+{toc}
+
+=== Value Classes
+
+Enter JEP 401 in JDK 28 with `--enable-preview`:
+
+> We introduce _value objects_ to model simple immutable data. A value object is an instance of a _value class_, declared with the `value` modifier. Classes without the value modifier are _identity classes_, and their instances are _identity objects_.
+
+=== Platform Value Classes
+
+In package `java.lang` : :: `Integer`, `Long`, `Float`, `Double`, `Byte`, `Short`, `Character`, `Boolean`, `Number`, `Record`
+In package `java.util` : :: `Optional`, `OptionalInt`, `OptionalLong`, `OptionalDouble`
+In package `java.time` : :: `LocalDate`, `LocalTime`, `LocalDateTime`, `ZonedDateTime`, `OffsetTime`, `OffsetDateTime`, `Duration`, `Instant`, `Period`, `Year`, `YearMonth`, `MonthDay`
+In package `java.time.chrono` : :: `MinguoDate`, `HijrahDate`, `JapaneseDate`, `ThaiBuddhistDate`
+
+=== First Experiments
+
+```java
+var x = LocalDate.of(2026, 8, 19);
+var y = LocalDate.of(2026, 8, 19);
+
+var identical = x == y; // true
+
+// synchronized (x) {
+//     ⇝ compile error:
+//       required: a type with identity
+// }
+```
+
+=== First Experiments
+
+```java
+Integer x1 = new Integer(0);
+Integer y1 = new Integer(0);
+var identical1 = x1 == y1; // true
+
+Integer x2 = 0;
+Integer y2 = 0;
+var identical2 = x2 == y2; // true
+
+Integer x3 = 2026;
+Integer y3 = 2026;
+var identical3 = x3 == y3; // true
+```
+
+=== Bad News
+
+> The `String` class, due to some dependencies on object identity in its API and implementation, is not a value class, so instances of `String` are always identity objects.
+
+=== More Platform Value Classes
+
+Project Valhalla is exploring the option +
+to migrate more JDK classes to value classes:
+
+> It’s worth asking which *other* JDK API classes might want to become value classes someday. I explored the question in conjunction with the CSR (JDK-8339199), and want to memorialize the experience here, for future reference.
+>
+> – Dan Smith, https://mail.openjdk.org/archives/list/core-libs-dev@openjdk.org/thread/Y72NRXM7KYBX43OKYBQMVKOZDWKG4MHS/[Identifying JDK value class candidates]
+
+=== Custom Value Classes
+
+> You can declare your own value classes by applying the `value` modifier to any class whose instances should be immutable and interchangeable:
+>
+> *Immutable* — All instance fields of the class are final, and the value represented by an instance will not change over time; and
+>
+> *Interchangeable* — It is not necessary to distinguish between two separately-created instances that represent the same value.
+
+
+=== Custom Value Classes
+
+```java
+value class ComplexNumber {
+	// ...
+}
+
+value record Point(int x, int y) {
+
+}
+```
+
+(Fun fact: The only new syntax is `value`.)
+
+=== Business as Usual
+
+> In most respects, value objects work the way that objects have always worked in the language: They have fields and methods, they are handled by reference, and their references can be `null`.
+
+=== Summary
+
+Value classes are conceptually simple:
+
+* value classes:
+** are reference types
+** opt out of identity
+** are immutable and interchangeable (!)
+* 30 JDK value classes
+* custom value classes with `value`
+
+But there are a few implications.

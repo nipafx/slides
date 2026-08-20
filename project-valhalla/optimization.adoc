@@ -1,0 +1,131 @@
+== {title}
+
+{toc}
+
+=== ✋ Stop Right There!
+
+Value classes have performance implications, +
+_but `value` should not be used as a "speed-up keyword"_.
+
+* JVM applies optimizations 
+* these depend on many factors
+* they will evolve over time
+
+Optimizing value objects will become part +
+of regular JDK performance work.
+
+=== References
+
+> At run time, a JVM can optimize value objects by encoding references to them in more compact forms than references to identity objects. Instead of allocating space in the heap for a value object, a JVM can _flatten_ and _scalarize_ the reference to the object.
+
+=== Reference Flattening
+
+> When a field of one object, or an element of an array, stores a reference to another object, a JVM can encode the other object's field values directly into the reference. When this is done, the reference is not a pointer to the other object in memory. The reference is said to be _flattened_.
+
+This usually requires an extra bit to encode nullity.
+
+=== Reference Flattening
+
+> An array of `LocalDate` references can be flattened by prepending a `null` flag to the year-month-day triple of a `LocalDate` object (an `int` and two `byte`-s). 
+
+```
++--------------+
+| LocalDate[5] |
++--------------+
+| 1|2026|08|16 |
+| 1|2026|08|17 |
+| 1|2026|08|18 |
+| 0|0000|00|00 |
+| 1|2026|08|20 |
++--------------+
+```
+
+=== Reference Flattening
+
+```java
+class Event {
+	private LocalDate day;	
+}
+```
+
+```sh
+# POINTER REFERENCE   ║ # FLATTENED REFERENCE
+┌                     ║ ┌
+| EVENT  ┌            ║ | EVENT
+| day -> | LOCALDATE  ║ | day[1|2026|08|19]
+└        | 2026|08|19 ║ └
+         └            ║
+```
+
+=== Reference Flattening
+
+Values still need to be written atomically.
+
+This is generally limited to 64 bits.
+
+Due to the nullity bit, this limits reference flattening +
+to values classes with total fields <64 bits. 😕
+
+=== Future Improvements
+
+Flattening would be more applicable with:
+
+* 128-bit atomic writes
+* language-level atomicity control
+* language-level nullity information
+* generic specialization (https://openjdk.org/jeps/218[JEP 218])
+
+=== Reference Scalarization
+
+When passing objects to or from a method, +
+the runtime generally references heap objects.
+
+For identity objects, escape analysis can prove +
+that the identity doesn't need to be tracked.
+
+⇝ The runtime can load fields once +
+and use the stack to pass them.
+
+=== Reference Scalarization
+
+Value objects lack identity, +
+so this can always be done.
+
+Unlike for flattening, +
+no strict boundary exists.
+
+=== At the JVM's Discretion
+
+> Reference flattening and scalarization are optimizations, not language features. You cannot directly control them. Like all optimizations, they are done at the discretion of the JVM. There are, however, things you can do to make it more likely that a JVM can apply these optimizations.
+
+=== Variable Declaration
+
+Only references that are declared as value classes can be optimizied, e.g.:
+
+```java
+// flattenable
+Integer[] ints = { 1996, 2006, 1996, null, null };
+// not flattenable
+Object[] objs = { 1996, 2006, 1996, null, null };
+
+// field is not flattenable
+record Box<T>(T field) { }
+// field stores a heap pointer 
+var b = new Box<LocalDate>(i); 
+```
+
+=== Summary
+
+Optimization of value objects:
+
+* JVM can flatten and scalarize some references
+* flattening is limited to small values
+* scalarization is more universally applicable
+
+=== Advice
+
+As (almost) always in Java:
+
+* write maintainable code
+* use constructs semantically
+* rely on JVM for optimization

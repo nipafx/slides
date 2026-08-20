@@ -1,0 +1,40 @@
+== {title}
+
+{toc}
+
+=== Getting Started
+
+> As a general rule, if a class with immutable state does not require identity then it is probably appropriate to adopt the `value` modifier. This includes abstract classes.
+
+=== Value Class Design
+
+Keep value class APIs small:
+
+> enough logic to construct, validate, and transform instances
+
+=== Equality vs ==
+
+> To test whether two value objects represent the same value, use the `equals` method. When declaring a class, define `equals` in a way that always returns `true` for interchangeable instances.
+
+=== Values != Records
+
+Values aren't records:
+
+* values give up identity for +
+  safety and performance 
+* records give up encapsulation for +
+  succinctness and usability
+
+But many classes need neither +
+identity nor encapsulation.
+
+=== Values ♥ Records
+
+Considerable overlap between values and records:
+
+* both immutable
+* both (often) represent simple data
+* both (often) have simple APIs
+
+⇝ Value records will be very common +
+(probably the norm).

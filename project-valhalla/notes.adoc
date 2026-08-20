@@ -1,0 +1,9 @@
+== Optimizations
+
+* "Now that `LocalDate` objects lack identity, a JVM need not represent references to them using pointers; it can, rather, encode the fields of LocalDate objects directly in the references."
+* ~> "Run-time optimizations for value objects"
+
+== Other Features
+
+* user-defined coversions
+* operator overloading

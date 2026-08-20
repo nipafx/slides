@@ -1,0 +1,113 @@
+== {title}
+
+{toc}
+
+=== Restrictions
+
+Value classes lack identity, +
+which changes/prevents identity-based operations.
+
+=== New Objects
+
+For identity classes, `new` guarantees an instance +
+that's not `==` to any other.
+
+> For a value class, invoking the `new` operator might not allocate a fresh object.
+
+⇝ Conceptually, every constructor could act +
+like a caching factory method.
+
+=== Deep Reflection
+
+Value class fields are truly immutable.
+
+> Using deep reflection, as embodied in the `setAccessible` and `set` methods of the `java.lang.reflect.Field` API, to mutate the fields of a value object is not supported. [...] Libraries must initialize instances of a value class using the class's constructors.
+
+=== Indistinguishability
+
+Historically, `==` compares identity.
+
+> After the introduction of value objects, the purpose of the `==` operator is to test whether two referenced objects are indistinguishable.
+
+For identity objects:
+
+* _indistinguishable_ and _identical_ are the same
+* the evolving definition has the same semantic
+
+=== Indistinguishability
+
+> The `==` operator compares value objects by comparing the objects' field values, so references to two objects are `==` if the objects have identical field values.
+
+That means:
+
+* for primitive fields: bitwise equality
+* for reference type fields: indistinguishability
+
+⇝ For value class fields, `==` is recursive.
+
+=== Object Monitors
+
+Operations like `wait`, `notify`, and `synchronize` +
+interact with an object's monitor.
+
+Object monitors are tied to an object's identity.
+
+⇝ These operations do not work on value objects.
+
+(Compile error if possible, otherwise run-time exception.)
+
+=== Finalization
+
+> The `finalize` method of a value object is never invoked by the garbage collector. javac issues identity warnings for value classes that override finalize.
+
+(Finalization is deprecated for removal - https://openjdk.org/jeps/421[JEP 421] ⑱)
+
+=== Serialization of Value Records
+
+Serialization of record instances +
+works through constructor invocation.
+
+> Serialization of value records works automatically
+
+=== Serialization of Non-Records
+
+Otherwise, serialization creates instances with all-`null` fields +
+and assigns them later, but value objects prohibit this.
+
+> Serialization of non-record value classes requires manual intervention. Value classes that implement `Serializable` must implement the `writeReplace` and `readResolve` methods so that a replacement object is serialized and deserialized in place of the value object itself.
+
+⇝ Otherwise, `InvalidClassException`.
+
+=== GC Interaction
+
+> The garbage collection APIs in the `java.lang.ref` package and the `java.util.WeakHashMap` class cannot be used with value objects. Attempting to create `Reference` objects for value objects will cause an `IdentityException` to be thrown.
+
+=== Your Operations
+
+If your operations depend on an object's identity, you can:
+
+* check with `Objects::hasIdentity`
+* verify with `Objects::requireIdentity`
+
+=== Business as Usual
+
+Everything else works as for identity classes, too, e.g.:
+
+> Methods that operate on `Object` or `Object[]` parameters accept value objects. Almost anywhere you need to provide an implementation of an interface, the implementation may be a value class. Generic types such as `List<T>` and `Comparable<T>` can be instantiated with value classes as the type arguments.
+
+=== Summary
+
+Behavioral differences vs identity classes:
+
+* `new` may not allocate a fresh object
+* `==` is field-wise comparison
+
+Behavioral restrictions:
+
+* no deep reflection
+* no object monitor interaction
+* no finalization
+* limited serialization (records or proxies)
+* no GC interaction
+
+What other benefits can we get?

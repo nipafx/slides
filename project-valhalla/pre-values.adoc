@@ -1,0 +1,123 @@
+== {title}
+
+{toc}
+
+=== Distinguishing Variables
+
+Which of these variable pairs can be distinguished?
+
+```java
+int a = 20260819;
+int b = 20260819;
+
+var x = LocalDate.of(2026, 8, 19);
+var y = LocalDate.of(2026, 8, 19);
+```
+
+[%step]
+* `a` and `b` can't
+* `x` and `y` can
+
+[%step]
+⇝ How?
+
+=== Identity
+
+`LocalDate` (and all other reference types) have _identity_, +
+a way to distinguish otherwise identical objects.
+
+```java
+var x = LocalDate.of(2026, 8, 19);
+var y = LocalDate.of(2026, 8, 19);
+
+var identical = x == y; // false
+
+synchronized (x) {
+	// x is "locked", y isn't
+}
+```
+
+=== Identity of Mutable Objects
+
+> For mutable objects, identity is important: It lets us distinguish two objects that have the same state now but may have different states in the future.
+
+```java
+var list1 = new ArrayList<String>();
+var list2 = new ArrayList<String>();
+
+var equal = list1.equals(list2); // true
+var identical = list1 == list2;  // false
+```
+
+⇝ Mutable objects can be equal but never interchangeable.
+
+=== Identity of Immutable Objects
+
+But equal _immutable_ objects are usually interchangeable.
+
+```java
+var x = LocalDate.of(2026, 8, 19);
+var y = LocalDate.of(2026, 8, 19);
+```
+
+Does it make sense to distinguish interchangeable objects?
+
+=== Confusing Identity: Integer
+
+```java
+Integer x1 = new Integer(0);
+Integer y1 = new Integer(0);
+var identical1 = x1 == y1; // ?
+```
+[%step]
+```java
+Integer x2 = 0;
+Integer y2 = 0;
+var identical2 = x2 == y2; // ?
+```
+[%step]
+```java
+Integer x3 = 2026;
+Integer y3 = 2026;
+var identical3 = x3 == y3; // ?
+```
+
+=== Confusing Identity: String
+
+```java
+var x1 = new String("0");
+var y1 = new String("0");
+var identical1 = x1 == y1; // ?
+```
+[%step]
+```java
+var x2 = "0";
+var y2 = "0";
+var identical2 = x2 == y2; // ?
+```
+[%step]
+```java
+var x3 = "0";
+var y3 = "" + RandomGenerator.getDefault().nextInt(1);
+var identical3 = x3 == y3; // ?
+```
+
+=== Performance Cost
+
+Tracking identity is expensive.
+
+Escape analysis exists to avoid it.
+
+=== Summary
+
+Current state:
+
+* all reference types have identity
+* identity distinguishes objects
+* many equal immutable objects are interchangeable
+* for many immutable classes:
+** identity is meaningless
+** identity can cause confusion
+** identity comes with a run-time cost
+
+Wouldn't it be nice to be able to opt out of identity?

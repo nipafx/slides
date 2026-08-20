@@ -1,0 +1,99 @@
+== {title}
+
+{toc}
+
+=== Restrictions
+
+Value classes are immutable and interchangeable, +
+which restricts some class-building capabilities.
+
+=== Immutability
+
+Value classes are immutable, +
+so all fields are implicitly final.
+
+(Truly final - even to reflection.)
+
+=== Inheritance
+
+Limited superclasses:
+
+> A value class can extend either `java.lang.Object` or an abstract value class, but not an identity class.
+
+No subclasses:
+
+> The class itself is also implicitly final, so it cannot be extended.
+
+=== Side Track
+
+Java 25 introduced the early construction phase:
+
+```java
+class ComplexNumber extends Number {
+
+	ComplexNumber(double r, double i) {
+		// early construction
+		this.r = r;
+		this.i = i;
+		super();
+		// late construction
+		LOGGER.log("Created: " + this);
+	}
+
+}
+```
+
+By default, code runs during late construction.
+
+=== Side Track
+
+During early construction:
+
+* can write and read fields
+* no other access to `this` +
+  (e.g. no instance method calls)
+
+⇝ Object can be initialized before other code "sees" it.
+
+=== Value Class Construction
+
+For value classes:
+
+* by default, code runs during early construction
+* call to `super(...)` or `this(...)`:
+** requires that all fields are set
+** is needed to enter late construction
+
+⇝ Initial mutation of final fields can never be observed.
+
+=== Business as Usual
+
+Except for the aforementioned restrictions, +
+inheritance works as for identity classes:
+
+* have `Object` at their inheritance hierarchy root
+* can implement interfaces
+* can be abstract +
+  (interpret as "abstract class is value-ready")
+
+=== Business as Usual
+
+Everything else works as for identity classes, too:
+
+* inherit `equals`, `hashCode`, `toString` from `Object`
+* no restriction on the types of fields +
+  (particularly both value abd identity classes work)
+
+=== Summary
+
+Declaration site restrictions:
+
+* fields and class are final
+* can't extends identity classes +
+  (except `java.lang.Object`)
+* by default, construction code runs +
+  during early construction
+
+Everything else works as usual for declaration.
+
+But there are behavioral differences.
