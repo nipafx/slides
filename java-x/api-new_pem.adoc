@@ -31,7 +31,7 @@ but moved way beyond:
 
 ⇝ Very helpful if Java handled them.
 
-=== Manual En-/Decoding
+=== Manual en-/decoding
 
 To *encode*:
 
@@ -58,7 +58,7 @@ String pem = encoder.encodeToString(cert);
 
 // decode
 PEMDecoder decoder = PEMDecoder.of();
-DEREncodable cert2 = decoder.decode(pem);
+BinaryEncodable cert2 = decoder.decode(pem);
 
 assert cert.equals(cert2);
 ```
@@ -73,7 +73,7 @@ Instances of `PEMEncoder` and `PEMDecoder` are:
 
 === Encodable
 
-All implementations of `DEREncodable` can be encoded:
+All implementations of `BinaryEncodable` can be encoded:
 
 * `AsymmetricKey` +
   (DH, DSA, EC, RSA, etc.)
@@ -90,7 +90,7 @@ All implementations of `DEREncodable` can be encoded:
 For decoding:
 
 * if the object type is known, call +
-  `decode(String, Class<T extends DEREncodable>)`:
+  `decode(String, Class<T extends BinaryEncodable>)`:
 +
 ```java
 KeyPair kp = decoder.decode(pem, KeyPair.class);
@@ -104,9 +104,9 @@ KeyPair kp = decoder.decode(pem, KeyPair.class);
 
 Unknown cryptographic objects are decoded to `PEM`:
 
-* `String type` (header text)
-* `String content` (Base64-encoded body)
-* `byte[] leadingData` (data preceding the header)
+* `String type()` (header text)
+* `String content()` (Base64-encoded body)
+* `byte[] leadingData()` (data preceding the header)
 
 === Encryption
 
@@ -129,7 +129,7 @@ DEREncodable der = decoder
 
 === More
 
-Second preview in JDK 26.
+Third preview in JDK 27.
 
-* 📝 https://openjdk.org/jeps/524[JEP 524]: PEM Encodings of Cryptographic Objects
+* 📝 https://openjdk.org/jeps/538[JEP 538]: PEM Encodings of Cryptographic Objects
 * 🎥 https://www.youtube.com/watch?v=hqvMn2SwKiI[Java 25 Encodes PEM]
