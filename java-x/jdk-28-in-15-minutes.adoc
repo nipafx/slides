@@ -1,0 +1,408 @@
+== Let's get started!
+
+*JDK 28* will be released in March 2027 +
+(early-access builds at https://jdk.java.net/28[jdk.java.net/28]).
+
+Feature freeze in December 2026.
+
+=== JDK 28 features
+
+Integrated changes (as of today):
+
+* value objects (preview)
+* default generational Shenandoah
+* strict field initialization (preview)
+* simple JSON API (incubator)
+* macOS/x64 port deprecation
+* PEM encodings
+
+=== JDK 28 features
+
+Ongoing previews that will continue or finalize:
+
+* lazy constants
+* primitive types in patterns
+* structured concurrency
+* vector API
+
+
+// ////////// //
+// SHORT JEPs //
+// ////////// //
+
+
+== Lightning round
+
+* strict field initialization (preview)
+* default generational Shenandoah
+* macOS/x64 port deprecation
+
+=== Strict field initialization
+
+A JVM preview feature for safer interaction with fields:
+
+* compiler can mark fields as strict
+* runtime ensures no reads before first write
+* runtime ensures single write for strict final fields +
+  (i.e. reflection can't mutate them)
+
+Marking fields as strict:
+
+* is generally incompatible for regular classes
+* is done for value and record instance fields
+
+=== Default gen. Shenandoah
+
+Shenandoah is:
+
+* a low-pause-time GC
+* Red Hat's alternative to Oracle's ZGC
+* not available in Oracle JDK
+
+Generational mode:
+
+* improves most GC metrics
+* introduction in JDK 24/25 (ZGC: 21)
+* default in JDK 28 (ZGC: 23)
+* will be the only mode in the future (ZGC: 24)
+
+=== macOS/x64 port deprecation
+
+Support for x64:
+
+* macOS 27 won't be available for x64
+* macOS 26 support will end in 2028
+
+Implications for Java:
+
+* no JDK 27+ port for macOS/x64
+* JDK 28 deactivates macOS/x64 buids
+* older Oracle JDK LTS versions +
+  keep supporting macOS/x64
+
+=== More
+
+* 📝 https://openjdk.org/jeps/539[JEP 539]: Strict Field Initialization (Preview)
+* 📝 https://openjdk.org/jeps/535[JEP 535]: Default Generational Shenandoah
+* 📝 https://openjdk.org/jeps/541[JEP 541]: macOS/x64 Port Deprecation
+
+Now on to the practical features!
+
+
+// ///////// //
+// PEM TEXTS //
+// ///////// //
+
+
+== PEM texts
+
+Representations of cryptographic objects +
+(keys, certificates, certificate revocation lists):
+
+```
+-----BEGIN PUBLIC KEY-----
+MFkwEwYHKoZIzj0CAQYIKoZIzj
+0DAQcDQgAEi/kRGOL7wCPTN4KJ
+2ppeSt5UYB6ucPjjuKDtFTXbgu
+OIFDdZ65O/8HTUqS/sVzRF+dg7
+H3/tkQ/36KdtuADbwQ==
+-----END PUBLIC KEY-----
+```
+
+=== PEM API
+
+PEM API encodes and decodes cryptographic objects:
+
+```java
+X509Certificate cert = // ...
+
+// encode
+PEMEncoder encoder = PEMEncoder.of();
+String pem = encoder.encodeToString(cert);
+
+// decode
+PEMDecoder decoder = PEMDecoder.of();
+BinaryEncodable cert2 = decoder.decode(pem);
+
+assert cert.equals(cert2);
+```
+
+=== Encodable
+
+All implementations of `BinaryEncodable` can be encoded:
+
+* `AsymmetricKey` +
+  (DH, DSA, EC, RSA, etc.)
+* `KeyPair`
+* `PKCS8EncodedKeySpec`
+* `X509EncodedKeySpec`
+* `X509Certificate`
+* `X509CRL`
+* `EncryptedPrivateKeyInfo`
+* `PEM`
+
+=== Decoding
+
+For decoding:
+
+* if the object type is known, call +
+  `decode(String, Class<T extends BinaryEncodable>)`:
++
+```java
+KeyPair kp = decoder.decode(pem, KeyPair.class);
+```
+* otherwise, switch over return value of `decode(String)`
+
+
+=== Details
+
+* `PEMEncoder`/`PEMDecoder` instances are +
+  immutable, thread-safe, and reusable
+* overloads for decoding from `InputStream` exist
+* unknown cryptographic objects are decoded to `PEM`
+* `PrivateKey`, `KeyPair`, `PKCS8EncodedKeySpec` +
+  instances can be encrypted/decrypted
+
+=== More
+
+The PEM API is final in JDK 28.
+
+* 📝 https://openjdk.org/jeps/542[JEP 542]: PEM Encodings of Cryptographic Objects
+* 🎥 https://www.youtube.com/watch?v=hqvMn2SwKiI[Java 25 Encodes PEM]
+
+
+// ///////////// //
+// VALUE CLASSES //
+// ///////////// //
+
+
+== Value classes reset
+
+You've probably heard a lot about Project Valhalla:
+
+* indirection and flattening
+* object headers and density
+* identity and custom primitives
+* universal and specialized generics
+* performance benefits
+
+_Forget all that for now!_
+
+=== Identity
+
+Current state:
+
+* all reference types have identity
+* identity distinguishes objects
+* many equal immutable objects are interchangeable +
+  (e.g. two `LocalDate.of(2026, 9, 9)`)
+
+For many immutable classes:
+
+* identity is meaningless
+* identity can cause confusion
+* identity comes with a run-time cost
+
+Wouldn't it be nice to be able to opt out of identity?
+
+=== Value classes
+
+Enter JEP 401 in JDK 28 with `--enable-preview`:
+
+> We introduce _value objects_ to model simple immutable data. A value object is an instance of a _value class_, declared with the `value` modifier. Classes without the value modifier are _identity classes_, and their instances are _identity objects_.
+
+=== Platform value classes
+
+With previews enabled, 30 JDK classes are value classes:
+
+* primitive wrappers
+* `Optional` types
+* many date/time API types
+
+=== Custom value classes
+
+You can create your own by adding `value`:
+
+```java
+value class ComplexNumber {
+	// ...
+}
+
+value record Point(int x, int y) {
+	// ...
+}
+```
+
+(Fun fact: The only new syntax is `value`.)
+
+=== Business as usual
+
+> In most respects, value objects work the way that objects have always worked in the language: They have fields and methods, they are handled by reference, and their references can be `null`.
+
+=== Declaration differences
+
+Declaration site restrictions:
+
+* fields and class are final
+* can't extends identity classes +
+  (except `java.lang.Object`)
+* by default, construction code runs +
+  during early construction
+
+=== Behavioral differences
+
+Behavioral differences vs identity classes:
+
+* `new` may not allocate a fresh object
+* `==` does a field-wise comparison
+
+Behavioral restrictions:
+
+* no deep reflection
+* no object monitor interaction
+* no finalization
+* limited serialization (records or proxies)
+* no GC interaction
+
+What other benefits can we get?
+
+=== Optimizations
+
+Optimization of value objects:
+
+* JVM can flatten and scalarize some references
+* flattening is limited to small values
+* scalarization is more universally applicable
+
+But, as (almost) always in Java:
+
+* write maintainable code
+* use constructs semantically
+* rely on JVM for optimization
+
+=== More
+
+Value classes have their first preview in JDK 28.
+
+* 📝 https://openjdk.org/jeps/401[JEP 401]: Value Objects (Preview)
+* 📝 State of Valhalla
+** https://openjdk.org/projects/valhalla/design-notes/state-of-valhalla/01-background[Part 1: The Road to Valhalla]
+** https://openjdk.org/projects/valhalla/design-notes/state-of-valhalla/02-object-model[Part 2: The Language Model]
+** https://openjdk.org/projects/valhalla/design-notes/state-of-valhalla/03-vm-model[Part 3: The JVM Model]
+* 🎥 https://www.youtube.com/watch?v=Dhn-JgZaBWo[Valhalla - Java's Epic Refactor] (Dec 2024)
+* 🎥 https://www.youtube.com/watch?v=Gz7Or9C0TpM[Growing the Java Language] (Aug 2025)
+
+
+// //////// //
+// JSON API //
+// //////// //
+
+
+== JSON API
+
+A simple API to parse, traverse, and format JSON:
+
+```java
+var jsonDoc = """
+	{
+		"users": [
+			{ "name": "John Doe" },
+			{ "name": "Jane Doe" }
+		]
+	}
+	""";
+
+JsonValue json = Json.parse(jsonDoc);
+```
+
+=== JsonValue
+
+```java
+public sealed interface JsonValue permits
+		JsonObject, JsonArray, JsonNull
+		JsonString, JsonNumber, JsonBoolean {
+
+	// ...
+
+}
+```
+
+=== JsonValue API
+
+```java
+String asString();
+double asDouble();
+long asLong();
+int asInt();
+boolean asBoolean();
+
+List<JsonValue> asList();
+
+Map<String, JsonValue> asMap();
+JsonValue get(String name);
+JsonValue get(int index);
+
+Optional<JsonValue> tryGet(String name);
+Optional<JsonValue> tryValue();
+```
+
+=== Using JsonValue
+
+```java
+JsonValue json = Json.parse(jsonDoc);
+// if structure is known
+var name = json
+	.get("users")
+	.get(0)
+	.get("name");
+var names = json
+	.get("users")
+	.asList().stream()
+	.map((JsonValue user) -> user.get("name"))
+	.toList();
+```
+
+=== Using JsonValue
+
+```java
+JsonValue json = Json.parse(jsonDoc);
+// if structure is unknown
+switch (json) {
+	case JsonString string -> // ...
+	case JsonNumber number -> // ...
+	// ...
+}
+```
+
+=== Advanced features
+
+This API is a "JSON starter set":
+
+* no parsing configuration
+* no streaming
+* no data binding
+
+Advanced features are left to ecosystem projects.
+
+=== More
+
+The JSON API is incubating for the first time in JDK 28.
+
+* 📝 https://openjdk.org/jeps/540[Simple JSON API (Incubator)]
+
+
+// ///// //
+// OUTRO //
+// ///// //
+
+
+== Outro
+
+Get *JDK 28* EA builds at https://jdk.java.net/28[jdk.java.net/28] +
+(unless you're on an x64 Mac 😉):
+
+* use the PEM text API
+* try out value objects and the JSON API +
+  (don't write more code than you can rewrite/delete)
+* benefit from hundreds of small improvements +
+  (API refinements, bug fixes, optimizations, etc.)
