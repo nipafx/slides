@@ -39,8 +39,9 @@ include::intro.adoc[]
 	<tr><td>Value Types</td></tr> \
 	<tr><td>Declaration</td></tr> \
 	<tr><td>Behavior</td></tr> \
-	<tr><td>Recommendations</td></tr> \
 	<tr><td>Optimization</td></tr> \
+	<tr><td>Recommendations</td></tr> \
+	<tr><td>Summary</td></tr> \
 </table> \
 ]
 include::pre-values.adoc[]
@@ -51,8 +52,9 @@ include::pre-values.adoc[]
 	<tr class="toc-current"><td>Value Types</td></tr> \
 	<tr><td>Declaration</td></tr> \
 	<tr><td>Behavior</td></tr> \
-	<tr><td>Recommendations</td></tr> \
 	<tr><td>Optimization</td></tr> \
+	<tr><td>Recommendations</td></tr> \
+	<tr><td>Summary</td></tr> \
 </table> \
 ]
 include::values.adoc[]
@@ -63,8 +65,9 @@ include::values.adoc[]
 	<tr><td>Value Types</td></tr> \
 	<tr class="toc-current"><td>Declaration</td></tr> \
 	<tr><td>Behavior</td></tr> \
-	<tr><td>Recommendations</td></tr> \
 	<tr><td>Optimization</td></tr> \
+	<tr><td>Recommendations</td></tr> \
+	<tr><td>Summary</td></tr> \
 </table> \
 ]
 include::declaration.adoc[]
@@ -75,8 +78,9 @@ include::declaration.adoc[]
 	<tr><td>Value Types</td></tr> \
 	<tr><td>Declaration</td></tr> \
 	<tr class="toc-current"><td>Behavior</td></tr> \
-	<tr><td>Recommendations</td></tr> \
 	<tr><td>Optimization</td></tr> \
+	<tr><td>Recommendations</td></tr> \
+	<tr><td>Summary</td></tr> \
 </table> \
 ]
 include::behavior.adoc[]
@@ -87,8 +91,22 @@ include::behavior.adoc[]
 	<tr><td>Value Types</td></tr> \
 	<tr><td>Declaration</td></tr> \
 	<tr><td>Behavior</td></tr> \
-	<tr class="toc-current"><td>Recommendations</td></tr> \
+	<tr class="toc-current"><td>Optimization</td></tr> \
+	<tr><td>Recommendations</td></tr> \
+	<tr><td>Summary</td></tr> \
+</table> \
+]
+include::optimization.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>Object Identity</td></tr> \
+	<tr><td>Value Types</td></tr> \
+	<tr><td>Declaration</td></tr> \
+	<tr><td>Behavior</td></tr> \
 	<tr><td>Optimization</td></tr> \
+	<tr class="toc-current"><td>Recommendations</td></tr> \
+	<tr><td>Summary</td></tr> \
 </table> \
 ]
 include::recommendations.adoc[]
@@ -99,11 +117,12 @@ include::recommendations.adoc[]
 	<tr><td>Value Types</td></tr> \
 	<tr><td>Declaration</td></tr> \
 	<tr><td>Behavior</td></tr> \
+	<tr><td>Optimization</td></tr> \
 	<tr><td>Recommendations</td></tr> \
-	<tr class="toc-current"><td>Optimization</td></tr> \
+	<tr class="toc-current"><td>Summary</td></tr> \
 </table> \
 ]
-include::optimization.adoc[]
+include::summary.adoc[]
 
 include::../_shared/about-slide.adoc[]
 

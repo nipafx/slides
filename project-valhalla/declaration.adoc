@@ -14,38 +14,31 @@ so all fields are implicitly final.
 
 (Truly final - even to reflection.)
 
-=== Inheritance
+[%step]
+But isn't the change from null fields +
+to assigned fields a mutation?
 
-Limited superclasses:
-
-> A value class can extend either `java.lang.Object` or an abstract value class, but not an identity class.
-
-No subclasses:
-
-> The class itself is also implicitly final, so it cannot be extended.
-
-=== Side Track
+=== Recap
 
 Java 25 introduced the early construction phase:
 
 ```java
 class ComplexNumber extends Number {
+	private final double r, i;
 
 	ComplexNumber(double r, double i) {
-		// early construction
-		this.r = r;
+		this.r = r; // early construction
 		this.i = i;
-		super();
-		// late construction
-		LOGGER.log("Created: " + this);
+		super(); // transitions early ⇝ late
+		LOGGER.log("Created: " + this); // late
 	}
-
 }
 ```
 
-By default, code runs during late construction.
+Without `this(...)` or `super(...)`, +
+code runs during late construction.
 
-=== Side Track
+=== Recap
 
 During early construction:
 
@@ -66,15 +59,24 @@ For value classes:
 
 ⇝ Initial mutation of final fields can never be observed.
 
+=== Inheritance
+
+Limited superclasses:
+
+> A value class can extend either `java.lang.Object` or an abstract value class, but not an identity class.
+
+No subclasses:
+
+> The class itself is also implicitly final, so it cannot be extended.
+
 === Business as Usual
 
 Except for the aforementioned restrictions, +
 inheritance works as for identity classes:
 
-* have `Object` at their inheritance hierarchy root
+* inherit from `Object`
 * can implement interfaces
-* can be abstract +
-  (interpret as "abstract class is value-ready")
+* can be abstract
 
 === Business as Usual
 
@@ -82,7 +84,7 @@ Everything else works as for identity classes, too:
 
 * inherit `equals`, `hashCode`, `toString` from `Object`
 * no restriction on the types of fields +
-  (particularly both value abd identity classes work)
+  (value and identity classes both work)
 
 === Summary
 

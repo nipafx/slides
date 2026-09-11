@@ -5,7 +5,7 @@
 === ✋ Stop Right There!
 
 Value classes have performance implications, +
-_but `value` should not be used as a "speed-up keyword"_.
+_but `value` should not be used as a "performance keyword"_.
 
 * JVM applies optimizations 
 * these depend on many factors
@@ -70,7 +70,7 @@ to values classes with total fields <64 bits. 😕
 
 Flattening would be more applicable with:
 
-* 128-bit atomic writes
+* performant 128-bit atomic writes
 * language-level atomicity control
 * language-level nullity information
 * generic specialization (https://openjdk.org/jeps/218[JEP 218])
@@ -100,7 +100,8 @@ no strict boundary exists.
 
 === Variable Declaration
 
-Only references that are declared as value classes can be optimizied, e.g.:
+Only references that are declared as value classes +
+can be optimizied, e.g.:
 
 ```java
 // flattenable
@@ -111,7 +112,7 @@ Object[] objs = { 1996, 2006, 1996, null, null };
 // field is not flattenable
 record Box<T>(T field) { }
 // field stores a heap pointer 
-var b = new Box<LocalDate>(i); 
+var box = new Box<LocalDate>(x); 
 ```
 
 === Summary
@@ -121,11 +122,3 @@ Optimization of value objects:
 * JVM can flatten and scalarize some references
 * flattening is limited to small values
 * scalarization is more universally applicable
-
-=== Advice
-
-As (almost) always in Java:
-
-* write maintainable code
-* use constructs semantically
-* rely on JVM for optimization

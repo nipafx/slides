@@ -50,6 +50,13 @@ That means:
 Operations like `wait`, `notify`, and `synchronize` +
 interact with an object's monitor.
 
+```java
+Object x = LocalDate.of(2026, 9, 11);
+synchronized (x) {
+	// ...
+}
+```
+
 Object monitors are tied to an object's identity.
 
 ⇝ These operations do not work on value objects.

@@ -1,0 +1,38 @@
+== {title}
+
+{toc}
+
+=== Summary
+
+Value types in a nutshell:
+
+* identity is often harmful for immutable classes
+* value classes:
+** are immutable classes without identity
+** are compared by fields with `==`
+** have some behavioral restrictions
+** are otherwise regular classes
+* the runtime can flatten and scalarize +
+  value objects to improve performance
+
+=== In JDK 28
+
+Value types are a preview feature.
+
+If enabled with `--enable-preview`:
+
+* 30 JDK classes become value classes
+* custom value classes with `value`
+
+Experiment and give feedback!
+
+=== More
+
+* 📝 https://openjdk.org/jeps/401[JEP 401]: Value Objects (Preview)
+* 📝 https://johan-sjolen.github.io/post/compiler-sympathy/compiler-sympathy/[Value Classes Still Need Compiler Sympathy]
+* 📝 State of Valhalla
+** https://openjdk.org/projects/valhalla/design-notes/state-of-valhalla/01-background[Part 1: The Road to Valhalla]
+** https://openjdk.org/projects/valhalla/design-notes/state-of-valhalla/02-object-model[Part 2: The Language Model]
+** https://openjdk.org/projects/valhalla/design-notes/state-of-valhalla/03-vm-model[Part 3: The JVM Model]
+* 🎥 https://www.youtube.com/watch?v=Dhn-JgZaBWo[Valhalla - Java's Epic Refactor] (Dec 2024)
+* 🎥 https://www.youtube.com/watch?v=Gz7Or9C0TpM[Growing the Java Language] (Aug 2025)
