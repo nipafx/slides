@@ -1,0 +1,51 @@
+= Modern Java in Practice
+:backend: revealjs
+:revealjs_theme: nipa-night
+:revealjsdir: ../_reveal.js/head
+:revealjs_controls: false
+:revealjs_progress: false
+:revealjs_slideNumber: false
+:revealjs_history: true
+:revealjs_center: true
+:revealjs_transition: fade
+:revealjs_backgroundTransition: fade
+:revealjs_parallaxBackgroundImage: images/modern-colors.jpg
+:revealjs_parallaxBackgroundSize: 4500px 3000px
+:revealjs_totalTime: 2700
+:docinfo: shared
+:docinfodir: ../_shared
+
+:imagedir: images
+
+include::../_shared/highlight.js.adoc[]
+
+++++
+<style>
+.reveal .title h1 {
+	font-size: 3em;
+}
+.reveal .title h2 {
+	font-size: 1.75em;
+}
+</style>
+<h2>The Features That Matter</h2>
+++++
+
+:host-name: Devoxx BE
+:host-url: https://devoxx.be/
+:host-logo-url: images/logo-devoxx.png
+include::../_shared/event-on-title-and-footer.adoc[]
+
+
+:title: Modern Java in Practice
+
+// ######### //
+// I N T R O //
+// ######### //
+
+// ⇝
+
+
+include::../_shared/about-slide.adoc[]
+
+include::images/sources.adoc[]
