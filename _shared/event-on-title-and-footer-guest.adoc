@@ -18,6 +18,7 @@
 		<a href="{guest-url}" title="{guest-name}"><img src="images/{guest-photo}"  alt="Photo of {guest-name}" class="logo"></a>
 		<div class="name">
 			<p><a href="{guest-url}" title="{guest-name} online">{guest-name}</a></p>
+			<p><a href="{guest-url}" title="{guest-name} online">{guest-byline}</a></p>
 		</div>
 	</div>
 </div>
@@ -33,6 +34,7 @@
 		<a href="{guest-url}" title="{guest-name}"><img src="images/{guest-photo}"  alt="Photo of {guest-name}" class="logo"></a>
 		<div class="name"><p>
 			<a href="{guest-url}" title="{guest-name} online">{guest-name}</a>
+			/ <a href="{guest-url}" title="{guest-name} online">{guest-byline}</a>
 		</p></div>
 	</div>
 	<div class="participant">
