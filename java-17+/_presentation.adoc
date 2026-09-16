@@ -45,7 +45,66 @@ include::../_shared/event-on-title-and-footer.adoc[]
 
 // ⇝
 
+// TODO: 5 min intro
 
+// FS - 40 mins: pattern matching and DOP
+:toc: pass:[ \
+<table class="toc"> \
+	<tr class="toc-current"><td>Patterns and Data</td></tr> \
+</table> \
+]
+include::pattern-matching.adoc[]
+
+// NP - 30 mins: virtual threads and structured concurrency
+:toc: pass:[ \
+<table class="toc"> \
+	<tr class="toc-current"><td>Better Concurrency</td></tr> \
+</table> \
+]
+include::concurrency.adoc[]
+
+// FS - 10 mins: on-ramp for beginners
+// NP -  5 mins: better experiments for experts
+:toc: pass:[ \
+<table class="toc"> \
+	<tr class="toc-current"><td>On-Ramp and Fast Lane</td></tr> \
+</table> \
+]
+include::on-ramp.adoc[]
+
+// FS: APIs - 30 mins: stream gatherers, sequenced collections, lazy constants, HTTP/3 (at least; I would split into one file per API)
+:toc: pass:[ \
+<table class="toc"> \
+	<tr class="toc-current"><td>APIs</td></tr> \
+</table> \
+]
+include::apis.adoc[]
+
+// NP - 10 mins: improved performance, like ahead-of-time computation and compact object headers
+:toc: pass:[ \
+<table class="toc"> \
+	<tr class="toc-current"><td>Performance</td></tr> \
+</table> \
+]
+include::performance.adoc[]
+
+// NP - 5 mins: better security - most out of the box, some on demand
+:toc: pass:[ \
+<table class="toc"> \
+	<tr class="toc-current"><td>Security</td></tr> \
+</table> \
+]
+include::security.adoc[]
+
+// NP - 20 mins: better tooling - most out of the box, some on demand
+:toc: pass:[ \
+<table class="toc"> \
+	<tr class="toc-current"><td>Tooling</td></tr> \
+</table> \
+]
+include::tooling.adoc[]
+
+// TODO: better last slide
 include::../_shared/about-slide.adoc[]
 
 include::images/sources.adoc[]
