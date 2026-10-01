@@ -1,0 +1,88 @@
+== {title}
+
+{toc}
+
+=== Structured concurrency
+
+> When the flow of execution splits into multiple concurrent flows, they rejoin in the same code block.
+
+Term coined/refined by:
+
+* Martin Sustrik, https://www.250bpm.com/p/structured-concurrency[Structured Concurrency]
+* Nathaniel J. Smith, https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/[Notes on structured concurrency [...\]]
+
+=== Structured concurrency
+
+```java
+String executeTasks() throws InterruptedException {
+	// implicitly short-circuits on error
+	try (var scope = StructuredTaskScope.open()) {
+		Subtask<String> taskA = scope.fork(this::doA);
+		Subtask<String> taskB = scope.fork(this::doB);
+
+		// wait explicitly for success
+		// (throws errors if there were any)
+		scope.join();
+
+		// all tasks succeeded
+		return taskA.get() + taskB.get();
+	} catch (FailedException ex) {
+		return ex.getMessage();
+	}
+}
+```
+
+=== Properties
+
+Threads are short-lived:
+
+* start when task begins
+* end on completion
+
+⇝ Establishes parent-child/sibling relationships +
+  and logical grouping of tasks/threads.
+
+=== Completion
+
+Use `Joiner` to configure success/failure policy:
+
+* how are results collected?
+* when are subtasks cancelled?
+* when does `join` throw?
+
+Pass to `StructuredTaskScope.open(Joiner)`.
+
+=== Any successful
+
+```java
+try (var scope = StructuredTaskScope.open(
+		Joiner.<String> anySuccessfulOrThrow())) {
+	// no need to grab the `Subtask` instances
+	scope.fork(this::taskA);
+	scope.fork(this::taskB);
+
+	// returns the first successful result
+	return scope.join();
+} catch (FailedException ex) {
+	// TODO: handle task errors
+}
+```
+
+=== Structured concurrency
+
+Benefits:
+
+* defines a scope for concurrency
+* simplifies control flow
+* simplifies grouped result/error handling
+* makes thread relationships visible +
+  (in thread dumps and soon🤞 debuggers)
+
+=== More
+
+The structured concurrency API will probably finalize in JDK 28.
+
+* 📝 https://openjdk.org/jeps/543[JEP 543]: Structured Concurrency
+* 📝 https://www.250bpm.com/p/structured-concurrency[Structured Concurrency]
+* 📝 https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/[Notes on structured concurrency [...\]]
+* 🎥 https://www.youtube.com/watch?v=vLJDPmXufQw[Structured Concurrency Revamp in Java 25]

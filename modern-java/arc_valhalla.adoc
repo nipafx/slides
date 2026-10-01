@@ -1,0 +1,128 @@
+== {title}
+
+{toc}
+
+=== Valhalla reset
+
+You've probably heard a lot about Project Valhalla:
+
+* indirection and flattening
+* object headers and density
+* identity and custom primitives
+* universal and specialized generics
+* performance benefits
+
+_Forget all that for now!_
+
+=== Identity
+
+Current state:
+
+* all reference types have identity
+* identity distinguishes objects
+* many equal immutable objects are interchangeable +
+  (e.g. two `LocalDate.of(2026, 7, 31)`)
+
+For many immutable classes:
+
+* identity is meaningless
+* identity can cause confusion
+* identity comes with a run-time cost
+
+Wouldn't it be nice to be able to opt out of identity?
+
+=== Value classes
+
+Enter JEP 401 in JDK 28 with `--enable-preview`:
+
+> We introduce _value objects_ to model simple immutable data. A value object is an instance of a _value class_, declared with the `value` modifier. Classes without the value modifier are _identity classes_, and their instances are _identity objects_.
+
+=== Platform value classes
+
+With previews enabled, 30 JDK classes are value classes:
+
+* primitive wrappers
+* `Optional` types
+* many date/time API types
+
+=== Custom value classes
+
+You can create your own by adding `value`:
+
+```java
+value class ComplexNumber {
+	// ...
+}
+
+value record Point(int x, int y) {
+	// ...
+}
+```
+
+(Fun fact: The only new syntax is `value`.)
+
+=== Business as usual
+
+> In most respects, value objects work the way that objects have always worked in the language: They have fields and methods, they are handled by reference, and their references can be `null`.
+
+=== Declaration differences
+
+Declaration site restrictions:
+
+* fields and class are final
+* can't extends identity classes +
+  (except `java.lang.Object`)
+* by default, construction code runs +
+  during early construction
+
+=== Behavioral differences
+
+Behavioral differences vs identity classes:
+
+* `new` may not allocate a fresh object
+* `==` does a field-wise comparison
+
+Behavioral restrictions:
+
+* no deep reflection
+* no object monitor interaction
+* no finalization
+* limited serialization (records or proxies)
+* no GC interaction
+
+What other benefits can we get?
+
+=== Optimizations
+
+Optimization of value objects:
+
+* JVM can flatten and scalarize some references
+* flattening is limited to small values
+* scalarization is more universally applicable
+
+But, as (almost) always in Java:
+
+* write maintainable code
+* use constructs semantically
+* rely on JVM for optimization
+
+=== Future work
+
+Project Valhalla has a long way to go:
+
+* manage nullity and atomicity to increase flattening
+* introduce type classes for limited operator overloading
+* add universal and specialized generics +
+  for a better language and more flattening
+
+=== More
+
+Value classes have their first preview in JDK 28.
+
+* 📝 https://openjdk.org/jeps/401[JEP 401]: Value Objects (Preview)
+* 📝 State of Valhalla
+** https://openjdk.org/projects/valhalla/design-notes/state-of-valhalla/01-background[Part 1: The Road to Valhalla]
+** https://openjdk.org/projects/valhalla/design-notes/state-of-valhalla/02-object-model[Part 2: The Language Model]
+** https://openjdk.org/projects/valhalla/design-notes/state-of-valhalla/03-vm-model[Part 3: The JVM Model]
+* 🎥 https://www.youtube.com/watch?v=Dhn-JgZaBWo[Valhalla - Java's Epic Refactor] (Dec 2024)
+* 🎥 https://www.youtube.com/watch?v=Gz7Or9C0TpM[Growing the Java Language] (Aug 2025)

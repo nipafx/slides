@@ -1,0 +1,71 @@
+== {title}
+
+{toc}
+
+=== PEM texts
+
+Representations of cryptographic objects +
+(keys, certificates, certificate revocation lists):
+
+```
+-----BEGIN PUBLIC KEY-----
+MFkwEwYHKoZIzj0CAQYIKoZIzj
+0DAQcDQgAEi/kRGOL7wCPTN4KJ
+2ppeSt5UYB6ucPjjuKDtFTXbgu
+OIFDdZ65O/8HTUqS/sVzRF+dg7
+H3/tkQ/36KdtuADbwQ==
+-----END PUBLIC KEY-----
+```
+
+=== PEM API
+
+PEM API encodes and decodes cryptographic objects:
+
+```java
+X509Certificate cert = // ...
+
+// encode
+PEMEncoder encoder = PEMEncoder.of();
+String pem = encoder.encodeToString(cert);
+
+// decode
+PEMDecoder decoder = PEMDecoder.of();
+BinaryEncodable cert2 = decoder.decode(pem);
+
+assert cert.equals(cert2);
+```
+
+=== Encodable
+
+All implementations of `BinaryEncodable` can be encoded:
+
+* `AsymmetricKey` +
+  (DH, DSA, EC, RSA, etc.)
+* `KeyPair`
+* `PKCS8EncodedKeySpec`
+* `X509EncodedKeySpec`
+* `X509Certificate`
+* `X509CRL`
+* `EncryptedPrivateKeyInfo`
+* `PEM`
+
+=== Decoding
+
+For decoding:
+
+* if the object type is known, call +
+  `decode(String, Class<T extends BinaryEncodable>)`:
++
+```java
+KeyPair kp = decoder.decode(pem, KeyPair.class);
+```
+* otherwise, switch over return value of `decode(String)`
+
+
+=== More
+
+The PEM API is final in JDK 28.
+
+* 📝 https://openjdk.org/jeps/542[JEP 542]: PEM Encodings of Cryptographic Objects
+* 🎥 https://www.youtube.com/watch?v=hqvMn2SwKiI[Java 25 Encodes PEM]
+

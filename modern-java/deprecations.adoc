@@ -1,0 +1,38 @@
+== {title}
+
+{toc}
+
+=== Cleaning house
+
+Already removed:
+
+* macOS/x64 port ㉘ (https://openjdk.org/jeps/541[JEP 541])
+* applet API ㉖ (https://openjdk.org/jeps/504[JEP 504])
+* 32-bit x86 ports ㉕ (https://openjdk.org/jeps/503[JEP 503])
+* security manager ㉔ (https://openjdk.org/jeps/486[JEP 486])
+* biased locking ⑱ (https://openjdk.org/jeps/374[JEP 374], https://bugs.openjdk.org/browse/JDK-8256425[JDK-8256425])
+* RMI activation ⑰ (https://openjdk.org/jeps/407[JEP 407])
+* Nashorn ⑮ (https://openjdk.org/jeps/372[JEP 372])
+* concurrent mark sweep GC ⑭ (https://openjdk.org/jeps/363[JEP 363])
+
+=== Cleaning house
+
+Deprecated (for removal)
+
+* finalization ⑱ (https://openjdk.org/jeps/421[JEP 421])
+* memory access via `Unsafe` ㉔ (https://openjdk.org/jeps/498[JEP 498])
+
+=== Integrity by default
+
+Disallow by default:
+
+* mutating final fields ㉖ (https://openjdk.org/jeps/500[JEP 500])
+* JNI ㉔ (https://openjdk.org/jeps/472[JEP 472])
+* dynamic agents ㉑ (https://openjdk.org/jeps/451[JEP 451])
+
+=== More
+
+* 📝 https://openjdk.org/jeps/8305968[JEP draft: Integrity by Default]
+* 🎥 https://www.youtube.com/watch?v=ucdzGd-f8as[Why Is Integrity by Default So Important?]
+* 🎥 https://www.youtube.com/watch?v=3HnH6G_zcP0[Future Java - Prepare Your Codebase Now!]
+* 🎥 https://www.youtube.com/watch?v=5jIkRqBuSBs[How to Upgrade to Java 21] and https://www.youtube.com/watch?v=9azNjz7s1Ck[Java 25]

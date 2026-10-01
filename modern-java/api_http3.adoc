@@ -1,0 +1,53 @@
+== {title}
+
+{toc}
+
+=== HTTP client
+
+Java's HTTP API:
+
+```java
+HttpClient client = HttpClient.newBuilder()
+	.version(HTTP_2)
+	.build();
+
+HttpRequest request = HttpRequest.newBuilder()
+	.uri(URI.create("https://dev.java"))
+	.build();
+
+var response = client
+	.send(request, BodyHandlers.ofString());
+```
+
+=== HTTP/3
+
+It now supports HTTP/3:
+
+```java
+HttpClient client = HttpClient.newBuilder()
+	.version(HTTP_3)
+	.build();
+
+HttpRequest request = HttpRequest.newBuilder()
+	.uri(URI.create("https://dev.java"))
+	.version(HTTP_3)
+	.build();
+```
+
+=== Connection upgrades
+
+Network stacks:
+
+* HTTP/1.1 and 2 use TCP
+* HTTP/3 uses QUIC over UDP
+
+⇝ Can't upgrade a connection to /3.
+
+Check documentation for version selection.
+
+=== More
+
+HTTP/3 is final in JDK 26.
+
+* 📝 https://openjdk.org/jeps/517[JEP 517]: HTTP/3 for the HTTP Client API
+* 🎧 https://inside.java/2026/02/26/podcast-048/[HTTP/3 in Java 26 - Inside Java Podcast 48]

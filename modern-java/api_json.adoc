@@ -1,0 +1,96 @@
+== {title}
+
+{toc}
+
+=== JSON API
+
+A simple API to parse, traverse, and format JSON:
+
+```java
+var jsonDoc = """
+	{
+		"users": [
+			{ "name": "John Doe" },
+			{ "name": "Jane Doe" }
+		]
+	}
+	""";
+
+JsonValue json = Json.parse(jsonDoc);
+```
+
+=== JsonValue
+
+```java
+public sealed interface JsonValue permits
+		JsonObject, JsonArray, JsonNull
+		JsonString, JsonNumber, JsonBoolean {
+
+	// ...
+
+}
+```
+
+=== JsonValue API
+
+```java
+String asString();
+double asDouble();
+long asLong();
+int asInt();
+boolean asBoolean();
+
+List<JsonValue> asList();
+
+Map<String, JsonValue> asMap();
+JsonValue get(String name);
+JsonValue get(int index);
+
+Optional<JsonValue> tryGet(String name);
+Optional<JsonValue> tryValue();
+```
+
+=== Using JsonValue
+
+```java
+JsonValue json = Json.parse(jsonDoc);
+// if structure is known
+var name = json
+	.get("users")
+	.get(0)
+	.get("name");
+var names = json
+	.get("users")
+	.asList().stream()
+	.map((JsonValue user) -> user.get("name"))
+	.toList();
+```
+
+=== Using JsonValue
+
+```java
+JsonValue json = Json.parse(jsonDoc);
+// if structure is unknown
+switch (json) {
+	case JsonString string -> // ...
+	case JsonNumber number -> // ...
+	// ...
+}
+```
+
+=== Advanced features
+
+This API is a "JSON starter set":
+
+* no parsing configuration
+* no streaming
+* no data binding
+
+Advanced features are left to ecosystem projects.
+
+=== More
+
+The JSON API is incubating for the first time in JDK 28.
+
+* 📝 https://openjdk.org/jeps/540[JEP 540]: Simple JSON API (Incubator)
+

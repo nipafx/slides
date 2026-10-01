@@ -1,0 +1,54 @@
+= Modern Java
+:title: Modern Java
+:backend: revealjs
+:revealjs_theme: nipa-night
+:revealjsdir: ../_reveal.js/head
+:revealjs_controls: false
+:revealjs_progress: false
+:revealjs_slideNumber: false
+:revealjs_history: true
+:revealjs_center: true
+:revealjs_transition: fade
+:revealjs_backgroundTransition: fade
+:revealjs_parallaxBackgroundImage: images/modern.jpg
+:revealjs_parallaxBackgroundSize: 6000px 4000px
+:revealjs_totalTime: 1800
+:docinfo: shared
+:docinfodir: ../_shared
+
+:imagedir: images
+
+include::../_shared/highlight.js.adoc[]
+
+++++
+<style>
+.reveal .title h1 {
+	font-size: 3em;
+}
+.reveal .title h2 {
+	font-size: 1.75em;
+}
+</style>
+<h2>Past | Present | Future</h2>
+++++
+
+:host-name: HKA
+:host-url: https://www.h-ka.de/
+:host-logo-url: images/logo-hka.jpg
+include::../_shared/event-on-title-and-footer.adoc[]
+
+// ######### //
+// I N T R O //
+// ######### //
+
+// ⇝
+
+include::past.adoc[]
+
+include::present.adoc[]
+
+include::future.adoc[]
+
+include::../_shared/about-slide.adoc[]
+
+include::images/sources.adoc[]

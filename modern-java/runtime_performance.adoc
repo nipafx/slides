@@ -1,0 +1,114 @@
+== {title}
+
+{toc}
+
+=== Performance
+
+Continuous performance improvements, e.g.:
+
+* reduced virtual thread pinning (https://bugs.java.com/bugdatabase/JDK-8369238[JDK-8369238]) ㉖
+* G1 across the board (particularly https://openjdk.org/jeps/522[JEP 522]) ㉖ ㉗
+* G1 becomes true default GC (https://openjdk.org/jeps/523[JEP 523]) ㉗
+* compact object headers by default (https://openjdk.org/jeps/534[JEP 534]) ㉗
+
+And many, many more: https://inside.java/2026/06/09/jdk-26-performance-improvements/[JDK 26], https://inside.java/2026/09/28/performance-update-jdk27/[JDK 27].
+
+=== characteristics
+
+Java has really good peak performance, +
+but also tends to have:
+
+* slow startup time
+* slow warmup time
+
+This is due to a lot of early work +
+(e.g. class loading, profiling, JIT).
+
+=== AOTCache
+
+Project Leyden introduces the _AOTCache_:
+
+* observe the JVM
+* capture decisions in an AOTCache
+* use as "initial state" during future run
+* fall back to live observation/optimization +
+  if necessary and possible
+
+=== AOT computation
+
+Creating and using the AOTCache:
+
+```sh
+# training run (⇝ AOTCache)
+$ java -XX:AOTCacheOutput=app.aot
+       -cp app.jar com.example.App ...
+# production run (AOTCache ⇝ performance)
+$ java -XX:AOTCache=app.aot
+       -cp app.jar com.example.App ...
+```
+
+=== Class loading & linking
+
+> Improve startup time by making the classes of an application instantly available, in a loaded and linked state, when the HotSpot JVM starts.
+
+Spring PetClinic benchmarks:
+
+* up to ~40% startup time reduction
+* AOT cache size of ~130 MB
+
+=== Method profiling
+
+> Improve warmup time by making method-execution profiles from a previous run of an application instantly available, when the HotSpot Java Virtual Machine starts.
+
+Benchmark of a 100_000x loop over a simple stream:
+
+* ~20% run time reduction
+* AOT cache size increased by ~2.5%
+
+=== Streaming cached objects
+
+> Making it possible to load cached Java objects sequentially into memory from a neutral, GC-agnostic format.
+
+* allows use of any garbage collector
+* does not block when initializing heap
+* takes longer for warm starts and +
+  requires a CPU core
+
+(Note: The cache contains _no_ application instances.)
+
+=== Code Compilation
+
+> Improve startup and warmup time by making optimized native code for an application instantly available when the HotSpot JVM starts.
+
+Benchmarks with `javac`:
+
+* ~15% startup time reduction
+* ~75% fewer warmup iterations
+
+[state="empty",background-color="white"]
+=== !
+image::images/leyden-speedup-code-cache-projects.png[background, size=contain]
+
+[state="empty",background-color="white"]
+=== !
+image::images/leyden-speedup-code-cache-time.png[background, size=contain]
+
+=== AOT limitations
+
+* for code compilation: AArch64 or x64
+* training vs production:
+** same JDK release / architecture / OS
+** for code compilation: same CPU features & GC
+** consistent class path
+** consistent module options
+* limited use of JVMTI agents
+
+Otherwise, unsuitable portions are ignored.
+
+=== More
+
+* 📝 https://openjdk.org/jeps/483[JEP 483]: AOT Class Loading and Linking ㉔
+* 📝 https://openjdk.org/jeps/515[JEP 515]: AOT Method Profiling ㉕
+* 📝 https://openjdk.org/jeps/514[JEP 514]: AOT CLI Ergonomics ㉕
+* 📝 https://openjdk.org/jeps/516[JEP 516]: AOT Object Caching with Any GC ㉖
+* 📝 https://openjdk.org/jeps/544[JEP 544]: AOT Code Compilation ㉘
