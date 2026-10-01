@@ -18,8 +18,8 @@ In package `java.time.chrono` : :: `MinguoDate`, `HijrahDate`, `JapaneseDate`, `
 === First Experiments
 
 ```java
-var x = LocalDate.of(2026, 9, 11);
-var y = LocalDate.of(2026, 9, 11);
+var x = LocalDate.of(2026, 7, 31);
+var y = LocalDate.of(2026, 7, 31);
 
 var identical = x == y; // true
 

@@ -7,11 +7,11 @@
 Which of these variable pairs can be distinguished?
 
 ```java
-int a = 20260911;
-int b = 20260911;
+int a = 20260731;
+int b = 20260731;
 
-var x = LocalDate.of(2026, 9, 11);
-var y = LocalDate.of(2026, 9, 11);
+var x = LocalDate.of(2026, 7, 31);
+var y = LocalDate.of(2026, 7, 31);
 ```
 
 [%step]
@@ -27,8 +27,8 @@ var y = LocalDate.of(2026, 9, 11);
 a way to distinguish otherwise identical objects.
 
 ```java
-var x = LocalDate.of(2026, 9, 11);
-var y = LocalDate.of(2026, 9, 11);
+var x = LocalDate.of(2026, 7, 31);
+var y = LocalDate.of(2026, 7, 31);
 
 var identical = x == y; // false
 
@@ -56,8 +56,8 @@ var identical = list1 == list2;  // false
 But equal _immutable_ objects are usually interchangeable.
 
 ```java
-var x = LocalDate.of(2026, 9, 11);
-var y = LocalDate.of(2026, 9, 11);
+var x = LocalDate.of(2026, 7, 31);
+var y = LocalDate.of(2026, 7, 31);
 ```
 
 Does it make sense to distinguish interchangeable objects?

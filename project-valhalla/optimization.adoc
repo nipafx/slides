@@ -32,11 +32,11 @@ This usually requires an extra bit to encode nullity.
 +--------------+
 | LocalDate[5] |
 +--------------+
-| 1|2026|08|16 |
-| 1|2026|08|17 |
-| 1|2026|08|18 |
+| 1|2026|07|27 |
+| 1|2026|07|28 |
+| 1|2026|07|29 |
 | 0|0000|00|00 |
-| 1|2026|08|20 |
+| 1|2026|07|31 |
 +--------------+
 ```
 
@@ -52,8 +52,8 @@ class Event {
 # POINTER REFERENCE   ║ # FLATTENED REFERENCE
 ┌                     ║ ┌
 | EVENT  ┌            ║ | EVENT
-| day -> | LOCALDATE  ║ | day[1|2026|08|19]
-└        | 2026|08|19 ║ └
+| day -> | LOCALDATE  ║ | day[1|2026|07|31]
+└        | 2026|07|31 ║ └
          └            ║
 ```
 
@@ -105,9 +105,9 @@ can be optimizied, e.g.:
 
 ```java
 // flattenable
-Integer[] ints = { 1996, 2006, 1996, null, null };
+Integer[] ints = { 1996, 2014, null, null, 2026 };
 // not flattenable
-Object[] objs = { 1996, 2006, 1996, null, null };
+Object[] objs = { 1996, 2014, null, null, 2026 };
 
 // field is not flattenable
 record Box<T>(T field) { }

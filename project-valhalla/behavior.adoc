@@ -51,7 +51,7 @@ Operations like `wait`, `notify`, and `synchronize` +
 interact with an object's monitor.
 
 ```java
-Object x = LocalDate.of(2026, 9, 11);
+Object x = LocalDate.of(2026, 7, 31);
 synchronized (x) {
 	// ...
 }
