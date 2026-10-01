@@ -1,10 +1,10 @@
-== Pattern Matching and Beyond
+== Data-Oriented Programming
 
 ++++
 <table class="toc">
-	<tr><td>Data-Oriented Programming</td></tr>
+	<tr><td>What is DOP?</td></tr>
 	<tr class="toc-current"><td>A Lengthy Example</td></tr>
-	<tr><td>Project Amber's Arc</td></tr>
+	<tr><td>That was DOP!</td></tr>
 </table>
 ++++
 
@@ -49,7 +49,18 @@ Pages:
 
 === Requirements
 
-Operations:
+Possible operations on pages +
+(and their subtree):
+
+* display as interactive graph
+* compute graph properties
+* categorize pages by topic
+* analyze mood of interactions
+* process payment for analyses
+
+=== Requirements
+
+Example operations going forward:
 
 * evaluate statistics
 * create pretty string
@@ -65,6 +76,7 @@ public String content();
 public int issueNumber();
 public int prNumber();
 public Set<Page> links();
+public Stream<Page> subtree();
 
 public Stats evaluateStatistics();
 public String toPrettyString();
@@ -97,12 +109,27 @@ Records fit perfectly:
 record ExternalPage(URI url, String content) { }
 ```
 
+(Just in case: You can achieve this with regular classes, too.)
+
 === Ensuring Immutability
 
 Records are shallowly immutable, +
 but field types may not be.
 
 ⇝ Fix that during construction.
+
+=== Ensuring Immutability
+
+```java
+public record GitHubPrPage(..., Set<Page> links) {
+
+	// compact constructor
+	GitHubPrPage {
+		links = Set.copyOf(links);
+	}
+
+}
+```
 
 === Applying DOP
 
@@ -163,6 +190,7 @@ public sealed interface GitHubPage
 		extends SuccessfulPage
 		permits GitHubIssuePage, GitHubPrPage {
 	Set<Page> links();
+	default Stream<Page> subtree() { ... }
 }
 ```
 
@@ -197,7 +225,22 @@ Many are already, e.g.:
 * with `issueNumber` and `prNumber`
 * with `isseNumber` or `prNumber` but no `links`
 
+=== Validation
+
 ⇝ Reject other illegal states in constructors.
+
+```java
+record ExternalPage(URI url, String content) {
+
+	ExternalPage {
+		Objects.requireNonNull(url);
+		Objects.requireNonNull(content);
+		if (content.isBlank())
+			throw new IllegalArgumentException();
+	}
+
+}
+```
 
 === Where Are We?
 
@@ -237,6 +280,25 @@ so everything is accessible.
 In class `Statistician`:
 
 ```java
+public static Stats evaluate(Page rootPage) {
+	Statistician statistician = new Statistician();
+	statistician.evaluateTree(rootPage);
+	return statistician.result();
+}
+
+private void evaluateTree(Page page) {
+	if (page instanceof GitHubPage ghPage)
+		ghPage.subtree().forEach(this::evaluatePage);
+	else
+		evaluatePage(page);
+}
+```
+
+=== Gathering Statistics
+
+In class `Statistician`:
+
+```java
 private void evaluatePage(Page page) {
 	// `numberOf...` are fields
 	switch (page) {
@@ -245,6 +307,22 @@ private void evaluatePage(Page page) {
 		case ExternalPage ext -> numberOfExternals++;
 		case ErrorPage err -> numberOfErrors++;
 	}
+}
+```
+
+=== Creating A Pretty String
+
+In class `Pretty`:
+
+```java
+public static String toPrettyString(Page rootPage) {
+	if (!(rootPage instanceof GitHubPage ghPage))
+		return createPrettyString(rootPage);
+
+	return ghPage
+			.subtree()
+			.map(Pretty::createPrettyString)
+			.collect(joining("\n"));
 }
 ```
 
@@ -368,6 +446,35 @@ private static String createPrettyString(Page page) {
 		case GitHubPrPage pr -> // ...
 		case ExternalPage external -> // ...
 		case ErrorPage error -> // ...
+	};
+}
+```
+
+=== Exhaustiveness
+
+Unlike an `if`-`else`-`if`-chain, +
+a pattern `switch` needs to cover all cases!
+
+Two ways to achieve this:
+
+* enumerate all subtypes
+* have a default branch
+
+We want the compile error on new types!
+
+⇝ Avoid the default branch.
+
+=== Follow the errors
+
+Next stop: all switches that are no longer exhaustive.
+
+```java
+private static String createPrettyString(Page page) {
+	return switch (page) {
+		case GitHubIssuePage issue -> // ...
+		case GitHubPrPage pr -> // ...
+		case ExternalPage external -> // ...
+		case ErrorPage error -> // ...
 		// missing case: GitHubCommitPage
 	};
 }
@@ -400,6 +507,54 @@ To keep operations maintainable:
 
 ⇝ Compile error when new type is added.
 
+=== Avoiding Default
+
+Sometimes you have "defaulty" behavior:
+
+```java
+public static String createPageEmoji(Page page) {
+	return switch (page) {
+		case GitHubIssuePage issue -> "🐈";
+		case GitHubPrPage pr -> "🐙";
+		default -> "n.a.";
+	};
+}
+```
+
+But we need to avoid `default`!
+
+=== Avoiding Default
+
+Write explicit branches:
+
+```java
+public static String createPageEmoji(Page page) {
+	return switch (page) {
+		case GitHubIssuePage issue -> "🐈";
+		case GitHubPrPage pr -> "🐙";
+		// duplication 😢
+		case ErrorPage err -> "n.a.";
+		case ExternalPage ext -> "n.a.";
+	};
+}
+```
+
+=== Avoiding Default
+
+Use `_` to combine "default branches":
+
+```java
+public static String createPageEmoji(Page page) {
+	return switch (page) {
+		case GitHubIssuePage issue -> "🐈";
+		case GitHubPrPage pr -> "🐙";
+		case ErrorPage _, ExternalPage _ -> "n.a.";
+	};
+}
+```
+
+⇝ Default behavior without `default` branch.
+
 === Where Are We?
 
 * operations separate from data
@@ -408,65 +563,3 @@ To keep operations maintainable:
   but supported by the compiler
 
 ⇝ Like the visitor pattern, but less painful.
-
-=== Functional Programming?!
-
-* immutable data structures
-* methods (functions?) that operate on them
-
-Isn't this just functional programming?!
-
-[%step]
-Kind of.
-
-=== DOP vs FP
-
-**Functional programming:**
-
-> Everything is a function
-
-⇝ Focus on creating and composing functions.
-
----
-
-**Data-oriented programming:**
-
-> Model data as data.
-
-⇝ Focus on correctly modeling the data.
-
-=== DOP vs OOP
-
-**OOP is not dead (again):**
-
-* valuable for complex entities or rich libraries
-* use whenever encapsulation is needed
-* still a good default on high level
-
-**DOP --  consider when:**
-
-* mainly handling outside data
-* working with simple or ad-hoc data
-* data and behavior should be separated
-
-=== Data-Oriented Programming
-
-Use Java's strong typing to model data as data:
-
-* use classes to represent data, particularly:
-** data as data with records
-** alternatives with sealed classes
-* use methods (separately) to model behavior, particularly:
-** exhaustive `switch` without `default`
-** pattern matching to destructure polymorphic data
-
-=== More
-
-On data-oriented programming:
-
-* 📝 https://inside.java/2024/05/23/dop-v1-1-introduction/[Data-Oriented Programming in Java - Version 1.1]
-* 📝 https://www.infoq.com/articles/data-oriented-programming-java/[Data Oriented Programming in Java]
-* 🎥 https://www.youtube.com/watch?v=QrwFrm1R8OY[Java 21 Brings Full Pattern Matching]
-* 🎥 https://www.youtube.com/watch?v=5qYJYGvVLg8[Data-Oriented Programming]
-* 📝 https://openjdk.org/projects/amber/design-notes/patterns/pattern-match-object-model[Pattern Matching in the Java Object Model]
-* 🧑‍💻 https://github.com/nipafx/modern-java-demo[GitHub crawler]
