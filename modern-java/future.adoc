@@ -3,6 +3,11 @@
 	<tr><td>Past</td></tr> \
 	<tr><td>Present</td></tr> \
 	<tr class="toc-current"><td>Future</td></tr> \
+	<tr class="toc-current"><td style="padding-left: 2em;">Amber's Arc</td></tr> \
+	<tr><td style="padding-left: 2em;">Leyden's Arc</td></tr> \
+	<tr><td style="padding-left: 2em;">JSON (no Arc)</td></tr> \
+	<tr><td style="padding-left: 2em;">Valhalla's Arc</td></tr> \
+	<tr><td style="padding-left: 2em;">Babylon's Arc</td></tr> \
 </table> \
 ]
 include::arc_amber.adoc[]
@@ -12,6 +17,39 @@ include::arc_amber.adoc[]
 	<tr><td>Past</td></tr> \
 	<tr><td>Present</td></tr> \
 	<tr class="toc-current"><td>Future</td></tr> \
+	<tr><td style="padding-left: 2em;">Amber's Arc</td></tr> \
+	<tr class="toc-current"><td style="padding-left: 2em;">Leyden's Arc</td></tr> \
+	<tr><td style="padding-left: 2em;">JSON (no Arc)</td></tr> \
+	<tr><td style="padding-left: 2em;">Valhalla's Arc</td></tr> \
+	<tr><td style="padding-left: 2em;">Babylon's Arc</td></tr> \
+</table> \
+]
+include::arc_leyden.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>Past</td></tr> \
+	<tr><td>Present</td></tr> \
+	<tr class="toc-current"><td>Future</td></tr> \
+	<tr><td style="padding-left: 2em;">Amber's Arc</td></tr> \
+	<tr><td style="padding-left: 2em;">Leyden's Arc</td></tr> \
+	<tr class="toc-current"><td style="padding-left: 2em;">JSON (no Arc)</td></tr> \
+	<tr><td style="padding-left: 2em;">Valhalla's Arc</td></tr> \
+	<tr><td style="padding-left: 2em;">Babylon's Arc</td></tr> \
+</table> \
+]
+include::api_json.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>Past</td></tr> \
+	<tr><td>Present</td></tr> \
+	<tr class="toc-current"><td>Future</td></tr> \
+	<tr><td style="padding-left: 2em;">Amber's Arc</td></tr> \
+	<tr><td style="padding-left: 2em;">Leyden's Arc</td></tr> \
+	<tr><td style="padding-left: 2em;">JSON (no Arc)</td></tr> \
+	<tr class="toc-current"><td style="padding-left: 2em;">Valhalla's Arc</td></tr> \
+	<tr><td style="padding-left: 2em;">Babylon's Arc</td></tr> \
 </table> \
 ]
 include::arc_valhalla.adoc[]
@@ -21,31 +59,20 @@ include::arc_valhalla.adoc[]
 	<tr><td>Past</td></tr> \
 	<tr><td>Present</td></tr> \
 	<tr class="toc-current"><td>Future</td></tr> \
+	<tr><td style="padding-left: 2em;">Amber's Arc</td></tr> \
+	<tr><td style="padding-left: 2em;">Leyden's Arc</td></tr> \
+	<tr><td style="padding-left: 2em;">JSON (no Arc)</td></tr> \
+	<tr><td style="padding-left: 2em;">Valhalla's Arc</td></tr> \
+	<tr class="toc-current"><td style="padding-left: 2em;">Babylon's Arc</td></tr> \
 </table> \
 ]
 include::arc_babylon.adoc[]
-
-:toc: pass:[ \
-<table class="toc"> \
-	<tr><td>Past</td></tr> \
-	<tr><td>Present</td></tr> \
-	<tr class="toc-current"><td>Future</td></tr> \
-</table> \
-]
-include::api_json.adoc[]
 
 ////
 TODO
 * JEPs 545, 546
 * vector API
 * lazy constants
-
-=== Current work Leyden
-
-* allow tradeoff between +
-  portability and peak performance
-* iterative training
-* better inspectability of training data
 
 == Project Detroit
 image::images/detroit.jpg[background, size=cover]
