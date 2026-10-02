@@ -422,9 +422,9 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://www.java-forum-stuttgart.de/" title="Java Forum Stuttgart"><img src="../_images/logo-java-forum-stuttgart-5787b9ab.png" alt="Logo of Java Forum Stuttgart" class="logo" style="{host-logo-style}"></a>
+		<a href="https://jcp.org" title="Java Community Process"><img src="../_images/logo-jcp-2b3d2945.jpg" alt="Logo of Java Community Process" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://www.java-forum-stuttgart.de/" title="Java Forum Stuttgart website">Java Forum Stuttgart</a></p>
+			<p><a href="https://jcp.org" title="Java Community Process website">Java Community Process</a></p>
 		</div>
 	</div>
 	<div class="participant">
@@ -445,9 +445,9 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://www.java-forum-stuttgart.de/" title="Java Forum Stuttgart"><img src="../_images/logo-java-forum-stuttgart-5787b9ab.png" alt="Logo of Java Forum Stuttgart" class="logo" style="{host-logo-style}"></a>
+		<a href="https://jcp.org" title="Java Community Process"><img src="../_images/logo-jcp-2b3d2945.jpg" alt="Logo of Java Community Process" class="logo" style="{host-logo-style}"></a>
 		<div class="name"><p>
-			<a href="https://www.java-forum-stuttgart.de/" title="Java Forum Stuttgart website">Java Forum Stuttgart</a>
+			<a href="https://jcp.org" title="Java Community Process website">Java Community Process</a>
 		</p></div>
 	</div>
 </footer>
@@ -540,17 +540,21 @@ $ java -XX:AOTCache=app.aot
 <div class="ulist"><ul><li><p>~20% run time reduction</p></li><li><p>AOT cache size increased by ~2.5%</p></li></ul></div></div></section><section id="_streaming_cached_objects"><h2>Streaming cached objects</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>Making it possible to load cached Java objects sequentially into memory from a neutral, GC-agnostic format.</p></div></blockquote></div>
 <div class="ulist"><ul><li><p>allows use of any garbage collector</p></li><li><p>does not block when initializing heap</p></li><li><p>takes longer for warm starts and<br>
 requires a CPU core</p></li></ul></div>
-<div class="paragraph"><p>(Note: The cache contains <em>no</em> application instances.)</p></div></div></section><section data-background-color="#011f2a" data-background-image="../_images/leyden-speedup-1322fbb7.jpg" data-background-size="contain" data-state="empty"></section><section id="_aot_limitations"><h2>AOT limitations</h2><div class="slide-content"><div class="paragraph"><p>Limitation so far:</p></div>
-<div class="ulist"><ul><li><p><s>requires Serial GC, Parallel GC, or G1</s> ㉖</p></li><li><p>same JDK release / architecture / OS</p></li><li><p>consistent class path for training and production</p></li><li><p>consistent module options</p></li><li><p>limited use of JVMTI agents</p></li></ul></div>
-<div class="paragraph"><p>Otherwise, AOT cache is ignored.</p></div></div></section><section id="_aot_everything"><h2>AOT everything</h2><div class="slide-content"><div class="paragraph"><p>Leyden&#8217;s early access builds AOT more:</p></div>
-<div class="ulist"><ul><li><p>constant resolution</p></li><li><p>code compilation</p></li><li><p>dynamic proxies</p></li><li><p>reflection data</p></li><li><p>unfound classes</p></li></ul></div>
+<div class="paragraph"><p>(Note: The cache contains <em>no</em> application instances.)</p></div></div></section><section id="_code_compilation"><h2>Code Compilation</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>Improve startup and warmup time by making optimized native code for an application instantly available when the HotSpot JVM starts.</p></div></blockquote></div>
+<div class="paragraph"><p>Benchmarks with <code>javac</code>:</p></div>
+<div class="ulist"><ul><li><p>~15% startup time reduction</p></li><li><p>~75% fewer warmup iterations</p></li></ul></div></div></section><section data-background-color="white" data-background-image="../_images/leyden-speedup-code-cache-projects-3a1f8e4b.png" data-background-size="contain" data-state="empty"></section><section data-background-color="white" data-background-image="../_images/leyden-speedup-code-cache-time-89f1f9b9.png" data-background-size="contain" data-state="empty"></section><section id="_aot_limitations"><h2>AOT limitations</h2><div class="slide-content"><div class="ulist"><ul><li><p>for code compilation: AArch64 or x64</p></li><li><p>training vs production:</p><div class="ulist"><ul><li><p>same JDK release / architecture / OS</p></li><li><p>for code compilation: same CPU features &amp; GC</p></li><li><p>consistent class path</p></li><li><p>consistent module options</p></li></ul></div></li><li><p>limited use of JVMTI agents</p></li></ul></div>
+<div class="paragraph"><p>Otherwise, unsuitable portions are ignored.</p></div></div></section><section id="_aot_everything"><h2>AOT everything</h2><div class="slide-content"><div class="paragraph"><p>Leyden&#8217;s EA AOTs more:</p></div>
+<div class="ulist"><ul><li><p>constant resolution</p></li><li><p>dynamic proxies</p></li><li><p>reflection data</p></li><li><p>unfound classes</p></li></ul></div>
 <div class="paragraph"><p>Benchmarks show ~70% startup time reduction.</p></div></div></section><section id="_project_leyden_2"><h2>Project Leyden</h2><div class="slide-content"><div class="ulist"><ul><li><p>improves Java&#8217;s overall footprint</p></li><li><p>focusses on startup/warmup time<br>
 by caching early JVM work</p></li><li><p>may explore stricter constraints<br>
 for more aggressive optimization</p></li></ul></div></div></section><section id="_timeline_3"><h2>Timeline</h2><div class="slide-content"><div class="paragraph"><p>JDK 25:</p></div>
 <div class="ulist"><ul><li><p>AOT class loading &amp; linking (<a href="https://openjdk.org/jeps/483">JEP 483</a>)</p></li><li><p>AOT method profiling (<a href="https://openjdk.org/jeps/515">JEP 515</a>)</p></li></ul></div>
 <div class="paragraph"><p>JDK 26:</p></div>
-<div class="ulist"><ul><li><p>AOT with any GC (<a href="https://openjdk.org/jeps/516">JEP 516</a>)</p></li></ul></div></div></section><section id="_current_work"><h2>Current work</h2><div class="slide-content"><div class="ulist"><ul><li><p>code compilation (<a href="https://openjdk.org/jeps/8335368">JDK-833536</a>)</p></li><li><p>allow tradeoff between<br>
-portability and peak performance</p></li><li><p>iterative training</p></li><li><p>better inspectability of training data</p></li></ul></div></div></section><section id="_deeper_dives_2"><h2>Deeper Dives</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/projects/leyden/notes/02-shift-and-constrain">Selectively Shifting and Constraining Computation</a></p></li><li><p>📝 <a href="https://openjdk.org/projects/leyden/notes/05-training-runs">Thoughts on Training Runs</a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=z9XgILeSwzk">A Preview of What&#8217;s Coming in Project Leyden</a> (Oct 2024)</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=NlJK5BKXtHI">Project Leyden: Capturing Lightning in a Bottle</a> (Feb 2024)</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=OOPSU4LnKg0">Project Leyden Update #JVMLS</a> (August 2024)</p></li></ul></div></div></section></section>
+<div class="ulist"><ul><li><p>AOT with any GC (<a href="https://openjdk.org/jeps/516">JEP 516</a>)</p></li></ul></div>
+<div class="paragraph"><p>JDK 28:</p></div>
+<div class="ulist"><ul><li><p>AOT code compilation (<a href="https://openjdk.org/jeps/544">JEP 544</a>)</p></li></ul></div></div></section><section id="_current_work"><h2>Current work</h2><div class="slide-content"><div class="ulist"><ul><li><p>expand AOTCache</p></li><li><p>allow tradeoff between<br>
+portability and peak performance</p></li><li><p>iterative training</p></li><li><p>better inspectability of training data</p></li></ul></div></div></section><section id="_deeper_dives_2"><h2>Deeper Dives</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 <a href="https://openjdk.org/projects/leyden/notes/05-training-runs">Thoughts on Training Runs</a> (Sep 2024)</p></li><li><p>📝 <a href="https://openjdk.org/projects/leyden/notes/02-shift-and-constrain">Selectively Shifting and Constraining Computation</a><br>
+(Oct 2022)</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=z9XgILeSwzk">A Preview of What&#8217;s Coming in Project Leyden</a> (Oct 2024)</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=NlJK5BKXtHI">Project Leyden: Capturing Lightning in a Bottle</a> (Feb 2024)</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=OOPSU4LnKg0">Project Leyden Update #JVMLS</a> (Aug 2024)</p></li></ul></div></div></section></section>
 <section><section id="_project_valhalla" data-background-image="../_images/valhalla-6417e07f.jpg" data-background-size="cover"><h2>Project Valhalla</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>Advanced Java VM and Language feature candidates</p></div></blockquote></div><div class="paragraph"><p>Profile:</p></div><div class="ulist"><ul><li><p><a href="https://openjdk.org/projects/valhalla/">project</a> /
 <a href="https://wiki.openjdk.org/display/valhalla/Main">wiki</a> /
 <a href="http://mail.openjdk.org/mailman/listinfo/valhalla-dev">mailing list</a> /
@@ -560,13 +564,12 @@ portability and peak performance</p></li><li><p>iterative training</p></li><li><
 <div class="ulist"><ul><li><p>have identity</p></li><li><p>have references</p></li></ul></div>
 <aside class="notes"><div class="ulist"><ul><li><p>split caused by need for numerical performance</p></li><li><p>got worse with generics</p></li><li><p>got weird with (auto-)boxing</p></li><li><p>got worse again with lambdas/streams</p></li></ul></div></aside></div></section><section id="_identity"><h2>Identity</h2><div class="slide-content"><div class="paragraph"><p>All classes come with <em>identity</em>:</p></div>
 <div class="ulist"><ul><li><p>extra memory for header</p></li><li><p>mutability</p></li><li><p>locking, synchronization, etc.</p></li></ul></div>
-<div class="paragraph"><p>But not all custom types need that!</p></div></div></section><section id="_references"><h2>References</h2><div class="slide-content"><div class="paragraph"><p>All class instances come as <em>references</em>:</p></div>
+<div class="paragraph"><p>But not all custom types need that!</p></div></div></section><section id="_references"><h2>References</h2><div class="slide-content"><div class="paragraph"><p>All instances come as <em>references</em>:</p></div>
 <div class="ulist"><ul><li><p>memory access indirection</p></li><li><p>nullability</p></li></ul></div>
-<div class="paragraph"><p>But not all custom types need that!</p></div></div></section><section id="_project_valhalla_2"><h2>Project Valhalla</h2><div class="slide-content"><div class="paragraph"><p>Valhalla&#8217;s goal is to unify the type system:</p></div>
-<div class="ulist"><ul><li><p><em>value types</em> (disavow identity)</p></li><li><p><em>null-restriction</em> + <em>implicit constructors</em><br>
-(disavow references)</p></li></ul></div>
+<div class="paragraph"><p>But not all code needs that!</p></div></div></section><section id="_project_valhalla_2"><h2>Project Valhalla</h2><div class="slide-content"><div class="paragraph"><p>Valhalla&#8217;s goal is to unify the type system.</p></div>
+<div class="paragraph"><p>Primary mechanism: <em>value classes</em>.</p></div>
 <div class="paragraph"><p>Potential follow-up work:</p></div>
-<div class="ulist"><ul><li><p><em>type classes</em> (limited operator overloading)</p></li><li><p><em>universal generics</em> (<code>ArrayList&lt;int&gt;</code>)</p></li><li><p><em>specialized generics</em> (backed by <code>int[]</code>)</p></li></ul></div></div></section><section id="_value_types"><h2>Value types</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">value class ComplexNumber {
+<div class="ulist"><ul><li><p><em>null-restriction</em></p></li><li><p><em>specialized generics</em></p></li><li><p><em>universal generics</em></p></li><li><p><em>type classes</em></p></li></ul></div></div></section><section id="_jdk_value_classes"><h2>JDK value classes</h2><div class="slide-content"><div class="dlist"><dl><dt class="hdlist1">In package <code>java.lang</code> : </dt><dd><p><code>Integer</code>, <code>Long</code>, <code>Float</code>, <code>Double</code>, <code>Byte</code>, <code>Short</code>, <code>Character</code>, <code>Boolean</code>, <code>Number</code>, <code>Record</code></p></dd><dt class="hdlist1">In package <code>java.util</code> : </dt><dd><p><code>Optional</code>, <code>OptionalInt</code>, <code>OptionalLong</code>, <code>OptionalDouble</code></p></dd><dt class="hdlist1">In package <code>java.time</code> : </dt><dd><p><code>LocalDate</code>, <code>LocalTime</code>, <code>LocalDateTime</code>, <code>ZonedDateTime</code>, <code>OffsetTime</code>, <code>OffsetDateTime</code>, <code>Duration</code>, <code>Instant</code>, <code>Period</code>, <code>Year</code>, <code>YearMonth</code>, <code>MonthDay</code></p></dd><dt class="hdlist1">In package <code>java.time.chrono</code> : </dt><dd><p><code>MinguoDate</code>, <code>HijrahDate</code>, <code>JapaneseDate</code>, <code>ThaiBuddhistDate</code></p></dd></dl></div></div></section><section id="_custom_value_classes"><h2>Custom value classes</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">value class ComplexNumber {
 
 	private double real;
 	private double imaginary;
@@ -574,36 +577,30 @@ portability and peak performance</p></li><li><p>iterative training</p></li><li><
 	// constructor, etc.
 }</code></pre></div></div>
 <div class="paragraph"><p>Codes (almost) like a class - exceptions:</p></div>
-<div class="ulist"><ul><li><p>class and fields are implicitly final</p></li><li><p>superclasses are limited</p></li></ul></div>
-<aside class="notes"><div class="ulist"><ul><li><p>can be records</p></li><li><p>fields, methods, constructors</p></li><li><p>use generics, implement interfaces</p></li><li><p>nested classes, class literals</p></li></ul></div></aside></div></section><section id="_value_type_behavior"><h2>Value type behavior</h2><div class="slide-content"><div class="paragraph"><p>No identity:</p></div>
-<div class="ulist"><ul><li><p>some runtime operations throw exceptions</p></li><li><p>"identity" check <code>==</code> compares by state</p></li><li><p><code>null</code> is default value</p></li></ul></div>
+<div class="ulist"><ul><li><p>class and fields are implicitly final</p></li><li><p>superclasses are limited</p></li></ul></div></div></section><section id="_value_class_behavior"><h2>Value class behavior</h2><div class="slide-content"><div class="paragraph"><p>No identity:</p></div>
+<div class="ulist"><ul><li><p>"identity" check <code>==</code> compares by state</p></li><li><p>some operations throw exceptions</p></li><li><p>(<code>null</code> is the default value)</p></li></ul></div>
 <div class="paragraph"><p>Benefits:</p></div>
-<div class="ulist"><ul><li><p>guaranteed immutability</p></li><li><p>more expressiveness</p></li><li><p>more optimizations</p></li></ul></div></div></section><section id="_migration_to_value_types"><h2>Migration to value types</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>The JDK (as well as other libraries) has many value-based classes, such as <code>Optional</code> and <code>LocalDateTime</code>. [&#8230;&#8203;]
-We plan to migrate many value-based classes in the JDK to value classes.</p></div></blockquote></div></div></section><section id="_getting_rid_of_references"><h2>Getting rid of references</h2><div class="slide-content"><div class="paragraph"><p>In general, value types have references:</p></div>
-<div class="ulist"><ul><li><p>allow <code>null</code></p></li><li><p>prevent flattening</p></li></ul></div>
-<div class="paragraph"><p>How do we get rid of them?</p></div></div></section><section id="_null_restriction"><h2>Null-restriction</h2><div class="slide-content"><div class="paragraph"><p>Details are in flux, but possibly:</p></div>
-<div class="ulist"><ul><li><p>null-restructed variables and fields:</p><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// number can't be null
-ComplexNumber! number = // ...</code></pre></div></div></li><li><p>implicit constructor marks good <em>default instance</em></p></li></ul></div></div></section><section id="_implicit_constructors"><h2>Implicit constructors</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">value class ComplexNumber {
-
-	private double real;
-	private double imaginary;
-
-	// implicitly sets all fields to default values
-	public implicit ComplexNumber();
-
-	public ComplexNumber(double r, double i) {
-		// ...
-	}
-
-	// etc.
-
-}</code></pre></div></div></div></section><section id="_no_references"><h2>No references</h2><div class="slide-content"><div class="paragraph"><p>The just-in-time compiler <em>can</em><br>
-inline/flatten variables …</p></div>
-<div class="ulist"><ul><li><p>of a value type</p></li><li><p>with implicit constructor</p></li><li><p>that are null-restricted</p></li></ul></div>
-<div class="paragraph"><p>Performance comparable to today&#8217;s primitives! 🚀</p></div></div></section><section id="_emergent_performance"><h2>Emergent performance</h2><div class="slide-content"><div class="paragraph"><p>Don&#8217;t create a type <em>in order to</em> get performance.</p></div>
+<div class="ulist"><ul><li><p>guaranteed immutability</p></li><li><p>more expressiveness</p></li><li><p>more optimizations</p></li></ul></div></div></section><section id="_reference_scalarization"><h2>Reference Scalarization</h2><div class="slide-content"><div class="paragraph"><p>When passing objects to or from a method,<br>
+the runtime generally references heap objects.</p></div>
+<div class="paragraph"><p>Tracking identity:</p></div>
+<div class="ulist"><ul><li><p>required for identity objects<br>
+unless escape analysis shows it isn&#8217;t</p></li><li><p>never needed for value objects</p></li></ul></div>
+<div class="paragraph"><p>⇝ The runtime can load value object fields once<br>
+and use the stack to pass them.</p></div></div></section><section id="_flattening"><h2>Flattening</h2><div class="slide-content"><div class="paragraph"><p>Reference flattening:</p></div>
+<div class="ulist"><ul><li><p>encode object&#8217;s fields in reference</p></li><li><p>requires extra bit for nullity</p></li><li><p>limited by atomic writes (⇝ 64 bits)</p></li><li><p>limited by type information</p></li></ul></div></div></section><section id="_improve_flattening"><h2>Improve flattening</h2><div class="slide-content"><div class="paragraph"><p>Flattening would be more applicable with:</p></div>
+<div class="ulist"><ul><li><p>performant 128-bit atomic writes</p></li><li><p>language-level atomicity control</p></li><li><p>language-level nullity information</p></li><li><p>generic specialization</p></li></ul></div></div></section><section id="_null_restriction"><h2>Null-restriction</h2><div class="slide-content"><div class="paragraph"><p>Details are in flux, but possibly:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// number can't be null
+ComplexNumber! number = // ...</code></pre></div></div></div></section><section id="_generic_specialization"><h2>Generic specialization</h2><div class="slide-content"><div class="paragraph"><p>Value classes can be type parameters:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">List&lt;ComplexNumber&gt; numbers = new ArrayList&lt;&gt;();</code></pre></div></div>
+<div class="paragraph"><p>But if <code>ArrayList&lt;ComplexNumber&gt;</code> is backed by <code>Object[]</code>,<br>
+it will still be avoided in many cases.</p></div>
+<div class="paragraph"><p>Specialized generics would enable <code>ComplexNumber[]</code>,<br>
+which allows the JVM to flatten references.</p></div></div></section><section id="_universal_generics"><h2>Universal generics</h2><div class="slide-content"><div class="paragraph"><p>To completely heal the rift, <code>List&lt;int&gt;</code> would be great!</p></div>
+<div class="paragraph"><p>Ideally, <code>int</code> is just the legacy version of <code>Integer!</code>.</p></div>
+<div class="paragraph"><p>⇝ <code>List&lt;int&gt;</code> just works.</p></div></div></section><section id="_emergent_performance"><h2>Emergent performance</h2><div class="slide-content"><div class="paragraph"><p>Don&#8217;t create a value class <em>in order to</em> get performance.</p></div>
 <div class="paragraph"><p>Instead:</p></div>
-<div class="ulist"><ul><li><p>"Is the type value-ish?" ⇝ value type</p></li><li><p>"Is all-fields-default usable?" ⇝ implicit constructor</p></li><li><p>"Is no <code>null</code> needed?" ⇝ restrict nullness</p></li></ul></div>
-<div class="paragraph"><p>Performance emerges from domain decisions!</p></div></div></section><section id="_type_classes"><h2>Type classes</h2><div class="slide-content"><div class="paragraph"><p>For value types to feel like primitives,<br>
+<div class="ulist"><ul><li><p>"Is the type value-ish?" ⇝ value class</p></li><li><p>"Is no <code>null</code> needed?" ⇝ restrict nullness</p></li><li><p>"Do I control concurrency" ⇝ relax atomicity</p></li></ul></div>
+<div class="paragraph"><p>Performance emerges from domain decisions!</p></div></div></section><section id="_type_classes"><h2>Type classes</h2><div class="slide-content"><div class="paragraph"><p>For value classes to feel like primitives,<br>
 we need to use them with operators.</p></div>
 <div class="paragraph"><p>Maybe (!) Java will let us define common operations<br>
 for suitale types (with type classes):</p></div>
@@ -612,23 +609,11 @@ var i = new ComplexNumber(0, 1);
 
 var x = one + i; // maybe
 var y = one * i; // maybe
-var z = one $ i; // NO!</code></pre></div></div></div></section><section id="_universal_generics"><h2>Universal generics</h2><div class="slide-content"><div class="paragraph"><p>When everybody creates their own value classes,<br>
-boxing becomes omni-present and very painful!</p></div>
-<div class="paragraph"><p>Universal generics allow value classes<br>
-as type parameters:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">List&lt;long&gt; ids = new ArrayList&lt;&gt;();
-List&lt;RationalNumber&gt; numbers = new ArrayList&lt;&gt;();</code></pre></div></div></div></section><section id="_specialized_generics"><h2>Specialized generics</h2><div class="slide-content"><div class="paragraph"><p>Healing the rift in the type system is great!</p></div>
-<div class="paragraph"><p>But if <code>ArrayList&lt;int&gt;</code> is backed by <code>Object[]</code>,<br>
-it will still be avoided in many cases.</p></div>
-<div class="paragraph"><p>Specialized generics will fix that:<br>
-Generics over primitives will avoid references!</p></div></div></section><section id="_project_valhalla_3"><h2>Project Valhalla</h2><div class="slide-content"><div class="paragraph"><p>Value types, implicit constructors, null-restriction<br>
-plus universal and specialized generics:</p></div>
+var z = one $ i; // NO!</code></pre></div></div></div></section><section id="_project_valhalla_3"><h2>Project Valhalla</h2><div class="slide-content"><div class="paragraph"><p>Value classes, null-restriction, and specialized generics:</p></div>
 <div class="ulist"><ul><li><p>fewer trade-offs between<br>
 design and performance</p></li><li><p>no more manual specializations</p></li><li><p>better performance</p></li><li><p>can express design more clearly</p></li><li><p>more robust APIs</p></li></ul></div>
-<div class="paragraph"><p>Makes Java more expressive and performant.</p></div></div></section><section id="_timeline_4"><h2>Timeline</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>The Valhalla team is currently working on the delivery of <strong>JEP 401: Value Classes</strong>. [&#8230;&#8203;]
-Tentative schedule for integration is as follows:</p></div>
-<div class="ulist"><ul><li><p>OpenJDK review is in progress at <a href="https://github.com/openjdk/jdk/pull/31120">#31120</a>.</p></li><li><p>[&#8230;&#8203;]</p></li><li><p>Early July integration into OpenJDK mainline for JDK 28.</p></li></ul></div></blockquote></div>
-<div class="paragraph"><p><a href="https://mail.openjdk.org/archives/list/jdk-dev@openjdk.org/thread/AIA3O3LHFZ6T7TIPH7KZT4WS4B6U72U5/">mail from June 8th, 2026</a></p></div></div></section><section data-background-color="#151b23" data-background-image="../_images/jep401-pr-14029132.png" data-background-size="contain"></section><section id="_deeper_dives_3"><h2>Deeper Dives</h2><div class="slide-content"><div class="ulist"><ul><li><p><a href="https://openjdk.org/jeps/401">JEP 401</a>: Value Classes and Objects</p></li><li><p><a href="https://openjdk.org/jeps/8316779">JEP draft</a>: Null-restricted Value Types</p></li><li><p><a href="https://openjdk.org/jeps/402">JEP 402</a>: Enhanced Primitive Boxing</p></li><li><p><a href="https://openjdk.org/jeps/8277163">JEP draft</a>: Value Objects</p></li></ul></div></div></section><section id="_deeper_dives_4"><h2>Deeper Dives</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 State of Valhalla</p><div class="ulist"><ul><li><p><a href="https://openjdk.org/projects/valhalla/design-notes/state-of-valhalla/01-background">Part 1: The Road to Valhalla</a></p></li><li><p><a href="https://openjdk.org/projects/valhalla/design-notes/state-of-valhalla/02-object-model">Part 2: The Language Model</a></p></li><li><p><a href="https://openjdk.org/projects/valhalla/design-notes/state-of-valhalla/03-vm-model">Part 3: The JVM Model</a></p></li></ul></div></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=Dhn-JgZaBWo">Valhalla - Java&#8217;s Epic Refactor</a> (Dec 2024)</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=Gz7Or9C0TpM">Growing the Java Language</a> (Aug 2025)</p></li></ul></div></div></section></section>
+<div class="paragraph"><p>Makes Java more expressive and performant.</p></div></div></section><section id="_timeline_4"><h2>Timeline</h2><div class="slide-content"><div class="paragraph"><p>Value classes are a preview feature in JDK 28.</p></div>
+<div class="paragraph"><p>Everything else is TBD.</p></div></div></section><section id="_deeper_dives_3"><h2>Deeper Dives</h2><div class="slide-content"><div class="ulist"><ul><li><p><a href="https://openjdk.org/jeps/401">JEP 401</a>: Value Classes and Objects</p></li><li><p><a href="https://openjdk.org/jeps/8316779">JEP draft</a>: Null-restricted Value Types</p></li><li><p><a href="https://openjdk.org/jeps/402">JEP 402</a>: Enhanced Primitive Boxing</p></li></ul></div></div></section><section id="_deeper_dives_4"><h2>Deeper Dives</h2><div class="slide-content"><div class="ulist"><ul><li><p>📝 State of Valhalla</p><div class="ulist"><ul><li><p><a href="https://openjdk.org/projects/valhalla/design-notes/state-of-valhalla/01-background">Part 1: The Road to Valhalla</a></p></li><li><p><a href="https://openjdk.org/projects/valhalla/design-notes/state-of-valhalla/02-object-model">Part 2: The Language Model</a></p></li><li><p><a href="https://openjdk.org/projects/valhalla/design-notes/state-of-valhalla/03-vm-model">Part 3: The JVM Model</a></p></li></ul></div></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=Dhn-JgZaBWo">Valhalla - Java&#8217;s Epic Refactor</a> (Dec 2024)</p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=Gz7Or9C0TpM">Growing the Java Language</a> (Aug 2025)</p></li></ul></div></div></section></section>
 <section><section id="_project_babylon" data-background-image="../_images/babylon-8088924d.jpg" data-background-size="cover"><h2>Project Babylon</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>Extend the reach of Java to foreign programming models such as SQL, differentiable programming, machine learning models, and GPUs</p></div></blockquote></div><div class="paragraph"><p>Profile:</p></div><div class="ulist"><ul><li><p><a href="https://openjdk.org/projects/babylon/">project</a> /
 <a href="https://mail.openjdk.org/mailman/listinfo/babylon-dev">mailing list</a> /
 <a href="https://github.com/openjdk/babylon">code base</a></p></li><li><p>launched January 2024</p></li><li><p>led by Paul Sandoz</p></li></ul></div></div></section><section id="_motivation_4"><h2>Motivation</h2><div class="slide-content"><div class="paragraph"><p>Java is adjacent to other programmable systems:</p></div>
