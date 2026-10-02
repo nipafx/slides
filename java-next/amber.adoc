@@ -53,10 +53,8 @@ Amber's main thrust is pattern matching:
 
 === Sum &gt; Parts
 
-[link=https://www.youtube.com/watch?v=5qYJYGvVLg8]
-image::images/inside-java-newscast-29.png[width=80%]
+https://inside.java/2024/05/23/dop-v1-1-introduction/[Data-Oriented Programming in Java - Version 1.1]
 
-https://www.youtube.com/watch?v=5qYJYGvVLg8[Data-Oriented Programming]
 
 === Amber Endeavors
 
@@ -81,6 +79,24 @@ if (x instanceof float f)
 else
 	// lossy
 ```
+
+=== Constant Patterns
+
+Constant patterns for simpler primitive checks:
+
+```java
+record Point(int x, int y) { }
+
+var point = // ...
+switch (point) {
+	// primitive pattern
+	case Point(var x, _) when x == 0 -> // ...
+	// constant pattern (probably)
+	case Point(0, _) -> // ...
+}
+```
+
+(Strawman syntax.)
 
 === "Withers"
 
@@ -141,7 +157,9 @@ JDK 25:
 Current work:
 
 * primitive types in patterns (https://openjdk.org/jeps/530[JEP 530])
+* constant patterns
 * deconstruction & reconstruction
+* string templates (!)
 
 === Deeper Dives
 
