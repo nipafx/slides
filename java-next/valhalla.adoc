@@ -44,31 +44,36 @@ But not all custom types need that!
 
 === References
 
-All class instances come as _references_:
+All instances come as _references_:
 
 * memory access indirection
 * nullability
 
-But not all custom types need that!
+But not all code needs that!
 
 === Project Valhalla
 
-Valhalla's goal is to unify the type system:
+Valhalla's goal is to unify the type system.
 
-* _value types_ (disavow identity)
-* _null-restriction_ + _implicit constructors_ +
-  (disavow references)
+Primary mechanism: _value classes_.
 
 Potential follow-up work:
 
-* _type classes_ (limited operator overloading)
-* _universal generics_ (`ArrayList<int>`)
-* _specialized generics_ (backed by `int[]`)
+* _null-restriction_
+* _specialized generics_
+* _universal generics_
+* _type classes_
 
-=== Value types
+=== JDK value classes
 
-[source,java]
-----
+In package `java.lang` : :: `Integer`, `Long`, `Float`, `Double`, `Byte`, `Short`, `Character`, `Boolean`, `Number`, `Record`
+In package `java.util` : :: `Optional`, `OptionalInt`, `OptionalLong`, `OptionalDouble`
+In package `java.time` : :: `LocalDate`, `LocalTime`, `LocalDateTime`, `ZonedDateTime`, `OffsetTime`, `OffsetDateTime`, `Duration`, `Instant`, `Period`, `Year`, `YearMonth`, `MonthDay`
+In package `java.time.chrono` : :: `MinguoDate`, `HijrahDate`, `JapaneseDate`, `ThaiBuddhistDate`
+
+=== Custom value classes
+
+```java
 value class ComplexNumber {
 
 	private double real;
@@ -76,28 +81,20 @@ value class ComplexNumber {
 
 	// constructor, etc.
 }
-----
+```
 
 Codes (almost) like a class - exceptions:
 
 * class and fields are implicitly final
 * superclasses are limited
 
-[NOTE.speaker]
---
-* can be records
-* fields, methods, constructors
-* use generics, implement interfaces
-* nested classes, class literals
---
-
-=== Value type behavior
+=== Value class behavior
 
 No identity:
 
-* some runtime operations throw exceptions
 * "identity" check `==` compares by state
-* `null` is default value
+* some operations throw exceptions
+* (`null` is the default value)
 
 Benefits:
 
@@ -105,78 +102,83 @@ Benefits:
 * more expressiveness
 * more optimizations
 
-=== Migration to value types
+=== Reference Scalarization
 
-> The JDK (as well as other libraries) has many value-based classes, such as `Optional` and `LocalDateTime`. [...]
-> We plan to migrate many value-based classes in the JDK to value classes.
+When passing objects to or from a method, +
+the runtime generally references heap objects.
 
-=== Getting rid of references
+Tracking identity:
 
-In general, value types have references:
+* required for identity objects +
+  unless escape analysis shows it isn't
+* never needed for value objects
 
-* allow `null`
-* prevent flattening
+⇝ The runtime can load value object fields once +
+and use the stack to pass them.
 
-How do we get rid of them?
+=== Flattening
+
+Reference flattening:
+
+* encode object's fields in reference
+* requires extra bit for nullity
+* limited by atomic writes (⇝ 64 bits)
+* limited by type information
+
+=== Improve flattening
+
+Flattening would be more applicable with:
+
+* performant 128-bit atomic writes
+* language-level atomicity control
+* language-level nullity information
+* generic specialization
 
 === Null-restriction
 
 Details are in flux, but possibly:
 
-* null-restructed variables and fields:
-+
 ```java
 // number can't be null
 ComplexNumber! number = // ...
 ```
-* implicit constructor marks good _default instance_
+=== Generic specialization
 
-=== Implicit constructors
+Value classes can be type parameters:
 
 ```java
-value class ComplexNumber {
-
-	private double real;
-	private double imaginary;
-
-	// implicitly sets all fields to default values
-	public implicit ComplexNumber();
-
-	public ComplexNumber(double r, double i) {
-		// ...
-	}
-
-	// etc.
-
-}
+List<ComplexNumber> numbers = new ArrayList<>();
 ```
 
-=== No references
+But if `ArrayList<ComplexNumber>` is backed by `Object[]`, +
+it will still be avoided in many cases.
 
-The just-in-time compiler _can_ +
-inline/flatten variables …
+Specialized generics would enable `ComplexNumber[]`, +
+which allows the JVM to flatten references.
 
-* of a value type
-* with implicit constructor
-* that are null-restricted
+=== Universal generics
 
-Performance comparable to today's primitives! 🚀
+To completely heal the rift, `List<int>` would be great!
+
+Ideally, `int` is just the legacy version of `Integer!`.
+
+⇝ `List<int>` just works.
 
 === Emergent performance
 
-Don't create a type _in order to_ get performance.
+Don't create a value class _in order to_ get performance.
 
 Instead:
 
-* "Is the type value-ish?" ⇝ value type
-* "Is all-fields-default usable?" ⇝ implicit constructor
+* "Is the type value-ish?" ⇝ value class
 * "Is no `null` needed?" ⇝ restrict nullness
+* "Do I control concurrency" ⇝ relax atomicity
 
 Performance emerges from domain decisions!
 
 === Type classes
 
-For value types to feel like primitives, +
+For value classes to feel like primitives, +
 we need to use them with operators.
 
 Maybe (!) Java will let us define common operations +
@@ -191,34 +193,9 @@ var y = one * i; // maybe
 var z = one $ i; // NO!
 ```
 
-=== Universal generics
-
-When everybody creates their own value classes, +
-boxing becomes omni-present and very painful!
-
-Universal generics allow value classes +
-as type parameters:
-
-[source,java]
-----
-List<long> ids = new ArrayList<>();
-List<RationalNumber> numbers = new ArrayList<>();
-----
-
-=== Specialized generics
-
-Healing the rift in the type system is great!
-
-But if `ArrayList<int>` is backed by `Object[]`, +
-it will still be avoided in many cases.
-
-Specialized generics will fix that: +
-Generics over primitives will avoid references!
-
 === Project Valhalla
 
-Value types, implicit constructors, null-restriction +
-plus universal and specialized generics:
+Value classes, null-restriction, and specialized generics:
 
 * fewer trade-offs between +
   design and performance
@@ -231,25 +208,15 @@ Makes Java more expressive and performant.
 
 === Timeline
 
-> The Valhalla team is currently working on the delivery of *JEP 401: Value Classes*. [...]
-> Tentative schedule for integration is as follows:
->
-> - OpenJDK review is in progress at https://github.com/openjdk/jdk/pull/31120[#31120].
-> - [...]
-> - Early July integration into OpenJDK mainline for JDK 28.
+Value classes are a preview feature in JDK 28.
 
-https://mail.openjdk.org/archives/list/jdk-dev@openjdk.org/thread/AIA3O3LHFZ6T7TIPH7KZT4WS4B6U72U5/[mail from June 8th, 2026]
-
-[background-color="#151b23"]
-=== !
-image::images/jep401-pr.png[background, size=contain]
+Everything else is TBD.
 
 === Deeper Dives
 
 * https://openjdk.org/jeps/401[JEP 401]: Value Classes and Objects
 * https://openjdk.org/jeps/8316779[JEP draft]: Null-restricted Value Types
 * https://openjdk.org/jeps/402[JEP 402]: Enhanced Primitive Boxing
-* https://openjdk.org/jeps/8277163[JEP draft]: Value Objects
 
 === Deeper Dives
 

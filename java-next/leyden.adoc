@@ -141,28 +141,40 @@ Benchmark of a 100_000x loop over a simple stream:
 
 (Note: The cache contains _no_ application instances.)
 
-[state="empty",background-color="#011f2a"]
+=== Code Compilation
+
+> Improve startup and warmup time by making optimized native code for an application instantly available when the HotSpot JVM starts.
+
+Benchmarks with `javac`:
+
+* ~15% startup time reduction
+* ~75% fewer warmup iterations
+
+[state="empty",background-color="white"]
 === !
-image::images/leyden-speedup.jpg[background, size=contain]
+image::images/leyden-speedup-code-cache-projects.png[background, size=contain]
+
+[state="empty",background-color="white"]
+=== !
+image::images/leyden-speedup-code-cache-time.png[background, size=contain]
 
 === AOT limitations
 
-Limitation so far:
-
-* +++<s>requires Serial GC, Parallel GC, or G1</s>+++ ㉖
-* same JDK release / architecture / OS
-* consistent class path for training and production
-* consistent module options
+* for code compilation: AArch64 or x64
+* training vs production:
+** same JDK release / architecture / OS
+** for code compilation: same CPU features & GC
+** consistent class path
+** consistent module options
 * limited use of JVMTI agents
 
-Otherwise, AOT cache is ignored.
+Otherwise, unsuitable portions are ignored.
 
 === AOT everything
 
-Leyden's early access builds AOT more:
+Leyden's EA AOTs more:
 
 * constant resolution
-* code compilation
 * dynamic proxies
 * reflection data
 * unfound classes
@@ -188,9 +200,13 @@ JDK 26:
 
 * AOT with any GC (https://openjdk.org/jeps/516[JEP 516])
 
+JDK 28:
+
+* AOT code compilation (https://openjdk.org/jeps/544[JEP 544])
+
 === Current work
 
-* code compilation (https://openjdk.org/jeps/8335368[JDK-833536])
+* expand AOTCache
 * allow tradeoff between +
   portability and peak performance
 * iterative training
@@ -198,8 +214,9 @@ JDK 26:
 
 === Deeper Dives
 
-* 📝 https://openjdk.org/projects/leyden/notes/02-shift-and-constrain[Selectively Shifting and Constraining Computation]
-* 📝 https://openjdk.org/projects/leyden/notes/05-training-runs[Thoughts on Training Runs]
+* 📝 https://openjdk.org/projects/leyden/notes/05-training-runs[Thoughts on Training Runs] (Sep 2024)
+* 📝 https://openjdk.org/projects/leyden/notes/02-shift-and-constrain[Selectively Shifting and Constraining Computation] +
+  (Oct 2022)
 * 🎥 https://www.youtube.com/watch?v=z9XgILeSwzk[A Preview of What's Coming in Project Leyden] (Oct 2024)
 * 🎥 https://www.youtube.com/watch?v=NlJK5BKXtHI[Project Leyden: Capturing Lightning in a Bottle] (Feb 2024)
-* 🎥 https://www.youtube.com/watch?v=OOPSU4LnKg0[Project Leyden Update #JVMLS] (August 2024)
+* 🎥 https://www.youtube.com/watch?v=OOPSU4LnKg0[Project Leyden Update #JVMLS] (Aug 2024)
