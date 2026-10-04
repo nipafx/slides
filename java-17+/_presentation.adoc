@@ -64,6 +64,17 @@ TIMING:
 	10min NP tooling
 ////
 
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>Data-Oriented Programming</td></tr> \
+	<tr><td>Faster Applications</td></tr> \
+	<tr><td>On-Ramp and Fast Lane</td></tr> \
+	<tr><td>Quantum Security</td></tr> \
+	<tr><td>Scalable <em>and</em> Maintainable</td></tr> \
+	<tr><td>Stream Gatherers, Sequenced Collections, …</td></tr> \
+	<tr><td>Flight Recorder and Other Tools</td></tr> \
+</table> \
+]
 include::intro.adoc[]
 
 :toc: pass:[ \
@@ -129,9 +140,10 @@ include::on-ramp.adoc[]
 ]
 include::security.adoc[]
 
-// TODO: JavaOne ad
+[state="empty",background-color="#faf9f7"]
+== !
+image::images/javaone-2027.jpg[background, size=contain]
 
-// NP - 40 mins
 :toc: pass:[ \
 <table class="toc"> \
 	<tr><td>Data-Oriented Programming</td></tr> \
@@ -171,7 +183,6 @@ include::apis.adoc[]
 ]
 include::tooling.adoc[]
 
-// TODO: better last slide
 include::../_shared/about-slide.adoc[]
 
 include::images/sources.adoc[]
