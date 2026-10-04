@@ -49,61 +49,124 @@ include::../_shared/event-on-title-and-footer-guest.adoc[]
 
 // ⇝
 
-// TODO: 5 min intro
+////
+TIMING:
+	 5min NP/FS intro
+	40min FS patterns
+	10min NP performance
+	15min FS/NP on-ramp
+	 5min NP security
 
-// FS - 40 mins: pattern matching and DOP
+	20min BREAK
+
+	40min NP concurrency
+	30min FS APIs
+	10min NP tooling
+////
+
+include::intro.adoc[]
+
 :toc: pass:[ \
 <table class="toc"> \
-	<tr class="toc-current"><td>Patterns and Data</td></tr> \
+	<tr class="toc-current"><td>Data-Oriented Programming</td></tr> \
+	<tr><td>Faster Applications</td></tr> \
+	<tr><td>On-Ramp and Fast Lane</td></tr> \
+	<tr><td>Quantum Security</td></tr> \
+	<tr><td>Scalable <em>and</em> Maintainable</td></tr> \
+	<tr><td>Stream Gatherers, Sequenced Collections, …</td></tr> \
+	<tr><td>Flight Recorder and Other Tools</td></tr> \
 </table> \
 ]
 include::pattern-matching.adoc[]
 
-// NP - 30 mins
 :toc: pass:[ \
 <table class="toc"> \
-	<tr class="toc-current"><td>Better Concurrency</td></tr> \
+	<tr><td>Data-Oriented Programming</td></tr> \
+	<tr class="toc-current"><td>Faster Applications</td></tr> \
+	<tr><td>On-Ramp and Fast Lane</td></tr> \
+	<tr><td>Quantum Security</td></tr> \
+	<tr><td>Scalable <em>and</em> Maintainable</td></tr> \
+	<tr><td>Stream Gatherers, Sequenced Collections, …</td></tr> \
+	<tr><td>Flight Recorder and Other Tools</td></tr> \
 </table> \
 ]
-include::concurrency.adoc[]
-
-// FS - 10 mins: on-ramp for beginners
-// NP -  5 mins
-:toc: pass:[ \
+:toc-fakeout: pass:[ \
 <table class="toc"> \
+	<tr><td>Data-Oriented Programming</td></tr> \
+	<tr><td>Faster Applications</td></tr> \
 	<tr class="toc-current"><td>On-Ramp and Fast Lane</td></tr> \
-</table> \
-]
-include::on-ramp.adoc[]
-
-// FS: APIs - 30 mins: stream gatherers, sequenced collections, lazy constants, HTTP/3 (at least; I would split into one file per API)
-:toc: pass:[ \
-<table class="toc"> \
-	<tr class="toc-current"><td>APIs</td></tr> \
-</table> \
-]
-include::apis.adoc[]
-
-// NP - 10 mins
-:toc: pass:[ \
-<table class="toc"> \
-	<tr class="toc-current"><td>Performance</td></tr> \
+	<tr><td>Quantum Security</td></tr> \
+	<tr><td>Scalable <em>and</em> Maintainable</td></tr> \
+	<tr><td>Stream Gatherers, Sequenced Collections, …</td></tr> \
+	<tr><td>Flight Recorder and Other Tools</td></tr> \
 </table> \
 ]
 include::performance.adoc[]
 
-// NP - 5 mins: better security - most out of the box, some on demand
 :toc: pass:[ \
 <table class="toc"> \
-	<tr class="toc-current"><td>Security</td></tr> \
+	<tr><td>Data-Oriented Programming</td></tr> \
+	<tr><td>Faster Applications</td></tr> \
+	<tr class="toc-current"><td>On-Ramp and Fast Lane</td></tr> \
+	<tr><td>Quantum Security</td></tr> \
+	<tr><td>Scalable <em>and</em> Maintainable</td></tr> \
+	<tr><td>Stream Gatherers, Sequenced Collections, …</td></tr> \
+	<tr><td>Flight Recorder and Other Tools</td></tr> \
+</table> \
+]
+include::on-ramp.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>Data-Oriented Programming</td></tr> \
+	<tr><td>Faster Applications</td></tr> \
+	<tr><td>On-Ramp and Fast Lane</td></tr> \
+	<tr class="toc-current"><td>Quantum Security</td></tr> \
+	<tr><td>Scalable <em>and</em> Maintainable</td></tr> \
+	<tr><td>Stream Gatherers, Sequenced Collections, …</td></tr> \
+	<tr><td>Flight Recorder and Other Tools</td></tr> \
 </table> \
 ]
 include::security.adoc[]
 
-// NP - 20 mins: better tooling - most out of the box, some on demand
+// TODO: JavaOne ad
+
+// NP - 40 mins
 :toc: pass:[ \
 <table class="toc"> \
-	<tr class="toc-current"><td>Tooling</td></tr> \
+	<tr><td>Data-Oriented Programming</td></tr> \
+	<tr><td>Faster Applications</td></tr> \
+	<tr><td>On-Ramp and Fast Lane</td></tr> \
+	<tr><td>Quantum Security</td></tr> \
+	<tr class="toc-current"><td>Scalable <em>and</em> Maintainable</td></tr> \
+	<tr><td>Stream Gatherers, Sequenced Collections, …</td></tr> \
+	<tr><td>Flight Recorder and Other Tools</td></tr> \
+</table> \
+]
+include::concurrency.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>Data-Oriented Programming</td></tr> \
+	<tr><td>Faster Applications</td></tr> \
+	<tr><td>On-Ramp and Fast Lane</td></tr> \
+	<tr><td>Quantum Security</td></tr> \
+	<tr><td>Scalable <em>and</em> Maintainable</td></tr> \
+	<tr class="toc-current"><td>Stream Gatherers, Sequenced Collections, …</td></tr> \
+	<tr><td>Flight Recorder and Other Tools</td></tr> \
+</table> \
+]
+include::apis.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>Data-Oriented Programming</td></tr> \
+	<tr><td>Faster Applications</td></tr> \
+	<tr><td>On-Ramp and Fast Lane</td></tr> \
+	<tr><td>Quantum Security</td></tr> \
+	<tr><td>Scalable <em>and</em> Maintainable</td></tr> \
+	<tr><td>Stream Gatherers, Sequenced Collections, …</td></tr> \
+	<tr class="toc-current"><td>Flight Recorder and Other Tools</td></tr> \
 </table> \
 ]
 include::tooling.adoc[]
