@@ -1,3 +1,521 @@
 == {title}
 
 {toc}
+
+=== Scaling issues
+
+Many factors can limit scaling:
+
+* CPU
+* memory
+* network connections
+* file descriptors
+* concurrency
+* downstream services
+* etc.
+
+=== Concurrency issues
+
+_Thread count_ can be a limiting factor.
+
+Signs:
+
+* CPU not saturated
+* downstream services can +
+  handle more requests
+* can't further increase thread count +
+  (e.g. due to memory limitations)
+
+⇝ Waiting is expensive.
+
+=== Enter virtual threads!
+
+A _virtual_ thread:
+
+* is a regular `Thread` +
+  (drop-in replacement)
+* low memory footprint (100s of bytes)
+* small switching cost
+* scheduled by the Java runtime
+* requires no OS thread when waiting
+
+⇝ Waiting is free.
+
+=== Virtual things
+
+*Virtual memory:*
+
+* maps large virtual address space +
+  to limited physical memory
+* gives illusion of plentiful memory
+
+*Virtual threads:*
+
+* map large number of virtual threads +
+  to a small number of OS threads
+* give the illusion of plentiful threads
+
+=== Virtual things
+
+Programs rarely care about virtual vs physical memory.
+
+Programs need rarely care about virtual vs platform threads.
+
+Instead:
+
+* write straightforward (blocking) code
+* runtime shares available OS threads
+
+=== Performance
+
+Virtual threads aren't "faster threads":
+
+* same number of CPU cycles
+* each task takes the same CPU time +
+  (⇝ same _latency_)
+
+So why bother?
+
+=== Throughput
+
+When...
+
+* workload is not CPU-bound
+* downstream services can scale
+
+Then...
+
+* start waiting as early as possible
+* for as many tasks as possible
+
+⇝ Virtual threads increase _throughput_.
+
+=== Future scaling
+
+Virtual threads:
+
+* adoption is often easy
+* are open to future scaling
+* with structured concurrency: +
+  create maintainable code
+
+Best of both worlds.
+
+=== Tips
+
+A few tips for virtual thread use:
+
+* don't pool them
+* if you have many CPU-intensive tasks, +
+  consider a platform thread pool
+* if you need to limit concurrency, +
+  use locks, semaphores, etc.
+
+=== Semaphores
+
+```java
+private static final Semaphore DB_SEMAPHORE =
+	new Semaphore(16);
+
+public <T> T queryDatabase(Callable<T> query)
+		throws Exception {
+	DB_SEMAPHORE.acquire();
+	try {
+		return query.call();
+	} finally {
+		DB_SEMAPHORE.release();
+	}
+}
+```
+
+=== Tips
+
+Be aware:
+
+* of pinning in native calls
+* of capture for file I/O
+* of `jdk.virtualThreadScheduler.maxPoolSize`
+* of scaling with `InheritableThreadLocal`
+
+=== ThreadLocal
+
+`ThreadLocal` is a way to share information +
+with all code in a thread:
+
+```java
+static final ThreadLocal<Integer> ANSWER =
+	new ThreadLocal<>();
+
+void main() throws Exception {
+	ANSWER.set(42);
+	IO.println(ANSWER.get());     // "42"
+	Thread.ofVirtual().start(() -> {
+		IO.println(ANSWER.get()); // "null"
+	});
+	Thread.sleep(100);
+}
+```
+
+This scales well with virtual threads.
+
+=== InheritableThreadLocal
+
+`InheritableThreadLocal` is a way to share information +
+with all code in a thread _group_:
+
+```java
+static final ThreadLocal<Integer> ANSWER =
+	new InheritableThreadLocal<>();
+
+void main() throws Exception {
+	ANSWER.set(42);
+	IO.println(ANSWER.get());     // "42"
+	Thread.ofVirtual().start(() -> {
+		IO.println(ANSWER.get()); // "42"
+	});
+	Thread.sleep(100);
+}
+```
+
+This copies `ANSWER` into every new `Thread`. 😕
+
+=== ThreadLocal
+
+Challenges when using `ThreadLocal`:
+
+* inheriting data to child threads can be expensive
+* data flow is two-way and possibly complex
+* requires manual clean-up
+
+`ScopedValue` addresses all that.
+
+=== ScopedValue example
+
+```java
+static final ScopedValue<Integer> ANSWER =
+	ScopedValue.newInstance();
+
+void main() {
+	ScopedValue //      ⬐ VALUE
+		.where(ANSWER, 42)
+		//  |<---------- SCOPE ----------->|
+		.run(() -> IO.println(ANSWER.get())); // "42"
+
+	// OUT OF SCOPE
+	ANSWER.get(); // ⚡️ NoSuchElementException
+}
+```
+
+=== ScopedValue properties
+
+Central properties:
+
+* data is only available in `run`
+* data flow is one-way
+* inheriting data to child threads is free
+
+This comes at the "cost" of a less flexible data flow.
+
+=== Bigger picture
+
+Common way to organize concurrency:
+
+* have long-running `ExecutorService` instances
+* submit new tasks wherever necessary
+* enqueue follow-up computations wherever convenient
+* wait for results wherever needed
+
+Concurrency is "all over the place".
+
+=== Unstructured concurrency
+
+Makes it more difficult to:
+
+* express/identify relationships between threads
+* organize overarching result/error handling
+* analyze control flow
+* debug issues that span multiple threads
+
+=== Structured programming
+
+We have seen this before with GOTOs.
+
+Structured programming was the solution:
+
+* prescribes single entry point +
+  and clearly defined exit points
+* influenced languages and runtimes
+
+=== Structured concurrency
+
+> When the flow of execution splits into multiple concurrent flows, they rejoin in the same code block.
+
+Term coined/refined by:
+
+* Martin Sustrik, https://www.250bpm.com/p/structured-concurrency[Structured Concurrency]
+* Nathaniel J. Smith, https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/[Notes on structured concurrency [...\]]
+
+=== Structured concurrency
+
+```java
+// implicitly short-circuits on error
+try (var scope = StructuredTaskScope.open()) {
+	// spawns new (virtual) threads
+	Subtask<String> a = scope.fork(this::taskA);
+	Subtask<String> b = scope.fork(this::taskB);
+
+	// waits explicitly for success
+	// (throws error if there was one)
+	scope.join();
+
+	return a.get() + b.get();
+} catch (ExecutionException ex) {
+	// TODO: handle task errors
+} // waits until all tasks/threads complete
+```
+
+=== Properties
+
+Threads are short-lived:
+
+* start when task begins
+* end on completion
+
+⇝ Establishes parent-child/sibling relationships +
+  and logical grouping of tasks/threads.
+
+=== Benefits
+
+Structured concurrency:
+
+* defines a scope for concurrency
+* simplifies control flow
+* simplifies grouped result/error handling
+* makes thread relationships visible +
+  (in thread dumps and soon🤞 debuggers)
+
+=== Completion
+
+Use `Joiner` to configure result/error handling:
+
+* how are results collected?
+* when are subtasks cancelled?
+* what does `join` return?
+* when does `join` throw?
+
+Pass to `StructuredTaskScope.open(Joiner)`.
+
+=== Cancellation
+
+If joiner cancels scope:
+
+* all child threads get interrupted
+* `join` returns or throws
+
+But `StructuredTaskScope.close()` waits +
+until all child threads complete.
+
+⇝ Handle `InterruptedException` properly!
+
+=== Joiners
+
+Existing joiners for heterogeneous results:
+
+* `awaitAllSuccessfulOrThrow()`:
+** cancels/throws on first error
+** default behavior of `open()`
+* `allUntil(Predicate)`:
+** cancels when the predicate is true
+** returns `List<Subtask>`
+
+=== Joiners
+
+Existing joiners for homogeneous results:
+
+* `allSuccessfulOrThrow()`:
+** cancels/throws on first error
+** returns `List<RESULT>`
+* `anySuccessfulOrThrow()`
+** cancels/throws if all fail
+** returns `RESULT`
+
+=== Any Successful
+
+```java
+try (var scope = StructuredTaskScope.open(
+		Joiner.<String> anySuccessfulOrThrow())) {
+	// no need to grab the `Subtask` instances
+	scope.fork(this::taskA);
+	scope.fork(this::taskB);
+	
+	// returns the first successful result
+	return scope.join();
+} catch (ExecutionException ex) {
+	// TODO: handle task errors
+}
+```
+
+=== Custom exceptions
+
+Some joiners accept a function to transform the exception:
+
+```java
+try (var scope = StructuredTaskScope.open(
+		Joiner.<String> anySuccessfulOrThrow(
+			IOException::new))) {
+
+	scope.fork(this::taskA);
+	scope.fork(this::taskB);
+	
+	return scope.join();
+} catch (IOException ex) {
+	// TODO: handle task errors
+}
+```
+
+=== Custom joiners
+
+Implement and pass to `StructuredTaskScope::open`:
+
+```java
+interface Joiner<T, R> {
+
+	boolean onFork(Subtask<? extends T> subtask);
+
+	boolean onComplete(Subtask<? extends T> subtask);
+
+	void onTimeout();
+
+	R result() throws Throwable;
+
+}
+```
+
+=== Configuration
+
+Further configuration options:
+
+* the scope's name
+* a timeout
+* a custom thread factory
+
+Pass `UnaryOperator<Configuration>` to `StructuredTaskScope::open`.
+
+=== Timeouts
+
+```java
+var timeout = Duration.ofSeconds(3);
+try (var scope = StructuredTaskScope.open(
+		Joiner.<String> anySuccessfulOrThrow(),
+		cfg -> cfg.withTimeout(timeout))) {
+	// [... forks ...]
+
+	// throws when timeout expires
+	return scope.join();
+} catch (ExecutionException ex) {
+	if (ex.getCause() instanceof
+		CancelledByTimeoutException tex) {
+			// TODO: handle timeout
+		}
+	// TODO: handle task errors
+}
+```
+
+=== Sharing data
+
+Passing data across thread boundaries:
+
+* `ScopedValue` just works
+* `InheritableThreadLocal` just works
+* a `ThreadFactory` can help with other cases
+
+=== Scoped values
+
+```java
+ScopedValue.where(ANSWER, 42).run(() -> {// scope ──┐
+	try (var scope = StructuredTaskScope    //      │
+			.open() {                       //      │
+		               // child threads' scope ──┐  │
+		var subA = scope.fork(ANSWER::get); //   │  │
+		var subB = scope.fork(ANSWER::get); //   │  │
+		                                    //   │  │
+		scope.join();                       //   │  │
+		                                    //   │  │
+		var result = subA.get()+subB.get(); //   │  │
+		IO.println(result);  // "84"        //   │  │
+	}           // all child threads completed ──┘  │
+	IO.println(ANSWER.get()) // "42"        //      │
+}                                           // ─────┘
+```
+
+=== Custom thread factory
+
+A `ThreadFactory` can transport data +
+across thread boundaries:
+
+```java
+@Override
+public Thread newThread(Runnable runnable) {
+	var contextMap = MDC.getCopyOfContextMap();
+	return Thread.ofVirtual().unstarted(() -> {
+		MDC.setContextMap(contextMap);
+		runnable.run();
+	});
+}
+```
+
+[state="empty"]
+=== !
+image::images/elephant.jpg[background, size=cover]
+
+=== Reactive Streams
+
+Typical properties:
+
+* non-blocking (asynchronous)
+* event-based
+* backpressure strategies
+* streaming API
+* many reusable operators
+
+Virtual threads with concurrent data structures +
+can replace much of that.
+
+=== Reusable Operators
+
+Reactive APIs come with many reusable operators.
+
+* some map to language constructs
+* some map to data structures
+* some are avilable in other libraries
+* some may need to be (re)implemented
+
+=== Versions
+
+JDK 21: ::
+
+* virtual threads
+
+JDK 25: ::
+
+* no pinning in `synchronized`
+* structured concurrency (5th preview)
+
+JDK 28: ::
+
+* structured concurrency 🤞
+
+=== Summary
+
+Structured concurrency:
+
+* primed for fan-out and waiting
+* allows gradual adoption
+* composes well
+
+Together with virtual threads:
+
+* natural concurrency model
+* lead to maintainable and scalable code
+
+Should be your new default, specifically for backends.
