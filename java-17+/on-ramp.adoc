@@ -18,8 +18,7 @@ How much Java must we explain +
 before the first line runs?
 
 [step=2]
-**classes, visibility, static members, return types, +
-methods, parameters, arrays, console output**
+pass:[<strong style="color: #ff2c2d;">classes, visibility, static members, return types,<br>methods, parameters, arrays, console output</strong>]
 
 [NOTE.speaker]
 --
@@ -47,7 +46,7 @@ java HelloWorld
 ----
 
 a|
-*Since Java 11*
+*One command*
 
 [source,shell]
 ----
@@ -58,8 +57,6 @@ java HelloWorld.java
 [step=1]
 Java still compiles the program. +
 The launcher manages that step.
-
-Java 11 · JEP 330
 
 [NOTE.speaker]
 --
@@ -91,8 +88,6 @@ record Restaurant(String name) { }
 java LunchRoulette.java
 ----
 
-Java 22 · JEP 458
-
 [NOTE.speaker]
 --
 Since Java 22, JEP 458 extends source launching to multiple files.
@@ -107,7 +102,7 @@ For small programs, however, we can grow beyond one file
 without immediately introducing a build tool.
 --
 
-=== The smallest Java program
+=== Today: The smallest Java program
 
 [source,java]
 ----
@@ -120,8 +115,6 @@ void main() {
 ----
 java HelloWorld.java
 ----
-
-Final since Java 25.
 
 [NOTE.speaker]
 --
@@ -189,7 +182,7 @@ as the program grows.
 
 [source,java,role=small-note]
 ----
-include::../../demo/LunchRoulette.java[tag=lunch-roulette,indent=0]
+include::demos/LunchRoulette.java[tag=lunch-roulette,indent=0]
 ----
 
 [step=1]
@@ -205,43 +198,6 @@ We can introduce decomposition before introducing class design.
 If the program grows further,
 we can add records, ordinary classes, packages,
 tests, and a build tool at the point where each one becomes useful.
---
-
-=== Grow as you go
-
-[.small-note,cols="3,4",options="header"]
-|===
-| Need
-| Add
-
-| one small program
-| compact source file
-
-| several source files
-| multi-file source launcher
-
-| more structure
-| methods, types, packages
-
-| dependencies and builds
-| Maven or Gradle
-|===
-
-*Start simple. Learn gradually. Scale when needed.*
-
-[NOTE.speaker]
---
-The message is not that structure, build tools, or architecture are obsolete.
-The message is that a program does not need all of them on its first day.
-
-Java now supports a gradual path:
-start with the problem,
-add language and library concepts when they become relevant,
-and keep the full path to a conventional application.
-
-That improves the on-ramp.
-Now Nicolai will take the same small-program idea onto the fast lane
-and use Java for practical automation.
 --
 
 === The fast lane
@@ -399,4 +355,53 @@ Adam Bien has a lot, e.g. https://github.com/adamBien/zeeds[zeeds].
 === !
 image::images/zeeds.jpg[background, size=contain]
 
-// TODO: summary
+=== Summary
+
+[.small-note,cols="4,1,2",options="header"]
+|===
+| Feature
+| Final in
+| JEP
+
+| Single-file source launcher
+| Java 11
+| https://openjdk.org/jeps/330[JEP 330]
+
+| Multi-file source launcher
+| Java 22
+| https://openjdk.org/jeps/458[JEP 458]
+
+| Module import declarations
+| Java 25
+| https://openjdk.org/jeps/511[JEP 511]
+
+| Compact source files, instance main, `IO`
+| Java 25
+| https://openjdk.org/jeps/512[JEP 512]
+|===
+
+Fast lane:
+
+* executable Java source files
+* JDK APIs for local and remote automation
+
+*Start simple. Learn gradually. Scale when needed.*
+
+[NOTE.speaker]
+--
+The on-ramp evolved over several releases.
+Java 11 removed the explicit compilation step for one source file.
+Java 22 extended that launcher model to programs with multiple source files.
+Java 25 finalized module imports,
+compact source files, instance main methods, and the simple IO class.
+
+Those same features also create a fast lane for automation.
+A shebang turns a source file into an executable command,
+and the JDK already provides APIs for files, HTTP, and processes.
+External dependencies still require ecosystem tools,
+but many useful scripts need nothing beyond the JDK.
+
+Start with the problem,
+add structure when it becomes useful,
+and scale to a conventional application when needed.
+--
