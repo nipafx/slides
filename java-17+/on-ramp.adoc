@@ -2,7 +2,247 @@
 
 {toc}
 
-// TODO: on-ramp for beginners
+=== The traditional on-ramp
+
+[source,java]
+----
+public class HelloWorld {
+	public static void main(String[] args) {
+		System.out.println("Hello, World!");
+	}
+}
+----
+
+[step=1]
+How much Java must we explain +
+before the first line runs?
+
+[step=2]
+**classes, visibility, static members, return types, +
+methods, parameters, arrays, console output**
+
+[NOTE.speaker]
+--
+For experienced Java developers, this code is almost invisible.
+For a beginner, every highlighted concept creates a new question:
+Why a class, why public, why static,
+what is void, and what is this array of strings?
+
+None of those concepts is wrong.
+They are simply not relevant to printing the first line.
+The on-ramp work asks whether Java can reveal this structure gradually.
+--
+
+=== Single-file source launcher
+
+[cols="1,1",frame=none,grid=none]
+|===
+a|
+*Compile, then run*
+
+[source,shell]
+----
+javac HelloWorld.java
+java HelloWorld
+----
+
+a|
+*Since Java 11*
+
+[source,shell]
+----
+java HelloWorld.java
+----
+|===
+
+[step=1]
+Java still compiles the program. +
+The launcher manages that step.
+
+Java 11 · JEP 330
+
+[NOTE.speaker]
+--
+The first improvement arrived in Java 11
+with JEP 330, the single-file source-code launcher.
+For a small program, we can pass the source file directly to java.
+
+This does not turn Java into an interpreted language.
+The launcher compiles the source in memory and then runs it.
+It simply removes a build step that adds no value during a first experiment.
+--
+
+=== Multiple-file source launcher
+
+[source,java]
+----
+// LunchRoulette.java
+void main() {
+	var lunch = new Restaurant("Sushi");
+	IO.println(lunch.name());
+}
+
+// Restaurant.java
+record Restaurant(String name) { }
+----
+
+[source,shell]
+----
+java LunchRoulette.java
+----
+
+Java 22 · JEP 458
+
+[NOTE.speaker]
+--
+Since Java 22, JEP 458 extends source launching to multiple files.
+We still name only the file containing the entry point.
+When the program references Restaurant,
+the launcher finds Restaurant.java in the source tree
+and compiles the required source files.
+
+This is dependency discovery, not a recursive build of every Java file.
+Package names and directories still need to form a valid source tree.
+For small programs, however, we can grow beyond one file
+without immediately introducing a build tool.
+--
+
+=== The smallest Java program
+
+[source,java]
+----
+void main() {
+	IO.println("Hello, World!");
+}
+----
+
+[source,shell]
+----
+java HelloWorld.java
+----
+
+Final since Java 25.
+
+[NOTE.speaker]
+--
+Java 25 made the source itself smaller.
+A compact source file needs no explicit class declaration,
+and the entry point can be an instance main method.
+
+There is still a class behind the scenes,
+but beginners do not need to understand classes before running this program.
+The explicit structure can appear later,
+when the program actually needs it.
+--
+
+=== Input without setup
+
+[source,java]
+----
+void main() {
+	var name = IO.readln("Your name: ");
+	IO.println("Hello, " + name + "!");
+}
+----
+
+`IO` is part of `java.lang`.
+
+[NOTE.speaker]
+--
+The same idea applies to terminal interaction.
+The new IO class offers simple line-based input and output
+without first introducing Scanner or buffered readers.
+
+This API is intentionally small.
+It is designed for learning, experiments, and compact programs,
+not as a replacement for every production I/O abstraction.
+--
+
+=== The standard library is ready
+
+[source,java]
+----
+var restaurants = List.of(
+		"Pizza", "Sushi", "Falafel");
+var random = new Random();
+
+IO.println(restaurants.get(
+		random.nextInt(restaurants.size())));
+----
+
+[step=1]
+Compact source files implicitly import `java.base`.
+
+[NOTE.speaker]
+--
+A useful first program quickly needs library types.
+Compact source files implicitly import the public top-level types
+exported by the java.base module.
+
+That is why List and Random work here without individual import declarations.
+The rule keeps the first file focused on the problem,
+while ordinary imports and explicit module imports remain available
+as the program grows.
+--
+
+=== Add structure when it helps
+
+[source,java,role=small-note]
+----
+include::../../demo/LunchRoulette.java[tag=lunch-roulette,indent=0]
+----
+
+[step=1]
+Methods work without an explicit class, too.
+
+[NOTE.speaker]
+--
+Our Lunch Roulette is now a complete small program.
+The main method defines the workflow,
+and a second method gives the random selection a name.
+
+We can introduce decomposition before introducing class design.
+If the program grows further,
+we can add records, ordinary classes, packages,
+tests, and a build tool at the point where each one becomes useful.
+--
+
+=== Grow as you go
+
+[.small-note,cols="3,4",options="header"]
+|===
+| Need
+| Add
+
+| one small program
+| compact source file
+
+| several source files
+| multi-file source launcher
+
+| more structure
+| methods, types, packages
+
+| dependencies and builds
+| Maven or Gradle
+|===
+
+*Start simple. Learn gradually. Scale when needed.*
+
+[NOTE.speaker]
+--
+The message is not that structure, build tools, or architecture are obsolete.
+The message is that a program does not need all of them on its first day.
+
+Java now supports a gradual path:
+start with the problem,
+add language and library concepts when they become relevant,
+and keep the full path to a conventional application.
+
+That improves the on-ramp.
+Now Nicolai will take the same small-program idea onto the fast lane
+and use Java for practical automation.
+--
 
 === The fast lane
 
