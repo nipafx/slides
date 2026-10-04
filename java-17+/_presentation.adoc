@@ -56,6 +56,7 @@ TIMING:
 	10min NP performance
 	15min FS/NP on-ramp
 	 5min NP security
+	 5min NP deprecations
 
 	20min BREAK
 
@@ -70,6 +71,7 @@ TIMING:
 	<tr><td>Faster Applications</td></tr> \
 	<tr><td>On-Ramp and Fast Lane</td></tr> \
 	<tr><td>Quantum Security</td></tr> \
+	<tr><td>Removing the Cruft</td></tr> \
 	<tr><td>Scalable <em>and</em> Maintainable</td></tr> \
 	<tr><td>Stream Gatherers, Sequenced Collections, …</td></tr> \
 	<tr><td>Flight Recorder and Other Tools</td></tr> \
@@ -83,6 +85,7 @@ include::intro.adoc[]
 	<tr><td>Faster Applications</td></tr> \
 	<tr><td>On-Ramp and Fast Lane</td></tr> \
 	<tr><td>Quantum Security</td></tr> \
+	<tr><td>Removing the Cruft</td></tr> \
 	<tr><td>Scalable <em>and</em> Maintainable</td></tr> \
 	<tr><td>Stream Gatherers, Sequenced Collections, …</td></tr> \
 	<tr><td>Flight Recorder and Other Tools</td></tr> \
@@ -96,6 +99,7 @@ include::pattern-matching.adoc[]
 	<tr class="toc-current"><td>Faster Applications</td></tr> \
 	<tr><td>On-Ramp and Fast Lane</td></tr> \
 	<tr><td>Quantum Security</td></tr> \
+	<tr><td>Removing the Cruft</td></tr> \
 	<tr><td>Scalable <em>and</em> Maintainable</td></tr> \
 	<tr><td>Stream Gatherers, Sequenced Collections, …</td></tr> \
 	<tr><td>Flight Recorder and Other Tools</td></tr> \
@@ -107,6 +111,7 @@ include::pattern-matching.adoc[]
 	<tr><td>Faster Applications</td></tr> \
 	<tr class="toc-current"><td>On-Ramp and Fast Lane</td></tr> \
 	<tr><td>Quantum Security</td></tr> \
+	<tr><td>Removing the Cruft</td></tr> \
 	<tr><td>Scalable <em>and</em> Maintainable</td></tr> \
 	<tr><td>Stream Gatherers, Sequenced Collections, …</td></tr> \
 	<tr><td>Flight Recorder and Other Tools</td></tr> \
@@ -120,6 +125,7 @@ include::performance.adoc[]
 	<tr><td>Faster Applications</td></tr> \
 	<tr class="toc-current"><td>On-Ramp and Fast Lane</td></tr> \
 	<tr><td>Quantum Security</td></tr> \
+	<tr><td>Removing the Cruft</td></tr> \
 	<tr><td>Scalable <em>and</em> Maintainable</td></tr> \
 	<tr><td>Stream Gatherers, Sequenced Collections, …</td></tr> \
 	<tr><td>Flight Recorder and Other Tools</td></tr> \
@@ -133,12 +139,27 @@ include::on-ramp.adoc[]
 	<tr><td>Faster Applications</td></tr> \
 	<tr><td>On-Ramp and Fast Lane</td></tr> \
 	<tr class="toc-current"><td>Quantum Security</td></tr> \
+	<tr><td>Removing the Cruft</td></tr> \
 	<tr><td>Scalable <em>and</em> Maintainable</td></tr> \
 	<tr><td>Stream Gatherers, Sequenced Collections, …</td></tr> \
 	<tr><td>Flight Recorder and Other Tools</td></tr> \
 </table> \
 ]
 include::security.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>Data-Oriented Programming</td></tr> \
+	<tr><td>Faster Applications</td></tr> \
+	<tr><td>On-Ramp and Fast Lane</td></tr> \
+	<tr><td>Quantum Security</td></tr> \
+	<tr class="toc-current"><td>Removing the Cruft</td></tr> \
+	<tr><td>Scalable <em>and</em> Maintainable</td></tr> \
+	<tr><td>Stream Gatherers, Sequenced Collections, …</td></tr> \
+	<tr><td>Flight Recorder and Other Tools</td></tr> \
+</table> \
+]
+include::deprecations.adoc[]
 
 [state="empty",background-color="#faf9f7"]
 == !
@@ -150,6 +171,7 @@ image::images/javaone-2027.jpg[background, size=contain]
 	<tr><td>Faster Applications</td></tr> \
 	<tr><td>On-Ramp and Fast Lane</td></tr> \
 	<tr><td>Quantum Security</td></tr> \
+	<tr><td>Removing the Cruft</td></tr> \
 	<tr class="toc-current"><td>Scalable <em>and</em> Maintainable</td></tr> \
 	<tr><td>Stream Gatherers, Sequenced Collections, …</td></tr> \
 	<tr><td>Flight Recorder and Other Tools</td></tr> \
@@ -163,6 +185,7 @@ include::concurrency.adoc[]
 	<tr><td>Faster Applications</td></tr> \
 	<tr><td>On-Ramp and Fast Lane</td></tr> \
 	<tr><td>Quantum Security</td></tr> \
+	<tr><td>Removing the Cruft</td></tr> \
 	<tr><td>Scalable <em>and</em> Maintainable</td></tr> \
 	<tr class="toc-current"><td>Stream Gatherers, Sequenced Collections, …</td></tr> \
 	<tr><td>Flight Recorder and Other Tools</td></tr> \
@@ -176,6 +199,7 @@ include::apis.adoc[]
 	<tr><td>Faster Applications</td></tr> \
 	<tr><td>On-Ramp and Fast Lane</td></tr> \
 	<tr><td>Quantum Security</td></tr> \
+	<tr><td>Removing the Cruft</td></tr> \
 	<tr><td>Scalable <em>and</em> Maintainable</td></tr> \
 	<tr><td>Stream Gatherers, Sequenced Collections, …</td></tr> \
 	<tr class="toc-current"><td>Flight Recorder and Other Tools</td></tr> \
