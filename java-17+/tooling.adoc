@@ -1,3 +1,189 @@
 == {title}
 
 {toc}
+
+=== Detective work
+
+Do you sometimes need to know…
+
+* … whether your app calls deprecated code?
+* … whether your serialization works as intended?
+* … the initial security properties?
+* … who's the most frequent caller of a method?
+* … how much CPU time your methods are spending?
+
+Then the JDK Flight Recorder (JFR) is your friend! +
+(And these are just the latest features.)
+
+=== JFR crash course
+
+> JFR is a tool for collecting diagnostic and profiling data about a running Java application.
+> It is integrated into the JVM and causes almost no performance overhead [~1% with default settings].
+> JFR collects data about the JVM as well as the Java application running on it.
+
+=== JFR crash course
+
+JFR is used in two steps:
+
+* run the application and create a recording
+* analyze the recording
+
+=== Recording
+
+To start a recording with default settings:
+
+* launch with `-XX:StartFlightRecording`
+* run `jcmd $pid JFR.start`
+
+Arguments can be used to configure:
+
+* event settings
+* data retention
+* when to write to disk
+* and more
+
+=== Analysis
+
+To analyze a recording:
+
+* open it in JDK Mission Control
+* show as text with `jfr view`
+* use `jfr print` to transform +
+  to XML for JSON for other tools
+
+Let's see some examples!
+
+=== Method tracing
+
+```
+$ java -XX:StartFlightRecording:\
+	jdk.MethodTrace#filter=java.util.HashMap::resize,\
+	filename=recording.jfr \
+	...
+$ jfr print \
+	--events jdk.MethodTrace --stack-depth 20 \
+	recording.jfr
+> jdk.MethodTrace {
+>     startTime = 00:39:26.379 (2025-03-05)
+>     duration = 0.00113 ms
+>     method = java.util.HashMap.resize()
+>     eventThread = "main" (javaThreadId = 3)
+>     stackTrace = [
+>       ...
+>     ]
+> }
+```
+
+=== Method timing
+
+```
+$ java -XX:StartFlightRecording:\
+	method-timing=::<clinit>,\
+	filename=clinit.jfr \
+	...
+$ jfr view method-timing clinit.jfr
+> 
+>                                  Method Timing
+> 
+> Timed Method                 Invocations Avg Time
+> ---------------------------- ----------- --------
+> HBShaper.<clinit>()                    1 32.50 ms
+> GraphicsEnvironment$LocalGE.<clinit>() 1 32.40 ms
+> DemoFonts.<clinit>()                   1 21.20 ms
+> TempFileHelper.<clinit>()              1 17.10 ms
+> SecurityProviderConstants.<clinit>()   1  9.86 ms
+```
+
+=== CPU time profiling
+
+```
+$ java -XX:StartFlightRecording=\
+	jdk.CPUTimeSample#enabled=true,\
+	filename=profile.jfr \
+	...
+```
+
+JMC can create a flame graph...
+
+[state="empty",background-color="white"]
+=== !
+image::images/jfr-jmc-flamegraph.png[background, size=contain]
+
+=== JDK JFR events
+
+JDK comes with almost 200 built-in events:
+
+* threading and contention, e.g.: +
+  `jdk.VirtualThreadPinned`, `jdk.JavaMonitorWait`
+* allocation, memory, and GC, e.g.: +
+  `jdk.ObjectAllocationSample`, `jdk.GCHeapMemoryUsage`
+* file and network I/O, e.g.: `jdk.FileRead`, `jdk.SocketWrite`
+* security, e.g.: +
+  `jdk.InitialSystemProperty`, `jdk.TLSHandshake`
+* and more
+
+Run `jfr metadata` for a full list.
+
+////
+=== Custom JFR events
+
+You can also create your own events:
+
+```java
+@Name("my.org.Rollback")
+@Label("Transaction Rollback")
+@Description("Transaction could not complete properly")
+@Category({ "Ordering", "Transactions", "Failure" })
+public class RollbackEvent extends jdk.jfr.Event {
+
+	@Label("Order ID")
+	@Description("The order ID")
+	public long orderID;
+
+	@Label("Error Message")
+	public String errorMessage;
+
+}
+```
+
+=== Custom JFR events
+
+Using your event:
+
+```java
+public void rollbackTransaction() {
+	var rollbackEvent = new RollbackEvent();
+	rollbackEvent.begin();
+	try {
+		// roll back transaction
+	} catch (SQLException ex) {
+		rollbackEvent.end();
+		rollbackEvent.orderID = ...;
+		rollbackEvent.errorMessage = "...";
+		rollbackEvent.commit();
+	} finally {
+		rollbackEvent.end();
+	}
+}
+```
+////
+
+=== Versions
+
+JDK 21: ::
+
+* `JFR view`
+
+JDK 25: ::
+
+* method timing & tracing
+* CPU-time profiling
+* cooperative sampling
+
+JDK 27: ::
+
+* in-process data redaction
+
+=== Summary
+
+// TODO
