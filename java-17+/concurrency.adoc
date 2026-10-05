@@ -181,7 +181,7 @@ This copies `ANSWER` into every new `Thread`. 😕
 
 === ThreadLocal
 
-Challenges when using `ThreadLocal`:
+Challenges when using (`Inheritable`)`ThreadLocal`:
 
 * inheriting data to child threads can be expensive
 * data flow is two-way and possibly complex
@@ -500,6 +500,7 @@ JDK 25: ::
 
 * no pinning in `synchronized`
 * structured concurrency (5th preview)
+* scoped values
 
 JDK 28: ::
 

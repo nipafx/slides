@@ -70,21 +70,6 @@ params.setNamedGroups(new String[] {
 socket.setSSLParameters(params);
 ```
 
-=== Countless improvements
-
-A random collection:
-
-* HTTP response body size limits
-* integrity disallows by default: +
-  JNI, final field mutation, dynamic agents
-* `Unsafe` memory access is deprecated +
-  and disabled by default
-* JFR's initial security property logging
-* JFR's data redaction
-* `keytool` warns about weak PBE algorithms
-* updates to countless algorithms, +
-  key lengths, default values, etc.
-
 === PEM texts
 
 Representations of cryptographic objects +
@@ -143,6 +128,21 @@ For decoding:
 KeyPair kp = decoder.decode(pem, KeyPair.class);
 ```
 * otherwise, switch over return value of `decode(String)`
+
+=== Countless improvements
+
+A random collection:
+
+* HTTP response body size limits
+* integrity disallows by default: +
+  JNI, final field mutation, dynamic agents
+* `Unsafe` memory access is deprecated +
+  and disabled by default
+* JFR's initial security property logging
+* JFR's data redaction
+* `keytool` warns about weak PBE algorithms
+* updates to countless algorithms, +
+  key lengths, default values, etc.
 
 === Monthly updates
 

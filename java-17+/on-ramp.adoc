@@ -35,7 +35,7 @@ The on-ramp work asks whether Java can reveal this structure gradually.
 === Single-file source launcher
 
 [cols="1,1",frame=none,grid=none]
-|===
+|====
 a|
 *Compile, then run*
 
@@ -52,7 +52,7 @@ a|
 ----
 java HelloWorld.java
 ----
-|===
+|====
 
 [step=1]
 Java still compiles the program. +
@@ -279,6 +279,63 @@ Java has out-of-the-box support for:
 
 😬
 
+=== JSON?
+
+Yes!
+
+A simple API to parse, traverse, and format JSON:
+
+```java
+var jsonDoc = """
+	{
+		"users": [
+			{ "name": "John Doe" },
+			{ "name": "Jane Doe" }
+		]
+	}
+	""";
+
+JsonValue json = Json.parse(jsonDoc);
+```
+
+=== Using JsonValue
+
+```java
+JsonValue json = Json.parse(jsonDoc);
+// if structure is known
+var name = json
+	.get("users")
+	.get(0)
+	.get("name");
+var names = json
+	.get("users")
+	.asList().stream()
+	.map((JsonValue user) -> user.get("name"))
+	.toList();
+```
+
+=== Using JsonValue
+
+```java
+JsonValue json = Json.parse(jsonDoc);
+// if structure is unknown
+switch (json) {
+	case JsonString string -> // ...
+	case JsonNumber number -> // ...
+	// ...
+}
+```
+
+=== Advanced features
+
+This API is a "JSON starter set":
+
+* no parsing configuration
+* no streaming
+* no data binding
+
+Advanced features are left to ecosystem projects.
+
 === Dependencies
 
 Third-party tools are needed for dependencies, +
@@ -293,7 +350,7 @@ An on-board solution would be great!
 
 === Share functionality
 
-Tha Java launcher can launch more complex projects:
+The Java launcher can launch more complex projects:
 
 ```
 java-scripts
@@ -314,7 +371,7 @@ But _not_ from script files with a shebang. 😕
 
 === Share functionality
 
-Workaround:
+Solution:
 
 * use `.java` names for all sources
 * create simple scripts for execution
@@ -325,24 +382,6 @@ $ cat `which hello`
 > java /absolute/path/to/Hello.java -cp 'lib/*' "$@"
 $ hello
 > Hello, scripts!
-```
-
-=== Scriptify
-
-```java
-void main(String[] args) throws Exception {
-	var source = args[0];
-	var script = source
-		.substring(0, source.length() - 5)
-		.toLowerCase();
-	Files.writeString(
-		Path.of(script),
-		"java %s \"$@\"".formatted(
-			Path.of(source).toAbsolutePath()));
-	new ProcessBuilder("chmod", "+x", script)
-		.start()
-		.waitFor();
-}
 ```
 
 === Ideas
