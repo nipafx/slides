@@ -168,22 +168,107 @@ public void rollbackTransaction() {
 ```
 ////
 
+=== JavaDoc
+
+> The Features That Matter
+
+Well...
+
+=== Markdown
+
+Markdown is more pleasant to read and write:
+
+* neither `<p>` nor `</p>`
+* code snippts/blocks are simple
+* lists are simple
+* tables are less terrible
+* embedding HTML is straightforward
+
+Markdown is widely used and known.
+
+=== Markdown in JavaDoc
+
+Java now allows Markdown JavaDoc:
+
+* each line starts with `///`
+* CommonMark 0.30
+* links to program elements use extended +
+  reference link syntax: `[text][element]`
+* JavaDoc tags work as usual
+
+[state="empty",background-color="white"]
+=== !
+image::images/javadoc-markdown-diff.png[background, size=contain]
+
+=== Code snippets
+
+You can pull code snippets from source files, +
+which you can compile and even test.
+
+```java
+class SnippetDocsDemo {
+
+	@Test
+	void constructorDemo() {
+		// @start region="constructor"
+		// How to call the parameterless constructor:
+		SnippetDocs docs = new SnippetDocs();
+		// @end
+
+		// assert something meaningful
+	}
+
+}
+```
+
+=== Code snippets
+
+```java
+/**
+ * This class has a constructor. Here's how you call it:
+ * {@snippet class="SnippetDocsDemo" region="constructor"}
+ */
+public class SnippetDocs { ... }
+```
+
+image::images/javadoc-simple-snippet.png[role="diagram",width=500px]
+
+=== Other improvements
+
+Other tools that saw improvements:
+
+* `javac`
+* `java`
+* `jar`
+* `jlink`
+* `jpackage`
+* `jdeps`
+* `jcmd`
+* `javap`
+* `jshell`
+
 === Versions
 
 JDK 21: ::
 
 * `JFR view`
+* JavaDoc snippets
+* `jwebserver`
 
 JDK 25: ::
 
-* method timing & tracing
-* CPU-time profiling
-* cooperative sampling
+* JFR method timing & tracing, +
+  CPU-time profiling, cooperative sampling
+* Markdown in JavaDoc
 
 JDK 27: ::
 
-* in-process data redaction
+* JFR in-process data redaction
 
 === Summary
 
-// TODO
+All tools are continuously improved, +
+but specifically:
+
+* JFR
+* JavaDoc
