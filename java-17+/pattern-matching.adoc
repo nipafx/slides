@@ -1,3 +1,960 @@
 == {title}
 
 {toc}
+
+++++
+<style>
+.reveal .listingblock.compact pre code.hljs {
+	font-size: 22px;
+}
+.reveal .green {
+	color: #17ff2e;
+}
+.reveal table.tight th, .reveal table.tight td {
+	padding: 0.1em 0.5em;
+}
+</style>
+++++
+
+=== Let's introduce our example
+
+++++
+<div style="text-align: center;">
+<svg viewBox="0 0 1440 540" style="width: 100%; max-height: 72vh;" font-family="'Fira Mono', Menlo, Consolas, monospace" role="img" aria-label="Class diagram of the medication plan">
+<defs>
+<marker id="mp-has" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="12" markerHeight="12" orient="auto"><path d="M1,1 L11,6 L1,11" fill="none" stroke="#cfd8e3" stroke-width="2"/></marker>
+<marker id="mp-is" viewBox="0 0 14 14" refX="13" refY="7" markerWidth="14" markerHeight="14" orient="auto"><path d="M1,1 L13,7 L1,13 Z" fill="#161d2b" stroke="#cfd8e3" stroke-width="2"/></marker>
+</defs>
+<rect x="0" y="215" width="380" height="132" rx="8" fill="#161d2b" stroke="#3fa9ff" stroke-width="3"/>
+<path d="M0,271 V223 a8,8 0 0 1 8,-8 H372 a8,8 0 0 1 8,8 V271 Z" fill="#3fa9ff" fill-opacity="0.9"/>
+<text x="190.0" y="235" text-anchor="middle" font-size="15" font-style="italic" fill="#10151f">«record»</text>
+<text x="190.0" y="259" text-anchor="middle" font-size="24" font-weight="bold" fill="#10151f">MedicationPlan</text>
+<text x="16" y="296" font-size="20" fill="#f2f5fa">String patientName</text>
+<text x="16" y="330" font-size="20" fill="#f2f5fa">List&lt;Medication&gt; medications</text>
+<g class="fragment" data-fragment-index="1">
+<line x1="380" y1="281" x2="448" y2="281" stroke="#cfd8e3" stroke-width="2.5" marker-end="url(#mp-has)"/>
+<rect x="450" y="215" width="250" height="132" rx="8" fill="#161d2b" stroke="#3fa9ff" stroke-width="3"/>
+<path d="M450,271 V223 a8,8 0 0 1 8,-8 H692 a8,8 0 0 1 8,8 V271 Z" fill="#3fa9ff" fill-opacity="0.9"/>
+<text x="575.0" y="235" text-anchor="middle" font-size="15" font-style="italic" fill="#10151f">«record»</text>
+<text x="575.0" y="259" text-anchor="middle" font-size="24" font-weight="bold" fill="#10151f">Medication</text>
+<text x="466" y="296" font-size="20" fill="#f2f5fa">Drug drug</text>
+<text x="466" y="330" font-size="20" fill="#f2f5fa">Dosage dosage</text>
+</g>
+<g class="fragment" data-fragment-index="2">
+<line x1="700" y1="245" x2="788" y2="93" stroke="#cfd8e3" stroke-width="2.5" marker-end="url(#mp-has)"/>
+<rect x="790" y="10" width="300" height="166" rx="8" fill="#161d2b" stroke="#ffb347" stroke-width="3"/>
+<path d="M790,66 V18 a8,8 0 0 1 8,-8 H1082 a8,8 0 0 1 8,8 V66 Z" fill="#ffb347" fill-opacity="0.9"/>
+<text x="940.0" y="30" text-anchor="middle" font-size="15" font-style="italic" fill="#10151f">«enum»</text>
+<text x="940.0" y="54" text-anchor="middle" font-size="24" font-weight="bold" fill="#10151f">Drug</text>
+<text x="806" y="91" font-size="20" fill="#f2f5fa">PARACETAMOL</text>
+<text x="806" y="125" font-size="20" fill="#f2f5fa">IBUPROFEN</text>
+<text x="806" y="159" font-size="20" fill="#f2f5fa">CAFFEINE</text>
+</g>
+<g class="fragment" data-fragment-index="3">
+<line x1="700" y1="320" x2="788" y2="339" stroke="#cfd8e3" stroke-width="2.5" marker-end="url(#mp-has)"/>
+<rect x="790" y="290" width="320" height="98" rx="8" fill="#161d2b" stroke="#ffb347" stroke-width="3"/>
+<path d="M790,346 V298 a8,8 0 0 1 8,-8 H1102 a8,8 0 0 1 8,8 V346 Z" fill="#ffb347" fill-opacity="0.9"/>
+<text x="950.0" y="310" text-anchor="middle" font-size="15" font-style="italic" fill="#10151f">«sealed interface»</text>
+<text x="950.0" y="334" text-anchor="middle" font-size="24" font-weight="bold" fill="#10151f">Dosage</text>
+<text x="806" y="371" font-size="20" fill="#f2f5fa">permits Tablet, Infusion</text>
+</g>
+<g class="fragment" data-fragment-index="4">
+<line x1="1190" y1="223" x2="1112" y2="322" stroke="#cfd8e3" stroke-width="2.5" stroke-dasharray="9 6" marker-end="url(#mp-is)"/>
+<line x1="1190" y1="446" x2="1112" y2="358" stroke="#cfd8e3" stroke-width="2.5" stroke-dasharray="9 6" marker-end="url(#mp-is)"/>
+<rect x="1190" y="140" width="250" height="166" rx="8" fill="#161d2b" stroke="#3fa9ff" stroke-width="3"/>
+<path d="M1190,196 V148 a8,8 0 0 1 8,-8 H1432 a8,8 0 0 1 8,8 V196 Z" fill="#3fa9ff" fill-opacity="0.9"/>
+<text x="1315.0" y="160" text-anchor="middle" font-size="15" font-style="italic" fill="#10151f">«record»</text>
+<text x="1315.0" y="184" text-anchor="middle" font-size="24" font-weight="bold" fill="#10151f">Tablet</text>
+<text x="1206" y="221" font-size="20" fill="#f2f5fa">int morning</text>
+<text x="1206" y="255" font-size="20" fill="#f2f5fa">int midday</text>
+<text x="1206" y="289" font-size="20" fill="#f2f5fa">int evening</text>
+<rect x="1190" y="380" width="250" height="132" rx="8" fill="#161d2b" stroke="#3fa9ff" stroke-width="3"/>
+<path d="M1190,436 V388 a8,8 0 0 1 8,-8 H1432 a8,8 0 0 1 8,8 V436 Z" fill="#3fa9ff" fill-opacity="0.9"/>
+<text x="1315.0" y="400" text-anchor="middle" font-size="15" font-style="italic" fill="#10151f">«record»</text>
+<text x="1315.0" y="424" text-anchor="middle" font-size="24" font-weight="bold" fill="#10151f">Infusion</text>
+<text x="1206" y="461" font-size="20" fill="#f2f5fa">int speed</text>
+<text x="1206" y="495" font-size="20" fill="#f2f5fa">int duration</text>
+</g>
+</svg>
+</div>
+++++
+
+[NOTE.speaker]
+--
+Our running example for this chapter: a medication plan, as a hospital system might process it.
+(Blue types combine several values, orange types are a choice between alternatives.)
+
+Click through the diagram:
+
+* A plan belongs to a patient and consists of medications.
+* Each medication is a drug ...
+* ... that is one of a few known drugs, ...
+* ... with a dosage that is either tablets (morning, midday, evening) or an infusion (speed and duration).
+* The two dosages are alternatives: never both, never neither.
+
+The values are made up and not medical advice.
+--
+
+=== Inspired by
+
+++++
+<div style="text-align: center;">
+<img src="images/sums-products.png" alt="Blog post: Data Modeling with Sums and Products" style="max-height: 42vh; width: auto;">
+</div>
+++++
+
+[.small-note]
+https://funktionale-programmierung.de/en/2024/11/25/sums-products.html[funktionale-programmierung.de/en/2024/11/25/sums-products.html^]
+
+[NOTE.speaker]
+--
+Das Beispiel ist inspiriert von diesem Blog-Post: "Data Modeling with Sums and Products" von Michael Sperber und Stefan Wehr (funktionale-programmierung.de, November 2024).
+Der Post beschreibt Produkte (records, "und") und Summen (alternatives, "oder") als die zwei Grundwerkzeuge für gute Datenmodelle, genau das, was in unserem Diagramm blau und orange eingefärbt ist.
+Der Link steht auf der Folie, falls jemand nachlesen möchte.
+--
+
+=== The Model in Code
+
+[source,java]
+----
+include::demos/MedicationPlan.java[tag=model,indent=0]
+----
+
+[step=1]
+Heavily using modern Java features: Records, Sealed Classes, ...
+[NOTE.speaker]
+--
+This is the whole diagram as Java code.
+Please don't try to read every keyword right now:
+we'll take the pieces apart one by one on the following slides
+and see what each of them is good for on its own.
+
+For now, just notice that the code mirrors the diagram almost 1:1.
+--
+
+=== Data-Oriented Programming
+
+[%step]
+* *Data* comes first: +
+  model it precisely, immutably, transparently
+* *Operations* come second: +
+  separate functions from data to data
+* *Programs* are production lines (batch processing): +
+  data flows in, gets transformed, flows out
+
+[NOTE.speaker]
+--
+That's the idea behind the example: data-oriented programming.
+The data is modeled as data and nothing else.
+The operations on that data don't live in the data types
+but next to them, as functions that take data and return data.
+Together they form a production line, not a network of interacting objects.
+
+This works best for smaller (sub)systems that mainly turn input into output,
+e.g. batch jobs, event processing, or tools that analyze or transform a structure.
+We'll come back to when to use it, and to the guidelines behind it, after the language features.
+--
+
+=== Java's Toolbox for DOP
+
+Three language features fit the diagram:
+
+[step=1]
+*Records* ⇝ data as data (product types) +
+`Tablet`, `Infusion`, `Medication`, `MedicationPlan`
+
+[step=2]
+*Sealed types* ⇝ alternatives (sum types) +
+`Dosage`
+
+[step=3]
+*Pattern matching* ⇝ operations on data +
+e.g. `describe(Dosage)`
+
+[step=4]
+Let's take them apart, one by one.
+
+[NOTE.speaker]
+--
+Records, sealed types, and pattern matching work together,
+but each of them is useful on its own.
+(Records and sealed types together are what functional languages call algebraic data types, more on that soon.)
+That's how we'll approach them:
+first the small features that make this possible
+(switch expressions, then records, type patterns, and sealed types),
+then pattern matching on top of them,
+and finally the question of how this changes the way we design code.
+--
+
+=== The Classic `switch`
+
+[source,java,role=compact]
+----
+include::demos/MedicationPlan.java[tag=switch-old,indent=0]
+----
+
+[step=1]
+A statement: mutable variable, `break`, fall-through
+
+[step=2]
+`default` hides cases that are added later
+
+[NOTE.speaker]
+--
+Let's start with the orange `Drug` enum from the diagram:
+a fixed set of options, and we want to map each of them to something.
+The classic switch is a statement, so we need a variable that we assign in each branch.
+Forgetting a `break` silently falls through to the next branch.
+And a `default` branch, which we add to make the compiler happy,
+also swallows every constant we add to the enum later.
+Candidate to cut if time is short.
+--
+
+=== Switch Expressions
+
+[source,java]
+----
+include::demos/MedicationPlan.java[tag=switch-expression,indent=0]
+----
+
+[%step]
+* An *expression*: it yields a value
+* No fall-through, no `break`
+* Exhaustive: no `default` needed ⇝ +
+  new `Drug`? Compile error!
+
+[NOTE.speaker]
+--
+Standalone benefit: safe expressions.
+The switch returns the result directly, so there is no half-initialized variable.
+The arrow form never falls through, and `case A, B` groups labels.
+For enums, the compiler checks that every constant is covered, without a `default`.
+If somebody adds `Drug.ASPIRIN`, every switch like this one stops compiling
+instead of silently returning the wrong thing.
+
+(If you need several statements in a branch: use a block and `yield` the result.)
+--
+
+=== Records: Data Carriers
+
+[source,java,role=compact]
+----
+include::demos/MedicationPlanValidation.java[tag=records-basics,indent=0]
+----
+
+[%step]
+* *Transparent:* the state *is* the components
+* *Immutable:* no setters, final fields
+* Constructor, accessors, `equals`, `hashCode`, `toString` ⇝ for free
+
+[NOTE.speaker]
+--
+Back to the blue boxes of the diagram: `Tablet`, `Infusion`, `Medication`, `MedicationPlan`.
+A record declaration lists the components, and that's all.
+Standalone benefit: transparent, immutable data carriers without boilerplate.
+Two tablets with the same numbers are equal; the string representation is useful in logs and tests.
+Records are final and can implement interfaces (as `Tablet` implements `Dosage`),
+but they can't extend classes and can't have additional instance fields.
+"Changing" a record means creating a new one.
+--
+
+=== Records: Validation
+
+[source,java,role=compact]
+----
+include::demos/MedicationPlanValidation.java[tag=validation-tablet,indent=0]
+----
+
+[step=1]
+Compact constructor ⇝ invalid data can't exist
+
+[NOTE.speaker]
+--
+Records are transparent, but not naive:
+the compact constructor runs before the fields are assigned,
+so it's the right place to reject invalid values.
+No `Tablet` with negative counts can ever exist, no matter where it's created.
+That's validation at the boundary: later code can rely on it.
+--
+
+=== Records: Invariants
+
+[source,java,role=compact]
+----
+include::demos/MedicationPlanValidation.java[tag=validation-infusion,indent=0]
+----
+
+[step=1]
+Every record guards its own invariants
+
+[NOTE.speaker]
+--
+Same idea for the second alternative:
+no `Infusion` without a positive speed and duration can ever exist.
+Each type enforces its own rules, so no operation has to re-check them.
+Candidate to cut if time is short: skip this slide and only mention that `Infusion` does the same.
+--
+
+=== Records: Immutability
+
+[source,java]
+----
+include::demos/MedicationPlanValidation.java[tag=immutable,indent=0]
+----
+
+[step=1]
+Records are only *shallowly* immutable. +
+`List.copyOf` to the rescue (defensive copies).
+
+[NOTE.speaker]
+--
+A record's fields are final, but a `List` component could still be changed by whoever holds the original list.
+The defensive copy in the compact constructor makes `MedicationPlan` truly immutable
+(and `List.copyOf` doesn't copy if the list is already immutable).
+Candidate to cut if time is short.
+--
+
+=== Which Dosages Are Valid?
+
+[source,java,role=compact]
+----
+include::demos/MedicationPlanValidation.java[tag=illegal-states,indent=0]
+----
+
+[step=1]
+One type for everything ⇝ +
+illegal states are *representable*
+
+[NOTE.speaker]
+--
+Now the orange `Dosage`: tablets *or* infusion.
+The obvious first attempt is a single record with all fields, and `null` for those that don't apply.
+Nothing stops us from creating a dosage that is both, or neither.
+Every operation then has to check for these cases.
+We want the opposite: make illegal states unrepresentable.
+--
+
+=== Sealed Types
+
+[source,java]
+----
+include::demos/MedicationPlan.java[tag=sealed,indent=0]
+----
+
+[%step]
+* A *closed* set of alternatives: +
+  `permits` lists all subtypes
+* Compiler and readers know *all* variants
+* Records as variants ⇝ transparent alternatives
+
+[NOTE.speaker]
+--
+Standalone benefit: a controlled hierarchy.
+With a sealed interface, only the permitted types can implement `Dosage`:
+exactly `Tablet` or `Infusion`, never both, never anything else.
+That's the same as an interface with two implementations,
+but the compiler now knows that there are no others.
+(If all subtypes are in the same file, `permits` can be omitted.)
+Now that the compiler knows the full set, we can build on that. See: exhaustive switches.
+--
+
+=== Algebraic Data Types
+
+[cols="1,1",frame=none,grid=none]
+|===
+| *Product types* +
+_this *and* that_
+| *Sum types* +
+_this *or* that_
+
+a|
+* `Tablet` +
+  = `int` & `int` & `int`
+* `Medication` +
+  = `Drug` & `Dosage`
+
+a|
+* `Dosage` +
+  = `Tablet` \| `Infusion`
+* `Drug` +
+  = `PARACETAMOL` \| ...
+|===
+
+[step=1]
+Records + sealed types = *algebraic data types*
+
+[NOTE.speaker]
+--
+Time to give the combination a name. The diagram we started with is built from just two kinds of building blocks:
+
+* Records are *product types*: a value consists of all of its components at once (aggregation).
+* Sealed types (and enums) are *sum types*: a value is exactly one of a fixed set of alternatives (choice).
+
+Combine the two and you can model almost any data: a plan has medications, a medication has a dosage, a dosage is tablets or an infusion.
+That's what functional languages like Haskell, Scala, or Kotlin call algebraic data types.
+Java now has both halves, with records and sealed types, plus pattern matching to take them apart.
+Goetz in his article: this simple combination of mechanisms, aggregation and choice, is deceptively powerful.
+
+Standalone benefit: a precise vocabulary for data modeling that works in any language with these features.
+Keep it short, the point is only the name.
+--
+
+=== Type Patterns: `instanceof`
+
+[source,java]
+----
+include::demos/MedicationPlan.java[tag=instanceof-old,indent=0]
+----
+
+[step=1]
+Test, cast, assign: three steps for one idea.
+
+[NOTE.speaker]
+--
+How do we get from a `Dosage` to the `Tablet` inside? The classic way:
+test the type, cast, assign to a variable.
+The same type is mentioned three times, and the cast can go wrong if we change one of them.
+--
+
+=== Type Patterns: `instanceof`
+
+[source,java]
+----
+include::demos/MedicationPlan.java[tag=instanceof,indent=0]
+----
+
+[step=1]
+Test, cast, and bind in one: +
+`dosage instanceof Tablet tablet`
+
+[NOTE.speaker]
+--
+Standalone benefit: less boilerplate and no cast to get wrong.
+`Tablet tablet` is a type pattern: if the value matches, it is bound to `tablet`.
+--
+
+=== Type Patterns: Scope
+
+[source,java,role=compact]
+----
+include::demos/MedicationPlan.java[tag=instanceof-scope,indent=0]
+----
+
+[step=1]
+The binding is in scope *where the test is true*.
+
+[NOTE.speaker]
+--
+The compiler tracks where the pattern variable is definitely matched:
+in the right operand of `&&`, in the `if` branch, or, as in the second method,
+after an early return when the negated test failed.
+This is "flow scoping". Candidate to cut if time is short.
+--
+
+=== Pattern Matching for `switch`
+
+[source,java,role=compact]
+----
+include::demos/MedicationPlan.java[tag=switch-type-patterns,indent=0]
+----
+
+[%step]
+* Type patterns as `case` labels
+* One branch per alternative
+* No `if`-`else` chain, no casts
+
+[NOTE.speaker]
+--
+Standalone benefit: branching on the type of an object, without instanceof chains.
+Combine this with the sealed `Dosage` and we have a function over the diagram's alternatives:
+one case for `Tablet`, one for `Infusion`.
+Unlike the visitor pattern, the operation lives next to the data, not inside it.
+--
+
+=== Exhaustiveness
+
+[source,java,role=compact]
+----
+include::demos/MedicationPlan.java[tag=exhaustiveness-error,indent=0]
+----
+
+[%step]
+* Sealed types ⇝ the compiler knows all cases
+* Missing one? *Compile error*
+* No `default` ⇝ a new subtype breaks *every* `switch` that needs updating
+
+[NOTE.speaker]
+--
+Sealed types and pattern matching pay off together.
+Remove the `Infusion` case and the compiler rejects the switch.
+Even better, the other direction: when somebody adds a third dosage type later,
+every switch over `Dosage` stops compiling
+and points exactly to the places that need to handle it.
+That's why a `default` branch is usually a bad idea on sealed types.
+--
+
+=== Guards (when clause)
+
+[source,java,role=compact]
+----
+include::demos/MedicationPlan.java[tag=guards,indent=0]
+----
+
+[step=1]
+`case Type t when condition` ⇝ refine a pattern
+
+[NOTE.speaker]
+--
+The type alone often isn't enough, so a `when` clause adds a condition.
+Cases are checked top to bottom: the first match wins,
+so the specific cases with a guard come before the general one.
+(Dose limits are made up and not medical advice.)
+--
+
+=== Dominance
+
+[source,java,role=compact]
+----
+include::demos/MedicationPlan.java[tag=dominance,indent=0]
+----
+
+[step=1]
+General before specific? *Compile error*.
+
+[NOTE.speaker]
+--
+If a general case comes first, the specific one can never be reached.
+The compiler detects this ("dominated") and rejects it, so order mistakes can't hide.
+Candidate to cut if time is short.
+--
+
+=== `null` handling
+
+[source,java]
+----
+include::demos/MedicationPlan.java[tag=null,indent=0]
+----
+
+[%step]
+* Without `case null`: `NullPointerException`
+* `case null` ⇝ handle it in the same switch
+* `case null, default` ⇝ combine with the fallback
+
+[NOTE.speaker]
+--
+A switch has always thrown a `NullPointerException` for `null`; that's still the default.
+With `case null` the switch can handle it explicitly, which makes `null` just another case.
+That's optional: in our model there should be no `null` dosages (validated at the boundary),
+so use it where `null` is a legitimate input.
+`case null, default` is the combination for non-sealed types.
+--
+
+=== Record Patterns
+
+[source,java,role=compact]
+----
+include::demos/MedicationPlan.java[tag=record-patterns,indent=0]
+----
+
+[%step]
+* Test the type *and* deconstruct it
+* Components are bound to variables directly
+* Construction and deconstruction are symmetric
+
+[NOTE.speaker]
+--
+Standalone benefit: access to the components without accessor calls.
+`Tablet(int morning, int midday, int evening)` is the exact mirror image of `new Tablet(1, 0, 1)`.
+This is where transparent records pay off: the pattern knows the components.
+`var` can replace the component types.
+--
+
+=== Nested Record Patterns
+
+[source,java,role=compact]
+----
+include::demos/MedicationPlan.java[tag=record-patterns-nested,indent=0]
+----
+
+[%step]
+* Patterns nest like the data: `Medication(Drug, Tablet(...))`
+* One `switch` instead of nested `if` statements
+* Still exhaustive!
+
+[NOTE.speaker]
+--
+Records contain records, so patterns can be nested as deep as the data.
+This one matches a medication, and in the same step the kind of dosage inside it,
+and binds all values it needs.
+It's the diagram, as a pattern.
+The compiler still checks exhaustiveness across the nesting.
+A pattern for the `List<Medication>` in `MedicationPlan` doesn't exist: we use a stream or loop for collections.
+--
+
+=== Nested Patterns and Guards
+
+[source,java,role=compact]
+----
+include::demos/MedicationPlan.java[tag=record-patterns-guard,indent=0]
+----
+
+[step=1]
+Match the shape first, then refine with `when`.
+
+[NOTE.speaker]
+--
+Shape first, details second: the pattern picks the right structure,
+the guard checks the values.
+Candidate to cut if time is short.
+--
+
+=== Unnamed Patterns
+
+[source,java]
+----
+include::demos/MedicationPlan.java[tag=unnamed,indent=0]
+----
+
+[%step]
+* `_` ⇝ "I don't need this component"
+* Shows intent ⇝ no unused variables
+* `Infusion(_, _)` ⇝ every component ignored
+
+[NOTE.speaker]
+--
+Standalone benefit: say what you don't care about.
+Record patterns have to list all components,
+but we usually need only some of them.
+`_` makes it explicit that a component is irrelevant, and the reader (and the compiler) don't have to look for unused variables.
+--
+
+[%skip]
+=== Unnamed Variables
+
+[source,java,role=compact]
+----
+include::demos/MedicationPlan.java[tag=unnamed-type,indent=0]
+----
+
+[step=1]
+`_` also works for variables, type patterns, ...
+
+[NOTE.speaker]
+--
+`_` isn't limited to record components:
+a type pattern can be unnamed (`Tablet _`) when we only care about the type.
+The same works for unused local variables, `for` loop variables, lambda parameters, and `catch` parameters.
+--
+
+=== Primitive Patterns
+
+[source,java,role=compact]
+----
+include::demos/MedicationPlanPrimitives.java[tag=primitive-instanceof,indent=0]
+----
+
+[%step]
+* Patterns for `byte`, `int`, `double`, ... too
+* Match only if the value converts *without loss*
+* Replaces manual range checks and casts
+
+[NOTE.speaker]
+--
+Here the dosage example is not the best fit, so this is a mini example:
+the infusion pump only accepts a `byte`, but the model uses an `int`.
+`infusion.speed() instanceof byte speed` is only true if the value fits a byte exactly.
+No manual range check, no lossy cast.
+
+Status: still a preview feature. Mention that orally.
+The version and JEP details are on the summary slide.
+--
+
+=== Primitive Patterns: Records
+
+[source,java,role=compact]
+----
+include::demos/MedicationPlanPrimitives.java[tag=primitive-record-pattern,indent=0]
+----
+
+[%step]
+* Record components can use a narrower primitive pattern
+* No match ⇝ the next `case` is tried
+
+[NOTE.speaker]
+--
+Primitive patterns also work in record patterns and in switches:
+`Infusion(byte speed, _)` matches only if the speed fits into a byte.
+Otherwise the next case is tried.
+Also available: a `switch` on primitive selectors with patterns and guards (`primitive-switch` in the demo).
+Candidate to cut if time is short.
+--
+
+=== Goetz's Four Principles
+
+Brian Goetz, June 2022:
+
+[%step]
+* *Data is immutable.*
+* *Model the data, the whole data, and nothing but the data.*
+* *Make illegal states unrepresentable.*
+* *Validate at the boundary.*
+
+[role=small-note]
+https://www.infoq.com/articles/data-oriented-programming-java/[Data Oriented Programming in Java (InfoQ)]
+
+[NOTE.speaker]
+--
+We just used all of these without naming them. Where we saw them:
+
+* Immutable: records and `List.copyOf`.
+* The whole data and nothing but the data: `Medication` is exactly a drug and a dosage, no more, no less.
+* Illegal states: a sealed `Dosage` is either tablets or an infusion, never both and never neither.
+* Validate at the boundary: the compact constructors checked the values when the data enters the system.
+
+These are the principles from Brian Goetz's 2022 article, as listed in the introduction of the Inside Java series
+(there slightly reordered).
+Standalone benefit: a checklist for reviewing a data model, independent of the Java version.
+--
+
+=== Revised: Parlog's DOP v1.1
+
+Nicolai Parlog, 2024:
+
+[%step]
+* [.green]*Model data immutably and transparently.*
+* *Model the data, the whole data, and nothing but the data.*
+* *Make illegal states unrepresentable.*
+* [.green]*Separate operations from data.*
+
+[role=small-note]
+https://inside.java/2024/05/23/dop-v1-1-introduction/[Data-Oriented Programming in Java - Version 1.1 (Inside Java)]
+
+[NOTE.speaker]
+--
+Nicolai Parlog used DOP for about 18 months, in demos, hobby projects, and one production project,
+and proposed a minor revision in a six-part series on Inside Java:
+
+* Introduction, 23 May 2024: https://inside.java/2024/05/23/dop-v1-1-introduction/
+* Immutable and transparent data, 27 May: https://inside.java/2024/05/27/dop-v1-1-immutable-transparent-data/
+* Model the data, 29 May: https://inside.java/2024/05/29/dop-v1-1-model-data/
+* Illegal states, 3 June: https://inside.java/2024/06/03/dop-v1-1-illegal-states/
+* Separate operations, 5 June: https://inside.java/2024/06/05/dop-v1-1-separate-operations/
+* Wrap-up (DOP vs. FP vs. OOP, when to use it), 10 June: https://inside.java/2024/06/10/dop-v1-1-wrap-up/
+--
+
+=== From 1.0 to 1.1
+
+[%step]
+* *Immutable* ⇝ *immutable and transparent* +
+  the data must be readable, not just constant
+* *Validate at the boundary* ⇝ part of *illegal states* +
+  the constructor is the boundary
+* *New:* *separate operations from data* +
+  functions next to the types, not inside
+
+The two "model the data" principles stay as they are.
+
+[NOTE.speaker]
+--
+Same idea, sharper edges:
+
+* Transparency is the reason pattern matching works at all: record patterns need to see the components.
+  A record is both immutable and transparent, a class with private state is not.
+* Validation at the boundary is one way of making illegal states unrepresentable,
+  so v1.1 merges it into that principle. Compact constructors make the constructor the boundary.
+* Goetz's examples already put the operations into separate methods, but it was not a principle of its own.
+  Parlog makes it explicit, because it is what makes the data usable by many independent subsystems.
+
+The two don't contradict each other: v1.1 is a minor revision, not a different philosophy.
+Open point: some people prefer Goetz's original wording, so say "my reading" if challenged.
+Candidate to cut if time is short: this slide (keep Goetz and v1.1 slides, point to the articles).
+--
+
+=== The Principles in Dosage
+
+[%step]
+* *Immutable, transparent:* +
+  `Tablet`, `Infusion`, `List.copyOf` ...
+* *Whole data, nothing else:* +
+  `Medication` = `Drug` + `Dosage`
+* *Illegal states:* +
+  sealed `Dosage` + compact constructors
+* *Separate operations:* +
+  `describe`, `format`, `dailyPills` ...
+
+[NOTE.speaker]
+--
+This is the whole chapter in four lines. The examples are not new, they are the slides we just saw.
+The first three bullets are about the data types, the last one is about the operations,
+and the operations are what we look at next:
+what happens if the requirements change?
+--
+
+=== Adding an Operation
+
+[source,java,role=compact]
+----
+include::demos/MedicationPlan.java[tag=new-operation,indent=0]
+----
+
+[%step]
+* One new function ⇝ *no* existing type changes
+* The `switch` is exhaustive: no `default` needed
+
+[NOTE.speaker]
+--
+New requirement: how many pills does a patient take per day?
+We write one function next to the data. `Tablet`, `Infusion`, and `Dosage` stay untouched.
+In an object-oriented design this would be a new method on `Dosage`, and every implementation would change.
+Operations that only one subsystem needs don't have to bloat the shared types.
+--
+
+=== Adding an Alternative
+
+[source,java,role=compact]
+----
+include::demos/MedicationPlan.java[tag=new-variant,indent=0]
+----
+
+[%step]
+* The compiler shows *every* `switch` that needs a new case
+* Without `default` nothing is silently skipped
+* Trade-off: new alternatives are the costly part
+
+[NOTE.speaker]
+--
+New requirement: a medication can also be a patch.
+Adding the record and extending `permits` breaks every switch over `Dosage`.
+That is intended: "follow the errors" gives us a to-do list for free.
+This works only because we avoided `default`. A `default` branch would silently swallow `Patch`.
+
+The honest trade-off: with sealed types, new operations are cheap and new alternatives are expensive.
+With classic inheritance it's the other way around.
+That's the bridge to the next slide.
+--
+
+=== OOP and DOP
+
+[cols="1,1",frame=none,grid=none]
+|===
+| *OOP*
+| *DOP*
+
+a|
+[%step]
+* state + behavior together
+* encapsulation hides details
+* open for new subtypes
+* evolving processes
+
+a|
+[%step]
+* data and behavior apart
+* transparency exposes the data
+* closed set of alternatives
+* data that is passed around
+|===
+
+Complementary tools, not rivals.
+
+[NOTE.speaker]
+--
+OOP is not dead (again).
+Encapsulation, inheritance, and the ease of modularizing large systems keep OOP valuable,
+especially for things with identity and evolving state: services, resources, the "engine" of a system.
+DOP shines for the things that flow through that engine: input, events, results, and other values.
+Parlog places DOP between FP and OOP, but closer to FP:
+immutable data and functions, with possibly mutable subsystems around them
+(see the wrap-up article of the series).
+--
+
+=== When to Use DOP
+
+[%step]
+* Data (sub)systems: +
+  batch jobs, analysis, event processing
+* Small problems that need no further modularization
+* Data from the outside: +
+  JSON, messages, ASTs, return values
+
+Start small: even one record and one `switch` help.
+
+[NOTE.speaker]
+--
+You don't have to build a whole system data-oriented.
+Records, no mutation, and an exhaustive switch instead of a visitor already make a piece of code clearer.
+Parlog's two situations to look for: data processing (sub)systems, and small (partial) problems.
+Requirement: Java 21 or later, because pattern matching for switch is the essential part.
+Candidate to cut if time is short.
+--
+
+=== What Matters
+
+[%step]
+* *Records* ⇝ data as data
+* *Sealed types* ⇝ alternatives the compiler knows
+* *Pattern matching* ⇝ exhaustive operations, no `default`
+* *DOP* ⇝ a style that uses all three
+
+[NOTE.speaker]
+--
+Each feature is useful on its own: switch expressions are safe expressions, records remove boilerplate,
+type patterns remove casts, sealed types control hierarchies.
+But the combination changes how we model and process data.
+Next slide: the versions and JEPs for all of this.
+--
+
+=== Summary
+
+[.small-note.tight,cols="5,2,2",options="header"]
+|===
+| Feature
+| Final in
+| JEP
+
+| Switch expressions
+| Java 14
+| https://openjdk.org/jeps/361[JEP 361]
+
+| Records
+| Java 16
+| https://openjdk.org/jeps/395[JEP 395]
+
+| Type patterns for `instanceof`
+| Java 16
+| https://openjdk.org/jeps/394[JEP 394]
+
+| Sealed classes and interfaces
+| Java 17
+| https://openjdk.org/jeps/409[JEP 409]
+
+| Pattern matching for `switch`
+| Java 21
+| https://openjdk.org/jeps/441[JEP 441]
+
+| Record patterns
+| Java 21
+| https://openjdk.org/jeps/440[JEP 440]
+
+| Unnamed patterns and variables
+| Java 22
+| https://openjdk.org/jeps/456[JEP 456]
+
+| Primitive types in patterns
+| *Preview* (Java 27)
+| https://openjdk.org/jeps/532[JEP 532]
+
+| Data-oriented programming
+| Java 21+
+| &ndash;
+|===
+
+[NOTE.speaker]
+--
+Status as of October 2026 (JDK 27 is GA), checked on openjdk.org.
+Primitive types in patterns is in its fifth preview in JDK 27 and needs `--enable-preview`.
+It is not final yet.
+Guards, `null` handling, exhaustiveness, and dominance are all part of JEP 441.
+Everything else on this slide is final.
+Data-oriented programming needs pattern matching for `switch`, so Java 21 is the minimum (as Nicolai Parlog notes in the wrap-up article).
+--
