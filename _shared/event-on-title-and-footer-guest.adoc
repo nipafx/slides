@@ -35,6 +35,9 @@
 		<div class="name"><p>
 			<a href="{guest-url}" title="{guest-name} online">{guest-name}</a>
 			/ <a href="{guest-url}" title="{guest-name} online">{guest-byline}</a>
+ifdef::guest-company-logo[]
+			<a href="{guest-company-url}" title="{guest-name}'s company"><img src="{guest-company-logo}" alt="Company logo" style="height: 30px; padding: 4px 6px; box-sizing: border-box; border: 1px solid white; border-radius: 2px; vertical-align: middle; margin-left: 10px;"></a>
+endif::[]
 		</p></div>
 	</div>
 	<div class="participant">
