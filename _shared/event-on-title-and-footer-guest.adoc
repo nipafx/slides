@@ -5,7 +5,7 @@
 		<a href="https://nipafx.dev/nicolai-parlog" title="Nicolai"><img src="images/nipa-face.jpg" alt="Photo of Nicolai" class="logo"></a>
 		<div class="name">
 			<p><a href="https://nipafx.dev/nicolai-parlog" title="About Nicolai">Nicolai Parlog</a></p>
-			<p><a href="https://nipafx.dev" title="Nicolai's website">nipafx.dev</a></p>
+			<p><a href="https://nipafx.dev" title="Nicolai's website">nipafx.dev</a> / <a href="https://oracle.com/java" title="Oracle Java">Oracle</a></p>
 		</div>
 	</div>
 	<div class="participant">
@@ -18,7 +18,7 @@
 		<a href="{guest-url}" title="{guest-name}"><img src="images/{guest-photo}"  alt="Photo of {guest-name}" class="logo"></a>
 		<div class="name">
 			<p><a href="{guest-url}" title="{guest-name} online">{guest-name}</a></p>
-			<p><a href="{guest-url}" title="{guest-name} online">{guest-byline}</a></p>
+			<p><a href="{guest-url}" title="{guest-name} online">{guest-byline}</a> / <a href="{guest-company-url}" title="{guest-name} at work">{guest-company-byline}</a></p>
 		</div>
 	</div>
 </div>
@@ -35,9 +35,6 @@
 		<div class="name"><p>
 			<a href="{guest-url}" title="{guest-name} online">{guest-name}</a>
 			/ <a href="{guest-url}" title="{guest-name} online">{guest-byline}</a>
-ifdef::guest-company-logo[]
-			<a href="{guest-company-url}" title="{guest-name}'s company"><img src="{guest-company-logo}" alt="Company logo" style="height: 30px; padding: 4px 6px; box-sizing: border-box; border: 1px solid white; border-radius: 2px; vertical-align: middle; margin-left: 10px;"></a>
-endif::[]
 		</p></div>
 	</div>
 	<div class="participant">
