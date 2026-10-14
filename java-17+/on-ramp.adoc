@@ -1,0 +1,446 @@
+== {title}
+
+{toc}
+
+=== The traditional on-ramp
+
+[source,java]
+----
+public class HelloWorld {
+	public static void main(String[] args) {
+		System.out.println("Hello, World!");
+	}
+}
+----
+
+[step=1]
+How much Java must we explain +
+before the first line runs?
+
+[step=2]
+pass:[<strong style="color: #ff2c2d;">classes, visibility, static members, return types,<br>methods, parameters, arrays, console output</strong>]
+
+[NOTE.speaker]
+--
+For experienced Java developers, this code is almost invisible.
+For a beginner, every highlighted concept creates a new question:
+Why a class, why public, why static,
+what is void, and what is this array of strings?
+
+None of those concepts is wrong.
+They are simply not relevant to printing the first line.
+The on-ramp work asks whether Java can reveal this structure gradually.
+--
+
+=== Single-file source launcher
+
+[cols="1,1",frame=none,grid=none]
+|====
+a|
+*Compile, then run*
+
+[source,shell]
+----
+javac HelloWorld.java
+java HelloWorld
+----
+
+a|
+*One command*
+
+[source,shell]
+----
+java HelloWorld.java
+----
+|====
+
+[step=1]
+Java still compiles the program. +
+The launcher manages that step.
+
+[NOTE.speaker]
+--
+The first improvement arrived in Java 11
+with JEP 330, the single-file source-code launcher.
+For a small program, we can pass the source file directly to java.
+
+This does not turn Java into an interpreted language.
+The launcher compiles the source in memory and then runs it.
+It simply removes a build step that adds no value during a first experiment.
+--
+
+=== Multiple-file source launcher
+
+[source,java]
+----
+// LunchRoulette.java
+void main() {
+	var lunch = new Restaurant("Sushi");
+	IO.println(lunch.name());
+}
+
+// Restaurant.java
+record Restaurant(String name) { }
+----
+
+[source,shell]
+----
+java LunchRoulette.java
+----
+
+[NOTE.speaker]
+--
+Since Java 22, JEP 458 extends source launching to multiple files.
+We still name only the file containing the entry point.
+When the program references Restaurant,
+the launcher finds Restaurant.java in the source tree
+and compiles the required source files.
+
+This is dependency discovery, not a recursive build of every Java file.
+Package names and directories still need to form a valid source tree.
+For small programs, however, we can grow beyond one file
+without immediately introducing a build tool.
+--
+
+=== Today: The smallest Java program
+
+[source,java]
+----
+void main() {
+	IO.println("Hello, World!");
+}
+----
+
+[source,shell]
+----
+java HelloWorld.java
+----
+
+[NOTE.speaker]
+--
+Java 25 made the source itself smaller.
+A compact source file needs no explicit class declaration,
+and the entry point can be an instance main method.
+
+There is still a class behind the scenes,
+but beginners do not need to understand classes before running this program.
+The explicit structure can appear later,
+when the program actually needs it.
+--
+
+=== Input without setup
+
+[source,java]
+----
+void main() {
+	var name = IO.readln("Your name: ");
+	IO.println("Hello, " + name + "!");
+}
+----
+
+`IO` is part of `java.lang`.
+
+[NOTE.speaker]
+--
+The same idea applies to terminal interaction.
+The new IO class offers simple line-based input and output
+without first introducing Scanner or buffered readers.
+
+This API is intentionally small.
+It is designed for learning, experiments, and compact programs,
+not as a replacement for every production I/O abstraction.
+--
+
+=== The standard library is ready
+
+[source,java]
+----
+var restaurants = List.of(
+		"Pizza", "Sushi", "Falafel");
+var random = new Random();
+
+IO.println(restaurants.get(
+		random.nextInt(restaurants.size())));
+----
+
+[step=1]
+Compact source files implicitly import `java.base`.
+
+[NOTE.speaker]
+--
+A useful first program quickly needs library types.
+Compact source files implicitly import the public top-level types
+exported by the java.base module.
+
+That is why List and Random work here without individual import declarations.
+The rule keeps the first file focused on the problem,
+while ordinary imports and explicit module imports remain available
+as the program grows.
+--
+
+=== Add structure when it helps
+
+[source,java,role=small-note]
+----
+include::demos/LunchRoulette.java[tag=lunch-roulette,indent=0]
+----
+
+[step=1]
+Methods work without an explicit class, too.
+
+[NOTE.speaker]
+--
+Our Lunch Roulette is now a complete small program.
+The main method defines the workflow,
+and a second method gives the random selection a name.
+
+We can introduce decomposition before introducing class design.
+If the program grows further,
+we can add records, ordinary classes, packages,
+tests, and a build tool at the point where each one becomes useful.
+--
+
+=== The fast lane
+
+Automate with Java!
+
+* create a folder `java-scripts`
+* add it to your path
+* write scripts
+
+=== Java scripts
+
+To create a script:
+
+* create a file with suitable name +
+  (does not have to be `*.java`)
+* make it executable with `chmod +x`
+* run it from anywhere
+
+=== Hello, World
+
+```sh
+$ cat `which hello`
+> #!/usr/bin/env -S java --source 25
+> void main() {
+>	IO.println("Hello, scripts!");
+> }
+$ hello
+> Hello, scripts!
+```
+
+=== Terminal Interaction
+
+```java
+void main() {
+	var name = IO.readln("Please enter your name: ");
+	IO.println("Nice to meet you, " + name);
+}
+```
+
+```sh
+# on JDK 25
+$ java Main.java
+> Please enter your name: Nicolai
+> Nice to meet you, Nicolai
+```
+
+=== Local Data
+
+```java
+var transactions = Path.of("transactions.csv");
+for (var line : Files.readAllLines(transactions)) {
+	// ...
+}
+
+var analysis = "...";
+var file = Path.of("analysis.txt");
+Files.writeString(file, analysis);
+```
+
+=== Remote Data
+
+```java
+var client = HttpClient.newHttpClient();
+var request = HttpRequest
+		.newBuilder(URI.create("http://example.org/"))
+		.build();
+var body = client
+		.send(request, BodyHandlers.ofString())
+		.body();
+```
+
+=== Parsing Data
+
+Java has out-of-the-box support for:
+
+* XML
+* JSON (preview in JDK 28)
+
+😬
+
+=== JSON?
+
+Yes!
+
+A simple API to parse, traverse, and format JSON:
+
+```java
+var jsonDoc = """
+	{
+		"users": [
+			{ "name": "John Doe" },
+			{ "name": "Jane Doe" }
+		]
+	}
+	""";
+
+JsonValue json = Json.parse(jsonDoc);
+```
+
+=== Using JsonValue
+
+```java
+JsonValue json = Json.parse(jsonDoc);
+// if structure is known
+var name = json
+	.get("users")
+	.get(0)
+	.get("name");
+var names = json
+	.get("users")
+	.asList().stream()
+	.map((JsonValue user) -> user.get("name"))
+	.toList();
+```
+
+=== Using JsonValue
+
+```java
+JsonValue json = Json.parse(jsonDoc);
+// if structure is unknown
+switch (json) {
+	case JsonString string -> // ...
+	case JsonNumber number -> // ...
+	// ...
+}
+```
+
+=== Advanced features
+
+This API is a "JSON starter set":
+
+* no parsing configuration
+* no streaming
+* no data binding
+
+Advanced features are left to ecosystem projects.
+
+=== Dependencies
+
+Third-party tools are needed for dependencies, +
+e.g. https://www.jbang.dev/[jbang] or https://github.com/codejive/java-jpm[jpm]:
+
+```sh
+$ jpm install com.github.lalyos:jfiglet:0.0.9
+Artifacts new: 1, updated: 0, deleted: 0
+```
+
+An on-board solution would be great!
+
+=== Share functionality
+
+The Java launcher can launch more complex projects:
+
+```
+java-scripts
+ ├─ Hello.java
+ ├─ Helper.java
+ ├─ Goodbye.java
+ └─ lib
+     └─ library.jar
+```
+
+Run with:
+
+```
+java -cp 'lib/*' Hello.java
+```
+
+But _not_ from script files with a shebang. 😕
+
+=== Share functionality
+
+Solution:
+
+* use `.java` names for all sources
+* create simple scripts for execution
+
+```sh
+$ cat `which hello`
+> #!/usr/bin/bash
+> java /absolute/path/to/Hello.java -cp 'lib/*' "$@"
+$ hello
+> Hello, scripts!
+```
+
+=== Ideas
+
+Looking for ideas?
+
+Adam Bien has a lot, e.g. https://github.com/adamBien/zeeds[zeeds].
+
+[state="empty",background-color="#212830"]
+=== !
+image::images/zeeds.jpg[background, size=contain]
+
+=== Summary
+
+[.small-note,cols="4,1,2",options="header"]
+|===
+| Feature
+| Final in
+| JEP
+
+| Single-file source launcher
+| Java 11
+| https://openjdk.org/jeps/330[JEP 330]
+
+| Multi-file source launcher
+| Java 22
+| https://openjdk.org/jeps/458[JEP 458]
+
+| Module import declarations
+| Java 25
+| https://openjdk.org/jeps/511[JEP 511]
+
+| Compact source files, instance main, `IO`
+| Java 25
+| https://openjdk.org/jeps/512[JEP 512]
+|===
+
+Fast lane:
+
+* executable Java source files
+* JDK APIs for local and remote automation
+
+*Start simple. Learn gradually. Scale when needed.*
+
+[NOTE.speaker]
+--
+The on-ramp evolved over several releases.
+Java 11 removed the explicit compilation step for one source file.
+Java 22 extended that launcher model to programs with multiple source files.
+Java 25 finalized module imports,
+compact source files, instance main methods, and the simple IO class.
+
+Those same features also create a fast lane for automation.
+A shebang turns a source file into an executable command,
+and the JDK already provides APIs for files, HTTP, and processes.
+External dependencies still require ecosystem tools,
+but many useful scripts need nothing beyond the JDK.
+
+Start with the problem,
+add structure when it becomes useful,
+and scale to a conventional application when needed.
+--
