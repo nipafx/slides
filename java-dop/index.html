@@ -407,7 +407,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		hljs.initHighlightingOnLoad();
 	}
 </script>
-<h2>In Java</h2>
+<h2>Beyond Records</h2>
 <div class="event">
 	<div class="participant">
 		<a href="https://nipafx.dev/nicolai-parlog" title="Nicolai"><img src="../_images/nipa-face-3b803a14.jpg" alt="Photo of Nicolai" class="logo"></a>
@@ -417,9 +417,9 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</div>
 	</div>
 	<div class="participant">
-		<a href="https://www.meetup.com/javamug/" title="JavaMUG"><img src="../_images/logo-jug-mug-5030a2a4.png" alt="Logo of JavaMUG" class="logo" style="{host-logo-style}"></a>
+		<a href="https://jonthebeach.com/" title="J On the Beach"><img src="../_images/logo-j-on-the-beach-07a7b164.png" alt="Logo of J On the Beach" class="logo" style="{host-logo-style}"></a>
 		<div class="name">
-			<p><a href="https://www.meetup.com/javamug/" title="JavaMUG website">JavaMUG</a></p>
+			<p><a href="https://jonthebeach.com/" title="J On the Beach website">J On the Beach</a></p>
 		</div>
 	</div>
 	<div class="participant">
@@ -440,9 +440,9 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 		</p></div>
 	</div>
 	<div class="participant">
-		<a href="https://www.meetup.com/javamug/" title="JavaMUG"><img src="../_images/logo-jug-mug-5030a2a4.png" alt="Logo of JavaMUG" class="logo" style="{host-logo-style}"></a>
+		<a href="https://jonthebeach.com/" title="J On the Beach"><img src="../_images/logo-j-on-the-beach-07a7b164.png" alt="Logo of J On the Beach" class="logo" style="{host-logo-style}"></a>
 		<div class="name"><p>
-			<a href="https://www.meetup.com/javamug/" title="JavaMUG website">JavaMUG</a>
+			<a href="https://jonthebeach.com/" title="J On the Beach website">J On the Beach</a>
 		</p></div>
 	</div>
 </footer>
@@ -455,13 +455,13 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><link hr
 <section id="_data_oriented_programming"><h2>Data-Oriented Programming</h2><div class="slide-content"><table class="toc">
 	<tr><td>What is DOP?</td></tr>
 	<tr><td>A Lengthy Example</td></tr>
-	<tr><td>That was DOP!</td></tr>
+	<tr><td>Beyond Records</td></tr>
 </table>
 <div class="paragraph"><p>Slides at <a href="https://slides.nipafx.dev/">slides.nipafx.dev</a>.</p></div></div></section>
 <section><section id="_data_oriented_programming_2"><h2>Data-Oriented Programming</h2><div class="slide-content"><table class="toc">
 	<tr class="toc-current"><td>What is DOP?</td></tr>
 	<tr><td>A Lengthy Example</td></tr>
-	<tr><td>That was DOP!</td></tr>
+	<tr><td>Beyond Records</td></tr>
 </table></div></section><section id="_data_oriented_programming_3"><h2>Data-Oriented Programming</h2><div class="slide-content"><div class="paragraph"><p>Data-oriented programming:</p></div>
 <div class="ulist"><ul><li><p>focuses on data (Duh!)</p></li><li><p>views programs as series of transformations</p></li></ul></div>
 <div class="paragraph"><p>Consider it for:</p></div>
@@ -474,7 +474,7 @@ and nothing but the data.</p></li><li><p>Make illegal states unrepresentable.</p
 <section><section id="_data_oriented_programming_5"><h2>Data-Oriented Programming</h2><div class="slide-content"><table class="toc">
 	<tr><td>What is DOP?</td></tr>
 	<tr class="toc-current"><td>A Lengthy Example</td></tr>
-	<tr><td>That was DOP!</td></tr>
+	<tr><td>Beyond Records</td></tr>
 </table></div></section><section id="_crawling_github"><h2>Crawling GitHub</h2><div class="slide-content"><div class="paragraph"><p>Starting with a seed URL:</p></div>
 <div class="olist arabic"><ol class="arabic"><li><p>connect to URL</p></li><li><p>identify kind of page</p></li><li><p>identify interesting section</p></li><li><p>identify outgoing links</p></li><li><p>for each link, start at 1.</p></li></ol></div>
 <div class="paragraph"><p>(Code on <a href="https://github.com/nipafx/modern-java-demo">github.com/nipafx/modern-java-demo</a>.)</p></div></div></section><section id="_crawling_github_2"><h2>Crawling GitHub</h2><div class="slide-content"><div class="paragraph"><p>That logic is implemented in:</p></div>
@@ -503,8 +503,7 @@ public String toPrettyString();</code></pre></div></div></div></section><section
 <div class="ulist"><ul><li><p>page "type" is implicit</p></li><li><p>legal combination of fields is unclear</p></li><li><p>clients must "divine" the type</p></li><li><p>disparate operations on same class</p></li></ul></div></div></section><section id="_a_better_implementation"><h2>A Better Implementation</h2><div class="slide-content"><div class="paragraph"><p>Data-oriented programming:</p></div>
 <div class="ulist"><ul><li><p>makes all data explicit and "obviously correct"</p></li><li><p>separates operations from data</p></li><li><p>models systems as production line</p></li></ul></div></div></section><section id="_applying_dop"><h2>Applying DOP</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>Model data immutably and transparently.</p></div></blockquote></div>
 <div class="paragraph"><p>Records fit perfectly:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">record ExternalPage(URI url, String content) { }</code></pre></div></div>
-<div class="paragraph"><p>(Just in case: You can achieve this with regular classes, too.)</p></div></div></section><section id="_ensuring_immutability"><h2>Ensuring Immutability</h2><div class="slide-content"><div class="paragraph"><p>Records are shallowly immutable,<br>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">record ExternalPage(URI url, String content) { }</code></pre></div></div></div></section><section id="_ensuring_immutability"><h2>Ensuring Immutability</h2><div class="slide-content"><div class="paragraph"><p>Records are shallowly immutable,<br>
 but field types may not be.</p></div>
 <div class="paragraph"><p>⇝ Fix that during construction.</p></div></div></section><section id="_ensuring_immutability_2"><h2>Ensuring Immutability</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public record GitHubPrPage(..., Set&lt;Page&gt; links) {
 
@@ -694,16 +693,7 @@ a pattern <code>switch</code> needs to cover all cases!</p></div>
 		default -&gt; "n.a.";
 	};
 }</code></pre></div></div>
-<div class="paragraph"><p>But we need to avoid <code>default</code>!</p></div></div></section><section id="_avoiding_default_2"><h2>Avoiding Default</h2><div class="slide-content"><div class="paragraph"><p>Write explicit branches:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public static String createPageEmoji(Page page) {
-	return switch (page) {
-		case GitHubIssuePage issue -&gt; "🐈";
-		case GitHubPrPage pr -&gt; "🐙";
-		// duplication 😢
-		case ErrorPage err -&gt; "n.a.";
-		case ExternalPage ext -&gt; "n.a.";
-	};
-}</code></pre></div></div></div></section><section id="_avoiding_default_3"><h2>Avoiding Default</h2><div class="slide-content"><div class="paragraph"><p>Use <code>_</code> to combine "default branches":</p></div>
+<div class="paragraph"><p>But we need to avoid <code>default</code>!</p></div></div></section><section id="_avoiding_default_2"><h2>Avoiding Default</h2><div class="slide-content"><div class="paragraph"><p>Use <code>_</code> to combine "default branches":</p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">public static String createPageEmoji(Page page) {
 	return switch (page) {
 		case GitHubIssuePage issue -&gt; "🐈";
@@ -718,6 +708,7 @@ but supported by the compiler</p></li></ul></div>
 	<tr><td>What is DOP?</td></tr>
 	<tr><td>A Lengthy Example</td></tr>
 	<tr class="toc-current"><td>That was DOP!</td></tr>
+	<tr><td>Beyond Records</td></tr>
 </table></div></section><section id="_dynamic_dispatch"><h2>Dynamic dispatch</h2><div class="slide-content"><div class="paragraph"><p>Dynamic dispatch selects the invoked method by type.</p></div>
 <div class="paragraph"><p>As language feature:</p></div>
 <div class="ulist"><ul><li><p>via inheritance</p></li><li><p>makes method part of API</p></li></ul></div>
@@ -778,6 +769,66 @@ of the program&#8217;s domain.</p></div>
 <div class="ulist"><ul><li><p>mainly handling outside data</p></li><li><p>working with simple or ad-hoc data</p></li><li><p>data and behavior should be separated</p></li></ul></div></div></section><section id="_data_oriented_programming_7"><h2>Data-Oriented Programming</h2><div class="slide-content"><div class="paragraph"><p>Use Java&#8217;s strong typing to model data as data:</p></div>
 <div class="ulist"><ul><li><p>use classes to represent data, particularly:</p><div class="ulist"><ul><li><p>data as data with records</p></li><li><p>alternatives with sealed classes</p></li></ul></div></li><li><p>use methods (separately) to model behavior, particularly:</p><div class="ulist"><ul><li><p>exhaustive <code>switch</code> without <code>default</code></p></li><li><p>pattern matching to destructure polymorphic data</p></li></ul></div></li></ul></div></div></section><section id="_more"><h2>More</h2><div class="slide-content"><div class="paragraph"><p>More on pattern matching:</p></div>
 <div class="ulist"><ul><li><p>📝 <a href="https://inside.java/2024/05/23/dop-v1-1-introduction/">Data-Oriented Programming in Java - Version 1.1</a></p></li><li><p>📝 <a href="https://www.infoq.com/articles/data-oriented-programming-java/">Data Oriented Programming in Java</a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=QrwFrm1R8OY">Java 21 Brings Full Pattern Matching</a></p></li><li><p>🎥 <a href="https://www.youtube.com/watch?v=5qYJYGvVLg8">Data-Oriented Programming</a></p></li><li><p>📝 <a href="https://openjdk.org/projects/amber/design-notes/patterns/pattern-match-object-model">Pattern Matching in the Java Object Model</a></p></li><li><p>🧑‍💻 <a href="https://github.com/nipafx/modern-java-demo">GitHub crawler</a></p></li></ul></div></div></section></section>
+<section><section id="_data_oriented_programming_8"><h2>Data-Oriented Programming</h2><div class="slide-content"><table class="toc">
+	<tr><td>What is DOP?</td></tr>
+	<tr><td>A Lengthy Example</td></tr>
+	<tr class="toc-current"><td>Beyond Records</td></tr>
+</table></div></section><section id="_remember_this"><h2>Remember This?</h2><div class="slide-content"><div class="quoteblock"><blockquote><div class="paragraph"><p>“ Model data immutably and transparently.</p></div>
+<div class="paragraph"><p>Records fit perfectly:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">record ExternalPage(URI url, String content) { }</code></pre></div></div></blockquote></div>
+<div class="paragraph"><p>What if it can&#8217;t be a record?</p></div></div></section><section id="_records_revisited"><h2>Records Revisited</h2><div class="slide-content"><div class="paragraph"><p>Record benefits fall into two categories:</p></div>
+<div class="ulist"><ul><li><p>internal quality-of-life<br>
+(fields, accessors, <code>toString()</code>, etc.)</p></li><li><p>external contract<br>
+(well-defined (de)construction)</p></li></ul></div>
+<div class="paragraph"><p>Only the latter is "needed" for DOP.</p></div></div></section><section id="_carrier_types"><h2>Carrier Types 💭</h2><div class="slide-content"><div class="paragraph"><p>Project Amber is exploring ways to allow<br>
+non-records to define such an external contract.</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// ↙ !!!              ↙ state description
+interface Point(int x, int y) {
+
+	// ...
+
+}</code></pre></div></div>
+<div class="paragraph"><p>(Strawman syntax.)</p></div>
+<div class="paragraph"><p>Would allow <code>Point</code> to be deconstructed, e.g.<br>
+<code>point instanceof Point(int x, int y)</code>.</p></div></div></section><section id="_carrier_types_2"><h2>Carrier Types 💭</h2><div class="slide-content"><div class="paragraph"><p>Similar for classes:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// ↙ !!!          ↙ state description
+class Point(int x, int y) {
+
+	// fields
+	// constructors
+	// accessors
+	// equals, hashCode, etc.
+
+}</code></pre></div></div>
+<div class="paragraph"><p>(Strawman syntax.)</p></div></div></section><section id="_carrier_types_3"><h2>Carrier Types 💭</h2><div class="slide-content"><div class="paragraph"><p>If a connection can be made between</p></div>
+<div class="ulist"><ul><li><p>state description of a class</p></li><li><p>a matching constructor</p></li></ul></div>
+<div class="paragraph"><p>Java can infer the same reconstruction protocol<br>
+as for records.</p></div>
+<div class="paragraph"><p>⇝ That can be <em>very</em> useful!</p></div></div></section><section id="_withers"><h2>Withers 💭</h2><div class="slide-content"><div class="paragraph"><p>Deriving new instances from existing ones:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">record Point(int x, int y) { }
+
+var p0 = new Point(0, 0);
+var p1 = p0 with { x = 1; };</code></pre></div></div>
+<div class="paragraph"><p>(Strawman syntax.)</p></div></div></section><section id="_constant_patterns"><h2>Constant Patterns 💭</h2><div class="slide-content"><div class="paragraph"><p>Constant patterns for simpler primitive checks:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">record Point(int x, int y) { }
+
+var point = // ...
+switch (point) {
+	// record pattern
+	case Point(var x, _) when x == 0 -&gt; // ...
+	// constant pattern (probably)
+	case Point(0, _) -&gt; // ...
+}</code></pre></div></div>
+<div class="paragraph"><p>(Strawman syntax.)</p></div></div></section><section id="_deconstruction_on_assignment"><h2>Deconstruction on Assignment 💭</h2><div class="slide-content"><div class="paragraph"><p>Unconditional deconstruction on assignment:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// `Point` is a type with state description
+Point nextPoint() { /* ... */ }
+
+// if you only need `x`
+Point(int x, _) = nextPoint();</code></pre></div></div>
+<div class="paragraph"><p>(Strawman syntax.)</p></div></div></section><section id="_amber_endeavors"><h2>Amber Endeavors</h2><div class="slide-content"><div class="paragraph"><p>Links:</p></div>
+<div class="ulist"><ul><li><p>deconstruction assignment: <a href="https://openjdk.org/jeps/8357464">JEP draft</a></p></li><li><p>derived record creation ("withers"): <a href="https://openjdk.org/jeps/468">JEP 468</a></p></li><li><p>deconstruction of classes: mails <a href="https://mail.openjdk.org/pipermail/amber-spec-experts/2026-January/004307.html">#1</a>, <a href="https://mail.openjdk.org/pipermail/amber-spec-experts/2026-February/004351.html">#2</a></p></li></ul></div>
+<div class="paragraph"><p>For more, follow <a href="https://inside.java/">inside.java</a><br>
+and the <a href="https://inside.java/podcast">Inside Java Podcast</a>.</p></div></div></section></section>
 <section id="_so_long" data-background-image="../_images/question-mark-9644fc1f.jpg" data-background-size="cover"><h2>So long&#8230;&#8203;</h2><div class="slide-content">
 <div style="float: left; width: 45%; margin: 0;">
 	<a href="https://www.manning.com/books/the-java-module-system?a_aid=nipa&a_bid=869915cb"><img src="../_images/cover-jms-4e5e400d.png" style="margin: 0;"></a>
