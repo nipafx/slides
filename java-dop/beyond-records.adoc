@@ -1,0 +1,137 @@
+== Data-Oriented Programming
+
+++++
+<table class="toc">
+	<tr><td>What is DOP?</td></tr>
+	<tr><td>A Lengthy Example</td></tr>
+	<tr class="toc-current"><td>Beyond Records</td></tr>
+</table>
+++++
+
+=== Remember This?
+
+> “ Model data immutably and transparently.
+>
+> Records fit perfectly:
+>
+> ```java
+> record ExternalPage(URI url, String content) { }
+> ```
+
+What if it can't be a record?
+
+=== Records Revisited
+
+Record benefits fall into two categories:
+
+* internal quality-of-life +
+  (fields, accessors, `toString()`, etc.)
+* external contract +
+  (well-defined (de)construction)
+
+Only the latter is "needed" for DOP.
+
+=== Carrier Types 💭
+
+Project Amber is exploring ways to allow +
+non-records to define such an external contract.
+
+```java
+// ↙ !!!              ↙ state description
+interface Point(int x, int y) {
+
+	// ...
+
+}
+```
+
+(Strawman syntax.)
+
+Would allow `Point` to be deconstructed, e.g. +
+`point instanceof Point(int x, int y)`.
+
+=== Carrier Types 💭
+
+Similar for classes:
+
+```java
+// ↙ !!!          ↙ state description
+class Point(int x, int y) {
+
+	// fields
+	// constructors
+	// accessors
+	// equals, hashCode, etc.
+
+}
+```
+
+(Strawman syntax.)
+
+=== Carrier Types 💭
+
+If a connection can be made between
+
+* state description of a class
+* a matching constructor
+
+Java can infer the same reconstruction protocol +
+as for records.
+
+⇝ That can be _very_ useful!
+
+=== Withers 💭
+
+Deriving new instances from existing ones:
+
+```java
+record Point(int x, int y) { }
+
+var p0 = new Point(0, 0);
+var p1 = p0 with { x = 1; };
+```
+
+(Strawman syntax.)
+
+=== Constant Patterns 💭
+
+Constant patterns for simpler primitive checks:
+
+```java
+record Point(int x, int y) { }
+
+var point = // ...
+switch (point) {
+	// record pattern
+	case Point(var x, _) when x == 0 -> // ...
+	// constant pattern (probably)
+	case Point(0, _) -> // ...
+}
+```
+
+(Strawman syntax.)
+
+=== Deconstruction on Assignment 💭
+
+Unconditional deconstruction on assignment:
+
+```java
+// `Point` is a type with state description
+Point nextPoint() { /* ... */ }
+
+// if you only need `x`
+Point(int x, _) = nextPoint();
+```
+
+(Strawman syntax.)
+
+=== Amber Endeavors
+
+Links:
+
+* deconstruction assignment: https://openjdk.org/jeps/8357464[JEP draft]
+* derived record creation ("withers"): https://openjdk.org/jeps/468[JEP 468]
+* deconstruction of classes: mails https://mail.openjdk.org/pipermail/amber-spec-experts/2026-January/004307.html[#1], https://mail.openjdk.org/pipermail/amber-spec-experts/2026-February/004351.html[#2]
+
+For more, follow https://inside.java/[inside.java] +
+and the https://inside.java/podcast[Inside Java Podcast].

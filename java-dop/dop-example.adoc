@@ -4,7 +4,7 @@
 <table class="toc">
 	<tr><td>What is DOP?</td></tr>
 	<tr class="toc-current"><td>A Lengthy Example</td></tr>
-	<tr><td>That was DOP!</td></tr>
+	<tr><td>Beyond Records</td></tr>
 </table>
 ++++
 
@@ -108,8 +108,6 @@ Records fit perfectly:
 ```java
 record ExternalPage(URI url, String content) { }
 ```
-
-(Just in case: You can achieve this with regular classes, too.)
 
 === Ensuring Immutability
 
@@ -522,22 +520,6 @@ public static String createPageEmoji(Page page) {
 ```
 
 But we need to avoid `default`!
-
-=== Avoiding Default
-
-Write explicit branches:
-
-```java
-public static String createPageEmoji(Page page) {
-	return switch (page) {
-		case GitHubIssuePage issue -> "🐈";
-		case GitHubPrPage pr -> "🐙";
-		// duplication 😢
-		case ErrorPage err -> "n.a.";
-		case ExternalPage ext -> "n.a.";
-	};
-}
-```
 
 === Avoiding Default
 
