@@ -78,33 +78,31 @@ Best of both worlds.
 
 Details:
 
-* initializer executes at most once (successfully)
+* initializer executes at most once
+* no cancellation/timeout
 * `equals` compares `LazyConstant` identity
 
 Error cases:
 
-* rejects `null`
-* `IllegalStateException` on cycles
-* if initializer fails:
-** `get` throws its exception
-** next `get` will try again
-* no cancellation/timeout
+* rejects `null` and cycles
+* if initializer fails, each `get` throws
+
+All errors surface as +
+`NoSuchElementException` (with cause).
 
 === Lazy collections
 
 ```java
 var list = List.ofLazy(2, index -> "" + index);
 var map = Map.ofLazy(Set.of(0, 1), key -> "" + key);
+var set = Set.ofLazy(Set.of(0, 1), this::isInSet);
 ```
-
-Coming in JDK 27: `Set::ofLazy`.
 
 === Lazy collections
 
 Details:
 
-* initializer executes at most once +
-  _per element_ (successfully)
+* initializer executes at most once _per element_
 * collections are unmodifiable
 * `equals` evaluates all elements +
   (`Collection` requires this)
@@ -113,7 +111,7 @@ Error cases like before.
 
 === More
 
-Second preview in JDK 26.
+Third preview in JDK 27.
 
-* 📝 https://openjdk.org/jeps/526[JEP 526]: Lazy Constants
+* 📝 https://openjdk.org/jeps/531[JEP 531]: Lazy Constants
 * 🎥 https://www.youtube.com/watch?v=BZlXZyXA4jY[LazyConstants in JDK 26]
