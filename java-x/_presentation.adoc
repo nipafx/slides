@@ -1,4 +1,4 @@
-= Java 28
+= Java 27
 :backend: revealjs
 :revealjs_theme: nipa-night
 :revealjsdir: ../_reveal.js/head
@@ -37,7 +37,7 @@ include::../_shared/highlight.js.adoc[]
 include::../_shared/event-on-title-and-footer.adoc[]
 
 
-:title: Java 28
+:title: Java 27
 
 // ######### //
 // I N T R O //
@@ -45,18 +45,15 @@ include::../_shared/event-on-title-and-footer.adoc[]
 
 // ⇝
 
-include::jdk-28-in-15-minutes.adoc[]
-
-////
 == Let's get started!
 
-*JDK 26* was released in March: +
-https://jdk.java.net/26[jdk.java.net/26]
+*JDK 27* was released in September: +
+https://jdk.java.net/27[jdk.java.net/27]
 
 *This session*:
 
 * briefly summarizes Java 22 to 25
-* goes into more detail on Java 26
+* goes into more detail on Java 26 and 27
 * is a showcase, not a tutorial
 
 *Slides* at https://slides.nipafx.dev/java-x[slides.nipafx.dev/java-x] (⇝ hit "?")
@@ -75,23 +72,19 @@ include::summary.adoc[]
 <table class="toc"> \
 	<tr><td>Java 22 to 25</td></tr> \
 	<tr class="toc-current"><td>Java 26</td></tr> \
-	<tr class="toc-current"><td style="padding-left: 2em;">Primitive Patterns</td></tr> \
-	<tr><td style="padding-left: 2em;">Lazy Constants</td></tr> \
-	<tr><td style="padding-left: 2em;">HTTP/3</td></tr> \
-	<tr><td style="padding-left: 2em;">Structured Concurrency</td></tr> \
-	<tr><td style="padding-left: 2em;">PEM Encoding</td></tr> \
+	<tr class="toc-current"><td style="padding-left: 2em;">HTTP/3</td></tr> \
+	<tr><td>Java 27</td></tr> \
 	<tr><td>Deprecations & Removals</td></tr> \
 </table> \
 ]
-include::language_pattern-primitive.adoc[]
+include::api-updated_http3.adoc[]
 
 :toc: pass:[ \
 <table class="toc"> \
 	<tr><td>Java 22 to 25</td></tr> \
-	<tr class="toc-current"><td>Java 26</td></tr> \
-	<tr><td style="padding-left: 2em;">Primitive Patterns</td></tr> \
+	<tr><td>Java 26</td></tr> \
+	<tr class="toc-current"><td>Java 27</td></tr> \
 	<tr class="toc-current"><td style="padding-left: 2em;">Lazy Constants</td></tr> \
-	<tr><td style="padding-left: 2em;">HTTP/3</td></tr> \
 	<tr><td style="padding-left: 2em;">Structured Concurrency</td></tr> \
 	<tr><td style="padding-left: 2em;">PEM Encoding</td></tr> \
 	<tr><td>Deprecations & Removals</td></tr> \
@@ -102,24 +95,9 @@ include::api-new_lazy.adoc[]
 :toc: pass:[ \
 <table class="toc"> \
 	<tr><td>Java 22 to 25</td></tr> \
-	<tr class="toc-current"><td>Java 26</td></tr> \
-	<tr><td style="padding-left: 2em;">Primitive Patterns</td></tr> \
+	<tr><td>Java 26</td></tr> \
+	<tr class="toc-current"><td>Java 27</td></tr> \
 	<tr><td style="padding-left: 2em;">Lazy Constants</td></tr> \
-	<tr class="toc-current"><td style="padding-left: 2em;">HTTP/3</td></tr> \
-	<tr><td style="padding-left: 2em;">Structured Concurrency</td></tr> \
-	<tr><td style="padding-left: 2em;">PEM Encoding</td></tr> \
-	<tr><td>Deprecations & Removals</td></tr> \
-</table> \
-]
-include::api-updated_http3.adoc[]
-
-:toc: pass:[ \
-<table class="toc"> \
-	<tr><td>Java 22 to 25</td></tr> \
-	<tr class="toc-current"><td>Java 26</td></tr> \
-	<tr><td style="padding-left: 2em;">Primitive Patterns</td></tr> \
-	<tr><td style="padding-left: 2em;">Lazy Constants</td></tr> \
-	<tr><td style="padding-left: 2em;">HTTP/3</td></tr> \
 	<tr class="toc-current"><td style="padding-left: 2em;">Structured Concurrency</td></tr> \
 	<tr><td style="padding-left: 2em;">PEM Encoding</td></tr> \
 	<tr><td>Deprecations & Removals</td></tr> \
@@ -130,10 +108,9 @@ include::api-new_structured-concurrency.adoc[]
 :toc: pass:[ \
 <table class="toc"> \
 	<tr><td>Java 22 to 25</td></tr> \
-	<tr class="toc-current"><td>Java 26</td></tr> \
-	<tr><td style="padding-left: 2em;">Primitive Patterns</td></tr> \
+	<tr><td>Java 26</td></tr> \
+	<tr class="toc-current"><td>Java 27</td></tr> \
 	<tr><td style="padding-left: 2em;">Lazy Constants</td></tr> \
-	<tr><td style="padding-left: 2em;">HTTP/3</td></tr> \
 	<tr><td style="padding-left: 2em;">Structured Concurrency</td></tr> \
 	<tr class="toc-current"><td style="padding-left: 2em;">PEM Encoding</td></tr> \
 	<tr><td>Deprecations & Removals</td></tr> \
@@ -145,6 +122,7 @@ include::api-new_pem.adoc[]
 <table class="toc"> \
 	<tr><td>Java 22 to 25</td></tr> \
 	<tr><td>Java 26</td></tr> \
+	<tr><td>Java 27</td></tr> \
 	<tr class="toc-current"><td>Deprecations & Removals</td></tr> \
 </table> \
 ]
@@ -154,7 +132,7 @@ include::deprecations.adoc[]
 // O U T R O //
 // ######### //
 
-== Java 22-26
+== Java 22-27
 
 Major achievements:
 
@@ -163,11 +141,9 @@ Major achievements:
 * improve tooling and performance
 * introduce AOT workflow
 
-Get JDK 26 at https://jdk.java.net/26/[jdk.java.net/26].
+Get JDK 27 at https://jdk.java.net/27/[jdk.java.net/27].
 
 
 include::../_shared/about-slide.adoc[]
 
 include::images/sources.adoc[]
-
-////
