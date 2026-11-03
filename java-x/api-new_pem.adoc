@@ -68,7 +68,7 @@ assert cert.equals(cert2);
 Instances of `PEMEncoder` and `PEMDecoder` are:
 
 * immutable
-* thread-safe 
+* thread-safe
 * reusable
 
 === Encodable
@@ -96,7 +96,7 @@ For decoding:
 KeyPair kp = decoder.decode(pem, KeyPair.class);
 ```
 * otherwise, `switch`/`instanceof` over +
-  return value of `decode(String)` 
+  return value of `decode(String)`
 
 (Overloads for `InputStream` exist.)
 
@@ -120,7 +120,7 @@ char[] pass = // ...
 String pem = encoder
 	.withEncryption(pass)
 	.encodeToString(key);
-DEREncodable der = decoder
+BinaryEncodable decoded = decoder
 	.withDecryption(pass)
 	.decode(pem);
 ```
