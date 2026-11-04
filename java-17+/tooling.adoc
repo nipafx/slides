@@ -82,9 +82,9 @@ $ java -XX:StartFlightRecording:
 	filename=clinit.jfr
 	...
 $ jfr view method-timing clinit.jfr
-> 
+>
 >                                  Method Timing
-> 
+>
 > Timed Method                 Invocations Avg Time
 > ---------------------------- ----------- --------
 > HBShaper.<clinit>()                    1 32.50 ms

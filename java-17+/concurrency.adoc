@@ -305,49 +305,49 @@ Use `Joiner` to configure result/error handling:
 
 Pass to `StructuredTaskScope.open(Joiner)`.
 
-=== Cancellation
+=== Strong Typing
 
-If joiner cancels scope:
+`Joiner<T, R, EX>` and `StructuredTaskScope<T, R, EX>` +
+have the same type parameters:
 
-* all child threads get interrupted
-* `join` returns or throws
-
-But `StructuredTaskScope.close()` waits +
-until all child threads complete.
-
-⇝ Handle `InterruptedException` properly!
+* `T`: result type of all subtasks
+* `R`: return type of `join`
+* `EX`: exception type of `join`
 
 === Joiners
 
 Existing joiners for heterogeneous results:
 
-* `awaitAllSuccessfulOrThrow()`:
+* `Joiner<T, Void, ExecutionException>` +
+  `awaitAllSuccessfulOrThrow()`:
 ** cancels/throws on first error
 ** default behavior of `open()`
-* `allUntil(Predicate)`:
+* `Joiner<T, List<Subtask<T>>, RuntimeException>` +
+  `allUntil(Predicate<Subtask<T>>)`:
 ** cancels when the predicate is true
-** returns `List<Subtask>`
 
 === Joiners
 
 Existing joiners for homogeneous results:
 
-* `allSuccessfulOrThrow()`:
+* `Joiner<T, List<T>, ExecutionException>` +
+  `allSuccessfulOrThrow()`:
 ** cancels/throws on first error
-** returns `List<RESULT>`
-* `anySuccessfulOrThrow()`
+* `Joiner<T, T, *ExecutionException*>` +
+  `anySuccessfulOrThrow()`
+** returns first result
 ** cancels/throws if all fail
-** returns `RESULT`
 
 === Any Successful
 
 ```java
-try (var scope = StructuredTaskScope.open(
-		Joiner.<String> anySuccessfulOrThrow())) {
+try (StructuredTaskScope<String, String, Ex.Ex.> scope =
+	StructuredTaskScope.open(
+		Joiner.anySuccessfulOrThrow())) {
 	// no need to grab the `Subtask` instances
 	scope.fork(this::taskA);
 	scope.fork(this::taskB);
-	
+
 	// returns the first successful result
 	return scope.join();
 } catch (ExecutionException ex) {
@@ -357,19 +357,19 @@ try (var scope = StructuredTaskScope.open(
 
 === Custom exceptions
 
-Some joiners accept a function to transform the exception:
+Most `Joiner` factories accept a function +
+to transform the exception:
 
 ```java
-try (var scope = StructuredTaskScope.open(
-		Joiner.<String> anySuccessfulOrThrow(
-			IOException::new))) {
+// let the method throw `IOException`
+try (StructuredTaskScope<String, String, IOEx> scope =
+	StructuredTaskScope.open(
+		Joiner.anySuccessfulOrThrow(IOException::new))) {
 
 	scope.fork(this::taskA);
 	scope.fork(this::taskB);
-	
+
 	return scope.join();
-} catch (IOException ex) {
-	// TODO: handle task errors
 }
 ```
 
@@ -378,15 +378,15 @@ try (var scope = StructuredTaskScope.open(
 Implement and pass to `StructuredTaskScope::open`:
 
 ```java
-interface Joiner<T, R> {
+interface Joiner<T, R, EX extends Throwable> {
 
-	boolean onFork(Subtask<? extends T> subtask);
+	boolean onFork(Subtask<T> subtask);
 
-	boolean onComplete(Subtask<? extends T> subtask);
+	boolean onComplete(Subtask<T> subtask);
 
-	void onTimeout();
+	R result() throws EX;
 
-	R result() throws Throwable;
+	R timeout() throws EX;
 
 }
 ```
@@ -404,22 +404,35 @@ Pass `UnaryOperator<Configuration>` to `StructuredTaskScope::open`.
 === Timeouts
 
 ```java
-var timeout = Duration.ofSeconds(3);
-try (var scope = StructuredTaskScope.open(
-		Joiner.<String> anySuccessfulOrThrow(),
-		cfg -> cfg.withTimeout(timeout))) {
-	// [... forks ...]
+try (StructuredTaskScope<String, String, Ex.Ex.> scope =
+	StructuredTaskScope.open(
+		Joiner.anySuccessfulOrThrow(IOException::new),
+		cfg -> cfg.withTimeout(Duration.ofSeconds(1)))) {
+	scope.fork(this::taskA);
+	scope.fork(this::taskB);
 
 	// throws when timeout expires
 	return scope.join();
 } catch (ExecutionException ex) {
 	if (ex.getCause() instanceof
-		CancelledByTimeoutException tex) {
-			// TODO: handle timeout
-		}
-	// TODO: handle task errors
+			CancelledByTimeoutException)
+		// TODO: handle timeout
+	else
+		// TODO: handle task errors
 }
 ```
+
+=== Error propagation
+
+If joiner cancels scope:
+
+* all child threads get interrupted
+* `join` returns or throws
+
+But `StructuredTaskScope.close()` waits +
+until all child threads complete.
+
+⇝ Handle `InterruptedException` properly!
 
 === Sharing data
 
