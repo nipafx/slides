@@ -7,7 +7,7 @@
 Value classes have performance implications, +
 _but `value` should not be used as a "performance keyword"_.
 
-* JVM applies optimizations 
+* JVM applies optimizations
 * these depend on many factors
 * they will evolve over time
 
@@ -26,7 +26,7 @@ This usually requires an extra bit to encode nullity.
 
 === Reference Flattening
 
-> An array of `LocalDate` references can be flattened by prepending a `null` flag to the year-month-day triple of a `LocalDate` object (an `int` and two `byte`-s). 
+> An array of `LocalDate` references can be flattened by prepending a `null` flag to the year-month-day triple of a `LocalDate` object (an `int` and two `byte`-s).
 
 ```
 +--------------+
@@ -44,7 +44,7 @@ This usually requires an extra bit to encode nullity.
 
 ```java
 class Event {
-	private LocalDate day;	
+	private LocalDate day;
 }
 ```
 
@@ -111,8 +111,8 @@ Object[] objs = { 1996, 2014, null, null, 2026 };
 
 // field is not flattenable
 record Box<T>(T field) { }
-// field stores a heap pointer 
-var box = new Box<LocalDate>(x); 
+// field stores a heap pointer
+var box = new Box<LocalDate>(x);
 ```
 
 === Summary
