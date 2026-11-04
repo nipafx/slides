@@ -1413,14 +1413,17 @@ try (var scope = StructuredTaskScope.open()) {
 <div class="ulist"><ul><li><p>defines a scope for concurrency</p></li><li><p>simplifies control flow</p></li><li><p>simplifies grouped result/error handling</p></li><li><p>makes thread relationships visible<br>
 (in thread dumps and soon🤞 debuggers)</p></li></ul></div></div></section><section id="_completion"><h2>Completion</h2><div class="slide-content"><div class="paragraph"><p>Use <code>Joiner</code> to configure result/error handling:</p></div>
 <div class="ulist"><ul><li><p>how are results collected?</p></li><li><p>when are subtasks cancelled?</p></li><li><p>what does <code>join</code> return?</p></li><li><p>when does <code>join</code> throw?</p></li></ul></div>
-<div class="paragraph"><p>Pass to <code>StructuredTaskScope.open(Joiner)</code>.</p></div></div></section><section id="_cancellation"><h2>Cancellation</h2><div class="slide-content"><div class="paragraph"><p>If joiner cancels scope:</p></div>
-<div class="ulist"><ul><li><p>all child threads get interrupted</p></li><li><p><code>join</code> returns or throws</p></li></ul></div>
-<div class="paragraph"><p>But <code>StructuredTaskScope.close()</code> waits<br>
-until all child threads complete.</p></div>
-<div class="paragraph"><p>⇝ Handle <code>InterruptedException</code> properly!</p></div></div></section><section id="_joiners"><h2>Joiners</h2><div class="slide-content"><div class="paragraph"><p>Existing joiners for heterogeneous results:</p></div>
-<div class="ulist"><ul><li><p><code>awaitAllSuccessfulOrThrow()</code>:</p><div class="ulist"><ul><li><p>cancels/throws on first error</p></li><li><p>default behavior of <code>open()</code></p></li></ul></div></li><li><p><code>allUntil(Predicate)</code>:</p><div class="ulist"><ul><li><p>cancels when the predicate is true</p></li><li><p>returns <code>List&lt;Subtask&gt;</code></p></li></ul></div></li></ul></div></div></section><section id="_joiners_2"><h2>Joiners</h2><div class="slide-content"><div class="paragraph"><p>Existing joiners for homogeneous results:</p></div>
-<div class="ulist"><ul><li><p><code>allSuccessfulOrThrow()</code>:</p><div class="ulist"><ul><li><p>cancels/throws on first error</p></li><li><p>returns <code>List&lt;RESULT&gt;</code></p></li></ul></div></li><li><p><code>anySuccessfulOrThrow()</code></p><div class="ulist"><ul><li><p>cancels/throws if all fail</p></li><li><p>returns <code>RESULT</code></p></li></ul></div></li></ul></div></div></section><section id="_any_successful"><h2>Any Successful</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">try (var scope = StructuredTaskScope.open(
-		Joiner.&lt;String&gt; anySuccessfulOrThrow())) {
+<div class="paragraph"><p>Pass to <code>StructuredTaskScope.open(Joiner)</code>.</p></div></div></section><section id="_strong_typing"><h2>Strong Typing</h2><div class="slide-content"><div class="paragraph"><p><code>Joiner&lt;T, R, EX&gt;</code> and <code>StructuredTaskScope&lt;T, R, EX&gt;</code><br>
+have the same type parameters:</p></div>
+<div class="ulist"><ul><li><p><code>T</code>: result type of all subtasks</p></li><li><p><code>R</code>: return type of <code>join</code></p></li><li><p><code>EX</code>: exception type of <code>join</code></p></li></ul></div></div></section><section id="_joiners"><h2>Joiners</h2><div class="slide-content"><div class="paragraph"><p>Existing joiners for heterogeneous results:</p></div>
+<div class="ulist"><ul><li><p><code>Joiner&lt;T, Void, ExecutionException&gt;</code><br>
+<code>awaitAllSuccessfulOrThrow()</code>:</p><div class="ulist"><ul><li><p>cancels/throws on first error</p></li><li><p>default behavior of <code>open()</code></p></li></ul></div></li><li><p><code>Joiner&lt;T, List&lt;Subtask&lt;T&gt;&gt;, RuntimeException&gt;</code><br>
+<code>allUntil(Predicate&lt;Subtask&lt;T&gt;&gt;)</code>:</p><div class="ulist"><ul><li><p>cancels when the predicate is true</p></li></ul></div></li></ul></div></div></section><section id="_joiners_2"><h2>Joiners</h2><div class="slide-content"><div class="paragraph"><p>Existing joiners for homogeneous results:</p></div>
+<div class="ulist"><ul><li><p><code>Joiner&lt;T, List&lt;T&gt;, ExecutionException&gt;</code><br>
+<code>allSuccessfulOrThrow()</code>:</p><div class="ulist"><ul><li><p>cancels/throws on first error</p></li></ul></div></li><li><p><code>Joiner&lt;T, T, <strong>ExecutionException</strong>&gt;</code><br>
+<code>anySuccessfulOrThrow()</code></p><div class="ulist"><ul><li><p>returns first result</p></li><li><p>cancels/throws if all fail</p></li></ul></div></li></ul></div></div></section><section id="_any_successful"><h2>Any Successful</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">try (StructuredTaskScope&lt;String, String, Ex.Ex.&gt; scope =
+	StructuredTaskScope.open(
+		Joiner.anySuccessfulOrThrow())) {
 	// no need to grab the `Subtask` instances
 	scope.fork(this::taskA);
 	scope.fork(this::taskB);
@@ -1429,45 +1432,50 @@ until all child threads complete.</p></div>
 	return scope.join();
 } catch (ExecutionException ex) {
 	// TODO: handle task errors
-}</code></pre></div></div></div></section><section id="_custom_exceptions"><h2>Custom exceptions</h2><div class="slide-content"><div class="paragraph"><p>Some joiners accept a function to transform the exception:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">try (var scope = StructuredTaskScope.open(
-		Joiner.&lt;String&gt; anySuccessfulOrThrow(
-			IOException::new))) {
+}</code></pre></div></div></div></section><section id="_custom_exceptions"><h2>Custom exceptions</h2><div class="slide-content"><div class="paragraph"><p>Most <code>Joiner</code> factories accept a function<br>
+to transform the exception:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">// let the method throw `IOException`
+try (StructuredTaskScope&lt;String, String, IOEx&gt; scope =
+	StructuredTaskScope.open(
+		Joiner.anySuccessfulOrThrow(IOException::new))) {
 
 	scope.fork(this::taskA);
 	scope.fork(this::taskB);
 
 	return scope.join();
-} catch (IOException ex) {
-	// TODO: handle task errors
 }</code></pre></div></div></div></section><section id="_custom_joiners"><h2>Custom joiners</h2><div class="slide-content"><div class="paragraph"><p>Implement and pass to <code>StructuredTaskScope::open</code>:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">interface Joiner&lt;T, R&gt; {
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">interface Joiner&lt;T, R, EX extends Throwable&gt; {
 
-	boolean onFork(Subtask&lt;? extends T&gt; subtask);
+	boolean onFork(Subtask&lt;T&gt; subtask);
 
-	boolean onComplete(Subtask&lt;? extends T&gt; subtask);
+	boolean onComplete(Subtask&lt;T&gt; subtask);
 
-	void onTimeout();
+	R result() throws EX;
 
-	R result() throws Throwable;
+	R timeout() throws EX;
 
 }</code></pre></div></div></div></section><section id="_configuration"><h2>Configuration</h2><div class="slide-content"><div class="paragraph"><p>Further configuration options:</p></div>
 <div class="ulist"><ul><li><p>the scope&#8217;s name</p></li><li><p>a timeout</p></li><li><p>a custom thread factory</p></li></ul></div>
-<div class="paragraph"><p>Pass <code>UnaryOperator&lt;Configuration&gt;</code> to <code>StructuredTaskScope::open</code>.</p></div></div></section><section id="_timeouts"><h2>Timeouts</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">var timeout = Duration.ofSeconds(3);
-try (var scope = StructuredTaskScope.open(
-		Joiner.&lt;String&gt; anySuccessfulOrThrow(),
-		cfg -&gt; cfg.withTimeout(timeout))) {
-	// [... forks ...]
+<div class="paragraph"><p>Pass <code>UnaryOperator&lt;Configuration&gt;</code> to <code>StructuredTaskScope::open</code>.</p></div></div></section><section id="_timeouts"><h2>Timeouts</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">try (StructuredTaskScope&lt;String, String, Ex.Ex.&gt; scope =
+	StructuredTaskScope.open(
+		Joiner.anySuccessfulOrThrow(IOException::new),
+		cfg -&gt; cfg.withTimeout(Duration.ofSeconds(1)))) {
+	scope.fork(this::taskA);
+	scope.fork(this::taskB);
 
 	// throws when timeout expires
 	return scope.join();
 } catch (ExecutionException ex) {
 	if (ex.getCause() instanceof
-		CancelledByTimeoutException tex) {
-			// TODO: handle timeout
-		}
-	// TODO: handle task errors
-}</code></pre></div></div></div></section><section id="_sharing_data"><h2>Sharing data</h2><div class="slide-content"><div class="paragraph"><p>Passing data across thread boundaries:</p></div>
+			CancelledByTimeoutException)
+		// TODO: handle timeout
+	else
+		// TODO: handle task errors
+}</code></pre></div></div></div></section><section id="_error_propagation"><h2>Error propagation</h2><div class="slide-content"><div class="paragraph"><p>If joiner cancels scope:</p></div>
+<div class="ulist"><ul><li><p>all child threads get interrupted</p></li><li><p><code>join</code> returns or throws</p></li></ul></div>
+<div class="paragraph"><p>But <code>StructuredTaskScope.close()</code> waits<br>
+until all child threads complete.</p></div>
+<div class="paragraph"><p>⇝ Handle <code>InterruptedException</code> properly!</p></div></div></section><section id="_sharing_data"><h2>Sharing data</h2><div class="slide-content"><div class="paragraph"><p>Passing data across thread boundaries:</p></div>
 <div class="ulist"><ul><li><p><code>ScopedValue</code> just works</p></li><li><p><code>InheritableThreadLocal</code> just works</p></li><li><p>a <code>ThreadFactory</code> can help with other cases</p></li></ul></div></div></section><section id="_scoped_values"><h2>Scoped values</h2><div class="slide-content"><div class="listingblock"><div class="content"><pre class="highlight"><code class="language-java" data-lang="java">ScopedValue.where(ANSWER, 42).run(() -&gt; {// scope ──┐
 	try (var scope = StructuredTaskScope    //      │
 			.open() {                       //      │
