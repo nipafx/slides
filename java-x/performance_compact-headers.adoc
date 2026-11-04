@@ -44,12 +44,11 @@ This incurs overhead:
 The aforementioned subsystems are +
 complicated _and_ performance-sensitive.
 
-I've only told you the easy part of object headers: +
-locking operations can override upper 62 bits.
+I've only told you the easy part of object headers.
 
 === Compressed headers
 
-Project Lilliput achieved first milestone:
+Project Lilliput achieved its first milestone:
 
 ```
 63-32 CCCCCCCCCCCCCCCCCCCCCCHHHHHHHHHH
@@ -65,11 +64,8 @@ Project Lilliput achieved first milestone:
 
 === Effects
 
-These changes have several downstream effects:
-
-* locking operations no longer override
-* class word is now much smaller and encoded differently
-* GC forwarding operations become more complex
+These changes have several downstream effects +
+for the complexities I (didn't) mention.
 
 In special cases, these may be detrimental to performance.
 
@@ -79,20 +75,20 @@ In special cases, these may be detrimental to performance.
 > * In another setting, the number of garbage collections done by SPECjbb2015 is https://bugs.openjdk.org/browse/JDK-8350457?focusedId=14766358&page=com.atlassian.jira.plugin.system.issuetabpanels%3Acomment-tabpanel#comment-14766358[reduced by 15%], with both the G1 and Parallel collectors.
 > * A highly parallel JSON parser benchmark runs in https://www.reddit.com/r/scala/comments/1jptiv3/xxusecompactobjectheaders_is_your_new_turbo/?rdt=40432[10% less time].
 
-=== Try it out!
+=== Configuration
 
-Add flag:
+Compact object headers:
 
+* Java 24 experiments
+* Java 25 finalizes
+* Java 27 enables by default
+
+Configure with flag:
+
+```sh
+# disable on JDK 27
+-XX:-UseCompactObjectHeaders
 ```
--XX:+UseCompactObjectHeaders
-```
-
-Report observations to https://mail.openjdk.org/mailman/listinfo/hotspot-dev[hotspot-dev]!
-
-This is vital to:
-
-* improve performance, specifically edge cases
-* decide whether this becomes default/only header encoding
 
 === Note
 
@@ -103,6 +99,7 @@ Interaction with other features:
 
 === More
 
-* 📝 https://openjdk.org/jeps/450[JEP 450]: Compact Object Headers (Experimental) ㉔
+* 📝 https://openjdk.org/jeps/450[JEP 450]: Compact Object Headers (Experimental) ❗️ ㉔
 * 📝 https://openjdk.org/jeps/519[JEP 519]: Compact Object Headers ㉕
+* 📝 https://openjdk.org/jeps/534[JEP 534]: Compact Object Headers by Default ㉗
 * 🎥 https://www.youtube.com/watch?v=r2G4ed2E4QY[Save 10-20% Memory With Compact Headers]
