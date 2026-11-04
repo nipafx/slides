@@ -73,6 +73,7 @@ include::summary.adoc[]
 	<tr><td>Java 22 to 25</td></tr> \
 	<tr class="toc-current"><td>Java 26</td></tr> \
 	<tr class="toc-current"><td style="padding-left: 2em;">HTTP/3</td></tr> \
+	<tr><td style="padding-left: 2em;">The Rest</td></tr> \
 	<tr><td>Java 27</td></tr> \
 	<tr><td>Deprecations & Removals</td></tr> \
 </table> \
@@ -82,11 +83,23 @@ include::api-updated_http3.adoc[]
 :toc: pass:[ \
 <table class="toc"> \
 	<tr><td>Java 22 to 25</td></tr> \
-	<tr><td>Java 26</td></tr> \
+	<tr class="toc-current"><td>Java 26</td></tr> \
+	<tr><td style="padding-left: 2em;">HTTP/3</td></tr> \
+	<tr class="toc-current"><td style="padding-left: 2em;">The Rest</td></tr> \
+	<tr><td>Java 27</td></tr> \
+	<tr><td>Deprecations & Removals</td></tr> \
+</table> \
+]
+include::rest_java26.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>...</td></tr> \
 	<tr class="toc-current"><td>Java 27</td></tr> \
 	<tr class="toc-current"><td style="padding-left: 2em;">Lazy Constants</td></tr> \
 	<tr><td style="padding-left: 2em;">Structured Concurrency</td></tr> \
 	<tr><td style="padding-left: 2em;">PEM Encoding</td></tr> \
+	<tr><td style="padding-left: 2em;">The Rest</td></tr> \
 	<tr><td>Deprecations & Removals</td></tr> \
 </table> \
 ]
@@ -94,12 +107,12 @@ include::api-new_lazy.adoc[]
 
 :toc: pass:[ \
 <table class="toc"> \
-	<tr><td>Java 22 to 25</td></tr> \
-	<tr><td>Java 26</td></tr> \
+	<tr><td>...</td></tr> \
 	<tr class="toc-current"><td>Java 27</td></tr> \
 	<tr><td style="padding-left: 2em;">Lazy Constants</td></tr> \
 	<tr class="toc-current"><td style="padding-left: 2em;">Structured Concurrency</td></tr> \
 	<tr><td style="padding-left: 2em;">PEM Encoding</td></tr> \
+	<tr><td style="padding-left: 2em;">The Rest</td></tr> \
 	<tr><td>Deprecations & Removals</td></tr> \
 </table> \
 ]
@@ -107,16 +120,29 @@ include::api-new_structured-concurrency.adoc[]
 
 :toc: pass:[ \
 <table class="toc"> \
-	<tr><td>Java 22 to 25</td></tr> \
-	<tr><td>Java 26</td></tr> \
+	<tr><td>...</td></tr> \
 	<tr class="toc-current"><td>Java 27</td></tr> \
 	<tr><td style="padding-left: 2em;">Lazy Constants</td></tr> \
 	<tr><td style="padding-left: 2em;">Structured Concurrency</td></tr> \
 	<tr class="toc-current"><td style="padding-left: 2em;">PEM Encoding</td></tr> \
+	<tr><td style="padding-left: 2em;">The Rest</td></tr> \
 	<tr><td>Deprecations & Removals</td></tr> \
 </table> \
 ]
 include::api-new_pem.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>...</td></tr> \
+	<tr class="toc-current"><td>Java 27</td></tr> \
+	<tr><td style="padding-left: 2em;">Lazy Constants</td></tr> \
+	<tr><td style="padding-left: 2em;">Structured Concurrency</td></tr> \
+	<tr><td style="padding-left: 2em;">PEM Encoding</td></tr> \
+	<tr class="toc-current"><td style="padding-left: 2em;">The Rest</td></tr> \
+	<tr><td>Deprecations & Removals</td></tr> \
+</table> \
+]
+include::rest_java27.adoc[]
 
 :toc: pass:[ \
 <table class="toc"> \
