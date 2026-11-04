@@ -54,6 +54,7 @@ https://jdk.java.net/27[jdk.java.net/27]
 
 * briefly summarizes Java 22 to 25
 * goes into more detail on Java 26 and 27
+* time permitting, peeks into Java 28
 * is a showcase, not a tutorial
 
 *Slides* at https://slides.nipafx.dev/java-x[slides.nipafx.dev/java-x] (⇝ hit "?")
@@ -76,6 +77,7 @@ include::summary.adoc[]
 	<tr><td style="padding-left: 2em;">The Rest</td></tr> \
 	<tr><td>Java 27</td></tr> \
 	<tr><td>Deprecations & Removals</td></tr> \
+	<tr><td>Java 28</td></tr> \
 </table> \
 ]
 include::api-updated_http3.adoc[]
@@ -88,6 +90,7 @@ include::api-updated_http3.adoc[]
 	<tr class="toc-current"><td style="padding-left: 2em;">The Rest</td></tr> \
 	<tr><td>Java 27</td></tr> \
 	<tr><td>Deprecations & Removals</td></tr> \
+	<tr><td>Java 28</td></tr> \
 </table> \
 ]
 include::rest_java26.adoc[]
@@ -101,7 +104,7 @@ include::rest_java26.adoc[]
 	<tr><td style="padding-left: 2em;">Structured Concurrency</td></tr> \
 	<tr><td style="padding-left: 2em;">PEM Encoding</td></tr> \
 	<tr><td style="padding-left: 2em;">The Rest</td></tr> \
-	<tr><td>Deprecations & Removals</td></tr> \
+	<tr><td>...</td></tr> \
 </table> \
 ]
 include::performance_compact-headers.adoc[]
@@ -115,7 +118,7 @@ include::performance_compact-headers.adoc[]
 	<tr><td style="padding-left: 2em;">Structured Concurrency</td></tr> \
 	<tr><td style="padding-left: 2em;">PEM Encoding</td></tr> \
 	<tr><td style="padding-left: 2em;">The Rest</td></tr> \
-	<tr><td>Deprecations & Removals</td></tr> \
+	<tr><td>...</td></tr> \
 </table> \
 ]
 include::api-new_lazy.adoc[]
@@ -129,7 +132,7 @@ include::api-new_lazy.adoc[]
 	<tr class="toc-current"><td style="padding-left: 2em;">Structured Concurrency</td></tr> \
 	<tr><td style="padding-left: 2em;">PEM Encoding</td></tr> \
 	<tr><td style="padding-left: 2em;">The Rest</td></tr> \
-	<tr><td>Deprecations & Removals</td></tr> \
+	<tr><td>...</td></tr> \
 </table> \
 ]
 include::api-new_structured-concurrency.adoc[]
@@ -143,7 +146,7 @@ include::api-new_structured-concurrency.adoc[]
 	<tr><td style="padding-left: 2em;">Structured Concurrency</td></tr> \
 	<tr class="toc-current"><td style="padding-left: 2em;">PEM Encoding</td></tr> \
 	<tr><td style="padding-left: 2em;">The Rest</td></tr> \
-	<tr><td>Deprecations & Removals</td></tr> \
+	<tr><td>...</td></tr> \
 </table> \
 ]
 include::api-new_pem.adoc[]
@@ -157,7 +160,7 @@ include::api-new_pem.adoc[]
 	<tr><td style="padding-left: 2em;">Structured Concurrency</td></tr> \
 	<tr><td style="padding-left: 2em;">PEM Encoding</td></tr> \
 	<tr class="toc-current"><td style="padding-left: 2em;">The Rest</td></tr> \
-	<tr><td>Deprecations & Removals</td></tr> \
+	<tr><td>...</td></tr> \
 </table> \
 ]
 include::rest_java27.adoc[]
@@ -168,9 +171,21 @@ include::rest_java27.adoc[]
 	<tr><td>Java 26</td></tr> \
 	<tr><td>Java 27</td></tr> \
 	<tr class="toc-current"><td>Deprecations & Removals</td></tr> \
+	<tr><td>Java 28</td></tr> \
 </table> \
 ]
 include::deprecations.adoc[]
+
+:toc: pass:[ \
+<table class="toc"> \
+	<tr><td>Java 22 to 25</td></tr> \
+	<tr><td>Java 26</td></tr> \
+	<tr><td>Java 27</td></tr> \
+	<tr><td>Deprecations & Removals</td></tr> \
+	<tr class="toc-current"><td>Java 28</td></tr> \
+</table> \
+]
+include::rest_java28.adoc[]
 
 // ######### //
 // O U T R O //
